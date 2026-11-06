@@ -1,6 +1,6 @@
 name: İstasyon verisini güncelle
 
-# 1) OpenStreetMap'ten istasyonları çeker  2) EPDK adreslerini konuma çevirir (kaldığı yerden devam eder)
+# 1) OpenStreetMap'ten istasyonları çeker  1b) ZES/Ovolt/WAT/ASTOR'un kendi haritalarından çeker  2) EPDK adreslerini konuma çevirir (kaldığı yerden devam eder)
 # 3) ikisini birleştirip site/istasyonlar.json üretir.
 on:
   schedule:
@@ -22,6 +22,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: OpenStreetMap istasyonlarını çek
         run: python3 tools/istasyon_cek.py data/osm/istasyonlar_osm.json
+      - name: Ağların resmi haritalarından istasyonları çek
+        run: python3 -u tools/ag_istasyonlari.py
+        continue-on-error: true
       - name: EPDK adreslerini konuma çevir (en fazla 4 saat)
         run: python3 -u tools/epdk_konum.py 14400
         continue-on-error: true
@@ -38,7 +41,7 @@ jobs:
         run: |
           git config user.name "wattkac-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/osm data/epdk site/istasyonlar.json docs/kampanyalar/istasyonlar.json
+          git add data/osm data/epdk data/aglar site/istasyonlar.json docs/kampanyalar/istasyonlar.json
           if git diff --cached --quiet; then echo "Değişiklik yok"; exit 0; fi
           git commit -m "İstasyon verisi güncellendi"
           git pull --rebase origin "${GITHUB_REF_NAME}"

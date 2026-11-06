@@ -17,12 +17,18 @@
       "not": "KDV dahil. DC fiyatı lokasyona göre değişiyor; güncel fiyat Eşarj uygulamasında."
     },
     "ASTOR Şarj": {
-      "ac": null,
-      "dc": null,
+      "ac": {
+        "min": 8.99,
+        "max": 8.99
+      },
+      "dc": {
+        "min": 10.9,
+        "max": 10.9
+      },
       "kaynak": "https://astorsarj.com.tr/",
-      "kontrol": null,
+      "kontrol": "2026-11-07",
       "gecerlilik": null,
-      "not": "Sitede fiyat yok; güncel tarifeler yalnızca mobil uygulamada."
+      "not": "Sitedeki birim fiyatlar; istasyon bazlı fiyat ASTOR'un resmi haritasından günlük alınır."
     },
     "Trugo": {
       "ac": {

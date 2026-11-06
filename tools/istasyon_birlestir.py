@@ -12,6 +12,9 @@ import csv, json, math, pathlib, re, sys, datetime
 EPDK = pathlib.Path("data/epdk/epdk_sarj_istasyonlari.csv")
 CACHE = pathlib.Path("data/epdk/konum_onbellek.json")
 OSM = pathlib.Path("data/osm/istasyonlar_osm.json")
+AGLAR = pathlib.Path("data/aglar")
+# Resmi listesi olan ağlar: bu ağlara ait EPDK/OSM kayıtları atlanır, ağın kendi listesi kullanılır
+RESMI = {"zes": r"\bzes\b", "ovolt": r"ovolt|sharz", "wat": r"wat mobilite|watmobilite|\bwat\b", "astor": r"astor"}
 OUT = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else "site/istasyonlar.json")
 TR = str.maketrans({"İ": "i", "I": "ı", "Ş": "ş", "Ğ": "ğ", "Ü": "ü", "Ö": "ö", "Ç": "ç"})
 fold = lambda s: s.translate(TR).lower().replace("ı", "i").replace("ş", "s").replace("ğ", "g").replace("ü", "u").replace("ö", "o").replace("ç", "c")
@@ -25,6 +28,16 @@ def dist(a, b, c, d):
 
 
 def main():
+    resmi, kaynaklar = [], {}
+    for f in sorted(AGLAR.glob("*.json")) if AGLAR.exists() else []:
+        d = json.loads(f.read_text(encoding="utf-8"))
+        if d.get("ag") in RESMI and d.get("istasyonlar"):
+            kaynaklar[d["ag"]] = {"sayfa": d.get("kaynak"), "cekildi": d.get("cekildi"), "sayi": len(d["istasyonlar"])}
+            for r in d["istasyonlar"]:
+                r = dict(r); r["q"] = "r"; resmi.append(r)
+    covered = re.compile("|".join(RESMI[k] for k in kaynaklar)) if kaynaklar else None
+    is_covered = lambda *names: bool(covered and covered.search(fold(" ".join(x for x in names if x))))
+
     cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
     osm = json.loads(OSM.read_text(encoding="utf-8"))["istasyonlar"] if OSM.exists() else []
     ops, opi = [], {}
@@ -42,6 +55,8 @@ def main():
         loc = cache.get(r["adres"].strip())
         rec = {"i": "e" + re.sub(r"\D", "", no), "e": no, "n": r["ad"].strip(), "b": r["marka"].strip(), "p": op(r["ag_isletmecisi"].strip()),
                "ad": r["adres"].strip()}
+        if is_covered(r["marka"], r["ag_isletmecisi"]):
+            continue  # bu ağın resmi listesi var
         if r["hizmet"].strip() == "Özel":
             ozel += 1
             continue  # halka açık olmayan (özel) istasyonlar haritada gösterilmez
@@ -57,6 +72,8 @@ def main():
     matched, extra = 0, []
     used = set()
     for s in osm:
+        if is_covered(s.get("b"), s.get("p"), s.get("w"), s.get("n")):
+            continue
         k = key(s.get("b") or s.get("p") or s.get("w") or s.get("n") or "")
         best, bd = None, 300
         cx, cy = round(s["a"], 2), round(s["o"], 2)
@@ -79,7 +96,7 @@ def main():
             if s.get("p"):
                 s["p"] = op(s["p"])
             extra.append(s)
-    recs += extra
+    recs += extra + resmi
     located = [r for r in recs if "a" in r]
     recs = located  # konumu bilinmeyenler haritada gösterilemez
     recs.sort(key=lambda r: (round(r["a"], 1), r["o"], r["i"]))
@@ -90,11 +107,12 @@ def main():
             cnt[b.lower()] = cnt.get(b.lower(), 0) + 1
     data = {"guncelleme": datetime.date.today().isoformat(),
             "kaynak": "EPDK Şarj İstasyonları kaydı ve © OpenStreetMap katkıda bulunanlar (ODbL)",
-            "sayi": len(recs),
+            "sayi": len(recs), "resmi_kaynaklar": kaynaklar,
             "isletmeciler": ops, "istasyonlar": recs}
     txt = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
     OUT.write_text(txt, encoding="utf-8")
-    print(f"EPDK {len(seen)} kayıt (özel {ozel} çıkarıldı), önbellekten konumlanan {sum(1 for r in recs if r.get('e'))}, OSM ile eşleşen {matched}, yalnız OSM {len(extra)}, toplam {len(recs)}, {len(txt)//1024} KB")
+    ozet = ", ".join("%s %d" % (k, v["sayi"]) for k, v in kaynaklar.items())
+    print(f"resmi ağ listeleri {len(resmi)} ({ozet}); EPDK {len(seen)} kayıt (özel {ozel} çıkarıldı), önbellekten konumlanan {sum(1 for r in recs if r.get('e'))}, OSM ile eşleşen {matched}, yalnız OSM {len(extra)}, toplam {len(recs)}, {len(txt)//1024} KB")
 
 
 if __name__ == "__main__":
