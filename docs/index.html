@@ -42,7 +42,9 @@ label.lb{display:block;font-size:12px;font-weight:800;letter-spacing:.6px;color:
 textarea,input[type=datetime-local],input[type=password]{width:100%;background:#0b1325;color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:12px;font:15px/1.45 Inter,sans-serif}
 textarea{min-height:200px;resize:vertical}
 .src{list-style:none;display:flex;flex-direction:column;gap:8px}
-.src li{display:flex;gap:8px;align-items:flex-start;font-size:14px}
+.src li{display:flex;gap:8px;align-items:flex-start;font-size:14px;min-width:0}
+.src li span:last-child{min-width:0;overflow-wrap:anywhere}
+.card{overflow:hidden}
 .tag{flex:none;font-size:11px;font-weight:800;border-radius:6px;padding:2px 6px;margin-top:2px}
 .t-resmi{background:#123b2f;color:var(--g)}.t-derleme{background:#3d3410;color:var(--y)}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px}
