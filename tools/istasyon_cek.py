@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Türkiye'deki tüm şarj istasyonlarını OpenStreetMap'ten (Overpass) çekip
-site/istasyonlar.json olarak kaydeder. Yalnızca standart kütüphane kullanır.
+data/osm/istasyonlar_osm.json olarak kaydeder. Yalnızca standart kütüphane kullanır.
 
 Kullanım: python3 tools/istasyon_cek.py [çıktı_dosyası]
 Çıktı bozuksa ya da çok az kayıt gelirse mevcut dosyanın üzerine YAZILMAZ.
@@ -103,7 +103,7 @@ def parse(el):
 
 
 def main():
-    out = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else "site/istasyonlar.json")
+    out = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else "data/osm/istasyonlar_osm.json")
     recs = [r for r in (parse(e) for e in fetch()) if r]
     recs.sort(key=lambda r: (round(r["a"], 1), r["o"], r["i"]))
     brands = {}
@@ -114,6 +114,7 @@ def main():
     data = {"guncelleme": datetime.date.today().isoformat(), "kaynak": "© OpenStreetMap katkıda bulunanlar (ODbL)",
             "sayi": len(recs), "markalar": dict(sorted(brands.items(), key=lambda x: -x[1])[:60]), "istasyonlar": recs}
     txt = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
+    out.parent.mkdir(parents=True, exist_ok=True)
     old = out.read_text(encoding="utf-8") if out.exists() else ""
     # yalnızca içerik değiştiyse (tarih hariç) yaz; gereksiz commit oluşmasın
     strip = lambda s: re.sub(r'"guncelleme":"[^"]*",', "", s, count=1)

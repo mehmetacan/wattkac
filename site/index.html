@@ -319,8 +319,10 @@ const MAXM = 100, PAGE = 40;
 // Eşleştirme kalıpları: boşluksuz, aksansız (fold edilmiş) yazılır; \b kelime sınırıdır
 const ALIAS = { "Eşarj": ["esarj", "enerjisa"], "ASTOR Şarj": ["astor"], "Shell Recharge": ["shell"], "WAT Mobilite": ["wat mobilite", "watmobilite", "\\bwat\\b"] };
 // Kampanya verisinde olmasa da tanınan, yaygın markalar
-const KNOWN_EXTRA = { "ZES": ["\\bzes\\b"], "Sharz.net": ["sharz"], "Tesla": ["tesla"], "Beefull": ["beefull"], "Aksa Şarj": ["\\baksa\\b"], "Enyakıt": ["enyakit"],
-  "Petrol Ofisi": ["petrol ofisi"], "Opet": ["\\bopet\\b"], "BP": ["\\bbp\\b"], "Aytemiz": ["aytemiz"], "Power Şarj": ["powersarj", "power sarj"] };
+const KNOWN_EXTRA = { "ZES": ["\\bzes\\b"], "Sharz.net": ["sharz"], "Tesla": ["tesla"], "Beefull": ["beefull"], "Aksa Şarj": ["\\baksa\\b"], "Enyakıt": ["enyakit", "en yakit"],
+  "Petrol Ofisi": ["petrol ofisi"], "Opet": ["\\bopet\\b"], "BP": ["\\bbp\\b"], "Aytemiz": ["aytemiz"], "Power Şarj": ["powersarj", "power sarj"],
+  "Zeplin": ["zeplin"], "Otojet": ["otojet"], "Oncharge": ["oncharge"], "D-Charge": ["d-charge", "d charge"], "5 Şarj": ["\\b5 sarj"], "otoWATT": ["otowatt"],
+  "Efish": ["efish"], "EPSIS": ["epsis"], "EKA Enerji": ["eka enerji"], "Magic Line": ["magic line"], "K-Şarj": ["k-sarj", "k sarj"], "Neva Şarj": ["neva sarj"], "TOGG": ["\\btogg\\b"] };
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -593,10 +595,11 @@ async function loadStatic() {
   return STATIC;
 }
 function fromRec(r) {
-  const t = { brand: r.b, operator: r.p, network: r.w, name: r.n, opening_hours: r.h, website: r.u };
+  const op = typeof r.p === "number" ? (STATIC.isletmeciler || [])[r.p] : r.p;
+  const t = { brand: r.b, operator: op, network: r.w, name: r.n, opening_hours: r.h, website: r.u };
   const b = brandOf(t), nm = r.n || "";
   return { id: r.i, lat: r.a, lon: r.o, brand: b.name, known: b.known, named: !!nm, name: nm || b.name || "Şarj istasyonu",
-    kw: r.k || null, types: r.t ? [...r.t] : [], hasAc: !!r.ac, hasDc: !!r.dc, tags: t, addr: r.ad || "", camp: NETC[b.name] || [], count: r.c || null, d: 0, mode: null, price: null };
+    kw: r.k || null, types: r.t ? [...r.t] : [], hasAc: !!r.ac, hasDc: !!r.dc, tags: t, addr: r.ad || "", approx: r.q === "i" || r.q === "m", camp: NETC[b.name] || [], count: r.c || null, d: 0, mode: null, price: null };
 }
 // OpenStreetMap'te bir istasyon çoğu zaman birden fazla kayıt olarak girilir; aynı markadaki yakın kayıtları birleştir
 function mergeStations(arr) {
@@ -795,6 +798,7 @@ function renderDetail(s) {
   const web = /^https?:\/\//i.test(t.website || t["contact:website"] || "") ? (t.website || t["contact:website"]) : "";
   if (web) rows.push(["Web", `<a href="${esc(safeUrl(web))}" target="_blank" rel="noopener nofollow">Site ↗</a>`]);
   $("sh-b").innerHTML = `<div class="dn">${esc(s.name)}</div><div class="alt">${esc(s.brand && s.name !== s.brand ? s.brand + " · " : "")}${fmtKm(s.d)} uzakta</div>
+    ${s.approx ? `<p class="note">Konum yaklaşık: adres EPDK kaydından alındı, tam nokta doğrulanmadı.</p>` : ""}
     ${rows.length ? `<dl class="kv">${rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>` : ""}
     ${s.camp.length ? `<div class="lbl" style="margin-top:12px">Bu ağa özel kampanyalar</div>${s.camp.map(mc).join("")}` : ""}
     ${myGeneral.length ? `<div class="lbl" style="margin-top:10px">Kartınla her istasyonda</div>${myGeneral.map(mc).join("")}` : (general.length && profileEmpty() ? `<p class="note">Her istasyonda geçerli ${general.length} kart kampanyası var. Kartlarını ekleyince burada görürsün.</p>` : "")}
