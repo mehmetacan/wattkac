@@ -134,6 +134,8 @@ def effective(item, approvals):
         return False, None, None
     t = dt.datetime.fromisoformat(a.get("zaman") or item["zaman"])
     if item["tip"] == "hikaye":
+        if item.get("yalniz_hikaye"):        # tek başına hikaye: panelde seçilen saat aynen kullanılır
+            return True, t, ""
         if a.get("hikaye") is False:
             return False, None, None
         if a.get("zaman"):

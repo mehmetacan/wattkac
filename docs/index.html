@@ -146,7 +146,7 @@ async function load() {
     }));
     const by = {};
     items.forEach(x => { const g = x.grup || x.id.replace(/_(post|hikaye)$/, ""); (by[g] ||= { grup: g }); by[g][x.tip === "hikaye" ? "story" : "post"] = x; });
-    groups = Object.values(by).filter(g => g.post && g.post.durum !== "iptal").sort((a, b) => a.post.zaman.localeCompare(b.post.zaman));
+    groups = Object.values(by).filter(g => (g.post || g.story) && (g.post || g.story).durum !== "iptal").sort((a, b) => (a.post || a.story).zaman.localeCompare((b.post || b.story).zaman));
     render();
   } catch (e) {
     if (/^(401|403)/.test(String(e.message)) || /ISO-8859-1|headers/.test(String(e.message))) { store("wk_token", null); token = ""; setupScreen("Anahtar geçersiz veya izni eksik, lütfen yeniden girin. (" + e.message + ")"); }
@@ -155,7 +155,7 @@ async function load() {
 }
 
 function stateOf(g) {
-  if (g.post.durum === "paylasildi") return "paylasildi";
+  if ((g.post || g.story).durum === "paylasildi") return "paylasildi";
   const a = approvals[g.grup];
   if (a?.onay === "reddedildi") return "reddedildi";
   if (a?.onay === "onaylandi") return "onaylandi";
@@ -175,26 +175,26 @@ function render() {
 }
 
 function card(g) {
-  const p = g.post, s = g.story, a = approvals[g.grup] || {}, st = stateOf(g);
+  const storyOnly = !g.post, p = g.post || g.story, s = storyOnly ? null : g.story, a = approvals[g.grup] || {}, st = stateOf(g);
   const tur = p.tur || (p.id.startsWith("banka") ? "banka" : p.id.startsWith("istasyon") ? "istasyon" : "ozet");
   const zaman = a.zaman || p.zaman;
-  const imgs = [...p.gorseller.map((u, i) => [u, i === 0 ? "Kapak" : "Detay"]), ...(s ? [[s.gorseller[0], "Hikaye"]] : [])];
+  const imgs = storyOnly ? [[p.gorseller[0], "Hikaye"]] : [...p.gorseller.map((u, i) => [u, i === 0 ? "Kapak" : "Detay"]), ...(s ? [[s.gorseller[0], "Hikaye"]] : [])];
   const late = st === "bekleyen" && new Date(zaman) < new Date();
   const editable = st === "bekleyen" || st === "onaylandi";
   const src = (p.kaynaklar || []).map(k => `<li><span class="tag t-${k.tur}">${k.tur === "resmi" ? "RESMİ" : "DERLEME"}</span><span>${esc(k.ad)}<br><a href="${esc(k.url)}" target="_blank" rel="noopener">${esc(k.url.replace(/^https?:\/\//, "").slice(0, 70))}…</a></span></li>`).join("");
   return `<div class="card" id="c-${esc(g.grup)}">
     <div class="top"><div><span class="badge b-${tur}">${tur === "ozet" ? "Özet" : tur === "banka" ? "Banka" : "Şarj ağı"}</span>
-      <h2 style="margin-top:6px">${esc(p.baslik || p.id)}</h2>
+      <h2 style="margin-top:6px">${esc(p.baslik || p.id)}${storyOnly ? ' <span class="badge b-ozet">Sadece hikaye</span>' : ""}</h2>
       <div class="when">Paylaşım: ${fmt(zaman)}${s && a.hikaye !== false ? " · hikaye 1 saat sonra" : ""}</div></div>
       <span class="st ${st}">${LABEL[st]}</span></div>
     <div class="imgs">${imgs.map(([u, l]) => `<figure><img loading="lazy" src="${RAW}${encodeURI(u)}" alt="${l}"><figcaption>${l}</figcaption></figure>`).join("")}</div>
     ${p.durum === "hata" ? `<div class="err">Paylaşım hatası: ${esc(p.hata)}</div>` : ""}
     ${late ? `<div class="warn">Planlanan saat geçti. Onaylarsanız 15 dakika içinde paylaşılacak şekilde ayarlanır (aşağıdan değiştirebilirsiniz).</div>` : ""}
-    <label class="lb">Instagram açıklaması</label>
-    <textarea id="cap-${esc(g.grup)}" ${editable ? "" : "readonly"}>${esc(a.aciklama || p.aciklama)}</textarea>
+    ${storyOnly ? "" : `<label class="lb">Instagram açıklaması</label>
+    <textarea id="cap-${esc(g.grup)}" ${editable ? "" : "readonly"}>${esc(a.aciklama || p.aciklama)}</textarea>`}
     <label class="lb">Kaynaklar</label>
     <ul class="src">${src || `<li class="muted">Kaynak bilgisi yok</li>`}</ul>
-    ${editable ? `<label class="lb">Paylaşım zamanı (İstanbul)</label>
+    ${editable ? `<label class="lb">${storyOnly ? "Hikaye zamanı" : "Paylaşım zamanı"} (İstanbul)</label>
       <input type="datetime-local" id="t-${esc(g.grup)}" value="${late ? nowPlus(15) : toLocalInput(zaman)}">
       ${s ? `<div class="row"><label class="chk"><input type="checkbox" id="h-${esc(g.grup)}" ${a.hikaye === false ? "" : "checked"}> Hikayeyi de paylaş</label></div>` : ""}` : ""}
     <div class="acts">
@@ -214,7 +214,8 @@ async function act(grup, kind) {
     let zaman = fromLocalInput(tv);
     if (new Date(zaman) < new Date(Date.now() + 5 * 60e3)) zaman = fromLocalInput(nowPlus(15));
     const h = document.getElementById(`h-${grup}`);
-    body = { onay: "onaylandi", zaman, aciklama: document.getElementById(`cap-${grup}`).value, hikaye: h ? h.checked : false, tarih: new Date().toISOString() };
+    const cap = document.getElementById(`cap-${grup}`);
+    body = { onay: "onaylandi", zaman, aciklama: cap ? cap.value : "", hikaye: h ? h.checked : true, tarih: new Date().toISOString() };
   } else if (kind === "reddet") body = { onay: "reddedildi", tarih: new Date().toISOString() };
   else body = { onay: "bekliyor", tarih: new Date().toISOString() };
   try {

@@ -1,0 +1,60 @@
+[
+ {
+  "id": "banka_garanti_hikaye",
+  "grup": "2026-11-06-hikaye__banka_garanti",
+  "baslik": "Garanti BBVA",
+  "tur": "banka",
+  "tip": "hikaye",
+  "zaman": "2026-11-06T20:00:00+03:00",
+  "gorseller": [
+   "media/2026-11-06-hikaye/banka_garanti/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null,
+  "yalniz_hikaye": true,
+  "kaynaklar": [
+   {
+    "ad": "Garanti BBVA: %50 bonus (Shell Recharge)",
+    "url": "https://www.shell.com.tr/suruculer/shellden-avantajli-kampanyalar/shell-recharge-kullanicilarina-ozel-garanti-bbva-kredi-kartlari-ile-yaptiklari-sarjlamalarda-50-bonus-firsati.html",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Garanti BBVA: 75 TL bonus (Ovolt)",
+    "url": "https://www.bonus.com.tr/kampanyalar/ovolt-akaryakit-bonus-kampanyalari",
+    "tur": "resmi"
+   }
+  ]
+ },
+ {
+  "id": "istasyon_esarj_hikaye",
+  "grup": "2026-11-06-hikaye__istasyon_esarj",
+  "baslik": "Eşarj",
+  "tur": "istasyon",
+  "tip": "hikaye",
+  "zaman": "2026-11-06T20:30:00+03:00",
+  "gorseller": [
+   "media/2026-11-06-hikaye/istasyon_esarj/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null,
+  "yalniz_hikaye": true,
+  "kaynaklar": [
+   {
+    "ad": "Eşarj: %10 Eşarj Puan",
+    "url": "https://www.allianz.com.tr/tr_TR/faaliyetlerimiz/kampanyalar/elektrikli-arac-sarj-kampanyasi.html",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Ziraat Bankası: %20 Jest Lira",
+    "url": "https://www.bankkart.com.tr/kampanyalar/akaryakit/elektrikli-sarj-istasyonlarinda-750-tl-jest-lira",
+    "tur": "resmi"
+   }
+  ]
+ }
+]

@@ -1,0 +1,22 @@
+[
+ {
+  "id": "banka_garanti",
+  "tur": "banka",
+  "baslik": "Garanti BBVA",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_esarj",
+  "tur": "istasyon",
+  "baslik": "Eşarj",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ }
+]
