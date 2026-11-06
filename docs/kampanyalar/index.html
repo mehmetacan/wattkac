@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WattKaç · Elektrikli araç şarj kampanyaları</title>
+<meta name="description" content="Banka kredi kartı ve şarj ağı kampanyalarını tek yerde filtreleyin: hangi kartla, hangi istasyonda, ne kadar kazanırsınız. Her gün güncellenir.">
+<meta property="og:title" content="WattKaç · Şarj kampanyaları">
+<meta property="og:description" content="Hangi kartla hangi istasyonda ne kazanırsın? Güncel elektrikli araç şarj kampanyaları.">
+<meta property="og:image" content="logo.png">
+<meta name="theme-color" content="#0A1020">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A1020;--card:#111A2E;--card2:#0d1528;--line:#22304F;--txt:#F4F6FB;--mut:#9FB0D0;--y:#FFD400;--g:#22E3A0;--r:#FF7A7A}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font:15px/1.5 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:var(--y)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+header{padding:28px 0 18px;background:radial-gradient(700px 360px at 85% -20%,rgba(255,212,0,.16),transparent 60%),radial-gradient(600px 300px at 0% 120%,rgba(34,227,160,.10),transparent 60%)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:24px;letter-spacing:-.5px}
+.brand b{color:var(--y)}
+.brand .ig{margin-left:auto;font-size:14px;font-weight:700;color:var(--mut);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+h1{font-size:clamp(28px,6vw,46px);line-height:1.05;font-weight:900;letter-spacing:-1.5px;margin-top:22px;max-width:760px}
+h1 em{font-style:normal;color:var(--y)}
+.lead{color:var(--mut);margin-top:10px;font-size:16px;max-width:640px}
+.upd{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:13px;font-weight:700;color:var(--g);background:rgba(34,227,160,.08);border:1px solid rgba(34,227,160,.3);border-radius:999px;padding:5px 12px}
+.upd::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--g)}
+.layout{display:grid;grid-template-columns:300px 1fr;gap:24px;align-items:start;padding-bottom:60px}
+@media(max-width:860px){.layout{grid-template-columns:1fr;gap:0}}
+aside{position:sticky;top:12px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}
+@media(max-width:860px){aside{position:static;margin-bottom:6px}}
+.fh{display:flex;align-items:center;justify-content:space-between;margin:14px 0 8px}
+.fh:first-child{margin-top:0}
+.fh h3{font-size:12px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--mut)}
+.fh button{background:none;border:0;color:var(--mut);font:600 12px Inter,sans-serif;cursor:pointer;text-decoration:underline}
+.search{width:100%;background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:11px 12px;font:15px Inter,sans-serif}
+.search:focus,.chip:focus-visible,select:focus{outline:2px solid var(--y);outline-offset:1px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--card2);color:var(--txt);border-radius:999px;padding:6px 11px;font:600 13px Inter,sans-serif;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--y);border-color:var(--y);color:#0A1020}
+.chip.ag[aria-pressed=true]{background:var(--g);border-color:var(--g);color:#06231a}
+.tog{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;margin-top:12px;cursor:pointer}
+.tog input{width:18px;height:18px;accent-color:var(--g)}
+.mobile-toggle{display:none}
+@media(max-width:860px){.mobile-toggle{display:flex;width:100%;justify-content:space-between;align-items:center;background:var(--card);border:1px solid var(--line);color:var(--txt);border-radius:14px;padding:12px 14px;font:700 15px Inter,sans-serif;margin-bottom:10px;cursor:pointer}
+  aside.closed{display:none}}
+.bar{display:flex;align-items:center;gap:10px;margin:2px 0 12px;flex-wrap:wrap}
+.count{font-weight:800}
+.count span{color:var(--mut);font-weight:600}
+select{margin-left:auto;background:var(--card);color:var(--txt);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:600 14px Inter,sans-serif}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.ct{display:flex;align-items:flex-start;gap:8px}
+.kurum{font-weight:900;font-size:18px;letter-spacing:-.3px;line-height:1.2}
+.alt{color:var(--mut);font-size:13px;font-weight:600}
+.tip{margin-left:auto;flex:none;font-size:11px;font-weight:800;letter-spacing:.5px;border-radius:7px;padding:3px 7px;text-transform:uppercase}
+.tip.banka{background:var(--y);color:#0A1020}.tip.ag{background:var(--g);color:#06231a}
+.big{font-size:30px;font-weight:900;color:var(--y);letter-spacing:-.8px;line-height:1.05}
+.det{font-weight:600}
+.lbl{font-size:11px;font-weight:800;letter-spacing:.7px;color:var(--mut);text-transform:uppercase;margin-bottom:5px}
+.st{display:flex;flex-wrap:wrap;gap:5px}
+.st span{font-size:12px;font-weight:700;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:3px 9px}
+.st span.hit{background:var(--g);border-color:var(--g);color:#06231a}
+.st span.all{background:rgba(34,227,160,.12);border-color:rgba(34,227,160,.4);color:var(--g)}
+.join{font-size:14px;color:var(--mut)}.join b{color:var(--txt);font-weight:600}
+.foot{display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:10px;border-top:1px solid var(--line);flex-wrap:wrap}
+.days{font-size:13px;font-weight:800;border-radius:8px;padding:4px 9px;background:var(--card2);border:1px solid var(--line)}
+.days.soon{background:rgba(255,122,122,.12);border-color:rgba(255,122,122,.45);color:var(--r)}
+.src{margin-left:auto;font-size:13px;font-weight:700;text-decoration:none;display:inline-flex;gap:6px;align-items:center}
+.badge{font-size:10px;font-weight:800;border-radius:5px;padding:2px 5px}
+.b-resmi{background:#123b2f;color:var(--g)}.b-derleme{background:#3d3410;color:var(--y)}
+details{font-size:13px;color:var(--mut)}
+details summary{cursor:pointer;font-weight:700;color:var(--mut)}
+details p{margin-top:6px}
+.empty{grid-column:1/-1;text-align:center;color:var(--mut);padding:50px 10px;background:var(--card);border:1px dashed var(--line);border-radius:18px}
+.empty button{margin-top:12px;background:var(--y);color:#0A1020;border:0;border-radius:10px;padding:9px 14px;font:800 14px Inter,sans-serif;cursor:pointer}
+.note{margin-top:14px;font-size:13px;color:var(--mut);line-height:1.45}
+footer{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--mut);font-size:13px}
+.err{background:#3b1820;color:#ffb3b3;border-radius:12px;padding:14px;margin:20px 0}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path d="M13.5 2 4 13.5h6.2L9.5 22 20 9.8h-6.4z" fill="#FFD400"/></svg>
+      <span>Watt<b>Kaç</b></span>
+      <a class="ig" href="https://instagram.com/wattkac" target="_blank" rel="noopener">@wattkac</a>
+    </div>
+    <h1>Hangi kartla, hangi istasyonda <em>ne kazanırsın?</em></h1>
+    <p class="lead">Elektrikli araç şarjında geçerli banka kartı ve şarj ağı kampanyaları. Kartını ve şarj ettiğin ağı seç, sana uyanları gör.</p>
+    <div class="upd" id="upd">Yükleniyor…</div>
+  </div>
+</header>
+
+<main class="wrap">
+  <button class="mobile-toggle" id="mt" aria-expanded="false" aria-controls="filters">Filtreler <span id="mtc"></span></button>
+  <div class="layout">
+    <aside id="filters" class="closed" aria-label="Filtreler">
+      <div class="fh"><h3>Ara</h3></div>
+      <input class="search" id="q" type="search" placeholder="Banka, istasyon, kart…" autocomplete="off">
+      <div class="fh"><h3>Kartım</h3><button data-clear="banka">Temizle</button></div>
+      <div class="chips" id="f-banka"></div>
+      <div class="fh"><h3>Şarj ettiğim ağ</h3><button data-clear="ag">Temizle</button></div>
+      <div class="chips" id="f-ag"></div>
+      <div class="fh"><h3>Kampanya türü</h3></div>
+      <div class="chips" id="f-tip"></div>
+      <label class="tog"><input type="checkbox" id="resmi"> Yalnızca resmi kaynaklı</label>
+      <p class="note" id="nocamp"></p>
+    </aside>
+    <section aria-live="polite">
+      <div class="bar">
+        <div class="count" id="count"></div>
+        <select id="sort" aria-label="Sırala">
+          <option value="son">Son günü yakın olan</option>
+          <option value="kurum">Kuruma göre (A-Z)</option>
+        </select>
+      </div>
+      <div class="list" id="list"></div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    Bilgiler bankaların ve şarj ağlarının duyurularından derlenir; koşullar değişebilir. Kampanyaya katılmadan önce kampanya sahibinin resmi kanallarından kontrol edin.
+    Kaynak etiketi <b>DERLEME</b> olanlar kampanya derleme sitelerinden alınmıştır ve resmi sayfada teyit edilmemiştir. WattKaç hiçbir banka veya şarj ağıyla bağlantılı değildir.
+  </div>
+</footer>
+
+<script>
+const ALL = "Tüm şarj istasyonları";
+const DERLEME = ["sarjharitasi", "sarjevi", "hangikredi", "sarjkampanya", "arabamsarj", "donanimhaber"];
+const AY = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const tr = (a, b) => a.localeCompare(b, "tr");
+const todayIst = () => new Date(Date.now() + 3 * 3600e3).toISOString().slice(0, 10);
+let C = [], S = { q: "", banka: new Set(), ag: new Set(), tip: new Set(), resmi: false, sort: "son" };
+
+function flatten(d) {
+  const out = [];
+  d.bankalar.forEach(b => b.offers.forEach(o => out.push({ kid: b.id, kurum: b.name, alt: b.sub, tip: "banka", ...o })));
+  d.istasyonlar.forEach(s => s.own.forEach(o => out.push({ kid: s.id, kurum: s.name, alt: "Şarj ağının kendi kampanyası", tip: "ag", st: [s.name], join: o.kosul, ...o })));
+  const today = todayIst();
+  return out.filter(c => !c.bit || c.bit >= today).map(c => ({ ...c, resmi: !DERLEME.some(h => (c.link || "").includes(h)) }));
+}
+
+function daysLeft(bit) { return Math.round((new Date(bit + "T00:00:00Z") - new Date(todayIst() + "T00:00:00Z")) / 864e5); }
+
+function readHash() {
+  const p = new URLSearchParams(location.hash.slice(1));
+  ["banka", "ag", "tip"].forEach(k => S[k] = new Set((p.get(k) || "").split(",").filter(Boolean)));
+  S.q = p.get("q") || ""; S.resmi = p.get("resmi") === "1"; S.sort = p.get("sirala") || "son";
+}
+function writeHash() {
+  const p = new URLSearchParams();
+  ["banka", "ag", "tip"].forEach(k => S[k].size && p.set(k, [...S[k]].join(",")));
+  S.q && p.set("q", S.q); S.resmi && p.set("resmi", "1"); S.sort !== "son" && p.set("sirala", S.sort);
+  const h = p.toString(); history.replaceState(null, "", h ? "#" + h : location.pathname);
+}
+
+function chipGroup(el, key, items, cls = "") {
+  el.innerHTML = items.map(([v, label]) => `<button class="chip ${cls}" aria-pressed="${S[key].has(v)}" data-k="${key}" data-v="${esc(v)}">${esc(label)}</button>`).join("");
+}
+
+function buildFilters(d) {
+  const banks = d.bankalar.map(b => [b.id, b.name]).sort((a, b) => tr(a[1], b[1]));
+  const ags = new Set();
+  C.forEach(c => c.st.forEach(s => s !== ALL && ags.add(s)));
+  chipGroup($("f-banka"), "banka", banks);
+  chipGroup($("f-ag"), "ag", [...ags].sort(tr).map(a => [a, a]), "ag");
+  chipGroup($("f-tip"), "tip", [["banka", "Banka kartı"], ["ag", "Şarj ağı"]]);
+  document.querySelectorAll(".chip").forEach(b => b.onclick = () => {
+    const set = S[b.dataset.k], v = b.dataset.v;
+    set.has(v) ? set.delete(v) : set.add(v);
+    b.setAttribute("aria-pressed", set.has(v)); render();
+  });
+  const yok = (d.kampanyasiz_bankalar || []).map(x => x.split(" (")[0]);
+  $("nocamp").textContent = yok.length ? `Bu dönem şarj kampanyası bulunmayan: ${yok.join(", ")}.` : "";
+}
+
+function match(c) {
+  if (S.banka.size && !(c.tip === "banka" && S.banka.has(c.kid))) return false;
+  if (S.ag.size && !(c.st.includes(ALL) || c.st.some(s => S.ag.has(s)))) return false;
+  if (S.tip.size && !S.tip.has(c.tip)) return false;
+  if (S.resmi && !c.resmi) return false;
+  if (S.q) {
+    const h = [c.kurum, c.alt, c.big, c.det, c.join, c.kosul, ...c.st].join(" ").toLocaleLowerCase("tr");
+    if (!S.q.toLocaleLowerCase("tr").split(/\s+/).every(w => h.includes(w))) return false;
+  }
+  return true;
+}
+
+function card(c) {
+  const dl = c.bit ? daysLeft(c.bit) : null;
+  const dtxt = dl === null ? "" : dl === 0 ? "Son gün bugün" : `${dl} gün kaldı · ${c.son}`;
+  const st = c.st.map(s => `<span class="${s === ALL ? "all" : S.ag.has(s) ? "hit" : ""}">${esc(s)}</span>`).join("");
+  return `<article class="card">
+    <div class="ct"><div><div class="kurum">${esc(c.kurum)}</div><div class="alt">${esc(c.alt)}</div></div>
+      <span class="tip ${c.tip}">${c.tip === "banka" ? "Kart" : "Şarj ağı"}</span></div>
+    <div><div class="big">${esc(c.big)}</div><div class="det">${esc(c.det)}</div></div>
+    <div><div class="lbl">${c.st.includes(ALL) ? "Nerede geçerli" : "Geçerli istasyonlar"}</div><div class="st">${st}</div></div>
+    ${c.tip === "banka" && c.join ? `<div class="join">Katılım: <b>${esc(c.join)}</b></div>` : ""}
+    ${c.kosul ? `<details><summary>Koşullar</summary><p>${esc(c.kosul)}</p></details>` : ""}
+    <div class="foot">${dtxt ? `<span class="days ${dl <= 3 ? "soon" : ""}">${esc(dtxt)}</span>` : ""}
+      ${c.link ? `<a class="src" href="${esc(c.link)}" target="_blank" rel="noopener nofollow"><span class="badge b-${c.resmi ? "resmi" : "derleme"}">${c.resmi ? "RESMİ" : "DERLEME"}</span>Kaynağa git ↗</a>` : ""}</div>
+  </article>`;
+}
+
+function render() {
+  writeHash();
+  // Seçili ağa özel kampanyalar, "tüm istasyonlar" kampanyalarından önce gelir
+  const rel = c => (S.ag.size && c.st.some(s => S.ag.has(s))) ? 0 : 1;
+  const list = C.filter(match).sort((a, b) => rel(a) - rel(b) || (S.sort === "kurum" ? tr(a.kurum, b.kurum)
+    : (a.bit || "9").localeCompare(b.bit || "9") || tr(a.kurum, b.kurum)));
+  $("count").innerHTML = `${list.length} kampanya <span>/ ${C.length}</span>`;
+  const n = S.banka.size + S.ag.size + S.tip.size + (S.resmi ? 1 : 0) + (S.q ? 1 : 0);
+  $("mtc").textContent = n ? `(${n} seçili)` : "";
+  $("list").innerHTML = list.length ? list.map(card).join("") :
+    `<div class="empty">Bu seçime uyan kampanya yok.<br><button id="reset">Filtreleri temizle</button></div>`;
+  const r = $("reset"); if (r) r.onclick = resetAll;
+}
+
+function resetAll() {
+  S.banka.clear(); S.ag.clear(); S.tip.clear(); S.resmi = false; S.q = "";
+  $("q").value = ""; $("resmi").checked = false;
+  document.querySelectorAll(".chip").forEach(b => b.setAttribute("aria-pressed", "false")); render();
+}
+
+async function init() {
+  readHash();
+  try {
+    const r = await fetch("kampanyalar.json", { cache: "no-cache" });
+    if (!r.ok) throw new Error(r.status);
+    const d = await r.json();
+    C = flatten(d);
+    const [y, m, g] = d.guncelleme.split("-");
+    $("upd").textContent = `Son güncelleme: ${+g} ${AY[+m - 1]} ${y}`;
+    buildFilters(d);
+  } catch (e) {
+    $("list").innerHTML = `<div class="err">Kampanyalar yüklenemedi (${esc(e.message)}). Lütfen sayfayı yenileyin.</div>`;
+    $("upd").textContent = "Veri alınamadı"; return;
+  }
+  $("q").value = S.q; $("resmi").checked = S.resmi; $("sort").value = S.sort;
+  let t; $("q").oninput = e => { clearTimeout(t); t = setTimeout(() => { S.q = e.target.value.trim(); render(); }, 150); };
+  $("resmi").onchange = e => { S.resmi = e.target.checked; render(); };
+  $("sort").onchange = e => { S.sort = e.target.value; render(); };
+  document.querySelectorAll("[data-clear]").forEach(b => b.onclick = () => {
+    S[b.dataset.clear].clear(); document.querySelectorAll(`.chip[data-k=${b.dataset.clear}]`).forEach(c => c.setAttribute("aria-pressed", "false")); render();
+  });
+  $("mt").onclick = () => { const a = $("filters"); const open = a.classList.toggle("closed") === false; $("mt").setAttribute("aria-expanded", open); };
+  if (S.banka.size || S.ag.size) $("filters").classList.remove("closed");
+  render();
+}
+init();
+</script>
+</body>
+</html>
