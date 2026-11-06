@@ -1,0 +1,210 @@
+[
+ {
+  "id": "ozet_bankalar",
+  "tur": "ozet",
+  "baslik": "Banka kampanyaları özeti",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_liste.jpg"
+  ]
+ },
+ {
+  "id": "ozet_istasyonlar",
+  "tur": "ozet",
+  "baslik": "Şarj ağı kampanyaları özeti",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_liste.jpg"
+  ]
+ },
+ {
+  "id": "banka_garanti",
+  "tur": "banka",
+  "baslik": "Garanti BBVA",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "banka_vakifbank",
+  "tur": "banka",
+  "baslik": "VakıfBank",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "banka_ziraat",
+  "tur": "banka",
+  "baslik": "Ziraat Bankası",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "banka_yapikredi",
+  "tur": "banka",
+  "baslik": "Yapı Kredi",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "banka_halkbank",
+  "tur": "banka",
+  "baslik": "Halkbank",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "banka_qnb",
+  "tur": "banka",
+  "baslik": "QNB",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "banka_denizbank",
+  "tur": "banka",
+  "baslik": "DenizBank",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "banka_kuveytturk",
+  "tur": "banka",
+  "baslik": "Kuveyt Türk",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "banka_on",
+  "tur": "banka",
+  "baslik": "ON Dijital",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_esarj",
+  "tur": "istasyon",
+  "baslik": "Eşarj",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_zes",
+  "tur": "istasyon",
+  "baslik": "ZES",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_trugo",
+  "tur": "istasyon",
+  "baslik": "Trugo",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_voltrun",
+  "tur": "istasyon",
+  "baslik": "Voltrun",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_otopriz",
+  "tur": "istasyon",
+  "baslik": "Otopriz",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_ovolt",
+  "tur": "istasyon",
+  "baslik": "Ovolt",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_shell",
+  "tur": "istasyon",
+  "baslik": "Shell Recharge",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_wat",
+  "tur": "istasyon",
+  "baslik": "WAT Mobilite",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_varr",
+  "tur": "istasyon",
+  "baslik": "Varr",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_gioev",
+  "tur": "istasyon",
+  "baslik": "GIO EV",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ }
+]
