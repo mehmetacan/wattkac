@@ -175,5 +175,31 @@ def main():
     return 1 if errors and not done else 0
 
 
+def next_due_seconds():
+    """Onaylı ve bekleyen en yakın öğenin kaç saniye sonra paylaşılacağı (yoksa None)."""
+    approvals = load_approvals()
+    now = dt.datetime.now(dt.timezone.utc)
+    best = None
+    for path in glob.glob(os.path.join(ROOT, "queue", "*.json")):
+        for item in json.load(open(path, encoding="utf-8")):
+            if item["durum"] != "bekliyor":
+                continue
+            ok, t, _ = effective(item, approvals)
+            if ok and t > now:
+                sec = (t - now).total_seconds()
+                best = sec if best is None else min(best, sec)
+    return best
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    # BEKLE_DK > 0 ise: bu çalışma içinde zamanı yaklaşan onaylı öğeleri bekleyip tam saatinde paylaşır.
+    limit = time.time() + int(os.environ.get("BEKLE_DK", "0")) * 60
+    rc = main()
+    while not DRY:
+        sec = next_due_seconds()
+        if sec is None or time.time() + sec > limit:
+            break
+        log(f"Sıradaki onaylı paylaşım {int(sec // 60)} dk {int(sec % 60)} sn sonra, bekleniyor…")
+        time.sleep(sec + 5)
+        rc = main() or rc
+    sys.exit(rc)
