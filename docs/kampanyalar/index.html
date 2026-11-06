@@ -8,115 +8,117 @@
 <meta property="og:title" content="WattKaç · Şarj kampanyaları">
 <meta property="og:description" content="Hangi kartla hangi istasyonda ne kazanırsın? Güncel elektrikli araç şarj kampanyaları ve yakınındaki istasyonlar.">
 <meta property="og:image" content="logo.png">
-<meta name="theme-color" content="#0A1020">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
-:root{--bg:#0A1020;--card:#111A2E;--card2:#0d1528;--line:#22304F;--txt:#F4F6FB;--mut:#9FB0D0;--y:#FFD400;--g:#22E3A0;--r:#FF7A7A;--top:54px;--nav:62px;--sa:env(safe-area-inset-bottom,0px)}
+:root{--bg:#F6F7F9;--card:#fff;--card2:#F3F4F6;--line:#E5E7EB;--txt:#111827;--mut:#6B7280;--ink:#111827;--y:#FFC800;--g:#047857;--gbg:#ECFDF5;--gline:#A7F3D0;--r:#B91C1C;--rbg:#FEF2F2;--top:54px;--nav:62px;--sa:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box;margin:0;padding:0}
 [hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%}
 body{background:var(--bg);color:var(--txt);font:15px/1.5 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;padding-top:var(--top);padding-bottom:calc(var(--nav) + var(--sa))}
-a{color:var(--y)}
+a{color:#1D4ED8}
 button,input,select{font-family:inherit;color:inherit}
 button{-webkit-tap-highlight-color:transparent;cursor:pointer}
-:focus-visible{outline:2px solid var(--y);outline-offset:2px}
+:focus-visible{outline:2px solid #1D4ED8;outline-offset:2px}
 .wrap{max-width:1080px;margin:0 auto;padding:0 14px}
 
 /* Üst çubuk */
-.top{position:fixed;top:0;left:0;right:0;height:var(--top);z-index:1200;background:rgba(10,16,32,.97);border-bottom:1px solid var(--line)}
+.top{position:fixed;top:0;left:0;right:0;height:var(--top);z-index:1200;background:#fff;border-bottom:1px solid var(--line)}
 .topin{height:100%;display:flex;align-items:center;gap:10px;max-width:1080px;margin:0 auto;padding:0 14px}
 .brand{display:flex;align-items:center;gap:8px;font-weight:900;font-size:21px;letter-spacing:-.5px;flex:none}
-.brand b{color:var(--y)}
-.upd{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--g);background:rgba(34,227,160,.08);border:1px solid rgba(34,227,160,.3);border-radius:999px;padding:4px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.brand b{color:#E0A100}
+.upd{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--g);background:var(--gbg);border:1px solid var(--gline);border-radius:999px;padding:4px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .upd::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--g)}
 .ig{flex:none;font-size:13px;font-weight:700;color:var(--mut);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:4px 10px}
 @media(max-width:400px){.ig{display:none}}
 
 /* Alt gezinme */
-.tabs{position:fixed;left:0;right:0;bottom:0;z-index:1200;display:grid;grid-template-columns:repeat(3,1fr);height:calc(var(--nav) + var(--sa));padding-bottom:var(--sa);background:rgba(10,16,32,.98);border-top:1px solid var(--line)}
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:1200;display:grid;grid-template-columns:repeat(3,1fr);height:calc(var(--nav) + var(--sa));padding-bottom:var(--sa);background:#fff;border-top:1px solid var(--line)}
 .tabs button{position:relative;background:none;border:0;color:var(--mut);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font:700 12px Inter,sans-serif}
-.tabs button[aria-current=page]{color:var(--y)}
+.tabs button[aria-current=page]{color:var(--ink)}
+.tabs button[aria-current=page]::before{content:"";position:absolute;top:0;left:30%;right:30%;height:3px;border-radius:0 0 3px 3px;background:var(--y)}
 .tabs svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.tabs .dot{position:absolute;top:9px;left:calc(50% + 8px);width:8px;height:8px;border-radius:50%;background:var(--g)}
+.tabs .dot{position:absolute;top:9px;left:calc(50% + 8px);width:8px;height:8px;border-radius:50%;background:var(--y);border:1px solid #fff}
 
 /* Kampanyalar */
-.hero{padding:18px 0 6px;background:radial-gradient(600px 300px at 90% -30%,rgba(255,212,0,.14),transparent 60%)}
-h1{font-size:clamp(24px,7vw,42px);line-height:1.08;font-weight:900;letter-spacing:-1.2px;max-width:720px}
-h1 em{font-style:normal;color:var(--y)}
+.hero{padding:20px 0 4px}
+h1{font-size:clamp(24px,7vw,40px);line-height:1.1;font-weight:900;letter-spacing:-1.2px;max-width:720px}
+h1 em{font-style:normal;background:linear-gradient(transparent 62%,#FFE680 62%)}
 .lead{color:var(--mut);margin-top:8px;font-size:15px;max-width:620px}
 .searchrow{display:flex;gap:8px;margin-top:14px}
-.search{flex:1;min-width:0;background:var(--card);color:var(--txt);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:16px}
-.fbtn{flex:none;display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:0 14px;font-weight:700;font-size:15px}
+.search{flex:1;min-width:0;background:#fff;color:var(--txt);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:16px}
+.fbtn{flex:none;display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:0 14px;font-weight:700;font-size:15px}
 .fbtn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
-.fbtn i{font-style:normal;background:var(--y);color:#0A1020;border-radius:999px;font-size:12px;font-weight:800;padding:1px 7px}
+.fbtn i,.btn i{font-style:normal;background:var(--ink);color:#fff;border-radius:999px;font-size:12px;font-weight:800;padding:1px 7px}
 .quick{display:flex;gap:8px;overflow-x:auto;margin:12px -14px 0;padding:0 14px 4px;scrollbar-width:none}
 .quick::-webkit-scrollbar{display:none}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{flex:none;border:1px solid var(--line);background:var(--card);color:var(--txt);border-radius:999px;padding:9px 14px;min-height:40px;font:600 14px Inter,sans-serif}
-.chip[aria-pressed=true]{background:var(--y);border-color:var(--y);color:#0A1020}
-.chip.ag[aria-pressed=true]{background:var(--g);border-color:var(--g);color:#06231a}
-.chip.setup{border-style:dashed;color:var(--g);border-color:rgba(34,227,160,.5)}
+.chip{flex:none;border:1px solid var(--line);background:#fff;color:var(--txt);border-radius:999px;padding:9px 14px;min-height:40px;font:600 14px Inter,sans-serif}
+.chip[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+.chip.ag[aria-pressed=true]{background:var(--g);border-color:var(--g)}
+.chip.setup{border-style:dashed;color:var(--g);border-color:var(--gline);background:var(--gbg)}
 .bar{display:flex;align-items:center;gap:10px;margin:14px 0 10px}
 .count{font-weight:800}
 .count span{color:var(--mut);font-weight:600}
-select{background:var(--card);color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:9px 10px;font:600 14px Inter,sans-serif;min-height:40px}
+select{background:#fff;color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:9px 10px;font:600 14px Inter,sans-serif;min-height:40px}
 .bar select{margin-left:auto}
 .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:12px;padding-bottom:20px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px}
-.card.mine{border-color:rgba(34,227,160,.55)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 2px rgba(17,24,39,.04)}
+.card.mine{border-color:var(--g)}
 .ct{display:flex;align-items:flex-start;gap:8px}
 .kurum{font-weight:900;font-size:18px;letter-spacing:-.3px;line-height:1.2}
 .alt{color:var(--mut);font-size:13px;font-weight:600}
 .tip{margin-left:auto;flex:none;font-size:11px;font-weight:800;letter-spacing:.5px;border-radius:7px;padding:3px 7px;text-transform:uppercase}
-.tip.banka{background:var(--y);color:#0A1020}.tip.ag{background:var(--g);color:#06231a}
-.big{font-size:30px;font-weight:900;color:var(--y);letter-spacing:-.8px;line-height:1.05}
+.tip.banka{background:var(--y);color:var(--ink)}.tip.ag{background:var(--g);color:#fff}
+.big{font-size:30px;font-weight:900;color:var(--ink);letter-spacing:-.8px;line-height:1.15;background:linear-gradient(transparent 62%,#FFE680 62%);display:inline}
 .big.sm{font-size:20px}
-.det{font-weight:600}
+.det{font-weight:600;margin-top:4px}
 .lbl{font-size:11px;font-weight:800;letter-spacing:.7px;color:var(--mut);text-transform:uppercase;margin-bottom:5px}
 .st{display:flex;flex-wrap:wrap;gap:5px}
 .st span{font-size:12px;font-weight:700;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:3px 9px}
-.st span.hit{background:var(--g);border-color:var(--g);color:#06231a}
-.st span.all{background:rgba(34,227,160,.12);border-color:rgba(34,227,160,.4);color:var(--g)}
+.st span.hit{background:var(--g);border-color:var(--g);color:#fff}
+.st span.all{background:var(--gbg);border-color:var(--gline);color:var(--g)}
 .join{font-size:14px;color:var(--mut)}.join b{color:var(--txt);font-weight:600}
 .foot{display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:10px;border-top:1px solid var(--line);flex-wrap:wrap}
 .days{font-size:13px;font-weight:800;border-radius:8px;padding:4px 9px;background:var(--card2);border:1px solid var(--line)}
-.days.soon{background:rgba(255,122,122,.12);border-color:rgba(255,122,122,.45);color:var(--r)}
+.days.soon{background:var(--rbg);border-color:#FECACA;color:var(--r)}
 .src{margin-left:auto;font-size:13px;font-weight:700;text-decoration:none;padding:6px 0}
 .mark{font-size:12px;font-weight:800;color:var(--g)}
 details{font-size:13px;color:var(--mut)}
 details summary{cursor:pointer;font-weight:700;padding:4px 0}
 details p{margin-top:6px}
-.empty{grid-column:1/-1;text-align:center;color:var(--mut);padding:44px 12px;background:var(--card);border:1px dashed var(--line);border-radius:18px}
-.btn{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 16px;min-height:44px;font:700 14px Inter,sans-serif}
-.btn.primary{background:var(--y);border-color:var(--y);color:#0A1020}
+.empty{grid-column:1/-1;text-align:center;color:var(--mut);padding:44px 12px;background:#fff;border:1px dashed var(--line);border-radius:16px}
+.btn{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 16px;min-height:44px;font:700 14px Inter,sans-serif}
+.btn.primary{background:var(--y);border-color:var(--y);color:var(--ink)}
 .btn.danger{color:var(--r)}
 .empty .btn{margin-top:12px}
 .note{margin:6px 0 18px;font-size:13px;color:var(--mut);line-height:1.45}
 footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);font-size:12.5px}
-.err{background:#3b1820;color:#ffb3b3;border-radius:12px;padding:14px;margin:20px 0}
+.err{background:var(--rbg);color:var(--r);border-radius:12px;padding:14px;margin:20px 0}
 
-/* Filtre çekmecesi */
-.bd{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1300}
-.fsheet{position:fixed;left:0;right:0;bottom:0;z-index:1310;max-height:88vh;max-height:88dvh;background:var(--card);border:1px solid var(--line);border-bottom:0;border-radius:22px 22px 0 0;display:flex;flex-direction:column;padding-bottom:var(--sa)}
+/* Çekmeceler */
+.bd{position:fixed;inset:0;background:rgba(17,24,39,.4);z-index:1300}
+.fsheet{position:fixed;left:0;right:0;bottom:0;z-index:1310;max-height:88vh;max-height:88dvh;background:#fff;border-radius:22px 22px 0 0;display:flex;flex-direction:column;padding-bottom:var(--sa);box-shadow:0 -8px 30px rgba(17,24,39,.15)}
 .fs-h{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 8px;font-size:18px;font-weight:900}
 .fs-h button{background:none;border:0;font-size:22px;color:var(--mut);width:40px;height:40px}
 .fs-b{overflow-y:auto;padding:0 18px 12px}
 .fs-b h3,.sec h3{font-size:12px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--mut);margin:16px 0 8px}
 .fs-f{display:flex;gap:10px;padding:12px 18px;border-top:1px solid var(--line)}
 .fs-f .primary{flex:1}
-@media(min-width:900px){.fsheet{left:50%;right:auto;bottom:auto;top:50%;transform:translate(-50%,-50%);width:520px;border-radius:22px;border-bottom:1px solid var(--line)}}
+.chk{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px;margin-top:6px;cursor:pointer;min-height:44px}
+.chk input{width:22px;height:22px;accent-color:var(--ink);flex:none}
+@media(min-width:900px){.fsheet{left:50%;right:auto;bottom:auto;top:50%;transform:translate(-50%,-50%);width:520px;border-radius:22px}}
 
 /* Profil */
-.sec{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px}
+.sec{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
 .sec h2{font-size:20px;font-weight:900;letter-spacing:-.4px}
 .sec p{color:var(--mut);font-size:14px;margin-top:4px}
-.sec h3:first-of-type{margin-top:14px}
-.privacy{display:flex;gap:10px;align-items:flex-start;background:rgba(34,227,160,.08);border:1px solid rgba(34,227,160,.3);border-radius:14px;padding:12px 14px;color:var(--g);font-size:14px;font-weight:600;margin:16px 0 12px}
+.privacy{display:flex;gap:10px;align-items:flex-start;background:var(--gbg);border:1px solid var(--gline);border-radius:14px;padding:12px 14px;color:var(--g);font-size:14px;font-weight:600;margin:16px 0 12px}
 .sumbox{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.sumbox b{font-size:26px;font-weight:900;color:var(--y)}
+.sumbox b{font-size:28px;font-weight:900;color:var(--ink)}
 .field{width:100%;background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:12px;font:13px ui-monospace,Menlo,monospace}
 .row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
 .row .field{flex:1;min-width:0}
@@ -125,54 +127,53 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 
 /* Harita */
 .mapview{display:flex;flex-direction:column;height:calc(100vh - var(--top) - var(--nav) - var(--sa));height:calc(100dvh - var(--top) - var(--nav) - var(--sa))}
-.mapbar{flex:none;background:var(--card);border-bottom:1px solid var(--line);padding:8px 12px;display:flex;flex-direction:column;gap:8px}
-.mrow{display:flex;gap:8px;align-items:center}
-.mrow select{flex:1;min-width:0;padding-right:4px}
-#rad{flex:0 0 82px}
-.mrow .btn{padding:0 14px;display:flex;align-items:center;gap:6px;flex:none}
-.mrow .btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.mchips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
-.mchips::-webkit-scrollbar{display:none}
-.mchips .chip{padding:7px 12px;min-height:36px;font-size:13px}
+.mapbar{flex:none;background:#fff;border-bottom:1px solid var(--line);padding:8px 12px;display:flex;gap:8px;align-items:center}
+.mapbar .btn{min-height:42px;padding:0 12px;display:flex;align-items:center;gap:6px;flex:none}
+.mapbar .btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.seg{display:flex;background:var(--card2);border-radius:12px;padding:3px;flex:1;min-width:0}
+.seg button{flex:1;border:0;background:none;border-radius:9px;font:700 13px Inter,sans-serif;padding:8px 4px;color:var(--mut);min-height:36px;white-space:nowrap}
+.seg button[aria-pressed=true]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(17,24,39,.15)}
 .mapwrap{position:relative;flex:1;min-height:110px}
-#map{position:absolute;inset:0;background:#0d1528}
-.leaflet-container{font-family:inherit;background:#0d1528}
-.leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) saturate(.55) brightness(.92) contrast(.95)}
-.leaflet-control-attribution{background:rgba(10,16,32,.85)!important;color:var(--mut)!important;font-size:10px!important}
-.leaflet-control-attribution a{color:var(--y)!important}
-.here{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:1000;box-shadow:0 4px 14px rgba(0,0,0,.4)}
-.mapmsg{position:absolute;left:12px;right:12px;bottom:12px;z-index:1000;background:rgba(17,26,46,.96);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:14px;font-weight:600;text-align:center}
-.mapmsg.bad{border-color:rgba(255,122,122,.5);color:#ffb3b3}
+#map{position:absolute;inset:0;background:#F3F4F6}
+.leaflet-container{font-family:inherit;background:#F3F4F6}
+.here{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:1000;box-shadow:0 4px 14px rgba(17,24,39,.2)}
+.mapmsg{position:absolute;left:12px;right:12px;bottom:12px;z-index:1000;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:14px;font-weight:600;text-align:center;box-shadow:0 4px 14px rgba(17,24,39,.12)}
+.mapmsg.bad{border-color:#FECACA;color:var(--r)}
 .mapmsg .btn{margin-top:8px}
-.sheet{flex:none;display:flex;flex-direction:column;background:var(--card);border-top:1px solid var(--line);border-radius:18px 18px 0 0;position:relative;z-index:1100;transition:height .2s}
+.sheet{flex:none;display:flex;flex-direction:column;background:#fff;border-top:1px solid var(--line);border-radius:18px 18px 0 0;position:relative;z-index:1100}
 .sheet[data-s=peek]{height:84px}
-.sheet[data-s=half]{height:44%}
+.sheet[data-s=half]{height:42%}
 .sheet[data-s=full]{height:78%}
 .handle{flex:none;background:none;border:0;height:22px;width:100%;display:flex;align-items:center;justify-content:center}
-.handle span{width:44px;height:5px;border-radius:3px;background:var(--line)}
+.handle span{width:44px;height:5px;border-radius:3px;background:#D1D5DB}
 .sh-h{flex:none;padding:0 14px 8px;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:var(--mut)}
 .sh-h b{color:var(--txt);font-weight:800}
-.sh-h .back{background:none;border:0;color:var(--y);font:800 14px Inter,sans-serif;padding:6px 0}
+.sh-h .back{background:none;border:0;color:#1D4ED8;font:800 14px Inter,sans-serif;padding:6px 0}
 .lg{margin-left:auto;display:flex;gap:10px;font-size:11px;font-weight:700}
 .lg i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}
-.sh-b{flex:1;overflow-y:auto;padding:0 12px 14px}
-.stn{display:block;width:100%;text-align:left;background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px}
-.stn.sel{border-color:var(--y)}
+.sh-b{flex:1;overflow-y:auto;padding:0 12px 14px;-webkit-overflow-scrolling:touch}
+.stn{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px}
+.stn.sel{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
 .stn .r1{display:flex;gap:8px;align-items:baseline}
 .stn .nm{font-weight:800;font-size:15px;line-height:1.25;flex:1;min-width:0}
-.stn .ds{flex:none;font-weight:800;color:var(--y);font-size:14px}
-.stn .r2{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;align-items:center;font-size:12.5px;color:var(--mut);font-weight:600}
-.pr{color:var(--txt);font-weight:800}
+.stn .ds{flex:none;font-weight:800;color:var(--ink);font-size:14px}
+.stn .sub{font-size:12.5px;color:var(--mut);font-weight:500;margin-top:1px}
+.stn .r2{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:center}
+.pill{font-size:12px;font-weight:800;border-radius:7px;padding:2px 8px;background:var(--card2);color:var(--txt)}
+.pill.dc{background:#FEF3C7;color:#92400E}
+.pill.ac{background:#DBEAFE;color:#1E40AF}
+.pr{font-size:13px;font-weight:800}
 .tag{font-size:11.5px;font-weight:800;border-radius:7px;padding:2px 7px}
-.tag.camp{background:rgba(34,227,160,.14);color:var(--g);border:1px solid rgba(34,227,160,.4)}
-.tag.me{background:rgba(255,212,0,.14);color:var(--y);border:1px solid rgba(255,212,0,.45)}
+.tag.camp{background:var(--gbg);color:var(--g);border:1px solid var(--gline)}
+.tag.me{background:#FFF7D6;color:#92400E;border:1px solid #FDE68A}
+.more{display:block;width:100%;margin:4px 0 10px}
 .dn{font-size:19px;font-weight:900;letter-spacing:-.3px;line-height:1.2}
 .kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:12px 0;font-size:14px}
 .kv dt{color:var(--mut);font-weight:600}.kv dd{font-weight:700}
 .kv small{color:var(--mut);font-weight:500}
 .mc{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px;display:flex;flex-direction:column;gap:4px}
-.mc.mine{border-color:rgba(34,227,160,.55)}
-.dir{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;margin-top:12px}
+.mc.mine{border-color:var(--g);background:var(--gbg)}
+.dir{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;margin-top:12px;color:var(--ink)}
 .credit{font-size:11px;color:var(--mut);text-align:center;padding:8px 0 2px}
 
 @media(min-width:900px){
@@ -180,7 +181,8 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
   body{padding-bottom:0}
   .tabs{top:6px;bottom:auto;left:50%;right:auto;transform:translateX(-50%);width:420px;height:46px;padding:0;background:none;border:0;z-index:1250}
   .tabs button{flex-direction:row;gap:7px;font-size:14px;border-radius:12px}
-  .tabs button[aria-current=page]{background:rgba(255,212,0,.1)}
+  .tabs button[aria-current=page]{background:#FFF7D6}
+  .tabs button[aria-current=page]::before{display:none}
   .tabs .dot{top:11px;left:auto;right:12px}
   .mapview{display:grid;grid-template-columns:400px 1fr;grid-template-rows:auto 1fr;height:calc(100vh - var(--top));height:calc(100dvh - var(--top))}
   .mapbar{grid-column:1;grid-row:1;border-right:1px solid var(--line)}
@@ -189,7 +191,6 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
   .handle{display:none}
   .sh-h{padding-top:10px}
 }
-@media(prefers-reduced-motion:reduce){.sheet{transition:none}}
 </style>
 </head>
 <body>
@@ -198,7 +199,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 <header class="top">
   <div class="topin">
     <div class="brand">
-      <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M13.5 2 4 13.5h6.2L9.5 22 20 9.8h-6.4z" fill="#FFD400"/></svg>
+      <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M13.5 2 4 13.5h6.2L9.5 22 20 9.8h-6.4z" fill="#FFC800" stroke="#E0A100" stroke-width="1" stroke-linejoin="round"/></svg>
       <span>Watt<b>Kaç</b></span>
     </div>
     <div class="upd" id="upd">Yükleniyor…</div>
@@ -238,20 +239,9 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
   <!-- HARİTA -->
   <section id="v-harita" class="view mapview" aria-label="Harita" hidden>
     <div class="mapbar">
-      <div class="mrow">
-        <button class="btn primary" id="loc"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg><span id="loc-t">Konumum</span></button>
-        <select id="rad" aria-label="Yarıçap">
-          <option value="1">1 km</option><option value="3">3 km</option><option value="5" selected>5 km</option>
-          <option value="10">10 km</option><option value="25">25 km</option><option value="50">50 km</option>
-        </select>
-        <select id="msort" aria-label="Sırala">
-          <option value="yakin">Yakından uzağa</option>
-          <option value="ucuz">Ucuzdan pahalıya</option>
-          <option value="pahali">Pahalıdan ucuza</option>
-          <option value="guc">Güce göre</option>
-        </select>
-      </div>
-      <div class="mchips" id="mchips" aria-label="İstasyon filtreleri"></div>
+      <button class="btn primary" id="loc"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg><span id="loc-t">Konum</span></button>
+      <div class="seg" id="seg" role="group" aria-label="Akım türü"></div>
+      <button class="btn" id="mf-open" aria-haspopup="dialog">Filtre<i id="mf-n" hidden></i></button>
     </div>
     <div class="mapwrap">
       <div id="map" role="application" aria-label="Şarj istasyonları haritası"></div>
@@ -296,7 +286,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
   <button data-v="profil"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profilim<span class="dot" id="pdot" hidden></span></button>
 </nav>
 
-<!-- Filtre çekmecesi -->
+<!-- Kampanya filtre çekmecesi -->
 <div class="bd" id="bd" hidden></div>
 <div class="fsheet" id="fs" role="dialog" aria-modal="true" aria-label="Filtreler" hidden>
   <div class="fs-h"><span>Filtreler</span><button id="fs-x" aria-label="Kapat">✕</button></div>
@@ -308,6 +298,13 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
   <div class="fs-f"><button class="btn" id="fs-clear">Temizle</button><button class="btn primary" id="fs-ok">Sonuçları göster</button></div>
 </div>
 
+<!-- Harita filtre çekmecesi -->
+<div class="fsheet" id="mfs" role="dialog" aria-modal="true" aria-label="Harita filtreleri" hidden>
+  <div class="fs-h"><span>Harita filtreleri</span><button id="mfs-x" aria-label="Kapat">✕</button></div>
+  <div class="fs-b" id="mfs-b"></div>
+  <div class="fs-f"><button class="btn" id="mfs-clear">Temizle</button><button class="btn primary" id="mfs-ok">Göster</button></div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
 <script>
 "use strict";
@@ -315,8 +312,15 @@ const ALL = "Tüm şarj istasyonları";
 const DERLEME = ["sarjharitasi", "sarjevi", "hangikredi", "sarjkampanya", "arabamsarj", "donanimhaber"];
 const AY = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
 const OVERPASS = ["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter"];
+const TILE = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+const TILE_ATTR = '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/attributions">CARTO</a>';
 const PKEY = "wattkac.profil.v1";
+const MAXM = 100, PAGE = 40;
+// Eşleştirme kalıpları: boşluksuz, aksansız (fold edilmiş) yazılır; \b kelime sınırıdır
 const ALIAS = { "Eşarj": ["esarj", "enerjisa"], "ASTOR Şarj": ["astor"], "Shell Recharge": ["shell"], "WAT Mobilite": ["wat mobilite", "watmobilite", "\\bwat\\b"] };
+// Kampanya verisinde olmasa da tanınan, yaygın markalar
+const KNOWN_EXTRA = { "ZES": ["\\bzes\\b"], "Sharz.net": ["sharz"], "Tesla": ["tesla"], "Beefull": ["beefull"], "Aksa Şarj": ["\\baksa\\b"], "Enyakıt": ["enyakit"],
+  "Petrol Ofisi": ["petrol ofisi"], "Opet": ["\\bopet\\b"], "BP": ["\\bbp\\b"], "Aytemiz": ["aytemiz"], "Power Şarj": ["powersarj", "power sarj"] };
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -325,7 +329,6 @@ const tr = (a, b) => a.localeCompare(b, "tr");
 const fold = s => String(s).toLocaleLowerCase("tr").replace(/ı/g,"i").replace(/ş/g,"s").replace(/ğ/g,"g").replace(/ü/g,"u").replace(/ö/g,"o").replace(/ç/g,"c");
 const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const todayIst = () => new Date(Date.now() + 3 * 3600e3).toISOString().slice(0, 10);
-const fmtTL = v => v.toLocaleString("tr-TR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " TL/kWh";
 const fmtNum = v => v.toLocaleString("tr-TR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const priceStr = p => (p.max > p.v ? `${fmtNum(p.v)}–${fmtNum(p.max)}` : fmtNum(p.v)) + " TL/kWh";
 const dateTr = s => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ""); return m ? `${+m[3]} ${AY[+m[2] - 1]} ${m[1]}` : ""; };
@@ -358,10 +361,14 @@ function buildIndexes() {
   BANKS = D.bankalar.map(b => ({ id: b.id, name: b.name })).sort((a, b) => tr(a.name, b.name));
   NETC = {};
   C.forEach(c => c.st.forEach(s => { if (s !== ALL) (NETC[s] = NETC[s] || []).push(c); }));
-  NET_RES = NETS.map(n => {
-    const pats = (ALIAS[n] || [fold(n)]).map(a => a.startsWith("\\b") ? a : reEsc(a));
-    return [n, new RegExp(pats.join("|"))];
-  });
+  const pat = p => p.includes("\\b") ? p : reEsc(p);
+  const add = (name, pats) => NET_RES.push([name, new RegExp(pats.map(pat).join("|"))]);
+  NET_RES = [];
+  NETS.forEach(n => add(n, ALIAS[n] || [fold(n)]));
+  const names = new Set();
+  C.forEach(c => c.st.forEach(s => { if (s !== ALL && !NETS.includes(s) && !/uygulama/i.test(s)) names.add(s); }));
+  names.forEach(n => add(n, [fold(n)]));
+  Object.entries(KNOWN_EXTRA).forEach(([n, p]) => { if (!NET_RES.some(([x]) => x === n)) add(n, p); });
 }
 
 /* ---------- Profil (cihazda, kişisel bilgi yok) ---------- */
@@ -406,7 +413,7 @@ function decodeProfile(code) {
 }
 function profileChanged() {
   saveProfile(); renderProfile(); renderQuick(); render(); updateDot();
-  if (M.map) { buildMapChips(); renderMap(false); }
+  if (M.map) renderMap();
 }
 function updateDot() { $("pdot").hidden = !profileEmpty(); }
 function renderProfile() {
@@ -452,8 +459,7 @@ function buildFilters() {
   $("nocamp").textContent = yok.length ? `Bu dönem resmi sayfasında doğrulanmış şarj kampanyası olmayan: ${yok.join(", ")}.` : "";
 }
 function renderQuick() {
-  const q = $("quick");
-  q.innerHTML = (profileEmpty()
+  $("quick").innerHTML = (profileEmpty()
     ? `<button class="chip setup" id="q-setup">+ Kartlarını ekle</button>`
     : `<button class="chip" id="q-mine" aria-pressed="${useMine()}">Bana uyanlar</button>`)
     + `<button class="chip" data-k="tip" data-v="banka" aria-pressed="${S.tip.has("banka")}">Banka kartı</button>`
@@ -477,7 +483,7 @@ function card(c) {
   return `<article class="card ${mk ? "mine" : ""}">
     <div class="ct"><div><div class="kurum">${esc(c.kurum)}</div><div class="alt">${esc(c.alt)}</div></div>
       <span class="tip ${c.tip}">${c.tip === "banka" ? "Kart" : "Şarj ağı"}</span></div>
-    <div><div class="big">${esc(c.big)}</div><div class="det">${esc(c.det)}</div></div>
+    <div><span class="big">${esc(c.big)}</span><div class="det">${esc(c.det)}</div></div>
     <div><div class="lbl">${c.st.includes(ALL) ? "Nerede geçerli" : "Geçerli istasyonlar"}</div><div class="st">${st}</div></div>
     ${c.tip === "banka" && c.join ? `<div class="join">Katılım: <b>${esc(c.join)}</b></div>` : ""}
     ${c.kosul ? `<details><summary>Koşullar</summary><p>${esc(c.kosul)}</p></details>` : ""}
@@ -505,9 +511,14 @@ function resetAll() {
   S.banka.clear(); S.ag.clear(); S.tip.clear(); S.q = ""; S.bana = false;
   $("q").value = ""; renderQuick(); render();
 }
+function closeSheets() { $("fs").hidden = true; $("mfs").hidden = true; $("bd").hidden = true; }
 function openFilters(open) {
-  $("fs").hidden = !open; $("bd").hidden = !open;
-  if (open) $("fs-ok").focus(); else $("open-f").focus();
+  if (!open) return closeSheets();
+  $("fs").hidden = false; $("bd").hidden = false; $("fs-ok").focus();
+}
+function openMapFilters(open) {
+  if (!open) return closeSheets();
+  renderMapSheet(); $("mfs").hidden = false; $("bd").hidden = false; $("mfs-ok").focus();
 }
 
 /* ---------- Görünümler ---------- */
@@ -522,16 +533,19 @@ function show(v) {
 }
 
 /* ---------- Harita ---------- */
-const M = { map: null, layer: null, circle: null, meMark: null, me: null, center: null, radius: 5, sort: "yakin", f: { kamp: false, bana: false, brands: new Set() }, sel: null, markers: new Map(), last: null, ST: [], view: [] };
+const M = { map: null, layer: null, circle: null, meMark: null, me: null, center: null, radius: 5, sort: "yakin",
+  f: { akim: null, kamp: false, bana: false, tum: false, brands: new Set() },
+  sel: null, markers: new Map(), last: null, ST: [], view: [], shown: PAGE, sig: "", cnt: { all: 0, ac: 0, dc: 0 }, brands: [] };
 
 function brandOf(t) {
   const hay = fold([t.brand, t.operator, t.network, t.name].filter(Boolean).join(" | "));
-  for (const [n, re] of NET_RES) if (re.test(hay)) return n;
-  return (t.brand || t.operator || t.network || "").trim().slice(0, 28) || "Diğer";
+  for (const [n, re] of NET_RES) if (re.test(hay)) return { name: n, known: true };
+  return { name: (t.brand || t.operator || t.network || "").trim().slice(0, 28), known: false };
 }
 function sockets(t) {
-  const names = { type2: "Type 2", type2_combo: "CCS", type1_combo: "CCS 1", chademo: "CHAdeMO", type1: "Type 1", tesla_supercharger: "Tesla", tesla_supercharger_ccs: "Tesla", tesla_destination: "Tesla" };
-  let max = 0; const types = new Set(); let dc = false;
+  const names = { type2: "Type 2", type2_combo: "CCS", type1_combo: "CCS 1", chademo: "CHAdeMO", type1: "Type 1", tesla_supercharger: "Tesla", tesla_supercharger_ccs: "Tesla", tesla_destination: "Tesla", schuko: "Schuko" };
+  const DCT = ["type2_combo", "type1_combo", "chademo", "tesla_supercharger", "tesla_supercharger_ccs"], ACT = ["type2", "type1", "schuko", "tesla_destination"];
+  let max = 0, hasAc = false, hasDc = false; const types = [];
   for (const k in t) {
     let m = /^socket:([a-z0-9_]+):output$/.exec(k);
     if (m) {
@@ -541,15 +555,14 @@ function sockets(t) {
     }
     m = /^socket:([a-z0-9_]+)$/.exec(k);
     if (m && t[k] !== "no" && t[k] !== "0" && names[m[1]]) {
-      types.add(names[m[1]]);
-      if (["type2_combo", "type1_combo", "chademo", "tesla_supercharger", "tesla_supercharger_ccs"].includes(m[1])) dc = true;
+      if (!types.includes(names[m[1]])) types.push(names[m[1]]);
+      if (DCT.includes(m[1])) hasDc = true; else if (ACT.includes(m[1])) hasAc = true;
     }
   }
-  if (max >= 40) dc = true;
-  const known = types.size > 0 || max > 0;
-  return { kw: max || null, types: [...types], kind: !known ? null : dc ? "dc" : "ac" };
+  if (!hasAc && !hasDc && max > 0) { if (max >= 40) hasDc = true; else hasAc = true; }
+  return { kw: max || null, types, hasAc, hasDc };
 }
-function priceFor(net, kind) {
+function priceFor(net, mode) {
   const x = TAR.aglar && TAR.aglar[net];
   if (!x) return null;
   const pick = k => {
@@ -557,30 +570,48 @@ function priceFor(net, kind) {
     const min = typeof p === "number" ? p : p.min, max = typeof p === "number" ? p : (p.max ?? p.min);
     return typeof min === "number" && typeof max === "number" ? { v: min, max, kind: k } : null;
   };
-  return kind ? pick(kind) : (pick("ac") || pick("dc"));
+  return mode ? pick(mode) : (pick("ac") || pick("dc"));
 }
 function parseStation(el) {
   const t = el.tags || {};
   const lat = el.lat ?? el.center?.lat, lon = el.lon ?? el.center?.lon;
   if (typeof lat !== "number" || typeof lon !== "number") return null;
-  const brand = brandOf(t), sk = sockets(t), pr = priceFor(brand, sk.kind);
-  return { id: el.type + "/" + el.id, lat, lon, name: (t.name || "").trim() || brand, brand, ...sk, tags: t, price: pr,
-    camp: NETC[brand] || [], count: parseInt(t.capacity, 10) || null };
+  const b = brandOf(t), sk = sockets(t), nm = (t.name || "").trim();
+  const addr = [t["addr:street"], t["addr:suburb"] || t["addr:district"], t["addr:city"]].filter(Boolean).join(", ");
+  return { id: el.type + "/" + el.id, lat, lon, brand: b.name, known: b.known, named: !!nm, name: nm || b.name || "Şarj istasyonu",
+    ...sk, tags: t, addr, camp: NETC[b.name] || [], count: parseInt(t.capacity, 10) || null, d: 0, mode: null, price: null };
+}
+// OpenStreetMap'te bir istasyon çoğu zaman birden fazla kayıt olarak girilir; aynı markadaki yakın kayıtları birleştir
+function mergeStations(arr) {
+  const out = [];
+  for (const s of arr) {
+    const m = out.find(o => o.brand === s.brand && dist(o, s) < 60);
+    if (!m) { out.push(s); continue; }
+    m.hasAc = m.hasAc || s.hasAc; m.hasDc = m.hasDc || s.hasDc;
+    m.kw = Math.max(m.kw || 0, s.kw || 0) || null;
+    s.types.forEach(x => m.types.includes(x) || m.types.push(x));
+    m.count = (m.count || 0) + (s.count || 0) || null;
+    if (!m.named && s.named) { m.name = s.name; m.named = true; }
+    if (!m.addr && s.addr) m.addr = s.addr;
+    m.tags = { ...s.tags, ...m.tags };
+  }
+  return out;
 }
 async function overpass(lat, lon, rM) {
-  const key = `wk.st.${lat.toFixed(3)}.${lon.toFixed(3)}.${rM}`;
+  const key = `wk.st2.${lat.toFixed(3)}.${lon.toFixed(3)}.${rM}`;
   try { const h = JSON.parse(ssGet(key) || "null"); if (h && Date.now() - h.t < 30 * 60e3) return h.e; } catch {}
-  const q = `[out:json][timeout:25];(node["amenity"="charging_station"](around:${rM},${lat},${lon});way["amenity"="charging_station"](around:${rM},${lat},${lon}););out center tags 500;`;
-  let err;
-  for (const u of OVERPASS) {
-    try {
-      const r = await fetch(u, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: "data=" + encodeURIComponent(q) });
-      if (!r.ok) throw new Error("HTTP " + r.status);
-      const e = (await r.json()).elements || [];
-      ssSet(key, JSON.stringify({ t: Date.now(), e })); return e;
-    } catch (e) { err = e; }
-  }
-  throw err;
+  const q = `[out:json][timeout:20];(node["amenity"="charging_station"](around:${rM},${lat},${lon});way["amenity"="charging_station"](around:${rM},${lat},${lon}););out center tags 400;`;
+  const one = async u => {
+    const r = await fetch(u, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: "data=" + encodeURIComponent(q) });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const j = await r.json();
+    if (!Array.isArray(j.elements)) throw new Error("Geçersiz yanıt");
+    return j.elements;
+  };
+  // İlk sunucu 1,5 sn içinde yanıt vermezse ikincisi de denenir; hangisi önce dönerse o kullanılır
+  const second = new Promise((res, rej) => setTimeout(() => one(OVERPASS[1]).then(res, rej), 1500));
+  const e = await Promise.any([one(OVERPASS[0]), second]);
+  ssSet(key, JSON.stringify({ t: Date.now(), e })); return e;
 }
 function dist(a, b) {
   const R = 6371000, t = x => x * Math.PI / 180, dLa = t(b.lat - a.lat), dLo = t(b.lon - a.lon);
@@ -591,19 +622,18 @@ function setMsg(txt, bad = false, retry = false) {
   const el = $("mapmsg");
   el.hidden = !txt; el.className = "mapmsg" + (bad ? " bad" : "");
   el.innerHTML = esc(txt) + (retry ? `<br><button class="btn" id="retry">Tekrar dene</button>` : "");
-  const r = $("retry"); if (r) r.onclick = runSearch;
+  const r = $("retry"); if (r) r.onclick = () => runSearch(true);
 }
 function openMap() {
   if (!M.map) {
     if (!window.L) { setMsg("Harita kütüphanesi yüklenemedi. İnternet bağlantınızı kontrol edip sayfayı yenileyin.", true); return; }
     const wide = matchMedia("(min-width:900px)").matches;
-    M.map = L.map("map", { zoomControl: wide, attributionControl: true }).setView([39.0, 35.0], 6);
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(M.map);
+    M.map = L.map("map", { zoomControl: wide, attributionControl: true, preferCanvas: true, zoomSnap: 1, wheelPxPerZoomLevel: 90 }).setView([39.0, 35.0], 6);
+    L.tileLayer(TILE, { subdomains: "abcd", maxZoom: 19, attribution: TILE_ATTR, updateWhenIdle: true, updateWhenZooming: false, keepBuffer: 1 }).addTo(M.map);
     M.layer = L.layerGroup().addTo(M.map);
-    M.map.on("moveend", checkHere);
-    $("sheet").addEventListener("transitionend", () => M.map.invalidateSize());
-    buildMapChips(); renderMap(false);
-    setMsg("Yakındaki şarj istasyonlarını görmek için «Konumum»a dokun ya da haritada bir yere gidip «Bu bölgede ara»ya bas.");
+    let t; M.map.on("moveend", () => { clearTimeout(t); t = setTimeout(checkHere, 120); });
+    renderMap();
+    setMsg("Yakındaki istasyonlar için «Konum»a dokun ya da haritada bir yere gidip «Bu bölgede ara»ya bas.");
     try { navigator.permissions?.query({ name: "geolocation" }).then(p => p.state === "granted" && locate()); } catch {}
   }
   setTimeout(() => M.map.invalidateSize(), 50);
@@ -612,30 +642,33 @@ function locate() {
   if (!navigator.geolocation) { setMsg("Tarayıcın konum özelliğini desteklemiyor. Haritada bir bölgeye gidip «Bu bölgede ara»yı kullanabilirsin.", true); return; }
   $("loc").disabled = true; $("loc-t").textContent = "Aranıyor…";
   navigator.geolocation.getCurrentPosition(pos => {
-    $("loc").disabled = false; $("loc-t").textContent = "Konumum";
+    $("loc").disabled = false; $("loc-t").textContent = "Konum";
     M.me = { lat: pos.coords.latitude, lon: pos.coords.longitude }; M.center = { ...M.me };
     if (M.meMark) M.meMark.remove();
-    M.meMark = L.circleMarker([M.me.lat, M.me.lon], { radius: 8, color: "#fff", weight: 3, fillColor: "#3b82f6", fillOpacity: 1, interactive: false }).addTo(M.map);
+    M.meMark = L.circleMarker([M.me.lat, M.me.lon], { radius: 8, color: "#fff", weight: 3, fillColor: "#2563EB", fillOpacity: 1, interactive: false }).addTo(M.map);
     runSearch(true);
   }, err => {
-    $("loc").disabled = false; $("loc-t").textContent = "Konumum";
+    $("loc").disabled = false; $("loc-t").textContent = "Konum";
     setMsg(err.code === 1 ? "Konum izni verilmedi. Tarayıcı ayarlarından izin verebilir ya da haritada bir bölgeye gidip «Bu bölgede ara»yı kullanabilirsin." : "Konumun alınamadı. Haritada bir bölgeye gidip «Bu bölgede ara»yı kullanabilirsin.", true);
   }, { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 });
 }
 async function runSearch(fit) {
   if (!M.center) return;
   setMsg("İstasyonlar aranıyor…"); $("here").hidden = true;
+  const seq = M.seq = (M.seq || 0) + 1;
   try {
     const els = await overpass(M.center.lat, M.center.lon, M.radius * 1000);
-    M.ST = els.map(parseStation).filter(Boolean);
-    M.last = { ...M.center }; M.sel = null;
+    if (seq !== M.seq) return;
+    M.ST = mergeStations(els.map(parseStation).filter(Boolean));
+    M.last = { ...M.center }; M.sel = null; M.shown = PAGE; M.f.brands.clear(); M.sig = "";
     if (M.circle) M.circle.remove();
-    M.circle = L.circle([M.center.lat, M.center.lon], { radius: M.radius * 1000, color: "#FFD400", weight: 1.5, fillOpacity: .04, dashArray: "6 6", interactive: false }).addTo(M.map);
+    M.circle = L.circle([M.center.lat, M.center.lon], { radius: M.radius * 1000, color: "#9CA3AF", weight: 1.5, fillOpacity: .03, dashArray: "6 6", interactive: false }).addTo(M.map);
     if (fit !== false) M.map.fitBounds(M.circle.getBounds(), { padding: [10, 10] });
-    setMsg(M.ST.length ? "" : "Bu alanda OpenStreetMap'te kayıtlı şarj istasyonu bulunamadı. Yarıçapı büyütmeyi dene.");
-    buildMapChips(); renderMap(false);
+    setMsg("");
+    renderMap();
+    if (!M.view.length) setMsg(M.ST.length ? "Bu filtrelerle istasyon bulunamadı." : "Bu alanda kayıtlı şarj istasyonu bulunamadı. Mesafeyi büyütmeyi dene.");
   } catch (e) {
-    setMsg("İstasyon verisi alınamadı. Bağlantını kontrol edip tekrar dene.", true, true);
+    if (seq === M.seq) setMsg("İstasyon verisi alınamadı. Bağlantını kontrol edip tekrar dene.", true, true);
   }
 }
 function checkHere() {
@@ -644,91 +677,96 @@ function checkHere() {
   const far = !M.last || dist({ lat: c.lat, lon: c.lng }, M.last) > Math.max(600, M.radius * 400);
   $("here").hidden = !(far && M.map.getZoom() >= 9);
 }
-function buildMapChips() {
-  const counts = new Map();
-  M.ST.forEach(s => counts.set(s.brand, (counts.get(s.brand) || 0) + 1));
-  const known = [...counts].filter(([b]) => NETS.includes(b)).sort((a, b) => b[1] - a[1]);
-  const other = [...counts].filter(([b]) => !NETS.includes(b)).sort((a, b) => b[1] - a[1]).slice(0, 8);
-  const chip = (attr, label, on, cls = "") => `<button class="chip ${cls}" ${attr} aria-pressed="${on}">${esc(label)}</button>`;
-  $("mchips").innerHTML = chip('data-mf="kamp"', "Kampanyalı", M.f.kamp, "ag")
-    + (profileEmpty() ? "" : chip('data-mf="bana"', "Bana uyan", M.f.bana))
-    + [...known, ...other].map(([b, n]) => chip(`data-mb="${esc(b)}"`, `${b} · ${n}`, M.f.brands.has(b))).join("");
-}
 function visibleStations() {
   const ref = M.me || M.center;
-  let a = M.ST.map(s => ({ ...s, d: dist(ref, s) }));
+  const base = M.ST.filter(s => M.f.tum || s.known);
+  M.cnt = { all: base.length, ac: base.filter(s => s.hasAc).length, dc: base.filter(s => s.hasDc).length };
+  let a = M.f.akim === "ac" ? base.filter(s => s.hasAc) : M.f.akim === "dc" ? base.filter(s => s.hasDc) : base;
+  const bc = new Map(); a.forEach(s => s.known && bc.set(s.brand, (bc.get(s.brand) || 0) + 1));
+  M.brands = [...bc].sort((x, y) => y[1] - x[1] || tr(x[0], y[0]));
   if (M.f.brands.size) a = a.filter(s => M.f.brands.has(s.brand));
   if (M.f.kamp) a = a.filter(s => s.camp.length);
   if (M.f.bana) a = a.filter(s => stationMine(s.brand));
+  a.forEach(s => { s.d = dist(ref, s); s.mode = M.f.akim || (s.hasDc ? "dc" : s.hasAc ? "ac" : null); s.price = priceFor(s.brand, s.mode); });
   const pv = s => s.price ? s.price.v : null;
   const cmpPrice = dir => (x, y) => (pv(x) === null) - (pv(y) === null) || (pv(x) === null ? 0 : dir * (pv(x) - pv(y))) || x.d - y.d;
   const sorters = { yakin: (x, y) => x.d - y.d, ucuz: cmpPrice(1), pahali: cmpPrice(-1), guc: (x, y) => (y.kw || 0) - (x.kw || 0) || x.d - y.d };
   return a.sort(sorters[M.sort]);
 }
-const stColor = s => stationMine(s.brand) ? "#FFD400" : s.camp.length ? "#22E3A0" : "#6f86b3";
-function renderMap(fit) {
+const stColor = s => stationMine(s.brand) ? "#F59E0B" : s.camp.length ? "#047857" : s.known ? "#4B5563" : "#9CA3AF";
+function renderSeg() {
+  const b = (v, l, n) => `<button data-akim="${v}" aria-pressed="${(M.f.akim || "") === v}">${l}${n !== null && M.ST.length ? ` · ${n}` : ""}</button>`;
+  $("seg").innerHTML = b("", "Tümü", M.cnt.all) + b("ac", "AC", M.cnt.ac) + b("dc", "DC", M.cnt.dc);
+  const n = M.f.brands.size + (M.f.kamp ? 1 : 0) + (M.f.bana ? 1 : 0) + (M.f.tum ? 1 : 0);
+  $("mf-n").hidden = !n; $("mf-n").textContent = n;
+}
+function renderMap() {
   if (!M.map) return;
   M.view = M.center ? visibleStations() : [];
-  M.layer.clearLayers(); M.markers.clear();
-  M.view.slice(0, 250).forEach(s => {
-    const mk = L.circleMarker([s.lat, s.lon], { radius: 9, color: "#0A1020", weight: 2, fillColor: stColor(s), fillOpacity: .95 }).addTo(M.layer);
-    mk.on("click", () => selectStation(s.id, false)); M.markers.set(s.id, mk);
-  });
+  const top = M.view.slice(0, MAXM);
+  const sig = top.map(s => s.id + stColor(s)).join(",");
+  if (sig !== M.sig) {
+    M.sig = sig; M.layer.clearLayers(); M.markers.clear();
+    top.forEach(s => {
+      const mk = L.circleMarker([s.lat, s.lon], { radius: 8, color: "#fff", weight: 2, fillColor: stColor(s), fillOpacity: 1 }).addTo(M.layer);
+      mk.on("click", () => selectStation(s.id, false)); M.markers.set(s.id, mk);
+    });
+  }
   if (M.sel && !M.view.some(s => s.id === M.sel)) M.sel = null;
-  renderSheet(); highlight();
+  renderSeg(); renderSheet(); highlight();
+  if (!$("mfs").hidden) renderMapSheet();
 }
 function highlight() {
-  M.markers.forEach((mk, id) => mk.setStyle(id === M.sel ? { radius: 13, color: "#fff", weight: 3 } : { radius: 9, color: "#0A1020", weight: 2 }));
+  M.markers.forEach((mk, id) => mk.setStyle(id === M.sel ? { radius: 12, color: "#111827", weight: 3 } : { radius: 8, color: "#fff", weight: 2 }));
   const mk = M.markers.get(M.sel); if (mk) mk.bringToFront();
 }
-function priceText(s) {
-  if (!s.price) return `<span>Fiyat yok</span>`;
-  return `<span class="pr">${priceStr(s.price)}</span>`;
-}
+function typeBadge(s) { return s.hasAc && s.hasDc ? "AC/DC" : s.hasDc ? "DC" : s.hasAc ? "AC" : ""; }
 function renderSheet() {
   const h = $("sh-h"), b = $("sh-b"), s = M.sel && M.view.find(x => x.id === M.sel);
   if (s) { renderDetail(s); return; }
   if (!M.center) {
-    h.innerHTML = `<b>Şarj istasyonları</b>`; b.innerHTML = `<p class="note">Konumunu kullan ya da haritada bir bölgeye gidip aramayı başlat. İstasyon verisi OpenStreetMap'ten gelir.</p><div class="credit">Harita ve istasyon verisi © OpenStreetMap katkıda bulunanlar</div>`; return;
+    h.innerHTML = `<b>Şarj istasyonları</b>`;
+    b.innerHTML = `<p class="note">Konumunu kullan ya da haritada bir bölgeye gidip aramayı başlat.</p><div class="credit">Harita ve istasyon verisi © OpenStreetMap katkıda bulunanlar</div>`; return;
   }
   const sortTxt = { yakin: "yakından uzağa", ucuz: "ucuzdan pahalıya", pahali: "pahalıdan ucuza", guc: "güce göre" }[M.sort];
-  h.innerHTML = `<span><b>${M.view.length}</b> istasyon · ${sortTxt}</span><span class="lg"><span><i style="background:#FFD400"></i>Sana uyan</span><span><i style="background:#22E3A0"></i>Kampanyalı</span></span>`;
-  const noPrice = !M.view.some(x => x.price);
-  b.innerHTML = (M.view.length ? M.view.slice(0, 120).map(stationItem).join("") : `<p class="note">Seçtiğin filtrelere uyan istasyon yok.</p>`)
-    + (noPrice && M.view.length && (M.sort === "ucuz" || M.sort === "pahali") ? `<p class="note">Bu istasyonların liste fiyatı henüz yok, bu yüzden fiyata göre sıralanamadı.</p>` : "")
-    + ((M.sort === "ucuz" || M.sort === "pahali") && !noPrice ? `<p class="note">Fiyata göre sıralama, ağın resmi sayfasındaki en düşük liste fiyatına göredir; fiyat istasyona göre değişebilir. Fiyatı olmayanlar sona alınır.</p>` : "")
-    + `<div class="credit">Harita ve istasyon verisi © OpenStreetMap katkıda bulunanlar</div>`;
+  h.innerHTML = `<span><b>${M.view.length}</b> istasyon · ${sortTxt}</span><span class="lg"><span><i style="background:#F59E0B"></i>Sana uyan</span><span><i style="background:#047857"></i>Kampanyalı</span></span>`;
+  const hidden = M.f.tum ? 0 : M.ST.filter(x => !x.known).length;
+  let html = M.view.slice(0, M.shown).map(stationItem).join("");
+  if (M.view.length > M.shown) html += `<button class="btn more" id="more">Daha fazla göster (${M.view.length - M.shown})</button>`;
+  if (!M.view.length) html = `<p class="note">Bu filtrelerle istasyon bulunamadı.</p>`;
+  if (hidden) html += `<button class="btn more" data-showunk="1">Tanımsız ${hidden} istasyonu da göster</button>`;
+  if ((M.sort === "ucuz" || M.sort === "pahali") && M.view.some(x => x.price)) html += `<p class="note">Fiyatı bilinen istasyonlar önce listelenir. Fiyatlar ağın resmi sayfasındaki en düşük liste fiyatına göredir.</p>`;
+  b.innerHTML = html + `<div class="credit">Harita ve istasyon verisi © OpenStreetMap katkıda bulunanlar</div>`;
 }
 function stationItem(s) {
-  const pw = [s.kw ? `${Math.round(s.kw)} kW` : "", s.kind ? s.kind.toUpperCase() : ""].filter(Boolean).join(" ");
+  const tb = typeBadge(s), sub = [s.brand && s.name !== s.brand ? s.brand : "", s.addr].filter(Boolean).join(" · ");
   return `<button class="stn ${s.id === M.sel ? "sel" : ""}" data-sid="${esc(s.id)}">
     <div class="r1"><span class="nm">${esc(s.name)}</span><span class="ds">${fmtKm(s.d)}</span></div>
-    <div class="r2">${s.name !== s.brand ? `<span>${esc(s.brand)}</span>` : ""}${pw ? `<span>${esc(pw)}</span>` : ""}${priceText(s)}
+    ${sub ? `<div class="sub">${esc(sub)}</div>` : ""}
+    <div class="r2">${tb ? `<span class="pill ${s.hasDc ? "dc" : "ac"}">${tb}</span>` : ""}${s.kw ? `<span class="pill">${Math.round(s.kw)} kW</span>` : ""}${s.price ? `<span class="pr">${priceStr(s.price)}</span>` : ""}
       ${s.camp.length ? `<span class="tag camp">${s.camp.length} kampanya</span>` : ""}${stationMine(s.brand) ? `<span class="tag me">Sana uyuyor</span>` : ""}</div>
   </button>`;
 }
 function renderDetail(s) {
   $("sh-h").innerHTML = `<button class="back" id="back">← Listeye dön</button>`;
-  const t = s.tags, specific = s.camp;
+  const t = s.tags;
   const general = C.filter(c => c.tip === "banka" && c.st.includes(ALL));
   const myGeneral = general.filter(c => P.banka.includes(c.kid));
   const pr = s.price && TAR.aglar[s.brand];
-  const priceHtml = s.price
-    ? `<b>${priceStr(s.price)}</b> <small>(${s.price.kind.toUpperCase()} liste fiyatı${s.price.max > s.price.v ? ", konuma göre değişir" : ""}${pr && pr.gecerlilik ? ` · ${esc(dateTr(pr.gecerlilik))} tarihli` : ""}${pr && pr.kontrol ? ` · ${esc(dateTr(pr.kontrol))} tarihinde kontrol edildi` : ""}${pr && pr.kaynak ? ` · <a href="${esc(safeUrl(pr.kaynak))}" target="_blank" rel="noopener nofollow">resmi sayfa</a>` : ""})</small>`
-    : `<small>Bu ağın liste fiyatı henüz eklenmedi</small>`;
-  const mc = c => { const { txt } = daysText(c); return `<div class="mc ${mine(c) && !profileEmpty() ? "mine" : ""}"><div class="big sm">${esc(c.big)}</div><div class="det">${esc(c.det)}</div>
+  const mc = c => { const { txt } = daysText(c); return `<div class="mc ${mine(c) && !profileEmpty() ? "mine" : ""}"><div><span class="big sm">${esc(c.big)}</span></div><div class="det">${esc(c.det)}</div>
     <div class="alt">${esc(c.kurum)}${txt ? " · " + esc(txt) : ""}</div><a class="src" style="margin-left:0" href="${esc(safeUrl(c.link))}" target="_blank" rel="noopener nofollow">Resmi kampanya sayfası ↗</a></div>`; };
+  const rows = [];
+  if (s.price) rows.push(["Fiyat", `<b>${priceStr(s.price)}</b> <small>(${s.price.kind.toUpperCase()} liste fiyatı${s.price.max > s.price.v ? ", konuma göre değişir" : ""}${pr && pr.gecerlilik ? ` · ${esc(dateTr(pr.gecerlilik))} tarihli` : ""}${pr && pr.kontrol ? ` · ${esc(dateTr(pr.kontrol))} tarihinde kontrol edildi` : ""}${pr && pr.kaynak ? ` · <a href="${esc(safeUrl(pr.kaynak))}" target="_blank" rel="noopener nofollow">resmi sayfa</a>` : ""})</small>`]);
+  const tur = s.hasAc && s.hasDc ? "AC ve DC" : s.hasDc ? "DC" : s.hasAc ? "AC" : "";
+  if (tur || s.kw) rows.push(["Tür / güç", esc([tur, s.kw ? `${Math.round(s.kw)} kW` : ""].filter(Boolean).join(" · "))]);
+  if (s.types.length) rows.push(["Soket", esc(s.types.join(", ")) + (s.count ? ` <small>(${s.count} araç)</small>` : "")]);
+  if (s.addr) rows.push(["Adres", esc(s.addr)]);
+  if (t.opening_hours) rows.push(["Saatler", esc(t.opening_hours)]);
   const web = /^https?:\/\//i.test(t.website || t["contact:website"] || "") ? (t.website || t["contact:website"]) : "";
-  $("sh-b").innerHTML = `<div class="dn">${esc(s.name)}</div><div class="alt">${esc(s.brand)} · ${fmtKm(s.d)} uzakta</div>
-    <dl class="kv">
-      <dt>Fiyat</dt><dd>${priceHtml}</dd>
-      <dt>Güç</dt><dd>${s.kw ? `${Math.round(s.kw)} kW` : "<small>Bilinmiyor</small>"}${s.kind ? ` · ${s.kind.toUpperCase()}` : ""}</dd>
-      <dt>Soket</dt><dd>${s.types.length ? esc(s.types.join(", ")) : "<small>Bilinmiyor</small>"}${s.count ? ` <small>(${s.count} araç)</small>` : ""}</dd>
-      ${t.opening_hours ? `<dt>Saatler</dt><dd>${esc(t.opening_hours)}</dd>` : ""}
-      ${web ? `<dt>Web</dt><dd><a href="${esc(safeUrl(web))}" target="_blank" rel="noopener nofollow">Site ↗</a></dd>` : ""}
-    </dl>
-    <div class="lbl">Bu ağa özel kampanyalar</div>
-    ${specific.length ? specific.map(mc).join("") : `<p class="note">${esc(s.brand)} için şu an doğrulanmış kampanya yok.</p>`}
+  if (web) rows.push(["Web", `<a href="${esc(safeUrl(web))}" target="_blank" rel="noopener nofollow">Site ↗</a>`]);
+  $("sh-b").innerHTML = `<div class="dn">${esc(s.name)}</div><div class="alt">${esc(s.brand && s.name !== s.brand ? s.brand + " · " : "")}${fmtKm(s.d)} uzakta</div>
+    ${rows.length ? `<dl class="kv">${rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>` : ""}
+    ${s.camp.length ? `<div class="lbl" style="margin-top:12px">Bu ağa özel kampanyalar</div>${s.camp.map(mc).join("")}` : ""}
     ${myGeneral.length ? `<div class="lbl" style="margin-top:10px">Kartınla her istasyonda</div>${myGeneral.map(mc).join("")}` : (general.length && profileEmpty() ? `<p class="note">Her istasyonda geçerli ${general.length} kart kampanyası var. Kartlarını ekleyince burada görürsün.</p>` : "")}
     <a class="btn primary dir" href="https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lon}" target="_blank" rel="noopener">Yol tarifi al</a>
     <div class="credit">Konum ve teknik bilgiler OpenStreetMap katkıda bulunanlarından gelir; eksik ya da eski olabilir.</div>`;
@@ -738,10 +776,21 @@ function renderDetail(s) {
 function selectStation(id, pan = true) {
   M.sel = id; const s = M.view.find(x => x.id === id);
   if (!s) return;
-  if ($("sheet").dataset.s === "peek") $("sheet").dataset.s = "half";
+  if ($("sheet").dataset.s === "peek") { $("sheet").dataset.s = "half"; M.map.invalidateSize(); }
   renderSheet(); highlight();
   if (pan) M.map.panTo([s.lat, s.lon]);
-  setTimeout(() => M.map.invalidateSize(), 250);
+}
+function renderMapSheet() {
+  const chip = (attr, label, on, cls = "") => `<button class="chip ${cls}" ${attr} aria-pressed="${on}">${esc(label)}</button>`;
+  const rad = [1, 3, 5, 10, 25, 50].map(k => chip(`data-mr="${k}"`, `${k} km`, M.radius === k)).join("");
+  const srt = [["yakin", "Yakından uzağa"], ["ucuz", "Ucuzdan pahalıya"], ["pahali", "Pahalıdan ucuza"], ["guc", "Güce göre"]].map(([v, l]) => chip(`data-ms="${v}"`, l, M.sort === v)).join("");
+  const br = M.brands.map(([b, n]) => chip(`data-mb="${esc(b)}"`, `${b} · ${n}`, M.f.brands.has(b))).join("");
+  $("mfs-b").innerHTML = `<h3>Mesafe</h3><div class="chips">${rad}</div><h3>Sıralama</h3><div class="chips">${srt}</div>`
+    + (br ? `<h3>Marka</h3><div class="chips">${br}</div>` : "")
+    + `<h3>Ayrıca</h3><div class="chips">${chip('data-mf="kamp"', "Kampanyalı", M.f.kamp, "ag")}${profileEmpty() ? "" : chip('data-mf="bana"', "Bana uyan", M.f.bana)}</div>`
+    + `<label class="chk"><input type="checkbox" id="m-tum" ${M.f.tum ? "checked" : ""}><span>Tanımsız istasyonları da göster</span></label>`
+    + `<p class="note">Markası bilinmeyen ya da tanınmayan istasyonlar varsayılan olarak gizlenir.</p>`;
+  $("mfs-ok").textContent = `${M.view.length} istasyonu göster`;
 }
 
 /* ---------- Olaylar ---------- */
@@ -750,24 +799,31 @@ function bindEvents() {
   $("sort").onchange = e => { S.sort = e.target.value; render(); };
   document.addEventListener("click", e => {
     const b = e.target.closest("button"); if (!b) return;
-    if (b.dataset.k) { const set = S[b.dataset.k], v = b.dataset.v; set.has(v) ? set.delete(v) : set.add(v); render(); }
+    const d = b.dataset;
+    if (d.k) { const set = S[d.k]; set.has(d.v) ? set.delete(d.v) : set.add(d.v); render(); }
     else if (b.id === "q-mine") { S.bana = !useMine(); render(); }
     else if (b.id === "q-setup") show("profil");
-    else if (b.dataset.pk) { const a = P[b.dataset.pk], v = b.dataset.v; a.includes(v) ? a.splice(a.indexOf(v), 1) : a.push(v); profileChanged(); }
-    else if (b.dataset.mf) { M.f[b.dataset.mf] = !M.f[b.dataset.mf]; buildMapChips(); renderMap(false); }
-    else if (b.dataset.mb) { const s = M.f.brands, v = b.dataset.mb; s.has(v) ? s.delete(v) : s.add(v); buildMapChips(); renderMap(false); }
-    else if (b.dataset.sid) selectStation(b.dataset.sid);
-    else if (b.parentElement && b.parentElement.classList.contains("tabs")) show(b.dataset.v);
+    else if (d.pk) { const a = P[d.pk]; a.includes(d.v) ? a.splice(a.indexOf(d.v), 1) : a.push(d.v); profileChanged(); }
+    else if (d.akim !== undefined) { M.f.akim = d.akim || null; M.shown = PAGE; renderMap(); }
+    else if (d.mf) { M.f[d.mf] = !M.f[d.mf]; M.shown = PAGE; renderMap(); }
+    else if (d.mb) { const s = M.f.brands; s.has(d.mb) ? s.delete(d.mb) : s.add(d.mb); M.shown = PAGE; renderMap(); }
+    else if (d.ms) { M.sort = d.ms; renderMap(); }
+    else if (d.mr) { M.radius = +d.mr; renderMapSheet(); if (M.center) runSearch(true); }
+    else if (d.showunk) { M.f.tum = true; renderMap(); }
+    else if (b.id === "more") { M.shown += PAGE; renderSheet(); }
+    else if (d.sid) selectStation(d.sid);
+    else if (b.parentElement && b.parentElement.classList.contains("tabs")) show(d.v);
   });
+  document.addEventListener("change", e => { if (e.target.id === "m-tum") { M.f.tum = e.target.checked; M.shown = PAGE; renderMap(); } });
   $("open-f").onclick = () => openFilters(true);
-  $("fs-x").onclick = $("fs-ok").onclick = $("bd").onclick = () => openFilters(false);
-  document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("fs").hidden) openFilters(false); });
+  $("mf-open").onclick = () => openMapFilters(true);
+  $("fs-x").onclick = $("fs-ok").onclick = $("mfs-x").onclick = $("mfs-ok").onclick = $("bd").onclick = () => closeSheets();
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheets(); });
   $("fs-clear").onclick = () => { S.banka.clear(); S.ag.clear(); S.tip.clear(); render(); };
+  $("mfs-clear").onclick = () => { M.f = { akim: null, kamp: false, bana: false, tum: false, brands: new Set() }; M.sort = "yakin"; M.shown = PAGE; renderMap(); };
   $("loc").onclick = locate;
   $("here").onclick = () => { const c = M.map.getCenter(); M.center = { lat: c.lat, lon: c.lng }; runSearch(false); };
-  $("rad").onchange = e => { M.radius = +e.target.value; if (M.center) runSearch(true); };
-  $("msort").onchange = e => { M.sort = e.target.value; renderMap(false); };
-  $("handle").onclick = () => { const s = $("sheet"), o = ["peek", "half", "full"]; s.dataset.s = o[(o.indexOf(s.dataset.s) + 1) % 3]; };
+  $("handle").onclick = () => { const s = $("sheet"), o = ["peek", "half", "full"]; s.dataset.s = o[(o.indexOf(s.dataset.s) + 1) % 3]; if (M.map) M.map.invalidateSize(); };
   $("p-go").onclick = () => { S.bana = true; show("kamp"); render(); };
   $("p-copy").onclick = async () => {
     const v = $("p-code").value; if (!v) return;
