@@ -10,9 +10,9 @@
    "media/2026-11-06-hikaye/banka_garanti/hikaye.jpg"
   ],
   "aciklama": "",
-  "durum": "bekliyor",
+  "durum": "paylasildi",
   "deneme": 0,
-  "ig_media_id": null,
+  "ig_media_id": "18340803643276354",
   "hata": null,
   "yalniz_hikaye": true,
   "kaynaklar": [
@@ -26,7 +26,8 @@
     "url": "https://www.bonus.com.tr/kampanyalar/ovolt-akaryakit-bonus-kampanyalari",
     "tur": "resmi"
    }
-  ]
+  ],
+  "paylasim_zamani": "2026-11-06T18:05:05+00:00"
  },
  {
   "id": "istasyon_esarj_hikaye",
