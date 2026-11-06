@@ -44,6 +44,39 @@ def caption(item, d):
             f"\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n{HASHTAG} {tag(s['name'])}")
 
 
+def resmi_mi(url):
+    return not any(x in url for x in ["sarjharitasi", "sarjevi", "hangikredi", "sarjkampanya", "arabamsarj", "donanimhaber"])
+
+
+def kaynaklar(item, d):
+    out, seen = [], set()
+
+    def add(ad, url):
+        if url and url not in seen:
+            seen.add(url)
+            out.append({"ad": ad, "url": url, "tur": "resmi" if resmi_mi(url) else "derleme"})
+
+    src = item.get("_src")
+    if item["tur"] == "banka":
+        for o in src["offers"]:
+            add(f"{src['name']}: {o['big']} ({', '.join(o['st'])})", o["link"])
+    elif item["tur"] == "istasyon":
+        for o in src["own"]:
+            add(f"{src['name']}: {o['big']}", o["link"])
+        for b in d["bankalar"]:
+            for o in b["offers"]:
+                if src["name"] in o["st"]:
+                    add(f"{b['name']}: {o['big']}", o["link"])
+    else:
+        for b in d["bankalar"] if item["id"] == "ozet_bankalar" else []:
+            for o in b["offers"]:
+                add(f"{b['name']}: {o['big']}", o["link"])
+        for s in d["istasyonlar"] if item["id"] == "ozet_istasyonlar" else []:
+            for o in s["own"]:
+                add(f"{s['name']}: {o['big']}", o["link"])
+    return out
+
+
 def bitis(item):
     src = item.get("_src")
     if not src:
@@ -101,11 +134,13 @@ def build(etiket, baslangic, sadece=None):
             print(f"atlandı (kampanya bitmiş): {item['id']}")
             continue
         base = f"media/{etiket}/{item['id']}"
-        queue.append({"id": f"{item['id']}_post", "tip": "karusel", "zaman": t.isoformat(),
+        grup = f"{etiket}__{item['id']}"
+        queue.append({"id": f"{item['id']}_post", "grup": grup, "tip": "karusel", "zaman": t.isoformat(),
+                      "baslik": item["baslik"], "tur": item["tur"], "kaynaklar": kaynaklar(item, d),
                       "gorseller": [f"{base}/{f}" for f in item["dosyalar"] if f != "hikaye.jpg"],
                       "aciklama": caption(item, d), "durum": "bekliyor", "deneme": 0, "ig_media_id": None, "hata": None})
         if "hikaye.jpg" in item["dosyalar"]:
-            queue.append({"id": f"{item['id']}_hikaye", "tip": "hikaye", "zaman": (t + dt.timedelta(hours=1)).isoformat(),
+            queue.append({"id": f"{item['id']}_hikaye", "grup": grup, "baslik": item["baslik"], "tur": item["tur"], "tip": "hikaye", "zaman": (t + dt.timedelta(hours=1)).isoformat(),
                           "gorseller": [f"{base}/hikaye.jpg"], "aciklama": "", "durum": "bekliyor", "deneme": 0,
                           "ig_media_id": None, "hata": None})
     queue.sort(key=lambda q: q["zaman"])

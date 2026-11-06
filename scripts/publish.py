@@ -8,6 +8,12 @@ Ortam değişkenleri:
   GITHUB_REPOSITORY, GITHUB_SHA (Actions otomatik verir; görsellerin herkese açık adresi için)
   DRY_RUN=1                     hiçbir şey paylaşmadan ne yapılacağını yazar
   YAYIN_AKTIF                   "true" değilse paylaşım yapılmaz (GitHub repo değişkeni)
+
+Onay: Bir öğe ancak onaylar/<grup>.json dosyasında {"onay": "onaylandi"} varsa paylaşılır.
+Bu dosyaları onay paneli (docs/index.html) yazar. Onay dosyası şunları da değiştirebilir:
+  zaman   → postun paylaşım zamanı (hikaye 1 saat sonra)
+  aciklama → Instagram açıklaması
+  hikaye  → false ise hikaye paylaşılmaz
 """
 import datetime as dt, glob, json, os, sys, time, urllib.parse, urllib.request, urllib.error
 
@@ -89,6 +95,32 @@ def quota_left(uid):
         return 999
 
 
+def load_approvals():
+    out = {}
+    for f in glob.glob(os.path.join(ROOT, "onaylar", "*.json")):
+        try:
+            out[os.path.basename(f)[:-5]] = json.load(open(f, encoding="utf-8"))
+        except Exception as e:
+            log(f"Onay dosyası okunamadı {f}: {e}")
+    return out
+
+
+def effective(item, approvals):
+    """Onaya göre öğenin paylaşılıp paylaşılmayacağını ve zamanını döndürür: (paylasilacak_mi, zaman, aciklama)."""
+    grup = item.get("grup") or item["id"].rsplit("_", 1)[0]
+    a = approvals.get(grup)
+    if not a or a.get("onay") != "onaylandi":
+        return False, None, None
+    t = dt.datetime.fromisoformat(a.get("zaman") or item["zaman"])
+    if item["tip"] == "hikaye":
+        if a.get("hikaye") is False:
+            return False, None, None
+        if a.get("zaman"):
+            t = t + dt.timedelta(hours=1)
+        return True, t, ""
+    return True, t, a.get("aciklama") or item["aciklama"]
+
+
 def main():
     if os.environ.get("YAYIN_AKTIF", "").lower() != "true" and not DRY:
         log("YAYIN_AKTIF=true değil, paylaşım kapalı. Çıkılıyor.")
@@ -98,6 +130,8 @@ def main():
     done, errors = 0, 0
     left = 999 if DRY else quota_left(uid)
     log(f"Kalan günlük API kotası: {left}")
+    approvals = load_approvals()
+    log(f"Onaylı grup sayısı: {sum(1 for a in approvals.values() if a.get('onay') == 'onaylandi')}")
     for path in sorted(glob.glob(os.path.join(ROOT, "queue", "*.json"))):
         q = json.load(open(path, encoding="utf-8"))
         changed = False
@@ -106,11 +140,15 @@ def main():
                 continue
             if item["durum"] == "hata" and item.get("deneme", 0) >= MAX_DENEME:
                 continue
-            t = dt.datetime.fromisoformat(item["zaman"])
+            ok, t, aciklama = effective(item, approvals)
+            if not ok:
+                continue
+            item = dict(item, aciklama=aciklama, _ref=item)
             if t > now:
                 continue
+            ref = item["_ref"]
             if now - t > GEC_KALMA_SINIRI:
-                item["durum"], item["hata"] = "atlandi", "24 saatten fazla gecikti"
+                ref["durum"], ref["hata"] = "atlandi", "24 saatten fazla gecikti"
                 changed = True
                 continue
             if done >= MAX_PER_RUN or left <= 1:
@@ -119,15 +157,15 @@ def main():
             try:
                 mid = publish(item, uid)
                 if not DRY:
-                    item.update(durum="paylasildi", ig_media_id=mid, hata=None,
-                                paylasim_zamani=now.isoformat(timespec="seconds"))
+                    ref.update(durum="paylasildi", ig_media_id=mid, hata=None,
+                               paylasim_zamani=now.isoformat(timespec="seconds"))
                     changed = True
                 log(f"  ✓ {mid}")
                 done += 1
                 left -= 1
             except Exception as e:
-                item["deneme"] = item.get("deneme", 0) + 1
-                item.update(durum="hata", hata=str(e)[:500])
+                ref["deneme"] = ref.get("deneme", 0) + 1
+                ref.update(durum="hata", hata=str(e)[:500])
                 changed = True
                 errors += 1
                 log(f"  ✗ {e}")

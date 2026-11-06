@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WattKaç Onay Paneli</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A1020;--card:#111A2E;--line:#22304F;--txt:#F4F6FB;--mut:#9FB0D0;--y:#FFD400;--g:#22E3A0;--r:#FF6B6B;--b:#7AA7FF}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font:15px/1.45 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--b)}
+.wrap{max-width:760px;margin:0 auto;padding:16px 16px 80px}
+header{display:flex;align-items:center;gap:10px;padding:6px 0 14px}
+header h1{font-size:22px;font-weight:900;letter-spacing:-.5px}
+header h1 b{color:var(--y)}
+header .sp{flex:1}
+.btn{border:0;border-radius:12px;padding:11px 16px;font:700 15px Inter,sans-serif;cursor:pointer}
+.btn:disabled{opacity:.5;cursor:default}
+.ok{background:var(--g);color:#06231a}.no{background:transparent;color:var(--r);border:2px solid #5a2a35}
+.ghost{background:transparent;color:var(--mut);border:2px solid var(--line)}
+.y{background:var(--y);color:#0A1020}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;position:sticky;top:0;background:var(--bg);z-index:5;padding-top:6px}
+.tab{flex:none;border:2px solid var(--line);background:transparent;color:var(--mut);border-radius:999px;padding:7px 14px;font:700 14px Inter,sans-serif;cursor:pointer}
+.tab.on{background:var(--y);border-color:var(--y);color:#0A1020}
+.tab span{opacity:.75;margin-left:4px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:14px}
+.top{display:flex;align-items:flex-start;gap:10px}
+.top h2{font-size:20px;font-weight:900;letter-spacing:-.3px}
+.badge{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.5px;border-radius:8px;padding:3px 8px;text-transform:uppercase}
+.b-banka{background:var(--y);color:#0A1020}.b-istasyon{background:var(--g);color:#06231a}.b-ozet{background:#2b3b63;color:var(--txt)}
+.st{margin-left:auto;flex:none;font-size:13px;font-weight:700;border-radius:999px;padding:4px 10px;border:1px solid var(--line);color:var(--mut)}
+.st.onaylandi{color:var(--g);border-color:#1d5c49}.st.reddedildi{color:var(--r);border-color:#5a2a35}.st.paylasildi{color:var(--b);border-color:#2b4377}
+.when{color:var(--mut);font-size:14px;margin-top:4px}
+.imgs{display:flex;gap:10px;overflow-x:auto;margin:14px -16px 0;padding:0 16px 6px;scroll-snap-type:x mandatory}
+.imgs figure{flex:none;scroll-snap-align:start}
+.imgs img{display:block;height:260px;border-radius:10px;border:1px solid var(--line);cursor:zoom-in;background:#0d1426}
+.imgs figcaption{font-size:12px;color:var(--mut);margin-top:4px}
+label.lb{display:block;font-size:12px;font-weight:800;letter-spacing:.6px;color:var(--mut);text-transform:uppercase;margin:16px 0 6px}
+textarea,input[type=datetime-local],input[type=password]{width:100%;background:#0b1325;color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:12px;font:15px/1.45 Inter,sans-serif}
+textarea{min-height:200px;resize:vertical}
+.src{list-style:none;display:flex;flex-direction:column;gap:8px}
+.src li{display:flex;gap:8px;align-items:flex-start;font-size:14px}
+.tag{flex:none;font-size:11px;font-weight:800;border-radius:6px;padding:2px 6px;margin-top:2px}
+.t-resmi{background:#123b2f;color:var(--g)}.t-derleme{background:#3d3410;color:var(--y)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px}
+.chk{display:flex;gap:8px;align-items:center;font-weight:600}
+.chk input{width:20px;height:20px;accent-color:var(--g)}
+.acts{display:flex;gap:10px;margin-top:16px}
+.acts .btn{flex:1}
+.warn{background:#3d3410;color:#ffe680;border-radius:12px;padding:10px 12px;font-size:14px;margin-top:12px}
+.err{background:#3b1820;color:#ffb3b3;border-radius:12px;padding:10px 12px;font-size:14px;margin-top:12px}
+.empty{color:var(--mut);text-align:center;padding:40px 0}
+.setup{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;margin-top:20px}
+.setup h2{font-size:20px;margin-bottom:8px}.setup ol{margin:10px 0 14px 20px;color:var(--mut)}.setup li{margin:4px 0}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--txt);color:var(--bg);font-weight:700;padding:12px 18px;border-radius:12px;display:none;z-index:20;max-width:90vw}
+#zoom{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;z-index:30;padding:16px}
+#zoom img{max-width:100%;max-height:100%;border-radius:10px}
+.muted{color:var(--mut);font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <svg viewBox="0 0 24 24" width="28" height="28"><path d="M13.5 2 4 13.5h6.2L9.5 22 20 9.8h-6.4z" fill="#FFD400"/></svg>
+    <h1>Watt<b>Kaç</b> Onay Paneli</h1><span class="sp"></span>
+    <button class="btn ghost" id="refresh" title="Yenile">↻</button>
+  </header>
+  <div id="app"></div>
+</div>
+<div id="toast"></div>
+<div id="zoom"><img alt=""></div>
+
+<script>
+const OWNER = "mehmetacan", REPO = "wattkac", BRANCH = "main";
+const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
+const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/`;
+const app = document.getElementById("app");
+let token = "", groups = [], approvals = {}, approvalSha = {}, tab = "bekleyen";
+
+function store(k, v) { try { v === undefined ? localStorage.getItem(k) : (v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v)); } catch (e) {} }
+function read(k) { try { return localStorage.getItem(k) || ""; } catch (e) { return ""; } }
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const b64dec = b => new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\n/g, "")), c => c.charCodeAt(0)));
+const b64enc = s => { const by = new TextEncoder().encode(s); let bin = ""; by.forEach(x => bin += String.fromCharCode(x)); return btoa(bin); };
+function toast(m, ms = 2600) { const t = document.getElementById("toast"); t.textContent = m; t.style.display = "block"; clearTimeout(t._h); t._h = setTimeout(() => t.style.display = "none", ms); }
+
+async function gh(path, opt = {}) {
+  const r = await fetch(path, { ...opt, cache: "no-store", headers: { "Accept": "application/vnd.github+json", "Authorization": `Bearer ${token}`, ...(opt.headers || {}) } });
+  if (r.status === 404) return null;
+  if (!r.ok) { const j = await r.json().catch(() => ({})); throw new Error(`${r.status}: ${j.message || r.statusText}`); }
+  return r.json();
+}
+
+// İstanbul saati (UTC+3) ile tarih biçimleri
+const fmt = iso => new Date(iso).toLocaleString("tr-TR", { timeZone: "Europe/Istanbul", weekday: "short", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" });
+function toLocalInput(iso) { const d = new Date(new Date(iso).getTime() + 3 * 3600e3); return d.toISOString().slice(0, 16); }
+const fromLocalInput = v => `${v}:00+03:00`;
+function nowPlus(min) { const d = new Date(Date.now() + min * 60e3); d.setUTCSeconds(0, 0); const m = d.getUTCMinutes(); d.setUTCMinutes(Math.ceil(m / 5) * 5); return toLocalInput(d.toISOString()); }
+
+function setupScreen(msg = "") {
+  app.innerHTML = `<div class="setup">
+    <h2>Bir kerelik giriş</h2>
+    <p class="muted">Panel onaylarınızı GitHub deponuza kaydeder. Bunun için yalnızca <b>wattkac</b> deposuna yazabilen bir anahtar gerekir.</p>
+    <ol>
+      <li><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Bu sayfayı açın</a> (GitHub › Fine-grained token).</li>
+      <li>Token name: <b>wattkac-panel</b>, Expiration: 1 yıl.</li>
+      <li>Repository access: <b>Only select repositories</b> › <b>wattkac</b>.</li>
+      <li>Permissions › Repository permissions › <b>Contents: Read and write</b>.</li>
+      <li><b>Generate token</b> deyin, çıkan metni aşağıya yapıştırın.</li>
+    </ol>
+    <input type="password" id="tok" placeholder="github_pat_..." autocomplete="off">
+    ${msg ? `<div class="err">${esc(msg)}</div>` : ""}
+    <div class="acts"><button class="btn y" id="save">Kaydet ve aç</button></div>
+    <p class="muted" style="margin-top:12px">Anahtar yalnızca bu cihazın tarayıcısında saklanır.</p>
+  </div>`;
+  document.getElementById("save").onclick = () => {
+    const v = document.getElementById("tok").value.trim();
+    if (!v) return;
+    token = v; store("wk_token", v); load();
+  };
+}
+
+async function load() {
+  app.innerHTML = `<div class="empty">Yükleniyor…</div>`;
+  try {
+    const [qdir, odir] = await Promise.all([gh(`${API}/queue?ref=${BRANCH}`), gh(`${API}/onaylar?ref=${BRANCH}`)]);
+    approvals = {}; approvalSha = {};
+    await Promise.all((odir || []).filter(f => f.name.endsWith(".json")).map(async f => {
+      const j = await gh(`${API}/onaylar/${encodeURIComponent(f.name)}?ref=${BRANCH}`);
+      approvals[f.name.slice(0, -5)] = JSON.parse(b64dec(j.content)); approvalSha[f.name.slice(0, -5)] = j.sha;
+    }));
+    const items = [];
+    await Promise.all((qdir || []).filter(f => f.name.endsWith(".json")).map(async f => {
+      const j = await gh(`${API}/queue/${encodeURIComponent(f.name)}?ref=${BRANCH}`);
+      JSON.parse(b64dec(j.content)).forEach(x => items.push(x));
+    }));
+    const by = {};
+    items.forEach(x => { const g = x.grup || x.id.replace(/_(post|hikaye)$/, ""); (by[g] ||= { grup: g }); by[g][x.tip === "hikaye" ? "story" : "post"] = x; });
+    groups = Object.values(by).filter(g => g.post).sort((a, b) => a.post.zaman.localeCompare(b.post.zaman));
+    render();
+  } catch (e) {
+    if (String(e.message).startsWith("401") || String(e.message).startsWith("403")) { store("wk_token", null); setupScreen("Anahtar geçersiz veya izni eksik: " + e.message); }
+    else app.innerHTML = `<div class="err">Yüklenemedi: ${esc(e.message)}</div>`;
+  }
+}
+
+function stateOf(g) {
+  if (g.post.durum === "paylasildi") return "paylasildi";
+  const a = approvals[g.grup];
+  if (a?.onay === "reddedildi") return "reddedildi";
+  if (a?.onay === "onaylandi") return "onaylandi";
+  return "bekleyen";
+}
+const LABEL = { bekleyen: "Bekleyen", onaylandi: "Onaylanan", paylasildi: "Paylaşılan", reddedildi: "Reddedilen" };
+
+function render() {
+  const counts = { bekleyen: 0, onaylandi: 0, paylasildi: 0, reddedildi: 0 };
+  groups.forEach(g => counts[stateOf(g)]++);
+  const list = groups.filter(g => stateOf(g) === tab);
+  app.innerHTML = `<div class="tabs">${Object.keys(LABEL).map(k => `<button class="tab ${k === tab ? "on" : ""}" data-t="${k}">${LABEL[k]}<span>${counts[k]}</span></button>`).join("")}</div>
+    ${list.length ? list.map(card).join("") : `<div class="empty">Bu sekmede içerik yok.</div>`}`;
+  app.querySelectorAll(".tab").forEach(b => b.onclick = () => { tab = b.dataset.t; render(); window.scrollTo(0, 0); });
+  app.querySelectorAll("[data-act]").forEach(b => b.onclick = () => act(b.dataset.g, b.dataset.act));
+  app.querySelectorAll(".imgs img").forEach(i => i.onclick = () => { const z = document.getElementById("zoom"); z.querySelector("img").src = i.src; z.style.display = "flex"; });
+}
+
+function card(g) {
+  const p = g.post, s = g.story, a = approvals[g.grup] || {}, st = stateOf(g);
+  const tur = p.tur || (p.id.startsWith("banka") ? "banka" : p.id.startsWith("istasyon") ? "istasyon" : "ozet");
+  const zaman = a.zaman || p.zaman;
+  const imgs = [...p.gorseller.map((u, i) => [u, i === 0 ? "Kapak" : "Detay"]), ...(s ? [[s.gorseller[0], "Hikaye"]] : [])];
+  const late = st === "bekleyen" && new Date(zaman) < new Date();
+  const editable = st === "bekleyen" || st === "onaylandi";
+  const src = (p.kaynaklar || []).map(k => `<li><span class="tag t-${k.tur}">${k.tur === "resmi" ? "RESMİ" : "DERLEME"}</span><span>${esc(k.ad)}<br><a href="${esc(k.url)}" target="_blank" rel="noopener">${esc(k.url.replace(/^https?:\/\//, "").slice(0, 70))}…</a></span></li>`).join("");
+  return `<div class="card" id="c-${esc(g.grup)}">
+    <div class="top"><div><span class="badge b-${tur}">${tur === "ozet" ? "Özet" : tur === "banka" ? "Banka" : "Şarj ağı"}</span>
+      <h2 style="margin-top:6px">${esc(p.baslik || p.id)}</h2>
+      <div class="when">Paylaşım: ${fmt(zaman)}${s && a.hikaye !== false ? " · hikaye 1 saat sonra" : ""}</div></div>
+      <span class="st ${st}">${LABEL[st]}</span></div>
+    <div class="imgs">${imgs.map(([u, l]) => `<figure><img loading="lazy" src="${RAW}${encodeURI(u)}" alt="${l}"><figcaption>${l}</figcaption></figure>`).join("")}</div>
+    ${p.durum === "hata" ? `<div class="err">Paylaşım hatası: ${esc(p.hata)}</div>` : ""}
+    ${late ? `<div class="warn">Planlanan saat geçti. Onaylarsanız 15 dakika içinde paylaşılacak şekilde ayarlanır (aşağıdan değiştirebilirsiniz).</div>` : ""}
+    <label class="lb">Instagram açıklaması</label>
+    <textarea id="cap-${esc(g.grup)}" ${editable ? "" : "readonly"}>${esc(a.aciklama || p.aciklama)}</textarea>
+    <label class="lb">Kaynaklar</label>
+    <ul class="src">${src || `<li class="muted">Kaynak bilgisi yok</li>`}</ul>
+    ${editable ? `<label class="lb">Paylaşım zamanı (İstanbul)</label>
+      <input type="datetime-local" id="t-${esc(g.grup)}" value="${late ? nowPlus(15) : toLocalInput(zaman)}">
+      ${s ? `<div class="row"><label class="chk"><input type="checkbox" id="h-${esc(g.grup)}" ${a.hikaye === false ? "" : "checked"}> Hikayeyi de paylaş</label></div>` : ""}` : ""}
+    <div class="acts">
+      ${st === "bekleyen" ? `<button class="btn no" data-act="reddet" data-g="${esc(g.grup)}">Reddet</button><button class="btn ok" data-act="onayla" data-g="${esc(g.grup)}">Onayla</button>` : ""}
+      ${st === "onaylandi" ? `<button class="btn ghost" data-act="geri" data-g="${esc(g.grup)}">Onayı geri al</button><button class="btn ok" data-act="onayla" data-g="${esc(g.grup)}">Değişiklikleri kaydet</button>` : ""}
+      ${st === "reddedildi" ? `<button class="btn ghost" data-act="geri" data-g="${esc(g.grup)}">Bekleyenlere geri al</button>` : ""}
+      ${st === "paylasildi" && p.ig_media_id ? `<span class="muted">Paylaşıldı · ${p.paylasim_zamani ? fmt(p.paylasim_zamani) : ""}</span>` : ""}
+    </div></div>`;
+}
+
+async function act(grup, kind) {
+  const btns = document.querySelectorAll(`#c-${CSS.escape(grup)} .btn`); btns.forEach(b => b.disabled = true);
+  let body;
+  if (kind === "onayla") {
+    const tv = document.getElementById(`t-${grup}`).value;
+    if (!tv) { toast("Paylaşım zamanı seçin"); btns.forEach(b => b.disabled = false); return; }
+    let zaman = fromLocalInput(tv);
+    if (new Date(zaman) < new Date(Date.now() + 5 * 60e3)) zaman = fromLocalInput(nowPlus(15));
+    const h = document.getElementById(`h-${grup}`);
+    body = { onay: "onaylandi", zaman, aciklama: document.getElementById(`cap-${grup}`).value, hikaye: h ? h.checked : false, tarih: new Date().toISOString() };
+  } else if (kind === "reddet") body = { onay: "reddedildi", tarih: new Date().toISOString() };
+  else body = { onay: "bekliyor", tarih: new Date().toISOString() };
+  try {
+    await saveApproval(grup, body);
+    approvals[grup] = body;
+    toast(kind === "onayla" ? `Onaylandı · ${fmt(body.zaman)} paylaşılacak` : kind === "reddet" ? "Reddedildi, paylaşılmayacak" : "Geri alındı");
+    render();
+  } catch (e) { toast("Kaydedilemedi: " + e.message, 5000); btns.forEach(b => b.disabled = false); }
+}
+
+async function saveApproval(grup, body, retry = true) {
+  const path = `${API}/onaylar/${encodeURIComponent(grup)}.json`;
+  const payload = { message: `Onay paneli: ${grup} → ${body.onay}`, content: b64enc(JSON.stringify(body, null, 1)), branch: BRANCH };
+  if (approvalSha[grup]) payload.sha = approvalSha[grup];
+  try {
+    const r = await gh(path, { method: "PUT", body: JSON.stringify(payload) });
+    approvalSha[grup] = r.content.sha;
+  } catch (e) {
+    if (retry && /^(409|422)/.test(e.message)) {   // dosya bu arada değişmiş: güncel sha ile tekrar dene
+      const cur = await gh(`${path}?ref=${BRANCH}`); approvalSha[grup] = cur?.sha; return saveApproval(grup, body, false);
+    }
+    throw e;
+  }
+}
+
+document.getElementById("zoom").onclick = e => e.currentTarget.style.display = "none";
+document.getElementById("refresh").onclick = () => token ? load() : null;
+token = read("wk_token");
+token ? load() : setupScreen();
+</script>
+</body>
+</html>

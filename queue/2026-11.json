@@ -1,8 +1,83 @@
 [
  {
   "id": "ozet_bankalar_post",
+  "grup": "2026-11__ozet_bankalar",
   "tip": "karusel",
   "zaman": "2026-11-07T09:30:00+03:00",
+  "baslik": "Banka kampanyaları özeti",
+  "tur": "ozet",
+  "kaynaklar": [
+   {
+    "ad": "Garanti BBVA: %50 bonus",
+    "url": "https://www.shell.com.tr/suruculer/shellden-avantajli-kampanyalar/shell-recharge-kullanicilarina-ozel-garanti-bbva-kredi-kartlari-ile-yaptiklari-sarjlamalarda-50-bonus-firsati.html",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Garanti BBVA: 75 TL bonus",
+    "url": "https://www.bonus.com.tr/kampanyalar/ovolt-akaryakit-bonus-kampanyalari",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Garanti BBVA: 100 TL bonus",
+    "url": "https://www.bonus.com.tr/kampanyalar/varr-sarj-istasyonlari-kampanya",
+    "tur": "resmi"
+   },
+   {
+    "ad": "VakıfBank: %20 indirim",
+    "url": "https://www.vakifkart.com.tr/kampanyalar/elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41122",
+    "tur": "resmi"
+   },
+   {
+    "ad": "VakıfBank: %20 indirim",
+    "url": "https://www.vakifkart.com.tr/kampanyalar/recycle-card-ile-elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41128",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Ziraat Bankası: %20 Jest Lira",
+    "url": "https://bankkart.com.tr/kampanyalar/akaryakit/elektrikli-sarj-istasyonlarinda-750-tl-jest-lira",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Yapı Kredi: 435 TL Worldpuan",
+    "url": "https://www.worldcard.com.tr/kampanyalar/worldun-35-yilina-ozel-wat-mobilitede-400-tl-ve-uzeri-harcamaya-435-tlye-varan-worldpuan",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Halkbank: 75 TL ParafPara",
+    "url": "https://www.paraf.com.tr/tr/kampanyalar/akaryakit/elektrikli-arac-sarj-istasyonu-harcamalariniza-450-tl-parafpara1.html",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Halkbank: %10 indirim",
+    "url": "https://sarjkampanya.com/",
+    "tur": "derleme"
+   },
+   {
+    "ad": "QNB: 50 TL ParaPuan",
+    "url": "https://www.hangikredi.com/kredi-karti/kampanyalar",
+    "tur": "derleme"
+   },
+   {
+    "ad": "QNB: 125 mil",
+    "url": "https://milesandsmilesqnb.com.tr/kampanyalar/elektrikli-arac-sarj-istasyonlarinda-1250ye-varan-mil-2044",
+    "tur": "resmi"
+   },
+   {
+    "ad": "DenizBank: %10 indirim",
+    "url": "https://www.denizkartim.com/kampanyalar/elektrikli-arac-sarj-istasyonlarinda-500-tlye-varan-indirim",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Kuveyt Türk: %10 indirim",
+    "url": "https://www.kuveytturk.com.tr/kampanyalar/kendim-icin/kart-kampanyalari/elektrikli-arac-sarjiniza-ozel-750-tlye-varan-indirim",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ON Dijital: %20 iade",
+    "url": "https://on.com.tr/on-kredi-karti-elektrikli-arac-sarj-kampanyasi",
+    "tur": "resmi"
+   }
+  ],
   "gorseller": [
    "media/2026-11/ozet_bankalar/1_kapak.jpg",
    "media/2026-11/ozet_bankalar/2_liste.jpg"
@@ -15,8 +90,33 @@
  },
  {
   "id": "ozet_istasyonlar_post",
+  "grup": "2026-11__ozet_istasyonlar",
   "tip": "karusel",
   "zaman": "2026-11-07T10:00:00+03:00",
+  "baslik": "Şarj ağı kampanyaları özeti",
+  "tur": "ozet",
+  "kaynaklar": [
+   {
+    "ad": "Eşarj: %10 Eşarj Puan",
+    "url": "https://www.allianz.com.tr/tr_TR/faaliyetlerimiz/kampanyalar/elektrikli-arac-sarj-kampanyasi.html",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ZES: 30 kWh hediye",
+    "url": "https://sarjharitasi.tr/kampanyalar/?slug=metrodan-alisverise-zesten-30-kwh-sarj-hediyesi",
+    "tur": "derleme"
+   },
+   {
+    "ad": "Otopriz: %30 indirim",
+    "url": "https://otopriz.com.tr/kampanyalar/indirimli-istasyonlar/kampanya-detaylari",
+    "tur": "resmi"
+   },
+   {
+    "ad": "GIO EV: 11,99 TL/kWh",
+    "url": "https://sarjharitasi.tr/kampanyalar/?slug=gio-ev-istasyonlarinda-avantajli-fiyat",
+    "tur": "derleme"
+   }
+  ],
   "gorseller": [
    "media/2026-11/ozet_istasyonlar/1_kapak.jpg",
    "media/2026-11/ozet_istasyonlar/2_liste.jpg"
@@ -29,8 +129,28 @@
  },
  {
   "id": "banka_garanti_post",
+  "grup": "2026-11__banka_garanti",
   "tip": "karusel",
   "zaman": "2026-11-07T13:00:00+03:00",
+  "baslik": "Garanti BBVA",
+  "tur": "banka",
+  "kaynaklar": [
+   {
+    "ad": "Garanti BBVA: %50 bonus (Shell Recharge)",
+    "url": "https://www.shell.com.tr/suruculer/shellden-avantajli-kampanyalar/shell-recharge-kullanicilarina-ozel-garanti-bbva-kredi-kartlari-ile-yaptiklari-sarjlamalarda-50-bonus-firsati.html",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Garanti BBVA: 75 TL bonus (Ovolt)",
+    "url": "https://www.bonus.com.tr/kampanyalar/ovolt-akaryakit-bonus-kampanyalari",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Garanti BBVA: 100 TL bonus (Varr)",
+    "url": "https://www.bonus.com.tr/kampanyalar/varr-sarj-istasyonlari-kampanya",
+    "tur": "resmi"
+   }
+  ],
   "gorseller": [
    "media/2026-11/banka_garanti/1_kapak.jpg",
    "media/2026-11/banka_garanti/2_detay.jpg"
@@ -43,6 +163,9 @@
  },
  {
   "id": "banka_garanti_hikaye",
+  "grup": "2026-11__banka_garanti",
+  "baslik": "Garanti BBVA",
+  "tur": "banka",
   "tip": "hikaye",
   "zaman": "2026-11-07T14:00:00+03:00",
   "gorseller": [
@@ -56,8 +179,28 @@
  },
  {
   "id": "istasyon_esarj_post",
+  "grup": "2026-11__istasyon_esarj",
   "tip": "karusel",
   "zaman": "2026-11-07T19:30:00+03:00",
+  "baslik": "Eşarj",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "Eşarj: %10 Eşarj Puan",
+    "url": "https://www.allianz.com.tr/tr_TR/faaliyetlerimiz/kampanyalar/elektrikli-arac-sarj-kampanyasi.html",
+    "tur": "resmi"
+   },
+   {
+    "ad": "VakıfBank: %20 indirim",
+    "url": "https://www.vakifkart.com.tr/kampanyalar/recycle-card-ile-elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41128",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Ziraat Bankası: %20 Jest Lira",
+    "url": "https://bankkart.com.tr/kampanyalar/akaryakit/elektrikli-sarj-istasyonlarinda-750-tl-jest-lira",
+    "tur": "resmi"
+   }
+  ],
   "gorseller": [
    "media/2026-11/istasyon_esarj/1_kapak.jpg",
    "media/2026-11/istasyon_esarj/2_detay.jpg"
@@ -70,6 +213,9 @@
  },
  {
   "id": "istasyon_esarj_hikaye",
+  "grup": "2026-11__istasyon_esarj",
+  "baslik": "Eşarj",
+  "tur": "istasyon",
   "tip": "hikaye",
   "zaman": "2026-11-07T20:30:00+03:00",
   "gorseller": [
@@ -83,8 +229,23 @@
  },
  {
   "id": "banka_vakifbank_post",
+  "grup": "2026-11__banka_vakifbank",
   "tip": "karusel",
   "zaman": "2026-11-08T09:30:00+03:00",
+  "baslik": "VakıfBank",
+  "tur": "banka",
+  "kaynaklar": [
+   {
+    "ad": "VakıfBank: %20 indirim (Trugo, ZES, EnYakıt, Voltrun, CTG Elektrik, MyCharge)",
+    "url": "https://www.vakifkart.com.tr/kampanyalar/elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41122",
+    "tur": "resmi"
+   },
+   {
+    "ad": "VakıfBank: %20 indirim (Trugo, ZES, Eşarj, Tesla, Voltrun, EnYakıt, Ovolt, Sharz.net, CTG Elektrik, MyCharge, Solargize, RHG Enertürk)",
+    "url": "https://www.vakifkart.com.tr/kampanyalar/recycle-card-ile-elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41128",
+    "tur": "resmi"
+   }
+  ],
   "gorseller": [
    "media/2026-11/banka_vakifbank/1_kapak.jpg",
    "media/2026-11/banka_vakifbank/2_detay.jpg"
@@ -97,6 +258,9 @@
  },
  {
   "id": "banka_vakifbank_hikaye",
+  "grup": "2026-11__banka_vakifbank",
+  "baslik": "VakıfBank",
+  "tur": "banka",
   "tip": "hikaye",
   "zaman": "2026-11-08T10:30:00+03:00",
   "gorseller": [
@@ -110,8 +274,28 @@
  },
  {
   "id": "istasyon_zes_post",
+  "grup": "2026-11__istasyon_zes",
   "tip": "karusel",
   "zaman": "2026-11-08T13:00:00+03:00",
+  "baslik": "ZES",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "ZES: 30 kWh hediye",
+    "url": "https://sarjharitasi.tr/kampanyalar/?slug=metrodan-alisverise-zesten-30-kwh-sarj-hediyesi",
+    "tur": "derleme"
+   },
+   {
+    "ad": "VakıfBank: %20 indirim",
+    "url": "https://www.vakifkart.com.tr/kampanyalar/elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41122",
+    "tur": "resmi"
+   },
+   {
+    "ad": "VakıfBank: %20 indirim",
+    "url": "https://www.vakifkart.com.tr/kampanyalar/recycle-card-ile-elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41128",
+    "tur": "resmi"
+   }
+  ],
   "gorseller": [
    "media/2026-11/istasyon_zes/1_kapak.jpg",
    "media/2026-11/istasyon_zes/2_detay.jpg"
@@ -124,6 +308,9 @@
  },
  {
   "id": "istasyon_zes_hikaye",
+  "grup": "2026-11__istasyon_zes",
+  "baslik": "ZES",
+  "tur": "istasyon",
   "tip": "hikaye",
   "zaman": "2026-11-08T14:00:00+03:00",
   "gorseller": [
@@ -137,8 +324,18 @@
  },
  {
   "id": "banka_ziraat_post",
+  "grup": "2026-11__banka_ziraat",
   "tip": "karusel",
   "zaman": "2026-11-08T19:30:00+03:00",
+  "baslik": "Ziraat Bankası",
+  "tur": "banka",
+  "kaynaklar": [
+   {
+    "ad": "Ziraat Bankası: %20 Jest Lira (Eşarj, Voltrun, ASTOR Şarj, Otopriz, Mercury Şarj, Miggo, otojet, Porty Tech)",
+    "url": "https://bankkart.com.tr/kampanyalar/akaryakit/elektrikli-sarj-istasyonlarinda-750-tl-jest-lira",
+    "tur": "resmi"
+   }
+  ],
   "gorseller": [
    "media/2026-11/banka_ziraat/1_kapak.jpg",
    "media/2026-11/banka_ziraat/2_detay.jpg"
@@ -151,6 +348,9 @@
  },
  {
   "id": "banka_ziraat_hikaye",
+  "grup": "2026-11__banka_ziraat",
+  "baslik": "Ziraat Bankası",
+  "tur": "banka",
   "tip": "hikaye",
   "zaman": "2026-11-08T20:30:00+03:00",
   "gorseller": [
@@ -164,8 +364,23 @@
  },
  {
   "id": "istasyon_trugo_post",
+  "grup": "2026-11__istasyon_trugo",
   "tip": "karusel",
   "zaman": "2026-11-09T09:30:00+03:00",
+  "baslik": "Trugo",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "VakıfBank: %20 indirim",
+    "url": "https://www.vakifkart.com.tr/kampanyalar/elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41122",
+    "tur": "resmi"
+   },
+   {
+    "ad": "VakıfBank: %20 indirim",
+    "url": "https://www.vakifkart.com.tr/kampanyalar/recycle-card-ile-elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41128",
+    "tur": "resmi"
+   }
+  ],
   "gorseller": [
    "media/2026-11/istasyon_trugo/1_kapak.jpg",
    "media/2026-11/istasyon_trugo/2_detay.jpg"
@@ -178,6 +393,9 @@
  },
  {
   "id": "istasyon_trugo_hikaye",
+  "grup": "2026-11__istasyon_trugo",
+  "baslik": "Trugo",
+  "tur": "istasyon",
   "tip": "hikaye",
   "zaman": "2026-11-09T10:30:00+03:00",
   "gorseller": [
@@ -191,8 +409,18 @@
  },
  {
   "id": "banka_yapikredi_post",
+  "grup": "2026-11__banka_yapikredi",
   "tip": "karusel",
   "zaman": "2026-11-09T13:00:00+03:00",
+  "baslik": "Yapı Kredi",
+  "tur": "banka",
+  "kaynaklar": [
+   {
+    "ad": "Yapı Kredi: 435 TL Worldpuan (WAT Mobilite)",
+    "url": "https://www.worldcard.com.tr/kampanyalar/worldun-35-yilina-ozel-wat-mobilitede-400-tl-ve-uzeri-harcamaya-435-tlye-varan-worldpuan",
+    "tur": "resmi"
+   }
+  ],
   "gorseller": [
    "media/2026-11/banka_yapikredi/1_kapak.jpg",
    "media/2026-11/banka_yapikredi/2_detay.jpg"
@@ -205,6 +433,9 @@
  },
  {
   "id": "banka_yapikredi_hikaye",
+  "grup": "2026-11__banka_yapikredi",
+  "baslik": "Yapı Kredi",
+  "tur": "banka",
   "tip": "hikaye",
   "zaman": "2026-11-09T14:00:00+03:00",
   "gorseller": [
@@ -218,8 +449,28 @@
  },
  {
   "id": "istasyon_voltrun_post",
+  "grup": "2026-11__istasyon_voltrun",
   "tip": "karusel",
   "zaman": "2026-11-09T19:30:00+03:00",
+  "baslik": "Voltrun",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "VakıfBank: %20 indirim",
+    "url": "https://www.vakifkart.com.tr/kampanyalar/elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41122",
+    "tur": "resmi"
+   },
+   {
+    "ad": "VakıfBank: %20 indirim",
+    "url": "https://www.vakifkart.com.tr/kampanyalar/recycle-card-ile-elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41128",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Ziraat Bankası: %20 Jest Lira",
+    "url": "https://bankkart.com.tr/kampanyalar/akaryakit/elektrikli-sarj-istasyonlarinda-750-tl-jest-lira",
+    "tur": "resmi"
+   }
+  ],
   "gorseller": [
    "media/2026-11/istasyon_voltrun/1_kapak.jpg",
    "media/2026-11/istasyon_voltrun/2_detay.jpg"
@@ -232,6 +483,9 @@
  },
  {
   "id": "istasyon_voltrun_hikaye",
+  "grup": "2026-11__istasyon_voltrun",
+  "baslik": "Voltrun",
+  "tur": "istasyon",
   "tip": "hikaye",
   "zaman": "2026-11-09T20:30:00+03:00",
   "gorseller": [
@@ -245,8 +499,23 @@
  },
  {
   "id": "banka_halkbank_post",
+  "grup": "2026-11__banka_halkbank",
   "tip": "karusel",
   "zaman": "2026-11-10T09:30:00+03:00",
+  "baslik": "Halkbank",
+  "tur": "banka",
+  "kaynaklar": [
+   {
+    "ad": "Halkbank: 75 TL ParafPara (Tüm şarj istasyonları)",
+    "url": "https://www.paraf.com.tr/tr/kampanyalar/akaryakit/elektrikli-arac-sarj-istasyonu-harcamalariniza-450-tl-parafpara1.html",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Halkbank: %10 indirim (Tüm şarj istasyonları)",
+    "url": "https://sarjkampanya.com/",
+    "tur": "derleme"
+   }
+  ],
   "gorseller": [
    "media/2026-11/banka_halkbank/1_kapak.jpg",
    "media/2026-11/banka_halkbank/2_detay.jpg"
@@ -259,6 +528,9 @@
  },
  {
   "id": "banka_halkbank_hikaye",
+  "grup": "2026-11__banka_halkbank",
+  "baslik": "Halkbank",
+  "tur": "banka",
   "tip": "hikaye",
   "zaman": "2026-11-10T10:30:00+03:00",
   "gorseller": [
@@ -272,8 +544,23 @@
  },
  {
   "id": "istasyon_otopriz_post",
+  "grup": "2026-11__istasyon_otopriz",
   "tip": "karusel",
   "zaman": "2026-11-10T13:00:00+03:00",
+  "baslik": "Otopriz",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "Otopriz: %30 indirim",
+    "url": "https://otopriz.com.tr/kampanyalar/indirimli-istasyonlar/kampanya-detaylari",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Ziraat Bankası: %20 Jest Lira",
+    "url": "https://bankkart.com.tr/kampanyalar/akaryakit/elektrikli-sarj-istasyonlarinda-750-tl-jest-lira",
+    "tur": "resmi"
+   }
+  ],
   "gorseller": [
    "media/2026-11/istasyon_otopriz/1_kapak.jpg",
    "media/2026-11/istasyon_otopriz/2_detay.jpg"
@@ -286,6 +573,9 @@
  },
  {
   "id": "istasyon_otopriz_hikaye",
+  "grup": "2026-11__istasyon_otopriz",
+  "baslik": "Otopriz",
+  "tur": "istasyon",
   "tip": "hikaye",
   "zaman": "2026-11-10T14:00:00+03:00",
   "gorseller": [
@@ -299,8 +589,23 @@
  },
  {
   "id": "banka_qnb_post",
+  "grup": "2026-11__banka_qnb",
   "tip": "karusel",
   "zaman": "2026-11-10T19:30:00+03:00",
+  "baslik": "QNB",
+  "tur": "banka",
+  "kaynaklar": [
+   {
+    "ad": "QNB: 50 TL ParaPuan (Tüm şarj istasyonları)",
+    "url": "https://www.hangikredi.com/kredi-karti/kampanyalar",
+    "tur": "derleme"
+   },
+   {
+    "ad": "QNB: 125 mil (Tüm şarj istasyonları)",
+    "url": "https://milesandsmilesqnb.com.tr/kampanyalar/elektrikli-arac-sarj-istasyonlarinda-1250ye-varan-mil-2044",
+    "tur": "resmi"
+   }
+  ],
   "gorseller": [
    "media/2026-11/banka_qnb/1_kapak.jpg",
    "media/2026-11/banka_qnb/2_detay.jpg"
@@ -313,6 +618,9 @@
  },
  {
   "id": "banka_qnb_hikaye",
+  "grup": "2026-11__banka_qnb",
+  "baslik": "QNB",
+  "tur": "banka",
   "tip": "hikaye",
   "zaman": "2026-11-10T20:30:00+03:00",
   "gorseller": [
@@ -326,8 +634,23 @@
  },
  {
   "id": "istasyon_ovolt_post",
+  "grup": "2026-11__istasyon_ovolt",
   "tip": "karusel",
   "zaman": "2026-11-11T09:30:00+03:00",
+  "baslik": "Ovolt",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "Garanti BBVA: 75 TL bonus",
+    "url": "https://www.bonus.com.tr/kampanyalar/ovolt-akaryakit-bonus-kampanyalari",
+    "tur": "resmi"
+   },
+   {
+    "ad": "VakıfBank: %20 indirim",
+    "url": "https://www.vakifkart.com.tr/kampanyalar/recycle-card-ile-elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41128",
+    "tur": "resmi"
+   }
+  ],
   "gorseller": [
    "media/2026-11/istasyon_ovolt/1_kapak.jpg",
    "media/2026-11/istasyon_ovolt/2_detay.jpg"
@@ -340,6 +663,9 @@
  },
  {
   "id": "istasyon_ovolt_hikaye",
+  "grup": "2026-11__istasyon_ovolt",
+  "baslik": "Ovolt",
+  "tur": "istasyon",
   "tip": "hikaye",
   "zaman": "2026-11-11T10:30:00+03:00",
   "gorseller": [
@@ -353,8 +679,18 @@
  },
  {
   "id": "banka_denizbank_post",
+  "grup": "2026-11__banka_denizbank",
   "tip": "karusel",
   "zaman": "2026-11-11T13:00:00+03:00",
+  "baslik": "DenizBank",
+  "tur": "banka",
+  "kaynaklar": [
+   {
+    "ad": "DenizBank: %10 indirim (Tüm şarj istasyonları)",
+    "url": "https://www.denizkartim.com/kampanyalar/elektrikli-arac-sarj-istasyonlarinda-500-tlye-varan-indirim",
+    "tur": "resmi"
+   }
+  ],
   "gorseller": [
    "media/2026-11/banka_denizbank/1_kapak.jpg",
    "media/2026-11/banka_denizbank/2_detay.jpg"
@@ -367,6 +703,9 @@
  },
  {
   "id": "banka_denizbank_hikaye",
+  "grup": "2026-11__banka_denizbank",
+  "baslik": "DenizBank",
+  "tur": "banka",
   "tip": "hikaye",
   "zaman": "2026-11-11T14:00:00+03:00",
   "gorseller": [
@@ -380,8 +719,18 @@
  },
  {
   "id": "istasyon_shell_post",
+  "grup": "2026-11__istasyon_shell",
   "tip": "karusel",
   "zaman": "2026-11-11T19:30:00+03:00",
+  "baslik": "Shell Recharge",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "Garanti BBVA: %50 bonus",
+    "url": "https://www.shell.com.tr/suruculer/shellden-avantajli-kampanyalar/shell-recharge-kullanicilarina-ozel-garanti-bbva-kredi-kartlari-ile-yaptiklari-sarjlamalarda-50-bonus-firsati.html",
+    "tur": "resmi"
+   }
+  ],
   "gorseller": [
    "media/2026-11/istasyon_shell/1_kapak.jpg",
    "media/2026-11/istasyon_shell/2_detay.jpg"
@@ -394,6 +743,9 @@
  },
  {
   "id": "istasyon_shell_hikaye",
+  "grup": "2026-11__istasyon_shell",
+  "baslik": "Shell Recharge",
+  "tur": "istasyon",
   "tip": "hikaye",
   "zaman": "2026-11-11T20:30:00+03:00",
   "gorseller": [
@@ -407,8 +759,18 @@
  },
  {
   "id": "banka_kuveytturk_post",
+  "grup": "2026-11__banka_kuveytturk",
   "tip": "karusel",
   "zaman": "2026-11-12T09:30:00+03:00",
+  "baslik": "Kuveyt Türk",
+  "tur": "banka",
+  "kaynaklar": [
+   {
+    "ad": "Kuveyt Türk: %10 indirim (Tüm şarj istasyonları)",
+    "url": "https://www.kuveytturk.com.tr/kampanyalar/kendim-icin/kart-kampanyalari/elektrikli-arac-sarjiniza-ozel-750-tlye-varan-indirim",
+    "tur": "resmi"
+   }
+  ],
   "gorseller": [
    "media/2026-11/banka_kuveytturk/1_kapak.jpg",
    "media/2026-11/banka_kuveytturk/2_detay.jpg"
@@ -421,6 +783,9 @@
  },
  {
   "id": "banka_kuveytturk_hikaye",
+  "grup": "2026-11__banka_kuveytturk",
+  "baslik": "Kuveyt Türk",
+  "tur": "banka",
   "tip": "hikaye",
   "zaman": "2026-11-12T10:30:00+03:00",
   "gorseller": [
@@ -434,8 +799,18 @@
  },
  {
   "id": "istasyon_wat_post",
+  "grup": "2026-11__istasyon_wat",
   "tip": "karusel",
   "zaman": "2026-11-12T13:00:00+03:00",
+  "baslik": "WAT Mobilite",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "Yapı Kredi: 435 TL Worldpuan",
+    "url": "https://www.worldcard.com.tr/kampanyalar/worldun-35-yilina-ozel-wat-mobilitede-400-tl-ve-uzeri-harcamaya-435-tlye-varan-worldpuan",
+    "tur": "resmi"
+   }
+  ],
   "gorseller": [
    "media/2026-11/istasyon_wat/1_kapak.jpg",
    "media/2026-11/istasyon_wat/2_detay.jpg"
@@ -448,6 +823,9 @@
  },
  {
   "id": "istasyon_wat_hikaye",
+  "grup": "2026-11__istasyon_wat",
+  "baslik": "WAT Mobilite",
+  "tur": "istasyon",
   "tip": "hikaye",
   "zaman": "2026-11-12T14:00:00+03:00",
   "gorseller": [
@@ -461,8 +839,18 @@
  },
  {
   "id": "banka_on_post",
+  "grup": "2026-11__banka_on",
   "tip": "karusel",
   "zaman": "2026-11-12T19:30:00+03:00",
+  "baslik": "ON Dijital",
+  "tur": "banka",
+  "kaynaklar": [
+   {
+    "ad": "ON Dijital: %20 iade (Tüm şarj istasyonları)",
+    "url": "https://on.com.tr/on-kredi-karti-elektrikli-arac-sarj-kampanyasi",
+    "tur": "resmi"
+   }
+  ],
   "gorseller": [
    "media/2026-11/banka_on/1_kapak.jpg",
    "media/2026-11/banka_on/2_detay.jpg"
@@ -475,6 +863,9 @@
  },
  {
   "id": "banka_on_hikaye",
+  "grup": "2026-11__banka_on",
+  "baslik": "ON Dijital",
+  "tur": "banka",
   "tip": "hikaye",
   "zaman": "2026-11-12T20:30:00+03:00",
   "gorseller": [
@@ -488,8 +879,18 @@
  },
  {
   "id": "istasyon_varr_post",
+  "grup": "2026-11__istasyon_varr",
   "tip": "karusel",
   "zaman": "2026-11-13T09:30:00+03:00",
+  "baslik": "Varr",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "Garanti BBVA: 100 TL bonus",
+    "url": "https://www.bonus.com.tr/kampanyalar/varr-sarj-istasyonlari-kampanya",
+    "tur": "resmi"
+   }
+  ],
   "gorseller": [
    "media/2026-11/istasyon_varr/1_kapak.jpg",
    "media/2026-11/istasyon_varr/2_detay.jpg"
@@ -502,6 +903,9 @@
  },
  {
   "id": "istasyon_varr_hikaye",
+  "grup": "2026-11__istasyon_varr",
+  "baslik": "Varr",
+  "tur": "istasyon",
   "tip": "hikaye",
   "zaman": "2026-11-13T10:30:00+03:00",
   "gorseller": [
@@ -515,8 +919,18 @@
  },
  {
   "id": "istasyon_gioev_post",
+  "grup": "2026-11__istasyon_gioev",
   "tip": "karusel",
   "zaman": "2026-11-13T13:00:00+03:00",
+  "baslik": "GIO EV",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "GIO EV: 11,99 TL/kWh",
+    "url": "https://sarjharitasi.tr/kampanyalar/?slug=gio-ev-istasyonlarinda-avantajli-fiyat",
+    "tur": "derleme"
+   }
+  ],
   "gorseller": [
    "media/2026-11/istasyon_gioev/1_kapak.jpg",
    "media/2026-11/istasyon_gioev/2_detay.jpg"
@@ -529,6 +943,9 @@
  },
  {
   "id": "istasyon_gioev_hikaye",
+  "grup": "2026-11__istasyon_gioev",
+  "baslik": "GIO EV",
+  "tur": "istasyon",
   "tip": "hikaye",
   "zaman": "2026-11-13T14:00:00+03:00",
   "gorseller": [
