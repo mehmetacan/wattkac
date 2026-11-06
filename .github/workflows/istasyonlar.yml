@@ -25,6 +25,11 @@ jobs:
       - name: Ağların resmi haritalarından istasyonları çek
         run: python3 -u tools/ag_istasyonlari.py
         continue-on-error: true
+      - name: Open Charge Map istasyonlarını çek
+        env:
+          OCM_API_KEY: ${{ secrets.OCM_API_KEY }}
+        run: python3 -u tools/ocm_cek.py data/ocm/istasyonlar_ocm.json
+        continue-on-error: true
       - name: EPDK adreslerini konuma çevir (en fazla 4 saat)
         run: python3 -u tools/epdk_konum.py 14400
         continue-on-error: true
@@ -41,7 +46,7 @@ jobs:
         run: |
           git config user.name "wattkac-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/osm data/epdk data/aglar site/istasyonlar.json docs/kampanyalar/istasyonlar.json
+          git add data/osm data/ocm data/epdk data/aglar site/istasyonlar.json docs/kampanyalar/istasyonlar.json
           if git diff --cached --quiet; then echo "Değişiklik yok"; exit 0; fi
           git commit -m "İstasyon verisi güncellendi"
           git pull --rebase origin "${GITHUB_REF_NAME}"

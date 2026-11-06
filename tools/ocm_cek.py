@@ -12,7 +12,7 @@ import json, os, pathlib, re, sys, urllib.parse, urllib.request, datetime, colle
 
 API = "https://api.openchargemap.io/v3/poi/"
 UA = "WattKac/1.0 (+https://wattkac.com)"
-OPEN_LICENSE = re.compile(r"CC[\s-]?BY|CC0|ODbL|Open Data|Public Domain|Open Government", re.I)
+OPEN_LICENSE = re.compile(r"Creative Commons Attribution|CC[\s-]?BY|CC[\s-]?0|ODbL|Open Data|Public Domain|Open Government", re.I)
 DC_TYPES = re.compile(r"CCS|CHAdeMO|Supercharger|Combo|GB/T DC", re.I)
 
 
@@ -63,7 +63,7 @@ def main():
         dp = p.get("DataProvider") or {}
         license_ = dp.get("License") or ""
         lic[f"{dp.get('Title')} | {license_[:60]}"] += 1
-        if license_ and not OPEN_LICENSE.search(license_):
+        if license_ and (not OPEN_LICENSE.search(license_) or re.search(r"NonCommercial|\bNC\b", license_, re.I)):
             skipped += 1
             continue
         if (p.get("UsageType") or {}).get("IsPrivateIndividuals") or (p.get("StatusType") or {}).get("IsOperational") is False:

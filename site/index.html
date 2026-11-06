@@ -765,7 +765,7 @@ function renderSheet() {
   if (s) { renderDetail(s); return; }
   if (!M.center) {
     h.innerHTML = `<b>Şarj istasyonları</b>`;
-    b.innerHTML = `<p class="note">Konumunu kullan ya da haritada bir bölgeye gidip aramayı başlat.</p><div class="credit">Harita ve istasyon verisi © OpenStreetMap katkıda bulunanlar</div>`; return;
+    b.innerHTML = `<p class="note">Konumunu kullan ya da haritada bir bölgeye gidip aramayı başlat.</p><div class="credit">Harita ve istasyon verisi: EPDK, ağların resmi haritaları, © OpenStreetMap, © Open Charge Map (CC BY 4.0)</div>`; return;
   }
   const sortTxt = { yakin: "yakından uzağa", ucuz: "ucuzdan pahalıya", pahali: "pahalıdan ucuza", guc: "güce göre" }[M.sort];
   h.innerHTML = `<span><b>${M.view.length}</b> istasyon · ${sortTxt}</span><span class="lg"><span><i style="background:#F59E0B"></i>Sana uyan</span><span><i style="background:#047857"></i>Kampanyalı</span></span>`;
@@ -775,7 +775,7 @@ function renderSheet() {
   if (!M.view.length) html = `<p class="note">Bu filtrelerle istasyon bulunamadı.</p>`;
   if (hidden) html += `<button class="btn more" data-showunk="1">Tanımsız ${hidden} istasyonu da göster</button>`;
   if ((M.sort === "ucuz" || M.sort === "pahali") && M.view.some(x => x.price)) html += `<p class="note">Fiyatı bilinen istasyonlar önce listelenir. Fiyatlar ağın resmi sayfasındaki en düşük liste fiyatına göredir.</p>`;
-  b.innerHTML = html + `<div class="credit">Harita ve istasyon verisi © OpenStreetMap katkıda bulunanlar</div>`;
+  b.innerHTML = html + `<div class="credit">Harita ve istasyon verisi: EPDK, ağların resmi haritaları, © OpenStreetMap, © Open Charge Map (CC BY 4.0)</div>`;
 }
 function stationItem(s) {
   const tb = typeBadge(s), sub = [s.brand && s.name !== s.brand ? s.brand : "", s.addr].filter(Boolean).join(" · ");
@@ -810,7 +810,7 @@ function renderDetail(s) {
     ${s.camp.length ? `<div class="lbl" style="margin-top:12px">Bu ağa özel kampanyalar</div>${s.camp.map(mc).join("")}` : ""}
     ${myGeneral.length ? `<div class="lbl" style="margin-top:10px">Kartınla her istasyonda</div>${myGeneral.map(mc).join("")}` : (general.length && profileEmpty() ? `<p class="note">Her istasyonda geçerli ${general.length} kart kampanyası var. Kartlarını ekleyince burada görürsün.</p>` : "")}
     <a class="btn primary dir" href="https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lon}" target="_blank" rel="noopener">Yol tarifi al</a>
-    <div class="credit">${s.official ? "İstasyon bilgisi ağın kendi resmi haritasından alınır; günde bir kez güncellenir." : "Konum ve teknik bilgiler EPDK kaydı ve OpenStreetMap katkıda bulunanlarından gelir; eksik ya da eski olabilir."}</div>`;
+    <div class="credit">${s.official ? "İstasyon bilgisi ağın kendi resmi haritasından alınır; günde bir kez güncellenir." : "Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map katkıda bulunanlarından gelir; eksik ya da eski olabilir."}</div>`;
   $("back").onclick = () => { M.sel = null; renderSheet(); highlight(); };
   $("sh-b").scrollTop = 0;
 }
