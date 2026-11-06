@@ -1,0 +1,47 @@
+[
+ {
+  "id": "istasyon_astor_post",
+  "grup": "2026-11-06-astor__istasyon_astor",
+  "tip": "karusel",
+  "zaman": "2026-11-06T17:15:00+03:00",
+  "baslik": "ASTOR Şarj",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "ASTOR Şarj: DC 10,90 TL/kWh",
+    "url": "https://www.instagram.com/astorsarj/",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Ziraat Bankası: %20 Jest Lira",
+    "url": "https://www.bankkart.com.tr/kampanyalar/akaryakit/elektrikli-sarj-istasyonlarinda-750-tl-jest-lira",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-06-astor/istasyon_astor/1_kapak.jpg",
+   "media/2026-11-06-astor/istasyon_astor/2_detay.jpg"
+  ],
+  "aciklama": "⚡ ASTOR Şarj'da Kasım tarifesi: DC 10,90 TL/kWh, AC 8,99 TL/kWh!\n\n📲 Astor Şarj uygulamasını güncelle, Kasım ayı boyunca bu fiyatlarla şarj et.\n💳 Ziraat Bankkart ile ödersen ayrıca %20 Jest Lira (toplam 750 TL; ödemeden önce Bankkart Mobil'den katılım gerekli).\n🌍 Her istasyonda geçerli kart kampanyaları: Paraf Doğal · QNB · ON\n\nKaynak: @astorsarj resmi duyurusu. Güncel tarife uygulamada geçerlidir; koşullar değişebilir.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #astorşarj #wattkac",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "istasyon_astor_hikaye",
+  "grup": "2026-11-06-astor__istasyon_astor",
+  "baslik": "ASTOR Şarj",
+  "tur": "istasyon",
+  "tip": "hikaye",
+  "zaman": "2026-11-06T18:15:00+03:00",
+  "gorseller": [
+   "media/2026-11-06-astor/istasyon_astor/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ }
+]

@@ -272,6 +272,32 @@
    }
   },
   {
+   "id": "astor",
+   "name": "ASTOR Şarj",
+   "own": [
+    {
+     "big": "DC 10,90 TL/kWh",
+     "det": "AC 8,99 TL/kWh · uygulamayı güncelleyen kullanıcılara, Kasım boyunca",
+     "son": "30 Kasım",
+     "link": "https://www.instagram.com/astorsarj/",
+     "bas": "2026-11-01",
+     "bit": "2026-11-30",
+     "kosul": "Astor Şarj mobil uygulamasının güncel sürümüyle başlatılan şarjlarda; fiyat tarifesi Kasım ayı boyunca geçerli. Kaynak: Astor Şarj resmi Instagram duyurusu (6 Kasım 2026). Güncel tarife uygulamada geçerlidir."
+    }
+   ],
+   "banks": [
+    [
+     "Ziraat Bankkart",
+     "%20 Jest Lira"
+    ]
+   ],
+   "cover": {
+    "big": "DC 10,90 TL",
+    "sub": "AC 8,99 TL/kWh · Kasım boyunca",
+    "son": "30 Kasım"
+   }
+  },
+  {
    "id": "trugo",
    "name": "Trugo",
    "own": [],
