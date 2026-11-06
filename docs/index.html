@@ -69,6 +69,7 @@ textarea{min-height:200px;resize:vertical}
     <svg viewBox="0 0 24 24" width="28" height="28"><path d="M13.5 2 4 13.5h6.2L9.5 22 20 9.8h-6.4z" fill="#FFD400"/></svg>
     <h1>Watt<b>Kaç</b> Onay Paneli</h1><span class="sp"></span>
     <button class="btn ghost" id="refresh" title="Yenile">↻</button>
+    <button class="btn ghost" id="logout" title="Anahtarı sil">Çıkış</button>
   </header>
   <div id="app"></div>
 </div>
@@ -90,7 +91,7 @@ const b64enc = s => { const by = new TextEncoder().encode(s); let bin = ""; by.f
 function toast(m, ms = 2600) { const t = document.getElementById("toast"); t.textContent = m; t.style.display = "block"; clearTimeout(t._h); t._h = setTimeout(() => t.style.display = "none", ms); }
 
 async function gh(path, opt = {}) {
-  const r = await fetch(path, { ...opt, cache: "no-store", headers: { "Accept": "application/vnd.github+json", "Authorization": `Bearer ${token}`, ...(opt.headers || {}) } });
+  const r = await fetch(path, { ...opt, cache: "no-store", headers: { "Accept": "application/vnd.github+json", "Authorization": `Bearer ${cleanToken(token)}`, ...(opt.headers || {}) } });
   if (r.status === 404) return null;
   if (!r.ok) { const j = await r.json().catch(() => ({})); throw new Error(`${r.status}: ${j.message || r.statusText}`); }
   return r.json();
@@ -101,6 +102,10 @@ const fmt = iso => new Date(iso).toLocaleString("tr-TR", { timeZone: "Europe/Ist
 function toLocalInput(iso) { const d = new Date(new Date(iso).getTime() + 3 * 3600e3); return d.toISOString().slice(0, 16); }
 const fromLocalInput = v => `${v}:00+03:00`;
 function nowPlus(min) { const d = new Date(Date.now() + min * 60e3); d.setUTCSeconds(0, 0); const m = d.getUTCMinutes(); d.setUTCMinutes(Math.ceil(m / 5) * 5); return toLocalInput(d.toISOString()); }
+
+// Kopyalarken karışan görünmez karakterleri, boşlukları ve tırnakları temizler
+const cleanToken = v => String(v || "").normalize("NFKC").replace(/[^\x21-\x7E]/g, "").replace(/^["'`]+|["'`]+$/g, "");
+const validToken = v => /^(github_pat_|ghp_)[A-Za-z0-9_]{20,}$/.test(v);
 
 function setupScreen(msg = "") {
   app.innerHTML = `<div class="setup">
@@ -119,8 +124,8 @@ function setupScreen(msg = "") {
     <p class="muted" style="margin-top:12px">Anahtar yalnızca bu cihazın tarayıcısında saklanır.</p>
   </div>`;
   document.getElementById("save").onclick = () => {
-    const v = document.getElementById("tok").value.trim();
-    if (!v) return;
+    const v = cleanToken(document.getElementById("tok").value);
+    if (!validToken(v)) { setupScreen("Bu bir GitHub anahtarına benzemiyor. 'github_pat_' ile başlayan metnin tamamını, başında/sonunda boşluk olmadan yapıştırın."); return; }
     token = v; store("wk_token", v); load();
   };
 }
@@ -144,7 +149,7 @@ async function load() {
     groups = Object.values(by).filter(g => g.post).sort((a, b) => a.post.zaman.localeCompare(b.post.zaman));
     render();
   } catch (e) {
-    if (String(e.message).startsWith("401") || String(e.message).startsWith("403")) { store("wk_token", null); setupScreen("Anahtar geçersiz veya izni eksik: " + e.message); }
+    if (/^(401|403)/.test(String(e.message)) || /ISO-8859-1|headers/.test(String(e.message))) { store("wk_token", null); token = ""; setupScreen("Anahtar geçersiz veya izni eksik, lütfen yeniden girin. (" + e.message + ")"); }
     else app.innerHTML = `<div class="err">Yüklenemedi: ${esc(e.message)}</div>`;
   }
 }
@@ -236,9 +241,10 @@ async function saveApproval(grup, body, retry = true) {
 }
 
 document.getElementById("zoom").onclick = e => e.currentTarget.style.display = "none";
+document.getElementById("logout").onclick = () => { store("wk_token", null); token = ""; setupScreen(); };
 document.getElementById("refresh").onclick = () => token ? load() : null;
-token = read("wk_token");
-token ? load() : setupScreen();
+token = cleanToken(read("wk_token"));
+if (validToken(token)) load(); else { store("wk_token", null); token = ""; setupScreen(); }
 </script>
 </body>
 </html>
