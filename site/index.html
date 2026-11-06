@@ -326,6 +326,9 @@ const fold = s => String(s).toLocaleLowerCase("tr").replace(/ı/g,"i").replace(/
 const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const todayIst = () => new Date(Date.now() + 3 * 3600e3).toISOString().slice(0, 10);
 const fmtTL = v => v.toLocaleString("tr-TR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " TL/kWh";
+const fmtNum = v => v.toLocaleString("tr-TR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const priceStr = p => (p.max > p.v ? `${fmtNum(p.v)}–${fmtNum(p.max)}` : fmtNum(p.v)) + " TL/kWh";
+const dateTr = s => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ""); return m ? `${+m[3]} ${AY[+m[2] - 1]} ${m[1]}` : ""; };
 const fmtKm = m => m < 1000 ? `${Math.max(10, Math.round(m / 10) * 10)} m` : `${(m / 1000).toFixed(m < 10000 ? 1 : 0).replace(".", ",")} km`;
 const lsGet = k => { try { return localStorage.getItem(k); } catch { return null; } };
 const lsSet = (k, v) => { try { localStorage.setItem(k, v); return true; } catch { return false; } };
@@ -549,7 +552,11 @@ function sockets(t) {
 function priceFor(net, kind) {
   const x = TAR.aglar && TAR.aglar[net];
   if (!x) return null;
-  const pick = k => typeof x[k] === "number" ? { v: x[k], kind: k } : null;
+  const pick = k => {
+    const p = x[k]; if (p === null || p === undefined) return null;
+    const min = typeof p === "number" ? p : p.min, max = typeof p === "number" ? p : (p.max ?? p.min);
+    return typeof min === "number" && typeof max === "number" ? { v: min, max, kind: k } : null;
+  };
   return kind ? pick(kind) : (pick("ac") || pick("dc"));
 }
 function parseStation(el) {
@@ -676,7 +683,7 @@ function highlight() {
 }
 function priceText(s) {
   if (!s.price) return `<span>Fiyat yok</span>`;
-  return `<span class="pr">${fmtTL(s.price.v)}</span>`;
+  return `<span class="pr">${priceStr(s.price)}</span>`;
 }
 function renderSheet() {
   const h = $("sh-h"), b = $("sh-b"), s = M.sel && M.view.find(x => x.id === M.sel);
@@ -688,7 +695,8 @@ function renderSheet() {
   h.innerHTML = `<span><b>${M.view.length}</b> istasyon · ${sortTxt}</span><span class="lg"><span><i style="background:#FFD400"></i>Sana uyan</span><span><i style="background:#22E3A0"></i>Kampanyalı</span></span>`;
   const noPrice = !M.view.some(x => x.price);
   b.innerHTML = (M.view.length ? M.view.slice(0, 120).map(stationItem).join("") : `<p class="note">Seçtiğin filtrelere uyan istasyon yok.</p>`)
-    + (noPrice && M.view.length && M.sort !== "yakin" ? `<p class="note">Bu istasyonların liste fiyatı henüz yok, bu yüzden fiyata göre sıralanamadı.</p>` : "")
+    + (noPrice && M.view.length && (M.sort === "ucuz" || M.sort === "pahali") ? `<p class="note">Bu istasyonların liste fiyatı henüz yok, bu yüzden fiyata göre sıralanamadı.</p>` : "")
+    + ((M.sort === "ucuz" || M.sort === "pahali") && !noPrice ? `<p class="note">Fiyata göre sıralama, ağın resmi sayfasındaki en düşük liste fiyatına göredir; fiyat istasyona göre değişebilir. Fiyatı olmayanlar sona alınır.</p>` : "")
     + `<div class="credit">Harita ve istasyon verisi © OpenStreetMap katkıda bulunanlar</div>`;
 }
 function stationItem(s) {
@@ -706,7 +714,7 @@ function renderDetail(s) {
   const myGeneral = general.filter(c => P.banka.includes(c.kid));
   const pr = s.price && TAR.aglar[s.brand];
   const priceHtml = s.price
-    ? `<b>${fmtTL(s.price.v)}</b> <small>(${s.price.kind.toUpperCase()} liste fiyatı${TAR.guncelleme ? ` · ${esc(TAR.guncelleme)}` : ""}${pr && pr.kaynak ? ` · <a href="${esc(safeUrl(pr.kaynak))}" target="_blank" rel="noopener nofollow">kaynak</a>` : ""})</small>`
+    ? `<b>${priceStr(s.price)}</b> <small>(${s.price.kind.toUpperCase()} liste fiyatı${s.price.max > s.price.v ? ", konuma göre değişir" : ""}${pr && pr.gecerlilik ? ` · ${esc(dateTr(pr.gecerlilik))} tarihli` : ""}${pr && pr.kontrol ? ` · ${esc(dateTr(pr.kontrol))} tarihinde kontrol edildi` : ""}${pr && pr.kaynak ? ` · <a href="${esc(safeUrl(pr.kaynak))}" target="_blank" rel="noopener nofollow">resmi sayfa</a>` : ""})</small>`
     : `<small>Bu ağın liste fiyatı henüz eklenmedi</small>`;
   const mc = c => { const { txt } = daysText(c); return `<div class="mc ${mine(c) && !profileEmpty() ? "mine" : ""}"><div class="big sm">${esc(c.big)}</div><div class="det">${esc(c.det)}</div>
     <div class="alt">${esc(c.kurum)}${txt ? " · " + esc(txt) : ""}</div><a class="src" style="margin-left:0" href="${esc(safeUrl(c.link))}" target="_blank" rel="noopener nofollow">Resmi kampanya sayfası ↗</a></div>`; };
