@@ -1,0 +1,15 @@
+{
+  "_not": "Şarj ağlarının resmi sayfalarında doğrulanan liste fiyatları (TL/kWh). ac ve dc doğrulanana kadar null kalır; null olan ağlar haritada 'Fiyat yok' görünür ve fiyata göre sıralamada sona düşer. kaynak: ağın kendi tarife sayfası.",
+  "guncelleme": null,
+  "aglar": {
+    "Eşarj": { "ac": null, "dc": null, "kaynak": null },
+    "ASTOR Şarj": { "ac": null, "dc": null, "kaynak": null },
+    "Trugo": { "ac": null, "dc": null, "kaynak": null },
+    "Voltrun": { "ac": null, "dc": null, "kaynak": null },
+    "Otopriz": { "ac": null, "dc": null, "kaynak": null },
+    "Ovolt": { "ac": null, "dc": null, "kaynak": null },
+    "Shell Recharge": { "ac": null, "dc": null, "kaynak": null },
+    "WAT Mobilite": { "ac": null, "dc": null, "kaynak": null },
+    "Voltla": { "ac": null, "dc": null, "kaynak": null }
+  }
+}
