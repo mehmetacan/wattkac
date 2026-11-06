@@ -311,7 +311,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 const ALL = "Tüm şarj istasyonları";
 const DERLEME = ["sarjharitasi", "sarjevi", "hangikredi", "sarjkampanya", "arabamsarj", "donanimhaber"];
 const AY = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
-const OVERPASS = ["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter"];
+const OVERPASS = ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter", "https://overpass.kumi.systems/api/interpreter"];
 const TILE = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 const TILE_ATTR = '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 const PKEY = "wattkac.profil.v1";
@@ -600,17 +600,17 @@ function mergeStations(arr) {
 async function overpass(lat, lon, rM) {
   const key = `wk.st2.${lat.toFixed(3)}.${lon.toFixed(3)}.${rM}`;
   try { const h = JSON.parse(ssGet(key) || "null"); if (h && Date.now() - h.t < 30 * 60e3) return h.e; } catch {}
-  const q = `[out:json][timeout:20];(node["amenity"="charging_station"](around:${rM},${lat},${lon});way["amenity"="charging_station"](around:${rM},${lat},${lon}););out center tags 400;`;
+  const q = `[out:json][timeout:15];(node["amenity"="charging_station"](around:${rM},${lat},${lon});way["amenity"="charging_station"](around:${rM},${lat},${lon}););out center tags 400;`;
   const one = async u => {
-    const r = await fetch(u, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: "data=" + encodeURIComponent(q) });
+    const ac = new AbortController(), to = setTimeout(() => ac.abort(), 14000);
+    let r; try { r = await fetch(u, { method: "POST", signal: ac.signal, headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: "data=" + encodeURIComponent(q) }); } finally { clearTimeout(to); }
     if (!r.ok) throw new Error("HTTP " + r.status);
     const j = await r.json();
     if (!Array.isArray(j.elements)) throw new Error("Geçersiz yanıt");
     return j.elements;
   };
-  // İlk sunucu 1,5 sn içinde yanıt vermezse ikincisi de denenir; hangisi önce dönerse o kullanılır
-  const second = new Promise((res, rej) => setTimeout(() => one(OVERPASS[1]).then(res, rej), 1500));
-  const e = await Promise.any([one(OVERPASS[0]), second]);
+  // Sunucular kademeli (0, 1,5 ve 3 sn) başlatılır; hangisi önce dönerse o kullanılır, her biri 14 sn'de zaman aşımına uğrar
+  const e = await Promise.any(OVERPASS.map((u, i) => new Promise((res, rej) => setTimeout(() => one(u).then(res, rej), i * 1500))));
   ssSet(key, JSON.stringify({ t: Date.now(), e })); return e;
 }
 function dist(a, b) {
@@ -628,13 +628,13 @@ function openMap() {
   if (!M.map) {
     if (!window.L) { setMsg("Harita kütüphanesi yüklenemedi. İnternet bağlantınızı kontrol edip sayfayı yenileyin.", true); return; }
     const wide = matchMedia("(min-width:900px)").matches;
-    M.map = L.map("map", { zoomControl: wide, attributionControl: true, preferCanvas: true, zoomSnap: 1, wheelPxPerZoomLevel: 90 }).setView([39.0, 35.0], 6);
+    M.map = L.map("map", { zoomControl: wide, attributionControl: true, preferCanvas: true, minZoom: 9, zoomSnap: 1, wheelPxPerZoomLevel: 90 }).setView([41.01, 28.97], 11);
     L.tileLayer(TILE, { maxZoom: 19, attribution: TILE_ATTR, updateWhenIdle: true, updateWhenZooming: false, keepBuffer: 1 }).addTo(M.map);
     M.layer = L.layerGroup().addTo(M.map);
     let t; M.map.on("moveend", () => { clearTimeout(t); t = setTimeout(checkHere, 120); });
     renderMap();
-    setMsg("Yakındaki istasyonlar için «Konum»a dokun ya da haritada bir yere gidip «Bu bölgede ara»ya bas.");
-    try { navigator.permissions?.query({ name: "geolocation" }).then(p => p.state === "granted" && locate()); } catch {}
+    setMsg("Konumun alınıyor…");
+    locate();
   }
   setTimeout(() => M.map.invalidateSize(), 50);
 }
@@ -646,7 +646,8 @@ function locate() {
     M.me = { lat: pos.coords.latitude, lon: pos.coords.longitude }; M.center = { ...M.me };
     if (M.meMark) M.meMark.remove();
     M.meMark = L.circleMarker([M.me.lat, M.me.lon], { radius: 8, color: "#fff", weight: 3, fillColor: "#2563EB", fillOpacity: 1, interactive: false }).addTo(M.map);
-    runSearch(true);
+    M.map.setView([M.me.lat, M.me.lon], 13, { animate: false });
+    runSearch(false);
   }, err => {
     $("loc").disabled = false; $("loc-t").textContent = "Konum";
     setMsg(err.code === 1 ? "Konum izni verilmedi. Tarayıcı ayarlarından izin verebilir ya da haritada bir bölgeye gidip «Bu bölgede ara»yı kullanabilirsin." : "Konumun alınamadı. Haritada bir bölgeye gidip «Bu bölgede ara»yı kullanabilirsin.", true);
@@ -663,7 +664,7 @@ async function runSearch(fit) {
     M.last = { ...M.center }; M.sel = null; M.shown = PAGE; M.f.brands.clear(); M.sig = "";
     if (M.circle) M.circle.remove();
     M.circle = L.circle([M.center.lat, M.center.lon], { radius: M.radius * 1000, color: "#9CA3AF", weight: 1.5, fillOpacity: .03, dashArray: "6 6", interactive: false }).addTo(M.map);
-    if (fit !== false) M.map.fitBounds(M.circle.getBounds(), { padding: [10, 10] });
+    if (fit === true) M.map.fitBounds(M.circle.getBounds(), { padding: [10, 10] });
     setMsg("");
     renderMap();
     if (!M.view.length) setMsg(M.ST.length ? "Bu filtrelerle istasyon bulunamadı." : "Bu alanda kayıtlı şarj istasyonu bulunamadı. Mesafeyi büyütmeyi dene.");
