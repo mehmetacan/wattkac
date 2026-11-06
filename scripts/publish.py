@@ -109,9 +109,15 @@ def persist(path, q, msg):
     run("git", "-c", "user.name=wattkac-bot", "-c", "user.email=wattkac-bot@users.noreply.github.com",
         "commit", "-m", f"{msg} [skip ci]")
     for _ in range(3):
-        run("git", "pull", "--rebase", "-q", "origin", "main")
-        if run("git", "push", "-q", "origin", "HEAD:main").returncode == 0:
+        pr = run("git", "-c", "user.name=wattkac-bot", "-c", "user.email=wattkac-bot@users.noreply.github.com",
+                 "pull", "--rebase", "-q", "origin", "main")
+        if pr.returncode != 0:
+            log(f"git pull hatası: {pr.stderr.strip()[:300]}")
+            run("git", "rebase", "--abort")
+        ps = run("git", "push", "-q", "origin", "HEAD:main")
+        if ps.returncode == 0:
             return
+        log(f"git push hatası: {ps.stderr.strip()[:300]}")
         time.sleep(3)
     log("Uyarı: kuyruk durumu push edilemedi")
 
@@ -191,7 +197,7 @@ def main():
                 ref.update(durum="hata", hata=str(e)[:500])
                 changed = True
                 errors += 1
-                log(f"  ✗ {e}")
+                log(f"  ✗ HATA ({ref['id']}): {e}")
         if changed and not DRY:
             persist(path, q, "Kuyruk güncellendi")
     log(f"Bitti: {done} paylaşım, {errors} hata")
