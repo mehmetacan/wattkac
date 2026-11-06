@@ -95,6 +95,27 @@ def quota_left(uid):
         return 999
 
 
+def persist(path, q, msg):
+    """Kuyruğu yazar; Actions içindeyse hemen commit+push yapar (yarıda kesilirse çift paylaşım olmasın)."""
+    json.dump(q, open(path, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    if os.environ.get("GIT_COMMIT_EACH") != "1":
+        return
+    import subprocess
+    rel = os.path.relpath(path, ROOT)
+    run = lambda *a: subprocess.run(list(a), cwd=ROOT, capture_output=True, text=True)
+    run("git", "add", rel)
+    if run("git", "diff", "--cached", "--quiet").returncode == 0:
+        return
+    run("git", "-c", "user.name=wattkac-bot", "-c", "user.email=wattkac-bot@users.noreply.github.com",
+        "commit", "-m", f"{msg} [skip ci]")
+    for _ in range(3):
+        run("git", "pull", "--rebase", "-q", "origin", "main")
+        if run("git", "push", "-q", "origin", "HEAD:main").returncode == 0:
+            return
+        time.sleep(3)
+    log("Uyarı: kuyruk durumu push edilemedi")
+
+
 def load_approvals():
     out = {}
     for f in glob.glob(os.path.join(ROOT, "onaylar", "*.json")):
@@ -153,13 +174,13 @@ def main():
                 continue
             if done >= MAX_PER_RUN or left <= 1:
                 break
-            log(f"Paylaşılıyor: {item['id']} ({item['zaman']})")
+            log(f"Paylaşılıyor: {item['id']} (onaylı saat {t.astimezone(dt.timezone(dt.timedelta(hours=3))):%d.%m %H:%M})")
             try:
                 mid = publish(item, uid)
                 if not DRY:
                     ref.update(durum="paylasildi", ig_media_id=mid, hata=None,
                                paylasim_zamani=now.isoformat(timespec="seconds"))
-                    changed = True
+                    persist(path, q, f"Paylaşıldı: {ref['id']}")
                 log(f"  ✓ {mid}")
                 done += 1
                 left -= 1
@@ -170,7 +191,7 @@ def main():
                 errors += 1
                 log(f"  ✗ {e}")
         if changed and not DRY:
-            json.dump(q, open(path, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+            persist(path, q, "Kuyruk güncellendi")
     log(f"Bitti: {done} paylaşım, {errors} hata")
     return 1 if errors and not done else 0
 

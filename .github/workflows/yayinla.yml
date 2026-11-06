@@ -38,6 +38,7 @@ jobs:
           YAYIN_AKTIF: ${{ vars.YAYIN_AKTIF }}
           DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && '1' || '0' }}
           BEKLE_DK: "20"
+          GIT_COMMIT_EACH: "1"
         run: python scripts/publish.py
       - name: Kuyruk durumunu kaydet
         if: always()
