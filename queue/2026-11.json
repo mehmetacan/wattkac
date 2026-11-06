@@ -447,10 +447,11 @@
    "media/2026-11/banka_yapikredi/hikaye.jpg"
   ],
   "aciklama": "",
-  "durum": "bekliyor",
+  "durum": "paylasildi",
   "deneme": 0,
-  "ig_media_id": null,
-  "hata": null
+  "ig_media_id": "18022406819730353",
+  "hata": null,
+  "paylasim_zamani": "2026-11-06T17:00:05+00:00"
  },
  {
   "id": "istasyon_voltrun_post",
