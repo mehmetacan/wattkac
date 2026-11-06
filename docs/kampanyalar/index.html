@@ -312,8 +312,8 @@ const ALL = "Tüm şarj istasyonları";
 const DERLEME = ["sarjharitasi", "sarjevi", "hangikredi", "sarjkampanya", "arabamsarj", "donanimhaber"];
 const AY = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
 const OVERPASS = ["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter"];
-const TILE = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
-const TILE_ATTR = '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/attributions">CARTO</a>';
+const TILE = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+const TILE_ATTR = '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 const PKEY = "wattkac.profil.v1";
 const MAXM = 100, PAGE = 40;
 // Eşleştirme kalıpları: boşluksuz, aksansız (fold edilmiş) yazılır; \b kelime sınırıdır
@@ -629,7 +629,7 @@ function openMap() {
     if (!window.L) { setMsg("Harita kütüphanesi yüklenemedi. İnternet bağlantınızı kontrol edip sayfayı yenileyin.", true); return; }
     const wide = matchMedia("(min-width:900px)").matches;
     M.map = L.map("map", { zoomControl: wide, attributionControl: true, preferCanvas: true, zoomSnap: 1, wheelPxPerZoomLevel: 90 }).setView([39.0, 35.0], 6);
-    L.tileLayer(TILE, { subdomains: "abcd", maxZoom: 19, attribution: TILE_ATTR, updateWhenIdle: true, updateWhenZooming: false, keepBuffer: 1 }).addTo(M.map);
+    L.tileLayer(TILE, { maxZoom: 19, attribution: TILE_ATTR, updateWhenIdle: true, updateWhenZooming: false, keepBuffer: 1 }).addTo(M.map);
     M.layer = L.layerGroup().addTo(M.map);
     let t; M.map.on("moveend", () => { clearTimeout(t); t = setTimeout(checkHere, 120); });
     renderMap();
