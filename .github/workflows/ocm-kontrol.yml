@@ -1,0 +1,19 @@
+name: OCM kapsam kontrolü
+
+# Open Charge Map'teki Türkiye kayıtlarını sayar (dosya yazmaz, commit etmez).
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ozet:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: OCM özetini çıkar
+        env:
+          OCM_API_KEY: ${{ secrets.OCM_API_KEY }}
+        run: python3 -u tools/ocm_cek.py --ozet
