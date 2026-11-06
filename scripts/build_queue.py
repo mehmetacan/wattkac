@@ -81,7 +81,7 @@ def bitis(item):
     src = item.get("_src")
     if not src:
         return "2099-12-31"
-    tarihler = [o["bit"] for o in src.get("offers", [])] + [o["bit"] for o in src.get("own", [])]
+    tarihler = [o["bit"] or "2099-12-31" for o in src.get("offers", [])] + [o["bit"] or "2099-12-31" for o in src.get("own", [])]
     return max(tarihler) if tarihler else "2099-12-31"
 
 
@@ -90,7 +90,7 @@ def used_times(skip_path):
     for f in glob.glob(os.path.join(ROOT, "queue", "*.json")):
         if os.path.abspath(f) == os.path.abspath(skip_path):
             continue
-        t |= {q["zaman"] for q in json.load(open(f, encoding="utf-8"))}
+        t |= {q["zaman"] for q in json.load(open(f, encoding="utf-8")) if q.get("durum") != "iptal"}
     return t
 
 

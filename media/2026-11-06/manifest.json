@@ -1,0 +1,112 @@
+[
+ {
+  "id": "banka_ziraat",
+  "tur": "banka",
+  "baslik": "Ziraat Bankası",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "banka_akbank",
+  "tur": "banka",
+  "baslik": "Akbank",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "banka_halkbank",
+  "tur": "banka",
+  "baslik": "Halkbank",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "banka_qnb",
+  "tur": "banka",
+  "baslik": "QNB",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_trugo",
+  "tur": "istasyon",
+  "baslik": "Trugo",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_voltrun",
+  "tur": "istasyon",
+  "baslik": "Voltrun",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_otopriz",
+  "tur": "istasyon",
+  "baslik": "Otopriz",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_ovolt",
+  "tur": "istasyon",
+  "baslik": "Ovolt",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_shell",
+  "tur": "istasyon",
+  "baslik": "Shell Recharge",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_wat",
+  "tur": "istasyon",
+  "baslik": "WAT Mobilite",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_voltla",
+  "tur": "istasyon",
+  "baslik": "Voltla",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ }
+]

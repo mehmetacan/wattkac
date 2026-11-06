@@ -108,7 +108,6 @@ footer{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--mut);fon
       <div class="chips" id="f-ag"></div>
       <div class="fh"><h3>Kampanya türü</h3></div>
       <div class="chips" id="f-tip"></div>
-      <label class="tog"><input type="checkbox" id="resmi"> Yalnızca resmi kaynaklı</label>
       <p class="note" id="nocamp"></p>
     </aside>
     <section aria-live="polite">
@@ -127,7 +126,7 @@ footer{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--mut);fon
 <footer>
   <div class="wrap">
     Bilgiler bankaların ve şarj ağlarının duyurularından derlenir; koşullar değişebilir. Kampanyaya katılmadan önce kampanya sahibinin resmi kanallarından kontrol edin.
-    Kaynak etiketi <b>DERLEME</b> olanlar kampanya derleme sitelerinden alınmıştır ve resmi sayfada teyit edilmemiştir. WattKaç hiçbir banka veya şarj ağıyla bağlantılı değildir.
+    Her kampanya, kampanyayı yapan banka veya şarj ağının kendi sayfasında doğrulanır ve bağlantı o sayfaya gider. WattKaç hiçbir banka veya şarj ağıyla bağlantılı değildir.
   </div>
 </footer>
 
@@ -146,7 +145,8 @@ function flatten(d) {
   d.bankalar.forEach(b => b.offers.forEach(o => out.push({ kid: b.id, kurum: b.name, alt: b.sub, tip: "banka", ...o })));
   d.istasyonlar.forEach(s => s.own.forEach(o => out.push({ kid: s.id, kurum: s.name, alt: "Şarj ağının kendi kampanyası", tip: "ag", st: [s.name], join: o.kosul, ...o })));
   const today = todayIst();
-  return out.filter(c => !c.bit || c.bit >= today).map(c => ({ ...c, resmi: !DERLEME.some(h => (c.link || "").includes(h)) }));
+  // Yalnızca kampanya sahibinin resmi sayfasına bağlanan kampanyalar gösterilir
+  return out.filter(c => (!c.bit || c.bit >= today) && c.link && !DERLEME.some(h => c.link.includes(h))).map(c => ({ ...c, resmi: true }));
 }
 
 function daysLeft(bit) { return Math.round((new Date(bit + "T00:00:00Z") - new Date(todayIst() + "T00:00:00Z")) / 864e5); }
@@ -180,7 +180,7 @@ function buildFilters(d) {
     b.setAttribute("aria-pressed", set.has(v)); render();
   });
   const yok = (d.kampanyasiz_bankalar || []).map(x => x.split(" (")[0]);
-  $("nocamp").textContent = yok.length ? `Bu dönem şarj kampanyası bulunmayan: ${yok.join(", ")}.` : "";
+  $("nocamp").textContent = yok.length ? `Bu dönem resmi sayfasında doğrulanmış şarj kampanyası olmayan: ${yok.join(", ")}.` : "";
 }
 
 function match(c) {
@@ -197,7 +197,7 @@ function match(c) {
 
 function card(c) {
   const dl = c.bit ? daysLeft(c.bit) : null;
-  const dtxt = dl === null ? "" : dl === 0 ? "Son gün bugün" : `${dl} gün kaldı · ${c.son}`;
+  const dtxt = dl === null ? (c.son || "") : dl === 0 ? "Son gün bugün" : `${dl} gün kaldı · ${c.son}`;
   const st = c.st.map(s => `<span class="${s === ALL ? "all" : S.ag.has(s) ? "hit" : ""}">${esc(s)}</span>`).join("");
   return `<article class="card">
     <div class="ct"><div><div class="kurum">${esc(c.kurum)}</div><div class="alt">${esc(c.alt)}</div></div>
@@ -207,7 +207,7 @@ function card(c) {
     ${c.tip === "banka" && c.join ? `<div class="join">Katılım: <b>${esc(c.join)}</b></div>` : ""}
     ${c.kosul ? `<details><summary>Koşullar</summary><p>${esc(c.kosul)}</p></details>` : ""}
     <div class="foot">${dtxt ? `<span class="days ${dl <= 3 ? "soon" : ""}">${esc(dtxt)}</span>` : ""}
-      ${c.link ? `<a class="src" href="${esc(c.link)}" target="_blank" rel="noopener nofollow"><span class="badge b-${c.resmi ? "resmi" : "derleme"}">${c.resmi ? "RESMİ" : "DERLEME"}</span>Kaynağa git ↗</a>` : ""}</div>
+      ${c.link ? `<a class="src" href="${esc(c.link)}" target="_blank" rel="noopener nofollow">Resmi kampanya sayfası ↗</a>` : ""}</div>
   </article>`;
 }
 
@@ -227,7 +227,7 @@ function render() {
 
 function resetAll() {
   S.banka.clear(); S.ag.clear(); S.tip.clear(); S.resmi = false; S.q = "";
-  $("q").value = ""; $("resmi").checked = false;
+  $("q").value = "";
   document.querySelectorAll(".chip").forEach(b => b.setAttribute("aria-pressed", "false")); render();
 }
 
@@ -245,9 +245,8 @@ async function init() {
     $("list").innerHTML = `<div class="err">Kampanyalar yüklenemedi (${esc(e.message)}). Lütfen sayfayı yenileyin.</div>`;
     $("upd").textContent = "Veri alınamadı"; return;
   }
-  $("q").value = S.q; $("resmi").checked = S.resmi; $("sort").value = S.sort;
+  $("q").value = S.q; $("sort").value = S.sort;
   let t; $("q").oninput = e => { clearTimeout(t); t = setTimeout(() => { S.q = e.target.value.trim(); render(); }, 150); };
-  $("resmi").onchange = e => { S.resmi = e.target.checked; render(); };
   $("sort").onchange = e => { S.sort = e.target.value; render(); };
   document.querySelectorAll("[data-clear]").forEach(b => b.onclick = () => {
     S[b.dataset.clear].clear(); document.querySelectorAll(`.chip[data-k=${b.dataset.clear}]`).forEach(c => c.setAttribute("aria-pressed", "false")); render();

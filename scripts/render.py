@@ -15,6 +15,11 @@ NAME_BREAK = {"Ziraat Bankası": "Ziraat<br>Bankası", "Garanti BBVA": "Garanti<
               "ON Dijital": "ON<br>Dijital"}
 
 
+def son_txt(son, prefix):
+    """'30 Kasım' → 'Son gün: 30 Kasım'; tarihsiz metinler olduğu gibi."""
+    return f"{prefix}{son}" if son[:1].isdigit() else son
+
+
 def esc(s):
     return html.escape(str(s), quote=True)
 
@@ -94,7 +99,7 @@ def bank_html(b, d, story):
     offers = ""
     for o in b["offers"]:
         lbl = "Geçerli istasyonlar" if o["st"] != [ALL] else "Nerede geçerli"
-        offers += (f'<div class="of"><div class="ot"><div class="big">{esc(o["big"])}</div><div class="son">Son: {esc(o["son"])}</div></div>'
+        offers += (f'<div class="of"><div class="ot"><div class="big">{esc(o["big"])}</div><div class="son">{esc(son_txt(o["son"], "Son: "))}</div></div>'
                    f'<div class="det">{esc(o["det"])}</div><div class="lbl">{lbl}</div><div class="chips">{chips(o["st"])}</div>'
                    f'<div class="join">Katılım: <b>{esc(o["join"])}</b></div></div>')
     return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{base_css(W, H, story)}</style></head><body><div class="wrap">'
@@ -104,7 +109,7 @@ def bank_html(b, d, story):
 
 def station_html(s, d, story):
     W, H = (1080, 1920) if story else (1080, 1350)
-    own = "".join(f'<div class="of"><div class="ot"><div class="big">{esc(o["big"])}</div><div class="son">Son: {esc(o["son"])}</div></div>'
+    own = "".join(f'<div class="of"><div class="ot"><div class="big">{esc(o["big"])}</div><div class="son">{esc(son_txt(o["son"], "Son: "))}</div></div>'
                   f'<div class="det">{esc(o["det"])}</div></div>' for o in s["own"])
     if not own:
         own = '<div class="empty">Bu ay ağın kendi kampanyası yok, ama bu kartlarla kazanabilirsin:</div>'
@@ -159,8 +164,14 @@ html,body{{width:1080px;height:1350px;overflow:hidden;font-family:'Inter',sans-s
 def render_all(d, etiket, sadece=None):
     want = (lambda pid: not sadece or pid in sadece)
     out = os.path.join(ROOT, "media", etiket)
-    if os.path.exists(out):
+    if os.path.exists(out) and not sadece:
         shutil.rmtree(out)
+    for pid in (sadece or []):
+        shutil.rmtree(os.path.join(out, pid), ignore_errors=True)
+    old = []
+    mf = os.path.join(out, "manifest.json")
+    if sadece and os.path.exists(mf):
+        old = [p for p in json.load(open(mf, encoding="utf-8")) if p["id"] not in sadece]
     posts = []
 
     def add(pid, kind, title, files):
@@ -190,7 +201,7 @@ def render_all(d, etiket, sadece=None):
         if not want(pid):
             continue
         p, c = f"{out}/{pid}", b["cover"]
-        shot(cover_html(b["name"], c["big"], c["sub"], f"Son gün: {c['son']}", "Detay için kaydır →", "bank"), f"{p}/1_kapak.jpg", 1080, 1350)
+        shot(cover_html(b["name"], c["big"], c["sub"], son_txt(c['son'], "Son gün: "), "Detay için kaydır →", "bank"), f"{p}/1_kapak.jpg", 1080, 1350)
         shot(bank_html(b, d, False), f"{p}/2_detay.jpg", 1080, 1350)
         shot(bank_html(b, d, True), f"{p}/hikaye.jpg", 1080, 1920)
         add(pid, "banka", b["name"], ["1_kapak.jpg", "2_detay.jpg", "hikaye.jpg"])
@@ -199,12 +210,12 @@ def render_all(d, etiket, sadece=None):
         if not want(pid):
             continue
         p, c = f"{out}/{pid}", s["cover"]
-        shot(cover_html(s["name"], c["big"], c["sub"], f"Son gün: {c['son']}", "Detay için kaydır →", "station"), f"{p}/1_kapak.jpg", 1080, 1350)
+        shot(cover_html(s["name"], c["big"], c["sub"], son_txt(c['son'], "Son gün: "), "Detay için kaydır →", "station"), f"{p}/1_kapak.jpg", 1080, 1350)
         shot(station_html(s, d, False), f"{p}/2_detay.jpg", 1080, 1350)
         shot(station_html(s, d, True), f"{p}/hikaye.jpg", 1080, 1920)
         add(pid, "istasyon", s["name"], ["1_kapak.jpg", "2_detay.jpg", "hikaye.jpg"])
     os.makedirs(out, exist_ok=True)
-    json.dump(posts, open(f"{out}/manifest.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    json.dump(old + posts, open(f"{out}/manifest.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     return posts
 
 

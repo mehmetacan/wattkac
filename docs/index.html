@@ -146,7 +146,7 @@ async function load() {
     }));
     const by = {};
     items.forEach(x => { const g = x.grup || x.id.replace(/_(post|hikaye)$/, ""); (by[g] ||= { grup: g }); by[g][x.tip === "hikaye" ? "story" : "post"] = x; });
-    groups = Object.values(by).filter(g => g.post).sort((a, b) => a.post.zaman.localeCompare(b.post.zaman));
+    groups = Object.values(by).filter(g => g.post && g.post.durum !== "iptal").sort((a, b) => a.post.zaman.localeCompare(b.post.zaman));
     render();
   } catch (e) {
     if (/^(401|403)/.test(String(e.message)) || /ISO-8859-1|headers/.test(String(e.message))) { store("wk_token", null); token = ""; setupScreen("Anahtar geçersiz veya izni eksik, lütfen yeniden girin. (" + e.message + ")"); }

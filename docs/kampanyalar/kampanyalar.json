@@ -1,13 +1,12 @@
 {
  "donem": "Kasım 2026",
  "guncelleme": "2026-11-06",
- "genel_kartlar": "Paraf · QNB · DenizBank · Kuveyt Türk · ON",
+ "genel_kartlar": "Paraf Doğal · QNB · ON",
  "kampanyasiz_bankalar": [
-  "Akbank (Axess)",
   "İş Bankası (Maximum)",
-  "TEB",
-  "ING",
-  "Enpara"
+  "VakıfBank (resmi sayfada doğrulanamadı)",
+  "DenizBank (resmi sayfada doğrulanamadı)",
+  "Kuveyt Türk (resmi sayfada doğrulanamadı)"
  ],
  "bankalar": [
   {
@@ -15,10 +14,15 @@
    "name": "Garanti BBVA",
    "sub": "Bonus kredi kartları",
    "tur": "Kredi kartı",
+   "cover": {
+    "big": "%50'ye varan bonus",
+    "sub": "Shell Recharge · Ovolt",
+    "son": "30 Kasım"
+   },
    "offers": [
     {
      "big": "%50 bonus",
-     "det": "Farklı günlerde 500 TL+ şarjda · toplam 750 TL",
+     "det": "Shell Recharge uygulamasıyla 500 TL+ şarjda",
      "st": [
       "Shell Recharge"
      ],
@@ -27,7 +31,7 @@
      "link": "https://www.shell.com.tr/suruculer/shellden-avantajli-kampanyalar/shell-recharge-kullanicilarina-ozel-garanti-bbva-kredi-kartlari-ile-yaptiklari-sarjlamalarda-50-bonus-firsati.html",
      "bas": "2026-10-23",
      "bit": "2026-11-30",
-     "kosul": "Garanti Bonus/Bonus Genç/Money Bonus/Bonus Business, sanal ve ek kart dahil; Altın Bonus ve Paracard hariç; günde 1 işlem; Garanti BBVA POS; bonus 3 Ara–3 Oca kullanılır"
+     "kosul": "Garanti BBVA kredi kartlarıyla, Shell Recharge uygulaması üzerinden 500 TL ve üzeri şarj; tek seferde veya farklı günlerde. Toplam bonus tavanı resmi sayfada belirtilmemiş."
     },
     {
      "big": "75 TL bonus",
@@ -40,121 +44,63 @@
      "link": "https://www.bonus.com.tr/kampanyalar/ovolt-akaryakit-bonus-kampanyalari",
      "bas": "2026-11-01",
      "bit": "2026-11-30",
-     "kosul": "Paracard dahil; Altın Bonus ve Bonus Flexi hariç; günde 1 işlem; Garanti BBVA POS; bonus 5 Ara–5 Oca kullanılır"
-    },
-    {
-     "big": "100 TL bonus",
-     "det": "Tek seferde 400 TL+ şarjda · en fazla 4 kez, toplam 400 TL",
-     "st": [
-      "Varr"
-     ],
-     "son": "30 Kasım",
-     "join": "BonusFlaş'tan Hemen Katıl",
-     "link": "https://www.bonus.com.tr/kampanyalar/varr-sarj-istasyonlari-kampanya",
-     "bas": "2026-11-01",
-     "bit": "2026-11-30",
-     "kosul": "Bonus, Bonus Genç, Money Bonus, Bonus AmEx, Troy Garanti kartları; Paracard, Altın Bonus, Flexi, ticari hariç; peşin veya taksitli"
+     "kosul": "Bonus, Bonus Genç, Money Bonus, Bonus Business (şahıs), Paracard, sanal ve ek kartlar; Altın Bonus ve Bonus Flexi hariç; günde 1 bonus; Garanti BBVA POS; bonus 5 Ara 2026–5 Oca 2027 arası kullanılır"
     }
-   ],
-   "cover": {
-    "big": "750 TL'ye varan bonus",
-    "sub": "Shell Recharge · Ovolt · Varr",
-    "son": "30 Kasım"
-   }
-  },
-  {
-   "id": "vakifbank",
-   "name": "VakıfBank",
-   "sub": "World kredi kartları · Recycle Card",
-   "tur": "Kredi kartı",
-   "offers": [
-    {
-     "big": "%20 indirim",
-     "det": "Bireysel kredi kartları · toplam 300 TL'ye kadar",
-     "st": [
-      "Trugo",
-      "ZES",
-      "EnYakıt",
-      "Voltrun",
-      "CTG Elektrik",
-      "MyCharge"
-     ],
-     "son": "30 Kasım",
-     "join": "VakıfBank Mobil › Kartınla Kazan › Hemen Katıl",
-     "link": "https://www.vakifkart.com.tr/kampanyalar/elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41122",
-     "bas": "2026-11-01",
-     "bit": "2026-11-30",
-     "kosul": "Ek ve sanal kart dahil; 5.000 TL+ işlemler, Recycle Card, ticari, Bankomat ve mobil temassız hariç; indirim 3 Aralık'ta ekstreye"
-    },
-    {
-     "big": "%20 indirim",
-     "det": "Recycle Card · ayda 500 TL'ye kadar",
-     "st": [
-      "Trugo",
-      "ZES",
-      "Eşarj",
-      "Tesla",
-      "Voltrun",
-      "EnYakıt",
-      "Ovolt",
-      "Sharz.net",
-      "CTG Elektrik",
-      "MyCharge",
-      "Solargize",
-      "RHG Enertürk"
-     ],
-     "son": "30 Kasım",
-     "join": "VakıfBank Mobil › Kartınla Kazan › Hemen Katıl",
-     "link": "https://www.vakifkart.com.tr/kampanyalar/recycle-card-ile-elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41128",
-     "bas": "2026-11-01",
-     "bit": "2026-11-30",
-     "kosul": "Sadece Recycle Card (ek/sanal dahil); 5.000 TL+ işlemler ve mobil temassız hariç; indirim 3 Aralık'ta ekstreye"
-    }
-   ],
-   "cover": {
-    "big": "%20 indirim",
-    "sub": "12 şarj ağında · Trugo, ZES, Eşarj...",
-    "son": "30 Kasım"
-   }
+   ]
   },
   {
    "id": "ziraat",
    "name": "Ziraat Bankası",
    "sub": "Bankkart kredi kartları",
    "tur": "Kredi kartı",
+   "cover": {
+    "big": "%20 Jest Lira",
+    "sub": "18 şarj ağında · Trugo, Eşarj, Voltrun...",
+    "son": "30 Kasım"
+   },
    "offers": [
     {
      "big": "%20 Jest Lira",
-     "det": "Bankkart POS'undan her şarj ödemesinde · toplam 750 TL",
+     "det": "Anlaşmalı ağlarda her şarj ödemesinde · toplam 750 TL",
      "st": [
+      "Trugo",
       "Eşarj",
       "Voltrun",
-      "ASTOR Şarj",
       "Otopriz",
+      "ASTOR Şarj",
+      "WAT Mobilite",
+      "Petrol Ofisi e-POWER",
+      "Zeplin Enerji",
+      "Tunçmatik",
       "Mercury Şarj",
-      "Miggo",
       "otojet",
-      "Porty Tech"
+      "Nevaşarj",
+      "5Şarj",
+      "EFISH",
+      "Mig-Go",
+      "Wattarya",
+      "Egeşarj",
+      "Konya Elektrikli Araçlar"
      ],
      "son": "30 Kasım",
-     "join": "Bankkart Mobil veya bankkart.com.tr'den katıl",
-     "link": "https://bankkart.com.tr/kampanyalar/akaryakit/elektrikli-sarj-istasyonlarinda-750-tl-jest-lira",
+     "join": "Ödemeden önce Bankkart Mobil veya bankkart.com.tr'den katıl",
+     "link": "https://www.bankkart.com.tr/kampanyalar/akaryakit/elektrikli-sarj-istasyonlarinda-750-tl-jest-lira",
      "bas": "2026-11-01",
      "bit": "2026-11-30",
-     "kosul": "Bankkart Jest, Prestij, Genç kredi kartları; Başak, ticari ve banka kartı özelliği hariç; istasyon listesi derleme siteden (sarjevi.com.tr), resmi sayfadan teyit edilmeli"
+     "kosul": "Bireysel Bankkart kredi kartı özelliği (Jest, Prestij, Genç); Başak, Ticari, Business ve Jest Ücretsiz hariç; yalnızca asıl kart sahibi katılır. Anlaşmalı ağ listesi: bankkart.com.tr/medium/document-file-135.vsf"
     }
-   ],
-   "cover": {
-    "big": "%20 Jest Lira",
-    "sub": "8 şarj ağında · Eşarj, Voltrun...",
-    "son": "30 Kasım"
-   }
+   ]
   },
   {
    "id": "yapikredi",
    "name": "Yapı Kredi",
    "sub": "World kredi kartları · TLcard",
    "tur": "Kredi kartı",
+   "cover": {
+    "big": "435 TL Worldpuan",
+    "sub": "WAT Mobilite istasyonlarında",
+    "son": "30 Kasım"
+   },
    "offers": [
     {
      "big": "435 TL Worldpuan",
@@ -169,57 +115,79 @@
      "bit": "2026-11-30",
      "kosul": "Yapı Kredi bireysel kredi kartı ve TLcard; VakıfBank/Albaraka/Anadolubank Worldcard, Business, Eko hariç; Yapı Kredi POS; puan 7 Aralık'ta yüklenir"
     }
-   ],
+   ]
+  },
+  {
+   "id": "akbank",
+   "name": "Akbank",
+   "sub": "Axess · Wings · Free",
+   "tur": "Kredi kartı",
    "cover": {
-    "big": "435 TL Worldpuan",
-    "sub": "WAT Mobilite istasyonlarında",
-    "son": "30 Kasım"
-   }
+    "big": "%20 indirim",
+    "sub": "Voltla ile 9 şarj ağında",
+    "son": "22 Kasım"
+   },
+   "offers": [
+    {
+     "big": "%20 indirim",
+     "det": "Voltla üzerinden şarj ödemelerinde · toplam 500 TL",
+     "st": [
+      "Voltla uygulaması",
+      "Powerşarj",
+      "Zeplin Enerji",
+      "Tunçmatik",
+      "Şarjon",
+      "Voltgo",
+      "Solargize",
+      "Doğuş Dijital Enerji",
+      "D-Rect",
+      "Obişarj"
+     ],
+     "son": "22 Kasım",
+     "join": "VOLTLA yazıp 4566'ya SMS veya Juzdan'dan Hemen Katıl",
+     "link": "https://www.axess.com.tr/axess/kampanyalar/axesse-ozel-voltlada-20-indirim",
+     "bas": "2026-11-06",
+     "bit": "2026-11-22",
+     "kosul": "Axess, Free, Wings bireysel ve ticari, ek ve sanal kartlar; Akbank Kart ve Bank'O Card Axess hariç; indirim 2 iş gününde ekstreye"
+    }
+   ]
   },
   {
    "id": "halkbank",
    "name": "Halkbank",
-   "sub": "Paraf kartlar",
+   "sub": "Paraf Doğal",
    "tur": "Kredi kartı",
+   "cover": {
+    "big": "%10 indirim",
+    "sub": "Tüm şarj istasyonlarında · ayda 300 TL'ye kadar",
+    "son": "Süreli değil"
+   },
    "offers": [
     {
-     "big": "75 TL ParafPara",
-     "det": "Tek seferde 350 TL+ şarjda · toplam 450 TL",
-     "st": [
-      "Tüm şarj istasyonları"
-     ],
-     "son": "30 Kasım",
-     "join": "Paraf Mobil veya Halkbank Mobil'den Hemen Katıl",
-     "link": "https://www.paraf.com.tr/tr/kampanyalar/akaryakit/elektrikli-arac-sarj-istasyonu-harcamalariniza-450-tl-parafpara1.html",
-     "bas": "2026-11-01",
-     "bit": "2026-11-30",
-     "kosul": "Paraf, Parafly, sanal ve ek kart; Paraf Genç/Gençİz, banka kartı, ticari, Halkcard hariç; günde aynı işyerinde 1 işlem"
-    },
-    {
      "big": "%10 indirim",
-     "det": "Paraf Doğal ile · ayda 300 TL'ye kadar",
+     "det": "Paraf Doğal ile yurt içi şarjda · ayda 300 TL'ye kadar",
      "st": [
       "Tüm şarj istasyonları"
      ],
-     "son": "31 Aralık",
-     "join": "SARJ yazıp 3404'e SMS",
-     "link": "https://sarjkampanya.com/",
-     "bas": "2026-01-01",
-     "bit": "2026-12-31",
-     "kosul": "Sadece Paraf Doğal; yurt içi; ParafPara ile ödemeler hariç; derleme siteden, resmi sayfadan teyit edilmeli"
+     "son": "Süreli değil",
+     "join": "SARJ yazıp 3404'e SMS (katılımdan sonraki harcamalar)",
+     "link": "https://www.paraf.com.tr/tr/parafi-taniyin/elektrikli-arac-sarj-istasyonu-indirimi.html",
+     "bas": "",
+     "bit": "",
+     "kosul": "Yalnızca Paraf Doğal kredi kartı; ParafPara ile ödemeler, iptal/iade hariç; başka indirimle birleşmez (yüksek olan geçerli). Resmi sayfada bitiş tarihi yok; Halkbank değiştirebilir."
     }
-   ],
-   "cover": {
-    "big": "450 TL ParafPara",
-    "sub": "Tüm şarj istasyonlarında",
-    "son": "30 Kasım"
-   }
+   ]
   },
   {
    "id": "qnb",
    "name": "QNB",
    "sub": "Kredi kartları · Miles&Smiles QNB",
    "tur": "Kredi kartı",
+   "cover": {
+    "big": "500 TL ParaPuan",
+    "sub": "+ 1.250 mil · tüm istasyonlarda",
+    "son": "30 Kasım"
+   },
    "offers": [
     {
      "big": "50 TL ParaPuan",
@@ -227,12 +195,12 @@
      "st": [
       "Tüm şarj istasyonları"
      ],
-     "son": "29 Kasım",
-     "join": "Harcamadan önce kampanyaya kayıt",
-     "link": "https://www.hangikredi.com/kredi-karti/kampanyalar",
+     "son": "30 Kasım",
+     "join": "SARJ yazıp 2273'e SMS veya QNB Mobil (harcamadan önce)",
+     "link": "https://www.qnbcard.com.tr/kampanyalar/elektrikli-arac-sarj-istasyonlarinda-500-tlye-varan-parapuan-kazanin-43443",
      "bas": "2026-10-15",
-     "bit": "2026-11-29",
-     "kosul": "QNB bireysel kredi kartı; ParaPuan 31.12.2026'ya kadar; derleme siteden, resmi sayfadan teyit edilmeli"
+     "bit": "2026-11-30",
+     "kosul": "QNB bireysel kredi kartları (Xtra, GO, Trendyol, First vb.); Miles&Smiles, Fix, Ticari, GSPara, Fenerpara hariç; günde aynı işyerinde 1 ödül; ParaPuan 31.12.2026'ya kadar"
     },
     {
      "big": "125 mil",
@@ -247,70 +215,18 @@
      "bit": "2026-11-30",
      "kosul": "Miles&Smiles QNB kredi kartı; günde aynı işyerinde 1 işlem; mil ilk hesap kesiminde aktarılır"
     }
-   ],
-   "cover": {
-    "big": "500 TL ParaPuan",
-    "sub": "+ 1.250 mil · tüm istasyonlarda",
-    "son": "29 Kasım"
-   }
-  },
-  {
-   "id": "denizbank",
-   "name": "DenizBank",
-   "sub": "Bireysel kredi kartları",
-   "tur": "Kredi kartı",
-   "offers": [
-    {
-     "big": "%10 indirim",
-     "det": "Tek seferde 500 TL+ şarjda · toplam 500 TL",
-     "st": [
-      "Tüm şarj istasyonları"
-     ],
-     "son": "30 Kasım",
-     "join": "SARJ yazıp 3280'e SMS veya DenizKartım / MobilDeniz",
-     "link": "https://www.denizkartim.com/kampanyalar/elektrikli-arac-sarj-istasyonlarinda-500-tlye-varan-indirim",
-     "bas": "2026-11-01",
-     "bit": "2026-11-30",
-     "kosul": "Net Kart, sanal ve ek kart dahil; Business, İşletme, Üretici Kart, DenizPay, cüzdan yüklemeleri hariç"
-    }
-   ],
-   "cover": {
-    "big": "%10 indirim",
-    "sub": "Tüm şarj istasyonlarında",
-    "son": "30 Kasım"
-   }
-  },
-  {
-   "id": "kuveytturk",
-   "name": "Kuveyt Türk",
-   "sub": "Bireysel kredi kartları",
-   "tur": "Kredi kartı",
-   "offers": [
-    {
-     "big": "%10 indirim",
-     "det": "300 TL+ şarjda · toplam 750 TL",
-     "st": [
-      "Tüm şarj istasyonları"
-     ],
-     "son": "30 Kasım",
-     "join": "Şarjdan önce Mobil Şube'den katıl",
-     "link": "https://www.kuveytturk.com.tr/kampanyalar/kendim-icin/kart-kampanyalari/elektrikli-arac-sarjiniza-ozel-750-tlye-varan-indirim",
-     "bas": "2026-11-01",
-     "bit": "2026-11-30",
-     "kosul": "Miles&Smiles, Sağlam Kart, World Elite, ek ve sanal kart dahil; ilk 50.000 müşteri; diğer kampanyalarla birleşmez"
-    }
-   ],
-   "cover": {
-    "big": "%10 indirim",
-    "sub": "Tüm şarj istasyonlarında",
-    "son": "30 Kasım"
-   }
+   ]
   },
   {
    "id": "on",
    "name": "ON Dijital",
    "sub": "ON Kredi Kartı",
    "tur": "Kredi kartı",
+   "cover": {
+    "big": "%20 iade",
+    "sub": "Tüm şarj istasyonlarında",
+    "son": "30 Kasım"
+   },
    "offers": [
     {
      "big": "%20 iade",
@@ -319,18 +235,13 @@
       "Tüm şarj istasyonları"
      ],
      "son": "30 Kasım",
-     "join": "ON Mobil'den Hemen Katıl (harcamadan önce)",
+     "join": "ON Dijital'den Hemen Katıl (harcamadan önce)",
      "link": "https://on.com.tr/on-kredi-karti-elektrikli-arac-sarj-kampanyasi",
      "bas": "2026-11-01",
      "bit": "2026-11-30",
      "kosul": "Fiziki ve sanal ON Kredi Kartı; cüzdan yükleme/ödemeleri hariç; iade 5 iş gününde"
     }
-   ],
-   "cover": {
-    "big": "%20 iade",
-    "sub": "Tüm şarj istasyonlarında",
-    "son": "30 Kasım"
-   }
+   ]
   }
  ],
  "istasyonlar": [
@@ -345,52 +256,18 @@
      "link": "https://www.allianz.com.tr/tr_TR/faaliyetlerimiz/kampanyalar/elektrikli-arac-sarj-kampanyasi.html",
      "bas": "2026-07-01",
      "bit": "2026-12-31",
-     "kosul": "Her ay Allianz'ım'dan yeni kod, Eşarj Mobil'e tanımla"
+     "kosul": "Her ay Allianz'ım'dan yeni kod alıp Eşarj Mobil'e tanımla; yalnızca Eşarj istasyonları"
     }
    ],
    "banks": [
     [
      "Ziraat Bankkart",
      "%20 Jest Lira"
-    ],
-    [
-     "VakıfBank Recycle Card",
-     "%20 indirim"
     ]
    ],
    "cover": {
     "big": "%20'ye varan",
-    "sub": "Ziraat · VakıfBank · Allianz",
-    "son": "30 Kasım"
-   }
-  },
-  {
-   "id": "zes",
-   "name": "ZES",
-   "own": [
-    {
-     "big": "30 kWh hediye",
-     "det": "Seçili Metro mağazalarında 5.000 TL+ alışverişe (Nilüfer, Kepez, Mersin, Kozyatağı, Güneşli)",
-     "son": "31 Aralık",
-     "link": "https://sarjharitasi.tr/kampanyalar/?slug=metrodan-alisverise-zesten-30-kwh-sarj-hediyesi",
-     "bas": "2026-10-30",
-     "bit": "2026-12-31",
-     "kosul": "Alkol ve tütün hariç; derleme siteden, ZES/Metro'dan teyit edilmeli"
-    }
-   ],
-   "banks": [
-    [
-     "VakıfBank kredi kartları",
-     "%20 indirim"
-    ],
-    [
-     "VakıfBank Recycle Card",
-     "%20 indirim"
-    ]
-   ],
-   "cover": {
-    "big": "%20 indirim",
-    "sub": "VakıfBank ile · + Metro hediyesi",
+    "sub": "Ziraat · Allianz kasko",
     "son": "30 Kasım"
    }
   },
@@ -400,17 +277,13 @@
    "own": [],
    "banks": [
     [
-     "VakıfBank kredi kartları",
-     "%20 indirim"
-    ],
-    [
-     "VakıfBank Recycle Card",
-     "%20 indirim"
+     "Ziraat Bankkart",
+     "%20 Jest Lira"
     ]
    ],
    "cover": {
-    "big": "%20 indirim",
-    "sub": "VakıfBank kartlarıyla",
+    "big": "%20 Jest Lira",
+    "sub": "Ziraat Bankkart ile",
     "son": "30 Kasım"
    }
   },
@@ -420,21 +293,13 @@
    "own": [],
    "banks": [
     [
-     "VakıfBank kredi kartları",
-     "%20 indirim"
-    ],
-    [
-     "VakıfBank Recycle Card",
-     "%20 indirim"
-    ],
-    [
      "Ziraat Bankkart",
      "%20 Jest Lira"
     ]
    ],
    "cover": {
-    "big": "%20'ye varan",
-    "sub": "VakıfBank · Ziraat",
+    "big": "%20 Jest Lira",
+    "sub": "Ziraat Bankkart ile",
     "son": "30 Kasım"
    }
   },
@@ -444,12 +309,12 @@
    "own": [
     {
      "big": "%30 indirim",
-     "det": "37 ilde seçili istasyonlarda, uygulamadan başlatılan şarjda otomatik",
+     "det": "37 ilde seçili istasyonlarda, uygulamadan başlatılan AC/DC şarjda otomatik",
      "son": "30 Kasım",
      "link": "https://otopriz.com.tr/kampanyalar/indirimli-istasyonlar/kampanya-detaylari",
      "bas": "2026-11-01",
      "bit": "2026-11-30",
-     "kosul": "Kod gerekmez; istasyon listesi resmi sayfada"
+     "kosul": "Yalnızca kampanya listesindeki istasyonlar; kod gerekmez; başka indirimle birleşmez"
     }
    ],
    "banks": [
@@ -472,15 +337,11 @@
     [
      "Garanti BBVA Bonus",
      "350 TL+ şarja 75 TL bonus"
-    ],
-    [
-     "VakıfBank Recycle Card",
-     "%20 indirim"
     ]
    ],
    "cover": {
     "big": "75 TL bonus",
-    "sub": "Garanti ile · + VakıfBank",
+    "sub": "Garanti Bonus ile",
     "son": "30 Kasım"
    }
   },
@@ -490,13 +351,13 @@
    "own": [],
    "banks": [
     [
-     "Garanti BBVA Bonus",
+     "Garanti BBVA",
      "500 TL+ şarjda %50 bonus"
     ]
    ],
    "cover": {
     "big": "%50 bonus",
-    "sub": "Garanti Bonus ile",
+    "sub": "Garanti BBVA kartlarıyla",
     "son": "30 Kasım"
    }
   },
@@ -508,49 +369,32 @@
     [
      "Yapı Kredi World",
      "435 TL'ye varan Worldpuan"
+    ],
+    [
+     "Ziraat Bankkart",
+     "%20 Jest Lira"
     ]
    ],
    "cover": {
     "big": "435 TL Worldpuan",
-    "sub": "Yapı Kredi ile",
+    "sub": "Yapı Kredi ile · + Ziraat %20",
     "son": "30 Kasım"
    }
   },
   {
-   "id": "varr",
-   "name": "Varr",
+   "id": "voltla",
+   "name": "Voltla",
    "own": [],
    "banks": [
     [
-     "Garanti BBVA Bonus",
-     "400 TL+ şarja 100 TL bonus"
+     "Akbank Axess · Wings · Free",
+     "%20 indirim, toplam 500 TL"
     ]
    ],
    "cover": {
-    "big": "100 TL bonus",
-    "sub": "Garanti Bonus ile",
-    "son": "30 Kasım"
-   }
-  },
-  {
-   "id": "gioev",
-   "name": "GIO EV",
-   "own": [
-    {
-     "big": "11,99 TL/kWh",
-     "det": "Seçili istasyonlarda DC şarj (Samsun, Balıkesir, İzmir Selçuk, Amasya...)",
-     "son": "31 Aralık",
-     "link": "https://sarjharitasi.tr/kampanyalar/?slug=gio-ev-istasyonlarinda-avantajli-fiyat",
-     "bas": "2026-08-29",
-     "bit": "2026-12-31",
-     "kosul": "Derleme siteden; GIO EV'den teyit edilmeli"
-    }
-   ],
-   "banks": [],
-   "cover": {
-    "big": "11,99 TL/kWh",
-    "sub": "Seçili DC istasyonlarda",
-    "son": "31 Aralık"
+    "big": "%20 indirim",
+    "sub": "Akbank Axess · Wings · Free ile",
+    "son": "22 Kasım"
    }
   }
  ]
