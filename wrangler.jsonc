@@ -1,0 +1,11 @@
+// Cloudflare Workers (statik site) ayarı: "Import a repository" ile varsayılan ayarlarla çalışır.
+{
+  "name": "wattkac",
+  "compatibility_date": "2025-09-01",
+  "build": {
+    "command": "cp data/kampanyalar.json site/kampanyalar.json"
+  },
+  "assets": {
+    "directory": "./site"
+  }
+}
