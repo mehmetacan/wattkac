@@ -1,12 +1,10 @@
 name: Instagram token yenile
 
-# Uzun ömürlü Instagram token'ı 60 günde biter. Bu iş her pazartesi token'ı yeniler
-# ve IG_ACCESS_TOKEN secret'ını günceller. GH_PAT secret'ı gerekir
-# (fine-grained token, yalnızca bu depo, "Secrets: Read and write" izni).
+# Yalnızca graph.instagram.com (Instagram girişli) token'lar için gereklidir.
+# Şu anki kurulum graph.facebook.com kullandığı için ELLE çalıştırılır, zamanlanmış değildir.
+# Sistem kullanıcı token'ı (SUAT) hiç sona ermez; kullanıcı token'ı ise Meta panelinden yeniden üretilir.
 
 on:
-  schedule:
-    - cron: "0 6 * * 1"
   workflow_dispatch:
 
 jobs:

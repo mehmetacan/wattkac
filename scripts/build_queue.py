@@ -5,7 +5,7 @@ Her banka/istasyon postundan 1 saat sonra aynı kurumun hikayesi paylaşılır.
 Bitiş tarihi geçmiş kampanyalar kuyruğa alınmaz.
 Kullanım: python scripts/build_queue.py --etiket 2026-11 --baslangic 2026-11-07
 """
-import argparse, datetime as dt, json, os
+import argparse, datetime as dt, glob, json, os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TZ = dt.timezone(dt.timedelta(hours=3))  # Europe/Istanbul (yaz saati uygulaması yok)
@@ -52,7 +52,16 @@ def bitis(item):
     return max(tarihler) if tarihler else "2099-12-31"
 
 
-def build(etiket, baslangic):
+def used_times(skip_path):
+    t = set()
+    for f in glob.glob(os.path.join(ROOT, "queue", "*.json")):
+        if os.path.abspath(f) == os.path.abspath(skip_path):
+            continue
+        t |= {q["zaman"] for q in json.load(open(f, encoding="utf-8"))}
+    return t
+
+
+def build(etiket, baslangic, sadece=None):
     d = json.load(open(os.path.join(ROOT, "data", "kampanyalar.json"), encoding="utf-8"))
     manifest = json.load(open(os.path.join(ROOT, "media", etiket, "manifest.json"), encoding="utf-8"))
     src = {f"banka_{b['id']}": b for b in d["bankalar"]} | {f"istasyon_{s['id']}": s for s in d["istasyonlar"]}
@@ -69,12 +78,20 @@ def build(etiket, baslangic):
         if i < len(ist): karisik.append(ist[i])
     sira = ozet + karisik
 
+    if sadece:
+        sira = [m for m in sira if m["id"] in sadece]
+    path = os.path.join(ROOT, "queue", f"{etiket}.json")
+    if os.path.exists(path) and any(q["durum"] != "bekliyor" for q in json.load(open(path, encoding="utf-8"))):
+        raise SystemExit(f"{path} içinde paylaşılmış öğeler var; üzerine yazılmaz. Güncelleme için yeni bir --etiket kullanın.")
+    dolu = used_times(path)
+    ilk = not dolu
     slots, gun = [], dt.date.fromisoformat(baslangic)
-    first = True
     while len(slots) < len(sira):
-        for h, mi in (ILK_GUN if first else SAATLER):
-            slots.append(dt.datetime(gun.year, gun.month, gun.day, h, mi, tzinfo=TZ))
-        first = False
+        for h, mi in (ILK_GUN if ilk else SAATLER):
+            t = dt.datetime(gun.year, gun.month, gun.day, h, mi, tzinfo=TZ)
+            if t.isoformat() not in dolu and (t + dt.timedelta(hours=1)).isoformat() not in dolu:
+                slots.append(t)
+        ilk = False
         gun += dt.timedelta(days=1)
 
     queue = []
@@ -92,7 +109,6 @@ def build(etiket, baslangic):
                           "gorseller": [f"{base}/hikaye.jpg"], "aciklama": "", "durum": "bekliyor", "deneme": 0,
                           "ig_media_id": None, "hata": None})
     queue.sort(key=lambda q: q["zaman"])
-    path = os.path.join(ROOT, "queue", f"{etiket}.json")
     json.dump(queue, open(path, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     return queue
 
@@ -101,6 +117,7 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--etiket", required=True)
     ap.add_argument("--baslangic", required=True, help="YYYY-MM-DD (İstanbul)")
+    ap.add_argument("--sadece", default="", help="virgülle post id'leri (boş = hepsi)")
     a = ap.parse_args()
-    q = build(a.etiket, a.baslangic)
+    q = build(a.etiket, a.baslangic, set(x for x in a.sadece.split(",") if x))
     print(f"{len(q)} paylaşım kuyruğa alındı: {q[0]['zaman']} → {q[-1]['zaman']}")

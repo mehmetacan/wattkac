@@ -3,8 +3,8 @@
 GitHub Actions içinde çalışır (bkz. .github/workflows/yayinla.yml).
 Ortam değişkenleri:
   IG_USER_ID, IG_ACCESS_TOKEN   (GitHub Secrets)
-  GRAPH_BASE                    varsayılan https://graph.instagram.com (Instagram girişli API)
-                                Facebook girişli API kullanıyorsanız: https://graph.facebook.com/v23.0
+  GRAPH_BASE                    varsayılan https://graph.facebook.com/v23.0 (bağlantı testiyle doğrulandı)
+                                Instagram girişli token için: https://graph.instagram.com
   GITHUB_REPOSITORY, GITHUB_SHA (Actions otomatik verir; görsellerin herkese açık adresi için)
   DRY_RUN=1                     hiçbir şey paylaşmadan ne yapılacağını yazar
   YAYIN_AKTIF                   "true" değilse paylaşım yapılmaz (GitHub repo değişkeni)
@@ -12,7 +12,7 @@ Ortam değişkenleri:
 import datetime as dt, glob, json, os, sys, time, urllib.parse, urllib.request, urllib.error
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE = os.environ.get("GRAPH_BASE", "https://graph.instagram.com").rstrip("/")
+BASE = (os.environ.get("GRAPH_BASE") or "https://graph.facebook.com/v23.0").rstrip("/")
 DRY = os.environ.get("DRY_RUN") == "1"
 MAX_PER_RUN = int(os.environ.get("MAX_PER_RUN", "3"))
 GEC_KALMA_SINIRI = dt.timedelta(hours=24)   # bundan geç kalmış paylaşım atlanır

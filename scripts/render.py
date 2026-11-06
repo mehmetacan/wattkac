@@ -156,7 +156,8 @@ html,body{{width:1080px;height:1350px;overflow:hidden;font-family:'Inter',sans-s
 
 
 # ------------------------------------------------------------------ ana akış
-def render_all(d, etiket):
+def render_all(d, etiket, sadece=None):
+    want = (lambda pid: not sadece or pid in sadece)
     out = os.path.join(ROOT, "media", etiket)
     if os.path.exists(out):
         shutil.rmtree(out)
@@ -166,50 +167,55 @@ def render_all(d, etiket):
         posts.append({"id": pid, "tur": kind, "baslik": title, "dosyalar": files})
 
     banks, sts = d["bankalar"], d["istasyonlar"]
-    # özet postlar
-    p = f"{out}/ozet_bankalar"
-    shot(cover_html("Banka<br>kampanyaları", f'{len(banks)} banka · {d["donem"].split()[0]}', " · ".join(b["name"].replace(" Bankası", "") for b in banks),
-                    "Sabit post · Tümü burada", "Liste için kaydır →", "sum_bank"), f"{p}/1_kapak.jpg", 1080, 1350)
-    yok = ", ".join(x.split(" (")[0] for x in d["kampanyasiz_bankalar"][:2])
-    shot(list_html('Şarjda bu ay<br><b style="color:#FFD400">hangi banka?</b>', f'{len(banks)} bankanın {d["donem"]} şarj kampanyaları',
-                   [(b["name"], " / ".join(o["big"] for o in b["offers"])) for b in banks], d,
-                   f'<div class="foot" style="margin-top:14px;font-size:22px">Bu ay şarj kampanyası bulunamayan: {esc(yok)}.</div>'),
-         f"{p}/2_liste.jpg", 1080, 1350)
-    add("ozet_bankalar", "ozet", "Banka kampanyaları özeti", ["1_kapak.jpg", "2_liste.jpg"])
-
-    p = f"{out}/ozet_istasyonlar"
-    shot(cover_html("Şarj ağı<br>kampanyaları", f'{len(sts)} ağ · {d["donem"].split()[0]}', " · ".join(s["name"] for s in sts),
-                    "Sabit post · Tümü burada", "Liste için kaydır →", "sum_station"), f"{p}/1_kapak.jpg", 1080, 1350)
-    shot(list_html('Şarj ağlarında<br><b style="color:#FFD400">bu ay ne var?</b>', "Ağ ağ kampanyalar ve geçerli kartlar",
-                   [(s["name"], s["own"][0]["big"] if s["own"] else f'{len(s["banks"])} kart kampanyası') for s in sts], d),
-         f"{p}/2_liste.jpg", 1080, 1350)
-    add("ozet_istasyonlar", "ozet", "Şarj ağı kampanyaları özeti", ["1_kapak.jpg", "2_liste.jpg"])
-
+    if want("ozet_bankalar"):
+        p = f"{out}/ozet_bankalar"
+        shot(cover_html("Banka<br>kampanyaları", f'{len(banks)} banka · {d["donem"].split()[0]}', " · ".join(b["name"].replace(" Bankası", "") for b in banks),
+                        "Sabit post · Tümü burada", "Liste için kaydır →", "sum_bank"), f"{p}/1_kapak.jpg", 1080, 1350)
+        yok = ", ".join(x.split(" (")[0] for x in d["kampanyasiz_bankalar"][:2])
+        shot(list_html('Şarjda bu ay<br><b style="color:#FFD400">hangi banka?</b>', f'{len(banks)} bankanın {d["donem"]} şarj kampanyaları',
+                       [(b["name"], " / ".join(o["big"] for o in b["offers"])) for b in banks], d,
+                       f'<div class="foot" style="margin-top:14px;font-size:22px">Bu ay şarj kampanyası bulunamayan: {esc(yok)}.</div>'),
+             f"{p}/2_liste.jpg", 1080, 1350)
+        add("ozet_bankalar", "ozet", "Banka kampanyaları özeti", ["1_kapak.jpg", "2_liste.jpg"])
+    if want("ozet_istasyonlar"):
+        p = f"{out}/ozet_istasyonlar"
+        shot(cover_html("Şarj ağı<br>kampanyaları", f'{len(sts)} ağ · {d["donem"].split()[0]}', " · ".join(s["name"] for s in sts),
+                        "Sabit post · Tümü burada", "Liste için kaydır →", "sum_station"), f"{p}/1_kapak.jpg", 1080, 1350)
+        shot(list_html('Şarj ağlarında<br><b style="color:#FFD400">bu ay ne var?</b>', "Ağ ağ kampanyalar ve geçerli kartlar",
+                       [(s["name"], s["own"][0]["big"] if s["own"] else f'{len(s["banks"])} kart kampanyası') for s in sts], d),
+             f"{p}/2_liste.jpg", 1080, 1350)
+        add("ozet_istasyonlar", "ozet", "Şarj ağı kampanyaları özeti", ["1_kapak.jpg", "2_liste.jpg"])
     for b in banks:
-        p = f"{out}/banka_{b['id']}"
-        c = b["cover"]
+        pid = f"banka_{b['id']}"
+        if not want(pid):
+            continue
+        p, c = f"{out}/{pid}", b["cover"]
         shot(cover_html(b["name"], c["big"], c["sub"], f"Son gün: {c['son']}", "Detay için kaydır →", "bank"), f"{p}/1_kapak.jpg", 1080, 1350)
         shot(bank_html(b, d, False), f"{p}/2_detay.jpg", 1080, 1350)
         shot(bank_html(b, d, True), f"{p}/hikaye.jpg", 1080, 1920)
-        add(f"banka_{b['id']}", "banka", b["name"], ["1_kapak.jpg", "2_detay.jpg", "hikaye.jpg"])
+        add(pid, "banka", b["name"], ["1_kapak.jpg", "2_detay.jpg", "hikaye.jpg"])
     for s in sts:
-        p = f"{out}/istasyon_{s['id']}"
-        c = s["cover"]
+        pid = f"istasyon_{s['id']}"
+        if not want(pid):
+            continue
+        p, c = f"{out}/{pid}", s["cover"]
         shot(cover_html(s["name"], c["big"], c["sub"], f"Son gün: {c['son']}", "Detay için kaydır →", "station"), f"{p}/1_kapak.jpg", 1080, 1350)
         shot(station_html(s, d, False), f"{p}/2_detay.jpg", 1080, 1350)
         shot(station_html(s, d, True), f"{p}/hikaye.jpg", 1080, 1920)
-        add(f"istasyon_{s['id']}", "istasyon", s["name"], ["1_kapak.jpg", "2_detay.jpg", "hikaye.jpg"])
+        add(pid, "istasyon", s["name"], ["1_kapak.jpg", "2_detay.jpg", "hikaye.jpg"])
+    os.makedirs(out, exist_ok=True)
     json.dump(posts, open(f"{out}/manifest.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     return posts
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--etiket", required=True, help="ör. 2026-11")
+    ap.add_argument("--etiket", required=True, help="ör. 2026-11 veya güncelleme için 2026-11-15")
+    ap.add_argument("--sadece", default="", help="virgülle post id'leri, ör. banka_garanti,istasyon_zes (boş = hepsi)")
     a = ap.parse_args()
     data = json.load(open(os.path.join(ROOT, "data", "kampanyalar.json"), encoding="utf-8"))
     y, m, g = data["guncelleme"].split("-")
     aylar = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"]
     data["guncelleme_txt"] = f"{int(g)} {aylar[int(m) - 1]} {y}"
-    posts = render_all(data, a.etiket)
+    posts = render_all(data, a.etiket, set(x for x in a.sadece.split(",") if x))
     print(f"{len(posts)} post üretildi → media/{a.etiket}")

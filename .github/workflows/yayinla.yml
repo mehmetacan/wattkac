@@ -29,7 +29,7 @@ jobs:
         env:
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
-          GRAPH_BASE: ${{ vars.GRAPH_BASE || 'https://graph.instagram.com' }}
+          GRAPH_BASE: ${{ vars.GRAPH_BASE || 'https://graph.facebook.com/v23.0' }}
           YAYIN_AKTIF: ${{ vars.YAYIN_AKTIF }}
           DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && '1' || '0' }}
         run: python scripts/publish.py
