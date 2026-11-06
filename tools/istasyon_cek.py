@@ -34,6 +34,11 @@ def fetch():
                 req = urllib.request.Request(url, data=body, headers={"User-Agent": "wattkac-istasyon-cek/1.0 (+https://wattkac.com)"})
                 with urllib.request.urlopen(req, timeout=300) as r:
                     j = json.load(r)
+                rem = str(j.get("remark", ""))
+                if rem:
+                    print(f"{url} uyarı: {rem[:200]}", file=sys.stderr)
+                if re.search(r"error|timed out|out of memory", rem, re.I):
+                    raise RuntimeError("kısmi sonuç: " + rem[:120])
                 if isinstance(j.get("elements"), list) and len(j["elements"]) >= MIN_RECORDS:
                     print(f"{url}: {len(j['elements'])} kayıt")
                     return j["elements"]
