@@ -40,9 +40,10 @@
    "media/2026-11-06-astor/istasyon_astor/hikaye.jpg"
   ],
   "aciklama": "",
-  "durum": "bekliyor",
+  "durum": "paylasildi",
   "deneme": 0,
-  "ig_media_id": null,
-  "hata": null
+  "ig_media_id": "17913543609589602",
+  "hata": null,
+  "paylasim_zamani": "2026-11-06T16:52:26+00:00"
  }
 ]
