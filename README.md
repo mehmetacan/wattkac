@@ -5,17 +5,13 @@ karusel post ve hikaye olarak paylaşan yarı otomatik sistem.
 
 ## Nasıl çalışır
 
-1. **Kampanya taraması (Claude, her sabah):** Kampanyalar taranır, `data/kampanyalar.json`
-   güncellenir, `scripts/render.py` görselleri üretir, `scripts/build_queue.py` yeni postları
-   `queue/*.json` dosyasına **onay bekliyor** olarak ekler.
-2. **Onay (siz):** **Onay paneli** (https://mehmetacan.github.io/wattkac/) her postu ayrı kart olarak
-   gösterir: görseller, açıklama, kaynaklar. Her birini tek tek **Onayla** / **Reddet**;
-   açıklamayı, saati ve hikaye tercihini değiştirebilirsiniz. Onay `onaylar/<grup>.json` olarak kaydedilir.
-3. **Paylaşım (GitHub Actions, 15 dakikada bir):** `yayinla.yml` yalnızca **onaylanmış** ve zamanı
-   gelen post ve hikayeleri Instagram API ile paylaşır, durumu `paylasildi` yapar.
-
-Takvim: günde 3 post (09:30, 13:00, 19:30) ve her postun 1 saat sonrasında o kurumun
-hikayesi. Bitiş tarihi geçmiş kampanya kuyruğa alınmaz, 24 saatten fazla geciken paylaşım atlanır.
+1. **Kampanya taraması (Claude, her sabah 07:26):** Kampanyalar taranır, yeni/değişen kampanyaların
+   görselleri ve açıklamaları üretilip `queue/` klasörüne eklenir. Hiçbir şey onaylanmaz.
+2. **Onay paneli (siz):** <https://mehmetacan.github.io/wattkac/> — her post için görseller, açıklama ve
+   kaynaklar. Tek tek **Onayla** / **Reddet**; açıklama, saat ve hikaye tercihi düzenlenebilir.
+   Onaylar `onaylar/<grup>.json` olarak kaydedilir.
+3. **Paylaşım (GitHub Actions, 15 dakikada bir):** Yalnızca onaylanan ve zamanı gelen post/hikayeler paylaşılır.
+4. **Ana şalter:** `YAYIN_AKTIF` değişkeni `true` değilse hiçbir şey paylaşılmaz.
 
 ## Bir kerelik kurulum
 
