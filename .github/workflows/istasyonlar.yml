@@ -23,7 +23,7 @@ jobs:
       - name: OpenStreetMap istasyonlarını çek
         run: python3 tools/istasyon_cek.py data/osm/istasyonlar_osm.json
       - name: EPDK adreslerini konuma çevir (en fazla 4 saat)
-        run: python3 tools/epdk_konum.py 14400
+        run: python3 -u tools/epdk_konum.py 14400
         continue-on-error: true
       - name: Birleştir
         if: always()
