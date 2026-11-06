@@ -18,3 +18,7 @@ https://mehmetacan.github.io/wattkac/kampanyalar/ adresinde yayınlanır.
 `site/tarifeler.json` ağların resmi sayfalarındaki liste fiyatlarını tutar (TL/kWh, konuma göre min-max aralığı).
 Doğrulanamayan ağlar `null` kalır. Kopyalama komutuna `site/tarifeler.json` da eklenmeli:
     cp site/index.html site/logo.png site/tarifeler.json docs/kampanyalar/ && cp data/kampanyalar.json docs/kampanyalar/
+
+## İstasyon verisi (istasyonlar.json)
+`tools/istasyon_cek.py` Türkiye'deki tüm şarj istasyonlarını OpenStreetMap'ten çeker ve `site/istasyonlar.json` dosyasına yazar.
+`.github/workflows/istasyonlar.yml` bunu her gün 05:17'de çalıştırıp değişiklik varsa commit eder. Haritadaki arama önce bu dosyayı kullanır; dosya yoksa canlı Overpass'a düşer.

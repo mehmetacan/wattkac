@@ -581,6 +581,23 @@ function parseStation(el) {
   return { id: el.type + "/" + el.id, lat, lon, brand: b.name, known: b.known, named: !!nm, name: nm || b.name || "Şarj istasyonu",
     ...sk, tags: t, addr, camp: NETC[b.name] || [], count: parseInt(t.capacity, 10) || null, d: 0, mode: null, price: null };
 }
+// Günlük güncellenen istasyon dosyası (site/istasyonlar.json); yoksa canlı Overpass'a düşülür
+let STATIC = null;
+async function loadStatic() {
+  if (STATIC !== null) return STATIC;
+  try {
+    const r = await fetch("istasyonlar.json", { cache: "default" });
+    const j = r.ok ? await r.json() : null;
+    STATIC = j && Array.isArray(j.istasyonlar) && j.istasyonlar.length ? j : false;
+  } catch { STATIC = false; }
+  return STATIC;
+}
+function fromRec(r) {
+  const t = { brand: r.b, operator: r.p, network: r.w, name: r.n, opening_hours: r.h, website: r.u };
+  const b = brandOf(t), nm = r.n || "";
+  return { id: r.i, lat: r.a, lon: r.o, brand: b.name, known: b.known, named: !!nm, name: nm || b.name || "Şarj istasyonu",
+    kw: r.k || null, types: r.t ? [...r.t] : [], hasAc: !!r.ac, hasDc: !!r.dc, tags: t, addr: r.ad || "", camp: NETC[b.name] || [], count: r.c || null, d: 0, mode: null, price: null };
+}
 // OpenStreetMap'te bir istasyon çoğu zaman birden fazla kayıt olarak girilir; aynı markadaki yakın kayıtları birleştir
 function mergeStations(arr) {
   const out = [];
@@ -663,9 +680,16 @@ async function runSearch(fit) {
   setMsg("İstasyonlar aranıyor…"); $("here").hidden = true;
   const seq = M.seq = (M.seq || 0) + 1;
   try {
-    const els = await overpass(M.center.lat, M.center.lon, M.radius * 1000);
+    const st = await loadStatic();
+    let found;
+    if (st) {
+      const c = M.center, rM = M.radius * 1000, dLat = M.radius / 111, dLon = M.radius / (111 * Math.cos(c.lat * Math.PI / 180));
+      found = st.istasyonlar.filter(r => Math.abs(r.a - c.lat) <= dLat && Math.abs(r.o - c.lon) <= dLon && dist(c, { lat: r.a, lon: r.o }) <= rM).map(fromRec);
+    } else {
+      found = (await overpass(M.center.lat, M.center.lon, M.radius * 1000)).map(parseStation).filter(Boolean);
+    }
     if (seq !== M.seq) return;
-    M.ST = mergeStations(els.map(parseStation).filter(Boolean));
+    M.ST = mergeStations(found);
     M.last = { ...M.center }; M.sel = null; M.shown = PAGE; M.f.brands.clear(); M.sig = "";
     if (M.circle) M.circle.remove();
     M.circle = L.circle([M.center.lat, M.center.lon], { radius: M.radius * 1000, color: "#9CA3AF", weight: 1.5, fillOpacity: .03, dashArray: "6 6", interactive: false }).addTo(M.map);
