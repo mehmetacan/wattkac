@@ -6,7 +6,8 @@ Kaynaklar (her biri ağın kendi sitesindeki haritanın kullandığı adres):
   ZES          https://zes.net/Station/MarkerSet                       (zes.net/tr/sarj-istasyonlari)
   Ovolt/Sharz  https://mobil-api.ovolt.com.tr/api/App/stations/cards   (ovolt.com.tr/istasyon-haritasi)
   WAT Mobilite https://www.watmobilite.com/istasyon-haritasi           (sayfa içindeki istasyon kartları)
-  ASTOR Şarj   https://map-api.echargo.com/api/app/list                (astorsarj.com.tr/harita)
+  (ASTOR Şarj'ın haritası map-api.echargo.com kullanıyor ama sunucudan yapılan istekleri reddediyor (HTTP 404);
+   erişim kısıtını aşmaya çalışmıyoruz, ASTOR istasyonları EPDK + OSM'den gelir.)
 
 Kurallar: günde bir kez, her kaynağa tek istek; anahtar/oturum gerektiren kaynaklar KULLANILMAZ.
 Bir ağın çekimi başarısız olursa o ağın önceki dosyası korunur.
@@ -123,8 +124,7 @@ def astor():
 
 SOURCES = {"zes": (zes, "https://zes.net/tr/sarj-istasyonlari", 500),
            "ovolt": (ovolt, "https://ovolt.com.tr/istasyon-haritasi", 50),
-           "wat": (wat, "https://www.watmobilite.com/istasyon-haritasi", 100),
-           "astor": (astor, "https://astorsarj.com.tr/harita/", 100)}
+           "wat": (wat, "https://www.watmobilite.com/istasyon-haritasi", 100)}
 
 
 def main():
