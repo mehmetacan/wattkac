@@ -40,4 +40,5 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: "4.158.0"   # eski varsayılan sürüm sadece-statik siteyi tanımıyor ("Missing entry-point")
           command: deploy
