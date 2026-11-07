@@ -690,7 +690,7 @@ function fromRec(r) {
   const t = { brand: r.b, operator: op, network: r.w, name: r.n, opening_hours: r.h, website: r.u };
   const b = brandOf(t), nm = r.n || "";
   return { id: r.i, lat: r.a, lon: r.o, brand: b.name, known: b.known, named: !!nm, name: nm || b.name || "Şarj istasyonu",
-    kw: r.k || null, types: r.t ? [...r.t] : [], hasAc: !!r.ac, hasDc: !!r.dc, tags: t, addr: r.ad || "", approx: r.q === "i" || r.q === "m", official: r.q === "r", pr: r.pr || null, tesis: r.tesis || "", pasif: !!r.pasif, camp: NETC[b.name] || [], count: r.c || null, d: 0, mode: null, price: null };
+    kw: r.k || null, types: r.t ? [...r.t] : [], hasAc: !!r.ac, hasDc: !!r.dc, tags: t, addr: r.ad || "", approx: r.q === "i" || r.q === "m", official: r.q === "r", pr: r.pr || null, tesis: r.tesis || "", pasif: !!r.pasif, prn: r.prn || "", camp: NETC[b.name] || [], count: r.c || null, d: 0, mode: null, price: null };
 }
 // OpenStreetMap'te bir istasyon çoğu zaman birden fazla kayıt olarak girilir; aynı markadaki yakın kayıtları birleştir
 function mergeStations(arr) {
@@ -955,7 +955,7 @@ function renderDetail(s) {
   const mc = c => { const { txt } = daysText(c); return `<div class="mc ${mine(c) && !profileEmpty() ? "mine" : ""}"><div><span class="big sm">${esc(c.big)}</span></div><div class="det">${esc(c.det)}</div>${effTxt(c)}
     <div class="alt">${esc(c.kurum)}${txt ? " · " + esc(txt) : ""}</div><a class="src" style="margin-left:0" href="${esc(safeUrl(c.link))}" target="_blank" rel="noopener nofollow">Resmi kampanya sayfası ↗</a></div>`; };
   const rows = [];
-  if (s.price && s.price.own) rows.push(["Fiyat", `<b>${priceStr(s.price)}</b> <small>(${s.price.kind.toUpperCase()}, bu istasyonun güncel fiyatı · ağın resmi haritasından)</small>`]);
+  if (s.price && s.price.own) rows.push(["Fiyat", `<b>${priceStr(s.price)}</b> <small>(${s.price.kind.toUpperCase()}, bu istasyonun fiyatı · ağın resmi sayfasından${s.prn ? " · " + esc(s.prn) : ""})</small>`]);
   else if (s.price) rows.push(["Fiyat", `<b>${priceStr(s.price)}</b> <small>(${s.price.kind.toUpperCase()} liste fiyatı${s.price.max > s.price.v ? ", konuma göre değişir" : ""}${pr && pr.gecerlilik ? ` · ${esc(dateTr(pr.gecerlilik))} tarihli` : ""}${pr && pr.kontrol ? ` · ${esc(dateTr(pr.kontrol))} tarihinde kontrol edildi` : ""}${pr && pr.kaynak ? ` · <a href="${esc(safeUrl(pr.kaynak))}" target="_blank" rel="noopener nofollow">resmi sayfa</a>` : ""})</small>`]);
   const tur = s.hasAc && s.hasDc ? "AC ve DC" : s.hasDc ? "DC" : s.hasAc ? "AC" : "";
   if (tur || s.kw) rows.push(["Tür / güç", esc([tur, s.kw ? `${Math.round(s.kw)} kW` : ""].filter(Boolean).join(" · "))]);

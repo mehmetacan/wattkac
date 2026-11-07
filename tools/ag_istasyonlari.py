@@ -158,7 +158,47 @@ def trugo():
         out.append(clean({"i": f"trugo{s['id']}", "a": round(a, 6), "o": round(o, 6), "n": (s.get("name") or "").strip(), "b": "Trugo",
                           "ac": int(ac), "dc": int(dc), "t": (["Type 2"] if ac else []) + (["CCS"] if dc else []),
                           "ad": (s.get("district") or s.get("city") or "").strip(), "pasif": int(s.get("status") == 2)}))
+    trugo_prices(out)
     return out
+
+
+# Trugo fiyatları (resmi): AC 9,95 TL/kWh; DC 14,98 TL/kWh; duyurudaki seçili istasyonlarda DC 12 TL/kWh.
+# Kaynaklar: https://trugo.com.tr/price ve https://trugo.com.tr/individual/news/secili-istasyonlarda-12-tl-kwh
+TRUGO_AC, TRUGO_DC, TRUGO_12 = 9.95, 14.98, 12.0
+TRUGO_12_URL = "https://trugo.com.tr/individual/news/secili-istasyonlarda-12-tl-kwh"
+
+
+def _tok(s):
+    s = s.translate(str.maketrans({"İ": "i", "I": "ı"})).lower()
+    for a, b in (("ı", "i"), ("ş", "s"), ("ğ", "g"), ("ü", "u"), ("ö", "o"), ("ç", "c")):
+        s = s.replace(a, b)
+    return set(re.sub(r"[^a-z0-9 ]", " ", s).replace("bimola", "bi mola").split())
+
+
+def trugo_prices(recs):
+    try:
+        page = html.unescape(re.sub(r"<[^>]+>", " ", get(TRUGO_12_URL)))
+        m = re.search(r"katılan şarj istasyonları\s*:\s*(.+?)\.\s", page, re.S)
+        names = [x.strip() for x in m.group(1).split(",") if x.strip()] if m else []
+    except Exception as e:  # noqa: BLE001
+        print("trugo 12 TL duyurusu okunamadı:", e, file=sys.stderr)
+        return  # fiyat aralığına (tarifeler.json) düşülür
+    keys = [_tok(n) - {"akaryakit", "aydin", "soke", "istasyonu"} for n in names]
+    hit = 0
+    for r in recs:
+        tk = _tok(r.get("n", ""))
+        special = any(k and k <= tk for k in keys)
+        pr = {}
+        if r.get("ac"):
+            pr["ac"] = TRUGO_AC
+        if r.get("dc"):
+            pr["dc"] = TRUGO_12 if special else TRUGO_DC
+        if special:
+            r["prn"] = "Seçili istasyon: DC 12 TL/kWh"
+            hit += 1
+        if pr:
+            r["pr"] = pr
+    print(f"trugo: 12 TL duyurusunda {len(names)} istasyon adı, eşleşen {hit} istasyon")
 
 
 SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),

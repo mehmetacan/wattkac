@@ -40,9 +40,9 @@
         "max": 14.98
       },
       "kaynak": "https://trugo.com.tr/price",
-      "kontrol": "2026-11-06",
+      "kontrol": "2026-11-07",
       "gecerlilik": null,
-      "not": "Sayfa geçerlilik tarihi vermiyor; DC fiyat lokasyona göre değişiyor."
+      "not": "AC tüm istasyonlarda 9,95; DC 14,98 TL/kWh. Duyurudaki seçili istasyonlarda DC 12 TL/kWh (https://trugo.com.tr/individual/news/secili-istasyonlarda-12-tl-kwh); istasyon bazlı fiyat haritada gösterilir."
     },
     "Voltrun": {
       "ac": null,
