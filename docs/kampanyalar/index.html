@@ -158,14 +158,16 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .mapview[data-s=half]{--sheet-h:46%}
 .mapview[data-s=full]{--sheet-h:80%}
 .sheet{position:absolute;left:0;right:0;bottom:0;height:var(--sheet-h);z-index:1100;display:flex;flex-direction:column;background:#fff;border-radius:20px 20px 0 0;box-shadow:0 -6px 24px rgba(17,24,39,.16);padding-bottom:var(--sa)}
-.handle{flex:none;background:none;border:0;width:100%;padding:8px 14px 6px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:left}
-.handle .bar{width:44px;height:5px;border-radius:3px;background:#D1D5DB}
+.handle{flex:none;background:none;border:0;width:100%;padding:10px 14px 8px;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:left}
+.handle .bar{width:48px;height:5px;border-radius:3px;background:#D1D5DB}
 .sh-h{width:100%;display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:700;color:var(--mut)}
 .sh-h b{color:var(--txt);font-weight:900}
 .sh-h .tg{margin-left:auto;color:#1D4ED8;font-weight:800}
 .back{background:none;border:0;color:#1D4ED8;font:800 14px Inter,sans-serif;padding:4px 0}
 .sh-b{flex:1;overflow-y:auto;padding:4px 12px 14px;-webkit-overflow-scrolling:touch}
 .mapview[data-s=peek] .sh-b{display:none}
+.mapview.dragging .sh-b{display:block}
+.mapview:not(.dragging) .sheet,.mapview:not(.dragging) .locbtn,.mapview:not(.dragging) .radius{transition:height .22s ease,bottom .22s ease}
 /* İşaretçiler: marka renginde yuvarlak rozet; kampanyalı istasyonda yanıp sönen yeşil halka; aynı noktadakiler tek rozette sayıyla */
 .mkw{position:absolute;left:0;top:0}
 .mk{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:var(--bg-b,#6B7280);color:var(--fg-b,#fff);border:2px solid #fff;
@@ -926,11 +928,11 @@ function renderSheet() {
     M.group = null;
   }
   if (!M.all.length) {
-    h.innerHTML = `<b>Şarj istasyonları</b><span class="tg">${open ? "Kapat ▼" : "Liste ▲"}</span>`;
+    h.innerHTML = `<b>Şarj istasyonları</b>`;
     b.innerHTML = `<p class="note">İstasyonlar yükleniyor…</p>`; return;
   }
   const sortTxt = { yakin: "yakından uzağa", ucuz: "ucuzdan pahalıya", pahali: "pahalıdan ucuza", guc: "güce göre", kamp: "kampanyalı fiyat" }[M.sort];
-  h.innerHTML = `<span><b>${M.view.length}</b> istasyon · ${M.radius} km içinde · ${sortTxt}</span><span class="tg">${open ? "Kapat ▼" : "Liste ▲"}</span>`;
+  h.innerHTML = `<span><b>${M.view.length}</b> istasyon · ${M.radius} km içinde · ${sortTxt}</span>`;
   const hidden = M.f.tum ? 0 : M.cnt.unk || 0;
   let html = M.view.slice(0, M.shown).map(stationItem).join("");
   if (M.view.length > M.shown) html += `<button class="btn more" id="more">Daha fazla göster (${M.view.length - M.shown})</button>`;
@@ -1058,8 +1060,44 @@ function bindEvents() {
   $("fs-clear").onclick = () => { S.banka.clear(); S.ag.clear(); S.tip.clear(); render(); };
   $("mfs-clear").onclick = () => { M.f = { akim: null, kamp: false, bana: false, tum: false, brands: new Set() }; M.sort = "yakin"; M.shown = PAGE; renderMap(); };
   $("loc").onclick = () => locate(false);
+  // Alt pencere: tutamaktan yukarı/aşağı sürükleyerek aç-kapat (en yakın konuma oturur); dokunmak da bir sonraki konuma geçirir
+  (() => {
+    const hd = $("handle"), v = $("v-harita"), sh = $("sheet");
+    let y0 = 0, h0 = 0, moved = false, drag = false, last = 0, lastT = 0, vel = 0;
+    const mobile = () => !matchMedia("(min-width: 900px)").matches;
+    const H = () => v.clientHeight;
+    const stops = () => ({ peek: 64, half: H() * .46, full: H() * .8 });
+    hd.addEventListener("pointerdown", e => {
+      if (!mobile()) return;
+      drag = true; moved = false; y0 = last = e.clientY; lastT = performance.now(); vel = 0; h0 = sh.offsetHeight;
+      hd.setPointerCapture(e.pointerId);
+    });
+    hd.addEventListener("pointermove", e => {
+      if (!drag) return;
+      const dy = e.clientY - y0;
+      if (!moved && Math.abs(dy) < 6) return;
+      if (!moved) { moved = true; v.classList.add("dragging"); }
+      const now = performance.now(); vel = (e.clientY - last) / Math.max(1, now - lastT); last = e.clientY; lastT = now;
+      const st = stops(), h = Math.min(st.full, Math.max(st.peek, h0 - dy));
+      v.style.setProperty("--sheet-h", h + "px");
+    });
+    const end = () => {
+      if (!drag) return; drag = false;
+      if (!moved) return;
+      const st = stops(), h = sh.offsetHeight, order = ["peek", "half", "full"];
+      let target = order.reduce((a, k) => Math.abs(st[k] - h) < Math.abs(st[a] - h) ? k : a, "peek");
+      if (vel < -0.5) target = order.find(k => st[k] > h + 1) || "full";        // hızlı yukarı fırlatma
+      else if (vel > 0.5) target = [...order].reverse().find(k => st[k] < h - 1) || "peek";  // hızlı aşağı
+      v.classList.remove("dragging"); v.style.removeProperty("--sheet-h");
+      if (target === "peek") { M.sel = null; M.group = null; }
+      v.dataset.s = target; renderSheet();
+      hd.dataset.dragged = "1"; setTimeout(() => delete hd.dataset.dragged, 50);
+    };
+    hd.addEventListener("pointerup", end); hd.addEventListener("pointercancel", end);
+  })();
   $("handle").onclick = e => {
     e.stopPropagation();
+    if ($("handle").dataset.dragged) return;
     if (M.sel) { M.sel = null; renderSheet(); highlight(); return; }
     if (M.group) { M.group = null; renderSheet(); return; }
     const v = $("v-harita"), o = ["peek", "half", "full"]; v.dataset.s = o[(o.indexOf(v.dataset.s) + 1) % 3]; renderSheet();
