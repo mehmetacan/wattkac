@@ -1,7 +1,7 @@
 name: Cloudflare'e yayınla
 
 # Siteyi (site/ klasörü) Cloudflare Workers'a yayınlar (wattkac.mehmetstkacan.workers.dev).
-# Gerekli GitHub secret'ları: CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID
+# Gerekli GitHub secret'ları: CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID (7 Kasım 2026 eklendi)
 # Not: Actions'ın kendi yaptığı commit'ler "push" tetiklemez; bu yüzden istasyon iş akışı bitince ayrıca çalışır.
 on:
   push:
