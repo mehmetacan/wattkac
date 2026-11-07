@@ -890,7 +890,7 @@ async function init() {
     D = await r.json();
     C = flatten(D); buildIndexes();
     const [y, m, g] = D.guncelleme.split("-");
-    $("upd").textContent = `Güncelleme: ${+g} ${AY[+m - 1]}`;
+    $("upd").textContent = `Son değişiklik: ${+g} ${AY[+m - 1]}`; $("upd").title = "Kampanyalar her sabah resmi sayfalardan kontrol edilir; bu tarih son değişikliğin tarihidir.";
   } catch (e) {
     $("list").innerHTML = `<div class="err">Kampanyalar yüklenemedi (${esc(e.message)}). Lütfen sayfayı yenileyin.</div>`;
     $("upd").textContent = "Veri alınamadı"; return;
