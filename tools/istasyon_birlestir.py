@@ -22,6 +22,30 @@ fold = lambda s: s.translate(TR).lower().replace("ı", "i").replace("ş", "s").r
 key = lambda s: (re.sub(r"[^a-z0-9 ]", " ", fold(s)).split() or [""])[0]
 
 
+# Türkiye'nin kaba sınırı (boylam, enlem). Ege'deki Yunan adalarını ve Kıbrıs'ı dışarıda bırakacak şekilde çizildi.
+TR_POLY = [(26.35, 41.72), (26.6, 41.98), (27.0, 42.1), (28.05, 41.98), (28.15, 41.6), (29.1, 41.27), (31.0, 41.32), (32.5, 41.92),
+           (33.5, 42.08), (35.2, 42.12), (36.5, 41.45), (38.0, 41.15), (40.0, 41.12), (41.5, 41.58), (42.8, 41.62), (43.5, 41.15),
+           (44.85, 41.2), (44.85, 40.0), (44.6, 39.4), (44.45, 39.0), (44.85, 37.25), (44.3, 37.0), (42.3, 37.12), (42.2, 37.1), (41.2, 37.062), (40.0, 36.81),
+           (39.0, 36.68), (38.0, 36.83), (37.4, 36.62), (36.7, 36.6), (36.65, 36.2), (36.4, 35.78), (35.85, 35.78), (35.9, 36.3), (35.5, 36.58),
+           (34.6, 36.78), (33.9, 36.25), (32.8, 36.0), (32.0, 36.5), (30.6, 36.2), (30.4, 36.18), (29.66, 36.18), (29.38, 36.21), (29.1, 36.55),
+           (28.6, 36.75), (27.9, 36.62), (27.35, 36.66), (27.7, 36.8), (27.6, 36.98), (27.2, 37.0), (27.22, 37.15), (27.18, 37.35),
+           (27.2, 37.55), (27.15, 37.75), (26.75, 38.2), (26.25, 38.25), (26.22, 38.5), (26.45, 38.7), (26.75, 38.75), (26.65, 39.2),
+           (26.58, 39.36), (26.0, 39.45), (26.1, 39.9), (26.15, 40.05), (26.2, 40.3), (26.3, 40.6), (26.6, 40.62), (26.0, 40.72),
+           (26.3, 41.25), (26.55, 41.6)]
+TR_ISLANDS = [(25.6, 40.08, 26.02, 40.26), (25.95, 39.78, 26.1, 39.87)]  # Gökçeada, Bozcaada
+
+
+def in_turkey(lat, lon):
+    if any(x0 <= lon <= x1 and y0 <= lat <= y1 for x0, y0, x1, y1 in TR_ISLANDS):
+        return True
+    inside, n = False, len(TR_POLY)
+    for k in range(n):
+        x1, y1 = TR_POLY[k]; x2, y2 = TR_POLY[(k + 1) % n]
+        if (y1 > lat) != (y2 > lat) and lon < (x2 - x1) * (lat - y1) / (y2 - y1) + x1:
+            inside = not inside
+    return inside
+
+
 def dist(a, b, c, d):
     t = math.radians
     h = math.sin(t(c - a) / 2) ** 2 + math.cos(t(a)) * math.cos(t(c)) * math.sin(t(d - b) / 2) ** 2
@@ -48,7 +72,7 @@ def main():
             opi[name] = len(ops); ops.append(name)
         return opi[name]
 
-    seen, recs, ozel = set(), [], 0
+    seen, recs, ozel, groups = set(), [], 0, {}
     for r in csv.DictReader(EPDK.open(encoding="utf-8-sig")):
         no = r["no"].strip()
         if no in seen:
@@ -64,6 +88,12 @@ def main():
             continue  # halka açık olmayan (özel) istasyonlar haritada gösterilmez
         if loc:
             rec["a"], rec["o"], rec["q"] = loc
+        g = (fold(r["marka"]).strip(), fold(r["adres"]).strip())
+        if g in groups:
+            groups[g]["c"] = groups[g].get("c", 1) + 1
+            continue
+        rec["n"] = re.sub(r"[\s\-_]*(\d{1,2}|[A-Z])$", "", rec["n"]).strip() or rec["n"]
+        groups[g] = rec
         recs.append(rec)
 
     # OSM ve Open Charge Map kayıtlarını EPDK kayıtlarıyla eşle: aynı marka anahtarı, en yakın kayıt.
@@ -121,7 +151,8 @@ def main():
                 xgrid.setdefault(cell(s["a"], s["o"]), []).append((k, s))
     recs += extra + resmi
     located = [r for r in recs if "a" in r]
-    recs = located  # konumu bilinmeyenler haritada gösterilemez
+    recs = [r for r in located if in_turkey(r["a"], r["o"])]  # konumu bilinmeyen ve Türkiye dışı kayıtlar gösterilmez
+    disari = len(located) - len(recs)
     recs.sort(key=lambda r: (round(r["a"], 1), r["o"], r["i"]))
     cnt = {}
     for r in recs:
@@ -135,7 +166,7 @@ def main():
     txt = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
     OUT.write_text(txt, encoding="utf-8")
     ozet = ", ".join("%s %d" % (k, v["sayi"]) for k, v in kaynaklar.items())
-    print(f"resmi ağ listeleri {len(resmi)} ({ozet}); EPDK {len(seen)} kayıt (özel {ozel} çıkarıldı), önbellekten konumlanan {sum(1 for r in recs if r.get('e'))}, eşleşen/eklenen OSM {stats.get('o')}, OCM {stats.get('c')}, toplam {len(recs)}, {len(txt)//1024} KB")
+    print(f"resmi ağ listeleri {len(resmi)} ({ozet}); EPDK {len(seen)} kayıt (özel {ozel} çıkarıldı), önbellekten konumlanan {sum(1 for r in recs if r.get('e'))}, eşleşen/eklenen OSM {stats.get('o')}, OCM {stats.get('c')}, Türkiye dışı {disari}, aynı adreste birleştirilen EPDK ünitesi {sum(g.get('c', 1) - 1 for g in groups.values())}, toplam {len(recs)}, {len(txt)//1024} KB")
 
 
 if __name__ == "__main__":
