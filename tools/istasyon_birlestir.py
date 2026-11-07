@@ -92,7 +92,7 @@ def main():
         if g in groups:
             groups[g]["c"] = groups[g].get("c", 1) + 1
             continue
-        rec["n"] = re.sub(r"[\s\-_]*(\d{1,2}|[A-Z])$", "", rec["n"]).strip() or rec["n"]
+        rec["n"] = re.sub(r"[\s\-_]+(\d{1,2}|[A-Z])$", "", rec["n"]).strip() or rec["n"]
         groups[g] = rec
         recs.append(rec)
 
