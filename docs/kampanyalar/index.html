@@ -155,9 +155,14 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .stn{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px}
 .stn.sel{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
 .stn .r1{display:flex;gap:8px;align-items:baseline}
-.stn .nm{font-weight:800;font-size:15px;line-height:1.25;flex:1;min-width:0}
+.stn .nm{font-weight:900;font-size:16px;line-height:1.25;flex:1;min-width:0;letter-spacing:-.2px}
 .stn .ds{flex:none;font-weight:800;color:var(--ink);font-size:14px}
-.stn .sub{font-size:12.5px;color:var(--mut);font-weight:500;margin-top:1px}
+.stn .sub{font-size:12.5px;color:var(--mut);font-weight:500;margin-top:2px;line-height:1.35}
+.stn .sub b{color:var(--txt);font-weight:600}
+.old{text-decoration:line-through;color:var(--mut);font-weight:600;font-size:12px}
+.deal{font-size:13px;font-weight:900;color:var(--g)}
+.dealsrc{font-size:11.5px;font-weight:700;color:var(--g);background:var(--gbg);border:1px solid var(--gline);border-radius:7px;padding:1px 7px}
+.eff{margin-top:4px;font-size:13px;font-weight:800;color:var(--g)}
 .stn .r2{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:center}
 .pill{font-size:12px;font-weight:800;border-radius:7px;padding:2px 8px;background:var(--card2);color:var(--txt)}
 .pill.dc{background:#FEF3C7;color:#92400E}
@@ -580,6 +585,49 @@ function stationPrice(s, mode) {
   if (own && k && typeof own[k] === "number") return { v: own[k], max: own[k], kind: k, own: true };
   return priceFor(s.brand, mode);
 }
+// Kampanyanın kWh fiyatına etkisi (oran). Puan/bonus/iade, TL karşılığı üzerinden indirim gibi hesaplanır.
+// %X → X/100 ; "75 TL bonus" + "350 TL+ şarjda" → 75/350 ; "435 TL ... 400 TL+ şarj: 100 + 100 + 100 + 135" → 435/(400×4)
+// Mil gibi TL karşılığı belirsiz ödüller ve fiyat duyuruları hesaba katılmaz.
+const RATE = new Map();
+function campRate(c) {
+  if (RATE.has(c)) return RATE.get(c);
+  let r = null;
+  const big = String(c.big || ""), det = String(c.det || "");
+  const num = x => parseFloat(String(x).replace(/\./g, "").replace(",", "."));
+  const pct = /%\s*(\d+(?:[.,]\d+)?)/.exec(big);
+  if (pct) r = num(pct[1]) / 100;
+  else if (!/mil\b|TL\/kWh/i.test(big)) {
+    const amt = /(\d[\d.]*)\s*TL/i.exec(big), thr = /(\d[\d.]*)\s*TL\s*\+/i.exec(det);
+    if (amt && thr) {
+      const parts = (/:\s*([\d\s+]+?)\s*TL/.exec(det) || [])[1];
+      const n = parts ? parts.split("+").filter(x => x.trim()).length : 1;
+      r = num(amt[1]) / (num(thr[1]) * Math.max(1, n));
+    }
+  }
+  r = r && r > 0 && r < 0.9 ? r : null;
+  RATE.set(c, r); return r;
+}
+// İstasyonda geçerli kampanyalar: ağa özel olanlar + her istasyonda geçerli kart kampanyaları.
+// Profilde kart seçiliyse yalnızca o kartların kampanyaları.
+function stationOffers(s) {
+  const own = s.camp || [], general = C.filter(c => c.tip === "banka" && c.st.includes(ALL));
+  const all = [...own, ...general.filter(c => !own.includes(c))];
+  // ağın kendi kampanyası o ağda şarj eden herkese açıktır; kart kampanyaları profildeki kartlara göre süzülür
+  return profileEmpty() ? all : all.filter(c => c.tip === "ag" || (P.banka.length ? P.banka.includes(c.kid) : true));
+}
+// Herkese değil yalnızca belli müşterilere ya da seçili istasyonlara uygulanan kampanyalar sıralamaya katılmaz
+const COND = /seçili|sahiplerine|sahibi olan|yalnızca .*müşteri/i;
+const conditional = c => COND.test([c.det, c.kosul].join(" "));
+function bestDeal(s) {
+  if (!s.price) return null;
+  let best = null;
+  for (const c of stationOffers(s)) {
+    const r = campRate(c); if (!r || conditional(c)) continue;
+    const v = s.price.v * (1 - r);
+    if (!best || v < best.v) best = { v, r, c };
+  }
+  return best;
+}
 function parseStation(el) {
   const t = el.tags || {};
   const lat = el.lat ?? el.center?.lat, lon = el.lon ?? el.center?.lon;
@@ -726,10 +774,12 @@ function visibleStations() {
   if (M.f.brands.size) a = a.filter(s => M.f.brands.has(s.brand));
   if (M.f.kamp) a = a.filter(s => s.camp.length);
   if (M.f.bana) a = a.filter(s => stationMine(s.brand));
-  a.forEach(s => { s.d = dist(ref, s); s.mode = M.f.akim || (s.hasDc ? "dc" : s.hasAc ? "ac" : null); s.price = stationPrice(s, s.mode); });
+  a.forEach(s => { s.d = dist(ref, s); s.mode = M.f.akim || (s.hasDc ? "dc" : s.hasAc ? "ac" : null); s.price = stationPrice(s, s.mode); s.deal = bestDeal(s); });
   const pv = s => s.price ? s.price.v : null;
   const cmpPrice = dir => (x, y) => (pv(x) === null) - (pv(y) === null) || (pv(x) === null ? 0 : dir * (pv(x) - pv(y))) || x.d - y.d;
-  const sorters = { yakin: (x, y) => x.d - y.d, ucuz: cmpPrice(1), pahali: cmpPrice(-1), guc: (x, y) => (y.kw || 0) - (x.kw || 0) || x.d - y.d };
+  const ev = s => s.deal ? s.deal.v : pv(s);
+  const sorters = { yakin: (x, y) => x.d - y.d, ucuz: cmpPrice(1), pahali: cmpPrice(-1), guc: (x, y) => (y.kw || 0) - (x.kw || 0) || x.d - y.d,
+    kamp: (x, y) => (ev(x) === null) - (ev(y) === null) || (ev(x) === null ? 0 : ev(x) - ev(y)) || x.d - y.d };
   return a.sort(sorters[M.sort]);
 }
 const stColor = s => stationMine(s.brand) ? "#F59E0B" : s.camp.length ? "#047857" : s.known ? "#4B5563" : "#9CA3AF";
@@ -767,7 +817,7 @@ function renderSheet() {
     h.innerHTML = `<b>Şarj istasyonları</b>`;
     b.innerHTML = `<p class="note">Konumunu kullan ya da haritada bir bölgeye gidip aramayı başlat.</p><div class="credit">Harita ve istasyon verisi: EPDK, ağların resmi haritaları, © OpenStreetMap, © Open Charge Map (CC BY 4.0)</div>`; return;
   }
-  const sortTxt = { yakin: "yakından uzağa", ucuz: "ucuzdan pahalıya", pahali: "pahalıdan ucuza", guc: "güce göre" }[M.sort];
+  const sortTxt = { yakin: "yakından uzağa", ucuz: "ucuzdan pahalıya", pahali: "pahalıdan ucuza", guc: "güce göre", kamp: "kampanyalı fiyata göre" }[M.sort];
   h.innerHTML = `<span><b>${M.view.length}</b> istasyon · ${sortTxt}</span><span class="lg"><span><i style="background:#F59E0B"></i>Sana uyan</span><span><i style="background:#047857"></i>Kampanyalı</span></span>`;
   const hidden = M.f.tum ? 0 : M.ST.filter(x => !x.known).length;
   let html = M.view.slice(0, M.shown).map(stationItem).join("");
@@ -775,15 +825,22 @@ function renderSheet() {
   if (!M.view.length) html = `<p class="note">Bu filtrelerle istasyon bulunamadı.</p>`;
   if (hidden) html += `<button class="btn more" data-showunk="1">Tanımsız ${hidden} istasyonu da göster</button>`;
   if ((M.sort === "ucuz" || M.sort === "pahali") && M.view.some(x => x.price)) html += `<p class="note">Fiyatı bilinen istasyonlar önce listelenir. Fiyatlar ağın resmi sayfasındaki en düşük liste fiyatına göredir.</p>`;
+  if (M.sort === "kamp" || M.view.some(x => x.deal)) html += `<p class="note">Kampanyalı fiyat, istasyonda geçerli en avantajlı kampanyanın liste fiyatına uygulanmasıyla hesaplanır${profileEmpty() ? " (kartlarını Profilim'de seçersen yalnızca senin kartların hesaba katılır)" : " (yalnızca senin kartların ve uygulamaların)"}. Puan, bonus ve iadeler TL karşılığıyla indirim gibi sayılır; alt harcama şartı ve toplam üst limit uygulanır.</p>`;
   b.innerHTML = html + `<div class="credit">Harita ve istasyon verisi: EPDK, ağların resmi haritaları, © OpenStreetMap, © Open Charge Map (CC BY 4.0)</div>`;
 }
+// Kampanya verisinde küçük harfle geçen marka adlarını (ör. "otojet") başlıkta düzgün göster
+const pretty = n => n && n === n.toLocaleLowerCase("tr") ? n.charAt(0).toLocaleUpperCase("tr") + n.slice(1) : n;
 function stationItem(s) {
-  const tb = typeBadge(s), sub = [s.brand && s.name !== s.brand ? s.brand : "", s.addr].filter(Boolean).join(" · ");
+  const tb = typeBadge(s);
+  const head = pretty(s.brand) || s.name;
+  const sub = [s.brand && s.named && s.name !== s.brand ? `<b>${esc(s.name)}</b>` : "", esc(s.addr || "")].filter(Boolean).join(" · ");
+  const price = s.deal ? `<span class="old">${fmtNum(s.price.v)}</span> <span class="deal">${fmtNum(s.deal.v)} TL/kWh</span><span class="dealsrc">${esc(s.deal.c.kurum)} ${esc(s.deal.c.big)}</span>`
+    : s.price ? `<span class="pr">${priceStr(s.price)}</span>` : "";
   return `<button class="stn ${s.id === M.sel ? "sel" : ""}" data-sid="${esc(s.id)}">
-    <div class="r1"><span class="nm">${esc(s.name)}</span><span class="ds">${fmtKm(s.d)}</span></div>
-    ${sub ? `<div class="sub">${esc(sub)}</div>` : ""}
-    <div class="r2">${tb ? `<span class="pill ${s.hasDc ? "dc" : "ac"}">${tb}</span>` : ""}${s.kw ? `<span class="pill">${Math.round(s.kw)} kW</span>` : ""}${s.price ? `<span class="pr">${priceStr(s.price)}</span>` : ""}
-      ${s.camp.length ? `<span class="tag camp">${s.camp.length} kampanya</span>` : ""}${stationMine(s.brand) ? `<span class="tag me">Sana uyuyor</span>` : ""}</div>
+    <div class="r1"><span class="nm">${esc(head)}</span><span class="ds">${fmtKm(s.d)}</span></div>
+    ${sub ? `<div class="sub">${sub}</div>` : ""}
+    <div class="r2">${tb ? `<span class="pill ${s.hasDc ? "dc" : "ac"}">${tb}</span>` : ""}${s.kw ? `<span class="pill">${Math.round(s.kw)} kW</span>` : ""}${price}
+      ${s.camp.length && !s.deal ? `<span class="tag camp">${s.camp.length} kampanya</span>` : ""}${stationMine(s.brand) ? `<span class="tag me">Sana uyuyor</span>` : ""}</div>
   </button>`;
 }
 function renderDetail(s) {
@@ -792,7 +849,8 @@ function renderDetail(s) {
   const general = C.filter(c => c.tip === "banka" && c.st.includes(ALL));
   const myGeneral = general.filter(c => P.banka.includes(c.kid));
   const pr = s.price && TAR.aglar[s.brand];
-  const mc = c => { const { txt } = daysText(c); return `<div class="mc ${mine(c) && !profileEmpty() ? "mine" : ""}"><div><span class="big sm">${esc(c.big)}</span></div><div class="det">${esc(c.det)}</div>
+  const effTxt = c => { const r = campRate(c); return r && s.price ? `<div class="eff">Bu istasyonda ≈ ${fmtNum(s.price.v * (1 - r))} TL/kWh <small style="color:var(--mut);font-weight:600">(${fmtNum(s.price.v)} yerine, %${Math.round(r * 100)} karşılığı${conditional(c) ? "; yalnızca koşulu sağlayanlar/seçili istasyonlar" : ""})</small></div>` : ""; };
+  const mc = c => { const { txt } = daysText(c); return `<div class="mc ${mine(c) && !profileEmpty() ? "mine" : ""}"><div><span class="big sm">${esc(c.big)}</span></div><div class="det">${esc(c.det)}</div>${effTxt(c)}
     <div class="alt">${esc(c.kurum)}${txt ? " · " + esc(txt) : ""}</div><a class="src" style="margin-left:0" href="${esc(safeUrl(c.link))}" target="_blank" rel="noopener nofollow">Resmi kampanya sayfası ↗</a></div>`; };
   const rows = [];
   if (s.price && s.price.own) rows.push(["Fiyat", `<b>${priceStr(s.price)}</b> <small>(${s.price.kind.toUpperCase()}, bu istasyonun güncel fiyatı · ağın resmi haritasından)</small>`]);
@@ -804,7 +862,8 @@ function renderDetail(s) {
   if (t.opening_hours) rows.push(["Saatler", esc(t.opening_hours)]);
   const web = /^https?:\/\//i.test(t.website || t["contact:website"] || "") ? (t.website || t["contact:website"]) : "";
   if (web) rows.push(["Web", `<a href="${esc(safeUrl(web))}" target="_blank" rel="noopener nofollow">Site ↗</a>`]);
-  $("sh-b").innerHTML = `<div class="dn">${esc(s.name)}</div><div class="alt">${esc(s.brand && s.name !== s.brand ? s.brand + " · " : "")}${fmtKm(s.d)} uzakta</div>
+  $("sh-b").innerHTML = `<div class="dn">${esc(pretty(s.brand) || s.name)}</div><div class="alt">${esc(s.brand && s.named && s.name !== s.brand ? s.name + " · " : "")}${fmtKm(s.d)} uzakta</div>
+    ${s.deal ? `<p class="eff" style="font-size:15px">En iyi kampanyayla ≈ ${fmtNum(s.deal.v)} TL/kWh · ${esc(s.deal.c.kurum)} ${esc(s.deal.c.big)}</p>` : ""}
     ${s.approx ? `<p class="note">Konum yaklaşık: adres EPDK kaydından alındı, tam nokta doğrulanmadı.</p>` : ""}
     ${rows.length ? `<dl class="kv">${rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>` : ""}
     ${s.camp.length ? `<div class="lbl" style="margin-top:12px">Bu ağa özel kampanyalar</div>${s.camp.map(mc).join("")}` : ""}
@@ -824,7 +883,7 @@ function selectStation(id, pan = true) {
 function renderMapSheet() {
   const chip = (attr, label, on, cls = "") => `<button class="chip ${cls}" ${attr} aria-pressed="${on}">${esc(label)}</button>`;
   const rad = [1, 3, 5, 10, 25, 50].map(k => chip(`data-mr="${k}"`, `${k} km`, M.radius === k)).join("");
-  const srt = [["yakin", "Yakından uzağa"], ["ucuz", "Ucuzdan pahalıya"], ["pahali", "Pahalıdan ucuza"], ["guc", "Güce göre"]].map(([v, l]) => chip(`data-ms="${v}"`, l, M.sort === v)).join("");
+  const srt = [["yakin", "Yakından uzağa"], ["kamp", "Kampanyalı en ucuz"], ["ucuz", "Liste fiyatı en ucuz"], ["pahali", "Pahalıdan ucuza"], ["guc", "Güce göre"]].map(([v, l]) => chip(`data-ms="${v}"`, l, M.sort === v)).join("");
   const br = M.brands.map(([b, n]) => chip(`data-mb="${esc(b)}"`, `${b} · ${n}`, M.f.brands.has(b))).join("");
   $("mfs-b").innerHTML = `<h3>Mesafe</h3><div class="chips">${rad}</div><h3>Sıralama</h3><div class="chips">${srt}</div>`
     + (br ? `<h3>Marka</h3><div class="chips">${br}</div>` : "")
