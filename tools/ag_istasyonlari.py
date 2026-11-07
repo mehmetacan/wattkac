@@ -6,6 +6,7 @@ Kaynaklar (her biri ağın kendi sitesindeki haritanın kullandığı adres):
   ZES          https://zes.net/Station/MarkerSet                       (zes.net/tr/sarj-istasyonlari)
   Ovolt/Sharz  https://mobil-api.ovolt.com.tr/api/App/stations/cards   (ovolt.com.tr/istasyon-haritasi)
   WAT Mobilite https://www.watmobilite.com/istasyon-haritasi           (sayfa içindeki istasyon kartları)
+  Trugo        https://trugo.com.tr/individual/network                  (sayfanın kendi içindeki __NUXT_DATA__ istasyon listesi)
   (ASTOR Şarj'ın haritası map-api.echargo.com kullanıyor ama sunucudan yapılan istekleri reddediyor (HTTP 404);
    erişim kısıtını aşmaya çalışmıyoruz, ASTOR istasyonları EPDK + OSM'den gelir.)
 
@@ -122,7 +123,46 @@ def astor():
     return out
 
 
-SOURCES = {"zes": (zes, "https://zes.net/tr/sarj-istasyonlari", 500),
+def trugo():
+    page = get("https://trugo.com.tr/individual/network")
+    m = re.search(r'<script[^>]*id="__NUXT_DATA__"[^>]*>(.*?)</script>', page, re.S)
+    if not m:
+        raise RuntimeError("__NUXT_DATA__ bulunamadı")
+    arr = json.loads(m.group(1))
+
+    def res(v, depth=0):  # Nuxt "devalue" biçimi: değerler dizideki indekslerdir
+        if depth > 8 or not isinstance(v, int) or isinstance(v, bool) or not 0 <= v < len(arr):
+            return v
+        x = arr[v]
+        if isinstance(x, dict):
+            return {k: res(y, depth + 1) for k, y in x.items()}
+        if isinstance(x, list):
+            if x and isinstance(x[0], str) and x[0] in ("Reactive", "ShallowReactive", "Ref", "ShallowRef"):
+                return res(x[1], depth + 1)
+            return [res(y, depth + 1) for y in x]
+        return x
+
+    out = []
+    for i, x in enumerate(arr):
+        if not (isinstance(x, dict) and "coordinates" in x and "chargingTypes" in x and "name" in x):
+            continue
+        s = res(i)
+        co = s.get("coordinates") or []
+        if len(co) != 2:
+            continue
+        o, a = co[0], co[1]
+        if not ok_coord(a, o):
+            continue
+        types = " ".join(s.get("chargingTypes") or [])
+        dc, ac = "DC" in types, "AC" in types
+        out.append(clean({"i": f"trugo{s['id']}", "a": round(a, 6), "o": round(o, 6), "n": (s.get("name") or "").strip(), "b": "Trugo",
+                          "ac": int(ac), "dc": int(dc), "t": (["Type 2"] if ac else []) + (["CCS"] if dc else []),
+                          "ad": (s.get("district") or s.get("city") or "").strip(), "pasif": int(s.get("status") == 2)}))
+    return out
+
+
+SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
+           "zes": (zes, "https://zes.net/tr/sarj-istasyonlari", 500),
            "ovolt": (ovolt, "https://ovolt.com.tr/istasyon-haritasi", 50),
            "wat": (wat, "https://www.watmobilite.com/istasyon-haritasi", 100)}
 

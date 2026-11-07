@@ -13,7 +13,7 @@ CSV = pathlib.Path("data/epdk/epdk_sarj_istasyonlari.csv")
 CACHE = pathlib.Path("data/epdk/konum_onbellek.json")
 NOMINATIM = "https://nominatim.openstreetmap.org/search"
 # Resmi haritasından konumu alınan ağlar burada konumlandırılmaz (istasyon_birlestir.py ile aynı liste)
-RESMI = re.compile(r"\bzes\b|ovolt|sharz|wat mobilite|watmobilite|\bwat\b")
+RESMI = re.compile(r"trugo|\bzes\b|ovolt|sharz|wat mobilite|watmobilite|\bwat\b")
 UA = "WattKac-konum/1.0 (https://wattkac.com; elektrikli arac sarj haritasi)"
 TR = str.maketrans({"İ": "i", "I": "ı", "Ş": "ş", "Ğ": "ğ", "Ü": "ü", "Ö": "ö", "Ç": "ç"})
 fold = lambda s: s.translate(TR).lower().replace("ı", "i").replace("ş", "s").replace("ğ", "g").replace("ü", "u").replace("ö", "o").replace("ç", "c")

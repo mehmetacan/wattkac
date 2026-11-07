@@ -170,6 +170,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .mkw{position:absolute;left:0;top:0}
 .mk{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:var(--bg-b,#6B7280);color:var(--fg-b,#fff);border:2px solid #fff;
   display:flex;align-items:center;justify-content:center;font:900 12px/1 Inter,sans-serif;letter-spacing:-.3px;box-shadow:0 1px 4px rgba(17,24,39,.35);cursor:pointer}
+.mk.pasif{opacity:.5}
 .mk.unk{width:16px;height:16px;font-size:0;--bg-b:#9CA3AF}
 .mk.camp{animation:pulse 1.6s ease-in-out infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 2px #16A34A,0 1px 4px rgba(17,24,39,.35)}50%{box-shadow:0 0 0 6px rgba(22,163,74,.25),0 0 0 2px #16A34A}}
@@ -689,7 +690,7 @@ function fromRec(r) {
   const t = { brand: r.b, operator: op, network: r.w, name: r.n, opening_hours: r.h, website: r.u };
   const b = brandOf(t), nm = r.n || "";
   return { id: r.i, lat: r.a, lon: r.o, brand: b.name, known: b.known, named: !!nm, name: nm || b.name || "Şarj istasyonu",
-    kw: r.k || null, types: r.t ? [...r.t] : [], hasAc: !!r.ac, hasDc: !!r.dc, tags: t, addr: r.ad || "", approx: r.q === "i" || r.q === "m", official: r.q === "r", pr: r.pr || null, tesis: r.tesis || "", camp: NETC[b.name] || [], count: r.c || null, d: 0, mode: null, price: null };
+    kw: r.k || null, types: r.t ? [...r.t] : [], hasAc: !!r.ac, hasDc: !!r.dc, tags: t, addr: r.ad || "", approx: r.q === "i" || r.q === "m", official: r.q === "r", pr: r.pr || null, tesis: r.tesis || "", pasif: !!r.pasif, camp: NETC[b.name] || [], count: r.c || null, d: 0, mode: null, price: null };
 }
 // OpenStreetMap'te bir istasyon çoğu zaman birden fazla kayıt olarak girilir; aynı markadaki yakın kayıtları birleştir
 function mergeStations(arr) {
@@ -846,7 +847,7 @@ function markerHtml(g) {
   if (g.items.length === 1) {
     const st = brandStyle(s0), small = M.map.getZoom() < 11;
     if (!st) return `<div class="mkw"><div class="mk unk ${camp ? "camp" : ""} ${sel ? "sel" : ""}" title="${esc(s0.name)}"></div></div>`;
-    return `<div class="mkw"><div class="mk ${camp ? "camp" : ""} ${small ? "small" : ""} ${sel ? "sel" : ""}" style="--bg-b:${st[0]};--fg-b:${st[1]}" title="${esc(pretty(s0.brand))}">${esc(st[2])}</div></div>`;
+    return `<div class="mkw"><div class="mk ${camp ? "camp" : ""} ${small ? "small" : ""} ${sel ? "sel" : ""} ${s0.pasif ? "pasif" : ""}" style="--bg-b:${st[0]};--fg-b:${st[1]}" title="${esc(pretty(s0.brand))}">${esc(st[2])}</div></div>`;
   }
   const sw = [...new Set(g.items.map(s => (brandStyle(s) || ["#9CA3AF"])[0]))].slice(0, 4).map(c => `<i style="background:${c}"></i>`).join("");
   return `<div class="mkw"><div class="mk grp ${camp ? "camp" : ""} ${sel ? "sel" : ""}" title="${g.items.length} istasyon">${g.items.length}<span class="sw">${sw}</span></div></div>`;
@@ -966,6 +967,7 @@ function renderDetail(s) {
   if (web) rows.push(["Web", `<a href="${esc(safeUrl(web))}" target="_blank" rel="noopener nofollow">Site ↗</a>`]);
   $("sh-b").innerHTML = `<div class="dn">${esc(pretty(s.brand) || s.name)}</div><div class="alt">${esc(s.brand && s.named && s.name !== s.brand ? s.name + " · " : "")}${fmtKm(s.d)} uzakta</div>
     ${s.deal ? `<p class="eff" style="font-size:15px">En iyi kampanyayla ≈ ${fmtNum(s.deal.v)} TL/kWh · ${esc(s.deal.c.kurum)} ${esc(s.deal.c.big)}</p>` : ""}
+    ${s.pasif ? `<p class="note" style="color:var(--r)">Bu istasyon ağın kendi haritasında şu an pasif görünüyor; gitmeden önce uygulamadan kontrol et.</p>` : ""}
     ${s.approx ? `<p class="note">Konum yaklaşık: adres EPDK kaydından alındı, tam nokta doğrulanmadı.</p>` : ""}
     ${rows.length ? `<dl class="kv">${rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>` : ""}
     ${s.camp.filter(c => !s.viaShell.includes(c)).length ? `<div class="lbl" style="margin-top:12px">Bu ağa özel kampanyalar</div>${s.camp.filter(c => !s.viaShell.includes(c)).map(mc).join("")}` : ""}
