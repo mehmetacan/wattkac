@@ -41,10 +41,11 @@
    "media/2026-11-08/banka_halkbank/hikaye.jpg"
   ],
   "aciklama": "",
-  "durum": "bekliyor",
+  "durum": "paylasildi",
   "deneme": 0,
-  "ig_media_id": null,
-  "hata": null
+  "ig_media_id": "18113045696128487",
+  "hata": null,
+  "paylasim_zamani": "2026-11-07T20:55:05+00:00"
  },
  {
   "id": "istasyon_astor_hikaye",
