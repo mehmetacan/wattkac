@@ -29,13 +29,21 @@ jobs:
   yayinla:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      CF_HAZIR: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
     steps:
+      - name: Cloudflare anahtarı yoksa atla
+        if: env.CF_HAZIR != 'true'
+        run: echo "::notice::CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID secret'ları eklenmemiş; yayın atlandı (hata değil)."
       - uses: actions/checkout@v4
+        if: env.CF_HAZIR == 'true'
         with:
           ref: main
       - name: Kampanya verisini siteye kopyala
+        if: env.CF_HAZIR == 'true'
         run: cp data/kampanyalar.json site/kampanyalar.json
       - name: Wrangler ile yayınla
+        if: env.CF_HAZIR == 'true'
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
