@@ -6,6 +6,11 @@ on:
   schedule:
     - cron: "17 2 * * *"   # her gün 05:17 (Türkiye saati)
   workflow_dispatch:
+    inputs:
+      konum_cevir:
+        description: "EPDK adreslerini konuma çevirme adımı da çalışsın mı (4 saate kadar sürer)?"
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -31,6 +36,7 @@ jobs:
         run: python3 -u tools/ocm_cek.py data/ocm/istasyonlar_ocm.json
         continue-on-error: true
       - name: EPDK adreslerini konuma çevir (en fazla 4 saat)
+        if: github.event_name != 'workflow_dispatch' || inputs.konum_cevir
         run: python3 -u tools/epdk_konum.py 14400
         continue-on-error: true
       - name: Yaklaşık konumları tesislere (Shell, AVM, dinlenme tesisi) göre kesinleştir
