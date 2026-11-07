@@ -189,7 +189,7 @@ def main():
             cnt[b.lower()] = cnt.get(b.lower(), 0) + 1
     data = {"guncelleme": datetime.date.today().isoformat(),
             "kaynak": "EPDK Şarj İstasyonları kaydı, ağların resmi haritaları, © OpenStreetMap katkıda bulunanlar (ODbL), © Open Charge Map (CC BY 4.0)",
-            "sayi": len(recs), "resmi_kaynaklar": kaynaklar,
+            "sayi": len(recs), "resmi_kaynaklar": kaynaklar, "secili_aglar": sorted(secili.keys()),
             "isletmeciler": ops, "istasyonlar": recs}
     txt = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
     OUT.write_text(txt, encoding="utf-8")

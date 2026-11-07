@@ -651,7 +651,7 @@ function stationOffers(s) {
   return profileEmpty() ? all : all.filter(c => c.tip === "ag" || (P.banka.length ? P.banka.includes(c.kid) : true));
 }
 // Herkese değil yalnızca belli müşterilere ya da seçili istasyonlara uygulanan kampanyalar sıralamaya katılmaz
-const COND = /seçili|sahiplerine|sahibi olan|yalnızca .*müşteri|togg/i;
+const COND = /seçili|listedeki istasyon|sahiplerine|sahibi olan|yalnızca .*müşteri|togg/i;
 const conditional = c => COND.test([c.det, c.kosul].join(" "));
 function bestDeal(s) {
   if (!s.price) return null;
@@ -667,8 +667,10 @@ function bestDeal(s) {
 // Shell akaryakıt istasyonlarındaki Trugo şarj cihazları (Trugo–Shell iş birliği) Shell Recharge uygulamasıyla da kullanılabilir.
 // Bu istasyonlara Shell Recharge kampanyaları "uygulama üzerinden" notuyla eklenir; liste fiyatı bilinmediği için sıralamaya katılmaz.
 // Ağın "seçili istasyonlarda" geçerli kendi kampanyası (ör. Otopriz %30) yalnızca resmi listedeki istasyonlarda gösterilir
-const seciliKamp = c => c.tip === "ag" && /seçili/i.test([c.det, c.kosul, c.big].join(" "));
+// Ağın resmi "kampanyaya dahil istasyonlar" listesi varsa (istasyonlar.json → secili_aglar), o ağın kendi kampanyası
+// yalnızca listedeki istasyonlarda geçerlidir. Liste yoksa metindeki "seçili/listedeki istasyon" ifadesine bakılır.
 const kampKey = c => fold(c.kurum).replace(/[^a-z0-9]/g, "");
+const seciliKamp = c => c.tip === "ag" && ((STATIC && (STATIC.secili_aglar || []).includes(kampKey(c))) || /seçili|listedeki istasyon/i.test([c.det, c.kosul, c.join, c.big].join(" ")));
 function enrich(s) {
   s.sk = s.sk || [];
   s.camp = s.camp.filter(c => !seciliKamp(c) || s.sk.includes(kampKey(c)));
