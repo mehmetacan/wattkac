@@ -1,0 +1,43 @@
+name: Cloudflare'e yayınla
+
+# Siteyi (site/ klasörü) Cloudflare Workers'a yayınlar (wattkac.mehmetstkacan.workers.dev).
+# Gerekli GitHub secret'ları: CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID
+# Not: Actions'ın kendi yaptığı commit'ler "push" tetiklemez; bu yüzden istasyon iş akışı bitince ayrıca çalışır.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "data/kampanyalar.json"
+      - "wrangler.jsonc"
+      - ".github/workflows/cloudflare-yayin.yml"
+  workflow_run:
+    workflows: ["İstasyon verisini güncelle"]
+    types: [completed]
+  schedule:
+    - cron: "41 7 * * *"   # her gün 10:41 (Türkiye saati), günlük kampanya güncellemesinden sonra yedek yayın
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudflare-yayin
+  cancel-in-progress: true
+
+jobs:
+  yayinla:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Kampanya verisini siteye kopyala
+        run: cp data/kampanyalar.json site/kampanyalar.json
+      - name: Wrangler ile yayınla
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy
