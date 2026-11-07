@@ -503,12 +503,12 @@
       "own": [
         {
           "big": "%30 indirim",
-          "det": "37 ilde seçili istasyonlarda, uygulamadan başlatılan AC/DC şarjda otomatik",
+          "det": "36 ilde 73 istasyonda · AC ve DC · kod gerekmez, faturaya otomatik yansır",
           "son": "30 Kasım",
           "link": "https://otopriz.com.tr/kampanyalar/indirimli-istasyonlar/kampanya-detaylari",
           "bas": "2026-11-01",
           "bit": "2026-11-30",
-          "kosul": "Yalnızca kampanya listesindeki istasyonlar; kod gerekmez; başka indirimle birleşmez"
+          "kosul": "Yalnızca listedeki istasyonlarda; bireysel ve kurumsal işlemler; 30 Kasım 23:59'a kadar, sonra standart tarife. Otopriz'e göre diğer kampanya ve indirimlerle birleştirilemez."
         }
       ],
       "banks": [
@@ -519,7 +519,7 @@
       ],
       "cover": {
         "big": "%30 indirim",
-        "sub": "37 ilde · kartla 100 TL'lik şarj 56 TL",
+        "sub": "36 ilde 73 istasyon · liste içeride",
         "son": "30 Kasım"
       },
       "birlesik": {
@@ -538,8 +538,482 @@
             "56 TL"
           ]
         ],
-        "not": "Her satır tek bir kartla hesaplandı; puan/iade sonradan hesaba yansır; bankaya katılım ve limitler geçerli. Otopriz indirimi kampanya listesindeki istasyonlarda geçerli."
-      }
+        "not": "Her satır tek bir kartla hesaplandı. Otopriz, indirimin diğer kampanyalarla birleşmediğini belirtiyor; banka puanı/iadesi bankanın kendi kampanyası olduğu için kartın koşullarını kontrol et."
+      },
+      "istasyon_listesi": [
+        {
+          "il": "Adana",
+          "yerler": [
+            [
+              "Akkaya Petrol",
+              "Pozantı"
+            ],
+            [
+              "Akün Dinlenme Tesisi",
+              "Pozantı"
+            ],
+            [
+              "Eroğlu Petrol",
+              "Pozantı"
+            ],
+            [
+              "01 OTO AVM",
+              "Sarıçam"
+            ],
+            [
+              "Serine Petrol",
+              "Seyhan"
+            ],
+            [
+              "Yusuf Tunç Petrol",
+              "Seyhan"
+            ],
+            [
+              "Girne Bulvarı",
+              "Yüreğir"
+            ],
+            [
+              "Hamay Tarım",
+              "Yüreğir"
+            ]
+          ]
+        },
+        {
+          "il": "Adıyaman",
+          "yerler": [
+            [
+              "Aryon Altınşehir AVM",
+              "Merkez"
+            ]
+          ]
+        },
+        {
+          "il": "Aksaray",
+          "yerler": [
+            [
+              "Eraltınlar Petrol TP",
+              "Merkez"
+            ]
+          ]
+        },
+        {
+          "il": "Amasya",
+          "yerler": [
+            [
+              "ÇTN Akaryakıt",
+              "Merzifon"
+            ],
+            [
+              "Yolpınar",
+              "Suluova"
+            ],
+            [
+              "Başak Petrol",
+              "Taşova"
+            ]
+          ]
+        },
+        {
+          "il": "Ankara",
+          "yerler": [
+            [
+              "İlci Otel",
+              "Çankaya"
+            ],
+            [
+              "Doğan Buyruk Ankara",
+              "Gölbaşı"
+            ],
+            [
+              "Çıtır Simit",
+              "Yenimahalle"
+            ],
+            [
+              "Mega Bulvar İş Merkezi",
+              "Yenimahalle"
+            ],
+            [
+              "Vega Cadde AVM",
+              "Yenimahalle"
+            ]
+          ]
+        },
+        {
+          "il": "Antalya",
+          "yerler": [
+            [
+              "Termo Petrol",
+              "Döşemealtı"
+            ],
+            [
+              "Gazipark Airport AVM",
+              "Gazipaşa"
+            ]
+          ]
+        },
+        {
+          "il": "Aydın",
+          "yerler": [
+            [
+              "ANG Akaryakıt",
+              "Nazilli"
+            ]
+          ]
+        },
+        {
+          "il": "Balıkesir",
+          "yerler": [
+            [
+              "Highway Otel",
+              "Burhaniye"
+            ],
+            [
+              "Toyota Plaza Kuzen",
+              "Edremit"
+            ],
+            [
+              "Tellioğlu Dinlenme Tesisleri",
+              "Karesi"
+            ]
+          ]
+        },
+        {
+          "il": "Batman",
+          "yerler": [
+            [
+              "HFC Meidan",
+              "Merkez"
+            ]
+          ]
+        },
+        {
+          "il": "Bingöl",
+          "yerler": [
+            [
+              "Miliamall AVM",
+              "Merkez"
+            ]
+          ]
+        },
+        {
+          "il": "Bitlis",
+          "yerler": [
+            [
+              "Seyr-i Cevaz",
+              "Adilcevaz"
+            ],
+            [
+              "Doğu Pasifik",
+              "Güroymak"
+            ]
+          ]
+        },
+        {
+          "il": "Bursa",
+          "yerler": [
+            [
+              "NGS Dinlenme Tesisi",
+              "M.Kemalpaşa"
+            ],
+            [
+              "Bulvar Özlüce AVM",
+              "Nilüfer"
+            ]
+          ]
+        },
+        {
+          "il": "Diyarbakır",
+          "yerler": [
+            [
+              "Diclekent Petrol",
+              "Kayapınar"
+            ],
+            [
+              "Eryıl Akaryakıt",
+              "Sur"
+            ]
+          ]
+        },
+        {
+          "il": "Düzce",
+          "yerler": [
+            [
+              "Özenler Otomotiv",
+              "Merkez"
+            ]
+          ]
+        },
+        {
+          "il": "Edirne",
+          "yerler": [
+            [
+              "Bendis AVM",
+              "Keşan"
+            ]
+          ]
+        },
+        {
+          "il": "Erzurum",
+          "yerler": [
+            [
+              "Adil Cam",
+              "Yakutiye"
+            ]
+          ]
+        },
+        {
+          "il": "Hakkâri",
+          "yerler": [
+            [
+              "Depin",
+              "Merkez"
+            ]
+          ]
+        },
+        {
+          "il": "Isparta",
+          "yerler": [
+            [
+              "İyaş Bulvar AVM",
+              "Merkez"
+            ]
+          ]
+        },
+        {
+          "il": "İstanbul",
+          "yerler": [
+            [
+              "Ramada Florya",
+              "Bakırköy"
+            ],
+            [
+              "Közkanat",
+              "Çekmeköy"
+            ],
+            [
+              "Hani Cağ Kebap",
+              "Maltepe"
+            ],
+            [
+              "Meydan Otopark",
+              "Zeytinburnu"
+            ]
+          ]
+        },
+        {
+          "il": "İzmir",
+          "yerler": [
+            [
+              "Chekich Ayakkabı",
+              "Bornova"
+            ]
+          ]
+        },
+        {
+          "il": "Kırşehir",
+          "yerler": [
+            [
+              "Doğan Buyruk",
+              "Merkez"
+            ]
+          ]
+        },
+        {
+          "il": "Kocaeli",
+          "yerler": [
+            [
+              "Akgünler Otomotiv",
+              "İzmit"
+            ]
+          ]
+        },
+        {
+          "il": "Konya",
+          "yerler": [
+            [
+              "AKF Sosyal Tesisleri",
+              "Karatay"
+            ],
+            [
+              "Konya Ticaret Merkezi",
+              "Karatay"
+            ]
+          ]
+        },
+        {
+          "il": "Mersin",
+          "yerler": [
+            [
+              "FN Tarım",
+              "Silifke"
+            ],
+            [
+              "Akdemirler Petrol",
+              "Tarsus"
+            ],
+            [
+              "Şahin Otomotiv",
+              "Tarsus"
+            ]
+          ]
+        },
+        {
+          "il": "Muğla",
+          "yerler": [
+            [
+              "IRZ Akaryakıt",
+              "Ula"
+            ]
+          ]
+        },
+        {
+          "il": "Muş",
+          "yerler": [
+            [
+              "Petlas",
+              "Bulanık"
+            ],
+            [
+              "Diyar Petrol",
+              "Hasköy"
+            ],
+            [
+              "Global Otel",
+              "Merkez"
+            ]
+          ]
+        },
+        {
+          "il": "Samsun",
+          "yerler": [
+            [
+              "Gönül Bahçem",
+              "Terme"
+            ]
+          ]
+        },
+        {
+          "il": "Siirt",
+          "yerler": [
+            [
+              "Palmiyem Otel",
+              "Baykan"
+            ],
+            [
+              "Otogar",
+              "Kurtalan"
+            ],
+            [
+              "Andera Park AVM",
+              "Merkez"
+            ],
+            [
+              "Tillo Belediyesi",
+              "Tillo"
+            ]
+          ]
+        },
+        {
+          "il": "Sinop",
+          "yerler": [
+            [
+              "The Liora Hotel",
+              "Boyabat"
+            ]
+          ]
+        },
+        {
+          "il": "Sivas",
+          "yerler": [
+            [
+              "Ekenler Petrol",
+              "Merkez"
+            ]
+          ]
+        },
+        {
+          "il": "Şanlıurfa",
+          "yerler": [
+            [
+              "Belediye Sosyal Tesisleri",
+              "Suruç"
+            ]
+          ]
+        },
+        {
+          "il": "Tekirdağ",
+          "yerler": [
+            [
+              "Eriş Un Dinlenme Tesisleri",
+              "Çorlu"
+            ]
+          ]
+        },
+        {
+          "il": "Tokat",
+          "yerler": [
+            [
+              "Müşüroğlu Petrol",
+              "Pazar"
+            ],
+            [
+              "Coşaroğulları",
+              "Merkez"
+            ],
+            [
+              "Yeşil Vadi Restaurant",
+              "Merkez"
+            ]
+          ]
+        },
+        {
+          "il": "Van",
+          "yerler": [
+            [
+              "7 Kıta Yanar Petrol",
+              "Erciş"
+            ],
+            [
+              "Akdamar Restaurant",
+              "Gevaş"
+            ],
+            [
+              "Gözegir Petrol",
+              "Gevaş"
+            ],
+            [
+              "Çavuştepe Petrol",
+              "Gürpınar"
+            ],
+            [
+              "Kandahar Petrol",
+              "Muradiye"
+            ],
+            [
+              "Castrol",
+              "Tuşba"
+            ]
+          ]
+        },
+        {
+          "il": "Yozgat",
+          "yerler": [
+            [
+              "Şahan Petrol",
+              "Yerköy"
+            ]
+          ]
+        },
+        {
+          "il": "Zonguldak",
+          "yerler": [
+            [
+              "Coşkunoğlu Kasap",
+              "Ereğli"
+            ]
+          ]
+        }
+      ]
     },
     {
       "id": "ovolt",

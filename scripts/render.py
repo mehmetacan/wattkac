@@ -126,6 +126,24 @@ def station_html(s, d, story):
             f'{foot(d)}</div></body></html>')
 
 
+def stlist_html(s, d, part, idx, tot):
+    """İstasyon listesi slaydı: il başlıkları + 'istasyon · ilçe', iki sütun."""
+    blocks = "".join(
+        f'<div class="ib"><div class="il">{esc(x["il"])}</div>' +
+        "".join(f'<div class="ys"><b>{esc(a)}</b> · {esc(b)}</div>' for a, b in x["yerler"]) + '</div>' for x in part)
+    n = sum(len(x["yerler"]) for x in part)
+    css = base_css(1080, 1350, False) + """
+.cols{margin-top:22px;column-count:2;column-gap:34px;column-fill:auto;height:950px;overflow:hidden}
+.ib{break-inside:avoid;margin-bottom:10px}
+.il{font-size:23px;font-weight:900;color:#FFD400;letter-spacing:.3px;border-bottom:2px solid #202C4A;padding-bottom:2px;margin-bottom:4px}
+.ys{font-size:19px;line-height:1.27;color:#9FB0D0;font-weight:500}
+.ys b{color:#F4F6FB;font-weight:700}"""
+    return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{css}</style></head><body><div class="wrap">'
+            f'{brand(f"İstasyon listesi {idx}/{tot}")}<div class="h1" style="font-size:64px">{esc(s["name"])} · {esc(s["own"][0]["big"])}</div>'
+            f'<div class="h2">Kampanyalı istasyonlar ({n} istasyon) · {esc(son_txt(s["own"][0]["son"], "Son gün: "))}</div>'
+            f'<div class="cols">{blocks}</div>{foot(d)}</div></body></html>')
+
+
 def list_html(title_html, sub, rows, d, extra=""):
     r = "".join(f'<div class="row"><div class="rk">{esc(k)}</div><div class="rv">{esc(v)}</div></div>' for k, v in rows)
     return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{base_css(1080, 1350, False)}</style></head><body><div class="wrap">'
@@ -217,7 +235,19 @@ def render_all(d, etiket, sadece=None):
         shot(cover_html(s["name"], c["big"], c["sub"], son_txt(c['son'], "Son gün: "), "Detay için kaydır →", "station"), f"{p}/1_kapak.jpg", 1080, 1350)
         shot(station_html(s, d, False), f"{p}/2_detay.jpg", 1080, 1350)
         shot(station_html(s, d, True), f"{p}/hikaye.jpg", 1080, 1920)
-        add(pid, "istasyon", s["name"], ["1_kapak.jpg", "2_detay.jpg", "hikaye.jpg"])
+        files = ["1_kapak.jpg", "2_detay.jpg"]
+        lst = s.get("istasyon_listesi") or []
+        if lst:  # ~38 satıra bir slayt; il bloğu bölünmez
+            parts, cur, cnt = [], [], 0
+            for x in lst:
+                if cur and cnt + len(x["yerler"]) + 1 > 56:
+                    parts.append(cur); cur, cnt = [], 0
+                cur.append(x); cnt += len(x["yerler"]) + 1
+            parts.append(cur)
+            for i, part in enumerate(parts, 1):
+                shot(stlist_html(s, d, part, i, len(parts)), f"{p}/3_liste{i}.jpg", 1080, 1350)
+                files.append(f"3_liste{i}.jpg")
+        add(pid, "istasyon", s["name"], files + ["hikaye.jpg"])
     os.makedirs(out, exist_ok=True)
     json.dump(old + posts, open(f"{out}/manifest.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     return posts
