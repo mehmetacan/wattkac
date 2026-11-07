@@ -15,7 +15,7 @@ Bu dosyaları onay paneli (docs/index.html) yazar. Onay dosyası şunları da de
   aciklama → Instagram açıklaması
   hikaye  → false ise hikaye paylaşılmaz
 """
-import datetime as dt, glob, json, os, sys, time, urllib.parse, urllib.request, urllib.error
+import datetime as dt, glob, json, os, subprocess, sys, time, urllib.parse, urllib.request, urllib.error
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = (os.environ.get("GRAPH_BASE") or "https://graph.facebook.com/v23.0").rstrip("/")
@@ -225,10 +225,15 @@ if __name__ == "__main__":
     limit = time.time() + int(os.environ.get("BEKLE_DK", "0")) * 60
     rc = main()
     while not DRY:
+        # Beklerken panelden gelen yeni onayları kaçırmamak için her dakika depoyu güncelle.
+        subprocess.run(["git", "pull", "--rebase", "--autostash", "-q"], cwd=ROOT, capture_output=True)
         sec = next_due_seconds()
+        if sec is not None and sec <= 5:
+            rc = main() or rc
+            continue
         if sec is None or time.time() + sec > limit:
-            break
-        log(f"Sıradaki onaylı paylaşım {int(sec // 60)} dk {int(sec % 60)} sn sonra, bekleniyor…")
-        time.sleep(sec + 5)
+            break  # yakında onaylı paylaşım yok; yeni onay gelirse panel yeni bir çalışma başlatır
+        log(f"Sıradaki onaylı paylaşım {int(sec // 60)} dk {int(sec % 60)} sn sonra (her dakika yeni onaylara bakılıyor)")
+        time.sleep(min(60, sec + 5))
         rc = main() or rc
     sys.exit(rc)
