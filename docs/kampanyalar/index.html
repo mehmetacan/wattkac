@@ -699,6 +699,9 @@ function mergeStations(arr) {
     const m = out.find(o => o.brand === s.brand && dist(o, s) < 60);
     if (!m) { out.push(s); continue; }
     m.hasAc = m.hasAc || s.hasAc; m.hasDc = m.hasDc || s.hasDc;
+    if (s.pr) m.pr = { ...s.pr, ...(m.pr || {}) };
+    if (s.prn && !m.prn) m.prn = s.prn;
+    if (m.pasif && !s.pasif) m.pasif = false;
     m.kw = Math.max(m.kw || 0, s.kw || 0) || null;
     s.types.forEach(x => m.types.includes(x) || m.types.push(x));
     m.count = (m.count || 0) + (s.count || 0) || null;
