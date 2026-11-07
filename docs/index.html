@@ -46,7 +46,7 @@ textarea{min-height:200px;resize:vertical}
 .src li span:last-child{min-width:0;overflow-wrap:anywhere}
 .card{overflow:hidden}
 .tag{flex:none;font-size:11px;font-weight:800;border-radius:6px;padding:2px 6px;margin-top:2px}
-.t-resmi{background:#123b2f;color:var(--g)}.t-derleme{background:#3d3410;color:var(--y)}
+.t-resmi{background:#123b2f;color:var(--g)}.t-kontrol{background:#4a2410;color:#FF9B5C}.t-derleme{background:#3d3410;color:var(--y)}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px}
 .chk{display:flex;gap:8px;align-items:center;font-weight:600}
 .chk input{width:20px;height:20px;accent-color:var(--g)}
@@ -181,7 +181,7 @@ function card(g) {
   const imgs = storyOnly ? [[p.gorseller[0], "Hikaye"]] : [...p.gorseller.map((u, i) => [u, i === 0 ? "Kapak" : "Detay"]), ...(s ? [[s.gorseller[0], "Hikaye"]] : [])];
   const late = st === "bekleyen" && new Date(zaman) < new Date();
   const editable = st === "bekleyen" || st === "onaylandi";
-  const src = (p.kaynaklar || []).map(k => `<li><span class="tag t-${k.tur}">${k.tur === "resmi" ? "RESMİ" : "DERLEME"}</span><span>${esc(k.ad)}<br><a href="${esc(k.url)}" target="_blank" rel="noopener">${esc(k.url.replace(/^https?:\/\//, "").slice(0, 70))}…</a></span></li>`).join("");
+  const src = (p.kaynaklar || []).map(k => `<li><span class="tag t-${k.tur}">${k.tur === "resmi" ? "RESMİ" : k.tur === "kontrol" ? "RESMİ · KONTROL ET" : "DERLEME"}</span><span>${esc(k.ad)}${k.not ? `<br><small style="color:#FF9B5C">${esc(k.not)}</small>` : ""}<br><a href="${esc(k.url)}" target="_blank" rel="noopener">${esc(k.url.replace(/^https?:\/\//, "").slice(0, 70))}…</a></span></li>`).join("");
   return `<div class="card" id="c-${esc(g.grup)}">
     <div class="top"><div><span class="badge b-${tur}">${tur === "ozet" ? "Özet" : tur === "banka" ? "Banka" : "Şarj ağı"}</span>
       <h2 style="margin-top:6px">${esc(p.baslik || p.id)}${storyOnly ? ' <span class="badge b-ozet">Sadece hikaye</span>' : ""}</h2>

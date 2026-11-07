@@ -1,0 +1,72 @@
+[
+ {
+  "id": "banka_halkbank",
+  "tur": "banka",
+  "baslik": "Halkbank",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "banka_vakifbank",
+  "tur": "banka",
+  "baslik": "VakıfBank",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "banka_denizbank",
+  "tur": "banka",
+  "baslik": "DenizBank",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "banka_kuveytturk",
+  "tur": "banka",
+  "baslik": "Kuveyt Türk",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_astor",
+  "tur": "istasyon",
+  "baslik": "ASTOR Şarj",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_trugo",
+  "tur": "istasyon",
+  "baslik": "Trugo",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_otopriz",
+  "tur": "istasyon",
+  "baslik": "Otopriz",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ }
+]

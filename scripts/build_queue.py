@@ -38,9 +38,13 @@ def caption(item, d):
                 f"\n\n{HASHTAG} {tag(b['name'])}")
     s = item["_src"]
     lines = [f"✅ {o['big']}: {o['det']} (son gün {o['son']})" for o in s["own"]]
-    lines += [f"💳 {k}: {v}" for k, v in s["banks"]]
-    lines.append(f"🌍 Her istasyonda: {d['genel_kartlar']}")
-    return (f"⚡ {s['name']} istasyonlarında bu ay ne kazandırıyor?\n\n" + "\n".join(lines) +
+    bl = s.get("birlesik")
+    if bl:
+        lines.append(f"\n💳 Banka kartıyla birleşince ({bl['baslik']}):")
+        lines += [f"• {k}: {v}" for k, v in bl["satirlar"]]
+        lines.append(bl.get("not", ""))
+    lines.append("\nKart kampanyalarının tamamı ve geçerli istasyonlar banka postlarımızda.")
+    return (f"⚡ {s['name']}: {s['cover']['big']}!\n\n" + "\n".join(lines) +
             f"\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n{HASHTAG} {tag(s['name'])}")
 
 
@@ -51,22 +55,27 @@ def resmi_mi(url):
 def kaynaklar(item, d):
     out, seen = [], set()
 
-    def add(ad, url):
+    def add(ad, url, o=None):
         if url and url not in seen:
             seen.add(url)
-            out.append({"ad": ad, "url": url, "tur": "resmi" if resmi_mi(url) else "derleme"})
+            k = {"ad": ad, "url": url, "tur": "resmi" if resmi_mi(url) else "derleme"}
+            if o and o.get("kontrol"):
+                k["tur"], k["not"] = "kontrol", "Resmi sayfayı otomatik açamadım; tarih ve oranı linkten kontrol et."
+            out.append(k)
 
     src = item.get("_src")
     if item["tur"] == "banka":
         for o in src["offers"]:
-            add(f"{src['name']}: {o['big']} ({', '.join(o['st'])})", o["link"])
+            add(f"{src['name']}: {o['big']} ({', '.join(o['st'])})", o["link"], o)
     elif item["tur"] == "istasyon":
         for o in src["own"]:
             add(f"{src['name']}: {o['big']}", o["link"])
+        metin = " ".join(k for k, _ in (src.get("birlesik") or {}).get("satirlar", []))
         for b in d["bankalar"]:
             for o in b["offers"]:
-                if src["name"] in o["st"]:
-                    add(f"{b['name']}: {o['big']}", o["link"])
+                kisa = b["name"].split()[0]
+                if (src["name"] in o["st"] or o["st"] == ["Tüm şarj istasyonları"]) and (kisa in metin or b["id"] == "on" and "ON " in metin):
+                    add(f"{b['name']}: {o['big']}", o["link"], o)
     else:
         for b in d["bankalar"] if item["id"] == "ozet_bankalar" else []:
             for o in b["offers"]:

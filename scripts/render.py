@@ -108,18 +108,21 @@ def bank_html(b, d, story):
 
 
 def station_html(s, d, story):
+    """Sadece ağın KENDİ indirimi + banka kartıyla birleşince net fiyat. Banka kampanyaları burada tekrar edilmez."""
     W, H = (1080, 1920) if story else (1080, 1350)
     own = "".join(f'<div class="of"><div class="ot"><div class="big">{esc(o["big"])}</div><div class="son">{esc(son_txt(o["son"], "Son: "))}</div></div>'
                   f'<div class="det">{esc(o["det"])}</div></div>' for o in s["own"])
-    if not own:
-        own = '<div class="empty">Bu ay ağın kendi kampanyası yok, ama bu kartlarla kazanabilirsin:</div>'
-    rows = "".join(f'<div class="row"><div class="rk">{esc(k)}</div><div class="rv">{esc(v)}</div></div>' for k, v in s["banks"])
-    bank_part = (f'<div class="lbl" style="margin-top:{30 if story else 22}px">Bu ağda geçerli kart kampanyaları</div>'
-                 f'<div class="offers" style="margin-top:10px;gap:12px">{rows}</div>') if rows else ""
+    bp = ""
+    bl = s.get("birlesik")
+    if bl:
+        rows = "".join(f'<div class="row"><div class="rk">{esc(k)}</div><div class="rv">{esc(v)}</div></div>' for k, v in bl["satirlar"])
+        bp = (f'<div class="lbl" style="margin-top:{34 if story else 24}px">Banka kartıyla birleşince · {esc(bl["baslik"])}</div>'
+              f'<div class="offers" style="margin-top:10px;gap:12px">{rows}</div>'
+              f'<div class="foot" style="margin-top:12px">{esc(bl.get("not", ""))}</div>')
     return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{base_css(W, H, story)}</style></head><body><div class="wrap">'
-            f'{brand("Şarj ağı · " + d["donem"])}<div class="h1">{esc(s["name"])}</div><div class="h2">Bu ay ne kazandırıyor?</div>'
-            f'<div class="offers">{own}</div>{bank_part}<div class="spacer"></div>'
-            f'<div class="note"><b>Her istasyonda geçerli:</b> {esc(d["genel_kartlar"])} kart kampanyaları. Detaylar banka sayfalarında.</div>'
+            f'{brand("Şarj ağı · " + d["donem"])}<div class="h1">{esc(s["name"])}</div><div class="h2">Ağın kendi indirimi</div>'
+            f'<div class="offers">{own}</div>{bp}<div class="spacer"></div>'
+            f'<div class="note"><b>Kart kampanyalarının tamamı</b> banka postlarımızda; orada hangi istasyonlarda geçerli olduğu yazıyor.</div>'
             f'{foot(d)}</div></body></html>')
 
 
@@ -177,7 +180,8 @@ def render_all(d, etiket, sadece=None):
     def add(pid, kind, title, files):
         posts.append({"id": pid, "tur": kind, "baslik": title, "dosyalar": files})
 
-    banks, sts = d["bankalar"], d["istasyonlar"]
+    banks = d["bankalar"]
+    sts = [s for s in d["istasyonlar"] if s["own"]]  # kendi indirimi olmayan ağa ayrı post yok (banka postlarında geçiyor)
     if want("ozet_bankalar"):
         p = f"{out}/ozet_bankalar"
         shot(cover_html("Banka<br>kampanyaları", f'{len(banks)} banka · {d["donem"].split()[0]}', " · ".join(b["name"].replace(" Bankası", "") for b in banks),
@@ -192,8 +196,8 @@ def render_all(d, etiket, sadece=None):
         p = f"{out}/ozet_istasyonlar"
         shot(cover_html("Şarj ağı<br>kampanyaları", f'{len(sts)} ağ · {d["donem"].split()[0]}', " · ".join(s["name"] for s in sts),
                         "Sabit post · Tümü burada", "Liste için kaydır →", "sum_station"), f"{p}/1_kapak.jpg", 1080, 1350)
-        shot(list_html('Şarj ağlarında<br><b style="color:#FFD400">bu ay ne var?</b>', "Ağ ağ kampanyalar ve geçerli kartlar",
-                       [(s["name"], s["own"][0]["big"] if s["own"] else f'{len(s["banks"])} kart kampanyası') for s in sts], d),
+        shot(list_html('Şarj ağlarında<br><b style="color:#FFD400">bu ay ne var?</b>', "Ağların kendi indirimleri",
+                       [(s["name"], s["own"][0]["big"]) for s in sts], d),
              f"{p}/2_liste.jpg", 1080, 1350)
         add("ozet_istasyonlar", "ozet", "Şarj ağı kampanyaları özeti", ["1_kapak.jpg", "2_liste.jpg"])
     for b in banks:

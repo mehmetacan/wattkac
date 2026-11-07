@@ -1,463 +1,467 @@
 [
-  {
-    "id": "banka_ziraat_post",
-    "grup": "2026-11-06__banka_ziraat",
-    "tip": "karusel",
-    "zaman": "2026-11-08T09:30:00+03:00",
-    "baslik": "Ziraat Bankası",
-    "tur": "banka",
-    "kaynaklar": [
-      {
-        "ad": "Ziraat Bankası: %20 Jest Lira (Trugo, Eşarj, Voltrun, Otopriz, ASTOR Şarj, WAT Mobilite, Petrol Ofisi e-POWER, Zeplin Enerji, Tunçmatik, Mercury Şarj, otojet, Nevaşarj, 5Şarj, EFISH, Mig-Go, Wattarya, Egeşarj, Konya Elektrikli Araçlar)",
-        "url": "https://www.bankkart.com.tr/kampanyalar/akaryakit/elektrikli-sarj-istasyonlarinda-750-tl-jest-lira",
-        "tur": "resmi"
-      }
-    ],
-    "gorseller": [
-      "media/2026-11-06/banka_ziraat/1_kapak.jpg",
-      "media/2026-11-06/banka_ziraat/2_detay.jpg"
-    ],
-    "aciklama": "⚡ Ziraat Bankası ile şarjda %20 Jest Lira!\n\n✅ %20 Jest Lira: Anlaşmalı ağlarda her şarj ödemesinde · toplam 750 TL\n📍 Trugo, Eşarj, Voltrun, Otopriz, ASTOR Şarj, WAT Mobilite, Petrol Ofisi e-POWER, Zeplin Enerji, Tunçmatik, Mercury Şarj, otojet, Nevaşarj, 5Şarj, EFISH, Mig-Go, Wattarya, Egeşarj, Konya Elektrikli Araçlar\n📝 Katılım: Ödemeden önce Bankkart Mobil veya bankkart.com.tr'den katıl\n⏱ Son gün: 30 Kasım\n\nKoşullar değişebilir; katılmadan önce bankanın resmi kanallarından kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #ziraatbankası",
-    "durum": "bekliyor",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null
-  },
-  {
-    "id": "banka_ziraat_hikaye",
-    "grup": "2026-11-06__banka_ziraat",
-    "baslik": "Ziraat Bankası",
-    "tur": "banka",
-    "tip": "hikaye",
-    "zaman": "2026-11-08T10:30:00+03:00",
-    "gorseller": [
-      "media/2026-11-06/banka_ziraat/hikaye.jpg"
-    ],
-    "aciklama": "",
-    "durum": "bekliyor",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null
-  },
-  {
-    "id": "istasyon_trugo_post",
-    "grup": "2026-11-06__istasyon_trugo",
-    "tip": "karusel",
-    "zaman": "2026-11-08T13:00:00+03:00",
-    "baslik": "Trugo",
-    "tur": "istasyon",
-    "kaynaklar": [
-      {
-        "ad": "Ziraat Bankası: %20 Jest Lira",
-        "url": "https://www.bankkart.com.tr/kampanyalar/akaryakit/elektrikli-sarj-istasyonlarinda-750-tl-jest-lira",
-        "tur": "resmi"
-      }
-    ],
-    "gorseller": [
-      "media/2026-11-06/istasyon_trugo/1_kapak.jpg",
-      "media/2026-11-06/istasyon_trugo/2_detay.jpg"
-    ],
-    "aciklama": "⚡ Trugo istasyonlarında bu ay ne kazandırıyor?\n\n💳 Ziraat Bankkart: %20 Jest Lira\n🌍 Her istasyonda: Paraf Doğal · QNB · ON\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #trugo",
-    "durum": "iptal",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null,
-    "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
-  },
-  {
-    "id": "istasyon_trugo_hikaye",
-    "grup": "2026-11-06__istasyon_trugo",
-    "baslik": "Trugo",
-    "tur": "istasyon",
-    "tip": "hikaye",
-    "zaman": "2026-11-08T14:00:00+03:00",
-    "gorseller": [
-      "media/2026-11-06/istasyon_trugo/hikaye.jpg"
-    ],
-    "aciklama": "",
-    "durum": "iptal",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null,
-    "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
-  },
-  {
-    "id": "banka_akbank_post",
-    "grup": "2026-11-06__banka_akbank",
-    "tip": "karusel",
-    "zaman": "2026-11-08T19:30:00+03:00",
-    "baslik": "Akbank",
-    "tur": "banka",
-    "kaynaklar": [
-      {
-        "ad": "Akbank: %20 indirim (Voltla uygulaması, Powerşarj, Zeplin Enerji, Tunçmatik, Şarjon, Voltgo, Solargize, Doğuş Dijital Enerji, D-Rect, Obişarj)",
-        "url": "https://www.axess.com.tr/axess/kampanyalar/axesse-ozel-voltlada-20-indirim",
-        "tur": "resmi"
-      }
-    ],
-    "gorseller": [
-      "media/2026-11-06/banka_akbank/1_kapak.jpg",
-      "media/2026-11-06/banka_akbank/2_detay.jpg"
-    ],
-    "aciklama": "⚡ Akbank ile şarjda %20 indirim!\n\n✅ %20 indirim: Voltla üzerinden şarj ödemelerinde · toplam 500 TL\n📍 Voltla uygulaması, Powerşarj, Zeplin Enerji, Tunçmatik, Şarjon, Voltgo, Solargize, Doğuş Dijital Enerji, D-Rect, Obişarj\n📝 Katılım: VOLTLA yazıp 4566'ya SMS veya Juzdan'dan Hemen Katıl\n⏱ Son gün: 22 Kasım\n\nKoşullar değişebilir; katılmadan önce bankanın resmi kanallarından kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #akbank",
-    "durum": "bekliyor",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null
-  },
-  {
-    "id": "banka_akbank_hikaye",
-    "grup": "2026-11-06__banka_akbank",
-    "baslik": "Akbank",
-    "tur": "banka",
-    "tip": "hikaye",
-    "zaman": "2026-11-08T20:30:00+03:00",
-    "gorseller": [
-      "media/2026-11-06/banka_akbank/hikaye.jpg"
-    ],
-    "aciklama": "",
-    "durum": "bekliyor",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null
-  },
-  {
-    "id": "istasyon_voltrun_post",
-    "grup": "2026-11-06__istasyon_voltrun",
-    "tip": "karusel",
-    "zaman": "2026-11-09T09:30:00+03:00",
-    "baslik": "Voltrun",
-    "tur": "istasyon",
-    "kaynaklar": [
-      {
-        "ad": "Ziraat Bankası: %20 Jest Lira",
-        "url": "https://www.bankkart.com.tr/kampanyalar/akaryakit/elektrikli-sarj-istasyonlarinda-750-tl-jest-lira",
-        "tur": "resmi"
-      }
-    ],
-    "gorseller": [
-      "media/2026-11-06/istasyon_voltrun/1_kapak.jpg",
-      "media/2026-11-06/istasyon_voltrun/2_detay.jpg"
-    ],
-    "aciklama": "⚡ Voltrun istasyonlarında bu ay ne kazandırıyor?\n\n💳 Ziraat Bankkart: %20 Jest Lira\n🌍 Her istasyonda: Paraf Doğal · QNB · ON\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #voltrun",
-    "durum": "iptal",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null,
-    "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
-  },
-  {
-    "id": "istasyon_voltrun_hikaye",
-    "grup": "2026-11-06__istasyon_voltrun",
-    "baslik": "Voltrun",
-    "tur": "istasyon",
-    "tip": "hikaye",
-    "zaman": "2026-11-09T10:30:00+03:00",
-    "gorseller": [
-      "media/2026-11-06/istasyon_voltrun/hikaye.jpg"
-    ],
-    "aciklama": "",
-    "durum": "iptal",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null,
-    "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
-  },
-  {
-    "id": "banka_halkbank_post",
-    "grup": "2026-11-06__banka_halkbank",
-    "tip": "karusel",
-    "zaman": "2026-11-09T19:30:00+03:00",
-    "baslik": "Halkbank",
-    "tur": "banka",
-    "kaynaklar": [
-      {
-        "ad": "Halkbank: %10 indirim (Tüm şarj istasyonları)",
-        "url": "https://www.paraf.com.tr/tr/parafi-taniyin/elektrikli-arac-sarj-istasyonu-indirimi.html",
-        "tur": "resmi"
-      }
-    ],
-    "gorseller": [
-      "media/2026-11-06/banka_halkbank/1_kapak.jpg",
-      "media/2026-11-06/banka_halkbank/2_detay.jpg"
-    ],
-    "aciklama": "⚡ Halkbank ile şarjda %10 indirim!\n\n✅ %10 indirim: Paraf Doğal ile yurt içi şarjda · ayda 300 TL'ye kadar\n📍 Tüm şarj istasyonları\n📝 Katılım: SARJ yazıp 3404'e SMS (katılımdan sonraki harcamalar)\n⏱ Son gün: Süreli değil\n\nKoşullar değişebilir; katılmadan önce bankanın resmi kanallarından kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #halkbank",
-    "durum": "bekliyor",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null
-  },
-  {
-    "id": "banka_halkbank_hikaye",
-    "grup": "2026-11-06__banka_halkbank",
-    "baslik": "Halkbank",
-    "tur": "banka",
-    "tip": "hikaye",
-    "zaman": "2026-11-09T20:30:00+03:00",
-    "gorseller": [
-      "media/2026-11-06/banka_halkbank/hikaye.jpg"
-    ],
-    "aciklama": "",
-    "durum": "bekliyor",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null
-  },
-  {
-    "id": "istasyon_otopriz_post",
-    "grup": "2026-11-06__istasyon_otopriz",
-    "tip": "karusel",
-    "zaman": "2026-11-10T09:30:00+03:00",
-    "baslik": "Otopriz",
-    "tur": "istasyon",
-    "kaynaklar": [
-      {
-        "ad": "Otopriz: %30 indirim",
-        "url": "https://otopriz.com.tr/kampanyalar/indirimli-istasyonlar/kampanya-detaylari",
-        "tur": "resmi"
-      },
-      {
-        "ad": "Ziraat Bankası: %20 Jest Lira",
-        "url": "https://www.bankkart.com.tr/kampanyalar/akaryakit/elektrikli-sarj-istasyonlarinda-750-tl-jest-lira",
-        "tur": "resmi"
-      }
-    ],
-    "gorseller": [
-      "media/2026-11-06/istasyon_otopriz/1_kapak.jpg",
-      "media/2026-11-06/istasyon_otopriz/2_detay.jpg"
-    ],
-    "aciklama": "⚡ Otopriz istasyonlarında bu ay ne kazandırıyor?\n\n✅ %30 indirim: 37 ilde seçili istasyonlarda, uygulamadan başlatılan AC/DC şarjda otomatik (son gün 30 Kasım)\n💳 Ziraat Bankkart: %20 Jest Lira\n🌍 Her istasyonda: Paraf Doğal · QNB · ON\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #otopriz",
-    "durum": "bekliyor",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null
-  },
-  {
-    "id": "istasyon_otopriz_hikaye",
-    "grup": "2026-11-06__istasyon_otopriz",
-    "baslik": "Otopriz",
-    "tur": "istasyon",
-    "tip": "hikaye",
-    "zaman": "2026-11-10T10:30:00+03:00",
-    "gorseller": [
-      "media/2026-11-06/istasyon_otopriz/hikaye.jpg"
-    ],
-    "aciklama": "",
-    "durum": "bekliyor",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null
-  },
-  {
-    "id": "banka_qnb_post",
-    "grup": "2026-11-06__banka_qnb",
-    "tip": "karusel",
-    "zaman": "2026-11-10T13:00:00+03:00",
-    "baslik": "QNB",
-    "tur": "banka",
-    "kaynaklar": [
-      {
-        "ad": "QNB: 50 TL ParaPuan (Tüm şarj istasyonları)",
-        "url": "https://www.qnbcard.com.tr/kampanyalar/elektrikli-arac-sarj-istasyonlarinda-500-tlye-varan-parapuan-kazanin-43443",
-        "tur": "resmi"
-      },
-      {
-        "ad": "QNB: 125 mil (Tüm şarj istasyonları)",
-        "url": "https://milesandsmilesqnb.com.tr/kampanyalar/elektrikli-arac-sarj-istasyonlarinda-1250ye-varan-mil-2044",
-        "tur": "resmi"
-      }
-    ],
-    "gorseller": [
-      "media/2026-11-06/banka_qnb/1_kapak.jpg",
-      "media/2026-11-06/banka_qnb/2_detay.jpg"
-    ],
-    "aciklama": "⚡ QNB ile şarjda 500 TL ParaPuan!\n\n✅ 50 TL ParaPuan: Her 750 TL+ şarjda · toplam 500 TL\n📍 Tüm şarj istasyonları\n📝 Katılım: SARJ yazıp 2273'e SMS veya QNB Mobil (harcamadan önce)\n⏱ Son gün: 30 Kasım\n\n✅ 125 mil: Miles&Smiles QNB ile her 750 TL+ şarjda · toplam 1.250 mil\n📍 Tüm şarj istasyonları\n📝 Katılım: MSSARJ yazıp 2273'e SMS veya QNB Mobil\n⏱ Son gün: 30 Kasım\n\nKoşullar değişebilir; katılmadan önce bankanın resmi kanallarından kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #qnb",
-    "durum": "bekliyor",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null
-  },
-  {
-    "id": "banka_qnb_hikaye",
-    "grup": "2026-11-06__banka_qnb",
-    "baslik": "QNB",
-    "tur": "banka",
-    "tip": "hikaye",
-    "zaman": "2026-11-10T14:00:00+03:00",
-    "gorseller": [
-      "media/2026-11-06/banka_qnb/hikaye.jpg"
-    ],
-    "aciklama": "",
-    "durum": "bekliyor",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null
-  },
-  {
-    "id": "istasyon_ovolt_post",
-    "grup": "2026-11-06__istasyon_ovolt",
-    "tip": "karusel",
-    "zaman": "2026-11-10T19:30:00+03:00",
-    "baslik": "Ovolt",
-    "tur": "istasyon",
-    "kaynaklar": [
-      {
-        "ad": "Garanti BBVA: 75 TL bonus",
-        "url": "https://www.bonus.com.tr/kampanyalar/ovolt-akaryakit-bonus-kampanyalari",
-        "tur": "resmi"
-      }
-    ],
-    "gorseller": [
-      "media/2026-11-06/istasyon_ovolt/1_kapak.jpg",
-      "media/2026-11-06/istasyon_ovolt/2_detay.jpg"
-    ],
-    "aciklama": "⚡ Ovolt istasyonlarında bu ay ne kazandırıyor?\n\n💳 Garanti BBVA Bonus: 350 TL+ şarja 75 TL bonus\n🌍 Her istasyonda: Paraf Doğal · QNB · ON\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #ovolt",
-    "durum": "iptal",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null,
-    "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
-  },
-  {
-    "id": "istasyon_ovolt_hikaye",
-    "grup": "2026-11-06__istasyon_ovolt",
-    "baslik": "Ovolt",
-    "tur": "istasyon",
-    "tip": "hikaye",
-    "zaman": "2026-11-10T20:30:00+03:00",
-    "gorseller": [
-      "media/2026-11-06/istasyon_ovolt/hikaye.jpg"
-    ],
-    "aciklama": "",
-    "durum": "iptal",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null,
-    "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
-  },
-  {
-    "id": "istasyon_shell_post",
-    "grup": "2026-11-06__istasyon_shell",
-    "tip": "karusel",
-    "zaman": "2026-11-11T09:30:00+03:00",
-    "baslik": "Shell Recharge",
-    "tur": "istasyon",
-    "kaynaklar": [
-      {
-        "ad": "Garanti BBVA: %50 bonus",
-        "url": "https://www.shell.com.tr/suruculer/shellden-avantajli-kampanyalar/shell-recharge-kullanicilarina-ozel-garanti-bbva-kredi-kartlari-ile-yaptiklari-sarjlamalarda-50-bonus-firsati.html",
-        "tur": "resmi"
-      }
-    ],
-    "gorseller": [
-      "media/2026-11-06/istasyon_shell/1_kapak.jpg",
-      "media/2026-11-06/istasyon_shell/2_detay.jpg"
-    ],
-    "aciklama": "⚡ Shell Recharge istasyonlarında bu ay ne kazandırıyor?\n\n💳 Garanti BBVA: 500 TL+ şarjda %50 bonus\n🌍 Her istasyonda: Paraf Doğal · QNB · ON\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #shellrecharge",
-    "durum": "iptal",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null,
-    "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
-  },
-  {
-    "id": "istasyon_shell_hikaye",
-    "grup": "2026-11-06__istasyon_shell",
-    "baslik": "Shell Recharge",
-    "tur": "istasyon",
-    "tip": "hikaye",
-    "zaman": "2026-11-11T10:30:00+03:00",
-    "gorseller": [
-      "media/2026-11-06/istasyon_shell/hikaye.jpg"
-    ],
-    "aciklama": "",
-    "durum": "iptal",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null,
-    "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
-  },
-  {
-    "id": "istasyon_wat_post",
-    "grup": "2026-11-06__istasyon_wat",
-    "tip": "karusel",
-    "zaman": "2026-11-11T13:00:00+03:00",
-    "baslik": "WAT Mobilite",
-    "tur": "istasyon",
-    "kaynaklar": [
-      {
-        "ad": "Ziraat Bankası: %20 Jest Lira",
-        "url": "https://www.bankkart.com.tr/kampanyalar/akaryakit/elektrikli-sarj-istasyonlarinda-750-tl-jest-lira",
-        "tur": "resmi"
-      },
-      {
-        "ad": "Yapı Kredi: 435 TL Worldpuan",
-        "url": "https://www.worldcard.com.tr/kampanyalar/worldun-35-yilina-ozel-wat-mobilitede-400-tl-ve-uzeri-harcamaya-435-tlye-varan-worldpuan",
-        "tur": "resmi"
-      }
-    ],
-    "gorseller": [
-      "media/2026-11-06/istasyon_wat/1_kapak.jpg",
-      "media/2026-11-06/istasyon_wat/2_detay.jpg"
-    ],
-    "aciklama": "⚡ WAT Mobilite istasyonlarında bu ay ne kazandırıyor?\n\n💳 Yapı Kredi World: 435 TL'ye varan Worldpuan\n💳 Ziraat Bankkart: %20 Jest Lira\n🌍 Her istasyonda: Paraf Doğal · QNB · ON\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #watmobilite",
-    "durum": "iptal",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null,
-    "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
-  },
-  {
-    "id": "istasyon_wat_hikaye",
-    "grup": "2026-11-06__istasyon_wat",
-    "baslik": "WAT Mobilite",
-    "tur": "istasyon",
-    "tip": "hikaye",
-    "zaman": "2026-11-11T14:00:00+03:00",
-    "gorseller": [
-      "media/2026-11-06/istasyon_wat/hikaye.jpg"
-    ],
-    "aciklama": "",
-    "durum": "iptal",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null,
-    "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
-  },
-  {
-    "id": "istasyon_voltla_post",
-    "grup": "2026-11-06__istasyon_voltla",
-    "tip": "karusel",
-    "zaman": "2026-11-11T19:30:00+03:00",
-    "baslik": "Voltla",
-    "tur": "istasyon",
-    "kaynaklar": [],
-    "gorseller": [
-      "media/2026-11-06/istasyon_voltla/1_kapak.jpg",
-      "media/2026-11-06/istasyon_voltla/2_detay.jpg"
-    ],
-    "aciklama": "⚡ Voltla istasyonlarında bu ay ne kazandırıyor?\n\n💳 Akbank Axess · Wings · Free: %20 indirim, toplam 500 TL\n🌍 Her istasyonda: Paraf Doğal · QNB · ON\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #voltla",
-    "durum": "iptal",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null,
-    "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
-  },
-  {
-    "id": "istasyon_voltla_hikaye",
-    "grup": "2026-11-06__istasyon_voltla",
-    "baslik": "Voltla",
-    "tur": "istasyon",
-    "tip": "hikaye",
-    "zaman": "2026-11-11T20:30:00+03:00",
-    "gorseller": [
-      "media/2026-11-06/istasyon_voltla/hikaye.jpg"
-    ],
-    "aciklama": "",
-    "durum": "iptal",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null,
-    "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
-  }
+ {
+  "id": "banka_ziraat_post",
+  "grup": "2026-11-06__banka_ziraat",
+  "tip": "karusel",
+  "zaman": "2026-11-08T09:30:00+03:00",
+  "baslik": "Ziraat Bankası",
+  "tur": "banka",
+  "kaynaklar": [
+   {
+    "ad": "Ziraat Bankası: %20 Jest Lira (Trugo, Eşarj, Voltrun, Otopriz, ASTOR Şarj, WAT Mobilite, Petrol Ofisi e-POWER, Zeplin Enerji, Tunçmatik, Mercury Şarj, otojet, Nevaşarj, 5Şarj, EFISH, Mig-Go, Wattarya, Egeşarj, Konya Elektrikli Araçlar)",
+    "url": "https://www.bankkart.com.tr/kampanyalar/akaryakit/elektrikli-sarj-istasyonlarinda-750-tl-jest-lira",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-06/banka_ziraat/1_kapak.jpg",
+   "media/2026-11-06/banka_ziraat/2_detay.jpg"
+  ],
+  "aciklama": "⚡ Ziraat Bankası ile şarjda %20 Jest Lira!\n\n✅ %20 Jest Lira: Anlaşmalı ağlarda her şarj ödemesinde · toplam 750 TL\n📍 Trugo, Eşarj, Voltrun, Otopriz, ASTOR Şarj, WAT Mobilite, Petrol Ofisi e-POWER, Zeplin Enerji, Tunçmatik, Mercury Şarj, otojet, Nevaşarj, 5Şarj, EFISH, Mig-Go, Wattarya, Egeşarj, Konya Elektrikli Araçlar\n📝 Katılım: Ödemeden önce Bankkart Mobil veya bankkart.com.tr'den katıl\n⏱ Son gün: 30 Kasım\n\nKoşullar değişebilir; katılmadan önce bankanın resmi kanallarından kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #ziraatbankası",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "banka_ziraat_hikaye",
+  "grup": "2026-11-06__banka_ziraat",
+  "baslik": "Ziraat Bankası",
+  "tur": "banka",
+  "tip": "hikaye",
+  "zaman": "2026-11-08T10:30:00+03:00",
+  "gorseller": [
+   "media/2026-11-06/banka_ziraat/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "istasyon_trugo_post",
+  "grup": "2026-11-06__istasyon_trugo",
+  "tip": "karusel",
+  "zaman": "2026-11-08T13:00:00+03:00",
+  "baslik": "Trugo",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "Ziraat Bankası: %20 Jest Lira",
+    "url": "https://www.bankkart.com.tr/kampanyalar/akaryakit/elektrikli-sarj-istasyonlarinda-750-tl-jest-lira",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-06/istasyon_trugo/1_kapak.jpg",
+   "media/2026-11-06/istasyon_trugo/2_detay.jpg"
+  ],
+  "aciklama": "⚡ Trugo istasyonlarında bu ay ne kazandırıyor?\n\n💳 Ziraat Bankkart: %20 Jest Lira\n🌍 Her istasyonda: Paraf Doğal · QNB · ON\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #trugo",
+  "durum": "iptal",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null,
+  "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
+ },
+ {
+  "id": "istasyon_trugo_hikaye",
+  "grup": "2026-11-06__istasyon_trugo",
+  "baslik": "Trugo",
+  "tur": "istasyon",
+  "tip": "hikaye",
+  "zaman": "2026-11-08T14:00:00+03:00",
+  "gorseller": [
+   "media/2026-11-06/istasyon_trugo/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "iptal",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null,
+  "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
+ },
+ {
+  "id": "banka_akbank_post",
+  "grup": "2026-11-06__banka_akbank",
+  "tip": "karusel",
+  "zaman": "2026-11-08T19:30:00+03:00",
+  "baslik": "Akbank",
+  "tur": "banka",
+  "kaynaklar": [
+   {
+    "ad": "Akbank: %20 indirim (Voltla uygulaması, Powerşarj, Zeplin Enerji, Tunçmatik, Şarjon, Voltgo, Solargize, Doğuş Dijital Enerji, D-Rect, Obişarj)",
+    "url": "https://www.axess.com.tr/axess/kampanyalar/axesse-ozel-voltlada-20-indirim",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-06/banka_akbank/1_kapak.jpg",
+   "media/2026-11-06/banka_akbank/2_detay.jpg"
+  ],
+  "aciklama": "⚡ Akbank ile şarjda %20 indirim!\n\n✅ %20 indirim: Voltla üzerinden şarj ödemelerinde · toplam 500 TL\n📍 Voltla uygulaması, Powerşarj, Zeplin Enerji, Tunçmatik, Şarjon, Voltgo, Solargize, Doğuş Dijital Enerji, D-Rect, Obişarj\n📝 Katılım: VOLTLA yazıp 4566'ya SMS veya Juzdan'dan Hemen Katıl\n⏱ Son gün: 22 Kasım\n\nKoşullar değişebilir; katılmadan önce bankanın resmi kanallarından kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #akbank",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "banka_akbank_hikaye",
+  "grup": "2026-11-06__banka_akbank",
+  "baslik": "Akbank",
+  "tur": "banka",
+  "tip": "hikaye",
+  "zaman": "2026-11-08T20:30:00+03:00",
+  "gorseller": [
+   "media/2026-11-06/banka_akbank/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "istasyon_voltrun_post",
+  "grup": "2026-11-06__istasyon_voltrun",
+  "tip": "karusel",
+  "zaman": "2026-11-09T09:30:00+03:00",
+  "baslik": "Voltrun",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "Ziraat Bankası: %20 Jest Lira",
+    "url": "https://www.bankkart.com.tr/kampanyalar/akaryakit/elektrikli-sarj-istasyonlarinda-750-tl-jest-lira",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-06/istasyon_voltrun/1_kapak.jpg",
+   "media/2026-11-06/istasyon_voltrun/2_detay.jpg"
+  ],
+  "aciklama": "⚡ Voltrun istasyonlarında bu ay ne kazandırıyor?\n\n💳 Ziraat Bankkart: %20 Jest Lira\n🌍 Her istasyonda: Paraf Doğal · QNB · ON\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #voltrun",
+  "durum": "iptal",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null,
+  "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
+ },
+ {
+  "id": "istasyon_voltrun_hikaye",
+  "grup": "2026-11-06__istasyon_voltrun",
+  "baslik": "Voltrun",
+  "tur": "istasyon",
+  "tip": "hikaye",
+  "zaman": "2026-11-09T10:30:00+03:00",
+  "gorseller": [
+   "media/2026-11-06/istasyon_voltrun/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "iptal",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null,
+  "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
+ },
+ {
+  "id": "banka_halkbank_post",
+  "grup": "2026-11-06__banka_halkbank",
+  "tip": "karusel",
+  "zaman": "2026-11-09T19:30:00+03:00",
+  "baslik": "Halkbank",
+  "tur": "banka",
+  "kaynaklar": [
+   {
+    "ad": "Halkbank: %10 indirim (Tüm şarj istasyonları)",
+    "url": "https://www.paraf.com.tr/tr/parafi-taniyin/elektrikli-arac-sarj-istasyonu-indirimi.html",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-06/banka_halkbank/1_kapak.jpg",
+   "media/2026-11-06/banka_halkbank/2_detay.jpg"
+  ],
+  "aciklama": "⚡ Halkbank ile şarjda %10 indirim!\n\n✅ %10 indirim: Paraf Doğal ile yurt içi şarjda · ayda 300 TL'ye kadar\n📍 Tüm şarj istasyonları\n📝 Katılım: SARJ yazıp 3404'e SMS (katılımdan sonraki harcamalar)\n⏱ Son gün: Süreli değil\n\nKoşullar değişebilir; katılmadan önce bankanın resmi kanallarından kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #halkbank",
+  "durum": "iptal",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null,
+  "not": "Yeni sürümü 2026-11-08 kuyruğunda (banka kartıyla birleşik fiyat / ikinci Paraf kampanyası)"
+ },
+ {
+  "id": "banka_halkbank_hikaye",
+  "grup": "2026-11-06__banka_halkbank",
+  "baslik": "Halkbank",
+  "tur": "banka",
+  "tip": "hikaye",
+  "zaman": "2026-11-09T20:30:00+03:00",
+  "gorseller": [
+   "media/2026-11-06/banka_halkbank/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "iptal",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null,
+  "not": "Yeni sürümü 2026-11-08 kuyruğunda (banka kartıyla birleşik fiyat / ikinci Paraf kampanyası)"
+ },
+ {
+  "id": "istasyon_otopriz_post",
+  "grup": "2026-11-06__istasyon_otopriz",
+  "tip": "karusel",
+  "zaman": "2026-11-10T09:30:00+03:00",
+  "baslik": "Otopriz",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "Otopriz: %30 indirim",
+    "url": "https://otopriz.com.tr/kampanyalar/indirimli-istasyonlar/kampanya-detaylari",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Ziraat Bankası: %20 Jest Lira",
+    "url": "https://www.bankkart.com.tr/kampanyalar/akaryakit/elektrikli-sarj-istasyonlarinda-750-tl-jest-lira",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-06/istasyon_otopriz/1_kapak.jpg",
+   "media/2026-11-06/istasyon_otopriz/2_detay.jpg"
+  ],
+  "aciklama": "⚡ Otopriz istasyonlarında bu ay ne kazandırıyor?\n\n✅ %30 indirim: 37 ilde seçili istasyonlarda, uygulamadan başlatılan AC/DC şarjda otomatik (son gün 30 Kasım)\n💳 Ziraat Bankkart: %20 Jest Lira\n🌍 Her istasyonda: Paraf Doğal · QNB · ON\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #otopriz",
+  "durum": "iptal",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null,
+  "not": "Yeni sürümü 2026-11-08 kuyruğunda (banka kartıyla birleşik fiyat / ikinci Paraf kampanyası)"
+ },
+ {
+  "id": "istasyon_otopriz_hikaye",
+  "grup": "2026-11-06__istasyon_otopriz",
+  "baslik": "Otopriz",
+  "tur": "istasyon",
+  "tip": "hikaye",
+  "zaman": "2026-11-10T10:30:00+03:00",
+  "gorseller": [
+   "media/2026-11-06/istasyon_otopriz/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "iptal",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null,
+  "not": "Yeni sürümü 2026-11-08 kuyruğunda (banka kartıyla birleşik fiyat / ikinci Paraf kampanyası)"
+ },
+ {
+  "id": "banka_qnb_post",
+  "grup": "2026-11-06__banka_qnb",
+  "tip": "karusel",
+  "zaman": "2026-11-10T13:00:00+03:00",
+  "baslik": "QNB",
+  "tur": "banka",
+  "kaynaklar": [
+   {
+    "ad": "QNB: 50 TL ParaPuan (Tüm şarj istasyonları)",
+    "url": "https://www.qnbcard.com.tr/kampanyalar/elektrikli-arac-sarj-istasyonlarinda-500-tlye-varan-parapuan-kazanin-43443",
+    "tur": "resmi"
+   },
+   {
+    "ad": "QNB: 125 mil (Tüm şarj istasyonları)",
+    "url": "https://milesandsmilesqnb.com.tr/kampanyalar/elektrikli-arac-sarj-istasyonlarinda-1250ye-varan-mil-2044",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-06/banka_qnb/1_kapak.jpg",
+   "media/2026-11-06/banka_qnb/2_detay.jpg"
+  ],
+  "aciklama": "⚡ QNB ile şarjda 500 TL ParaPuan!\n\n✅ 50 TL ParaPuan: Her 750 TL+ şarjda · toplam 500 TL\n📍 Tüm şarj istasyonları\n📝 Katılım: SARJ yazıp 2273'e SMS veya QNB Mobil (harcamadan önce)\n⏱ Son gün: 30 Kasım\n\n✅ 125 mil: Miles&Smiles QNB ile her 750 TL+ şarjda · toplam 1.250 mil\n📍 Tüm şarj istasyonları\n📝 Katılım: MSSARJ yazıp 2273'e SMS veya QNB Mobil\n⏱ Son gün: 30 Kasım\n\nKoşullar değişebilir; katılmadan önce bankanın resmi kanallarından kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #qnb",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "banka_qnb_hikaye",
+  "grup": "2026-11-06__banka_qnb",
+  "baslik": "QNB",
+  "tur": "banka",
+  "tip": "hikaye",
+  "zaman": "2026-11-10T14:00:00+03:00",
+  "gorseller": [
+   "media/2026-11-06/banka_qnb/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "istasyon_ovolt_post",
+  "grup": "2026-11-06__istasyon_ovolt",
+  "tip": "karusel",
+  "zaman": "2026-11-10T19:30:00+03:00",
+  "baslik": "Ovolt",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "Garanti BBVA: 75 TL bonus",
+    "url": "https://www.bonus.com.tr/kampanyalar/ovolt-akaryakit-bonus-kampanyalari",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-06/istasyon_ovolt/1_kapak.jpg",
+   "media/2026-11-06/istasyon_ovolt/2_detay.jpg"
+  ],
+  "aciklama": "⚡ Ovolt istasyonlarında bu ay ne kazandırıyor?\n\n💳 Garanti BBVA Bonus: 350 TL+ şarja 75 TL bonus\n🌍 Her istasyonda: Paraf Doğal · QNB · ON\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #ovolt",
+  "durum": "iptal",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null,
+  "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
+ },
+ {
+  "id": "istasyon_ovolt_hikaye",
+  "grup": "2026-11-06__istasyon_ovolt",
+  "baslik": "Ovolt",
+  "tur": "istasyon",
+  "tip": "hikaye",
+  "zaman": "2026-11-10T20:30:00+03:00",
+  "gorseller": [
+   "media/2026-11-06/istasyon_ovolt/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "iptal",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null,
+  "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
+ },
+ {
+  "id": "istasyon_shell_post",
+  "grup": "2026-11-06__istasyon_shell",
+  "tip": "karusel",
+  "zaman": "2026-11-11T09:30:00+03:00",
+  "baslik": "Shell Recharge",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "Garanti BBVA: %50 bonus",
+    "url": "https://www.shell.com.tr/suruculer/shellden-avantajli-kampanyalar/shell-recharge-kullanicilarina-ozel-garanti-bbva-kredi-kartlari-ile-yaptiklari-sarjlamalarda-50-bonus-firsati.html",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-06/istasyon_shell/1_kapak.jpg",
+   "media/2026-11-06/istasyon_shell/2_detay.jpg"
+  ],
+  "aciklama": "⚡ Shell Recharge istasyonlarında bu ay ne kazandırıyor?\n\n💳 Garanti BBVA: 500 TL+ şarjda %50 bonus\n🌍 Her istasyonda: Paraf Doğal · QNB · ON\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #shellrecharge",
+  "durum": "iptal",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null,
+  "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
+ },
+ {
+  "id": "istasyon_shell_hikaye",
+  "grup": "2026-11-06__istasyon_shell",
+  "baslik": "Shell Recharge",
+  "tur": "istasyon",
+  "tip": "hikaye",
+  "zaman": "2026-11-11T10:30:00+03:00",
+  "gorseller": [
+   "media/2026-11-06/istasyon_shell/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "iptal",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null,
+  "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
+ },
+ {
+  "id": "istasyon_wat_post",
+  "grup": "2026-11-06__istasyon_wat",
+  "tip": "karusel",
+  "zaman": "2026-11-11T13:00:00+03:00",
+  "baslik": "WAT Mobilite",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "Ziraat Bankası: %20 Jest Lira",
+    "url": "https://www.bankkart.com.tr/kampanyalar/akaryakit/elektrikli-sarj-istasyonlarinda-750-tl-jest-lira",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Yapı Kredi: 435 TL Worldpuan",
+    "url": "https://www.worldcard.com.tr/kampanyalar/worldun-35-yilina-ozel-wat-mobilitede-400-tl-ve-uzeri-harcamaya-435-tlye-varan-worldpuan",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-06/istasyon_wat/1_kapak.jpg",
+   "media/2026-11-06/istasyon_wat/2_detay.jpg"
+  ],
+  "aciklama": "⚡ WAT Mobilite istasyonlarında bu ay ne kazandırıyor?\n\n💳 Yapı Kredi World: 435 TL'ye varan Worldpuan\n💳 Ziraat Bankkart: %20 Jest Lira\n🌍 Her istasyonda: Paraf Doğal · QNB · ON\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #watmobilite",
+  "durum": "iptal",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null,
+  "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
+ },
+ {
+  "id": "istasyon_wat_hikaye",
+  "grup": "2026-11-06__istasyon_wat",
+  "baslik": "WAT Mobilite",
+  "tur": "istasyon",
+  "tip": "hikaye",
+  "zaman": "2026-11-11T14:00:00+03:00",
+  "gorseller": [
+   "media/2026-11-06/istasyon_wat/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "iptal",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null,
+  "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
+ },
+ {
+  "id": "istasyon_voltla_post",
+  "grup": "2026-11-06__istasyon_voltla",
+  "tip": "karusel",
+  "zaman": "2026-11-11T19:30:00+03:00",
+  "baslik": "Voltla",
+  "tur": "istasyon",
+  "kaynaklar": [],
+  "gorseller": [
+   "media/2026-11-06/istasyon_voltla/1_kapak.jpg",
+   "media/2026-11-06/istasyon_voltla/2_detay.jpg"
+  ],
+  "aciklama": "⚡ Voltla istasyonlarında bu ay ne kazandırıyor?\n\n💳 Akbank Axess · Wings · Free: %20 indirim, toplam 500 TL\n🌍 Her istasyonda: Paraf Doğal · QNB · ON\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #voltla",
+  "durum": "iptal",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null,
+  "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
+ },
+ {
+  "id": "istasyon_voltla_hikaye",
+  "grup": "2026-11-06__istasyon_voltla",
+  "baslik": "Voltla",
+  "tur": "istasyon",
+  "tip": "hikaye",
+  "zaman": "2026-11-11T20:30:00+03:00",
+  "gorseller": [
+   "media/2026-11-06/istasyon_voltla/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "iptal",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null,
+  "not": "Yeni kural: istasyonun kendi indirimi yok, banka kampanyasını tekrar ediyor"
+ }
 ]
