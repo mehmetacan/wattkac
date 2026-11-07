@@ -4,13 +4,14 @@ site/istasyonlar.json üretir.
 
 Girdiler : data/epdk/epdk_sarj_istasyonlari.csv, data/epdk/konum_onbellek.json, data/osm/istasyonlar_osm.json
 Çıktı    : site/istasyonlar.json
-Kayıt alanları: i=kimlik, e=EPDK no, a/o=enlem/boylam, q=konum kalitesi (r resmi ağ haritası, o OSM, c Open Charge Map, a adres, m mahalle, i ilçe),
+Kayıt alanları: i=kimlik, e=EPDK no, a/o=enlem/boylam, q=konum kalitesi (p adresteki tesisin OSM konumu, r resmi ağ haritası, o OSM, c Open Charge Map, a adres, m mahalle, i ilçe),
                 n=ad, b=marka, p=işletmeci (isletmeciler tablosuna indeks ya da OSM'de metin), k=kW, t=soketler, ac/dc, c=adet, ad=adres, h=saat, u=web
 """
 import csv, json, math, pathlib, re, sys, datetime
 
 EPDK = pathlib.Path("data/epdk/epdk_sarj_istasyonlari.csv")
 CACHE = pathlib.Path("data/epdk/konum_onbellek.json")
+POI = pathlib.Path("data/epdk/poi_eslesme.json")  # tesis (Shell, AVM vb.) üzerinden bulunan kesin konumlar
 OSM = pathlib.Path("data/osm/istasyonlar_osm.json")
 OCM = pathlib.Path("data/ocm/istasyonlar_ocm.json")
 AGLAR = pathlib.Path("data/aglar")
@@ -64,6 +65,7 @@ def main():
     is_covered = lambda *names: bool(covered and covered.search(fold(" ".join(x for x in names if x))))
 
     cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
+    poi = json.loads(POI.read_text(encoding="utf-8")) if POI.exists() else {}
     osm = json.loads(OSM.read_text(encoding="utf-8"))["istasyonlar"] if OSM.exists() else []
     ocm = json.loads(OCM.read_text(encoding="utf-8"))["istasyonlar"] if OCM.exists() else []
     ops, opi = [], {}
@@ -86,7 +88,10 @@ def main():
         if r["hizmet"].strip() == "Özel":
             ozel += 1
             continue  # halka açık olmayan (özel) istasyonlar haritada gösterilmez
-        if loc:
+        if no in poi:
+            rec["a"], rec["o"], rec["q"] = poi[no][0], poi[no][1], "p"
+            rec["tesis"] = poi[no][2]
+        elif loc:
             rec["a"], rec["o"], rec["q"] = loc
         g = (fold(r["marka"]).strip(), fold(r["adres"]).strip())
         if g in groups:
@@ -99,7 +104,7 @@ def main():
     # OSM ve Open Charge Map kayıtlarını EPDK kayıtlarıyla eşle: aynı marka anahtarı, en yakın kayıt.
     # Arama yarıçapı EPDK konumunun kalitesine göre: adres 300 m, mahalle 2,5 km, ilçe 8 km.
     # Eşleşince EPDK kaydı kesin konum ve soket bilgisini alır; eşleşmeyenler ayrı istasyon olarak eklenir.
-    RADIUS = {"a": 300, "m": 2500, "i": 8000}
+    RADIUS = {"p": 300, "a": 300, "m": 2500, "i": 8000}
     G = 0.1
     cell = lambda a, o: (int(a // G), int(o // G))
     grid = {}

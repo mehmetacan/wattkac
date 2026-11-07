@@ -689,7 +689,7 @@ function fromRec(r) {
   const t = { brand: r.b, operator: op, network: r.w, name: r.n, opening_hours: r.h, website: r.u };
   const b = brandOf(t), nm = r.n || "";
   return { id: r.i, lat: r.a, lon: r.o, brand: b.name, known: b.known, named: !!nm, name: nm || b.name || "Şarj istasyonu",
-    kw: r.k || null, types: r.t ? [...r.t] : [], hasAc: !!r.ac, hasDc: !!r.dc, tags: t, addr: r.ad || "", approx: r.q === "i" || r.q === "m", official: r.q === "r", pr: r.pr || null, camp: NETC[b.name] || [], count: r.c || null, d: 0, mode: null, price: null };
+    kw: r.k || null, types: r.t ? [...r.t] : [], hasAc: !!r.ac, hasDc: !!r.dc, tags: t, addr: r.ad || "", approx: r.q === "i" || r.q === "m", official: r.q === "r", pr: r.pr || null, tesis: r.tesis || "", camp: NETC[b.name] || [], count: r.c || null, d: 0, mode: null, price: null };
 }
 // OpenStreetMap'te bir istasyon çoğu zaman birden fazla kayıt olarak girilir; aynı markadaki yakın kayıtları birleştir
 function mergeStations(arr) {
@@ -960,6 +960,7 @@ function renderDetail(s) {
   if (tur || s.kw) rows.push(["Tür / güç", esc([tur, s.kw ? `${Math.round(s.kw)} kW` : ""].filter(Boolean).join(" · "))]);
   if (s.types.length) rows.push(["Soket", esc(s.types.join(", ")) + (s.count ? ` <small>(${s.count} araç)</small>` : "")]);
   if (s.addr) rows.push(["Adres", esc(s.addr)]);
+  if (s.tesis) rows.push(["Konum", `${esc(s.tesis)} <small>(adresteki tesisin OpenStreetMap konumu)</small>`]);
   if (t.opening_hours) rows.push(["Saatler", esc(t.opening_hours)]);
   const web = /^https?:\/\//i.test(t.website || t["contact:website"] || "") ? (t.website || t["contact:website"]) : "";
   if (web) rows.push(["Web", `<a href="${esc(safeUrl(web))}" target="_blank" rel="noopener nofollow">Site ↗</a>`]);

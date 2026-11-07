@@ -33,6 +33,9 @@ jobs:
       - name: EPDK adreslerini konuma çevir (en fazla 4 saat)
         run: python3 -u tools/epdk_konum.py 14400
         continue-on-error: true
+      - name: Yaklaşık konumları tesislere (Shell, AVM, dinlenme tesisi) göre kesinleştir
+        run: python3 -u tools/poi_konum.py
+        continue-on-error: true
       - name: Birleştir
         if: always()
         run: python3 tools/istasyon_birlestir.py site/istasyonlar.json
