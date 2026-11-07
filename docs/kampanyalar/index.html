@@ -14,11 +14,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
-:root{--bg:#F6F7F9;--card:#fff;--card2:#F3F4F6;--line:#E5E7EB;--txt:#111827;--mut:#6B7280;--ink:#111827;--y:#FFC800;--g:#047857;--gbg:#ECFDF5;--gline:#A7F3D0;--r:#B91C1C;--rbg:#FEF2F2;--top:54px;--nav:62px;--sa:env(safe-area-inset-bottom,0px)}
+:root{--ac:#2563EB;--dc:#EA580C;--acdc:#7C3AED;--bg:#F6F7F9;--card:#fff;--card2:#F3F4F6;--line:#E5E7EB;--txt:#111827;--mut:#6B7280;--ink:#111827;--y:#FFC800;--g:#047857;--gbg:#ECFDF5;--gline:#A7F3D0;--r:#B91C1C;--rbg:#FEF2F2;--top:54px;--nav:62px;--sa:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box;margin:0;padding:0}
 [hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%}
-body{background:var(--bg);color:var(--txt);font:15px/1.5 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;padding-top:var(--top);padding-bottom:calc(var(--nav) + var(--sa))}
+body{background:var(--bg);color:var(--txt);font:15px/1.5 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;padding-top:var(--top)}
+body.on-map{overflow:hidden}
 a{color:#1D4ED8}
 button,input,select{font-family:inherit;color:inherit}
 button{-webkit-tap-highlight-color:transparent;cursor:pointer}
@@ -26,22 +27,22 @@ button{-webkit-tap-highlight-color:transparent;cursor:pointer}
 .wrap{max-width:1080px;margin:0 auto;padding:0 14px}
 
 /* Üst çubuk */
+:root{--nav:0px}
 .top{position:fixed;top:0;left:0;right:0;height:var(--top);z-index:1200;background:#fff;border-bottom:1px solid var(--line)}
-.topin{height:100%;display:flex;align-items:center;gap:10px;max-width:1080px;margin:0 auto;padding:0 14px}
-.brand{display:flex;align-items:center;gap:8px;font-weight:900;font-size:21px;letter-spacing:-.5px;flex:none}
+.topin{height:100%;display:flex;align-items:center;gap:8px;margin:0 auto;padding:0 10px}
+.brand{display:flex;align-items:center;gap:7px;font-weight:900;font-size:21px;letter-spacing:-.5px;flex:none;background:none;border:0;padding:4px 2px;color:var(--txt)}
 .brand b{color:#E0A100}
-.upd{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--g);background:var(--gbg);border:1px solid var(--gline);border-radius:999px;padding:4px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.tbtn{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 12px;font:800 13.5px Inter,sans-serif;color:var(--txt);white-space:nowrap}
+.tbtn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tbtn.camp{background:var(--gbg);border-color:var(--gline);color:var(--g)}
+.tbtn.camp i{font-style:normal;background:var(--g);color:#fff;border-radius:999px;font-size:11.5px;padding:0 6px}
+.tbtn.icon{padding:7px;position:relative}
+.tbtn .dot{position:absolute;top:2px;right:2px;width:9px;height:9px;border-radius:50%;background:var(--y);border:1px solid #fff}
+.back-map{display:inline-flex;align-items:center;gap:4px;white-space:nowrap;background:none;border:0;font:800 15px Inter,sans-serif;color:#1D4ED8;padding:6px 2px}
+.spacer{flex:1}
+.upd{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--g);background:var(--gbg);border:1px solid var(--gline);border-radius:999px;padding:4px 10px;white-space:nowrap;margin-top:10px}
 .upd::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--g)}
-.ig{flex:none;font-size:13px;font-weight:700;color:var(--mut);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:4px 10px}
-@media(max-width:400px){.ig{display:none}}
-
-/* Alt gezinme */
-.tabs{position:fixed;left:0;right:0;bottom:0;z-index:1200;display:grid;grid-template-columns:repeat(3,1fr);height:calc(var(--nav) + var(--sa));padding-bottom:var(--sa);background:#fff;border-top:1px solid var(--line)}
-.tabs button{position:relative;background:none;border:0;color:var(--mut);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font:700 12px Inter,sans-serif}
-.tabs button[aria-current=page]{color:var(--ink)}
-.tabs button[aria-current=page]::before{content:"";position:absolute;top:0;left:30%;right:30%;height:3px;border-radius:0 0 3px 3px;background:var(--y)}
-.tabs svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.tabs .dot{position:absolute;top:9px;left:calc(50% + 8px);width:8px;height:8px;border-radius:50%;background:var(--y);border:1px solid #fff}
+@media(max-width:360px){.tbtn.camp span{display:none}}
 
 /* Kampanyalar */
 .hero{padding:20px 0 4px}
@@ -126,32 +127,56 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 #pmsg.bad{color:var(--r)}
 
 /* Harita */
-.mapview{display:flex;flex-direction:column;height:calc(100vh - var(--top) - var(--nav) - var(--sa));height:calc(100dvh - var(--top) - var(--nav) - var(--sa))}
-.mapbar{flex:none;background:#fff;border-bottom:1px solid var(--line);padding:8px 12px;display:flex;gap:8px;align-items:center}
-.mapbar .btn{min-height:42px;padding:0 12px;display:flex;align-items:center;gap:6px;flex:none}
-.mapbar .btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.seg{display:flex;background:var(--card2);border-radius:12px;padding:3px;flex:1;min-width:0}
-.seg button{flex:1;border:0;background:none;border-radius:9px;font:700 13px Inter,sans-serif;padding:8px 4px;color:var(--mut);min-height:36px;white-space:nowrap}
-.seg button[aria-pressed=true]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(17,24,39,.15)}
-.mapwrap{position:relative;flex:1;min-height:110px}
+.mapview{position:relative;height:calc(100vh - var(--top));height:calc(100dvh - var(--top))}
 #map{position:absolute;inset:0;background:#F3F4F6}
 .leaflet-container{font-family:inherit;background:#F3F4F6}
-.here{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:1000;box-shadow:0 4px 14px rgba(17,24,39,.2)}
-.mapmsg{position:absolute;left:12px;right:12px;bottom:12px;z-index:1000;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:14px;font-weight:600;text-align:center;box-shadow:0 4px 14px rgba(17,24,39,.12)}
+.ov{position:absolute;z-index:1000}
+.mtop{top:10px;left:10px;right:10px;display:flex;gap:8px;align-items:flex-start;pointer-events:none}
+.mtop>*{pointer-events:auto}
+.seg{display:flex;background:#fff;border-radius:14px;padding:4px;box-shadow:0 2px 10px rgba(17,24,39,.18)}
+.seg button{border:0;background:none;border-radius:10px;font:800 13.5px Inter,sans-serif;padding:8px 12px;color:var(--mut);min-height:38px;white-space:nowrap}
+.seg button[aria-pressed=true]{background:var(--ink);color:#fff}
+.fab{background:#fff;border:0;border-radius:14px;box-shadow:0 2px 10px rgba(17,24,39,.18);min-height:46px;min-width:46px;padding:0 14px;font:800 14px Inter,sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:6px;color:var(--txt)}
+.fab svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.fab i{font-style:normal;background:var(--ink);color:#fff;border-radius:999px;font-size:11.5px;padding:0 6px}
+.mtop .fab{margin-left:auto}
+.legend{top:66px;left:10px;display:flex;gap:6px;flex-wrap:wrap;pointer-events:none}
+.legend span{background:rgba(255,255,255,.94);border-radius:999px;padding:3px 9px 3px 7px;font-size:11.5px;font-weight:800;box-shadow:0 1px 4px rgba(17,24,39,.15);display:inline-flex;align-items:center;gap:5px}
+.legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.locbtn{right:10px;bottom:calc(var(--sheet-h) + 14px)}
+.locbtn.busy svg{animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.radius{left:10px;bottom:calc(var(--sheet-h) + 14px);background:#fff;border-radius:999px;box-shadow:0 2px 10px rgba(17,24,39,.18);padding:4px 14px;width:min(270px,calc(100% - 80px));display:flex;align-items:center;gap:10px;height:46px}
+.radius label{font-size:12px;font-weight:700;color:var(--mut);white-space:nowrap;display:flex;flex-direction:column;line-height:1.1}
+.radius label b{color:var(--ink);font-size:14px;font-weight:900}
+.radius input{flex:1;min-width:0;accent-color:var(--ink);margin:0;height:30px}
+.here{top:66px;left:50%;transform:translateX(-50%);box-shadow:0 4px 14px rgba(17,24,39,.2)}
+.mapmsg{left:12px;right:12px;bottom:calc(var(--sheet-h) + 84px);background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:14px;font-weight:600;text-align:center;box-shadow:0 4px 14px rgba(17,24,39,.12)}
 .mapmsg.bad{border-color:#FECACA;color:var(--r)}
 .mapmsg .btn{margin-top:8px}
-.sheet{flex:none;display:flex;flex-direction:column;background:#fff;border-top:1px solid var(--line);border-radius:18px 18px 0 0;position:relative;z-index:1100}
-.sheet[data-s=peek]{height:84px}
-.sheet[data-s=half]{height:42%}
-.sheet[data-s=full]{height:78%}
-.handle{flex:none;background:none;border:0;height:22px;width:100%;display:flex;align-items:center;justify-content:center}
-.handle span{width:44px;height:5px;border-radius:3px;background:#D1D5DB}
-.sh-h{flex:none;padding:0 14px 8px;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:var(--mut)}
-.sh-h b{color:var(--txt);font-weight:800}
-.sh-h .back{background:none;border:0;color:#1D4ED8;font:800 14px Inter,sans-serif;padding:6px 0}
-.lg{margin-left:auto;display:flex;gap:10px;font-size:11px;font-weight:700}
-.lg i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}
-.sh-b{flex:1;overflow-y:auto;padding:0 12px 14px;-webkit-overflow-scrolling:touch}
+.mapview{--sheet-h:64px}
+.mapview[data-s=half]{--sheet-h:46%}
+.mapview[data-s=full]{--sheet-h:80%}
+.sheet{position:absolute;left:0;right:0;bottom:0;height:var(--sheet-h);z-index:1100;display:flex;flex-direction:column;background:#fff;border-radius:20px 20px 0 0;box-shadow:0 -6px 24px rgba(17,24,39,.16);padding-bottom:var(--sa)}
+.handle{flex:none;background:none;border:0;width:100%;padding:8px 14px 6px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:left}
+.handle .bar{width:44px;height:5px;border-radius:3px;background:#D1D5DB}
+.sh-h{width:100%;display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:700;color:var(--mut)}
+.sh-h b{color:var(--txt);font-weight:900}
+.sh-h .tg{margin-left:auto;color:#1D4ED8;font-weight:800}
+.back{background:none;border:0;color:#1D4ED8;font:800 14px Inter,sans-serif;padding:4px 0}
+.sh-b{flex:1;overflow-y:auto;padding:4px 12px 14px;-webkit-overflow-scrolling:touch}
+.mapview[data-s=peek] .sh-b{display:none}
+/* İşaretçiler: yalnızca marka adı; renk akım türünü, yeşil zemin kampanyayı gösterir */
+.mkw{position:absolute;left:0;top:0}
+.mk{position:absolute;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:5px;white-space:nowrap;background:#fff;border:2px solid var(--c,#6B7280);border-radius:999px;padding:2px 8px 2px 3px;font:800 12px/1.2 Inter,sans-serif;color:var(--ink);box-shadow:0 1px 4px rgba(17,24,39,.3);cursor:pointer}
+.mk .t{background:var(--c,#6B7280);color:#fff;border-radius:999px;font-size:9.5px;font-weight:900;padding:1px 5px;letter-spacing:.2px}
+.mk.ac{--c:var(--ac)}.mk.dc{--c:var(--dc)}.mk.acdc{--c:var(--acdc)}
+.mk.camp{background:var(--g);color:#fff;border-color:var(--g)}
+.mk.camp::after{content:"%";font-weight:900;margin-left:1px}
+.mk.sel{transform:translate(-50%,-50%) scale(1.25);z-index:5;box-shadow:0 0 0 3px #111827,0 3px 10px rgba(17,24,39,.4)}
+.mk.dot{padding:0;width:14px;height:14px;background:var(--c,#6B7280);border:2px solid #fff;gap:0}
+.mk.dot.camp{background:var(--g)}
+.mk.dot .t,.mk.dot .n{display:none}.mk.dot.camp::after{content:none}
 .stn{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px}
 .stn.sel{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
 .stn .r1{display:flex;gap:8px;align-items:baseline}
@@ -182,19 +207,14 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .credit{font-size:11px;color:var(--mut);text-align:center;padding:8px 0 2px}
 
 @media(min-width:900px){
-  :root{--nav:0px;--top:58px}
-  body{padding-bottom:0}
-  .tabs{top:6px;bottom:auto;left:50%;right:auto;transform:translateX(-50%);width:420px;height:46px;padding:0;background:none;border:0;z-index:1250}
-  .tabs button{flex-direction:row;gap:7px;font-size:14px;border-radius:12px}
-  .tabs button[aria-current=page]{background:#FFF7D6}
-  .tabs button[aria-current=page]::before{display:none}
-  .tabs .dot{top:11px;left:auto;right:12px}
-  .mapview{display:grid;grid-template-columns:400px 1fr;grid-template-rows:auto 1fr;height:calc(100vh - var(--top));height:calc(100dvh - var(--top))}
-  .mapbar{grid-column:1;grid-row:1;border-right:1px solid var(--line)}
-  .sheet{grid-column:1;grid-row:2;height:auto!important;min-height:0;border-radius:0;border-right:1px solid var(--line)}
-  .mapwrap{grid-column:2;grid-row:1/3}
-  .handle{display:none}
-  .sh-h{padding-top:10px}
+  :root{--top:58px}
+  .sheet{left:12px;right:auto;top:12px;bottom:12px;width:390px;height:auto;border-radius:18px}
+  .mapview[data-s] {--sheet-h:0px}
+  .mapview[data-s=peek] .sh-b{display:block}
+  .handle .bar,.sh-h .tg{display:none}
+  .mtop{left:414px}.legend{left:414px}
+  .radius{left:414px;bottom:14px}.locbtn{bottom:14px}
+  .mapmsg{left:414px;bottom:90px}
 }
 </style>
 </head>
@@ -203,21 +223,24 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 
 <header class="top">
   <div class="topin">
-    <div class="brand">
+    <button class="back-map" id="back-map" data-go="harita" hidden aria-label="Haritaya dön">← Harita</button>
+    <button class="brand" data-go="kamp" aria-label="Kampanyalar">
       <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M13.5 2 4 13.5h6.2L9.5 22 20 9.8h-6.4z" fill="#FFC800" stroke="#E0A100" stroke-width="1" stroke-linejoin="round"/></svg>
       <span>Watt<b>Kaç</b></span>
-    </div>
-    <div class="upd" id="upd">Yükleniyor…</div>
-    <a class="ig" href="https://instagram.com/wattkac" target="_blank" rel="noopener">@wattkac</a>
+    </button>
+    <span class="spacer"></span>
+    <button class="tbtn camp" data-go="kamp" id="to-kamp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8z"/><path d="M7 7h.01"/></svg><span>Kampanyalar</span><i id="kamp-n"></i></button>
+    <button class="tbtn icon" data-go="profil" aria-label="Profilim (kartlarım)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="dot" id="pdot" hidden></span></button>
   </div>
 </header>
 
 <main>
   <!-- KAMPANYALAR -->
-  <section id="v-kamp" class="view wrap" aria-label="Kampanyalar">
+  <section id="v-kamp" class="view wrap" aria-label="Kampanyalar" hidden>
     <div class="hero">
       <h1>Hangi kartla, hangi istasyonda <em>ne kazanırsın?</em></h1>
       <p class="lead">Elektrikli araç şarjında geçerli banka kartı ve şarj ağı kampanyaları.</p>
+      <div class="upd" id="upd">Yükleniyor…</div>
     </div>
     <div class="searchrow">
       <input class="search" id="q" type="search" placeholder="Banka, istasyon, kart…" autocomplete="off" aria-label="Ara">
@@ -241,21 +264,20 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
     </footer>
   </section>
 
-  <!-- HARİTA -->
-  <section id="v-harita" class="view mapview" aria-label="Harita" hidden>
-    <div class="mapbar">
-      <button class="btn primary" id="loc"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg><span id="loc-t">Konum</span></button>
+  <!-- HARİTA (ana ekran) -->
+  <section id="v-harita" class="view mapview" aria-label="Harita" data-s="peek">
+    <div id="map" role="application" aria-label="Şarj istasyonları haritası"></div>
+    <div class="ov mtop">
       <div class="seg" id="seg" role="group" aria-label="Akım türü"></div>
-      <button class="btn" id="mf-open" aria-haspopup="dialog">Filtre<i id="mf-n" hidden></i></button>
+      <button class="fab" id="mf-open" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Filtre<i id="mf-n" hidden></i></button>
     </div>
-    <div class="mapwrap">
-      <div id="map" role="application" aria-label="Şarj istasyonları haritası"></div>
-      <button class="btn primary here" id="here" hidden>Bu bölgede ara</button>
-      <div class="mapmsg" id="mapmsg" hidden></div>
-    </div>
-    <div class="sheet" id="sheet" data-s="half">
-      <button class="handle" id="handle" aria-label="Listeyi büyüt veya küçült"><span></span></button>
-      <div class="sh-h" id="sh-h"></div>
+    <div class="ov legend" aria-hidden="true"><span><i style="background:var(--ac)"></i>AC</span><span><i style="background:var(--dc)"></i>DC</span><span><i style="background:var(--acdc)"></i>AC+DC</span><span><i style="background:var(--g)"></i>Kampanyalı %</span></div>
+    <button class="btn primary ov here" id="here" hidden>Bu bölgede ara</button>
+    <div class="ov radius"><label for="rad-r">Çap<b id="rad-v">5 km</b></label><input type="range" id="rad-r" min="1" max="50" step="1" value="5" aria-label="Arama çapı (km)"></div>
+    <button class="fab ov locbtn" id="loc" aria-label="Konumuma git"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg></button>
+    <div class="ov mapmsg" id="mapmsg" hidden></div>
+    <div class="sheet" id="sheet">
+      <button class="handle" id="handle" aria-label="Listeyi aç veya kapat"><span class="bar"></span><span class="sh-h" id="sh-h"></span></button>
       <div class="sh-b" id="sh-b"></div>
     </div>
   </section>
@@ -285,11 +307,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
   </section>
 </main>
 
-<nav class="tabs" aria-label="Ana gezinme">
-  <button data-v="kamp" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8z"/><path d="M7 7h.01"/></svg>Kampanyalar</button>
-  <button data-v="harita"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>Harita</button>
-  <button data-v="profil"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profilim<span class="dot" id="pdot" hidden></span></button>
-</nav>
+
 
 <!-- Kampanya filtre çekmecesi -->
 <div class="bd" id="bd" hidden></div>
@@ -347,7 +365,7 @@ const ssSet = (k, v) => { try { sessionStorage.setItem(k, v); } catch {} };
 
 let D = null, C = [], NETS = [], BANKS = [], NETC = {}, NET_RES = [], TAR = { aglar: {} };
 let P = { banka: [], ag: [] };
-let S = { q: "", banka: new Set(), ag: new Set(), tip: new Set(), sort: "son", bana: null, view: "kamp" };
+let S = { q: "", banka: new Set(), ag: new Set(), tip: new Set(), sort: "son", bana: null, view: "harita" };
 
 /* ---------- Veri ---------- */
 function flatten(d) {
@@ -443,14 +461,14 @@ function readHash() {
   ["banka", "ag", "tip"].forEach(k => S[k] = new Set((p.get(k) || "").split(",").filter(Boolean)));
   S.q = p.get("q") || ""; S.sort = p.get("sirala") || "son";
   S.bana = p.get("bana") === "1" ? true : p.get("bana") === "0" ? false : null;
-  S.view = ["kamp", "harita", "profil"].includes(p.get("g")) ? p.get("g") : "kamp";
+  S.view = ["kamp", "harita", "profil"].includes(p.get("g")) ? p.get("g") : "harita";
 }
 function writeHash() {
   const p = new URLSearchParams();
   ["banka", "ag", "tip"].forEach(k => S[k].size && p.set(k, [...S[k]].join(",")));
   S.q && p.set("q", S.q); S.sort !== "son" && p.set("sirala", S.sort);
   S.bana !== null && p.set("bana", S.bana ? "1" : "0");
-  S.view !== "kamp" && p.set("g", S.view);
+  S.view !== "harita" && p.set("g", S.view);
   const h = p.toString(); history.replaceState(null, "", h ? "#" + h : location.pathname + location.search);
 }
 function chipGroup(el, key, items, cls = "") {
@@ -532,7 +550,9 @@ function openMapFilters(open) {
 function show(v) {
   S.view = v;
   ["kamp", "harita", "profil"].forEach(x => $("v-" + x).hidden = x !== v);
-  document.querySelectorAll(".tabs button").forEach(b => b.dataset.v === v ? b.setAttribute("aria-current", "page") : b.removeAttribute("aria-current"));
+  $("back-map").hidden = v === "harita";
+  $("to-kamp").hidden = v === "kamp";
+  document.body.classList.toggle("on-map", v === "harita");
   window.scrollTo(0, 0);
   if (v === "harita") openMap();
   if (v === "profil") renderProfile();
@@ -711,6 +731,8 @@ function openMap() {
     L.tileLayer(TILE, { maxZoom: 19, attribution: TILE_ATTR, updateWhenIdle: true, updateWhenZooming: false, keepBuffer: 1 }).addTo(M.map);
     M.layer = L.layerGroup().addTo(M.map);
     let t; M.map.on("moveend", () => { clearTimeout(t); t = setTimeout(checkHere, 120); });
+    M.map.on("zoomend", () => { if ((M.map.getZoom() < 12) !== M.dotMode) { M.dotMode = M.map.getZoom() < 12; renderMap(); } });
+    M.map.on("click", () => { if ($("v-harita").dataset.s !== "peek") { M.sel = null; $("v-harita").dataset.s = "peek"; renderSheet(); highlight(); } });
     renderMap();
     setMsg("Konumun alınıyor…");
     locate();
@@ -719,17 +741,19 @@ function openMap() {
 }
 function locate() {
   if (!navigator.geolocation) { setMsg("Tarayıcın konum özelliğini desteklemiyor. Haritada bir bölgeye gidip «Bu bölgede ara»yı kullanabilirsin.", true); return; }
-  $("loc").disabled = true; $("loc-t").textContent = "Aranıyor…";
+  $("loc").classList.add("busy");
   navigator.geolocation.getCurrentPosition(pos => {
-    $("loc").disabled = false; $("loc-t").textContent = "Konum";
+    $("loc").classList.remove("busy");
     M.me = { lat: pos.coords.latitude, lon: pos.coords.longitude }; M.center = { ...M.me };
     if (M.meMark) M.meMark.remove();
     M.meMark = L.circleMarker([M.me.lat, M.me.lon], { radius: 8, color: "#fff", weight: 3, fillColor: "#2563EB", fillOpacity: 1, interactive: false }).addTo(M.map);
     M.map.setView([M.me.lat, M.me.lon], 13, { animate: false });
     runSearch(false);
   }, err => {
-    $("loc").disabled = false; $("loc-t").textContent = "Konum";
-    setMsg(err.code === 1 ? "Konum izni verilmedi. Tarayıcı ayarlarından izin verebilir ya da haritada bir bölgeye gidip «Bu bölgede ara»yı kullanabilirsin." : "Konumun alınamadı. Haritada bir bölgeye gidip «Bu bölgede ara»yı kullanabilirsin.", true);
+    $("loc").classList.remove("busy");
+    // konum yoksa haritanın ortasındaki bölgeyi göster
+    if (!M.center) { const c = M.map.getCenter(); M.center = { lat: c.lat, lon: c.lng }; runSearch(false); }
+    setTimeout(() => setMsg(err.code === 1 ? "Konum izni verilmedi; İstanbul gösteriliyor. Haritayı kaydırıp «Bu bölgede ara»ya basabilirsin." : "Konumun alınamadı. Haritayı kaydırıp «Bu bölgede ara»ya basabilirsin.", true), 400);
   }, { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 });
 }
 async function runSearch(fit) {
@@ -793,11 +817,16 @@ function renderMap() {
   if (!M.map) return;
   M.view = M.center ? visibleStations() : [];
   const top = M.view.slice(0, MAXM);
-  const sig = top.map(s => s.id + stColor(s)).join(",");
+  const dot = M.map.getZoom() < 12;
+  const sig = (dot ? "d" : "l") + top.map(s => s.id + (s.deal || s.camp.length ? "c" : "")).join(",");
   if (sig !== M.sig) {
     M.sig = sig; M.layer.clearLayers(); M.markers.clear();
     top.forEach(s => {
-      const mk = L.circleMarker([s.lat, s.lon], { radius: 8, color: "#fff", weight: 2, fillColor: stColor(s), fillOpacity: 1 }).addTo(M.layer);
+      const type = s.hasAc && s.hasDc ? "acdc" : s.hasDc ? "dc" : s.hasAc ? "ac" : "";
+      const tl = { acdc: "AC+DC", dc: "DC", ac: "AC" }[type] || "";
+      const label = (pretty(s.brand) || s.name || "Şarj").slice(0, 16);
+      const html = `<div class="mkw"><div class="mk ${type} ${s.camp.length ? "camp" : ""} ${dot ? "dot" : ""}" data-mk="${esc(s.id)}">${tl ? `<span class="t">${tl}</span>` : ""}<span class="n">${esc(label)}</span></div></div>`;
+      const mk = L.marker([s.lat, s.lon], { icon: L.divIcon({ html, className: "", iconSize: [0, 0] }), keyboard: false, riseOnHover: true }).addTo(M.layer);
       mk.on("click", () => selectStation(s.id, false)); M.markers.set(s.id, mk);
     });
   }
@@ -806,19 +835,23 @@ function renderMap() {
   if (!$("mfs").hidden) renderMapSheet();
 }
 function highlight() {
-  M.markers.forEach((mk, id) => mk.setStyle(id === M.sel ? { radius: 12, color: "#111827", weight: 3 } : { radius: 8, color: "#fff", weight: 2 }));
-  const mk = M.markers.get(M.sel); if (mk) mk.bringToFront();
+  M.markers.forEach((mk, id) => {
+    const el = mk.getElement && mk.getElement(), d = el && el.querySelector(".mk");
+    if (d) d.classList.toggle("sel", id === M.sel);
+    if (mk.setZIndexOffset) mk.setZIndexOffset(id === M.sel ? 1000 : 0);
+  });
 }
 function typeBadge(s) { return s.hasAc && s.hasDc ? "AC/DC" : s.hasDc ? "DC" : s.hasAc ? "AC" : ""; }
 function renderSheet() {
   const h = $("sh-h"), b = $("sh-b"), s = M.sel && M.view.find(x => x.id === M.sel);
   if (s) { renderDetail(s); return; }
+  const open = $("v-harita").dataset.s !== "peek";
   if (!M.center) {
-    h.innerHTML = `<b>Şarj istasyonları</b>`;
+    h.innerHTML = `<b>Şarj istasyonları</b><span class="tg">${open ? "Kapat ▼" : "Liste ▲"}</span>`;
     b.innerHTML = `<p class="note">Konumunu kullan ya da haritada bir bölgeye gidip aramayı başlat.</p><div class="credit">Harita ve istasyon verisi: EPDK, ağların resmi haritaları, © OpenStreetMap, © Open Charge Map (CC BY 4.0)</div>`; return;
   }
   const sortTxt = { yakin: "yakından uzağa", ucuz: "ucuzdan pahalıya", pahali: "pahalıdan ucuza", guc: "güce göre", kamp: "kampanyalı fiyata göre" }[M.sort];
-  h.innerHTML = `<span><b>${M.view.length}</b> istasyon · ${sortTxt}</span><span class="lg"><span><i style="background:#F59E0B"></i>Sana uyan</span><span><i style="background:#047857"></i>Kampanyalı</span></span>`;
+  h.innerHTML = `<span><b>${M.view.length}</b> istasyon · ${sortTxt}</span><span class="tg">${open ? "Kapat ▼" : "Liste ▲"}</span>`;
   const hidden = M.f.tum ? 0 : M.ST.filter(x => !x.known).length;
   let html = M.view.slice(0, M.shown).map(stationItem).join("");
   if (M.view.length > M.shown) html += `<button class="btn more" id="more">Daha fazla göster (${M.view.length - M.shown})</button>`;
@@ -844,7 +877,7 @@ function stationItem(s) {
   </button>`;
 }
 function renderDetail(s) {
-  $("sh-h").innerHTML = `<button class="back" id="back">← Listeye dön</button>`;
+  $("sh-h").innerHTML = `<span class="back">← Listeye dön</span><span class="tg" style="color:var(--mut)">${fmtKm(s.d)}</span>`;
   const t = s.tags;
   const general = C.filter(c => c.tip === "banka" && c.st.includes(ALL));
   const myGeneral = general.filter(c => P.banka.includes(c.kid));
@@ -870,22 +903,20 @@ function renderDetail(s) {
     ${myGeneral.length ? `<div class="lbl" style="margin-top:10px">Kartınla her istasyonda</div>${myGeneral.map(mc).join("")}` : (general.length && profileEmpty() ? `<p class="note">Her istasyonda geçerli ${general.length} kart kampanyası var. Kartlarını ekleyince burada görürsün.</p>` : "")}
     <a class="btn primary dir" href="https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lon}" target="_blank" rel="noopener">Yol tarifi al</a>
     <div class="credit">${s.official ? "İstasyon bilgisi ağın kendi resmi haritasından alınır; günde bir kez güncellenir." : "Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map katkıda bulunanlarından gelir; eksik ya da eski olabilir."}</div>`;
-  $("back").onclick = () => { M.sel = null; renderSheet(); highlight(); };
   $("sh-b").scrollTop = 0;
 }
 function selectStation(id, pan = true) {
   M.sel = id; const s = M.view.find(x => x.id === id);
   if (!s) return;
-  if ($("sheet").dataset.s === "peek") { $("sheet").dataset.s = "half"; M.map.invalidateSize(); }
+  if ($("v-harita").dataset.s === "peek") $("v-harita").dataset.s = "half";
   renderSheet(); highlight();
   if (pan) M.map.panTo([s.lat, s.lon]);
 }
 function renderMapSheet() {
   const chip = (attr, label, on, cls = "") => `<button class="chip ${cls}" ${attr} aria-pressed="${on}">${esc(label)}</button>`;
-  const rad = [1, 3, 5, 10, 25, 50].map(k => chip(`data-mr="${k}"`, `${k} km`, M.radius === k)).join("");
   const srt = [["yakin", "Yakından uzağa"], ["kamp", "Kampanyalı en ucuz"], ["ucuz", "Liste fiyatı en ucuz"], ["pahali", "Pahalıdan ucuza"], ["guc", "Güce göre"]].map(([v, l]) => chip(`data-ms="${v}"`, l, M.sort === v)).join("");
   const br = M.brands.map(([b, n]) => chip(`data-mb="${esc(b)}"`, `${b} · ${n}`, M.f.brands.has(b))).join("");
-  $("mfs-b").innerHTML = `<h3>Mesafe</h3><div class="chips">${rad}</div><h3>Sıralama</h3><div class="chips">${srt}</div>`
+  $("mfs-b").innerHTML = `<h3>Sıralama</h3><div class="chips">${srt}</div>`
     + (br ? `<h3>Marka</h3><div class="chips">${br}</div>` : "")
     + `<h3>Ayrıca</h3><div class="chips">${chip('data-mf="kamp"', "Kampanyalı", M.f.kamp, "ag")}${profileEmpty() ? "" : chip('data-mf="bana"', "Bana uyan", M.f.bana)}</div>`
     + `<label class="chk"><input type="checkbox" id="m-tum" ${M.f.tum ? "checked" : ""}><span>Tanımsız istasyonları da göster</span></label>`
@@ -908,11 +939,10 @@ function bindEvents() {
     else if (d.mf) { M.f[d.mf] = !M.f[d.mf]; M.shown = PAGE; renderMap(); }
     else if (d.mb) { const s = M.f.brands; s.has(d.mb) ? s.delete(d.mb) : s.add(d.mb); M.shown = PAGE; renderMap(); }
     else if (d.ms) { M.sort = d.ms; renderMap(); }
-    else if (d.mr) { M.radius = +d.mr; renderMapSheet(); if (M.center) runSearch(true); }
     else if (d.showunk) { M.f.tum = true; renderMap(); }
     else if (b.id === "more") { M.shown += PAGE; renderSheet(); }
     else if (d.sid) selectStation(d.sid);
-    else if (b.parentElement && b.parentElement.classList.contains("tabs")) show(d.v);
+    else if (d.go) show(d.go);
   });
   document.addEventListener("change", e => { if (e.target.id === "m-tum") { M.f.tum = e.target.checked; M.shown = PAGE; renderMap(); } });
   $("open-f").onclick = () => openFilters(true);
@@ -923,7 +953,19 @@ function bindEvents() {
   $("mfs-clear").onclick = () => { M.f = { akim: null, kamp: false, bana: false, tum: false, brands: new Set() }; M.sort = "yakin"; M.shown = PAGE; renderMap(); };
   $("loc").onclick = locate;
   $("here").onclick = () => { const c = M.map.getCenter(); M.center = { lat: c.lat, lon: c.lng }; runSearch(false); };
-  $("handle").onclick = () => { const s = $("sheet"), o = ["peek", "half", "full"]; s.dataset.s = o[(o.indexOf(s.dataset.s) + 1) % 3]; if (M.map) M.map.invalidateSize(); };
+  $("handle").onclick = e => {
+    e.stopPropagation();
+    if (M.sel) { M.sel = null; renderSheet(); highlight(); return; }
+    const v = $("v-harita"), o = ["peek", "half", "full"]; v.dataset.s = o[(o.indexOf(v.dataset.s) + 1) % 3]; renderSheet();
+  };
+  // arama çapı: kaydırırken daire canlı büyür/küçülür, bırakınca arama yapılır
+  const rv = $("rad-v"), rr = $("rad-r"); let rt;
+  rr.oninput = () => {
+    M.radius = +rr.value; rv.textContent = `${M.radius} km`;
+    if (M.circle) M.circle.setRadius(M.radius * 1000);
+    clearTimeout(rt); rt = setTimeout(() => M.center && runSearch(false), 250);
+  };
+  rr.onchange = () => { M.radius = +rr.value; if (M.center) runSearch(true); };
   $("p-go").onclick = () => { S.bana = true; show("kamp"); render(); };
   $("p-copy").onclick = async () => {
     const v = $("p-code").value; if (!v) return;
@@ -959,7 +1001,8 @@ async function init() {
   $("q").value = S.q; $("sort").value = S.sort;
   renderQuick(); renderProfile(); updateDot(); render();
   if (!lsSet("wattkac.test", "1")) pmsg("Tarayıcın depolamaya izin vermiyor; seçimlerin yalnızca bu oturumda geçerli olur.", true);
-  if (S.view !== "kamp") show(S.view);
+  $("kamp-n").textContent = C.length;
+  show(S.view);
 }
 document.addEventListener("DOMContentLoaded", init);
 </script>
