@@ -174,8 +174,11 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
   display:flex;align-items:center;justify-content:center;font:900 12px/1 Inter,sans-serif;letter-spacing:-.3px;box-shadow:0 1px 4px rgba(17,24,39,.35);cursor:pointer}
 .mk.pasif{opacity:.5}
 .mk.grp.big{width:42px;height:42px;font-size:12px}
-.pin{position:absolute;transform:translate(-50%,-100%);width:40px;height:40px;cursor:grab;filter:drop-shadow(0 2px 3px rgba(17,24,39,.45))}
-.pin svg{width:40px;height:40px;fill:#2563EB;stroke:#fff;stroke-width:1.5}
+.cpin{left:50%;top:50%;width:38px;height:38px;transform:translate(-50%,-100%);pointer-events:none;z-index:1050;filter:drop-shadow(0 2px 3px rgba(17,24,39,.45))}
+.cpin svg{width:38px;height:38px;fill:#2563EB;stroke:#fff;stroke-width:1.5}
+.sortbar{display:flex;gap:6px;overflow-x:auto;margin:0 -12px 10px;padding:2px 12px 4px;scrollbar-width:none}
+.sortbar::-webkit-scrollbar{display:none}
+.sortbar .chip{min-height:34px;padding:6px 12px;font-size:13px}
 .mk.unk{width:16px;height:16px;font-size:0;--bg-b:#9CA3AF}
 .mk.camp{animation:pulse 1.6s ease-in-out infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 2px #16A34A,0 1px 4px rgba(17,24,39,.35)}50%{box-shadow:0 0 0 6px rgba(22,163,74,.25),0 0 0 2px #16A34A}}
@@ -286,6 +289,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
     <div class="ov legend" aria-hidden="true"><span><i style="background:#fff;box-shadow:0 0 0 2px #16A34A"></i>Yeşil halka: kampanya var</span></div>
     <div class="ov radius"><label for="rad-r">Çap<b id="rad-v">5 km</b></label><input type="range" id="rad-r" min="1" max="50" step="1" value="5" aria-label="Arama çapı (km)"></div>
     <button class="fab ov locbtn" id="loc" aria-label="Konumuma git"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg></button>
+    <div class="ov cpin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6" fill="#fff"/></svg></div>
     <div class="ov mapmsg" id="mapmsg" hidden></div>
     <div class="sheet" id="sheet">
       <button class="handle" id="handle" aria-label="Listeyi aç veya kapat"><span class="bar"></span><span class="sh-h" id="sh-h"></span></button>
@@ -744,37 +748,34 @@ function openMap() {
     M.map = L.map("map", { zoomControl: wide, attributionControl: true, minZoom: 6, zoomSnap: 1, wheelPxPerZoomLevel: 90 }).setView([41.01, 28.97], 11);
     L.tileLayer(TILE, { maxZoom: 19, attribution: TILE_ATTR, updateWhenIdle: true, updateWhenZooming: false, keepBuffer: 1 }).addTo(M.map);
     M.layer = L.layerGroup().addTo(M.map);
-    let t; M.map.on("moveend zoomend", () => { clearTimeout(t); t = setTimeout(renderMarkers, 60); });
+    // Arama noktası her zaman haritanın ortasında: harita kaydıkça daire de ortada kalır, durunca liste yenilenir
+    M.circle = L.circle([41.01, 28.97], { radius: M.radius * 1000, color: "#2563EB", weight: 2, fillColor: "#2563EB", fillOpacity: .06, interactive: false }).addTo(M.map);
+    M.map.on("move", () => M.circle.setLatLng(M.map.getCenter()));
+    let t; M.map.on("moveend zoomend", () => { clearTimeout(t); t = setTimeout(() => { const c = M.map.getCenter(); M.center = { lat: c.lat, lon: c.lng }; M.circle.setLatLng(c); M.shown = PAGE; refresh(); }, 120); });
     M.map.on("click", () => { if ($("v-harita").dataset.s !== "peek") { M.sel = null; M.group = null; $("v-harita").dataset.s = "peek"; renderSheet(); renderMarkers(true); } });
-    setPin(41.01, 28.97, false);
+    M.center = { lat: 41.01, lon: 28.97 };
     loadAll().then(() => locate(true));
   }
   setTimeout(() => M.map.invalidateSize(), 50);
 }
-const PIN_HTML = `<div class="mkw"><div class="pin" title="Arama noktası — sürükleyerek taşı"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6" fill="#fff"/></svg></div></div>`;
-function setPin(lat, lon, refreshNow = true) {
-  M.center = { lat, lon };
-  if (!M.pin) {
-    M.pin = L.marker([lat, lon], { draggable: true, zIndexOffset: 3000, keyboard: false, icon: L.divIcon({ html: PIN_HTML, className: "", iconSize: [0, 0] }) }).addTo(M.map);
-    M.circle = L.circle([lat, lon], { radius: M.radius * 1000, color: "#2563EB", weight: 2, fillColor: "#2563EB", fillOpacity: .06, interactive: false }).addTo(M.map);
-    M.pin.on("drag", e => { const ll = e.target.getLatLng(); M.circle.setLatLng(ll); });
-    M.pin.on("dragend", e => { const ll = e.target.getLatLng(); M.center = { lat: ll.lat, lon: ll.lng }; M.shown = PAGE; refresh(); });
-  } else { M.pin.setLatLng([lat, lon]); M.circle.setLatLng([lat, lon]); }
-  if (refreshNow) refresh();
+// Dairenin ekrana sığacağı yakınlaştırma düzeyi
+function zoomForRadius() {
+  const px = Math.min($("map").clientWidth, $("map").clientHeight * .6) / 2.4, lat = (M.center || M.me || { lat: 39 }).lat;
+  const mPerPx = M.radius * 1000 / px, z = Math.log2(156543.03 * Math.cos(lat * Math.PI / 180) / mPerPx);
+  return Math.max(6, Math.min(16, Math.floor(z)));
 }
 function locate(first = false) {
-  if (!navigator.geolocation) { setMsg("Tarayıcın konum özelliğini desteklemiyor. Mavi konum işaretini sürükleyerek arama noktasını seçebilirsin.", true); return; }
+  if (!navigator.geolocation) { setMsg("Tarayıcın konum özelliğini desteklemiyor. Haritayı kaydırarak arama noktasını (ortadaki mavi işaret) seçebilirsin.", true); return; }
   $("loc").classList.add("busy");
   navigator.geolocation.getCurrentPosition(pos => {
     $("loc").classList.remove("busy");
     M.me = { lat: pos.coords.latitude, lon: pos.coords.longitude };
     if (M.meMark) M.meMark.remove();
     M.meMark = L.circleMarker([M.me.lat, M.me.lon], { radius: 7, color: "#fff", weight: 3, fillColor: "#2563EB", fillOpacity: 1, interactive: false }).addTo(M.map);
-    setPin(M.me.lat, M.me.lon);
-    M.map.fitBounds(M.circle.getBounds(), { padding: [20, 20] });
+    M.map.setView([M.me.lat, M.me.lon], zoomForRadius(), { animate: false });
   }, err => {
     $("loc").classList.remove("busy");
-    setMsg(err.code === 1 ? "Konum izni verilmedi. Mavi konum işaretini sürükleyerek arama noktasını seçebilirsin." : "Konumun alınamadı. Mavi konum işaretini sürükleyerek arama noktasını seçebilirsin.", true);
+    setMsg(err.code === 1 ? "Konum izni verilmedi. Haritayı kaydırarak arama noktasını (ortadaki mavi işaret) seçebilirsin." : "Konumun alınamadı. Haritayı kaydırarak arama noktasını (ortadaki mavi işaret) seçebilirsin.", true);
     if (first) refresh();
   }, { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 });
 }
@@ -934,14 +935,16 @@ function renderSheet() {
   const sortTxt = { yakin: "yakından uzağa", ucuz: "ucuzdan pahalıya", pahali: "pahalıdan ucuza", guc: "güce göre", kamp: "kampanyalı fiyat" }[M.sort];
   h.innerHTML = `<span><b>${M.view.length}</b> istasyon · ${M.radius} km içinde · ${sortTxt}</span>`;
   const hidden = M.f.tum ? 0 : M.cnt.unk || 0;
+  const srt = [["yakin", "En yakın"], ["kamp", "Kampanyalı en ucuz"], ["ucuz", "Liste fiyatı en ucuz"], ["guc", "En güçlü"], ["pahali", "En pahalı"]];
+  const sortbar = `<div class="sortbar" role="group" aria-label="Sırala">${srt.map(([v, l]) => `<button class="chip" data-ms="${v}" aria-pressed="${M.sort === v}">${l}</button>`).join("")}</div>`;
   let html = M.view.slice(0, M.shown).map(stationItem).join("");
   if (M.view.length > M.shown) html += `<button class="btn more" id="more">Daha fazla göster (${M.view.length - M.shown})</button>`;
-  if (!M.view.length) html = `<p class="note">Dairenin içinde bu filtrelerle istasyon yok. Mavi konum işaretini sürükle ya da çapı büyüt.</p>`;
-  else html = `<p class="note" style="margin:0 2px 8px">Mavi konum işaretini sürükleyerek arama noktasını, alttaki çubukla çapı değiştir.</p>` + html;
+  if (!M.view.length) html = `<p class="note">Dairenin içinde bu filtrelerle istasyon yok. Haritayı kaydır ya da çapı büyüt.</p>`;
+  else html = `<p class="note" style="margin:0 2px 8px">Liste haritanın ortasındaki mavi işaretin çevresini gösterir; haritayı kaydırarak yeri, çubukla çapı değiştir.</p>` + html;
   if (hidden) html += `<button class="btn more" data-showunk="1">Tanımsız ${hidden} istasyonu da göster</button>`;
   if ((M.sort === "ucuz" || M.sort === "pahali") && M.view.some(x => x.price)) html += `<p class="note">Fiyatı bilinen istasyonlar önce listelenir. Fiyatlar ağın resmi sayfasındaki en düşük liste fiyatına göredir.</p>`;
   if (M.sort === "kamp" || M.view.some(x => x.deal)) html += `<p class="note">Kampanyalı fiyat, istasyonda geçerli en avantajlı kampanyanın liste fiyatına uygulanmasıyla hesaplanır${profileEmpty() ? " (kartlarını Profilim'de seçersen yalnızca senin kartların hesaba katılır)" : " (yalnızca senin kartların ve uygulamaların)"}. Puan, bonus ve iadeler TL karşılığıyla indirim gibi sayılır; alt harcama şartı ve toplam üst limit uygulanır.</p>`;
-  b.innerHTML = html + `<div class="credit">Harita ve istasyon verisi: EPDK, ağların resmi haritaları, © OpenStreetMap, © Open Charge Map (CC BY 4.0)</div>`;
+  b.innerHTML = sortbar + html + `<div class="credit">Harita ve istasyon verisi: EPDK, ağların resmi haritaları, © OpenStreetMap, © Open Charge Map (CC BY 4.0)</div>`;
 }
 // Bilinen ağların tanıtıcı renkleri ve kısaltmaları (logo yerine). Renkler yaklaşık; kolayca değiştirilebilir.
 const BRAND = {
@@ -1022,10 +1025,8 @@ function selectStation(id, pan = true) {
 }
 function renderMapSheet() {
   const chip = (attr, label, on, cls = "") => `<button class="chip ${cls}" ${attr} aria-pressed="${on}">${esc(label)}</button>`;
-  const srt = [["yakin", "Yakından uzağa"], ["kamp", "Kampanyalı en ucuz"], ["ucuz", "Liste fiyatı en ucuz"], ["pahali", "Pahalıdan ucuza"], ["guc", "Güce göre"]].map(([v, l]) => chip(`data-ms="${v}"`, l, M.sort === v)).join("");
   const br = M.brands.map(([b, n]) => chip(`data-mb="${esc(b)}"`, `${b} · ${n}`, M.f.brands.has(b))).join("");
-  $("mfs-b").innerHTML = `<h3>Sıralama</h3><div class="chips">${srt}</div>`
-    + (br ? `<h3>Marka</h3><div class="chips">${br}</div>` : "")
+  $("mfs-b").innerHTML = (br ? `<h3>Marka</h3><div class="chips">${br}</div>` : "")
     + `<h3>Ayrıca</h3><div class="chips">${chip('data-mf="kamp"', "Kampanyalı", M.f.kamp, "ag")}${profileEmpty() ? "" : chip('data-mf="bana"', "Bana uyan", M.f.bana)}</div>`
     + `<label class="chk"><input type="checkbox" id="m-tum" ${M.f.tum ? "checked" : ""}><span>Tanımsız istasyonları da göster</span></label>`
     + `<p class="note">Markası bilinmeyen ya da tanınmayan istasyonlar varsayılan olarak gizlenir.</p>`;
@@ -1046,7 +1047,7 @@ function bindEvents() {
     else if (d.akim !== undefined) { M.f.akim = d.akim || null; M.shown = PAGE; renderMap(); }
     else if (d.mf) { M.f[d.mf] = !M.f[d.mf]; M.shown = PAGE; renderMap(); }
     else if (d.mb) { const s = M.f.brands; s.has(d.mb) ? s.delete(d.mb) : s.add(d.mb); M.shown = PAGE; renderMap(); }
-    else if (d.ms) { M.sort = d.ms; renderMap(); }
+    else if (d.ms) { M.sort = d.ms; if ($("v-harita").dataset.s === "peek") $("v-harita").dataset.s = "half"; refresh(); $("sh-b").scrollTop = 0; }
     else if (d.showunk) { M.f.tum = true; renderMap(); }
     else if (b.id === "more") { M.shown += PAGE; renderSheet(); }
     else if (d.sid) selectStation(d.sid);
@@ -1058,7 +1059,7 @@ function bindEvents() {
   $("fs-x").onclick = $("fs-ok").onclick = $("mfs-x").onclick = $("mfs-ok").onclick = $("bd").onclick = () => closeSheets();
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheets(); });
   $("fs-clear").onclick = () => { S.banka.clear(); S.ag.clear(); S.tip.clear(); render(); };
-  $("mfs-clear").onclick = () => { M.f = { akim: null, kamp: false, bana: false, tum: false, brands: new Set() }; M.sort = "yakin"; M.shown = PAGE; renderMap(); };
+  $("mfs-clear").onclick = () => { M.f = { akim: null, kamp: false, bana: false, tum: false, brands: new Set() }; M.shown = PAGE; renderMap(); };
   $("loc").onclick = () => locate(false);
   // Alt pencere: tutamaktan yukarı/aşağı sürükleyerek aç-kapat (en yakın konuma oturur); dokunmak da bir sonraki konuma geçirir
   (() => {
@@ -1109,7 +1110,7 @@ function bindEvents() {
     if (M.circle) M.circle.setRadius(M.radius * 1000);
     clearTimeout(rt); rt = setTimeout(() => { M.shown = PAGE; refresh(); }, 120);
   };
-  rr.onchange = () => { M.radius = +rr.value; refresh(); M.map.fitBounds(M.circle.getBounds(), { padding: [20, 20] }); };
+  rr.onchange = () => { M.radius = +rr.value; refresh(); M.map.setZoom(zoomForRadius()); };
   $("p-go").onclick = () => { S.bana = true; show("kamp"); render(); };
   $("p-copy").onclick = async () => {
     const v = $("p-code").value; if (!v) return;
