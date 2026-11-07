@@ -166,17 +166,23 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .back{background:none;border:0;color:#1D4ED8;font:800 14px Inter,sans-serif;padding:4px 0}
 .sh-b{flex:1;overflow-y:auto;padding:4px 12px 14px;-webkit-overflow-scrolling:touch}
 .mapview[data-s=peek] .sh-b{display:none}
-/* İşaretçiler: yalnızca marka adı; renk akım türünü, yeşil zemin kampanyayı gösterir */
+/* İşaretçiler: marka renginde yuvarlak rozet; kampanyalı istasyonda yanıp sönen yeşil halka; aynı noktadakiler tek rozette sayıyla */
 .mkw{position:absolute;left:0;top:0}
-.mk{position:absolute;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:5px;white-space:nowrap;background:#fff;border:2px solid var(--c,#6B7280);border-radius:999px;padding:2px 8px 2px 3px;font:800 12px/1.2 Inter,sans-serif;color:var(--ink);box-shadow:0 1px 4px rgba(17,24,39,.3);cursor:pointer}
-.mk .t{background:var(--c,#6B7280);color:#fff;border-radius:999px;font-size:9.5px;font-weight:900;padding:1px 5px;letter-spacing:.2px}
-.mk.ac{--c:var(--ac)}.mk.dc{--c:var(--dc)}.mk.acdc{--c:var(--acdc)}
-.mk.camp{background:var(--g);color:#fff;border-color:var(--g)}
-.mk.camp::after{content:"%";font-weight:900;margin-left:1px}
-.mk.sel{transform:translate(-50%,-50%) scale(1.25);z-index:5;box-shadow:0 0 0 3px #111827,0 3px 10px rgba(17,24,39,.4)}
-.mk.dot{padding:0;width:14px;height:14px;background:var(--c,#6B7280);border:2px solid #fff;gap:0}
-.mk.dot.camp{background:var(--g)}
-.mk.dot .t,.mk.dot .n{display:none}.mk.dot.camp::after{content:none}
+.mk{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:var(--bg-b,#6B7280);color:var(--fg-b,#fff);border:2px solid #fff;
+  display:flex;align-items:center;justify-content:center;font:900 12px/1 Inter,sans-serif;letter-spacing:-.3px;box-shadow:0 1px 4px rgba(17,24,39,.35);cursor:pointer}
+.mk.unk{width:16px;height:16px;font-size:0;--bg-b:#9CA3AF}
+.mk.camp{animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 2px #16A34A,0 1px 4px rgba(17,24,39,.35)}50%{box-shadow:0 0 0 6px rgba(22,163,74,.25),0 0 0 2px #16A34A}}
+@media (prefers-reduced-motion:reduce){.mk.camp{animation:none;box-shadow:0 0 0 3px #16A34A}}
+.mk.grp{width:34px;height:34px;--bg-b:#111827;font-size:13px}
+.mk.grp .cnt{position:absolute;top:-6px;right:-8px;background:#fff;color:#111827;border-radius:999px;font-size:10.5px;font-weight:900;padding:1px 5px;box-shadow:0 1px 3px rgba(17,24,39,.35)}
+.mk.grp .sw{position:absolute;bottom:-3px;left:50%;transform:translateX(-50%);display:flex;gap:1px}
+.mk.grp .sw i{width:7px;height:7px;border-radius:50%;border:1px solid #fff}
+.mk.sel{width:38px;height:38px;z-index:5;border-width:3px;border-color:#111827}
+.mk.small{width:18px;height:18px;font-size:0;border-width:2px}
+.bdot{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-1px;margin-right:6px;border:1px solid rgba(0,0,0,.1)}
+.shellbox{background:#FFFBEB;border:1px solid #FDE68A;border-radius:14px;padding:12px;margin:10px 0;font-size:13.5px}
+.shellbox b{font-weight:900}
 .stn{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px}
 .stn.sel{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
 .stn .r1{display:flex;gap:8px;align-items:baseline}
@@ -271,7 +277,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
       <div class="seg" id="seg" role="group" aria-label="Akım türü"></div>
       <button class="fab" id="mf-open" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Filtre<i id="mf-n" hidden></i></button>
     </div>
-    <div class="ov legend" aria-hidden="true"><span><i style="background:var(--ac)"></i>AC</span><span><i style="background:var(--dc)"></i>DC</span><span><i style="background:var(--acdc)"></i>AC+DC</span><span><i style="background:var(--g)"></i>Kampanyalı %</span></div>
+    <div class="ov legend" aria-hidden="true"><span><i style="background:#fff;box-shadow:0 0 0 2px #16A34A"></i>Yeşil halka: kampanya var</span><span><i style="background:#111827"></i>Sayı: aynı yerde birden çok istasyon</span></div>
     <button class="btn primary ov here" id="here" hidden>Bu bölgede ara</button>
     <div class="ov radius"><label for="rad-r">Çap<b id="rad-v">5 km</b></label><input type="range" id="rad-r" min="1" max="50" step="1" value="5" aria-label="Arama çapı (km)"></div>
     <button class="fab ov locbtn" id="loc" aria-label="Konumuma git"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg></button>
@@ -642,11 +648,21 @@ function bestDeal(s) {
   if (!s.price) return null;
   let best = null;
   for (const c of stationOffers(s)) {
-    const r = campRate(c); if (!r || conditional(c)) continue;
+    const r = campRate(c); if (!r || conditional(c) || (s.viaShell && s.viaShell.includes(c))) continue;
     const v = s.price.v * (1 - r);
     if (!best || v < best.v) best = { v, r, c };
   }
   return best;
+}
+// Shell akaryakıt istasyonlarındaki Trugo şarj cihazları (Trugo–Shell iş birliği) Shell Recharge uygulamasıyla da kullanılabilir.
+// Bu istasyonlara Shell Recharge kampanyaları "uygulama üzerinden" notuyla eklenir; liste fiyatı bilinmediği için sıralamaya katılmaz.
+function enrich(s) {
+  s.viaShell = [];
+  if (/trugo/i.test(s.brand) && /shell/i.test(fold([s.name, s.addr].join(" ")))) {
+    s.shellTrugo = true;
+    s.viaShell = (NETC["Shell Recharge"] || []).filter(c => !s.camp.includes(c));
+    s.camp = [...s.camp, ...s.viaShell];
+  }
 }
 function parseStation(el) {
   const t = el.tags || {};
@@ -731,8 +747,8 @@ function openMap() {
     L.tileLayer(TILE, { maxZoom: 19, attribution: TILE_ATTR, updateWhenIdle: true, updateWhenZooming: false, keepBuffer: 1 }).addTo(M.map);
     M.layer = L.layerGroup().addTo(M.map);
     let t; M.map.on("moveend", () => { clearTimeout(t); t = setTimeout(checkHere, 120); });
-    M.map.on("zoomend", () => { if ((M.map.getZoom() < 12) !== M.dotMode) { M.dotMode = M.map.getZoom() < 12; renderMap(); } });
-    M.map.on("click", () => { if ($("v-harita").dataset.s !== "peek") { M.sel = null; $("v-harita").dataset.s = "peek"; renderSheet(); highlight(); } });
+    M.map.on("zoomend", () => renderMap());
+    M.map.on("click", () => { if ($("v-harita").dataset.s !== "peek") { M.sel = null; M.group = null; $("v-harita").dataset.s = "peek"; highlight(); } });
     renderMap();
     setMsg("Konumun alınıyor…");
     locate();
@@ -771,6 +787,7 @@ async function runSearch(fit) {
     }
     if (seq !== M.seq) return;
     M.ST = mergeStations(found);
+    M.ST.forEach(enrich);
     M.last = { ...M.center }; M.sel = null; M.shown = PAGE; M.f.brands.clear(); M.sig = "";
     if (M.circle) M.circle.remove();
     M.circle = L.circle([M.center.lat, M.center.lon], { radius: M.radius * 1000, color: "#9CA3AF", weight: 1.5, fillOpacity: .03, dashArray: "6 6", interactive: false }).addTo(M.map);
@@ -813,39 +830,70 @@ function renderSeg() {
   const n = M.f.brands.size + (M.f.kamp ? 1 : 0) + (M.f.bana ? 1 : 0) + (M.f.tum ? 1 : 0);
   $("mf-n").hidden = !n; $("mf-n").textContent = n;
 }
+// Ekranda birbirine yakın (aynı konumdaki) istasyonları tek rozette topla
+function groupStations(list) {
+  const z = M.map.getZoom(), px = z >= 16 ? 18 : 30, G = new Map(), out = [];
+  for (const s of list) {
+    const p = M.map.latLngToContainerPoint([s.lat, s.lon]), k = Math.round(p.x / px) + ":" + Math.round(p.y / px);
+    let g = G.get(k);
+    if (!g) { g = { k, items: [], lat: s.lat, lon: s.lon }; G.set(k, g); out.push(g); }
+    g.items.push(s);
+  }
+  return out;
+}
+function markerHtml(g) {
+  const s0 = g.items[0], camp = g.items.some(s => s.camp.length), sel = g.items.some(s => s.id === M.sel);
+  if (g.items.length === 1) {
+    const st = brandStyle(s0), small = M.map.getZoom() < 11;
+    if (!st) return `<div class="mkw"><div class="mk unk ${camp ? "camp" : ""} ${sel ? "sel" : ""}" title="${esc(s0.name)}"></div></div>`;
+    return `<div class="mkw"><div class="mk ${camp ? "camp" : ""} ${small ? "small" : ""} ${sel ? "sel" : ""}" style="--bg-b:${st[0]};--fg-b:${st[1]}" title="${esc(pretty(s0.brand))}">${esc(st[2])}</div></div>`;
+  }
+  const sw = [...new Set(g.items.map(s => (brandStyle(s) || ["#9CA3AF"])[0]))].slice(0, 4).map(c => `<i style="background:${c}"></i>`).join("");
+  return `<div class="mkw"><div class="mk grp ${camp ? "camp" : ""} ${sel ? "sel" : ""}" title="${g.items.length} istasyon">${g.items.length}<span class="sw">${sw}</span></div></div>`;
+}
 function renderMap() {
   if (!M.map) return;
   M.view = M.center ? visibleStations() : [];
   const top = M.view.slice(0, MAXM);
-  const dot = M.map.getZoom() < 12;
-  const sig = (dot ? "d" : "l") + top.map(s => s.id + (s.deal || s.camp.length ? "c" : "")).join(",");
+  const groups = groupStations(top);
+  const sig = M.map.getZoom() + "|" + (M.sel || "") + "|" + groups.map(g => g.items.map(s => s.id + (s.camp.length ? "c" : "")).join("+")).join(",");
   if (sig !== M.sig) {
-    M.sig = sig; M.layer.clearLayers(); M.markers.clear();
-    top.forEach(s => {
-      const type = s.hasAc && s.hasDc ? "acdc" : s.hasDc ? "dc" : s.hasAc ? "ac" : "";
-      const tl = { acdc: "AC+DC", dc: "DC", ac: "AC" }[type] || "";
-      const label = (pretty(s.brand) || s.name || "Şarj").slice(0, 16);
-      const html = `<div class="mkw"><div class="mk ${type} ${s.camp.length ? "camp" : ""} ${dot ? "dot" : ""}" data-mk="${esc(s.id)}">${tl ? `<span class="t">${tl}</span>` : ""}<span class="n">${esc(label)}</span></div></div>`;
-      const mk = L.marker([s.lat, s.lon], { icon: L.divIcon({ html, className: "", iconSize: [0, 0] }), keyboard: false, riseOnHover: true }).addTo(M.layer);
-      mk.on("click", () => selectStation(s.id, false)); M.markers.set(s.id, mk);
+    M.sig = sig; M.layer.clearLayers(); M.markers.clear(); M.groups = groups;
+    groups.forEach(g => {
+      const mk = L.marker([g.lat, g.lon], { icon: L.divIcon({ html: markerHtml(g), className: "", iconSize: [0, 0] }), keyboard: false }).addTo(M.layer);
+      mk.on("click", () => g.items.length === 1 ? selectStation(g.items[0].id, false) : openGroup(g));
+      g.items.forEach(s => M.markers.set(s.id, mk));
     });
   }
   if (M.sel && !M.view.some(s => s.id === M.sel)) M.sel = null;
-  renderSeg(); renderSheet(); highlight();
+  renderSeg(); renderSheet();
   if (!$("mfs").hidden) renderMapSheet();
 }
-function highlight() {
-  M.markers.forEach((mk, id) => {
-    const el = mk.getElement && mk.getElement(), d = el && el.querySelector(".mk");
-    if (d) d.classList.toggle("sel", id === M.sel);
-    if (mk.setZIndexOffset) mk.setZIndexOffset(id === M.sel ? 1000 : 0);
-  });
+// Aynı yerdeki istasyonlar: çok yakınsa listede göster, değilse o bölgeye yakınlaş
+function openGroup(g) {
+  const spread = Math.max(...g.items.map(s => dist(g.items[0], s)));
+  if (spread < 120 || M.map.getZoom() >= 17) {
+    M.sel = null; M.group = g.items.map(s => s.id);
+    $("v-harita").dataset.s = "half"; renderSheet();
+  } else {
+    const la = g.items.map(s => s.lat), lo = g.items.map(s => s.lon);
+    M.map.fitBounds([[Math.min(...la), Math.min(...lo)], [Math.max(...la), Math.max(...lo)]], { padding: [60, 60], maxZoom: 18 });
+  }
 }
+function highlight() { M.sig = ""; renderMap(); }
 function typeBadge(s) { return s.hasAc && s.hasDc ? "AC/DC" : s.hasDc ? "DC" : s.hasAc ? "AC" : ""; }
 function renderSheet() {
   const h = $("sh-h"), b = $("sh-b"), s = M.sel && M.view.find(x => x.id === M.sel);
   if (s) { renderDetail(s); return; }
   const open = $("v-harita").dataset.s !== "peek";
+  if (M.group) {
+    const items = M.view.filter(x => M.group.includes(x.id));
+    if (items.length) {
+      h.innerHTML = `<span class="back">← Tüm liste</span><span class="tg" style="color:var(--mut)">Bu noktada ${items.length} istasyon</span>`;
+      b.innerHTML = items.map(stationItem).join(""); return;
+    }
+    M.group = null;
+  }
   if (!M.center) {
     h.innerHTML = `<b>Şarj istasyonları</b><span class="tg">${open ? "Kapat ▼" : "Liste ▲"}</span>`;
     b.innerHTML = `<p class="note">Konumunu kullan ya da haritada bir bölgeye gidip aramayı başlat.</p><div class="credit">Harita ve istasyon verisi: EPDK, ağların resmi haritaları, © OpenStreetMap, © Open Charge Map (CC BY 4.0)</div>`; return;
@@ -861,6 +909,26 @@ function renderSheet() {
   if (M.sort === "kamp" || M.view.some(x => x.deal)) html += `<p class="note">Kampanyalı fiyat, istasyonda geçerli en avantajlı kampanyanın liste fiyatına uygulanmasıyla hesaplanır${profileEmpty() ? " (kartlarını Profilim'de seçersen yalnızca senin kartların hesaba katılır)" : " (yalnızca senin kartların ve uygulamaların)"}. Puan, bonus ve iadeler TL karşılığıyla indirim gibi sayılır; alt harcama şartı ve toplam üst limit uygulanır.</p>`;
   b.innerHTML = html + `<div class="credit">Harita ve istasyon verisi: EPDK, ağların resmi haritaları, © OpenStreetMap, © Open Charge Map (CC BY 4.0)</div>`;
 }
+// Bilinen ağların tanıtıcı renkleri ve kısaltmaları (logo yerine). Renkler yaklaşık; kolayca değiştirilebilir.
+const BRAND = {
+  "Trugo": ["#1D4ED8", "#fff", "T"], "ZES": ["#E11D2E", "#fff", "Z"], "Shell Recharge": ["#FFD500", "#DD1D21", "S"],
+  "Eşarj": ["#4F2EDB", "#fff", "E"], "Voltrun": ["#111827", "#A3E635", "V"], "WAT Mobilite": ["#F97316", "#fff", "W"],
+  "Ovolt": ["#0EA5E9", "#fff", "O"], "Sharz.net": ["#FF6A00", "#fff", "Sh"], "Otopriz": ["#16A34A", "#fff", "Op"],
+  "ASTOR Şarj": ["#0B3B60", "#fff", "A"], "Tesla": ["#CC0000", "#fff", "T"], "Beefull": ["#FACC15", "#111827", "B"],
+  "Enyakıt": ["#0F766E", "#fff", "EY"], "Aksa Şarj": ["#005BAC", "#fff", "Ak"], "Zeplin": ["#7C3AED", "#fff", "Ze"],
+  "Zeplin Enerji": ["#7C3AED", "#fff", "Ze"], "Otojet": ["#B91C1C", "#fff", "Oj"], "otojet": ["#B91C1C", "#fff", "Oj"],
+  "TOGG": ["#111827", "#fff", "Tg"], "Petrol Ofisi": ["#E30613", "#fff", "PO"], "Petrol Ofisi e-POWER": ["#E30613", "#fff", "PO"],
+  "Opet": ["#0057A8", "#fff", "Op"], "BP": ["#009B3A", "#FFE600", "bp"], "Powerşarj": ["#2563EB", "#fff", "P"],
+  "Tunçmatik": ["#DC2626", "#fff", "Tm"], "D-Charge": ["#0F172A", "#fff", "D"], "Oncharge": ["#0891B2", "#fff", "On"]
+};
+const PALETTE = ["#2563EB", "#DB2777", "#059669", "#D97706", "#7C3AED", "#0891B2", "#B45309", "#4338CA", "#BE123C", "#0D9488"];
+function brandStyle(s) {
+  if (!s.known) return null;
+  const b = BRAND[s.brand]; if (b) return b;
+  let h = 0; for (const ch of s.brand) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  const words = s.brand.replace(/[^\p{L}\p{N} ]/gu, " ").trim().split(/\s+/);
+  return [PALETTE[h % PALETTE.length], "#fff", (words.length > 1 ? words[0][0] + words[1][0] : words[0].slice(0, 2)).toLocaleUpperCase("tr")];
+}
 // Kampanya verisinde küçük harfle geçen marka adlarını (ör. "otojet") başlıkta düzgün göster
 const pretty = n => n && n === n.toLocaleLowerCase("tr") ? n.charAt(0).toLocaleUpperCase("tr") + n.slice(1) : n;
 function stationItem(s) {
@@ -870,7 +938,7 @@ function stationItem(s) {
   const price = s.deal ? `<span class="old">${fmtNum(s.price.v)}</span> <span class="deal">${fmtNum(s.deal.v)} TL/kWh</span><span class="dealsrc">${esc(s.deal.c.kurum)} ${esc(s.deal.c.big)}</span>`
     : s.price ? `<span class="pr">${priceStr(s.price)}</span>` : "";
   return `<button class="stn ${s.id === M.sel ? "sel" : ""}" data-sid="${esc(s.id)}">
-    <div class="r1"><span class="nm">${esc(head)}</span><span class="ds">${fmtKm(s.d)}</span></div>
+    <div class="r1"><span class="nm">${brandStyle(s) ? `<span class="bdot" style="background:${brandStyle(s)[0]}"></span>` : ""}${esc(head)}</span><span class="ds">${fmtKm(s.d)}</span></div>
     ${sub ? `<div class="sub">${sub}</div>` : ""}
     <div class="r2">${tb ? `<span class="pill ${s.hasDc ? "dc" : "ac"}">${tb}</span>` : ""}${s.kw ? `<span class="pill">${Math.round(s.kw)} kW</span>` : ""}${price}
       ${s.camp.length && !s.deal ? `<span class="tag camp">${s.camp.length} kampanya</span>` : ""}${stationMine(s.brand) ? `<span class="tag me">Sana uyuyor</span>` : ""}</div>
@@ -882,7 +950,7 @@ function renderDetail(s) {
   const general = C.filter(c => c.tip === "banka" && c.st.includes(ALL));
   const myGeneral = general.filter(c => P.banka.includes(c.kid));
   const pr = s.price && TAR.aglar[s.brand];
-  const effTxt = c => { const r = campRate(c); return r && s.price ? `<div class="eff">Bu istasyonda ≈ ${fmtNum(s.price.v * (1 - r))} TL/kWh <small style="color:var(--mut);font-weight:600">(${fmtNum(s.price.v)} yerine, %${Math.round(r * 100)} karşılığı${conditional(c) ? "; yalnızca koşulu sağlayanlar/seçili istasyonlar" : ""})</small></div>` : ""; };
+  const effTxt = c => { const r = campRate(c); return r && s.price && !s.viaShell.includes(c) ? `<div class="eff">Bu istasyonda ≈ ${fmtNum(s.price.v * (1 - r))} TL/kWh <small style="color:var(--mut);font-weight:600">(${fmtNum(s.price.v)} yerine, %${Math.round(r * 100)} karşılığı${conditional(c) ? "; yalnızca koşulu sağlayanlar/seçili istasyonlar" : ""})</small></div>` : ""; };
   const mc = c => { const { txt } = daysText(c); return `<div class="mc ${mine(c) && !profileEmpty() ? "mine" : ""}"><div><span class="big sm">${esc(c.big)}</span></div><div class="det">${esc(c.det)}</div>${effTxt(c)}
     <div class="alt">${esc(c.kurum)}${txt ? " · " + esc(txt) : ""}</div><a class="src" style="margin-left:0" href="${esc(safeUrl(c.link))}" target="_blank" rel="noopener nofollow">Resmi kampanya sayfası ↗</a></div>`; };
   const rows = [];
@@ -899,7 +967,10 @@ function renderDetail(s) {
     ${s.deal ? `<p class="eff" style="font-size:15px">En iyi kampanyayla ≈ ${fmtNum(s.deal.v)} TL/kWh · ${esc(s.deal.c.kurum)} ${esc(s.deal.c.big)}</p>` : ""}
     ${s.approx ? `<p class="note">Konum yaklaşık: adres EPDK kaydından alındı, tam nokta doğrulanmadı.</p>` : ""}
     ${rows.length ? `<dl class="kv">${rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>` : ""}
-    ${s.camp.length ? `<div class="lbl" style="margin-top:12px">Bu ağa özel kampanyalar</div>${s.camp.map(mc).join("")}` : ""}
+    ${s.camp.filter(c => !s.viaShell.includes(c)).length ? `<div class="lbl" style="margin-top:12px">Bu ağa özel kampanyalar</div>${s.camp.filter(c => !s.viaShell.includes(c)).map(mc).join("")}` : ""}
+    ${s.shellTrugo ? `<div class="shellbox"><b>Shell istasyonundaki Trugo.</b> Trugo–Shell iş birliği kapsamında bu cihazda <b>Shell Recharge</b> uygulamasıyla da şarj başlatılabilir; uygulamadaki haritadan istasyonu kontrol et.
+      Shell Recharge ile ödemede geçerli kampanyalar aşağıdadır. <b>Uyarı:</b> Togg sahiplerine özel Trugo indirimi yalnızca Trugo uygulamasında geçerlidir; Shell Recharge ile şarjda kullanılamaz, iki uygulamanın avantajları birleşmez.</div>
+      ${s.viaShell.length ? `<div class="lbl">Shell Recharge uygulamasıyla</div>${s.viaShell.map(mc).join("")}` : ""}` : ""}
     ${myGeneral.length ? `<div class="lbl" style="margin-top:10px">Kartınla her istasyonda</div>${myGeneral.map(mc).join("")}` : (general.length && profileEmpty() ? `<p class="note">Her istasyonda geçerli ${general.length} kart kampanyası var. Kartlarını ekleyince burada görürsün.</p>` : "")}
     <a class="btn primary dir" href="https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lon}" target="_blank" rel="noopener">Yol tarifi al</a>
     <div class="credit">${s.official ? "İstasyon bilgisi ağın kendi resmi haritasından alınır; günde bir kez güncellenir." : "Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map katkıda bulunanlarından gelir; eksik ya da eski olabilir."}</div>`;
@@ -907,9 +978,10 @@ function renderDetail(s) {
 }
 function selectStation(id, pan = true) {
   M.sel = id; const s = M.view.find(x => x.id === id);
+  if (M.group && !M.group.includes(id)) M.group = null;
   if (!s) return;
   if ($("v-harita").dataset.s === "peek") $("v-harita").dataset.s = "half";
-  renderSheet(); highlight();
+  highlight();
   if (pan) M.map.panTo([s.lat, s.lon]);
 }
 function renderMapSheet() {
@@ -956,6 +1028,7 @@ function bindEvents() {
   $("handle").onclick = e => {
     e.stopPropagation();
     if (M.sel) { M.sel = null; renderSheet(); highlight(); return; }
+    if (M.group) { M.group = null; renderSheet(); return; }
     const v = $("v-harita"), o = ["peek", "half", "full"]; v.dataset.s = o[(o.indexOf(v.dataset.s) + 1) % 3]; renderSheet();
   };
   // arama çapı: kaydırırken daire canlı büyür/küçülür, bırakınca arama yapılır
