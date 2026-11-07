@@ -643,13 +643,14 @@ function stationOffers(s) {
   return profileEmpty() ? all : all.filter(c => c.tip === "ag" || (P.banka.length ? P.banka.includes(c.kid) : true));
 }
 // Herkese değil yalnızca belli müşterilere ya da seçili istasyonlara uygulanan kampanyalar sıralamaya katılmaz
-const COND = /seçili|sahiplerine|sahibi olan|yalnızca .*müşteri/i;
+const COND = /seçili|sahiplerine|sahibi olan|yalnızca .*müşteri|togg/i;
 const conditional = c => COND.test([c.det, c.kosul].join(" "));
 function bestDeal(s) {
   if (!s.price) return null;
   let best = null;
   for (const c of stationOffers(s)) {
-    const r = campRate(c); if (!r || conditional(c) || (s.viaShell && s.viaShell.includes(c))) continue;
+    const listed = seciliKamp(c) && s.sk && s.sk.includes(kampKey(c));
+    const r = campRate(c); if (!r || (conditional(c) && !listed) || (s.viaShell && s.viaShell.includes(c))) continue;
     const v = s.price.v * (1 - r);
     if (!best || v < best.v) best = { v, r, c };
   }
@@ -657,7 +658,12 @@ function bestDeal(s) {
 }
 // Shell akaryakıt istasyonlarındaki Trugo şarj cihazları (Trugo–Shell iş birliği) Shell Recharge uygulamasıyla da kullanılabilir.
 // Bu istasyonlara Shell Recharge kampanyaları "uygulama üzerinden" notuyla eklenir; liste fiyatı bilinmediği için sıralamaya katılmaz.
+// Ağın "seçili istasyonlarda" geçerli kendi kampanyası (ör. Otopriz %30) yalnızca resmi listedeki istasyonlarda gösterilir
+const seciliKamp = c => c.tip === "ag" && /seçili/i.test([c.det, c.kosul, c.big].join(" "));
+const kampKey = c => fold(c.kurum).replace(/[^a-z0-9]/g, "");
 function enrich(s) {
+  s.sk = s.sk || [];
+  s.camp = s.camp.filter(c => !seciliKamp(c) || s.sk.includes(kampKey(c)));
   s.viaShell = [];
   if (/trugo/i.test(s.brand) && /shell/i.test(fold([s.name, s.addr].join(" ")))) {
     s.shellTrugo = true;
@@ -690,7 +696,7 @@ function fromRec(r) {
   const t = { brand: r.b, operator: op, network: r.w, name: r.n, opening_hours: r.h, website: r.u };
   const b = brandOf(t), nm = r.n || "";
   return { id: r.i, lat: r.a, lon: r.o, brand: b.name, known: b.known, named: !!nm, name: nm || b.name || "Şarj istasyonu",
-    kw: r.k || null, types: r.t ? [...r.t] : [], hasAc: !!r.ac, hasDc: !!r.dc, tags: t, addr: r.ad || "", approx: r.q === "i" || r.q === "m", official: r.q === "r", pr: r.pr || null, tesis: r.tesis || "", pasif: !!r.pasif, prn: r.prn || "", camp: NETC[b.name] || [], count: r.c || null, d: 0, mode: null, price: null };
+    kw: r.k || null, types: r.t ? [...r.t] : [], hasAc: !!r.ac, hasDc: !!r.dc, tags: t, addr: r.ad || "", approx: r.q === "i" || r.q === "m", official: r.q === "r", pr: r.pr || null, tesis: r.tesis || "", pasif: !!r.pasif, prn: r.prn || "", sk: r.sk || [], camp: NETC[b.name] || [], count: r.c || null, d: 0, mode: null, price: null };
 }
 // OpenStreetMap'te bir istasyon çoğu zaman birden fazla kayıt olarak girilir; aynı markadaki yakın kayıtları birleştir
 function mergeStations(arr) {
@@ -701,6 +707,7 @@ function mergeStations(arr) {
     m.hasAc = m.hasAc || s.hasAc; m.hasDc = m.hasDc || s.hasDc;
     if (s.pr) m.pr = { ...s.pr, ...(m.pr || {}) };
     if (s.prn && !m.prn) m.prn = s.prn;
+    if (s.sk && s.sk.length) m.sk = [...new Set([...(m.sk || []), ...s.sk])];
     if (m.pasif && !s.pasif) m.pasif = false;
     m.kw = Math.max(m.kw || 0, s.kw || 0) || null;
     s.types.forEach(x => m.types.includes(x) || m.types.push(x));

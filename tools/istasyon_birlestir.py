@@ -17,6 +17,8 @@ OCM = pathlib.Path("data/ocm/istasyonlar_ocm.json")
 AGLAR = pathlib.Path("data/aglar")
 # Resmi listesi olan ağlar: bu ağlara ait EPDK/OSM kayıtları atlanır, ağın kendi listesi kullanılır
 RESMI = {"trugo": r"trugo", "zes": r"\bzes\b", "ovolt": r"ovolt|sharz", "wat": r"wat mobilite|watmobilite|\bwat\b", "astor": r"astor"}
+SECILI = pathlib.Path("data/secili_istasyonlar.json")  # yalnızca seçili istasyonlarda geçerli ağ kampanyaları
+SECILI_AG = {"otopriz": r"otopriz|dicle kok"}
 OUT = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else "site/istasyonlar.json")
 TR = str.maketrans({"İ": "i", "I": "ı", "Ş": "ş", "Ğ": "ğ", "Ü": "ü", "Ö": "ö", "Ç": "ç"})
 fold = lambda s: s.translate(TR).lower().replace("ı", "i").replace("ş", "s").replace("ğ", "g").replace("ü", "u").replace("ö", "o").replace("ç", "c")
@@ -155,6 +157,27 @@ def main():
                 extra.append(s)
                 xgrid.setdefault(cell(s["a"], s["o"]), []).append((k, s))
     recs += extra + resmi
+    # Seçili istasyon kampanyaları: resmi listedeki "Ad, İlçe" kayıtlarını istasyon adı/ilçe/il ile eşleştir
+    secili = json.loads(SECILI.read_text(encoding="utf-8")) if SECILI.exists() else {}
+    toks = lambda x: set(re.sub(r"[^a-z0-9 ]", " ", fold(x or "")).split())
+    sk_hits = {}
+    for ag, d in secili.items():
+        rx = re.compile(SECILI_AG.get(ag, re.escape(ag)))
+        GENEL = {"petrol", "akaryakit", "otel", "hotel", "restaurant", "restoran", "avm", "dinlenme", "tesisi", "tesisleri", "otopark", "the"}
+        items = [(toks(i["ad"]) - GENEL or toks(i["ad"]), toks(i.get("ilce", "")) - {"merkez"}, toks(i.get("il", ""))) for i in d.get("istasyonlar", [])]
+        hit = 0
+        for r in recs:
+            opn = ops[r["p"]] if isinstance(r.get("p"), int) else (r.get("p") or "")
+            if not rx.search(fold(" ".join([r.get("b") or "", opn]))):
+                continue
+            nm = re.split(r"\s+-\s+", r.get("n") or "")[0]
+            name_part, _, dist_part = nm.rpartition(",") if "," in nm else (nm, "", "")
+            nt, place = toks(name_part) - {"otopriz"}, toks(dist_part) | toks(r.get("ad"))
+            for L, D, IL in items:
+                if L and L <= nt and (not D or D <= place) and (not IL or IL & place or D):
+                    r.setdefault("sk", []).append(ag); hit += 1
+                    break
+        sk_hits[ag] = hit
     located = [r for r in recs if "a" in r]
     recs = [r for r in located if in_turkey(r["a"], r["o"])]  # konumu bilinmeyen ve Türkiye dışı kayıtlar gösterilmez
     disari = len(located) - len(recs)
@@ -170,6 +193,7 @@ def main():
             "isletmeciler": ops, "istasyonlar": recs}
     txt = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
     OUT.write_text(txt, encoding="utf-8")
+    print("seçili kampanya eşleşmeleri:", sk_hits)
     ozet = ", ".join("%s %d" % (k, v["sayi"]) for k, v in kaynaklar.items())
     print(f"resmi ağ listeleri {len(resmi)} ({ozet}); EPDK {len(seen)} kayıt (özel {ozel} çıkarıldı), önbellekten konumlanan {sum(1 for r in recs if r.get('e'))}, eşleşen/eklenen OSM {stats.get('o')}, OCM {stats.get('c')}, Türkiye dışı {disari}, aynı adreste birleştirilen EPDK ünitesi {sum(g.get('c', 1) - 1 for g in groups.values())}, toplam {len(recs)}, {len(txt)//1024} KB")
 
