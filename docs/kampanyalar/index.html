@@ -171,6 +171,9 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .mk{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:var(--bg-b,#6B7280);color:var(--fg-b,#fff);border:2px solid #fff;
   display:flex;align-items:center;justify-content:center;font:900 12px/1 Inter,sans-serif;letter-spacing:-.3px;box-shadow:0 1px 4px rgba(17,24,39,.35);cursor:pointer}
 .mk.pasif{opacity:.5}
+.mk.grp.big{width:42px;height:42px;font-size:12px}
+.pin{position:absolute;transform:translate(-50%,-100%);width:40px;height:40px;cursor:grab;filter:drop-shadow(0 2px 3px rgba(17,24,39,.45))}
+.pin svg{width:40px;height:40px;fill:#2563EB;stroke:#fff;stroke-width:1.5}
 .mk.unk{width:16px;height:16px;font-size:0;--bg-b:#9CA3AF}
 .mk.camp{animation:pulse 1.6s ease-in-out infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 2px #16A34A,0 1px 4px rgba(17,24,39,.35)}50%{box-shadow:0 0 0 6px rgba(22,163,74,.25),0 0 0 2px #16A34A}}
@@ -278,8 +281,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
       <div class="seg" id="seg" role="group" aria-label="Akım türü"></div>
       <button class="fab" id="mf-open" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Filtre<i id="mf-n" hidden></i></button>
     </div>
-    <div class="ov legend" aria-hidden="true"><span><i style="background:#fff;box-shadow:0 0 0 2px #16A34A"></i>Yeşil halka: kampanya var</span><span><i style="background:#111827"></i>Sayı: aynı yerde birden çok istasyon</span></div>
-    <button class="btn primary ov here" id="here" hidden>Bu bölgede ara</button>
+    <div class="ov legend" aria-hidden="true"><span><i style="background:#fff;box-shadow:0 0 0 2px #16A34A"></i>Yeşil halka: kampanya var</span></div>
     <div class="ov radius"><label for="rad-r">Çap<b id="rad-v">5 km</b></label><input type="range" id="rad-r" min="1" max="50" step="1" value="5" aria-label="Arama çapı (km)"></div>
     <button class="fab ov locbtn" id="loc" aria-label="Konumuma git"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg></button>
     <div class="ov mapmsg" id="mapmsg" hidden></div>
@@ -569,7 +571,7 @@ function show(v) {
 /* ---------- Harita ---------- */
 const M = { map: null, layer: null, circle: null, meMark: null, me: null, center: null, radius: 5, sort: "yakin",
   f: { akim: null, kamp: false, bana: false, tum: false, brands: new Set() },
-  sel: null, markers: new Map(), last: null, ST: [], view: [], shown: PAGE, sig: "", cnt: { all: 0, ac: 0, dc: 0 }, brands: [] };
+  sel: null, markers: new Map(), all: [], byId: new Map(), filtered: null, view: [], shown: PAGE, sig: "", cnt: { all: 0, ac: 0, dc: 0 }, brands: [] };
 
 function brandOf(t) {
   const hay = fold([t.brand, t.operator, t.network, t.name].filter(Boolean).join(" | "));
@@ -698,26 +700,6 @@ function fromRec(r) {
   return { id: r.i, lat: r.a, lon: r.o, brand: b.name, known: b.known, named: !!nm, name: nm || b.name || "Şarj istasyonu",
     kw: r.k || null, types: r.t ? [...r.t] : [], hasAc: !!r.ac, hasDc: !!r.dc, tags: t, addr: r.ad || "", approx: r.q === "i" || r.q === "m", official: r.q === "r", pr: r.pr || null, tesis: r.tesis || "", pasif: !!r.pasif, prn: r.prn || "", sk: r.sk || [], camp: NETC[b.name] || [], count: r.c || null, d: 0, mode: null, price: null };
 }
-// OpenStreetMap'te bir istasyon çoğu zaman birden fazla kayıt olarak girilir; aynı markadaki yakın kayıtları birleştir
-function mergeStations(arr) {
-  const out = [];
-  for (const s of arr) {
-    const m = out.find(o => o.brand === s.brand && dist(o, s) < 60);
-    if (!m) { out.push(s); continue; }
-    m.hasAc = m.hasAc || s.hasAc; m.hasDc = m.hasDc || s.hasDc;
-    if (s.pr) m.pr = { ...s.pr, ...(m.pr || {}) };
-    if (s.prn && !m.prn) m.prn = s.prn;
-    if (s.sk && s.sk.length) m.sk = [...new Set([...(m.sk || []), ...s.sk])];
-    if (m.pasif && !s.pasif) m.pasif = false;
-    m.kw = Math.max(m.kw || 0, s.kw || 0) || null;
-    s.types.forEach(x => m.types.includes(x) || m.types.push(x));
-    m.count = (m.count || 0) + (s.count || 0) || null;
-    if (!m.named && s.named) { m.name = s.name; m.named = true; }
-    if (!m.addr && s.addr) m.addr = s.addr;
-    m.tags = { ...s.tags, ...m.tags };
-  }
-  return out;
-}
 async function overpass(lat, lon, rM) {
   const key = `wk.st2.${lat.toFixed(3)}.${lon.toFixed(3)}.${rM}`;
   try { const h = JSON.parse(ssGet(key) || "null"); if (h && Date.now() - h.t < 30 * 60e3) return h.e; } catch {}
@@ -746,110 +728,146 @@ function dist(a, b) {
 }
 function setMsg(txt, bad = false, retry = false) {
   const el = $("mapmsg");
-  el.hidden = !txt; el.className = "mapmsg" + (bad ? " bad" : "");
+  el.hidden = !txt; el.className = "ov mapmsg" + (bad ? " bad" : "");
   el.innerHTML = esc(txt) + (retry ? `<br><button class="btn" id="retry">Tekrar dene</button>` : "");
-  const r = $("retry"); if (r) r.onclick = () => runSearch(true);
+  const r = $("retry"); if (r) r.onclick = () => loadAll();
+  clearTimeout(M.msgT); if (txt && !bad && !retry) M.msgT = setTimeout(() => setMsg(""), 4000);
 }
+// Haritada her zaman TÜM istasyonlar görünür. Arama dairesi (sürüklenebilir konum işareti + çap) yalnızca alttaki
+// listeyi belirler: dairenin içindeki istasyonlar sıralanır (en yakın, kampanyalı en ucuz vb.).
 function openMap() {
   if (!M.map) {
     if (!window.L) { setMsg("Harita kütüphanesi yüklenemedi. İnternet bağlantınızı kontrol edip sayfayı yenileyin.", true); return; }
     const wide = matchMedia("(min-width:900px)").matches;
-    M.map = L.map("map", { zoomControl: wide, attributionControl: true, preferCanvas: true, minZoom: 9, zoomSnap: 1, wheelPxPerZoomLevel: 90 }).setView([41.01, 28.97], 11);
+    M.map = L.map("map", { zoomControl: wide, attributionControl: true, minZoom: 6, zoomSnap: 1, wheelPxPerZoomLevel: 90 }).setView([41.01, 28.97], 11);
     L.tileLayer(TILE, { maxZoom: 19, attribution: TILE_ATTR, updateWhenIdle: true, updateWhenZooming: false, keepBuffer: 1 }).addTo(M.map);
     M.layer = L.layerGroup().addTo(M.map);
-    let t; M.map.on("moveend", () => { clearTimeout(t); t = setTimeout(checkHere, 120); });
-    M.map.on("zoomend", () => renderMap());
-    M.map.on("click", () => { if ($("v-harita").dataset.s !== "peek") { M.sel = null; M.group = null; $("v-harita").dataset.s = "peek"; highlight(); } });
-    renderMap();
-    setMsg("Konumun alınıyor…");
-    locate();
+    let t; M.map.on("moveend zoomend", () => { clearTimeout(t); t = setTimeout(renderMarkers, 60); });
+    M.map.on("click", () => { if ($("v-harita").dataset.s !== "peek") { M.sel = null; M.group = null; $("v-harita").dataset.s = "peek"; renderSheet(); renderMarkers(true); } });
+    setPin(41.01, 28.97, false);
+    loadAll().then(() => locate(true));
   }
   setTimeout(() => M.map.invalidateSize(), 50);
 }
-function locate() {
-  if (!navigator.geolocation) { setMsg("Tarayıcın konum özelliğini desteklemiyor. Haritada bir bölgeye gidip «Bu bölgede ara»yı kullanabilirsin.", true); return; }
+const PIN_HTML = `<div class="mkw"><div class="pin" title="Arama noktası — sürükleyerek taşı"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6" fill="#fff"/></svg></div></div>`;
+function setPin(lat, lon, refreshNow = true) {
+  M.center = { lat, lon };
+  if (!M.pin) {
+    M.pin = L.marker([lat, lon], { draggable: true, zIndexOffset: 3000, keyboard: false, icon: L.divIcon({ html: PIN_HTML, className: "", iconSize: [0, 0] }) }).addTo(M.map);
+    M.circle = L.circle([lat, lon], { radius: M.radius * 1000, color: "#2563EB", weight: 2, fillColor: "#2563EB", fillOpacity: .06, interactive: false }).addTo(M.map);
+    M.pin.on("drag", e => { const ll = e.target.getLatLng(); M.circle.setLatLng(ll); });
+    M.pin.on("dragend", e => { const ll = e.target.getLatLng(); M.center = { lat: ll.lat, lon: ll.lng }; M.shown = PAGE; refresh(); });
+  } else { M.pin.setLatLng([lat, lon]); M.circle.setLatLng([lat, lon]); }
+  if (refreshNow) refresh();
+}
+function locate(first = false) {
+  if (!navigator.geolocation) { setMsg("Tarayıcın konum özelliğini desteklemiyor. Mavi konum işaretini sürükleyerek arama noktasını seçebilirsin.", true); return; }
   $("loc").classList.add("busy");
   navigator.geolocation.getCurrentPosition(pos => {
     $("loc").classList.remove("busy");
-    M.me = { lat: pos.coords.latitude, lon: pos.coords.longitude }; M.center = { ...M.me };
+    M.me = { lat: pos.coords.latitude, lon: pos.coords.longitude };
     if (M.meMark) M.meMark.remove();
-    M.meMark = L.circleMarker([M.me.lat, M.me.lon], { radius: 8, color: "#fff", weight: 3, fillColor: "#2563EB", fillOpacity: 1, interactive: false }).addTo(M.map);
-    M.map.setView([M.me.lat, M.me.lon], 13, { animate: false });
-    runSearch(false);
+    M.meMark = L.circleMarker([M.me.lat, M.me.lon], { radius: 7, color: "#fff", weight: 3, fillColor: "#2563EB", fillOpacity: 1, interactive: false }).addTo(M.map);
+    setPin(M.me.lat, M.me.lon);
+    M.map.fitBounds(M.circle.getBounds(), { padding: [20, 20] });
   }, err => {
     $("loc").classList.remove("busy");
-    // konum yoksa haritanın ortasındaki bölgeyi göster
-    if (!M.center) { const c = M.map.getCenter(); M.center = { lat: c.lat, lon: c.lng }; runSearch(false); }
-    setTimeout(() => setMsg(err.code === 1 ? "Konum izni verilmedi; İstanbul gösteriliyor. Haritayı kaydırıp «Bu bölgede ara»ya basabilirsin." : "Konumun alınamadı. Haritayı kaydırıp «Bu bölgede ara»ya basabilirsin.", true), 400);
+    setMsg(err.code === 1 ? "Konum izni verilmedi. Mavi konum işaretini sürükleyerek arama noktasını seçebilirsin." : "Konumun alınamadı. Mavi konum işaretini sürükleyerek arama noktasını seçebilirsin.", true);
+    if (first) refresh();
   }, { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 });
 }
-async function runSearch(fit) {
-  if (!M.center) return;
-  setMsg("İstasyonlar aranıyor…"); $("here").hidden = true;
-  const seq = M.seq = (M.seq || 0) + 1;
+// Aynı markanın 60 m içindeki kayıtlarını birleştir (ızgara ile hızlı)
+function mergeAll(arr) {
+  const G = new Map(), out = [], key = (a, o) => Math.round(a * 1000) + ":" + Math.round(o * 1000);
+  for (const s of arr) {
+    const ca = Math.round(s.lat * 1000), co = Math.round(s.lon * 1000); let m = null;
+    for (let i = -1; i <= 1 && !m; i++) for (let j = -1; j <= 1 && !m; j++)
+      for (const o of G.get((ca + i) + ":" + (co + j)) || []) if (o.brand === s.brand && dist(o, s) < 60) { m = o; break; }
+    if (!m) { out.push(s); const k = key(s.lat, s.lon); (G.get(k) || G.set(k, []).get(k)).push(s); continue; }
+    mergeInto(m, s);
+  }
+  return out;
+}
+function mergeInto(m, s) {
+  m.hasAc = m.hasAc || s.hasAc; m.hasDc = m.hasDc || s.hasDc;
+  if (s.pr) m.pr = { ...s.pr, ...(m.pr || {}) };
+  if (s.prn && !m.prn) m.prn = s.prn;
+  if (s.sk && s.sk.length) m.sk = [...new Set([...(m.sk || []), ...s.sk])];
+  if (m.pasif && !s.pasif) m.pasif = false;
+  m.kw = Math.max(m.kw || 0, s.kw || 0) || null;
+  s.types.forEach(x => m.types.includes(x) || m.types.push(x));
+  m.count = (m.count || 0) + (s.count || 0) || null;
+  if (!m.named && s.named) { m.name = s.name; m.named = true; }
+  if (!m.addr && s.addr) m.addr = s.addr;
+  m.tags = { ...s.tags, ...m.tags };
+}
+async function loadAll() {
+  setMsg("İstasyonlar yükleniyor…");
   try {
     const st = await loadStatic();
-    let found;
-    if (st) {
-      const c = M.center, rM = M.radius * 1000, dLat = M.radius / 111, dLon = M.radius / (111 * Math.cos(c.lat * Math.PI / 180));
-      found = st.istasyonlar.filter(r => Math.abs(r.a - c.lat) <= dLat && Math.abs(r.o - c.lon) <= dLon && dist(c, { lat: r.a, lon: r.o }) <= rM).map(fromRec);
-    } else {
-      found = (await overpass(M.center.lat, M.center.lon, M.radius * 1000)).map(parseStation).filter(Boolean);
+    let list;
+    if (st) list = st.istasyonlar.map(fromRec);
+    else { // günlük dosya yoksa: yalnız çevredeki istasyonları canlı OpenStreetMap'ten al
+      const c = M.center; list = (await overpass(c.lat, c.lon, 50000)).map(parseStation).filter(Boolean);
     }
-    if (seq !== M.seq) return;
-    M.ST = mergeStations(found);
-    M.ST.forEach(enrich);
-    M.last = { ...M.center }; M.sel = null; M.shown = PAGE; M.f.brands.clear(); M.sig = "";
-    if (M.circle) M.circle.remove();
-    M.circle = L.circle([M.center.lat, M.center.lon], { radius: M.radius * 1000, color: "#9CA3AF", weight: 1.5, fillOpacity: .03, dashArray: "6 6", interactive: false }).addTo(M.map);
-    if (fit === true) M.map.fitBounds(M.circle.getBounds(), { padding: [10, 10] });
-    setMsg("");
-    renderMap();
-    if (!M.view.length) setMsg(M.ST.length ? "Bu filtrelerle istasyon bulunamadı." : "Bu alanda kayıtlı şarj istasyonu bulunamadı. Mesafeyi büyütmeyi dene.");
+    M.all = mergeAll(list.filter(s => !/^test\b/i.test(s.name))); M.all.forEach(enrich);
+    M.byId = new Map(M.all.map(s => [s.id, s]));
+    setMsg(""); refresh();
   } catch (e) {
-    if (seq === M.seq) setMsg("İstasyon verisi alınamadı. Bağlantını kontrol edip tekrar dene." + (M.errs ? " (" + M.errs + ")" : ""), true, true);
+    setMsg("İstasyon verisi alınamadı. Bağlantını kontrol edip tekrar dene." + (M.errs ? " (" + M.errs + ")" : ""), true, true);
   }
 }
-function checkHere() {
-  if (!M.map) return;
-  const c = M.map.getCenter();
-  const far = !M.last || dist({ lat: c.lat, lon: c.lng }, M.last) > Math.max(600, M.radius * 400);
-  $("here").hidden = !(far && M.map.getZoom() >= 9);
+function prep(s) {
+  const ref = M.center || M.me;
+  s.d = ref ? dist(ref, s) : 0;
+  s.mode = M.f.akim || (s.hasDc ? "dc" : s.hasAc ? "ac" : null); s.price = stationPrice(s, s.mode); s.deal = bestDeal(s);
+  return s;
 }
-function visibleStations() {
-  const ref = M.me || M.center;
-  const base = M.ST.filter(s => M.f.tum || s.known);
-  M.cnt = { all: base.length, ac: base.filter(s => s.hasAc).length, dc: base.filter(s => s.hasDc).length };
+// Filtreler hem haritaya hem listeye uygulanır; daire yalnızca listeyi sınırlar
+function refresh() {
+  if (!M.map) return;
+  const base = M.all.filter(s => M.f.tum || s.known);
   let a = M.f.akim === "ac" ? base.filter(s => s.hasAc) : M.f.akim === "dc" ? base.filter(s => s.hasDc) : base;
-  const bc = new Map(); a.forEach(s => s.known && bc.set(s.brand, (bc.get(s.brand) || 0) + 1));
-  M.brands = [...bc].sort((x, y) => y[1] - x[1] || tr(x[0], y[0]));
   if (M.f.brands.size) a = a.filter(s => M.f.brands.has(s.brand));
   if (M.f.kamp) a = a.filter(s => s.camp.length);
   if (M.f.bana) a = a.filter(s => stationMine(s.brand));
-  a.forEach(s => { s.d = dist(ref, s); s.mode = M.f.akim || (s.hasDc ? "dc" : s.hasAc ? "ac" : null); s.price = stationPrice(s, s.mode); s.deal = bestDeal(s); });
+  M.filtered = a;
+  // dairenin içi
+  const c = M.center, rM = M.radius * 1000, dLat = M.radius / 111, dLon = M.radius / (111 * Math.cos(c.lat * Math.PI / 180));
+  const inC = s => Math.abs(s.lat - c.lat) <= dLat && Math.abs(s.lon - c.lon) <= dLon && dist(c, s) <= rM;
+  const circBase = base.filter(inC);
+  const unk = M.f.tum ? 0 : M.all.filter(s => !s.known && inC(s)).length;
+  M.cnt = { all: circBase.length, ac: circBase.filter(s => s.hasAc).length, dc: circBase.filter(s => s.hasDc).length, unk };
+  const bc = new Map(); circBase.forEach(s => s.known && bc.set(s.brand, (bc.get(s.brand) || 0) + 1));
+  M.brands = [...bc].sort((x, y) => y[1] - x[1] || tr(x[0], y[0]));
+  const list = a.filter(inC).map(prep);
   const pv = s => s.price ? s.price.v : null;
   const cmpPrice = dir => (x, y) => (pv(x) === null) - (pv(y) === null) || (pv(x) === null ? 0 : dir * (pv(x) - pv(y))) || x.d - y.d;
   const ev = s => s.deal ? s.deal.v : pv(s);
   const sorters = { yakin: (x, y) => x.d - y.d, ucuz: cmpPrice(1), pahali: cmpPrice(-1), guc: (x, y) => (y.kw || 0) - (x.kw || 0) || x.d - y.d,
     kamp: (x, y) => (ev(x) === null) - (ev(y) === null) || (ev(x) === null ? 0 : ev(x) - ev(y)) || x.d - y.d };
-  return a.sort(sorters[M.sort]);
+  M.view = list.sort(sorters[M.sort]);
+  if (M.sel && !M.filtered.some(s => s.id === M.sel)) M.sel = null;
+  renderMarkers(true); renderSeg(); renderSheet();
+  if (!$("mfs").hidden) renderMapSheet();
 }
-const stColor = s => stationMine(s.brand) ? "#F59E0B" : s.camp.length ? "#047857" : s.known ? "#4B5563" : "#9CA3AF";
 function renderSeg() {
-  const b = (v, l, n) => `<button data-akim="${v}" aria-pressed="${(M.f.akim || "") === v}">${l}${n !== null && M.ST.length ? ` · ${n}` : ""}</button>`;
+  const b = (v, l, n) => `<button data-akim="${v}" aria-pressed="${(M.f.akim || "") === v}">${l}${M.all.length ? ` · ${n}` : ""}</button>`;
   $("seg").innerHTML = b("", "Tümü", M.cnt.all) + b("ac", "AC", M.cnt.ac) + b("dc", "DC", M.cnt.dc);
   const n = M.f.brands.size + (M.f.kamp ? 1 : 0) + (M.f.bana ? 1 : 0) + (M.f.tum ? 1 : 0);
   $("mf-n").hidden = !n; $("mf-n").textContent = n;
 }
-// Ekranda birbirine yakın (aynı konumdaki) istasyonları tek rozette topla
+// Ekranda birbirine yakın istasyonları tek rozette topla (açgözlü kümeleme; rozetler üst üste binmez)
 function groupStations(list) {
-  const z = M.map.getZoom(), px = z >= 16 ? 18 : 30, G = new Map(), out = [];
-  for (const s of list) {
-    const p = M.map.latLngToContainerPoint([s.lat, s.lon]), k = Math.round(p.x / px) + ":" + Math.round(p.y / px);
-    let g = G.get(k);
-    if (!g) { g = { k, items: [], lat: s.lat, lon: s.lon }; G.set(k, g); out.push(g); }
-    g.items.push(s);
+  const z = M.map.getZoom(), R = z >= 16 ? 30 : z >= 13 ? 44 : 54, G = new Map(), out = [];
+  for (const [s, p] of list) {
+    const cx = Math.floor(p.x / R), cy = Math.floor(p.y / R); let g = null;
+    for (let i = -1; i <= 1 && !g; i++) for (let j = -1; j <= 1 && !g; j++)
+      for (const c of G.get((cx + i) + ":" + (cy + j)) || []) if (Math.abs(c.x - p.x) < R && Math.abs(c.y - p.y) < R) { g = c; break; }
+    if (!g) { g = { x: p.x, y: p.y, items: [], la: 0, lo: 0 }; const k = cx + ":" + cy; (G.get(k) || G.set(k, []).get(k)).push(g); out.push(g); }
+    g.items.push(s); g.la += s.lat; g.lo += s.lon;
   }
+  out.forEach(g => { g.lat = g.la / g.items.length; g.lon = g.lo / g.items.length; if (g.items.length === 1) { g.lat = g.items[0].lat; g.lon = g.items[0].lon; } });
   return out;
 }
 function markerHtml(g) {
@@ -860,61 +878,64 @@ function markerHtml(g) {
     return `<div class="mkw"><div class="mk ${camp ? "camp" : ""} ${small ? "small" : ""} ${sel ? "sel" : ""} ${s0.pasif ? "pasif" : ""}" style="--bg-b:${st[0]};--fg-b:${st[1]}" title="${esc(pretty(s0.brand))}">${esc(st[2])}</div></div>`;
   }
   const sw = [...new Set(g.items.map(s => (brandStyle(s) || ["#9CA3AF"])[0]))].slice(0, 4).map(c => `<i style="background:${c}"></i>`).join("");
-  return `<div class="mkw"><div class="mk grp ${camp ? "camp" : ""} ${sel ? "sel" : ""}" title="${g.items.length} istasyon">${g.items.length}<span class="sw">${sw}</span></div></div>`;
+  const n = g.items.length > 999 ? "999+" : g.items.length;
+  return `<div class="mkw"><div class="mk grp ${sel ? "sel" : ""} ${g.items.length > 99 ? "big" : ""}" title="${g.items.length} istasyon">${n}<span class="sw">${sw}</span></div></div>`;
 }
-function renderMap() {
-  if (!M.map) return;
-  M.view = M.center ? visibleStations() : [];
-  const top = M.view.slice(0, MAXM);
-  const groups = groupStations(top);
-  const sig = M.map.getZoom() + "|" + (M.sel || "") + "|" + groups.map(g => g.items.map(s => s.id + (s.camp.length ? "c" : "")).join("+")).join(",");
-  if (sig !== M.sig) {
-    M.sig = sig; M.layer.clearLayers(); M.markers.clear(); M.groups = groups;
-    groups.forEach(g => {
-      const mk = L.marker([g.lat, g.lon], { icon: L.divIcon({ html: markerHtml(g), className: "", iconSize: [0, 0] }), keyboard: false }).addTo(M.layer);
-      mk.on("click", () => g.items.length === 1 ? selectStation(g.items[0].id, false) : openGroup(g));
-      g.items.forEach(s => M.markers.set(s.id, mk));
-    });
+// Yalnızca ekranda görünen bölgedeki istasyonlar çizilir
+function renderMarkers(force) {
+  if (!M.map || !M.filtered) return;
+  const el = $("map"), w = el.clientWidth, h = el.clientHeight, pad = 60, vis = [];
+  for (const s of M.filtered) {
+    const p = M.map.latLngToContainerPoint([s.lat, s.lon]);
+    if (p.x > -pad && p.y > -pad && p.x < w + pad && p.y < h + pad) vis.push([s, p]);
   }
-  if (M.sel && !M.view.some(s => s.id === M.sel)) M.sel = null;
-  renderSeg(); renderSheet();
-  if (!$("mfs").hidden) renderMapSheet();
+  const groups = groupStations(vis);
+  const sig = M.map.getZoom() + "|" + (M.sel || "") + "|" + groups.map(g => g.items.length + g.items[0].id).join(",");
+  if (!force && sig === M.sig) return;
+  M.sig = sig; M.layer.clearLayers(); M.markers.clear(); M.groups = groups;
+  groups.forEach(g => {
+    const mk = L.marker([g.lat, g.lon], { icon: L.divIcon({ html: markerHtml(g), className: "", iconSize: [0, 0] }), keyboard: false }).addTo(M.layer);
+    mk.on("click", () => g.items.length === 1 ? selectStation(g.items[0].id, false) : openGroup(g));
+    g.items.forEach(s => M.markers.set(s.id, mk));
+  });
 }
+const renderMap = () => refresh();
 // Aynı yerdeki istasyonlar: çok yakınsa listede göster, değilse o bölgeye yakınlaş
 function openGroup(g) {
   const spread = Math.max(...g.items.map(s => dist(g.items[0], s)));
   if (spread < 120 || M.map.getZoom() >= 17) {
-    M.sel = null; M.group = g.items.map(s => s.id);
+    M.sel = null; M.group = g.items.map(s => s.id); g.items.forEach(prep);
     $("v-harita").dataset.s = "half"; renderSheet();
   } else {
     const la = g.items.map(s => s.lat), lo = g.items.map(s => s.lon);
     M.map.fitBounds([[Math.min(...la), Math.min(...lo)], [Math.max(...la), Math.max(...lo)]], { padding: [60, 60], maxZoom: 18 });
   }
 }
-function highlight() { M.sig = ""; renderMap(); }
+function highlight() { renderMarkers(true); }
 function typeBadge(s) { return s.hasAc && s.hasDc ? "AC/DC" : s.hasDc ? "DC" : s.hasAc ? "AC" : ""; }
 function renderSheet() {
-  const h = $("sh-h"), b = $("sh-b"), s = M.sel && M.view.find(x => x.id === M.sel);
-  if (s) { renderDetail(s); return; }
+  const h = $("sh-h"), b = $("sh-b"), s = M.sel && M.byId.get(M.sel);
+  if (s) { renderDetail(prep(s)); return; }
   const open = $("v-harita").dataset.s !== "peek";
   if (M.group) {
-    const items = M.view.filter(x => M.group.includes(x.id));
+    const items = M.group.map(id => M.byId.get(id)).filter(Boolean).map(prep);
     if (items.length) {
       h.innerHTML = `<span class="back">← Tüm liste</span><span class="tg" style="color:var(--mut)">Bu noktada ${items.length} istasyon</span>`;
       b.innerHTML = items.map(stationItem).join(""); return;
     }
     M.group = null;
   }
-  if (!M.center) {
+  if (!M.all.length) {
     h.innerHTML = `<b>Şarj istasyonları</b><span class="tg">${open ? "Kapat ▼" : "Liste ▲"}</span>`;
-    b.innerHTML = `<p class="note">Konumunu kullan ya da haritada bir bölgeye gidip aramayı başlat.</p><div class="credit">Harita ve istasyon verisi: EPDK, ağların resmi haritaları, © OpenStreetMap, © Open Charge Map (CC BY 4.0)</div>`; return;
+    b.innerHTML = `<p class="note">İstasyonlar yükleniyor…</p>`; return;
   }
-  const sortTxt = { yakin: "yakından uzağa", ucuz: "ucuzdan pahalıya", pahali: "pahalıdan ucuza", guc: "güce göre", kamp: "kampanyalı fiyata göre" }[M.sort];
-  h.innerHTML = `<span><b>${M.view.length}</b> istasyon · ${sortTxt}</span><span class="tg">${open ? "Kapat ▼" : "Liste ▲"}</span>`;
-  const hidden = M.f.tum ? 0 : M.ST.filter(x => !x.known).length;
+  const sortTxt = { yakin: "yakından uzağa", ucuz: "ucuzdan pahalıya", pahali: "pahalıdan ucuza", guc: "güce göre", kamp: "kampanyalı fiyat" }[M.sort];
+  h.innerHTML = `<span><b>${M.view.length}</b> istasyon · ${M.radius} km içinde · ${sortTxt}</span><span class="tg">${open ? "Kapat ▼" : "Liste ▲"}</span>`;
+  const hidden = M.f.tum ? 0 : M.cnt.unk || 0;
   let html = M.view.slice(0, M.shown).map(stationItem).join("");
   if (M.view.length > M.shown) html += `<button class="btn more" id="more">Daha fazla göster (${M.view.length - M.shown})</button>`;
-  if (!M.view.length) html = `<p class="note">Bu filtrelerle istasyon bulunamadı.</p>`;
+  if (!M.view.length) html = `<p class="note">Dairenin içinde bu filtrelerle istasyon yok. Mavi konum işaretini sürükle ya da çapı büyüt.</p>`;
+  else html = `<p class="note" style="margin:0 2px 8px">Mavi konum işaretini sürükleyerek arama noktasını, alttaki çubukla çapı değiştir.</p>` + html;
   if (hidden) html += `<button class="btn more" data-showunk="1">Tanımsız ${hidden} istasyonu da göster</button>`;
   if ((M.sort === "ucuz" || M.sort === "pahali") && M.view.some(x => x.price)) html += `<p class="note">Fiyatı bilinen istasyonlar önce listelenir. Fiyatlar ağın resmi sayfasındaki en düşük liste fiyatına göredir.</p>`;
   if (M.sort === "kamp" || M.view.some(x => x.deal)) html += `<p class="note">Kampanyalı fiyat, istasyonda geçerli en avantajlı kampanyanın liste fiyatına uygulanmasıyla hesaplanır${profileEmpty() ? " (kartlarını Profilim'de seçersen yalnızca senin kartların hesaba katılır)" : " (yalnızca senin kartların ve uygulamaların)"}. Puan, bonus ve iadeler TL karşılığıyla indirim gibi sayılır; alt harcama şartı ve toplam üst limit uygulanır.</p>`;
@@ -990,7 +1011,7 @@ function renderDetail(s) {
   $("sh-b").scrollTop = 0;
 }
 function selectStation(id, pan = true) {
-  M.sel = id; const s = M.view.find(x => x.id === id);
+  M.sel = id; const s = M.byId.get(id);
   if (M.group && !M.group.includes(id)) M.group = null;
   if (!s) return;
   if ($("v-harita").dataset.s === "peek") $("v-harita").dataset.s = "half";
@@ -1036,8 +1057,7 @@ function bindEvents() {
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheets(); });
   $("fs-clear").onclick = () => { S.banka.clear(); S.ag.clear(); S.tip.clear(); render(); };
   $("mfs-clear").onclick = () => { M.f = { akim: null, kamp: false, bana: false, tum: false, brands: new Set() }; M.sort = "yakin"; M.shown = PAGE; renderMap(); };
-  $("loc").onclick = locate;
-  $("here").onclick = () => { const c = M.map.getCenter(); M.center = { lat: c.lat, lon: c.lng }; runSearch(false); };
+  $("loc").onclick = () => locate(false);
   $("handle").onclick = e => {
     e.stopPropagation();
     if (M.sel) { M.sel = null; renderSheet(); highlight(); return; }
@@ -1049,9 +1069,9 @@ function bindEvents() {
   rr.oninput = () => {
     M.radius = +rr.value; rv.textContent = `${M.radius} km`;
     if (M.circle) M.circle.setRadius(M.radius * 1000);
-    clearTimeout(rt); rt = setTimeout(() => M.center && runSearch(false), 250);
+    clearTimeout(rt); rt = setTimeout(() => { M.shown = PAGE; refresh(); }, 120);
   };
-  rr.onchange = () => { M.radius = +rr.value; if (M.center) runSearch(true); };
+  rr.onchange = () => { M.radius = +rr.value; refresh(); M.map.fitBounds(M.circle.getBounds(), { padding: [20, 20] }); };
   $("p-go").onclick = () => { S.bana = true; show("kamp"); render(); };
   $("p-copy").onclick = async () => {
     const v = $("p-code").value; if (!v) return;
