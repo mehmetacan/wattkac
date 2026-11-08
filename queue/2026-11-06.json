@@ -35,10 +35,11 @@
    "media/2026-11-06/banka_ziraat/hikaye.jpg"
   ],
   "aciklama": "",
-  "durum": "bekliyor",
+  "durum": "paylasildi",
   "deneme": 0,
-  "ig_media_id": null,
-  "hata": null
+  "ig_media_id": "18129177820906013",
+  "hata": null,
+  "paylasim_zamani": "2026-11-08T07:44:08+00:00"
  },
  {
   "id": "istasyon_trugo_post",
