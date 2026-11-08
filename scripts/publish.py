@@ -51,18 +51,21 @@ def api(method, path, **params):
 
 def public_url(rel):
     repo = os.environ["GITHUB_REPOSITORY"]
+    if rel.startswith("docs/"):  # videolar GitHub Pages'ten (doğru video/mp4 türüyle) sunulur
+        owner, name = repo.split("/")
+        return f"https://{owner.lower()}.github.io/{name}/{urllib.parse.quote(rel[5:])}"
     ref = os.environ.get("GITHUB_SHA", "main")
     return f"https://raw.githubusercontent.com/{repo}/{ref}/{urllib.parse.quote(rel)}"
 
 
-def wait_ready(cid, tries=20):
+def wait_ready(cid, tries=20, every=3):
     for _ in range(tries):
         st = api("GET", cid, fields="status_code").get("status_code")
         if st == "FINISHED":
             return
         if st in ("ERROR", "EXPIRED"):
             raise RuntimeError(f"Medya hazırlanamadı: {st}")
-        time.sleep(3)
+        time.sleep(every)
     raise RuntimeError("Medya zamanında hazırlanmadı")
 
 
@@ -71,6 +74,11 @@ def publish(item, uid):
     if DRY:
         log(f"  [DRY] {item['tip']}: {urls}")
         return "dry-run"
+    if item["tip"] == "reels":
+        c = api("POST", f"{uid}/media", media_type="REELS", video_url=urls[0], caption=item["aciklama"],
+                share_to_feed="true", thumb_offset=str(item.get("kapak_ms", 0)))["id"]
+        wait_ready(c, tries=120, every=5)  # video işleme birkaç dakika sürebilir
+        return api("POST", f"{uid}/media_publish", creation_id=c)["id"]
     if item["tip"] == "hikaye":
         c = api("POST", f"{uid}/media", image_url=urls[0], media_type="STORIES")["id"]
     elif len(urls) == 1:

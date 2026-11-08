@@ -1,0 +1,24 @@
+[
+ {
+  "id": "reels_shell_post",
+  "grup": "2026-11-08-reels__reels_shell",
+  "tip": "reels",
+  "tur": "reels",
+  "baslik": "Reels · Garanti BBVA × Shell Recharge %50 bonus",
+  "zaman": "2026-11-08T10:52:00+03:00",
+  "gorseller": [
+   "docs/reels/2026-11-08_shell_recharge.mp4"
+  ],
+  "kapak_ms": 6000,
+  "aciklama": "⚡💳 Garanti BBVA kartın varsa şarjın yarısı bonus olarak geri!\n\nShell Recharge uygulamasıyla 500 TL ve üzeri şarj et, %50 bonus kazan. Tek seferde ya da farklı günlerde tamamlayabilirsin.\n\n📍 Sadece Shell istasyonları değil: Shell Recharge uygulamasında tanımlı Trugo istasyonlarında da geçerli! Şarjı uygulamadan başlatıp ödemen yeterli.\n\n💰 Örnek: 500 TL şarj → 250 TL bonus = net maliyet 250 TL\n\nNasıl katılırsın?\n1️⃣ BonusFlaş'ta \"Shell\" diye ara, \"Hemen Katıl\"a bas\n2️⃣ Shell Recharge uygulamasını indir, Garanti BBVA kredi kartını ekle\n3️⃣ Shell Recharge ya da Trugo istasyonunu uygulamadan seç, şarjı başlat\n\n⚠️ Kampanya 30 Kasım'da bitiyor. Toplam bonus tavanı ve güncel koşullar için BonusFlaş'taki kampanya sayfasını kontrol et.\n\nShell Recharge mı, Trugo mu? Yorumlara yaz 👇\nKaydet, şarjdan önce bak 🔖 Takip et 👉 @wattkac\n\n#Garanti #BonusFlaş #ShellRecharge #Trugo #Togg #ElektrikliAraç #ŞarjKampanyası #WattKaç",
+  "kaynaklar": [
+   {
+    "ad": "Shell: Garanti BBVA kredi kartlarıyla Shell Recharge'da %50 bonus",
+    "tur": "resmi",
+    "url": "https://www.shell.com.tr/suruculer/shellden-avantajli-kampanyalar/shell-recharge-kullanicilarina-ozel-garanti-bbva-kredi-kartlari-ile-yaptiklari-sarjlamalarda-50-bonus-firsati.html",
+    "not": "Trugo istasyonlarında geçerlilik kullanıcı bilgisine dayanıyor; bonus tavanı sayfada yok."
+   }
+  ],
+  "durum": "bekliyor"
+ }
+]
