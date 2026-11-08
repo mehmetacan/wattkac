@@ -1,0 +1,43 @@
+name: İstatistik
+
+# SADECE OKUMA: Instagram hesap ve gönderi istatistiklerini stats/rapor.json'a yazar. Hiçbir şey paylaşmaz.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 19 * * *"   # her gün 22:17 (İstanbul)
+  push:
+    branches: [main]
+    paths:
+      - "scripts/stats.py"
+      - ".github/workflows/istatistik.yml"
+      - "stats/yenile"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: istatistik
+  cancel-in-progress: false
+
+jobs:
+  oku:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: İstatistikleri oku
+        env:
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+        run: python scripts/stats.py
+      - name: Raporu kaydet
+        run: |
+          git config user.name "wattkac-bot"
+          git config user.email "wattkac-bot@users.noreply.github.com"
+          git add stats/rapor.json
+          git diff --cached --quiet || git commit -m "İstatistik raporu"
+          git pull --rebase -q || true
+          git push -q || true
