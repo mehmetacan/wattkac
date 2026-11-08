@@ -119,10 +119,11 @@
    "media/2026-11-06/banka_akbank/hikaye.jpg"
   ],
   "aciklama": "",
-  "durum": "bekliyor",
+  "durum": "paylasildi",
   "deneme": 0,
-  "ig_media_id": null,
-  "hata": null
+  "ig_media_id": "18288004285293869",
+  "hata": null,
+  "paylasim_zamani": "2026-11-08T18:23:10+00:00"
  },
  {
   "id": "istasyon_voltrun_post",
