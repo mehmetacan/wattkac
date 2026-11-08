@@ -172,7 +172,8 @@ def main():
                 continue
             nm = re.split(r"\s+-\s+", r.get("n") or "")[0]
             name_part, _, dist_part = nm.rpartition(",") if "," in nm else (nm, "", "")
-            nt, place = toks(name_part) - {"otopriz"}, toks(dist_part) | toks(r.get("ad"))
+            # ad "Ad, İlçe - DC" biçimindeyse ilçe adın içindekiyle eşleşmeli; değilse adresteki ilçeye bakılır
+            nt, place = toks(name_part) - {"otopriz"}, (toks(dist_part) if dist_part.strip() else toks(r.get("ad")))
             for L, D, IL in items:
                 if L and L <= nt and (not D or D <= place) and (not IL or IL & place or D):
                     r.setdefault("sk", []).append(ag); hit += 1
