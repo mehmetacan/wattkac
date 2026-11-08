@@ -1,0 +1,25 @@
+{
+  "name": "WattKaç · Şarj istasyonları ve kampanyalar",
+  "short_name": "WattKaç",
+  "description": "Yakınındaki elektrikli araç şarj istasyonları, fiyatlar ve banka/şarj ağı kampanyaları tek haritada.",
+  "lang": "tr",
+  "dir": "ltr",
+  "start_url": "./?kaynak=uygulama",
+  "scope": "./",
+  "id": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "background_color": "#0A1020",
+  "theme_color": "#ffffff",
+  "categories": ["navigation", "travel", "utilities"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Yakınımdaki istasyonlar", "short_name": "Harita", "url": "./", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Kampanyalar", "short_name": "Kampanyalar", "url": "./#g=kamp", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

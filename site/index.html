@@ -9,12 +9,19 @@
 <meta property="og:description" content="Hangi kartla hangi istasyonda ne kazanırsın? Güncel elektrikli araç şarj kampanyaları ve yakınındaki istasyonlar.">
 <meta property="og:image" content="logo.png">
 <meta name="theme-color" content="#ffffff">
-<link rel="icon" href="logo.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="WattKaç">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
-:root{--ac:#2563EB;--dc:#EA580C;--acdc:#7C3AED;--bg:#F6F7F9;--card:#fff;--card2:#F3F4F6;--line:#E5E7EB;--txt:#111827;--mut:#6B7280;--ink:#111827;--y:#FFC800;--g:#047857;--gbg:#ECFDF5;--gline:#A7F3D0;--r:#B91C1C;--rbg:#FEF2F2;--top:54px;--nav:62px;--sa:env(safe-area-inset-bottom,0px)}
+:root{--sat:env(safe-area-inset-top,0px);--ac:#2563EB;--dc:#EA580C;--acdc:#7C3AED;--bg:#F6F7F9;--card:#fff;--card2:#F3F4F6;--line:#E5E7EB;--txt:#111827;--mut:#6B7280;--ink:#111827;--y:#FFC800;--g:#047857;--gbg:#ECFDF5;--gline:#A7F3D0;--r:#B91C1C;--rbg:#FEF2F2;--top:calc(54px + var(--sat));--nav:62px;--sa:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box;margin:0;padding:0}
 [hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%}
@@ -28,7 +35,18 @@ button{-webkit-tap-highlight-color:transparent;cursor:pointer}
 
 /* Üst çubuk */
 :root{--nav:0px}
-.top{position:fixed;top:0;left:0;right:0;height:var(--top);z-index:1200;background:#fff;border-bottom:1px solid var(--line)}
+.top{position:fixed;top:0;left:0;right:0;height:var(--top);padding-top:var(--sat);z-index:1200;background:#fff;border-bottom:1px solid var(--line)}
+/* Uygulama hissi: seçim/vurgu yok, sayfa esnemesi yok, çentikli ekranlara uyum */
+html,body{overscroll-behavior:none}
+button,.top,.sheet .handle,.seg,.fab,.radius,.chip,.tabs{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.install{position:absolute;left:10px;right:10px;bottom:calc(var(--sheet-h) + 72px);z-index:1150;background:#111827;color:#fff;border-radius:16px;padding:12px 12px 12px 14px;display:flex;gap:10px;align-items:center;box-shadow:0 8px 24px rgba(17,24,39,.35)}
+.install img{width:40px;height:40px;border-radius:10px;flex:none}
+.install p{flex:1;min-width:0;font-size:13px;line-height:1.35;margin:0}
+.install p b{display:block;font-size:14.5px}
+.install .ok{background:var(--y);color:#111827;border:0;border-radius:10px;font:800 14px Inter,sans-serif;padding:9px 12px;white-space:nowrap}
+.install .x{background:none;border:0;color:#9CA3AF;font-size:20px;width:30px;height:30px;flex:none}
+.ios-share{display:inline-block;width:16px;height:16px;vertical-align:-3px;fill:none;stroke:currentColor;stroke-width:2}
+@media (display-mode: standalone){ .ig{display:none} }
 .topin{height:100%;display:flex;align-items:center;gap:8px;margin:0 auto;padding:0 10px}
 .brand{display:flex;align-items:center;gap:7px;font-weight:900;font-size:21px;letter-spacing:-.5px;flex:none;background:none;border:0;padding:4px 2px;color:var(--txt)}
 .brand b{color:#E0A100}
@@ -222,7 +240,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .credit{font-size:11px;color:var(--mut);text-align:center;padding:8px 0 2px}
 
 @media(min-width:900px){
-  :root{--top:58px}
+  :root{--top:calc(58px + var(--sat))}
   .sheet{left:12px;right:auto;top:12px;bottom:12px;width:390px;height:auto;border-radius:18px}
   .mapview[data-s] {--sheet-h:0px}
   .mapview[data-s=peek] .sh-b{display:block}
@@ -291,6 +309,11 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
     <button class="fab ov locbtn" id="loc" aria-label="Konumuma git"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg></button>
     <div class="ov cpin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6" fill="#fff"/></svg></div>
     <div class="ov mapmsg" id="mapmsg" hidden></div>
+    <div class="install" id="install" role="dialog" aria-label="Uygulamayı yükle" hidden>
+      <img src="icons/icon-192.png" alt="">
+      <p id="install-t"><b>WattKaç'ı ana ekrana ekle</b>Uygulama gibi tek dokunuşla açılır, hızlı yüklenir.</p>
+      <button class="ok" id="install-ok">Ekle</button><button class="x" id="install-x" aria-label="Kapat">✕</button>
+    </div>
     <div class="sheet" id="sheet">
       <button class="handle" id="handle" aria-label="Listeyi aç veya kapat"><span class="bar"></span><span class="sh-h" id="sh-h"></span></button>
       <div class="sh-b" id="sh-b"></div>
@@ -317,6 +340,11 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
       <div class="row"><input class="field" id="p-code" readonly aria-label="Profil kodu"><button class="btn" id="p-copy">Kopyala</button></div>
       <div class="row"><input class="field" id="p-in" placeholder="Başka cihazdaki kodu yapıştır" aria-label="Profil kodunu yapıştır" autocomplete="off"><button class="btn" id="p-apply">Uygula</button></div>
       <div id="pmsg" role="status" aria-live="polite"></div>
+    </div>
+    <div class="sec" id="p-app">
+      <h2>Uygulama olarak kullan</h2>
+      <p id="p-app-t">WattKaç'ı telefonunun ana ekranına ekleyerek uygulama gibi açabilirsin; mağazadan indirmen gerekmez.</p>
+      <div class="row"><button class="btn primary" id="p-install">Ana ekrana ekle</button></div>
     </div>
     <div class="row" style="margin-bottom:24px"><button class="btn danger" id="p-reset">Seçimlerimi sıfırla</button></div>
   </section>
@@ -563,7 +591,10 @@ function openMapFilters(open) {
 
 /* ---------- Görünümler ---------- */
 function show(v) {
+  const changed = S.view !== v;
   S.view = v;
+  if (changed && v !== "harita" && !S.pushed) { try { history.pushState(null, "", "#g=" + v); S.pushed = true; } catch {} }
+  if (v === "harita") S.pushed = false;
   ["kamp", "harita", "profil"].forEach(x => $("v-" + x).hidden = x !== v);
   $("back-map").hidden = v === "harita";
   $("to-kamp").hidden = v === "kamp";
@@ -1053,6 +1084,7 @@ function bindEvents() {
     else if (d.showunk) { M.f.tum = true; renderMap(); }
     else if (b.id === "more") { M.shown += PAGE; renderSheet(); }
     else if (d.sid) selectStation(d.sid);
+    else if (b.id === "back-map" && S.pushed) { S.pushed = false; history.back(); }
     else if (d.go) show(d.go);
   });
   document.addEventListener("change", e => { if (e.target.id === "m-tum") { M.f.tum = e.target.checked; M.shown = PAGE; renderMap(); } });
@@ -1129,6 +1161,45 @@ function bindEvents() {
 const currentView = () => ["kamp", "harita", "profil"].find(v => !$("v-" + v).hidden);
 function pmsg(t, bad = false) { const m = $("pmsg"); m.textContent = t; m.className = bad ? "bad" : ""; }
 
+/* ---------- Uygulama (PWA) ---------- */
+const IS_STANDALONE = () => matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+const IS_IOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+let installEvt = null;
+const IOS_TXT = `<b>Ana ekrana ekle</b>Safari'de alttaki <svg class="ios-share" viewBox="0 0 24 24"><path d="M12 3v12M7 8l5-5 5 5M5 12v8h14v-8"/></svg> Paylaş düğmesine, sonra «Ana Ekrana Ekle»ye dokun.`;
+function canInstall() { return !IS_STANDALONE() && (installEvt || IS_IOS); }
+async function doInstall() {
+  if (installEvt) {
+    installEvt.prompt();
+    const r = await installEvt.userChoice.catch(() => null); installEvt = null;
+    if (r && r.outcome === "accepted") { $("install").hidden = true; lsSet("wk.install", "kuruldu"); }
+    updateInstallUi(); return;
+  }
+  if (IS_IOS) { $("install-t").innerHTML = IOS_TXT; $("install-ok").hidden = true; $("install").hidden = false; }
+}
+function updateInstallUi() {
+  const ok = canInstall();
+  $("p-app").hidden = IS_STANDALONE();
+  $("p-install").hidden = !ok;
+  if (!ok && !IS_STANDALONE()) $("p-app-t").textContent = "Tarayıcının menüsünden «Ana ekrana ekle» ya da «Uygulamayı yükle» seçeneğiyle WattKaç'ı uygulama gibi kullanabilirsin.";
+}
+function initPwa() {
+  if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("sw.js").catch(() => {});
+  addEventListener("beforeinstallprompt", e => { e.preventDefault(); installEvt = e; updateInstallUi(); maybeShowInstall(); });
+  addEventListener("appinstalled", () => { $("install").hidden = true; lsSet("wk.install", "kuruldu"); updateInstallUi(); });
+  $("install-ok").onclick = doInstall; $("p-install").onclick = () => { show("harita"); doInstall(); };
+  $("install-x").onclick = () => { $("install").hidden = true; lsSet("wk.install", String(Date.now())); };
+  updateInstallUi();
+  setTimeout(maybeShowInstall, 20000);
+}
+// Yükleme önerisi: haritada 20 sn sonra, bir kez; kapatılırsa 14 gün sormaz
+function maybeShowInstall() {
+  if (!canInstall() || S.view !== "harita" || !$("install").hidden) return;
+  const v = lsGet("wk.install");
+  if (v === "kuruldu" || (v && Date.now() - +v < 14 * 864e5)) return;
+  if (IS_IOS && !installEvt) { $("install-t").innerHTML = IOS_TXT; $("install-ok").hidden = true; }
+  $("install").hidden = false;
+}
+
 /* ---------- Başlat ---------- */
 async function init() {
   readHash();
@@ -1150,6 +1221,7 @@ async function init() {
   if (!lsSet("wattkac.test", "1")) pmsg("Tarayıcın depolamaya izin vermiyor; seçimlerin yalnızca bu oturumda geçerli olur.", true);
   $("kamp-n").textContent = C.length;
   show(S.view);
+  initPwa();
 }
 document.addEventListener("DOMContentLoaded", init);
 </script>

@@ -22,3 +22,9 @@ Doğrulanamayan ağlar `null` kalır. Kopyalama komutuna `site/tarifeler.json` d
 ## İstasyon verisi (istasyonlar.json)
 `tools/istasyon_cek.py` Türkiye'deki tüm şarj istasyonlarını OpenStreetMap'ten çeker ve `site/istasyonlar.json` dosyasına yazar.
 `.github/workflows/istasyonlar.yml` bunu her gün 05:17'de çalıştırıp değişiklik varsa commit eder. Haritadaki arama önce bu dosyayı kullanır; dosya yoksa canlı Overpass'a düşer.
+
+## Uygulama olarak (PWA)
+`manifest.webmanifest`, `icons/` ve `sw.js` sitenin telefona "ana ekrana ekle" ile uygulama gibi kurulmasını sağlar.
+`sw.js` sayfayı ve veri dosyalarını önbelleğe alır (bağlantı yoksa son görülen veri açılır). `sw.js` içinde
+kabuk dosyaları değişirse `SURUM` değerini artır.
+GitHub Pages kopyası için: `cp -r site/index.html site/manifest.webmanifest site/sw.js site/icons docs/kampanyalar/`
