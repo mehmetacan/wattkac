@@ -879,10 +879,11 @@
    "media/2026-11/banka_on/hikaye.jpg"
   ],
   "aciklama": "",
-  "durum": "bekliyor",
+  "durum": "paylasildi",
   "deneme": 0,
-  "ig_media_id": null,
-  "hata": null
+  "ig_media_id": "18123678635291202",
+  "hata": null,
+  "paylasim_zamani": "2026-11-08T22:22:43+00:00"
  },
  {
   "id": "istasyon_varr_post",
