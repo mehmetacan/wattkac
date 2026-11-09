@@ -1,0 +1,47 @@
+[
+ {
+  "id": "istasyon_zes_post",
+  "grup": "2026-11-09__istasyon_zes",
+  "tip": "karusel",
+  "zaman": "2026-11-10T09:30:00+03:00",
+  "baslik": "ZES",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "ZES: %15 indirim",
+    "url": "https://zes.net/tr/kampanyalar/vodafonered",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ON Dijital: %20 iade",
+    "url": "https://on.com.tr/on-kredi-karti-elektrikli-arac-sarj-kampanyasi",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-09/istasyon_zes/1_kapak.jpg",
+   "media/2026-11-09/istasyon_zes/2_detay.jpg"
+  ],
+  "aciklama": "⚡ ZES: %15 indirim!\n\n✅ %15 indirim: Vodafone Red Premium ve Red Elite abonelerine · Happy'den alınan kodla (son gün 31 Aralık)\n\n💳 Banka kartıyla birleşince (100 TL'lik şarjda net maliyet):\n• Sadece Vodafone Red %15: 85 TL\n• + ON Kredi Kartı %20 iade: 68 TL\nTek kartla hesaplandı; ON iadesi 30 Kasım'a kadar, sonradan karta yansır, katılım ve 500 TL tavan geçerli. Zes kodu diğer Zes kampanyalarıyla birleşmez; ON iadesi bankanın kendi kampanyasıdır, kart koşullarını kontrol et.\n\nKart kampanyalarının tamamı ve geçerli istasyonlar banka postlarımızda.\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #zes",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "istasyon_zes_hikaye",
+  "grup": "2026-11-09__istasyon_zes",
+  "baslik": "ZES",
+  "tur": "istasyon",
+  "tip": "hikaye",
+  "zaman": "2026-11-10T10:30:00+03:00",
+  "gorseller": [
+   "media/2026-11-09/istasyon_zes/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ }
+]

@@ -1,0 +1,12 @@
+[
+ {
+  "id": "istasyon_zes",
+  "tur": "istasyon",
+  "baslik": "ZES",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ }
+]

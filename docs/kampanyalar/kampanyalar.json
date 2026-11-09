@@ -1,6 +1,6 @@
 {
   "donem": "Kasım 2026",
-  "guncelleme": "2026-11-07",
+  "guncelleme": "2026-11-09",
   "genel_kartlar": "Paraf Doğal · QNB · ON",
   "kampanyasiz_bankalar": [
     "İş Bankası (Maximum)"
@@ -385,6 +385,10 @@
         [
           "Ziraat Bankkart",
           "%20 Jest Lira"
+        ],
+        [
+          "VakıfBank Recycle Card",
+          "%20 indirim"
         ]
       ],
       "cover": {
@@ -451,6 +455,14 @@
         [
           "Ziraat Bankkart",
           "%20 Jest Lira"
+        ],
+        [
+          "VakıfBank kredi kartları",
+          "%20 indirim"
+        ],
+        [
+          "VakıfBank Recycle Card",
+          "%20 indirim"
         ]
       ],
       "cover": {
@@ -482,6 +494,50 @@
       }
     },
     {
+      "id": "zes",
+      "name": "ZES",
+      "own": [
+        {
+          "big": "%15 indirim",
+          "det": "Vodafone Red Premium ve Red Elite abonelerine · Happy'den alınan kodla",
+          "son": "31 Aralık",
+          "link": "https://zes.net/tr/kampanyalar/vodafonered",
+          "bas": "2026-02-16",
+          "bit": "2026-12-31",
+          "kosul": "Yalnızca bireysel Vodafone Red Premium (ayda 2 kez) ve Red Elite (ayda 3 kez) müşterileri, Zes üyesi olmalı (misafir kullanıcı hariç). Kod Vodafone Happy'den alınır; her şarjdan önce Zes uygulamasında Profil > Kampanyalar > Kampanya Kodu Ekle ile tanımlanır; kod tek kullanımlık. Zes'in halka açık AC, DC ve HPC istasyonları; Solarşarj hariç. Taksitli/kredili ödemeyle kullanılamaz, diğer kampanya ve hediye çekleriyle birleşmez; stoklarla sınırlı."
+        }
+      ],
+      "banks": [
+        [
+          "VakıfBank kredi kartları",
+          "%20 indirim"
+        ],
+        [
+          "VakıfBank Recycle Card",
+          "%20 indirim"
+        ]
+      ],
+      "cover": {
+        "big": "%15 indirim",
+        "sub": "Vodafone Red'e özel · ON kartla 100 TL'lik şarj 68 TL",
+        "son": "31 Aralık"
+      },
+      "birlesik": {
+        "baslik": "100 TL'lik şarjda net maliyet",
+        "satirlar": [
+          [
+            "Sadece Vodafone Red %15",
+            "85 TL"
+          ],
+          [
+            "+ ON Kredi Kartı %20 iade",
+            "68 TL"
+          ]
+        ],
+        "not": "Tek kartla hesaplandı; ON iadesi 30 Kasım'a kadar, sonradan karta yansır, katılım ve 500 TL tavan geçerli. Zes kodu diğer Zes kampanyalarıyla birleşmez; ON iadesi bankanın kendi kampanyasıdır, kart koşullarını kontrol et."
+      }
+    },
+    {
       "id": "voltrun",
       "name": "Voltrun",
       "own": [],
@@ -489,6 +545,14 @@
         [
           "Ziraat Bankkart",
           "%20 Jest Lira"
+        ],
+        [
+          "VakıfBank kredi kartları",
+          "%20 indirim"
+        ],
+        [
+          "VakıfBank Recycle Card",
+          "%20 indirim"
         ]
       ],
       "cover": {
@@ -1023,6 +1087,10 @@
         [
           "Garanti BBVA Bonus",
           "350 TL+ şarja 75 TL bonus"
+        ],
+        [
+          "VakıfBank Recycle Card",
+          "%20 indirim"
         ]
       ],
       "cover": {
