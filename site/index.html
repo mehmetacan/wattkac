@@ -670,6 +670,13 @@ function priceFor(net, mode) {
   if (!x) return null;
   const pick = k => {
     const p = x[k]; if (p === null || p === undefined) return null;
+    // Saate göre fiyat (ör. Shell Recharge DC: 22:00–04:59 ve 05:00–21:59): Türkiye saatine göre o anki fiyat gösterilir
+    if (Array.isArray(p.saatli) && p.saatli.length) {
+      const now = new Date(Date.now() + 3 * 3600e3), m = now.getUTCHours() * 60 + now.getUTCMinutes();
+      const mins = t => { const [h, mm] = t.split(":").map(Number); return h * 60 + mm; };
+      const cur = p.saatli.find(z => { const a = mins(z.bas), b = mins(z.bit); return a <= b ? m >= a && m < b : m >= a || m < b; }) || p.saatli[0];
+      return { v: cur.v, max: cur.v, min: cur.v, kind: k, range: false, tou: p.saatli, touNow: cur };
+    }
     const min = typeof p === "number" ? p : p.min, max = typeof p === "number" ? p : (p.max ?? p.min);
     // istasyonun kendi fiyatı bilinmiyorsa ağın açıkladığı en yüksek fiyat gösterilir (tek fiyat)
     return typeof min === "number" && typeof max === "number" ? { v: max, max, min, kind: k, range: max > min } : null;
@@ -1100,7 +1107,7 @@ function renderDetail(s) {
     .sort((a, b) => (b.tip === "ag") - (a.tip === "ag") || (P.banka.includes(b.kid)) - (P.banka.includes(a.kid)) || (campRate(b) || 0) - (campRate(a) || 0));
   const rows = [];
   if (s.price && s.price.own) rows.push(["Fiyat", `<b>${priceStr(s.price)}</b> <small>(${s.price.kind.toUpperCase()}, bu istasyonun fiyatı · ağın resmi sayfasından${s.prn ? " · " + esc(s.prn) : ""})</small>`]);
-  else if (s.price) rows.push(["Fiyat", `<b>${fmtNum(s.price.v)} TL/kWh</b> <small>(${s.price.kind.toUpperCase()} liste fiyatı${s.price.range ? `; ağ konuma göre ${fmtNum(s.price.min)}–${fmtNum(s.price.max)} arası fiyat uyguluyor, bu istasyonun fiyatı bilinmediği için en yüksek fiyat gösteriliyor` : ""}${pr && pr.gecerlilik ? ` · ${esc(dateTr(pr.gecerlilik))} tarihli` : ""}${pr && pr.kontrol ? ` · ${esc(dateTr(pr.kontrol))} tarihinde kontrol edildi` : ""}${pr && pr.kaynak ? ` · <a href="${esc(safeUrl(pr.kaynak))}" target="_blank" rel="noopener nofollow">resmi sayfa</a>` : ""})</small>`]);
+  else if (s.price) rows.push(["Fiyat", `<b>${fmtNum(s.price.v)} TL/kWh</b> <small>(${s.price.kind.toUpperCase()} liste fiyatı${s.price.tou ? `; saate göre değişir, şu an geçerli fiyat gösteriliyor: ${s.price.tou.map(z => `${esc(z.bas)}–${esc(z.etiket || z.bit)} ${fmtNum(z.v)} TL`).join(" · ")}` : ""}${s.price.range ? `; ağ konuma göre ${fmtNum(s.price.min)}–${fmtNum(s.price.max)} arası fiyat uyguluyor, bu istasyonun fiyatı bilinmediği için en yüksek fiyat gösteriliyor` : ""}${pr && pr.gecerlilik ? ` · ${esc(dateTr(pr.gecerlilik))} tarihli` : ""}${pr && pr.kontrol ? ` · ${esc(dateTr(pr.kontrol))} tarihinde kontrol edildi` : ""}${pr && pr.kaynak ? ` · <a href="${esc(safeUrl(pr.kaynak))}" target="_blank" rel="noopener nofollow">resmi sayfa</a>` : ""})</small>`]);
   const tur = s.hasAc && s.hasDc ? "AC ve DC" : s.hasDc ? "DC" : s.hasAc ? "AC" : "";
   if (tur || s.kw) rows.push(["Tür / güç", esc([tur, s.kw ? `${Math.round(s.kw)} kW` : ""].filter(Boolean).join(" · "))]);
   if (s.types.length) rows.push(["Soket", esc(s.types.join(", ")) + (s.count ? ` <small>(${s.count} araç)</small>` : "")]);
