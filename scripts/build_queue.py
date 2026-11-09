@@ -11,6 +11,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TZ = dt.timezone(dt.timedelta(hours=3))  # Europe/Istanbul (yaz saati uygulaması yok)
 SAATLER = [(9, 30), (13, 0), (19, 30)]
 ILK_GUN = [(9, 30), (10, 0), (13, 0), (19, 30)]
+REKLAM_YOK = "ℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz."
 HASHTAG = "#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac"
 
 
@@ -26,7 +27,7 @@ def caption(item, d):
         else:
             body = "\n".join(f"• {s['name']}: {s['cover']['big']} ({s['cover']['sub']})" for s in d["istasyonlar"])
             head = f"⚡ {d['donem']}: şarj ağlarında hangi kampanyalar var?"
-        return f"{head}\n\n{body}\n\nHer kurumun detayı ayrı postta. Kaydedin, şarj etmeden önce bakın.\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n{HASHTAG}"
+        return f"{head}\n\n{body}\n\nHer kurumun detayı ayrı postta. Kaydedin, şarj etmeden önce bakın.\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n{REKLAM_YOK}\n\n{HASHTAG}"
     if item["tur"] == "banka":
         b = item["_src"]
         lines = []
@@ -35,7 +36,7 @@ def caption(item, d):
             lines.append(f"✅ {o['big']}: {o['det']}\n📍 {st}\n📝 Katılım: {o['join']}\n⏱ Son gün: {o['son']}")
         return (f"⚡ {b['name']} ile şarjda {b['cover']['big']}!\n\n" + "\n\n".join(lines) +
                 f"\n\nKoşullar değişebilir; katılmadan önce bankanın resmi kanallarından kontrol edin."
-                f"\n\n{HASHTAG} {tag(b['name'])}")
+                f"\n\n{REKLAM_YOK}\n\n{HASHTAG} {tag(b['name'])}")
     s = item["_src"]
     lines = [f"✅ {o['big']}: {o['det']} (son gün {o['son']})" for o in s["own"]]
     bl = s.get("birlesik")
@@ -45,7 +46,7 @@ def caption(item, d):
         lines.append(bl.get("not", ""))
     lines.append("\nKart kampanyalarının tamamı ve geçerli istasyonlar banka postlarımızda.")
     return (f"⚡ {s['name']}: {s['cover']['big']}!\n\n" + "\n".join(lines) +
-            f"\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n{HASHTAG} {tag(s['name'])}")
+            f"\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n{REKLAM_YOK}\n\n{HASHTAG} {tag(s['name'])}")
 
 
 def resmi_mi(url):

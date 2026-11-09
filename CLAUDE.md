@@ -17,6 +17,9 @@ Bu depo @wattkac Instagram sayfasının kampanya verisini, görsellerini ve payl
   - Her satır tek bir kartla hesaplanır.
   - "Başka indirimle birleşmez" yazan kart kampanyaları (ör. Paraf Doğal) birleşik hesaba katılmaz.
 
+## Açıklama metni
+- Her gönderi ve Reels açıklamasında hashtag'lerden önce şu satır bulunur: "ℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz."
+
 ## Güvenlik
 - `onaylar/` klasörüne yazılmaz.
 - Paylaşım yapılmaz ve `YAYIN_AKTIF` değiştirilmez. Onay ve paylaşım yalnızca kullanıcının panelinden olur.
