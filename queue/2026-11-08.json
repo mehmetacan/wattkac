@@ -58,11 +58,12 @@
    "media/2026-11-08/istasyon_astor/hikaye.jpg"
   ],
   "aciklama": "",
-  "durum": "bekliyor",
+  "durum": "paylasildi",
   "deneme": 0,
-  "ig_media_id": null,
+  "ig_media_id": "18148980433531948",
   "hata": null,
-  "yalniz_hikaye": true
+  "yalniz_hikaye": true,
+  "paylasim_zamani": "2026-11-09T08:31:36+00:00"
  },
  {
   "id": "banka_vakifbank_post",
