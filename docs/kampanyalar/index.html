@@ -61,6 +61,7 @@ button,.top,.sheet .handle,.seg,.fab,.radius,.chip,.tabs{-webkit-user-select:non
 .upd{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--g);background:var(--gbg);border:1px solid var(--gline);border-radius:999px;padding:4px 10px;white-space:nowrap;margin-top:10px}
 .upd::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--g)}
 @media(max-width:360px){.tbtn.camp span{display:none}}
+@media(max-width:430px){body:not(.on-map) .tbtn.camp span{display:none}}
 
 /* Kampanyalar */
 .hero{padding:20px 0 4px}
@@ -268,6 +269,19 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .mc.mine{border-color:var(--g);background:var(--gbg)}
 .dir{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;margin-top:12px;color:var(--ink)}
 .credit{font-size:11px;color:var(--mut);text-align:center;padding:8px 0 2px}
+.stn .sub{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.src{margin:12px 0 4px;font-size:12.5px;color:var(--mut)}
+.src summary{cursor:pointer;font-weight:700;list-style:none}.src summary::-webkit-details-marker{display:none}
+.src p{margin:6px 0 0;line-height:1.45}.src a{color:inherit}
+.dlinks{display:flex;justify-content:space-between;gap:10px;margin-top:10px;font-size:13px}
+.dlinks button{background:none;border:0;padding:6px 0;font:700 13px Inter,sans-serif;color:var(--mut);text-decoration:underline;text-underline-offset:3px}
+.fb label{display:block;font-weight:700;font-size:14px;margin:14px 0 6px}
+.fb textarea,.fb input[type=text],.fb input[type=email]{width:100%;background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:12px;font:15px Inter,sans-serif}
+.fb textarea{min-height:130px;resize:vertical}
+.fb .hp{position:absolute;left:-5000px;width:1px;height:1px;overflow:hidden}
+.fb .ctx{background:var(--card2);border-radius:10px;padding:8px 10px;font-size:13px;margin-top:10px}
+.linkbtn{background:none;border:0;padding:8px 0 0;font:700 13px Inter,sans-serif;color:var(--txt);text-decoration:underline;text-underline-offset:3px}
+.fbmsg{margin-top:12px;font-weight:700}.fbmsg.ok{color:var(--g)}.fbmsg.err{color:var(--r)}
 
 @media(min-width:900px){
   :root{--top:calc(58px + var(--sat))}
@@ -324,6 +338,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
     <footer>
       Bilgiler bankaların ve şarj ağlarının duyurularından derlenir; koşullar değişebilir. Kampanyaya katılmadan önce kampanya sahibinin resmi kanallarından kontrol edin.
       Her kampanya, kampanyayı yapan banka veya şarj ağının kendi sayfasında doğrulanır ve bağlantı o sayfaya gider. WattKaç hiçbir banka veya şarj ağıyla bağlantılı değildir.
+      <br><button class="linkbtn" data-go="geri">Geri bildirim gönder</button>
     </footer>
   </section>
 
@@ -348,6 +363,29 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
       <button class="handle" id="handle" aria-label="Listeyi aç veya kapat"><span class="bar"></span><span class="sh-h" id="sh-h"></span></button>
       <div class="sh-b" id="sh-b"></div>
     </div>
+  </section>
+
+  <!-- GERİ BİLDİRİM -->
+  <section id="v-geri" class="view wrap" aria-label="Geri bildirim" hidden>
+    <div class="hero"><h1>Bir şey mi <em>yanlış</em>?</h1><p class="lead">Eksik istasyon, yanlış fiyat, hata ya da öneri; yaz, düzeltelim.</p></div>
+    <form class="sec fb" id="fb" novalidate>
+      <div class="chips" id="fb-tur" role="group" aria-label="Konu">
+        <button type="button" class="chip" data-fbt="fiyat" aria-pressed="false">Yanlış fiyat</button>
+        <button type="button" class="chip" data-fbt="istasyon" aria-pressed="false">İstasyon / konum</button>
+        <button type="button" class="chip" data-fbt="kampanya" aria-pressed="false">Kampanya</button>
+        <button type="button" class="chip" data-fbt="hata" aria-pressed="false">Site hatası</button>
+        <button type="button" class="chip" data-fbt="oneri" aria-pressed="false">Öneri</button>
+      </div>
+      <div class="ctx" id="fb-ctx" hidden></div>
+      <label for="fb-m">Mesajın</label>
+      <textarea id="fb-m" maxlength="2000" required placeholder="Ne gördün, ne olmalıydı?"></textarea>
+      <label for="fb-c">E-posta <small style="color:var(--mut);font-weight:500">(isteğe bağlı, yanıt istersen)</small></label>
+      <input type="email" id="fb-c" maxlength="120" autocomplete="email" inputmode="email">
+      <div class="hp" aria-hidden="true"><input type="text" id="fb-w" tabindex="-1" autocomplete="off"></div>
+      <div class="row"><button class="btn primary" id="fb-go" type="submit">Gönder</button></div>
+      <div class="fbmsg" id="fb-msg" role="status" aria-live="polite"></div>
+    </form>
+    <p class="note">Ad, plaka, kart numarası gibi kişisel bilgi yazma. Mesajın yalnızca siteyi düzeltmek için kullanılır.</p>
   </section>
 
   <!-- PROFİL -->
@@ -375,6 +413,11 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
       <h2>Uygulama olarak kullan</h2>
       <p id="p-app-t">WattKaç'ı telefonunun ana ekranına ekleyerek uygulama gibi açabilirsin; mağazadan indirmen gerekmez.</p>
       <div class="row"><button class="btn primary" id="p-install">Ana ekrana ekle</button></div>
+    </div>
+    <div class="sec">
+      <h2>Geri bildirim</h2>
+      <p>Eksik istasyon, yanlış fiyat ya da bir hata mı gördün? Bize yaz.</p>
+      <div class="row"><button class="btn primary" data-go="geri">Geri bildirim gönder</button></div>
     </div>
     <div class="row" style="margin-bottom:24px"><button class="btn danger" id="p-reset">Seçimlerimi sıfırla</button></div>
   </section>
@@ -534,7 +577,7 @@ function readHash() {
   ["banka", "ag", "tip"].forEach(k => S[k] = new Set((p.get(k) || "").split(",").filter(Boolean)));
   S.q = p.get("q") || ""; S.sort = p.get("sirala") || "son";
   S.bana = p.get("bana") === "1" ? true : p.get("bana") === "0" ? false : null;
-  S.view = ["kamp", "harita", "profil"].includes(p.get("g")) ? p.get("g") : "harita";
+  S.view = ["kamp", "harita", "profil", "geri"].includes(p.get("g")) ? p.get("g") : "harita";
 }
 function writeHash() {
   const p = new URLSearchParams();
@@ -625,14 +668,40 @@ function show(v) {
   S.view = v;
   if (changed && v !== "harita" && !S.pushed) { try { history.pushState(null, "", "#g=" + v); S.pushed = true; } catch {} }
   if (v === "harita") S.pushed = false;
-  ["kamp", "harita", "profil"].forEach(x => $("v-" + x).hidden = x !== v);
+  ["kamp", "harita", "profil", "geri"].forEach(x => $("v-" + x).hidden = x !== v);
   $("back-map").hidden = v === "harita";
   $("to-kamp").hidden = v === "kamp";
   document.body.classList.toggle("on-map", v === "harita");
   window.scrollTo(0, 0);
   if (v === "harita") openMap();
   if (v === "profil") renderProfile();
+  if (v === "geri") openFeedback();
   writeHash();
+}
+
+/* ---------- Geri bildirim ---------- */
+const FB = { tur: "", ctx: "", t0: 0 };
+function drawFbTur() { document.querySelectorAll("[data-fbt]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.fbt === FB.tur))); }
+function openFeedback() {
+  FB.t0 = Date.now(); drawFbTur();
+  const c = $("fb-ctx"); c.hidden = !FB.ctx; c.textContent = FB.ctx ? "İstasyon: " + FB.ctx : "";
+  $("fb-msg").textContent = ""; $("fb-msg").className = "fbmsg";
+}
+async function sendFeedback(e) {
+  e.preventDefault();
+  const msg = $("fb-msg"), m = $("fb-m").value.trim(), btn = $("fb-go");
+  if (m.length < 5) { msg.className = "fbmsg err"; msg.textContent = "Lütfen birkaç kelimeyle anlat."; $("fb-m").focus(); return; }
+  btn.disabled = true; msg.className = "fbmsg"; msg.textContent = "Gönderiliyor…";
+  try {
+    const r = await fetch("/api/geri-bildirim", { method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ tur: FB.tur || "diger", mesaj: m, iletisim: $("fb-c").value.trim(), istasyon: FB.ctx ? FB.ctx + (FB.sid ? " [" + FB.sid + "]" : "") : "", sayfa: location.pathname, web: $("fb-w").value, sure: Date.now() - FB.t0 }) });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok || !j.ok) throw new Error(j.hata || r.status);
+    msg.className = "fbmsg ok"; msg.textContent = "Teşekkürler, aldık!";
+    $("fb-m").value = ""; FB.ctx = ""; FB.tur = ""; drawFbTur(); $("fb-ctx").hidden = true;
+  } catch {
+    msg.className = "fbmsg err"; msg.textContent = "Gönderilemedi. Biraz sonra tekrar dene.";
+  } finally { btn.disabled = false; }
 }
 
 /* ---------- Harita ---------- */
@@ -1031,8 +1100,7 @@ function renderSheet() {
     h.innerHTML = `<b>Şarj istasyonları</b>`;
     b.innerHTML = `<p class="note">İstasyonlar yükleniyor…</p>`; return;
   }
-  const sortTxt = { yakin: "yakından uzağa", ucuz: "ucuzdan pahalıya", pahali: "pahalıdan ucuza", guc: "güce göre", kamp: "kartınla en ucuz" }[M.sort];
-  h.innerHTML = `<span><b>${M.view.length}</b> istasyon · ${M.radius} km içinde · ${sortTxt}</span>`;
+  h.innerHTML = `<span><b>${M.view.length}</b> istasyon · ${M.radius} km</span>`;
   const hidden = M.f.tum ? 0 : M.cnt.unk || 0;
   const srt = [["yakin", "En yakın"], ["ucuz", "En ucuz"], ...(P.banka.length ? [["kamp", "Kartımla en ucuz"]] : []), ["guc", "En güçlü"], ["pahali", "En pahalı"]];
   if (M.sort === "kamp" && !P.banka.length) M.sort = "ucuz";
@@ -1040,10 +1108,8 @@ function renderSheet() {
   let html = M.view.slice(0, M.shown).map(stationItem).join("");
   if (M.view.length > M.shown) html += `<button class="btn more" id="more">Daha fazla göster (${M.view.length - M.shown})</button>`;
   if (!M.view.length) html = `<p class="note">Dairenin içinde bu filtrelerle istasyon yok. Haritayı kaydır ya da çapı büyüt.</p>`;
-  else html = `<p class="note" style="margin:0 2px 8px">Liste haritanın ortasındaki mavi işaretin çevresini gösterir; haritayı kaydırarak yeri, çubukla çapı değiştir.</p>` + html;
   if (hidden) html += `<button class="btn more" data-showunk="1">Tanımsız ${hidden} istasyonu da göster</button>`;
-  html += `<p class="note">Fiyat: istasyonun kendi fiyatı biliniyorsa o, bilinmiyorsa ağın açıkladığı en yüksek fiyat gösterilir. İndirimli fiyat yalnızca kampanya listesinde olduğu kesin bilinen istasyonlarda yazılır. Kart kampanyaları fiyata eklenmez, istasyon detayında görünür${P.banka.length ? "; «Kartımla en ucuz» sıralamasında Profilim'deki kartlarının kampanyası uygulanır (puan/bonus TL karşılığıyla)" : ""}.</p>`;
-  b.innerHTML = sortbar + html + `<div class="credit">Harita ve istasyon verisi: EPDK, ağların resmi haritaları, © OpenStreetMap, © Open Charge Map (CC BY 4.0)</div>`;
+  b.innerHTML = sortbar + html + `<div class="credit">Veri: EPDK, ağların resmi haritaları, © OpenStreetMap, © Open Charge Map</div>`;
 }
 // Bilinen ağların tanıtıcı renkleri ve kısaltmaları (logo yerine). Renkler yaklaşık; kolayca değiştirilebilir.
 const BRAND = {
@@ -1070,7 +1136,7 @@ const pretty = n => n && n === n.toLocaleLowerCase("tr") ? n.charAt(0).toLocaleU
 function stationItem(s) {
   const tb = typeBadge(s);
   const head = pretty(s.brand) || s.name;
-  const sub = [s.brand && s.named && s.name !== s.brand ? `<b>${esc(s.name)}</b>` : "", esc(s.addr || "")].filter(Boolean).join(" · ");
+  const sub = s.brand && s.named && s.name !== s.brand ? esc(s.name) : "";
   // Her istasyonda tek fiyat: "Kartımla en ucuz" sıralamasında kartlı fiyat, aksi hâlde istasyon fiyatı (indirim kesinse indirimli)
   const useCard = M.sort === "kamp" && s.deal;
   const v = useCard ? s.deal.v : s.final;
@@ -1079,8 +1145,8 @@ function stationItem(s) {
   return `<button class="stn ${s.id === M.sel ? "sel" : ""}" data-sid="${esc(s.id)}">
     <div class="r1"><span class="nm">${brandStyle(s) ? `<span class="bdot" style="background:${brandStyle(s)[0]}"></span>` : ""}${esc(head)}</span><span class="ds">${fmtKm(s.d)}</span></div>
     ${sub ? `<div class="sub">${sub}</div>` : ""}
-    <div class="r2">${tb ? `<span class="pill ${s.hasDc ? "dc" : "ac"}">${tb}</span>` : ""}${s.kw ? `<span class="pill">${Math.round(s.kw)} kW</span>` : ""}${price}
-      ${s.camp.length && !s.net && !useCard ? `<span class="tag camp">${s.camp.length} kampanya</span>` : ""}${stationMine(s.brand) ? `<span class="tag me">Sana uyuyor</span>` : ""}</div>
+    <div class="r2">${tb || s.kw ? `<span class="pill ${tb ? (s.hasDc ? "dc" : "ac") : ""}">${[tb, s.kw ? Math.round(s.kw) + " kW" : ""].filter(Boolean).join(" · ")}</span>` : ""}${price}
+      ${s.camp.length && !s.net && !useCard ? `<span class="tag camp">${s.camp.length} kampanya</span>` : ""}</div>
   </button>`;
 }
 function renderDetail(s) {
@@ -1108,27 +1174,39 @@ function renderDetail(s) {
   const here = [...s.camp.filter(c => !s.viaShell.includes(c)), ...general.filter(c => !s.camp.includes(c))]
     .sort((a, b) => (b.tip === "ag") - (a.tip === "ag") || (P.banka.includes(b.kid)) - (P.banka.includes(a.kid)) || (campRate(b) || 0) - (campRate(a) || 0));
   const rows = [];
-  if (s.price && s.price.own) rows.push(["Fiyat", `<b>${priceStr(s.price)}</b> <small>(${s.price.kind.toUpperCase()}, bu istasyonun fiyatı · ağın resmi sayfasından${s.prn ? " · " + esc(s.prn) : ""})</small>`]);
-  else if (s.price) rows.push(["Fiyat", `<b>${fmtNum(s.price.v)} TL/kWh</b> <small>(${s.price.kind.toUpperCase()} liste fiyatı${s.price.tou ? `; bu istasyonda gece tarifesi var, şu an geçerli fiyat gösteriliyor: ${s.price.tou.map(z => `${esc(z.bas)}–${esc(z.etiket || z.bit)} ${fmtNum(z.v)} TL`).join(" · ")}` : ""}${s.price.range ? `; ağ konuma göre ${fmtNum(s.price.min)}–${fmtNum(s.price.max)} arası fiyat uyguluyor, bu istasyonun fiyatı bilinmediği için en yüksek fiyat gösteriliyor` : ""}${pr && pr.gecerlilik ? ` · ${esc(dateTr(pr.gecerlilik))} tarihli` : ""}${pr && pr.kontrol ? ` · ${esc(dateTr(pr.kontrol))} tarihinde kontrol edildi` : ""}${pr && pr.kaynak ? ` · <a href="${esc(safeUrl(pr.kaynak))}" target="_blank" rel="noopener nofollow">resmi sayfa</a>` : ""})</small>`]);
+  // Fiyat satırı kısa; nereden geldiği ve nasıl hesaplandığı alttaki "Fiyat kaynağı" bölümünde
+  const srcTxt = [];
+  if (s.price && s.price.own) {
+    rows.push(["Fiyat", `<b>${priceStr(s.price)}</b> <small>${s.price.kind.toUpperCase()}</small>`]);
+    srcTxt.push(`Bu istasyonun fiyatı, ağın resmi sayfasından${s.prn ? " (" + esc(s.prn) + ")" : ""}.`);
+  } else if (s.price) {
+    const gece = s.price.tou ? s.price.tou.filter(z => z.v !== s.price.v).map(z => `${esc(z.bas)}–${esc(z.etiket || z.bit)} ${fmtNum(z.v)}`).join(" · ") : "";
+    rows.push(["Fiyat", `<b>${fmtNum(s.price.v)} TL/kWh</b> <small>${s.price.kind.toUpperCase()}${gece ? ` · ${gece}` : ""}</small>`]);
+    srcTxt.push(s.price.range ? `Ağ konuma göre ${fmtNum(s.price.min)}–${fmtNum(s.price.max)} TL arası fiyat uyguluyor; bu istasyonun fiyatı bilinmediği için en yüksek fiyat gösteriliyor.` : "Ağın liste fiyatı.");
+    if (s.price.tou) srcTxt.push("Bu istasyonda saate göre tarife var; şu an geçerli fiyat gösteriliyor.");
+    if (pr && (pr.gecerlilik || pr.kontrol)) srcTxt.push([pr.gecerlilik ? `${esc(dateTr(pr.gecerlilik))} tarihli` : "", pr.kontrol ? `${esc(dateTr(pr.kontrol))} tarihinde kontrol edildi` : ""].filter(Boolean).join(", ") + ".");
+    if (pr && pr.kaynak) srcTxt.push(`<a href="${esc(safeUrl(pr.kaynak))}" target="_blank" rel="noopener nofollow">Resmi fiyat sayfası ↗</a>`);
+  }
   const tur = s.hasAc && s.hasDc ? "AC ve DC" : s.hasDc ? "DC" : s.hasAc ? "AC" : "";
   if (tur || s.kw) rows.push(["Tür / güç", esc([tur, s.kw ? `${Math.round(s.kw)} kW` : ""].filter(Boolean).join(" · "))]);
   if (s.types.length) rows.push(["Soket", esc(s.types.join(", ")) + (s.count ? ` <small>(${s.count} araç)</small>` : "")]);
   if (s.addr) rows.push(["Adres", esc(s.addr)]);
-  if (s.tesis) rows.push(["Konum", `${esc(s.tesis)} <small>(adresteki tesisin OpenStreetMap konumu)</small>`]);
   if (t.opening_hours) rows.push(["Saatler", esc(t.opening_hours)]);
   const web = /^https?:\/\//i.test(t.website || t["contact:website"] || "") ? (t.website || t["contact:website"]) : "";
   if (web) rows.push(["Web", `<a href="${esc(safeUrl(web))}" target="_blank" rel="noopener nofollow">Site ↗</a>`]);
   $("sh-b").innerHTML = `<div class="dn">${esc(pretty(s.brand) || s.name)}</div><div class="alt">${esc(s.brand && s.named && s.name !== s.brand ? s.name + " · " : "")}${fmtKm(s.d)} uzakta</div>
     ${s.net ? `<p class="eff" style="font-size:15px">İndirimli fiyat: ${fmtNum(s.net.v)} TL/kWh · ${esc(s.net.c.kurum)} ${esc(s.net.c.big)} (bu istasyon kampanya listesinde)</p>` : ""}
     ${s.pasif ? `<p class="note" style="color:var(--r)">Bu istasyon ağın kendi haritasında şu an pasif görünüyor; gitmeden önce uygulamadan kontrol et.</p>` : ""}
-    ${s.approx ? `<p class="note">Konum yaklaşık: adres EPDK kaydından alındı, tam nokta doğrulanmadı.</p>` : ""}
+    ${s.approx ? `<p class="note">Konum yaklaşık; gitmeden adresi kontrol et.</p>` : ""}
     ${rows.length ? `<dl class="kv">${rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>` : ""}
     ${here.length ? `<div class="lbl" style="margin-top:12px">Bu istasyonda geçerli kampanyalar · ${here.length}</div><div class="cmps">${here.map(mc).join("")}</div>` : ""}
-    ${s.shellTrugo ? `<div class="shellbox"><b>Shell istasyonundaki Trugo.</b> Trugo–Shell iş birliği kapsamında bu cihazda <b>Shell Recharge</b> uygulamasıyla da şarj başlatılabilir; uygulamadaki haritadan istasyonu kontrol et.
-      Shell Recharge ile ödemede geçerli kampanyalar aşağıdadır. <b>Uyarı:</b> Togg sahiplerine özel Trugo indirimi yalnızca Trugo uygulamasında geçerlidir; Shell Recharge ile şarjda kullanılamaz, iki uygulamanın avantajları birleşmez.</div>
+    ${s.shellTrugo ? `<div class="shellbox"><b>Shell istasyonundaki Trugo:</b> Shell Recharge uygulamasıyla da şarj başlatılabilir. Togg'a özel Trugo indirimi Shell Recharge'da geçmez.</div>
       ${s.viaShell.length ? `<div class="lbl">Shell Recharge uygulamasıyla</div><div class="cmps">${s.viaShell.map(mc).join("")}</div>` : ""}` : ""}
     <a class="btn primary dir" href="https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lon}" target="_blank" rel="noopener">Yol tarifi al</a>
-    <div class="credit">${s.official ? "İstasyon bilgisi ağın kendi resmi haritasından alınır; günde bir kez güncellenir." : "Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map katkıda bulunanlarından gelir; eksik ya da eski olabilir."}</div>`;
+    <details class="src"><summary>Bilgi kaynağı ›</summary>${srcTxt.map(x => `<p>${x}</p>`).join("")}
+      <p>${s.official ? "İstasyon bilgisi ağın kendi resmi haritasından, günde bir kez güncellenir." : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
+      ${s.net ? `<p>İndirimli fiyat yalnızca kampanya listesinde olduğu kesin bilinen istasyonlarda yazılır. Kart kampanyaları fiyata eklenmez.</p>` : ""}</details>
+    <div class="dlinks"><button data-fbs="${esc(s.id)}">Bu istasyonda hata bildir</button></div>`;
   $("sh-b").scrollTop = 0;
 }
 function selectStation(id, pan = true) {
@@ -1168,10 +1246,13 @@ function bindEvents() {
     else if (b.id === "more") { M.shown += PAGE; renderSheet(); }
     else if (d.sid) selectStation(d.sid);
     else if (b.id === "back-map" && S.pushed) { S.pushed = false; history.back(); }
+    else if (d.fbt) { FB.tur = FB.tur === d.fbt ? "" : d.fbt; drawFbTur(); }
+    else if (d.fbs) { const st = M.byId.get(d.fbs); FB.ctx = st ? [pretty(st.brand) || "", st.name, st.addr].filter(Boolean).join(" · ") : ""; FB.sid = st ? st.id : ""; FB.tur = FB.tur || "istasyon"; show("geri"); }
     else if (d.go) show(d.go);
   });
   document.addEventListener("change", e => { if (e.target.id === "m-tum") { M.f.tum = e.target.checked; M.shown = PAGE; renderMap(); } });
   $("open-f").onclick = () => openFilters(true);
+  $("fb").onsubmit = sendFeedback;
   $("mf-open").onclick = () => openMapFilters(true);
   $("fs-x").onclick = $("fs-ok").onclick = $("mfs-x").onclick = $("mfs-ok").onclick = $("bd").onclick = () => closeSheets();
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheets(); });

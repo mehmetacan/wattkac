@@ -11,7 +11,11 @@
     "directory": "./site",
     "binding": "ASSETS",
     "run_worker_first": true
-  }
+  },
+  // Geri bildirim formu kayıtları (worker/index.js → /api/geri-bildirim)
+  "d1_databases": [
+    { "binding": "DB", "database_name": "wattkac-geri-bildirim", "database_id": "d33da3c0-3f38-4200-8bfc-78ab66f7385d" }
+  ]
   ,"routes": [
     { "pattern": "wattkac.com", "custom_domain": true },
     { "pattern": "www.wattkac.com", "custom_domain": true }
