@@ -1,16 +1,17 @@
-// Cloudflare Workers ayarı: site/ klasörü statik olarak sunulur, worker/index.js yalnızca alan adı yönlendirmesi yapar.
+// Cloudflare Workers ayarı: site/ klasörü statik olarak sunulur; worker/index.js yalnızca /api/* (geri bildirim, analiz, panel) ve alan adı yönlendirmesi içindir.
 {
   "name": "wattkac",
   "main": "worker/index.js",
   "compatibility_date": "2025-09-01",
   "workers_dev": true,
   "build": {
-    "command": "cp data/kampanyalar.json site/kampanyalar.json"
+    "command": "cp data/kampanyalar.json site/kampanyalar.json && python3 tools/seo_sayfalar.py"
   },
   "assets": {
     "directory": "./site",
     "binding": "ASSETS",
-    "run_worker_first": true
+    // Ücretsiz plan: worker yalnızca /api/* için çalışır; sayfalar ve dosyalar doğrudan sunulur (worker isteği sayılmaz)
+    "run_worker_first": ["/api/*"]
   },
   // Geri bildirim formu kayıtları (worker/index.js → /api/geri-bildirim)
   "d1_databases": [

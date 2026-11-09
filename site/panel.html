@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>WattKaç Panel</title>
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F6F7F9;--card:#fff;--line:#E5E7EB;--txt:#111827;--mut:#6B7280;--faint:#9CA3AF;--y:#FFC800;--bar:#2563EB;--bar2:#BFDBFE;--g:#047857;--gbg:#ECFDF5;--r:#B91C1C;--rbg:#FEF2F2;--amb:#92400E;--abg:#FFFBEB}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0B0F17;--card:#111827;--line:#1F2937;--txt:#F3F4F6;--mut:#9CA3AF;--faint:#6B7280;--bar:#60A5FA;--bar2:#1E3A8A;--g:#34D399;--gbg:#052E1F;--r:#F87171;--rbg:#2A0E0E;--amb:#FBBF24;--abg:#2A1F05}}
+:root[data-theme=dark]{--bg:#0B0F17;--card:#111827;--line:#1F2937;--txt:#F3F4F6;--mut:#9CA3AF;--faint:#6B7280;--bar:#60A5FA;--bar2:#1E3A8A;--g:#34D399;--gbg:#052E1F;--r:#F87171;--rbg:#2A0E0E;--amb:#FBBF24;--abg:#2A1F05}
+*{box-sizing:border-box;margin:0;padding:0}[hidden]{display:none!important}
+body{background:var(--bg);color:var(--txt);font:14px/1.5 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:0 16px 40px}
+.wrap{max-width:1080px;margin:0 auto}
+header{display:flex;align-items:center;gap:10px;padding:16px 0}
+header h1{font-size:18px;font-weight:800;letter-spacing:-.2px}header h1 b{color:#E0A100}
+.sp{flex:1}
+button,select,input{font:inherit;color:inherit}
+.btn{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-weight:700;cursor:pointer}
+.btn.pri{background:var(--y);border-color:var(--y);color:#111827}
+.seg{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:3px}
+.seg button{border:0;background:none;padding:5px 10px;border-radius:7px;font-weight:700;color:var(--mut);cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--txt);color:var(--bg)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+h2{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--mut);margin-bottom:10px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+.kpi .v{font-size:26px;font-weight:800;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
+.kpi .l{color:var(--mut);font-weight:600;font-size:12.5px}
+.kpi .s{color:var(--faint);font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px;margin-bottom:12px}
+.chart{position:relative;margin-bottom:12px}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart .ax{fill:var(--faint);font-size:11px}
+.chart .gl{stroke:var(--line);stroke-width:1}
+.chart rect.b{fill:var(--bar)}.chart rect.b2{fill:var(--bar2)}
+.chart rect.hit{fill:transparent;cursor:default}
+.chart g.col:hover rect.b{opacity:.8}
+.tip{position:absolute;pointer-events:none;background:var(--txt);color:var(--bg);border-radius:8px;padding:6px 9px;font-size:12px;font-weight:600;white-space:nowrap;transform:translate(-50%,-110%)}
+.leg{display:flex;gap:14px;color:var(--mut);font-size:12px;margin-top:6px}.leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.rows{list-style:none}
+.rows li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;padding:5px 0}
+.rows .n{font-weight:700;font-variant-numeric:tabular-nums}
+.rows .k{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rows .bar{grid-column:1/-1;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.rows .bar span{display:block;height:100%;background:var(--bar);border-radius:3px}
+.empty{color:var(--faint);font-size:13px;padding:6px 0}
+.fb{list-style:none}
+.fb li{border-top:1px solid var(--line);padding:12px 0}.fb li:first-child{border-top:0}
+.fb .m{white-space:pre-wrap;word-break:break-word;margin:4px 0}
+.fb .meta{color:var(--mut);font-size:12px;display:flex;flex-wrap:wrap;gap:4px 10px}
+.tag{display:inline-block;border-radius:6px;padding:1px 7px;font-size:11.5px;font-weight:800}
+.tag.yeni{background:var(--abg);color:var(--amb)}.tag.okundu{background:var(--line);color:var(--mut)}.tag.cozuldu{background:var(--gbg);color:var(--g)}
+.fb .act{display:flex;gap:6px;margin-top:6px}.fb .act .btn{padding:4px 9px;font-size:12.5px}
+.login{max-width:360px;margin:12vh auto 0}
+.login input{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px;margin:10px 0}
+.err{color:var(--r);font-weight:600;font-size:13px;margin-top:6px}
+.lim{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--mut)}
+.lim b{color:var(--txt)}
+.note{color:var(--faint);font-size:12px;margin-top:14px}
+table.tv{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:8px}table.tv td,table.tv th{border-bottom:1px solid var(--line);padding:4px 6px;text-align:right}table.tv th:first-child,table.tv td:first-child{text-align:left}
+details.tvw summary{cursor:pointer;color:var(--mut);font-size:12px;font-weight:600;margin-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1>Watt<b>Kaç</b> · Panel</h1><span class="sp"></span><button class="btn" id="out" hidden>Çıkış</button></header>
+
+  <form class="card login" id="login" hidden>
+    <h2>Operatör girişi</h2>
+    <label for="pw" style="font-weight:600">Panel şifresi</label>
+    <input type="password" id="pw" autocomplete="current-password" required>
+    <button class="btn pri" type="submit" style="width:100%">Giriş</button>
+    <div class="err" id="lerr" role="alert"></div>
+  </form>
+
+  <main id="app" hidden>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+      <div class="seg" id="per" role="group" aria-label="Dönem"><button data-g="7">7 gün</button><button data-g="30">30 gün</button><button data-g="90">90 gün</button></div>
+      <span class="sp"></span><span style="color:var(--mut);font-size:12.5px" id="per-t"></span>
+      <button class="btn" id="yenile">Yenile</button>
+    </div>
+
+    <div class="kpis" id="kpis"></div>
+
+    <div class="card chart" id="ch">
+      <h2>Günlük ziyaret</h2>
+      <div id="chsvg"></div>
+      <div class="leg"><span><i style="background:var(--bar)"></i>Ziyaret (sayfa açılışı)</span><span><i style="background:var(--bar2)"></i>Tekil ziyaretçi</span></div>
+      <details class="tvw"><summary>Tablo olarak göster</summary><div id="chtab"></div></details>
+    </div>
+
+    <div class="grid" id="lists"></div>
+
+    <div class="card" style="margin-bottom:12px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><h2 style="margin:0">Geri bildirimler</h2><span class="sp"></span>
+        <div class="seg" id="fbf"><button data-f="acik" aria-pressed="true">Açık</button><button data-f="tum" aria-pressed="false">Tümü</button></div></div>
+      <ul class="fb" id="fb"></ul>
+    </div>
+
+    <div class="card lim" id="lim"></div>
+    <p class="note">Analiz çerezsizdir: kimlik, IP ya da konum kaydedilmez; yalnızca gün başına olay sayaçları tutulur. "Tekil ziyaretçi" her gün o cihazdan ilk açılıştır; dönem toplamı aynı kişiyi her gün yeniden sayar.</p>
+  </main>
+</div>
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const fmt = n => Number(n || 0).toLocaleString("tr-TR");
+const ST = { gun: 30, f: "acik" };
+const BASLIK = { kaynak: "Nereden geldiler", cihaz: "Cihaz", uygulama: "Nasıl açtılar", gorunum: "Açılan sayfa", istasyon: "Detayı açılan ağlar",
+  kampanya: "Tıklanan kampanyalar (kurum)", yol_tarifi: "Yol tarifi (ağ)", filtre: "Kullanılan filtreler", siralama: "Sıralama seçimi",
+  konum: "Konum izni", geri_bildirim: "Geri bildirim konusu", kurulum: "Ana ekrana ekleme", seo_sayfa: "Google sayfaları (statik)" };
+const SIRALAMA = { yakin: "En yakın", ucuz: "En ucuz", pahali: "En pahalı", guc: "En güçlü", kamp: "Kartımla en ucuz" };
+const FBTUR = { fiyat: "Yanlış fiyat", istasyon: "İstasyon / konum", kampanya: "Kampanya", hata: "Site hatası", oneri: "Öneri", diger: "Diğer" };
+
+async function api(path, opt) {
+  const r = await fetch("/api/panel/" + path, { credentials: "same-origin", ...opt, headers: { "content-type": "application/json", ...(opt && opt.headers) } });
+  const j = await r.json().catch(() => ({}));
+  if (r.status === 401) { showLogin(); throw new Error("giriş"); }
+  if (!r.ok || !j.ok) throw new Error(j.hata || r.status);
+  return j;
+}
+function showLogin(msg) { $("app").hidden = true; $("out").hidden = true; $("login").hidden = false; $("lerr").textContent = msg || ""; $("pw").focus(); }
+function showApp() { $("login").hidden = true; $("app").hidden = false; $("out").hidden = false; }
+
+$("login").onsubmit = async e => {
+  e.preventDefault(); $("lerr").textContent = "";
+  try {
+    const r = await fetch("/api/panel/giris", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ sifre: $("pw").value }) });
+    const j = await r.json().catch(() => ({}));
+    if (!j.ok) { $("lerr").textContent = j.hata || "Giriş yapılamadı."; return; }
+    $("pw").value = ""; showApp(); load();
+  } catch { $("lerr").textContent = "Bağlantı hatası."; }
+};
+$("out").onclick = async () => { await fetch("/api/panel/cikis", { method: "POST" }); showLogin(); };
+$("per").onclick = e => { const b = e.target.closest("button"); if (!b) return; ST.gun = +b.dataset.g; load(); };
+$("fbf").onclick = e => { const b = e.target.closest("button"); if (!b) return; ST.f = b.dataset.f; [...$("fbf").children].forEach(x => x.setAttribute("aria-pressed", String(x === b))); loadFb(); };
+$("yenile").onclick = () => load();
+
+function days(bas, n) { const out = [], t0 = Date.parse(bas + "T00:00:00Z"); for (let i = 0; i < n; i++) out.push(new Date(t0 + i * 864e5).toISOString().slice(0, 10)); return out; }
+const kisaGun = g => { const [, m, d] = g.split("-"); return `${+d}.${+m}`; };
+
+function chart(d) {
+  const ds = days(d.bas, d.gun), by = {};
+  d.gunluk.forEach(r => { (by[r.gun] = by[r.gun] || {})[r.olay] = r.n; });
+  const z = ds.map(g => (by[g] || {}).ziyaret || 0), t = ds.map(g => (by[g] || {}).tekil || 0);
+  const W = 1000, H = 220, L = 34, B = 22, T = 8, max = Math.max(4, ...z), step = Math.pow(10, Math.floor(Math.log10(max)));
+  const top = Math.ceil(max / step) * step, y = v => T + (H - T - B) * (1 - v / top), cw = (W - L) / ds.length, bw = Math.max(2, Math.min(26, cw * .62));
+  const ticks = [0, top / 2, top];
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Günlük ziyaret grafiği">`;
+  ticks.forEach(v => s += `<line class="gl" x1="${L}" x2="${W}" y1="${y(v)}" y2="${y(v)}"/><text class="ax" x="${L - 6}" y="${y(v) + 4}" text-anchor="end">${fmt(v)}</text>`);
+  const every = Math.ceil(ds.length / 10);
+  ds.forEach((g, i) => {
+    const x = L + i * cw + (cw - bw) / 2, h1 = H - B - y(z[i]), h2 = H - B - y(t[i]);
+    s += `<g class="col" data-i="${i}"><rect class="b" x="${x}" y="${y(z[i])}" width="${bw}" height="${Math.max(0, h1)}" rx="${Math.min(4, bw / 3)}"/>`;
+    s += `<rect class="b2" x="${x + bw * .22}" y="${y(t[i])}" width="${bw * .56}" height="${Math.max(0, h2)}" rx="${Math.min(3, bw / 4)}"/>`;
+    s += `<rect class="hit" x="${L + i * cw}" y="${T}" width="${cw}" height="${H - T - B}"/></g>`;
+    if (i % every === 0 || i === ds.length - 1) s += `<text class="ax" x="${L + i * cw + cw / 2}" y="${H - 6}" text-anchor="middle">${kisaGun(g)}</text>`;
+  });
+  s += `</svg><div class="tip" hidden></div>`;
+  $("chsvg").innerHTML = s;
+  const tip = $("chsvg").querySelector(".tip"), svg = $("chsvg").querySelector("svg");
+  svg.addEventListener("mousemove", e => { const g = e.target.closest("g.col"); if (!g) { tip.hidden = true; return; }
+    const i = +g.dataset.i, r = $("chsvg").getBoundingClientRect(), b = g.querySelector("rect.hit").getBoundingClientRect();
+    tip.hidden = false; tip.style.left = (b.left - r.left + b.width / 2) + "px"; tip.style.top = (b.top - r.top + (H - B - (H - B - y(z[i]))) * r.width / W - 4) + "px";
+    tip.innerHTML = `${kisaGun(ds[i])} · ${fmt(z[i])} ziyaret · ${fmt(t[i])} tekil`; });
+  svg.addEventListener("mouseleave", () => tip.hidden = true);
+  $("chtab").innerHTML = `<table class="tv"><tr><th>Gün</th><th>Ziyaret</th><th>Tekil</th></tr>${ds.slice().reverse().map((g, j) => { const i = ds.length - 1 - j; return `<tr><td>${g}</td><td>${fmt(z[i])}</td><td>${fmt(t[i])}</td></tr>`; }).join("")}</table>`;
+}
+
+function render(d) {
+  $("per-t").textContent = `${d.bas} → ${d.bugun}`;
+  [...$("per").children].forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.g === d.gun)));
+  const tot = {}; const grp = {};
+  d.toplam.forEach(r => { tot[r.olay] = (tot[r.olay] || 0) + r.n; (grp[r.olay] = grp[r.olay] || []).push(r); });
+  const gb = Object.fromEntries(d.gb.map(r => [r.durum, r.n]));
+  const k = [["Ziyaret", tot.ziyaret, "sayfa açılışı"], ["Tekil ziyaretçi", tot.tekil, "günlük tekillerin toplamı"], ["İstasyon detayı", tot.istasyon, "açılma"],
+    ["Kampanya tıklaması", tot.kampanya, "resmi sayfaya gidiş"], ["Yol tarifi", tot.yol_tarifi, "Google Haritalar'a gidiş"], ["Yeni geri bildirim", gb.yeni || 0, `toplam ${fmt(Object.values(gb).reduce((a, b) => a + b, 0) - (gb.cop || 0))}`]];
+  $("kpis").innerHTML = k.map(([l, v, s]) => `<div class="card kpi"><div class="l">${l}</div><div class="v">${fmt(v)}</div><div class="s">${s}</div></div>`).join("");
+  chart(d);
+  const order = ["kaynak", "istasyon", "kampanya", "gorunum", "cihaz", "uygulama", "yol_tarifi", "konum", "filtre", "siralama", "geri_bildirim", "kurulum", "seo_sayfa"];
+  $("lists").innerHTML = order.filter(o => grp[o]).map(o => {
+    const rows = grp[o].slice(0, 10), mx = Math.max(...rows.map(r => r.n)), more = grp[o].length - rows.length;
+    const lab = r => o === "siralama" ? (SIRALAMA[r.deger] || r.deger) : o === "geri_bildirim" ? (FBTUR[r.deger] || r.deger) : r.deger || "—";
+    return `<div class="card"><h2>${BASLIK[o] || o}</h2><ul class="rows">${rows.map(r => `<li><span class="k" title="${esc(lab(r))}">${esc(lab(r))}</span><span class="n">${fmt(r.n)}</span><span class="bar"><span style="width:${(100 * r.n / mx).toFixed(1)}%"></span></span></li>`).join("")}</ul>${more > 0 ? `<div class="empty">+${more} diğer</div>` : ""}</div>`;
+  }).join("") || `<div class="card empty">Bu dönemde henüz kullanım verisi yok. Veriler sitede gezinildikçe birikir.</div>`;
+  const s = d.sinir;
+  $("lim").innerHTML = `<div>ℹ️</div><div><b>Ücretsiz plan kullanımı (bugün):</b> ${fmt(s.bugun_olay)} olay, ${fmt(s.bugun_satir)} sayaç satırı.
+    Her ziyaret sayfa kapanırken tek istek gönderir; günlük ziyaret ${fmt(s.ayrinti_siniri)}'i geçerse ayrıntılar (sayfa, ağ, kampanya) o gün için durur, yalnızca ziyaret sayılır.
+    Bu, Cloudflare'in ücretsiz sınırlarının (günde 100.000 worker isteği ve 100.000 veritabanı yazması) çok altında kalmayı sağlar.</div>`;
+}
+
+async function load() {
+  try { const d = await api("ozet?gun=" + ST.gun); showApp(); render(d); loadFb(); } catch (e) { if (e.message !== "giriş") $("kpis").innerHTML = `<div class="card err">Veri alınamadı (${esc(e.message)}).</div>`; }
+}
+async function loadFb() {
+  try {
+    const { liste } = await api("geri-bildirim?durum=" + ST.f);
+    $("fb").innerHTML = liste.length ? liste.map(f => `<li data-id="${f.id}">
+      <div class="meta"><span class="tag ${esc(f.durum)}">${esc({ yeni: "Yeni", okundu: "Okundu", cozuldu: "Çözüldü" }[f.durum] || f.durum)}</span><b>${esc(FBTUR[f.tur] || f.tur)}</b>
+        <span>${esc(new Date(f.zaman).toLocaleString("tr-TR", { dateStyle: "medium", timeStyle: "short", timeZone: "Europe/Istanbul" }))}</span>
+        ${f.iletisim ? `<span>✉️ ${esc(f.iletisim)}</span>` : ""}</div>
+      <div class="m">${esc(f.mesaj)}</div>
+      ${f.istasyon ? `<div class="meta">📍 ${esc(f.istasyon)}</div>` : ""}
+      <div class="act">${f.durum !== "okundu" ? `<button class="btn" data-d="okundu">Okundu</button>` : ""}${f.durum !== "cozuldu" ? `<button class="btn" data-d="cozuldu">Çözüldü</button>` : ""}<button class="btn" data-d="cop">Sil</button></div></li>`).join("")
+      : `<li class="empty">${ST.f === "acik" ? "Açık geri bildirim yok." : "Henüz geri bildirim yok."}</li>`;
+  } catch {}
+}
+$("fb").onclick = async e => {
+  const b = e.target.closest("button[data-d]"); if (!b) return;
+  const id = +b.closest("li").dataset.id;
+  b.disabled = true;
+  try { await api("geri-bildirim", { method: "POST", body: JSON.stringify({ id, durum: b.dataset.d }) }); loadFb(); load(); } catch { b.disabled = false; }
+};
+load();
+</script>
+</body>
+</html>

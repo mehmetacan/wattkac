@@ -3,11 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>WattKaç · Elektrikli araç şarj kampanyaları</title>
-<meta name="description" content="Banka kredi kartı ve şarj ağı kampanyalarını tek yerde filtreleyin; yakınındaki şarj istasyonlarını haritada gör. Her gün güncellenir.">
-<meta property="og:title" content="WattKaç · Şarj kampanyaları">
-<meta property="og:description" content="Hangi kartla hangi istasyonda ne kazanırsın? Güncel elektrikli araç şarj kampanyaları ve yakınındaki istasyonlar.">
-<meta property="og:image" content="logo.png">
+<title>WattKaç · Elektrikli araç şarj istasyonları, fiyatları ve kampanyaları</title>
+<meta name="description" content="Yakınındaki elektrikli araç şarj istasyonlarını haritada gör; Trugo, ZES, Eşarj, Shell Recharge ve diğer ağların kWh fiyatlarını ve kredi kartı kampanyalarını karşılaştır. Her gün güncellenir.">
+<link rel="canonical" href="https://wattkac.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="WattKaç">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:url" content="https://wattkac.com/">
+<meta property="og:title" content="WattKaç · Şarj istasyonları, fiyatlar ve kampanyalar">
+<meta property="og:description" content="Hangi kartla hangi istasyonda ne kazanırsın? Yakınındaki şarj istasyonları, kWh fiyatları ve güncel kampanyalar.">
+<meta property="og:image" content="https://wattkac.com/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://wattkac.com/#site","name":"WattKaç","url":"https://wattkac.com/","inLanguage":"tr-TR","description":"Elektrikli araç şarj istasyonları haritası, kWh fiyatları ve kredi kartı şarj kampanyaları."},{"@type":"Organization","@id":"https://wattkac.com/#org","name":"WattKaç","url":"https://wattkac.com/","logo":"https://wattkac.com/icons/icon-512.png","sameAs":["https://www.instagram.com/wattkac/"]}]}</script>
 <meta name="theme-color" content="#ffffff">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/favicon-32.png" sizes="32x32">
@@ -273,9 +281,9 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .dir{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;margin-top:12px;color:var(--ink)}
 .credit{font-size:11px;color:var(--mut);text-align:center;padding:8px 0 2px}
 .stn .sub{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.src{margin:12px 0 4px;font-size:12.5px;color:var(--mut)}
-.src summary{cursor:pointer;font-weight:700;list-style:none}.src summary::-webkit-details-marker{display:none}
-.src p{margin:6px 0 0;line-height:1.45}.src a{color:inherit}
+.bkay{margin:12px 0 4px;font-size:12.5px;color:var(--mut)}
+.bkay summary{cursor:pointer;font-weight:700;list-style:none}.bkay summary::-webkit-details-marker{display:none}
+.bkay p{margin:6px 0 0;line-height:1.45}.bkay a{color:inherit}
 .dacts{display:flex;gap:8px;margin-bottom:6px}.dacts .primary{flex:1.4}.dacts .fbbtn{flex:1}
 .fbbtn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .fb label{display:block;font-weight:700;font-size:14px;margin:14px 0 6px}
@@ -283,6 +291,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .fb textarea{min-height:130px;resize:vertical}
 .fb .hp{position:absolute;left:-5000px;width:1px;height:1px;overflow:hidden}
 .fb .ctx{background:var(--card2);border-radius:10px;padding:8px 10px;font-size:13px;margin-top:10px}
+.seolinks{margin-top:10px;font-size:12.5px;line-height:1.9}.seolinks a{color:var(--mut)}
 .linkbtn{background:none;border:0;padding:8px 0 0;font:700 13px Inter,sans-serif;color:var(--txt);text-decoration:underline;text-underline-offset:3px}
 .fbmsg{margin-top:12px;font-weight:700}.fbmsg.ok{color:var(--g)}.fbmsg.err{color:var(--r)}
 
@@ -299,7 +308,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 </style>
 </head>
 <body>
-<noscript><div class="wrap"><div class="err">WattKaç'ın çalışması için JavaScript gerekiyor.</div></div></noscript>
+<noscript><div class="wrap"><div class="err">Harita için JavaScript gerekiyor. Kampanyaları JavaScript olmadan görmek için: <a href="/kampanyalar/">Tüm kampanyalar</a> · <a href="/sarj-agi/">Şarj ağları ve fiyatlar</a></div></div></noscript>
 
 <header class="top">
   <div class="topin">
@@ -342,6 +351,9 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
       Bilgiler bankaların ve şarj ağlarının duyurularından derlenir; koşullar değişebilir. Kampanyaya katılmadan önce kampanya sahibinin resmi kanallarından kontrol edin.
       Her kampanya, kampanyayı yapan banka veya şarj ağının kendi sayfasında doğrulanır ve bağlantı o sayfaya gider. WattKaç hiçbir banka veya şarj ağıyla bağlantılı değildir.
       <br><button class="linkbtn" data-go="geri">Geri bildirim gönder</button>
+      <nav class="seolinks" aria-label="Şarj ağları"><a href="/kampanyalar/">Tüm kampanyalar</a> · <a href="/sarj-agi/">Şarj ağları ve fiyatlar</a> ·
+        <a href="/sarj-agi/trugo/">Trugo</a> · <a href="/sarj-agi/zes/">ZES</a> · <a href="/sarj-agi/esarj/">Eşarj</a> · <a href="/sarj-agi/shell-recharge/">Shell Recharge</a> ·
+        <a href="/sarj-agi/voltrun/">Voltrun</a> · <a href="/sarj-agi/otopriz/">Otopriz</a> · <a href="/sarj-agi/ovolt/">Ovolt</a> · <a href="/sarj-agi/wat-mobilite/">WAT Mobilite</a> · <a href="/sarj-agi/astor-sarj/">ASTOR</a></nav>
     </footer>
   </section>
 
@@ -632,7 +644,7 @@ function card(c) {
     ${c.tip === "banka" && c.join ? `<div class="join">Katılım: <b>${esc(c.join)}</b></div>` : ""}
     ${c.kosul ? `<details><summary>Koşullar</summary><p>${esc(c.kosul)}</p></details>` : ""}
     <div class="foot">${txt ? `<span class="days ${dl !== null && dl <= 3 ? "soon" : ""}">${esc(txt)}</span>` : ""}${mk}
-      <a class="src" href="${esc(safeUrl(c.link))}" target="_blank" rel="noopener nofollow">Resmi kampanya sayfası ↗</a></div>
+      <a class="src" data-kk="${esc(c.kurum)}" href="${esc(safeUrl(c.link))}" target="_blank" rel="noopener nofollow">Resmi kampanya sayfası ↗</a></div>
   </article>`;
 }
 function render() {
@@ -679,7 +691,37 @@ function show(v) {
   if (v === "harita") openMap();
   if (v === "profil") renderProfile();
   if (v === "geri") openFeedback();
+  if (changed || !S.gor0) S.gor0 = true, an("gorunum", { kamp: "kampanyalar", harita: "harita", profil: "profilim", geri: "geri bildirim" }[v] || v);
   writeHash();
+}
+
+/* ---------- Kullanım analizi (çerezsiz) ----------
+   Kimlik, çerez, IP ya da konum gönderilmez. Yalnızca "bugün kaç ziyaret, hangi sayfa, hangi ağın detayı açıldı" gibi
+   sayaçlar birikir ve sayfa kapanırken tek istekle /api/olay'a gider (Cloudflare ücretsiz sınırları için). */
+const AN = { q: new Map(), t: 0 };
+function an(olay, deger = "") { const k = olay + "\u0001" + String(deger).slice(0, 60); AN.q.set(k, (AN.q.get(k) || 0) + 1); }
+function anFlush() {
+  if (!AN.q.size || location.protocol !== "https:") return;
+  const e = [...AN.q].map(([k, n]) => { const [a, d] = k.split("\u0001"); return [a, d, n]; }).slice(0, 40);
+  AN.q.clear();
+  const body = JSON.stringify({ e });
+  try { if (!(navigator.sendBeacon && navigator.sendBeacon("/api/olay", body))) fetch("/api/olay", { method: "POST", body, keepalive: true }); } catch {}
+}
+function anStart() {
+  an("ziyaret");
+  const bugun = new Date(Date.now() + 3 * 3600e3).toISOString().slice(0, 10);
+  if (lsGet("wk.gun") !== bugun) { an("tekil"); lsSet("wk.gun", bugun); }
+  let ref = ""; try { ref = document.referrer ? new URL(document.referrer).hostname : ""; } catch {}
+  const ua = navigator.userAgent;
+  const kaynak = /Instagram/i.test(ua) || /instagram/.test(ref) ? "instagram" : /FBAN|FBAV/i.test(ua) || /facebook/.test(ref) ? "facebook"
+    : /google\./.test(ref) ? "google" : /bing\.|yandex\.|duckduckgo/.test(ref) ? "diğer arama" : /t\.co$|twitter|x\.com/.test(ref) ? "x / twitter"
+    : !ref || ref === location.hostname ? "doğrudan" : ref.replace(/^www\./, "");
+  an("kaynak", kaynak);
+  an("cihaz", /Mobi|Android|iPhone|iPad/i.test(ua) ? (/iPhone|iPad/i.test(ua) ? "iPhone / iPad" : "Android") : "masaüstü");
+  an("uygulama", matchMedia("(display-mode: standalone)").matches || navigator.standalone ? "ana ekrandan (PWA)" : INAPP ? "uygulama içi tarayıcı" : "tarayıcı");
+  addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") anFlush(); });
+  addEventListener("pagehide", anFlush);
+  AN.t = setTimeout(anFlush, 20000);
 }
 
 /* ---------- Geri bildirim ---------- */
@@ -700,7 +742,7 @@ async function sendFeedback(e) {
       body: JSON.stringify({ tur: FB.tur || "diger", mesaj: m, iletisim: $("fb-c").value.trim(), istasyon: FB.ctx ? FB.ctx + (FB.sid ? " [" + FB.sid + "]" : "") : "", sayfa: location.pathname, web: $("fb-w").value, sure: Date.now() - FB.t0 }) });
     const j = await r.json().catch(() => ({}));
     if (!r.ok || !j.ok) throw new Error(j.hata || r.status);
-    msg.className = "fbmsg ok"; msg.textContent = "Teşekkürler, aldık!";
+    msg.className = "fbmsg ok"; msg.textContent = "Teşekkürler, aldık!"; an("geri_bildirim", FB.tur || "diger");
     $("fb-m").value = ""; FB.ctx = ""; FB.tur = ""; drawFbTur(); $("fb-ctx").hidden = true;
   } catch {
     msg.className = "fbmsg err"; msg.textContent = "Gönderilemedi. Biraz sonra tekrar dene.";
@@ -955,8 +997,10 @@ function locate(first = false) {
     if (M.meMark) M.meMark.remove();
     M.meMark = L.circleMarker([M.me.lat, M.me.lon], { radius: 7, color: "#fff", weight: 3, fillColor: "#2563EB", fillOpacity: 1, interactive: false }).addTo(M.map);
     M.map.setView([M.me.lat, M.me.lon], zoomForRadius(), { animate: false });
+    if (first) an("konum", "izin verildi");
   }, err => {
     $("loc").classList.remove("busy");
+    if (first) an("konum", INAPP ? "uygulama içi (yok)" : err.code === 1 ? "izin verilmedi" : "alınamadı");
     locMsg();
     if (first) refresh();
   }, { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 });
@@ -1189,7 +1233,7 @@ function renderDetail(s) {
         <h4>Nasıl katılırım?</h4><p>${esc(how)}</p>
         ${c.kosul && c.kosul !== how ? `<h4>Koşullar</h4><p>${esc(c.kosul)}</p>` : ""}
         ${txt ? `<p class="alt">${esc(txt)}</p>` : ""}
-        <a class="btn primary go" href="${esc(safeUrl(c.link))}" target="_blank" rel="noopener nofollow">${esc(c.kurum)} kampanya sayfasına git ↗</a></div></details>`;
+        <a class="btn primary go" data-kk="${esc(c.kurum)}" href="${esc(safeUrl(c.link))}" target="_blank" rel="noopener nofollow">${esc(c.kurum)} kampanya sayfasına git ↗</a></div></details>`;
   };
   // Bu istasyonda geçerli tüm kampanyalar: ağın kendi indirimi, bu ağda geçerli kart kampanyaları, her istasyonda geçerli kart kampanyaları
   const here = [...s.camp.filter(c => !s.viaShell.includes(c)), ...general.filter(c => !s.camp.includes(c))]
@@ -1225,7 +1269,7 @@ function renderDetail(s) {
     ${here.length ? `<div class="lbl" style="margin-top:12px">Bu istasyonda geçerli kampanyalar · ${here.length}</div><div class="cmps">${here.map(mc).join("")}</div>` : ""}
     ${s.shellTrugo ? `<div class="shellbox"><b>Shell istasyonundaki Trugo:</b> Shell Recharge uygulamasıyla da şarj başlatılabilir. Togg'a özel Trugo indirimi Shell Recharge'da geçmez.</div>
       ${s.viaShell.length ? `<div class="lbl">Shell Recharge uygulamasıyla</div><div class="cmps">${s.viaShell.map(mc).join("")}</div>` : ""}` : ""}
-    <details class="src"><summary>Bilgi kaynağı ›</summary>${srcTxt.map(x => `<p>${x}</p>`).join("")}
+    <details class="bkay"><summary>Bilgi kaynağı ›</summary>${srcTxt.map(x => `<p>${x}</p>`).join("")}
       <p>${s.official ? "İstasyon bilgisi ağın kendi resmi haritasından, günde bir kez güncellenir." : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
       ${s.net ? `<p>İndirimli fiyat yalnızca kampanya listesinde olduğu kesin bilinen istasyonlarda yazılır. Kart kampanyaları fiyata eklenmez.</p>` : ""}</details>`;
   $("sh-b").scrollTop = 0;
@@ -1236,6 +1280,7 @@ function selectStation(id, pan = true) {
   if (!s) return;
   if ($("v-harita").dataset.s === "peek") $("v-harita").dataset.s = "half";
   prep(s); renderSheet(); highlight();
+  an("istasyon", pretty(s.brand) || "markasız");
   if (pan) M.map.panTo([s.lat, s.lon]);
 }
 function renderMapSheet() {
@@ -1259,10 +1304,10 @@ function bindEvents() {
     else if (b.id === "q-mine") { S.bana = !useMine(); render(); }
     else if (b.id === "q-setup") show("profil");
     else if (d.pk) { const a = P[d.pk]; a.includes(d.v) ? a.splice(a.indexOf(d.v), 1) : a.push(d.v); profileChanged(); }
-    else if (d.akim !== undefined) { M.f.akim = d.akim || null; M.shown = PAGE; renderMap(); }
-    else if (d.mf) { M.f[d.mf] = !M.f[d.mf]; M.shown = PAGE; renderMap(); }
-    else if (d.mb) { const s = M.f.brands; s.has(d.mb) ? s.delete(d.mb) : s.add(d.mb); M.shown = PAGE; renderMap(); }
-    else if (d.ms) { M.sort = d.ms; if ($("v-harita").dataset.s === "peek") $("v-harita").dataset.s = "half"; refresh(); $("sh-b").scrollTop = 0; }
+    else if (d.akim !== undefined) { an("filtre", "akım: " + (d.akim || "tümü")); M.f.akim = d.akim || null; M.shown = PAGE; renderMap(); }
+    else if (d.mf) { an("filtre", d.mf); M.f[d.mf] = !M.f[d.mf]; M.shown = PAGE; renderMap(); }
+    else if (d.mb) { an("filtre", "marka"); const s = M.f.brands; s.has(d.mb) ? s.delete(d.mb) : s.add(d.mb); M.shown = PAGE; renderMap(); }
+    else if (d.ms) { an("siralama", d.ms); M.sort = d.ms; if ($("v-harita").dataset.s === "peek") $("v-harita").dataset.s = "half"; refresh(); $("sh-b").scrollTop = 0; }
     else if (d.showunk) { M.f.tum = true; renderMap(); }
     else if (b.id === "more") { M.shown += PAGE; renderSheet(); }
     else if (d.sid) selectStation(d.sid);
@@ -1370,7 +1415,7 @@ function updateInstallUi() {
 function initPwa() {
   if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("sw.js").catch(() => {});
   addEventListener("beforeinstallprompt", e => { e.preventDefault(); installEvt = e; updateInstallUi(); maybeShowInstall(); });
-  addEventListener("appinstalled", () => { $("install").hidden = true; lsSet("wk.install", "kuruldu"); updateInstallUi(); });
+  addEventListener("appinstalled", () => { an("kurulum", "ana ekrana eklendi"); $("install").hidden = true; lsSet("wk.install", "kuruldu"); updateInstallUi(); });
   $("install-ok").onclick = doInstall; $("p-install").onclick = () => { show("harita"); doInstall(); };
   $("install-x").onclick = () => { $("install").hidden = true; lsSet("wk.install", String(Date.now())); };
   updateInstallUi();
@@ -1388,6 +1433,7 @@ function maybeShowInstall() {
 /* ---------- Başlat ---------- */
 async function init() {
   readHash();
+  try { anStart(); } catch {}
   try {
     const r = await fetch("kampanyalar.json", { cache: "no-cache" });
     if (!r.ok) throw new Error(r.status);
@@ -1408,6 +1454,12 @@ async function init() {
   show(S.view);
   initPwa();
 }
+// Dış bağlantı tıklamaları (resmi kampanya sayfası, yol tarifi) sayılır
+document.addEventListener("click", e => {
+  const a = e.target.closest("a"); if (!a) return;
+  if (a.dataset.kk) an("kampanya", a.dataset.kk);
+  else if (a.classList.contains("dir")) { const s = M.byId && M.byId.get(M.sel); an("yol_tarifi", s ? pretty(s.brand) || "markasız" : ""); }
+}, true);
 document.addEventListener("DOMContentLoaded", init);
 </script>
 </body>

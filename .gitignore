@@ -1,3 +1,7 @@
 __pycache__/
 *.pyc
 site/kampanyalar.json
+site/kampanyalar/
+site/sarj-agi/
+site/sitemap.xml
+site/robots.txt
