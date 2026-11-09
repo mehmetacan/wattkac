@@ -12,11 +12,11 @@
     "binding": "ASSETS",
     "run_worker_first": true
   }
-  // Alan adları: wattkac.com ve wattkac.xyz Cloudflare'de "Active" olunca aşağıdaki blok eklenecek.
-  // ,"routes": [
-  //   { "pattern": "wattkac.com", "custom_domain": true },
-  //   { "pattern": "www.wattkac.com", "custom_domain": true },
-  //   { "pattern": "wattkac.xyz", "custom_domain": true },
-  //   { "pattern": "www.wattkac.xyz", "custom_domain": true }
-  // ]
+  ,"routes": [
+    { "pattern": "wattkac.com", "custom_domain": true },
+    { "pattern": "www.wattkac.com", "custom_domain": true }
+    // wattkac.xyz Cloudflare'de "Active" olunca eklenecek:
+    // ,{ "pattern": "wattkac.xyz", "custom_domain": true }
+    // ,{ "pattern": "www.wattkac.xyz", "custom_domain": true }
+  ]
 }
