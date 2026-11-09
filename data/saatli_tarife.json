@@ -1,0 +1,111 @@
+{
+ "shell": {
+  "ag": "Shell Recharge",
+  "baslik": "Gece tarifesi (DC 22:00–04:59 arası 13,99 TL/kWh)",
+  "kaynak": "Shell Recharge resmi duyuru görseli (kullanıcı paylaştı, 9 Kasım 2026); resmi web sayfasında liste yok",
+  "eklendi": "2026-11-09",
+  "not": "Görselde: uygulamadan tekrar kontrol edin, istasyon eklenebilir/çıkarılabilir veya tarife değişebilir.",
+  "istasyonlar": [
+   {
+    "il": "Ordu",
+    "ilce": "Ünye",
+    "ad": "Shell Yüceler"
+   },
+   {
+    "il": "Ankara",
+    "ilce": "Çankaya",
+    "ad": "Shell Çayyolu"
+   },
+   {
+    "il": "Ankara",
+    "ilce": "Gölbaşı",
+    "ad": "Shell İncek Bulvarı"
+   },
+   {
+    "il": "İstanbul",
+    "ilce": "Sarıyer",
+    "ad": "Shell Sarıyer Merkez"
+   },
+   {
+    "il": "İstanbul",
+    "ilce": "Silivri",
+    "ad": "Shell Büyükçavuşlu"
+   },
+   {
+    "il": "İstanbul",
+    "ilce": "Çekmeköy",
+    "ad": "Shell Taşdelen"
+   },
+   {
+    "il": "İstanbul",
+    "ilce": "Bağcılar",
+    "ad": "Shell Mahmutbey Kirazlı"
+   },
+   {
+    "il": "İstanbul",
+    "ilce": "Esenler",
+    "ad": "Shell Karabayır"
+   },
+   {
+    "il": "Bursa",
+    "ilce": "Merkez",
+    "ad": "Shell Beşevler"
+   },
+   {
+    "il": "Bursa",
+    "ilce": "İnegöl",
+    "ad": "Shell İnegöl Batıkent"
+   },
+   {
+    "il": "Bursa",
+    "ilce": "Yenişehir",
+    "ad": "Shell Yenişehir"
+   },
+   {
+    "il": "Antalya",
+    "ilce": "Kepez",
+    "ad": "Shell Uncalı"
+   },
+   {
+    "il": "Antalya",
+    "ilce": "Kepez",
+    "ad": "Shell Akdeniz Sanayi Sitesi"
+   },
+   {
+    "il": "Antalya",
+    "ilce": "Kepez",
+    "ad": "Shell Sakarya Bulvarı"
+   },
+   {
+    "il": "Antalya",
+    "ilce": "Yeşilbayır",
+    "ad": "Shell Döşemealtı"
+   },
+   {
+    "il": "Antalya",
+    "ilce": "Konyaaltı",
+    "ad": "Shell Liman Antalya"
+   },
+   {
+    "il": "İzmir",
+    "ilce": "Bergama",
+    "ad": "Shell Ovacık"
+   },
+   {
+    "il": "İzmir",
+    "ilce": "Güzelbahçe",
+    "ad": "Shell Güzelbahçe"
+   },
+   {
+    "il": "Balıkesir",
+    "ilce": "",
+    "ad": "Shell Burhaniye"
+   },
+   {
+    "il": "Balıkesir",
+    "ilce": "İvrindi",
+    "ad": "Shell Körfezyolu"
+   }
+  ]
+ }
+}

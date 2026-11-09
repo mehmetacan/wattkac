@@ -86,8 +86,9 @@
     "max": 12.99
    },
    "dc": {
-    "min": 13.99,
+    "min": 16.99,
     "max": 16.99,
+    "saatli_liste": "shell",
     "saatli": [
      {
       "bas": "22:00",
@@ -106,7 +107,7 @@
    "kaynak": "https://www.shell.com.tr/suruculer/shell-recharge-turkiye/fiyat-tarifesi.html",
    "kontrol": "2026-11-09",
    "gecerlilik": null,
-   "not": "Shell Recharge uygulamasındaki tarife (kullanıcı bildirimi, 9 Kasım 2026; resmi web sayfası fiyat yayınlamıyor). Tüm istasyonlarda aynı: AC 12,99; DC 22:00–04:59 arası 13,99, 05:00–21:59 arası 16,99 TL/kWh."
+   "not": "Shell Recharge uygulamasındaki tarife (kullanıcı bildirimi, 9 Kasım 2026; resmi web sayfası fiyat yayınlamıyor). AC 12,99; DC 16,99 TL/kWh. Gece tarifesi (22:00–04:59 arası DC 13,99) yalnızca Shell'in duyurduğu 20 istasyonda geçerli (data/saatli_tarife.json)."
   },
   "WAT Mobilite": {
    "ac": {

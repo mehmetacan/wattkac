@@ -19,6 +19,8 @@ AGLAR = pathlib.Path("data/aglar")
 RESMI = {"trugo": r"trugo", "zes": r"\bzes\b", "ovolt": r"ovolt|sharz", "wat": r"wat mobilite|watmobilite|\bwat\b", "astor": r"astor"}
 SECILI = pathlib.Path("data/secili_istasyonlar.json")  # yalnızca seçili istasyonlarda geçerli ağ kampanyaları
 SECILI_AG = {"otopriz": r"otopriz|dicle kok"}
+SAATLI = pathlib.Path("data/saatli_tarife.json")  # saate göre fiyatın (ör. gece tarifesi) yalnızca listedeki istasyonlarda geçerli olduğu ağlar
+SAATLI_AG = {"shell": r"\bshell\b"}
 OUT = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else "site/istasyonlar.json")
 TR = str.maketrans({"İ": "i", "I": "ı", "Ş": "ş", "Ğ": "ğ", "Ü": "ü", "Ö": "ö", "Ç": "ç"})
 fold = lambda s: s.translate(TR).lower().replace("ı", "i").replace("ş", "s").replace("ğ", "g").replace("ü", "u").replace("ö", "o").replace("ç", "c")
@@ -179,6 +181,21 @@ def main():
                     r.setdefault("sk", []).append(ag); hit += 1
                     break
         sk_hits[ag] = hit
+    # Saatli tarife (ör. Shell gece tarifesi): listedeki "Shell Ad" kayıtları istasyon adıyla ve ildeki adresle eşleşir → "tz"
+    saatli = json.loads(SAATLI.read_text(encoding="utf-8")) if SAATLI.exists() else {}
+    tz_hits = {}
+    for ag, d in saatli.items():
+        rx = re.compile(SAATLI_AG.get(ag, re.escape(ag)))
+        items = [(toks(i["ad"]) - {"shell"}, toks(i.get("il", ""))) for i in d.get("istasyonlar", [])]
+        hit = 0
+        for r in recs:
+            opn = ops[r["p"]] if isinstance(r.get("p"), int) else (r.get("p") or "")
+            if not rx.search(fold(" ".join([r.get("b") or "", opn, r.get("n") or ""]))):
+                continue
+            nt, place = toks(r.get("n")), toks(r.get("ad"))
+            if any(L and L <= nt and (not IL or IL <= place) for L, IL in items):
+                r.setdefault("tz", []).append(ag); hit += 1
+        tz_hits[ag] = hit
     located = [r for r in recs if "a" in r]
     recs = [r for r in located if in_turkey(r["a"], r["o"])]  # konumu bilinmeyen ve Türkiye dışı kayıtlar gösterilmez
     disari = len(located) - len(recs)
@@ -195,6 +212,7 @@ def main():
     txt = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
     OUT.write_text(txt, encoding="utf-8")
     print("seçili kampanya eşleşmeleri:", sk_hits)
+    print("saatli tarife eşleşmeleri:", tz_hits)
     ozet = ", ".join("%s %d" % (k, v["sayi"]) for k, v in kaynaklar.items())
     print(f"resmi ağ listeleri {len(resmi)} ({ozet}); EPDK {len(seen)} kayıt (özel {ozel} çıkarıldı), önbellekten konumlanan {sum(1 for r in recs if r.get('e'))}, eşleşen/eklenen OSM {stats.get('o')}, OCM {stats.get('c')}, Türkiye dışı {disari}, aynı adreste birleştirilen EPDK ünitesi {sum(g.get('c', 1) - 1 for g in groups.values())}, toplam {len(recs)}, {len(txt)//1024} KB")
 
