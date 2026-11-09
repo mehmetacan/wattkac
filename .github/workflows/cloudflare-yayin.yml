@@ -10,6 +10,7 @@ on:
       - "site/**"
       - "data/kampanyalar.json"
       - "wrangler.jsonc"
+      - "worker/**"
       - ".github/workflows/cloudflare-yayin.yml"
   workflow_run:
     workflows: ["İstasyon verisini güncelle"]

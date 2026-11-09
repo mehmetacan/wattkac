@@ -1,12 +1,22 @@
-// Cloudflare Workers (statik site) ayarı: "Import a repository" ile varsayılan ayarlarla çalışır.
+// Cloudflare Workers ayarı: site/ klasörü statik olarak sunulur, worker/index.js yalnızca alan adı yönlendirmesi yapar.
 {
   "name": "wattkac",
+  "main": "worker/index.js",
   "compatibility_date": "2025-09-01",
   "workers_dev": true,
   "build": {
     "command": "cp data/kampanyalar.json site/kampanyalar.json"
   },
   "assets": {
-    "directory": "./site"
+    "directory": "./site",
+    "binding": "ASSETS",
+    "run_worker_first": true
   }
+  // Alan adları: wattkac.com ve wattkac.xyz Cloudflare'de "Active" olunca aşağıdaki blok eklenecek.
+  // ,"routes": [
+  //   { "pattern": "wattkac.com", "custom_domain": true },
+  //   { "pattern": "www.wattkac.com", "custom_domain": true },
+  //   { "pattern": "wattkac.xyz", "custom_domain": true },
+  //   { "pattern": "www.wattkac.xyz", "custom_domain": true }
+  // ]
 }
