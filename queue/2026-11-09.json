@@ -40,9 +40,10 @@
    "media/2026-11-09/istasyon_zes/hikaye.jpg"
   ],
   "aciklama": "",
-  "durum": "bekliyor",
+  "durum": "paylasildi",
   "deneme": 0,
-  "ig_media_id": null,
-  "hata": null
+  "ig_media_id": "18115640636155419",
+  "hata": null,
+  "paylasim_zamani": "2026-11-09T09:50:05+00:00"
  }
 ]
