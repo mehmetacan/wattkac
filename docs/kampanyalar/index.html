@@ -273,8 +273,8 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .src{margin:12px 0 4px;font-size:12.5px;color:var(--mut)}
 .src summary{cursor:pointer;font-weight:700;list-style:none}.src summary::-webkit-details-marker{display:none}
 .src p{margin:6px 0 0;line-height:1.45}.src a{color:inherit}
-.dlinks{display:flex;justify-content:space-between;gap:10px;margin-top:10px;font-size:13px}
-.dlinks button{background:none;border:0;padding:6px 0;font:700 13px Inter,sans-serif;color:var(--mut);text-decoration:underline;text-underline-offset:3px}
+.dacts{display:flex;gap:8px;margin-bottom:6px}.dacts .primary{flex:1.4}.dacts .fbbtn{flex:1}
+.fbbtn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .fb label{display:block;font-weight:700;font-size:14px;margin:14px 0 6px}
 .fb textarea,.fb input[type=text],.fb input[type=email]{width:100%;background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:12px;font:15px Inter,sans-serif}
 .fb textarea{min-height:130px;resize:vertical}
@@ -1199,14 +1199,14 @@ function renderDetail(s) {
     ${s.pasif ? `<p class="note" style="color:var(--r)">Bu istasyon ağın kendi haritasında şu an pasif görünüyor; gitmeden önce uygulamadan kontrol et.</p>` : ""}
     ${s.approx ? `<p class="note">Konum yaklaşık; gitmeden adresi kontrol et.</p>` : ""}
     ${rows.length ? `<dl class="kv">${rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>` : ""}
+    <div class="dacts"><a class="btn primary dir" href="https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lon}" target="_blank" rel="noopener">Yol tarifi al</a>
+      <button class="btn dir fbbtn" data-fbs="${esc(s.id)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M12 7v4M12 14h.01"/></svg>Geri bildirim</button></div>
     ${here.length ? `<div class="lbl" style="margin-top:12px">Bu istasyonda geçerli kampanyalar · ${here.length}</div><div class="cmps">${here.map(mc).join("")}</div>` : ""}
     ${s.shellTrugo ? `<div class="shellbox"><b>Shell istasyonundaki Trugo:</b> Shell Recharge uygulamasıyla da şarj başlatılabilir. Togg'a özel Trugo indirimi Shell Recharge'da geçmez.</div>
       ${s.viaShell.length ? `<div class="lbl">Shell Recharge uygulamasıyla</div><div class="cmps">${s.viaShell.map(mc).join("")}</div>` : ""}` : ""}
-    <a class="btn primary dir" href="https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lon}" target="_blank" rel="noopener">Yol tarifi al</a>
     <details class="src"><summary>Bilgi kaynağı ›</summary>${srcTxt.map(x => `<p>${x}</p>`).join("")}
       <p>${s.official ? "İstasyon bilgisi ağın kendi resmi haritasından, günde bir kez güncellenir." : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
-      ${s.net ? `<p>İndirimli fiyat yalnızca kampanya listesinde olduğu kesin bilinen istasyonlarda yazılır. Kart kampanyaları fiyata eklenmez.</p>` : ""}</details>
-    <div class="dlinks"><button data-fbs="${esc(s.id)}">Bu istasyonda hata bildir</button></div>`;
+      ${s.net ? `<p>İndirimli fiyat yalnızca kampanya listesinde olduğu kesin bilinen istasyonlarda yazılır. Kart kampanyaları fiyata eklenmez.</p>` : ""}</details>`;
   $("sh-b").scrollTop = 0;
 }
 function selectStation(id, pan = true) {
