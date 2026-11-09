@@ -173,6 +173,9 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .mapmsg{left:12px;right:12px;bottom:calc(var(--sheet-h) + 84px);background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:14px;font-weight:600;text-align:center;box-shadow:0 4px 14px rgba(17,24,39,.12)}
 .mapmsg.bad{border-color:#FECACA;color:var(--r)}
 .mapmsg .btn{margin-top:8px}
+.mapmsg.soft{font-weight:500;color:var(--txt);padding:10px 34px 10px 14px;text-align:left}
+.mapmsg .mx{position:absolute;top:4px;right:4px;width:30px;height:30px;border:0;background:none;font-size:16px;color:var(--mut)}
+.mapmsg a.btn{display:inline-block;text-decoration:none;color:var(--ink);padding:8px 12px;min-height:0}
 .mapview{--sheet-h:64px}
 .mapview[data-s=half]{--sheet-h:46%}
 .mapview[data-s=full]{--sheet-h:80%}
@@ -925,8 +928,26 @@ function zoomForRadius() {
   const mPerPx = M.radius * 1000 / px, z = Math.log2(156543.03 * Math.cos(lat * Math.PI / 180) / mPerPx);
   return Math.max(6, Math.min(16, Math.floor(z)));
 }
+// Instagram, Facebook, TikTok gibi uygulamaların içindeki tarayıcılar konum iznini çoğu zaman vermez
+const INAPP = /Instagram|FBAN|FBAV|FB_IAB|musical_ly|TikTok|Twitter|LinkedInApp|Snapchat/i.test(navigator.userAgent);
+const IOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+function locMsg() {
+  const el = $("mapmsg");
+  let html;
+  if (INAPP) {
+    html = IOS
+      ? `Uygulama içi tarayıcı konumunu paylaşmıyor. Sağ üstteki <b>⋯</b> menüsünden <b>“Tarayıcıda aç”</b> dersen yakınındaki istasyonları görürsün.`
+      : `Uygulama içi tarayıcı konumunu paylaşmıyor.<br><a class="btn" href="intent://${location.host}${location.pathname}${location.hash}#Intent;scheme=https;end">Tarayıcıda aç</a>`;
+  } else {
+    html = `Konumun kullanılamadı. Haritayı kaydırarak yer seçebilirsin.`;
+  }
+  el.className = "ov mapmsg soft"; el.hidden = false;
+  el.innerHTML = html + `<button class="mx" aria-label="Kapat">✕</button>`;
+  el.querySelector(".mx").onclick = () => setMsg("");
+  clearTimeout(M.msgT); M.msgT = setTimeout(() => setMsg(""), INAPP ? 12000 : 5000);
+}
 function locate(first = false) {
-  if (!navigator.geolocation) { setMsg("Tarayıcın konum özelliğini desteklemiyor. Haritayı kaydırarak arama noktasını (ortadaki mavi işaret) seçebilirsin.", true); return; }
+  if (!navigator.geolocation) { locMsg(); if (first) refresh(); return; }
   $("loc").classList.add("busy");
   navigator.geolocation.getCurrentPosition(pos => {
     $("loc").classList.remove("busy");
@@ -936,7 +957,7 @@ function locate(first = false) {
     M.map.setView([M.me.lat, M.me.lon], zoomForRadius(), { animate: false });
   }, err => {
     $("loc").classList.remove("busy");
-    setMsg(err.code === 1 ? "Konum izni verilmedi. Haritayı kaydırarak arama noktasını (ortadaki mavi işaret) seçebilirsin." : "Konumun alınamadı. Haritayı kaydırarak arama noktasını (ortadaki mavi işaret) seçebilirsin.", true);
+    locMsg();
     if (first) refresh();
   }, { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 });
 }
