@@ -197,10 +197,11 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .st1 .pn path.b{fill:var(--bg-b,#6B7280);stroke:#fff;stroke-width:1.6}
 .st1 .pn .ic{fill:none;stroke:var(--fg-b,#fff);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .st1 .nm{margin-top:1px;background:#fff;color:var(--txt);border:1.5px solid var(--bg-b,#6B7280);border-radius:6px;font:800 10.5px/1.25 Inter,sans-serif;padding:0 5px;white-space:nowrap;max-width:110px;overflow:hidden;text-overflow:ellipsis;box-shadow:0 1px 2px rgba(17,24,39,.2)}
-.st1.camp .pn{animation:pulse2 1.6s ease-in-out infinite}
-@keyframes pulse2{0%,100%{filter:drop-shadow(0 0 0 #16A34A) drop-shadow(0 1px 2px rgba(17,24,39,.4))}50%{filter:drop-shadow(0 0 5px #16A34A) drop-shadow(0 0 2px #16A34A)}}
-@media (prefers-reduced-motion:reduce){.st1.camp .pn{animation:none;filter:drop-shadow(0 0 3px #16A34A)}}
-.st1.camp .pn path.b{stroke:#16A34A;stroke-width:2.4}
+/* kampanya rozeti: iğnenin sağ üst köşesinde sarı indirim etiketi (%) */
+.st1 .pw{position:relative;display:block;line-height:0}
+.st1 .dsc{position:absolute;top:-6px;right:-11px;width:20px;height:20px;filter:drop-shadow(0 1px 1.5px rgba(17,24,39,.35))}
+.st1.sel .dsc{top:-5px;right:-10px;width:23px;height:23px}
+.st1.unk .dsc{top:-7px;right:-12px;width:16px;height:16px}
 .st1.sel .pn{width:40px;height:50px}
 .st1.pasif{opacity:.55}
 .st1.unk .pn{width:20px;height:26px}
@@ -333,7 +334,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
       <div class="seg" id="seg" role="group" aria-label="Akım türü"></div>
       <button class="fab" id="mf-open" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Filtre<i id="mf-n" hidden></i></button>
     </div>
-    <div class="ov legend" aria-hidden="true"><span><i style="background:#fff;box-shadow:0 0 0 2px #16A34A"></i>Yeşil parlayan: kampanya var</span></div>
+    <div class="ov legend" aria-hidden="true"><span><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M3 12.2V4.6A1.6 1.6 0 0 1 4.6 3h7.6l9 9-9.4 9.4z" fill="#FFC800" stroke="#B45309" stroke-width="1.4"/><path d="M10.6 15.6l5-5" stroke="#78350F" stroke-width="1.6" stroke-linecap="round"/><circle cx="11" cy="11" r="1.15" fill="#78350F"/><circle cx="15.3" cy="15.2" r="1.15" fill="#78350F"/></svg>Kampanya var</span></div>
     <div class="ov radius"><label for="rad-r">Çap<b id="rad-v">5 km</b></label><input type="range" id="rad-r" min="1" max="50" step="1" value="5" aria-label="Arama çapı (km)"></div>
     <button class="fab ov locbtn" id="loc" aria-label="Konumuma git"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg></button>
     <div class="ov cpin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6" fill="#fff"/></svg></div>
@@ -959,6 +960,7 @@ function groupStations(list) {
   return out;
 }
 const PLUG = `<path class="ic" d="M10.2 7.5v2.6M13.8 7.5v2.6M9 10.1h6v1.7a3 3 0 0 1-6 0zM12 14.8v2.4"/>`;
+const DISC = `<svg class="dsc" viewBox="0 0 24 24" aria-label="kampanya"><path d="M3 12.2V4.6A1.6 1.6 0 0 1 4.6 3h7.6l9 9-9.4 9.4z" fill="#FFC800" stroke="#B45309" stroke-width="1.4" stroke-linejoin="round"/><circle cx="7.4" cy="7.4" r="1.3" fill="#fff" stroke="#B45309" stroke-width="1"/><path d="M10.6 15.6l5-5" stroke="#78350F" stroke-width="1.6" stroke-linecap="round"/><circle cx="11" cy="11" r="1.15" fill="#78350F"/><circle cx="15.3" cy="15.2" r="1.15" fill="#78350F"/></svg>`;
 function markerHtml(g) {
   const s0 = g.items[0], sel = g.items.some(s => s.id === M.sel);
   if (g.items.length === 1) {
@@ -966,7 +968,7 @@ function markerHtml(g) {
     const cls = `st1 ${camp ? "camp" : ""} ${sel ? "sel" : ""} ${s0.pasif ? "pasif" : ""} ${st ? "" : "unk"}`;
     const style = st ? `style="--bg-b:${st[0]};--fg-b:${st[1]}"` : "";
     const label = st && (z >= 14 || sel) ? `<span class="nm">${esc(pretty(s0.brand))}</span>` : "";
-    return `<div class="mkw"><div class="${cls}" ${style} title="${esc(pretty(s0.brand) || s0.name)}"><svg class="pn" viewBox="0 0 24 30" aria-hidden="true"><path class="b" d="M12 29s9-8.6 9-16.5A9 9 0 0 0 3 12.5C3 20.4 12 29 12 29z"/>${st ? PLUG : ""}</svg>${label}</div></div>`;
+    return `<div class="mkw"><div class="${cls}" ${style} title="${esc(pretty(s0.brand) || s0.name)}${camp ? " · kampanya var" : ""}"><span class="pw"><svg class="pn" viewBox="0 0 24 30" aria-hidden="true"><path class="b" d="M12 29s9-8.6 9-16.5A9 9 0 0 0 3 12.5C3 20.4 12 29 12 29z"/>${st ? PLUG : ""}</svg>${camp ? DISC : ""}</span>${label}</div></div>`;
   }
   const sw = [...new Set(g.items.map(s => (brandStyle(s) || ["#9CA3AF"])[0]))].slice(0, 4).map(c => `<i style="background:${c}"></i>`).join("");
   const n = g.items.length > 999 ? "999+" : g.items.length;
