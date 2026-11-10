@@ -33,7 +33,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 [hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%}
-body{background:var(--bg);color:var(--txt);font:15px/1.5 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;padding-top:var(--top)}
+body{background:var(--bg);color:var(--txt);font:15px/1.5 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;padding-top:var(--top);padding-bottom:var(--nav)}
 body.on-map{overflow:hidden}
 a{color:#1D4ED8}
 button,input,select{font-family:inherit;color:inherit}
@@ -42,12 +42,12 @@ button{-webkit-tap-highlight-color:transparent;cursor:pointer}
 .wrap{max-width:1080px;margin:0 auto;padding:0 14px}
 
 /* Üst çubuk */
-:root{--nav:0px}
+:root{--nav:calc(56px + var(--sa))}
 .top{position:fixed;top:0;left:0;right:0;height:var(--top);padding-top:var(--sat);z-index:1200;background:#fff;border-bottom:1px solid var(--line)}
 /* Uygulama hissi: seçim/vurgu yok, sayfa esnemesi yok, çentikli ekranlara uyum */
 html,body{overscroll-behavior:none}
-button,.top,.sheet .handle,.seg,.fab,.radius,.chip,.tabs{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
-.install{position:absolute;left:10px;right:10px;bottom:calc(var(--sheet-h) + 72px);z-index:1150;background:#111827;color:#fff;border-radius:16px;padding:12px 12px 12px 14px;display:flex;gap:10px;align-items:center;box-shadow:0 8px 24px rgba(17,24,39,.35)}
+button,.top,.sheet .handle,.seg,.fab,.chip,.nav{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.install{position:absolute;left:10px;right:10px;bottom:calc(var(--sheet-h) + 70px);z-index:1150;background:#111827;color:#fff;border-radius:16px;padding:12px 12px 12px 14px;display:flex;gap:10px;align-items:center;box-shadow:0 8px 24px rgba(17,24,39,.35)}
 .install img{width:40px;height:40px;border-radius:10px;flex:none}
 .install p{flex:1;min-width:0;font-size:13px;line-height:1.35;margin:0}
 .install p b{display:block;font-size:14.5px}
@@ -58,14 +58,17 @@ button,.top,.sheet .handle,.seg,.fab,.radius,.chip,.tabs{-webkit-user-select:non
 .topin{height:100%;display:flex;align-items:center;gap:8px;margin:0 auto;padding:0 10px}
 .brand{display:flex;align-items:center;gap:7px;font-weight:900;font-size:21px;letter-spacing:-.5px;flex:none;background:none;border:0;padding:4px 2px;color:var(--txt)}
 .brand b{color:#E0A100}
-.tabs{display:flex;gap:2px;margin-left:auto;background:var(--card2);border-radius:12px;padding:3px}
-.tabs button{display:inline-flex;align-items:center;gap:6px;border:0;background:none;border-radius:9px;padding:0 12px;min-height:36px;font:700 13.5px Inter,sans-serif;color:var(--mut);white-space:nowrap}
-.tabs button[aria-current=page]{background:#fff;color:var(--txt);box-shadow:0 1px 2px rgba(17,24,39,.14)}
-.tabs svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.tabs i{font-style:normal;background:var(--g);color:#fff;border-radius:999px;font-size:11px;font-weight:800;padding:0 6px}
-.tabs i:empty{display:none}
-@media(max-width:560px){.tabs svg,.tabs i{display:none}.tabs button{padding:0 10px}.brand{font-size:18px!important}}
-@media(max-width:374px){.brand span{display:none}}
+/* Alt çubuk: telefon uygulaması gibi, yalnızca simge (adlar title/aria-label ve yardım penceresinde) */
+.nav{position:fixed;left:0;right:0;bottom:0;height:var(--nav);padding-bottom:var(--sa);z-index:1250;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:stretch}
+.nav button{flex:1;border:0;background:none;display:grid;place-items:center;color:#9CA3AF;position:relative}
+.nav svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;position:relative;z-index:1}
+.nav button::before{content:"";position:absolute;width:58px;height:36px;border-radius:999px;background:transparent;transition:background .15s}
+.nav button[aria-current=page]{color:var(--ink)}
+.nav button[aria-current=page]::before{background:#FFE680}
+.nav i{position:absolute;top:8px;left:calc(50% + 9px);z-index:2;font-style:normal;background:var(--g);color:#fff;border-radius:999px;font-size:10.5px;font-weight:800;line-height:1.5;padding:0 5px;border:1.5px solid #fff}
+.nav i:empty{display:none}
+.hbtn{border:0;background:none;width:40px;height:40px;display:grid;place-items:center;color:var(--mut);border-radius:50%}
+.hbtn svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .spacer{flex:1}
 .upd{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--g);background:var(--gbg);border:1px solid var(--gline);border-radius:999px;padding:4px 10px;white-space:nowrap;margin-left:auto}
 .upd::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:currentColor}
@@ -78,7 +81,7 @@ h1{font-size:clamp(22px,6vw,30px);line-height:1.15;font-weight:900;letter-spacin
 .searchrow{display:flex;gap:8px}
 .search{flex:1;min-width:0;background:#fff;color:var(--txt);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:16px}
 .fbtn{flex:none;display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:0 14px;font-weight:700;font-size:15px}
-.fbtn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.fbtn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .fbtn i,.btn i{font-style:normal;background:var(--ink);color:#fff;border-radius:999px;font-size:12px;font-weight:800;padding:1px 7px}
 .quick{display:flex;gap:8px;overflow-x:auto;margin:12px -14px 0;padding:0 14px 4px;scrollbar-width:none}
 .quick::-webkit-scrollbar{display:none}
@@ -170,21 +173,22 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 #pmsg.bad{color:var(--r)}
 
 /* Harita */
-.mapview{position:relative;height:calc(100vh - var(--top));height:calc(100dvh - var(--top))}
+.mapview{position:relative;height:calc(100vh - var(--top) - var(--nav));height:calc(100dvh - var(--top) - var(--nav))}
 #map{position:absolute;inset:0;background:#F3F4F6}
 .leaflet-container{font-family:inherit;background:#F3F4F6}
 .ov{position:absolute;z-index:1000}
 .mtop{top:10px;left:10px;right:10px;display:flex;gap:8px;align-items:flex-start;pointer-events:none}
 .mtop>*{pointer-events:auto}
-.seg{display:flex;background:#fff;border-radius:14px;padding:4px;box-shadow:0 2px 10px rgba(17,24,39,.18)}
-.seg button{border:0;background:none;border-radius:10px;font:800 13.5px Inter,sans-serif;padding:8px 12px;color:var(--mut);min-height:38px;white-space:nowrap}
-.seg button[aria-pressed=true]{background:var(--ink);color:#fff}
+.seg{display:flex;gap:4px;background:#fff;border-radius:14px;padding:4px;box-shadow:0 2px 10px rgba(17,24,39,.18)}
+.seg button{border:0;background:none;border-radius:10px;width:46px;height:40px;display:grid;place-items:center;color:var(--mut)}
+.seg svg,.gbtn.ac svg,.gbtn.dc svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round}
+.seg .pin,.gbtn .pin{fill:currentColor;stroke:none}
+.seg button[data-akim=ac][aria-pressed=true],.gbtn.ac{background:#DBEAFE;color:#1E40AF}
+.seg button[data-akim=dc][aria-pressed=true],.gbtn.dc{background:#FEF3C7;color:#92400E}
 .fab{background:#fff;border:0;border-radius:14px;box-shadow:0 2px 10px rgba(17,24,39,.18);min-height:46px;min-width:46px;padding:0 14px;font:800 14px Inter,sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:6px;color:var(--txt)}
 .fab svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .fab i{font-style:normal;background:var(--ink);color:#fff;border-radius:999px;font-size:11.5px;padding:0 6px}
 .mtop .fab{margin-left:auto}
-.fab span{white-space:nowrap}
-.helpbtn{top:66px;right:10px;min-height:40px;min-width:40px;padding:0;border-radius:50%;font-size:17px;font-weight:900}
 .guide{list-style:none;display:grid;gap:16px;padding:8px 0 6px}
 .guide li{display:flex;align-items:center;gap:14px;font-size:14px;line-height:1.4;color:var(--mut)}
 .guide li b{display:block;font-size:15px;font-weight:800;color:var(--txt)}
@@ -193,17 +197,16 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .gi .gtag{position:absolute;top:0;right:1px;width:19px;height:19px}
 .gnum{width:34px;height:34px;border-radius:50%;background:#111827;color:#fff;border:2px solid #fff;display:grid;place-items:center;font:900 13px Inter,sans-serif;box-shadow:0 1px 4px rgba(17,24,39,.35)}
 .gbtn{width:40px;height:40px;border-radius:12px;background:#fff;display:grid;place-items:center;box-shadow:0 2px 10px rgba(17,24,39,.18)}
-.gbtn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;filter:none;color:var(--txt)}
-@media(max-width:350px){#mf-open span{display:none}}
+.gbtn{color:var(--txt)}.gbtn svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;filter:none}
+.gbtn.kart{background:#FFF7D6;color:#92400E}.gbtn.ag{background:var(--gbg);color:var(--g)}
+.gbar{width:36px;height:5px;border-radius:3px;background:#D1D5DB}
+.guide+h3{margin-top:22px}
+.guide[hidden]+h3{margin-top:0}
 .locbtn{right:10px;bottom:calc(var(--sheet-h) + 14px)}
 .locbtn.busy svg{animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.radius{left:10px;bottom:calc(var(--sheet-h) + 14px);background:#fff;border-radius:999px;box-shadow:0 2px 10px rgba(17,24,39,.18);padding:4px 14px;width:min(270px,calc(100% - 80px));display:flex;align-items:center;gap:10px;height:46px}
-.radius label{font-size:12px;font-weight:700;color:var(--mut);white-space:nowrap;display:flex;flex-direction:column;line-height:1.1}
-.radius label b{color:var(--ink);font-size:14px;font-weight:900}
-.radius input{flex:1;min-width:0;accent-color:var(--ink);margin:0;height:30px}
 .here{top:66px;left:50%;transform:translateX(-50%);box-shadow:0 4px 14px rgba(17,24,39,.2)}
-.mapmsg{left:12px;right:12px;bottom:calc(var(--sheet-h) + 84px);background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:14px;font-weight:600;text-align:center;box-shadow:0 4px 14px rgba(17,24,39,.12)}
+.mapmsg{left:12px;right:68px;bottom:calc(var(--sheet-h) + 14px);background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:14px;font-weight:600;text-align:center;box-shadow:0 4px 14px rgba(17,24,39,.12)}
 .mapmsg.bad{border-color:#FECACA;color:var(--r)}
 .mapmsg .btn{margin-top:8px}
 .mapmsg.soft{font-weight:500;color:var(--txt);padding:10px 34px 10px 14px;text-align:left}
@@ -222,7 +225,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .sh-b{flex:1;overflow-y:auto;padding:4px 12px 14px;-webkit-overflow-scrolling:touch}
 .mapview[data-s=peek] .sh-b{display:none}
 .mapview.dragging .sh-b{display:block}
-.mapview:not(.dragging) .sheet,.mapview:not(.dragging) .locbtn,.mapview:not(.dragging) .radius{transition:height .22s ease,bottom .22s ease}
+.mapview:not(.dragging) .sheet,.mapview:not(.dragging) .locbtn,.mapview:not(.dragging) .mapmsg{transition:height .22s ease,bottom .22s ease}
 /* İşaretçiler: marka renginde yuvarlak rozet; kampanyalı istasyonda yanıp sönen yeşil halka; aynı noktadakiler tek rozette sayıyla */
 .mkw{position:absolute;left:0;top:0}
 .mk{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:var(--bg-b,#6B7280);color:var(--fg-b,#fff);border:2px solid #fff;
@@ -244,8 +247,6 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .st1.unk .pn{width:20px;height:26px}
 .st1.unk .pn path.b{fill:#9CA3AF}
 .mk.grp.big{width:42px;height:42px;font-size:12px}
-.cpin{left:50%;top:50%;width:38px;height:38px;transform:translate(-50%,-100%);pointer-events:none;z-index:1050;filter:drop-shadow(0 2px 3px rgba(17,24,39,.45))}
-.cpin svg{width:38px;height:38px;fill:#2563EB;stroke:#fff;stroke-width:1.5}
 .sortbar{display:flex;gap:6px;overflow-x:auto;margin:0 -12px 10px;padding:2px 12px 4px;scrollbar-width:none}
 .sortbar::-webkit-scrollbar{display:none}
 .sortbar .chip{min-height:34px;padding:6px 12px;font-size:13px}
@@ -328,8 +329,11 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
   .mapview[data-s=peek] .sh-b{display:block}
   .handle .bar,.sh-h .tg{display:none}
   .mtop{left:414px}
-  .radius{left:414px;bottom:14px}.locbtn{bottom:14px}
-  .mapmsg{left:414px;bottom:90px}
+  .locbtn{bottom:14px}
+  .mapmsg{left:414px;right:68px;bottom:14px}
+  :root{--nav:0px}
+  .nav{left:auto;right:58px;top:var(--sat);bottom:auto;height:calc(var(--top) - var(--sat));width:auto;border:0;background:none;padding:0;gap:4px;z-index:1201}
+  .nav button{flex:none;width:64px}
 }
 </style>
 </head>
@@ -342,13 +346,15 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
       <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M13.5 2 4 13.5h6.2L9.5 22 20 9.8h-6.4z" fill="#FFC800" stroke="#E0A100" stroke-width="1" stroke-linejoin="round"/></svg>
       <span>Watt<b>Kaç</b></span>
     </button>
-    <nav class="tabs" aria-label="Bölümler">
-      <button data-go="harita" data-tab="harita"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5a7 7 0 0 0-14 0C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Harita</span></button>
-      <button data-go="kamp" data-tab="kamp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8z"/><path d="M7 7h.01"/></svg><span>Kampanyalar</span><i id="kamp-n"></i></button>
-      <button data-go="profil" data-tab="profil"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6.5 15h4"/></svg><span>Kartlarım</span></button>
-    </nav>
+    <span class="spacer"></span>
+    <button class="hbtn" id="help" aria-haspopup="dialog" aria-label="Yardım: bu ekrandaki simgeler" title="Yardım"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M9.3 9.2a2.8 2.8 0 1 1 4.2 2.5c-.9.5-1.5 1.1-1.5 2.1"/><path d="M12 17.2h.01"/></svg></button>
   </div>
 </header>
+<nav class="nav" aria-label="Bölümler">
+  <button data-go="harita" data-tab="harita" aria-label="Harita" title="Harita"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3 6.5V20l6-2.5 6 2.5 6-2.5V4l-6 2.5z"/><path d="M9 4v13.5M15 6.5V20"/></svg></button>
+  <button data-go="kamp" data-tab="kamp" aria-label="Kampanyalar" title="Kampanyalar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8z"/><path d="M7 7h.01"/></svg><i id="kamp-n"></i></button>
+  <button data-go="profil" data-tab="profil" aria-label="Profilim" title="Profilim"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></button>
+</nav>
 
 <main>
   <!-- KAMPANYALAR -->
@@ -359,9 +365,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
     </div>
     <div class="searchrow">
       <input class="search" id="q" type="search" placeholder="Banka, istasyon, kart…" autocomplete="off" aria-label="Ara">
-      <button class="fbtn" id="open-f" aria-haspopup="dialog">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Filtre<i id="fcount" hidden></i>
-      </button>
+      <button class="fbtn" id="open-f" aria-haspopup="dialog" aria-label="Filtre" title="Filtre"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 5h17l-6.5 8v6l-4 1.5V13z"/></svg><i id="fcount" hidden></i></button>
     </div>
     <div class="quick" id="quick"></div>
     <div class="bar">
@@ -387,12 +391,9 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
     <div id="map" role="application" aria-label="Şarj istasyonları haritası"></div>
     <div class="ov mtop">
       <div class="seg" id="seg" role="group" aria-label="Akım türü"></div>
-      <button class="fab" id="mf-open" aria-haspopup="dialog" aria-label="Filtre"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span>Filtre</span><i id="mf-n" hidden></i></button>
+      <button class="fab" id="mf-open" aria-haspopup="dialog" aria-label="Filtre" title="Filtre"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 5h17l-6.5 8v6l-4 1.5V13z"/></svg><i id="mf-n" hidden></i></button>
     </div>
-    <button class="fab ov helpbtn" id="help" aria-haspopup="dialog" aria-label="Haritadaki işaretler ne anlama geliyor?">?</button>
-    <div class="ov radius"><label for="rad-r">Arama çapı<b id="rad-v">5 km</b></label><input type="range" id="rad-r" min="1" max="50" step="1" value="5" aria-label="Arama çapı (km)"></div>
-    <button class="fab ov locbtn" id="loc" aria-label="Konumuma git"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg></button>
-    <div class="ov cpin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6" fill="#fff"/></svg></div>
+    <button class="fab ov locbtn" id="loc" aria-label="Konumuma git" title="Konumuma git"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg></button>
     <div class="ov mapmsg" id="mapmsg" hidden></div>
     <div class="install" id="install" role="dialog" aria-label="Uygulamayı yükle" hidden>
       <img src="icons/icon-192.png" alt="">
@@ -429,8 +430,8 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
   </section>
 
   <!-- PROFİL -->
-  <section id="v-profil" class="view wrap" aria-label="Kartlarım" hidden>
-    <div class="hero"><h1>Kartlarım</h1><p class="lead">Kartını ve şarj uygulamanı seç; sana uyan kampanyalar öne çıksın.</p></div>
+  <section id="v-profil" class="view wrap" aria-label="Profilim" hidden>
+    <div class="hero"><h1>Profilim</h1><p class="lead">Kartını ve şarj uygulamanı seç; sana uyan kampanyalar öne çıksın.</p></div>
     <div class="sec">
       <h2>Kartlarım</h2>
       <div class="chips" id="p-banka"></div>
@@ -468,19 +469,40 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
   <div class="fs-f"><button class="btn" id="fs-clear">Temizle</button><button class="btn primary" id="fs-ok">Sonuçları göster</button></div>
 </div>
 
-<!-- Harita rehberi: işaretlerin anlamı (ilk ziyarette bir kez, sonra "?" düğmesiyle) -->
-<div class="fsheet" id="gs" role="dialog" aria-modal="true" aria-label="Harita nasıl okunur?" hidden>
-  <div class="fs-h"><span>Harita nasıl okunur?</span><button id="gs-x" aria-label="Kapat">✕</button></div>
+<!-- Yardım: bulunulan ekrandaki simgelerin anlamı (üstteki ? düğmesiyle açılır; kendiliğinden açılmaz) -->
+<div class="fsheet" id="gs" role="dialog" aria-modal="true" aria-label="Yardım" hidden>
+  <div class="fs-h"><span>Bu ekranda ne var?</span><button id="gs-x" aria-label="Kapat">✕</button></div>
   <div class="fs-b">
-    <ul class="guide">
+    <ul class="guide" data-help="harita">
       <li><span class="gi"><svg viewBox="0 0 24 30" width="26" height="33" aria-hidden="true"><path d="M12 29s9-8.6 9-16.5A9 9 0 0 0 3 12.5C3 20.4 12 29 12 29z" fill="#1D4ED8" stroke="#fff" stroke-width="1.6"/><path d="M10.2 7.5v2.6M13.8 7.5v2.6M9 10.1h6v1.7a3 3 0 0 1-6 0zM12 14.8v2.4" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>Şarj istasyonu</b>Rengi şarj ağını gösterir. Dokun: fiyat ve yol tarifi.</span></li>
       <li><span class="gi"><svg viewBox="0 0 24 30" width="26" height="33" aria-hidden="true"><path d="M12 29s9-8.6 9-16.5A9 9 0 0 0 3 12.5C3 20.4 12 29 12 29z" fill="#16A34A" stroke="#fff" stroke-width="1.6"/><path d="M10.2 7.5v2.6M13.8 7.5v2.6M9 10.1h6v1.7a3 3 0 0 1-6 0zM12 14.8v2.4" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gtag" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12.2V4.6A1.6 1.6 0 0 1 4.6 3h7.6l9 9-9.4 9.4z" fill="#FFC800" stroke="#B45309" stroke-width="1.4" stroke-linejoin="round"/><path d="M10.6 15.6l5-5" stroke="#78350F" stroke-width="1.6" stroke-linecap="round"/><circle cx="11" cy="11" r="1.15" fill="#78350F"/><circle cx="15.3" cy="15.2" r="1.15" fill="#78350F"/></svg></span><span><b>Kampanyalı istasyon</b>Sarı etiket, burada indirim olduğunu gösterir.</span></li>
       <li><span class="gi"><span class="gnum">12</span></span><span><b>Birden çok istasyon</b>Dokun, harita yakınlaşsın.</span></li>
-      <li><span class="gi"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z" fill="#2563EB" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="10" r="2.6" fill="#fff"/></svg></span><span><b>Arama noktası</b>Haritayı kaydır; alttaki liste bu noktanın çevresini gösterir.</span></li>
-      <li><span class="gi"><span class="gbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg></span></span><span><b>Konumuma git</b>Haritayı bulunduğun yere getirir.</span></li>
+      <li><span class="gi"><span class="gbtn ac"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6.5h12a8.3 8.3 0 1 1-12 0z"/><g class="pin"><circle cx="9.3" cy="10.6" r="1.25"/><circle cx="14.7" cy="10.6" r="1.25"/><circle cx="7.9" cy="14.6" r="1.25"/><circle cx="12" cy="14.6" r="1.25"/><circle cx="16.1" cy="14.6" r="1.25"/></g></svg></span></span><span><b>AC şarj</b>Normal hızda şarj (Type 2 fişi). Dokun, yalnızca AC istasyonlar kalsın.</span></li>
+      <li><span class="gi"><span class="gbtn dc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.3 2.8h9.4a5.6 5.6 0 1 1-9.4 0z"/><rect x="5.2" y="14.6" width="13.6" height="7.4" rx="3.7"/><g class="pin"><circle cx="10.2" cy="6" r=".95"/><circle cx="13.8" cy="6" r=".95"/><circle cx="12" cy="9" r=".95"/><circle cx="9.3" cy="18.3" r="1.7"/><circle cx="14.7" cy="18.3" r="1.7"/></g></svg></span></span><span><b>DC hızlı şarj</b>Hızlı şarj (CCS fişi). Dokun, yalnızca DC istasyonlar kalsın.</span></li>
+      <li><span class="gi"><span class="gbtn "><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 5h17l-6.5 8v6l-4 1.5V13z"/></svg></span></span><span><b>Filtre</b>Markaya göre süz, yalnızca kampanyalı istasyonları göster.</span></li>
+      <li><span class="gi"><span class="gbtn "><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg></span></span><span><b>Konumum</b>Haritayı bulunduğun yere getirir.</span></li>
+      <li><span class="gi"><span class="gbar"></span></span><span><b>İstasyon listesi</b>Haritada gördüğün alandaki istasyonlar. Haritayı kaydır ya da yakınlaş, liste değişir.</span></li>
+    </ul>
+    <ul class="guide" data-help="kamp">
+      <li><span class="gi"><span class="gbtn kart"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6.5 15h4"/></svg></span></span><span><b>Banka kartı kampanyası</b>Belirtilen kartla ödeyince kazanırsın.</span></li>
+      <li><span class="gi"><span class="gbtn ag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12z"/></svg></span></span><span><b>Şarj ağının kendi indirimi</b>O ağda şarj eden herkese ya da belirtilen gruba.</span></li>
+      <li><span class="gi"><span class="bdg new">Yeni</span></span><span><b>Yeni</b>Son 7 günde eklenen kampanya.</span></li>
+      <li><span class="gi"><span class="bdg wait">?</span></span><span><b>Doğrulanıyor</b>Resmi sayfa otomatik açılamadı; ayrıntıyı resmi sayfadan teyit et.</span></li>
+      <li><span class="gi"><span class="bdg me">✓</span></span><span><b>Kartın</b>Profilinde seçtiğin karta uyan kampanya.</span></li>
+      <li><span class="gi"><span class="gbtn "><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span></span><span><b>Kalan süre</b>Kampanyanın bitmesine kalan gün.</span></li>
+    </ul>
+    <ul class="guide" data-help="profil">
+      <li><span class="gi"><span class="gbtn kart"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6.5 15h4"/></svg></span></span><span><b>Kartların ve uygulamaların</b>Seçtiklerine göre kampanyalar ve harita sana göre süzülür.</span></li>
+      <li><span class="gi"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><span><b>Gizlilik</b>Hesap yok. Seçimlerin yalnızca bu cihazda saklanır.</span></li>
+    </ul>
+    <h3>Alt çubuk</h3>
+    <ul class="guide">
+      <li><span class="gi"><span class="gbtn "><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3 6.5V20l6-2.5 6 2.5 6-2.5V4l-6 2.5z"/><path d="M9 4v13.5M15 6.5V20"/></svg></span></span><span><b>Harita</b>Yakınındaki şarj istasyonları ve fiyatları.</span></li>
+      <li><span class="gi"><span class="gbtn "><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8z"/><path d="M7 7h.01"/></svg></span></span><span><b>Kampanyalar</b>Banka kartı ve şarj ağı kampanyaları.</span></li>
+      <li><span class="gi"><span class="gbtn "><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></span></span><span><b>Profilim</b>Kartlarını ve şarj uygulamalarını seç.</span></li>
     </ul>
   </div>
-  <div class="fs-f"><button class="btn primary" id="gs-ok">Anladım</button></div>
+  <div class="fs-f"><button class="btn primary" id="gs-ok">Tamam</button></div>
 </div>
 
 <!-- Harita filtre çekmecesi -->
@@ -717,13 +739,11 @@ function resetAll() {
   S.banka.clear(); S.ag.clear(); S.tip.clear(); S.q = ""; S.bana = false;
   $("q").value = ""; renderQuick(); render();
 }
-function closeSheets() { if (!$("gs").hidden) lsSet("wk.rehber", "1"); $("fs").hidden = true; $("mfs").hidden = true; $("gs").hidden = true; $("bd").hidden = true; }
-// Harita rehberi: işaretlerin anlamı. İlk ziyarette bir kez kendiliğinden açılır, sonra "?" düğmesiyle.
-function openGuide() { $("gs").hidden = false; $("bd").hidden = false; $("gs-ok").focus(); }
-function maybeGuide() { if (S.view === "harita" && !lsGet("wk.rehber") && $("bd").hidden) openGuide(); }
-function openFilters(open) {
-  if (!open) return closeSheets();
-  $("fs").hidden = false; $("bd").hidden = false; $("fs-ok").focus();
+function closeSheets() { $("fs").hidden = true; $("mfs").hidden = true; $("gs").hidden = true; $("bd").hidden = true; }
+// Yardım: bulunulan ekranın simgeleri + alt çubuk. Yalnızca üstteki ? düğmesiyle açılır.
+function openGuide() {
+  document.querySelectorAll("#gs [data-help]").forEach(u => u.hidden = u.dataset.help !== S.view);
+  $("gs").hidden = false; $("bd").hidden = false; $("gs").querySelector(".fs-b").scrollTop = 0; $("gs-ok").focus();
 }
 function openMapFilters(open) {
   if (!open) return closeSheets();
@@ -1015,21 +1035,12 @@ function openMap() {
     M.map = L.map("map", { zoomControl: wide, attributionControl: true, minZoom: 6, zoomSnap: 1, wheelPxPerZoomLevel: 90 }).setView([41.01, 28.97], 11);
     L.tileLayer(TILE, { maxZoom: 19, attribution: TILE_ATTR, updateWhenIdle: true, updateWhenZooming: false, keepBuffer: 1 }).addTo(M.map);
     M.layer = L.layerGroup().addTo(M.map);
-    // Arama noktası her zaman haritanın ortasında: harita kaydıkça daire de ortada kalır, durunca liste yenilenir
-    M.circle = L.circle([41.01, 28.97], { radius: M.radius * 1000, color: "#2563EB", weight: 2, fillColor: "#2563EB", fillOpacity: .06, interactive: false }).addTo(M.map);
-    M.map.on("move", () => M.circle.setLatLng(M.map.getCenter()));
-    let t; M.map.on("moveend zoomend", () => { clearTimeout(t); t = setTimeout(() => { const c = M.map.getCenter(); M.center = { lat: c.lat, lon: c.lng }; M.circle.setLatLng(c); M.shown = PAGE; refresh(); }, 120); });
+    let t; M.map.on("moveend zoomend", () => { clearTimeout(t); t = setTimeout(() => { const c = M.map.getCenter(); M.center = { lat: c.lat, lon: c.lng }; M.shown = PAGE; refresh(); }, 120); });
     M.map.on("click", () => { if ($("v-harita").dataset.s !== "peek") { M.sel = null; M.group = null; $("v-harita").dataset.s = "peek"; renderSheet(); renderMarkers(true); } });
     M.center = { lat: 41.01, lon: 28.97 };
     loadAll().then(() => locate(true));
   }
   setTimeout(() => M.map.invalidateSize(), 50);
-}
-// Dairenin ekrana sığacağı yakınlaştırma düzeyi
-function zoomForRadius() {
-  const px = Math.min($("map").clientWidth, $("map").clientHeight * .6) / 2.4, lat = (M.center || M.me || { lat: 39 }).lat;
-  const mPerPx = M.radius * 1000 / px, z = Math.log2(156543.03 * Math.cos(lat * Math.PI / 180) / mPerPx);
-  return Math.max(6, Math.min(16, Math.floor(z)));
 }
 // Instagram, Facebook, TikTok gibi uygulamaların içindeki tarayıcılar konum iznini çoğu zaman vermez
 const INAPP = /Instagram|FBAN|FBAV|FB_IAB|musical_ly|TikTok|Twitter|LinkedInApp|Snapchat/i.test(navigator.userAgent);
@@ -1057,7 +1068,7 @@ function locate(first = false) {
     M.me = { lat: pos.coords.latitude, lon: pos.coords.longitude };
     if (M.meMark) M.meMark.remove();
     M.meMark = L.circleMarker([M.me.lat, M.me.lon], { radius: 7, color: "#fff", weight: 3, fillColor: "#2563EB", fillOpacity: 1, interactive: false }).addTo(M.map);
-    M.map.setView([M.me.lat, M.me.lon], zoomForRadius(), { animate: false });
+    M.map.setView([M.me.lat, M.me.lon], 13, { animate: false });
     if (first) an("konum", "izin verildi");
   }, err => {
     $("loc").classList.remove("busy");
@@ -1104,13 +1115,12 @@ async function loadAll() {
     M.all = mergeAll(list.filter(s => !/^test\b/i.test(s.name))); M.all.forEach(enrich);
     M.byId = new Map(M.all.map(s => [s.id, s]));
     setMsg(""); refresh();
-    setTimeout(maybeGuide, 600);
   } catch (e) {
     setMsg("İstasyon verisi alınamadı. Bağlantını kontrol edip tekrar dene." + (M.errs ? " (" + M.errs + ")" : ""), true, true);
   }
 }
 function prep(s) {
-  const ref = M.center || M.me;
+  const ref = M.me || M.center; // uzaklık: konum biliniyorsa sana, bilinmiyorsa haritanın ortasına göre
   s.d = ref ? dist(ref, s) : 0;
   s.mode = M.f.akim || (s.hasDc ? "dc" : s.hasAc ? "ac" : null); s.price = stationPrice(s, s.mode);
   s.net = netDiscount(s); s.final = s.net ? s.net.v : (s.price ? s.price.v : null);
@@ -1126,9 +1136,11 @@ function refresh() {
   if (M.f.kamp) a = a.filter(s => s.camp.length);
   if (M.f.bana) a = a.filter(s => stationMine(s.brand));
   M.filtered = a;
-  // dairenin içi
-  const c = M.center, rM = M.radius * 1000, dLat = M.radius / 111, dLon = M.radius / (111 * Math.cos(c.lat * Math.PI / 180));
-  const inC = s => Math.abs(s.lat - c.lat) <= dLat && Math.abs(s.lon - c.lon) <= dLon && dist(c, s) <= rM;
+  // Liste = haritada görünen alan (liste çekmecesinin örttüğü şerit hariç: telefonda alttaki tutamak, geniş ekranda soldaki panel)
+  const el = $("map"), wide = matchMedia("(min-width:900px)").matches;
+  const p1 = M.map.containerPointToLatLng([wide ? 414 : 0, 0]), p2 = M.map.containerPointToLatLng([el.clientWidth, el.clientHeight - (wide ? 0 : 64)]);
+  const n = Math.max(p1.lat, p2.lat), sth = Math.min(p1.lat, p2.lat), w = Math.min(p1.lng, p2.lng), e = Math.max(p1.lng, p2.lng);
+  const inC = s => s.lat <= n && s.lat >= sth && s.lon >= w && s.lon <= e;
   const circBase = base.filter(inC);
   const unk = M.f.tum ? 0 : M.all.filter(s => !s.known && inC(s)).length;
   M.cnt = { all: circBase.length, ac: circBase.filter(s => s.hasAc).length, dc: circBase.filter(s => s.hasDc).length, unk };
@@ -1146,8 +1158,8 @@ function refresh() {
   if (!$("mfs").hidden) renderMapSheet();
 }
 function renderSeg() {
-  const b = (v, l, t) => `<button data-akim="${v}" title="${t}" aria-pressed="${(M.f.akim || "") === v}">${l}</button>`;
-  $("seg").innerHTML = b("", "Tümü", "Tüm istasyonlar") + b("ac", "AC", "AC: normal hızda şarj") + b("dc", "DC · hızlı", "DC: hızlı şarj");
+  const b = (v, ic, t) => `<button data-akim="${v}" title="${t}" aria-label="${t}" aria-pressed="${M.f.akim === v}">${ic}</button>`;
+  $("seg").innerHTML = b("ac", `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6.5h12a8.3 8.3 0 1 1-12 0z"/><g class="pin"><circle cx="9.3" cy="10.6" r="1.25"/><circle cx="14.7" cy="10.6" r="1.25"/><circle cx="7.9" cy="14.6" r="1.25"/><circle cx="12" cy="14.6" r="1.25"/><circle cx="16.1" cy="14.6" r="1.25"/></g></svg>`, "AC: normal şarj") + b("dc", `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.3 2.8h9.4a5.6 5.6 0 1 1-9.4 0z"/><rect x="5.2" y="14.6" width="13.6" height="7.4" rx="3.7"/><g class="pin"><circle cx="10.2" cy="6" r=".95"/><circle cx="13.8" cy="6" r=".95"/><circle cx="12" cy="9" r=".95"/><circle cx="9.3" cy="18.3" r="1.7"/><circle cx="14.7" cy="18.3" r="1.7"/></g></svg>`, "DC: hızlı şarj");
   const n = M.f.brands.size + (M.f.kamp ? 1 : 0) + (M.f.bana ? 1 : 0) + (M.f.tum ? 1 : 0);
   $("mf-n").hidden = !n; $("mf-n").textContent = n;
 }
@@ -1227,14 +1239,14 @@ function renderSheet() {
     h.innerHTML = `<b>Şarj istasyonları</b>`;
     b.innerHTML = `<p class="note">İstasyonlar yükleniyor…</p>`; return;
   }
-  h.innerHTML = `<span><b>${M.view.length}</b> istasyon · ${M.radius} km içinde</span>${open ? "" : `<span class="tg">Listeyi aç ↑</span>`}`;
+  h.innerHTML = `<span><b>${M.view.length}</b> istasyon · haritadaki alanda</span>${open ? "" : `<span class="tg" aria-hidden="true">↑</span>`}`;
   const hidden = M.f.tum ? 0 : M.cnt.unk || 0;
   const srt = [["yakin", "En yakın"], ["ucuz", "En ucuz"], ...(P.banka.length ? [["kamp", "Kartımla en ucuz"]] : []), ["guc", "En güçlü"], ["pahali", "En pahalı"]];
   if (M.sort === "kamp" && !P.banka.length) M.sort = "ucuz";
   const sortbar = `<div class="sortbar" role="group" aria-label="Sırala">${srt.map(([v, l]) => `<button class="chip" data-ms="${v}" aria-pressed="${M.sort === v}">${l}</button>`).join("")}</div>`;
   let html = M.view.slice(0, M.shown).map(stationItem).join("");
   if (M.view.length > M.shown) html += `<button class="btn more" id="more">Daha fazla göster (${M.view.length - M.shown})</button>`;
-  if (!M.view.length) html = `<p class="note">Dairenin içinde bu filtrelerle istasyon yok. Haritayı kaydır ya da çapı büyüt.</p>`;
+  if (!M.view.length) html = `<p class="note">Haritadaki alanda bu filtrelerle istasyon yok. Haritayı kaydır ya da uzaklaş.</p>`;
   if (hidden) html += `<button class="btn more" data-showunk="1">Tanımsız ${hidden} istasyonu da göster</button>`;
   b.innerHTML = sortbar + html + `<div class="credit">Veri: EPDK, ağların resmi haritaları, © OpenStreetMap, © Open Charge Map</div>`;
 }
@@ -1366,7 +1378,7 @@ function bindEvents() {
     else if (b.id === "q-mine") { S.bana = !useMine(); render(); }
     else if (b.id === "q-setup") show("profil");
     else if (d.pk) { const a = P[d.pk]; a.includes(d.v) ? a.splice(a.indexOf(d.v), 1) : a.push(d.v); profileChanged(); }
-    else if (d.akim !== undefined) { an("filtre", "akım: " + (d.akim || "tümü")); M.f.akim = d.akim || null; M.shown = PAGE; renderMap(); }
+    else if (d.akim !== undefined) { an("filtre", "akım: " + (d.akim || "tümü")); M.f.akim = M.f.akim === d.akim ? null : d.akim; M.shown = PAGE; renderMap(); }
     else if (d.mf) { an("filtre", d.mf); M.f[d.mf] = !M.f[d.mf]; M.shown = PAGE; renderMap(); }
     else if (d.mb) { an("filtre", "marka"); const s = M.f.brands; s.has(d.mb) ? s.delete(d.mb) : s.add(d.mb); M.shown = PAGE; renderMap(); }
     else if (d.ms) { an("siralama", d.ms); M.sort = d.ms; if ($("v-harita").dataset.s === "peek") $("v-harita").dataset.s = "half"; refresh(); $("sh-b").scrollTop = 0; }
@@ -1430,14 +1442,6 @@ function bindEvents() {
     if (M.group) { M.group = null; renderSheet(); return; }
     const v = $("v-harita"), o = ["peek", "half", "full"]; v.dataset.s = o[(o.indexOf(v.dataset.s) + 1) % 3]; renderSheet();
   };
-  // arama çapı: kaydırırken daire canlı büyür/küçülür, bırakınca arama yapılır
-  const rv = $("rad-v"), rr = $("rad-r"); let rt;
-  rr.oninput = () => {
-    M.radius = +rr.value; rv.textContent = `${M.radius} km`;
-    if (M.circle) M.circle.setRadius(M.radius * 1000);
-    clearTimeout(rt); rt = setTimeout(() => { M.shown = PAGE; refresh(); }, 120);
-  };
-  rr.onchange = () => { M.radius = +rr.value; refresh(); M.map.setZoom(zoomForRadius()); };
   $("p-go").onclick = () => { S.bana = true; show("kamp"); render(); };
   $("p-copy").onclick = async () => {
     const v = $("p-code").value; if (!v) return;
