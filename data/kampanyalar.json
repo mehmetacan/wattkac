@@ -1,6 +1,6 @@
 {
   "donem": "Kasım 2026",
-  "guncelleme": "2026-11-09",
+  "guncelleme": "2026-11-10",
   "genel_kartlar": "Paraf Doğal · QNB · ON",
   "kampanyasiz_bankalar": [
     "İş Bankası (Maximum)"
@@ -13,7 +13,7 @@
       "tur": "Kredi kartı",
       "cover": {
         "big": "%50'ye varan bonus",
-        "sub": "Shell Recharge · Ovolt",
+        "sub": "Shell Recharge · Ovolt · Varr",
         "son": "30 Kasım"
       },
       "offers": [
@@ -42,6 +42,19 @@
           "bas": "2026-11-01",
           "bit": "2026-11-30",
           "kosul": "Bonus, Bonus Genç, Money Bonus, Bonus Business (şahıs), Paracard, sanal ve ek kartlar; Altın Bonus ve Bonus Flexi hariç; günde 1 bonus; Garanti BBVA POS; bonus 5 Ara 2026–5 Oca 2027 arası kullanılır"
+        },
+        {
+          "big": "100 TL bonus",
+          "det": "Tek seferde 400 TL+ şarjda · en fazla 4 kez, toplam 400 TL",
+          "st": [
+            "Varr"
+          ],
+          "son": "30 Kasım",
+          "join": "BonusFlaş'tan Hemen Katıl",
+          "link": "https://www.bonus.com.tr/kampanyalar/varr-sarj-istasyonlari-kampanya",
+          "bas": "2026-11-01",
+          "bit": "2026-11-30",
+          "kosul": "Tüm Varr istasyonlarında Garanti BBVA POS ile tek seferde 400 TL ve üzeri peşin/taksitli ödemeye 100 TL bonus; aynı gün aynı iş yerinde yalnızca ilk harcama; Bonus, Bonus Genç, Money Bonus, Troy logolu Bonus American Express bireysel, sanal, ek ve personel kartları; Paracard, Altın Bonus, Bonus Flexi ve ticari kartlar hariç; bonus 3 Ara 2026–3 Oca 2027 arası kullanılır"
         }
       ]
     },
@@ -1112,6 +1125,22 @@
       "cover": {
         "big": "%50 bonus",
         "sub": "Garanti BBVA kartlarıyla",
+        "son": "30 Kasım"
+      }
+    },
+    {
+      "id": "varr",
+      "name": "Varr",
+      "own": [],
+      "banks": [
+        [
+          "Garanti BBVA Bonus",
+          "400 TL+ şarja 100 TL bonus"
+        ]
+      ],
+      "cover": {
+        "big": "100 TL bonus",
+        "sub": "Garanti Bonus ile",
         "son": "30 Kasım"
       }
     },
