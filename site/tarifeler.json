@@ -50,7 +50,7 @@
    "kaynak": "https://www.voltrun.com/voltrun-uyelik-tarife/",
    "kontrol": null,
    "gecerlilik": null,
-   "not": "Resmi sayfa bot doğrulaması istiyor; elle doğrulanmalı."
+   "not": "Üyelik-tarife sayfası bot doğrulaması istiyor; açılamazsa https://www.voltrun.com/tr/tarifeler sayfası denenmeli."
   },
   "Otopriz": {
    "ac": {
@@ -130,6 +130,226 @@
    "kontrol": null,
    "gecerlilik": null,
    "not": "Sitede fiyat yok."
+  },
+  "ZES": {
+   "ac": null,
+   "dc": null,
+   "kaynak": "https://zes.net/tr/fiyatlandirma",
+   "kontrol": null,
+   "gecerlilik": null,
+   "adlar": [
+    "zes"
+   ],
+   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+  },
+  "Enyakıt": {
+   "ac": null,
+   "dc": null,
+   "kaynak": "https://www.enyakit.com.tr/ucretlendirme",
+   "kontrol": null,
+   "gecerlilik": null,
+   "adlar": [
+    "EN YAKIT"
+   ],
+   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+  },
+  "Oncharge": {
+   "ac": null,
+   "dc": null,
+   "kaynak": "https://www.oncharge.com.tr/fiyatlar",
+   "kontrol": null,
+   "gecerlilik": null,
+   "adlar": [
+    "oncharge"
+   ],
+   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+  },
+  "Otojet": {
+   "ac": null,
+   "dc": null,
+   "kaynak": "https://www.oto-jet.com.tr/fiyatlarimiz",
+   "kontrol": null,
+   "gecerlilik": null,
+   "adlar": [
+    "Otojet"
+   ],
+   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+  },
+  "D-Charge": {
+   "ac": null,
+   "dc": null,
+   "kaynak": "https://dcharge.com.tr/tarifeler",
+   "kontrol": null,
+   "gecerlilik": null,
+   "adlar": [
+    "D-Charge"
+   ],
+   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+  },
+  "Zeplin": {
+   "ac": null,
+   "dc": null,
+   "kaynak": "https://www.zeplinenerji.com",
+   "kontrol": null,
+   "gecerlilik": null,
+   "adlar": [
+    "ZEPLİN CAR rental"
+   ],
+   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+  },
+  "Tunçmatik": {
+   "ac": null,
+   "dc": null,
+   "kaynak": "https://tuncmatikcharge.com/fiyatlar/",
+   "kontrol": null,
+   "gecerlilik": null,
+   "adlar": [
+    "tunçmatik"
+   ],
+   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+  },
+  "Beefull": {
+   "ac": null,
+   "dc": null,
+   "kaynak": "https://beefull.com/tarifeler/elektrikli-arac-tarifesi/",
+   "kontrol": null,
+   "gecerlilik": null,
+   "adlar": [
+    "beefull"
+   ],
+   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+  },
+  "Aksa Şarj": {
+   "ac": null,
+   "dc": null,
+   "kaynak": "https://www.aksasarj.com.tr/ucretler",
+   "kontrol": null,
+   "gecerlilik": null,
+   "adlar": [
+    "AKSA ŞARJ"
+   ],
+   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+  },
+  "MKS Şarj": {
+   "ac": null,
+   "dc": null,
+   "kaynak": "https://mkssarj.com/tarife",
+   "kontrol": null,
+   "gecerlilik": null,
+   "adlar": [
+    "MKS-ŞARJ"
+   ],
+   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+  },
+  "Miggo": {
+   "ac": null,
+   "dc": null,
+   "kaynak": "https://www.mig-go.com",
+   "kontrol": null,
+   "gecerlilik": null,
+   "adlar": [
+    "MİGGO"
+   ],
+   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+  },
+  "Neva Şarj": {
+   "ac": null,
+   "dc": null,
+   "kaynak": "https://nevasarj.com/sayfalar/istasyonlarimiz/arac-sarj-ac-dc-kwh-fiyat-tarifeleri.html",
+   "kontrol": null,
+   "gecerlilik": null,
+   "adlar": [
+    "NEVA ŞARJ"
+   ],
+   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+  },
+  "Varr": {
+   "ac": null,
+   "dc": null,
+   "kaynak": "https://www.varr.com.tr",
+   "kontrol": null,
+   "gecerlilik": null,
+   "adlar": [
+    "varr TM"
+   ],
+   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+  },
+  "i-Şarj": {
+   "ac": null,
+   "dc": null,
+   "kaynak": "https://www.isarj.com/tarifeler/",
+   "kontrol": null,
+   "gecerlilik": null,
+   "adlar": [
+    "i-şarj"
+   ],
+   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+  },
+  "ŞarjMatik": {
+   "ac": null,
+   "dc": null,
+   "kaynak": "https://sarjmatik.com.tr/ChargingPrices/",
+   "kontrol": null,
+   "gecerlilik": null,
+   "adlar": [
+    "ŞarjMatik"
+   ],
+   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+  },
+  "Şarjon": {
+   "ac": null,
+   "dc": null,
+   "kaynak": "https://sarjon.com.tr/fiyatlar/",
+   "kontrol": null,
+   "gecerlilik": null,
+   "adlar": [
+    "ŞARJON"
+   ],
+   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+  },
+  "ADZE": {
+   "ac": null,
+   "dc": null,
+   "kaynak": "https://www.adze.com/tr/fiyat-tarifesi",
+   "kontrol": null,
+   "gecerlilik": null,
+   "adlar": [
+    "ADZE"
+   ],
+   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+  },
+  "Lumicle": {
+   "ac": null,
+   "dc": null,
+   "kaynak": "https://lumicle.com.tr",
+   "kontrol": null,
+   "gecerlilik": null,
+   "adlar": [
+    "LUMİCLE"
+   ],
+   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+  },
+  "Tora": {
+   "ac": null,
+   "dc": null,
+   "kaynak": "https://torasarj.com/fiyatlar/",
+   "kontrol": null,
+   "gecerlilik": null,
+   "adlar": [
+    "TORA"
+   ],
+   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+  },
+  "Efish": {
+   "ac": null,
+   "dc": null,
+   "kaynak": "https://www.efish.com.tr/tr/fiyatlandirma/",
+   "kontrol": null,
+   "gecerlilik": null,
+   "adlar": [
+    "efish"
+   ],
+   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
   }
  }
 }

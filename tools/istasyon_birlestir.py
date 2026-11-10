@@ -1,15 +1,20 @@
 #!/usr/bin/env python3
-"""EPDK şarj istasyonu listesi (+ konum önbelleği) ile OpenStreetMap kayıtlarını birleştirip
+"""EPDK şarj istasyonu kaydı, ağların resmi haritaları, OpenStreetMap ve Open Charge Map kayıtlarını birleştirip
 site/istasyonlar.json üretir.
+
+EPDK kaynağı: data/epdk/epdk_api.json (tools/epdk_cek.py; kesin koordinat + soket tür/güç) varsa o kullanılır (q="e").
+Dosya yoksa eski yönteme düşülür: CSV listesi + adresten bulunan yaklaşık konumlar (konum_onbellek.json, poi_eslesme.json).
 
 Girdiler : data/epdk/epdk_sarj_istasyonlari.csv, data/epdk/konum_onbellek.json, data/osm/istasyonlar_osm.json
 Çıktı    : site/istasyonlar.json
-Kayıt alanları: i=kimlik, e=EPDK no, a/o=enlem/boylam, q=konum kalitesi (p adresteki tesisin OSM konumu, r resmi ağ haritası, o OSM, c Open Charge Map, a adres, m mahalle, i ilçe),
+Kayıt alanları: i=kimlik, e=EPDK no, a/o=enlem/boylam, q=konum kalitesi (e EPDK kaydındaki resmi koordinat, p adresteki tesisin OSM konumu, r resmi ağ haritası, o OSM, c Open Charge Map, a adres, m mahalle, i ilçe),
                 n=ad, b=marka, p=işletmeci (isletmeciler tablosuna indeks ya da OSM'de metin), k=kW, t=soketler, ac/dc, c=adet, ad=adres, h=saat, u=web
 """
 import csv, json, math, pathlib, re, sys, datetime
 
 EPDK = pathlib.Path("data/epdk/epdk_sarj_istasyonlari.csv")
+EPDK_API = pathlib.Path("data/epdk/epdk_api.json")  # EPDK'nın açık servisi: kesin koordinat ve soketler
+SOKET_AD = {"AC_TYPE2": "Type 2", "AC_TYPE1": "Type 1", "AC_SCHUKO": "Schuko", "DC_CCS": "CCS", "DC_CCS2": "CCS", "DC_CHADEMO": "CHAdeMO", "DC_GBT": "GB/T"}
 CACHE = pathlib.Path("data/epdk/konum_onbellek.json")
 POI = pathlib.Path("data/epdk/poi_eslesme.json")  # tesis (Shell, AVM vb.) üzerinden bulunan kesin konumlar
 OSM = pathlib.Path("data/osm/istasyonlar_osm.json")
@@ -57,7 +62,32 @@ def dist(a, b, c, d):
     return 2 * 6371000 * math.asin(math.sqrt(h))
 
 
+def soket_ekle(rec, soketler):
+    """EPDK soket listesini ([[tur, kW, adet], ...]) kayda işler: ac/dc adetleri, en yüksek güç, soket adları, toplam soket."""
+    for tur, kw, n in soketler:
+        tip = "dc" if tur.startswith("DC") else "ac"
+        rec[tip] = rec.get(tip, 0) + n
+        rec["c"] = rec.get("c", 0) + n
+        if kw and kw > rec.get("k", 0):
+            rec["k"] = kw
+        ad = SOKET_AD.get(tur) or tur.split("_", 1)[-1].title()
+        if ad not in rec.setdefault("t", []):
+            rec["t"].append(ad)
+
+
+def epdk_kayitlari():
+    """EPDK satırlarını ortak biçimde verir: (no, ad, marka, işletmeci, adres, halka_açık, konum|None, soketler)."""
+    if EPDK_API.exists():
+        j = json.loads(EPDK_API.read_text(encoding="utf-8"))
+        for x in j.get("istasyonlar", []):
+            yield x["no"], x.get("ad", ""), x.get("marka", ""), x.get("isletmeci", ""), x.get("adres", ""), True, (x["a"], x["o"]), x.get("s") or []
+        return
+    for r in csv.DictReader(EPDK.open(encoding="utf-8-sig")):
+        yield r["no"].strip(), r["ad"].strip(), r["marka"].strip(), r["ag_isletmecisi"].strip(), r["adres"].strip(), r["hizmet"].strip() != "Özel", None, []
+
+
 def main():
+    api = EPDK_API.exists()
     resmi, kaynaklar = [], {}
     for f in sorted(AGLAR.glob("*.json")) if AGLAR.exists() else []:
         d = json.loads(f.read_text(encoding="utf-8"))
@@ -78,37 +108,50 @@ def main():
             opi[name] = len(ops); ops.append(name)
         return opi[name]
 
-    seen, recs, ozel, groups = set(), [], 0, {}
-    for r in csv.DictReader(EPDK.open(encoding="utf-8-sig")):
-        no = r["no"].strip()
+    seen, recs, ozel, groups, birlesen = set(), [], 0, {}, 0
+    epdk_resmi = []  # resmi listesi olan ağların EPDK kayıtları: yalnızca o listedeki eksik güç/soket bilgisini tamamlamak için
+    for no, ad, marka, isletmeci, adres, acik, konum, soketler in epdk_kayitlari():
         if no in seen:
             continue
         seen.add(no)
-        loc = cache.get(r["adres"].strip())
-        rec = {"i": "e" + re.sub(r"\D", "", no), "e": no, "n": r["ad"].strip(), "b": r["marka"].strip(), "p": op(r["ag_isletmecisi"].strip()),
-               "ad": r["adres"].strip()}
-        if is_covered(r["marka"], r["ag_isletmecisi"]):
-            continue  # bu ağın resmi listesi var
-        if r["hizmet"].strip() == "Özel":
+        if not acik:
             ozel += 1
             continue  # halka açık olmayan (özel) istasyonlar haritada gösterilmez
-        if no in poi:
+        if is_covered(marka, isletmeci):
+            if konum:
+                x = {"a": konum[0], "o": konum[1], "b": marka}
+                soket_ekle(x, soketler)
+                epdk_resmi.append(x)
+            continue  # bu ağın resmi listesi var
+        rec = {"i": "e" + re.sub(r"\D", "", no), "e": no, "n": ad, "b": marka, "p": op(isletmeci), "ad": adres}
+        if konum:
+            rec["a"], rec["o"], rec["q"] = konum[0], konum[1], "e"
+        elif no in poi:
             rec["a"], rec["o"], rec["q"] = poi[no][0], poi[no][1], "p"
             rec["tesis"] = poi[no][2]
-        elif loc:
-            rec["a"], rec["o"], rec["q"] = loc
-        g = (fold(r["marka"]).strip(), fold(r["adres"]).strip())
-        if g in groups:
-            groups[g]["c"] = groups[g].get("c", 1) + 1
+        elif cache.get(adres):
+            rec["a"], rec["o"], rec["q"] = cache[adres]
+        # Aynı markanın aynı adresteki üniteleri tek istasyonda toplanır (EPDK koordinatı varsa ayrıca 150 m içinde olmalı)
+        g = (fold(marka).strip(), fold(adres).strip())
+        ana = groups.get(g)
+        if ana is not None and (not konum or dist(ana["a"], ana["o"], konum[0], konum[1]) < 150):
+            birlesen += 1
+            if soketler:
+                soket_ekle(ana, soketler)
+            else:
+                ana["c"] = ana.get("c", 1) + 1
             continue
+        if soketler:
+            soket_ekle(rec, soketler)
         rec["n"] = re.sub(r"[\s\-_]+(\d{1,2}|[A-Z])$", "", rec["n"]).strip() or rec["n"]
-        groups[g] = rec
+        groups.setdefault(g, rec)
         recs.append(rec)
 
     # OSM ve Open Charge Map kayıtlarını EPDK kayıtlarıyla eşle: aynı marka anahtarı, en yakın kayıt.
     # Arama yarıçapı EPDK konumunun kalitesine göre: adres 300 m, mahalle 2,5 km, ilçe 8 km.
     # Eşleşince EPDK kaydı kesin konum ve soket bilgisini alır; eşleşmeyenler ayrı istasyon olarak eklenir.
-    RADIUS = {"p": 300, "a": 300, "m": 2500, "i": 8000}
+    # EPDK koordinatı (e) kesin olduğundan konum ve soket bilgisi korunur; OSM/OCM'den yalnızca saat ve web adresi alınır.
+    RADIUS = {"e": 150, "p": 300, "a": 300, "m": 2500, "i": 8000}
     G = 0.1
     cell = lambda a, o: (int(a // G), int(o // G))
     grid = {}
@@ -148,8 +191,11 @@ def main():
                             best, bd = r, d
             if best:
                 used.add(best["i"]); st[0] += 1
-                best.update({x: s[x] for x in ("k", "t", "ac", "dc", "c", "h", "u") if x in s})
-                best["a"], best["o"], best["q"] = s["a"], s["o"], q
+                if best["q"] == "e":
+                    best.update({x: s[x] for x in ("h", "u") if x in s and x not in best})
+                else:
+                    best.update({x: s[x] for x in ("k", "t", "ac", "dc", "c", "h", "u") if x in s})
+                    best["a"], best["o"], best["q"] = s["a"], s["o"], q
             elif k and near_extra(s, k):
                 continue  # aynı istasyon başka kaynaktan zaten eklendi
             else:
@@ -158,6 +204,49 @@ def main():
                     s["p"] = op(s["p"])
                 extra.append(s)
                 xgrid.setdefault(cell(s["a"], s["o"]), []).append((k, s))
+    # Resmi ağ listelerindeki eksik güç / soket / akım türü bilgisini aynı ağın 150 m içindeki EPDK kaydından tamamla
+    egrid, tamam = {}, 0
+    for x in epdk_resmi:
+        egrid.setdefault(cell(x["a"], x["o"]), []).append(x)
+    for r in resmi:
+        if r.get("k") and r.get("t") and (r.get("ac") or r.get("dc")):
+            continue
+        cx, cy = cell(r["a"], r["o"]); k = key(r.get("b") or ""); best, bd = None, 150
+        for dx in (-1, 0, 1):
+            for dy in (-1, 0, 1):
+                for x in egrid.get((cx + dx, cy + dy), []):
+                    d = dist(r["a"], r["o"], x["a"], x["o"])
+                    if d < bd and key(x["b"]) == k:
+                        best, bd = x, d
+        if best:
+            tamam += 1
+            for f in ("k", "t", "c"):
+                if not r.get(f) and best.get(f):
+                    r[f] = best[f]
+            if not r.get("ac") and not r.get("dc"):
+                for f in ("ac", "dc"):
+                    if best.get(f):
+                        r[f] = best[f]
+    # EPDK kaydı lisanslı tüm halka açık istasyonları kesin konumla içerdiğinden, OSM/OCM'den gelen ek kayıtlar yalnızca
+    # yakınında karşılığı yoksa tutulur: aynı marka 500 m içinde ya da herhangi bir resmi kayıt 60 m içindeyse mükerrer sayılır.
+    mukerrer = 0
+    if api:
+        rgrid = {}
+        for r in recs + resmi:
+            if "a" in r:
+                rgrid.setdefault(cell(r["a"], r["o"]), []).append((key(r.get("b") or ""), r))
+        kalan = []
+        for s in extra:
+            k = key(s.get("b") or (ops[s["p"]] if isinstance(s.get("p"), int) else "") or s.get("w") or s.get("n") or "")
+            cx, cy = cell(s["a"], s["o"])
+            es = any((d < 60 or (kk == k and d < 500))
+                     for dx in (-1, 0, 1) for dy in (-1, 0, 1) for kk, r in rgrid.get((cx + dx, cy + dy), [])
+                     for d in (dist(s["a"], s["o"], r["a"], r["o"]),))
+            if es:
+                mukerrer += 1
+            else:
+                kalan.append(s)
+        extra = kalan
     recs += extra + resmi
     # Seçili istasyon kampanyaları: resmi listedeki "Ad, İlçe" kayıtlarını istasyon adı/ilçe/il ile eşleştir
     secili = json.loads(SECILI.read_text(encoding="utf-8")) if SECILI.exists() else {}
@@ -197,7 +286,8 @@ def main():
                 r.setdefault("tz", []).append(ag); hit += 1
         tz_hits[ag] = hit
     located = [r for r in recs if "a" in r]
-    recs = [r for r in located if in_turkey(r["a"], r["o"])]  # konumu bilinmeyen ve Türkiye dışı kayıtlar gösterilmez
+    # konumu bilinmeyen ve Türkiye dışı kayıtlar gösterilmez (EPDK koordinatı resmi olduğundan kaba sınır denetimine girmez: kıyı ilçeleri)
+    recs = [r for r in located if r.get("q") == "e" or in_turkey(r["a"], r["o"])]
     disari = len(located) - len(recs)
     recs.sort(key=lambda r: (round(r["a"], 1), r["o"], r["i"]))
     cnt = {}
@@ -214,7 +304,7 @@ def main():
     print("seçili kampanya eşleşmeleri:", sk_hits)
     print("saatli tarife eşleşmeleri:", tz_hits)
     ozet = ", ".join("%s %d" % (k, v["sayi"]) for k, v in kaynaklar.items())
-    print(f"resmi ağ listeleri {len(resmi)} ({ozet}); EPDK {len(seen)} kayıt (özel {ozel} çıkarıldı), önbellekten konumlanan {sum(1 for r in recs if r.get('e'))}, eşleşen/eklenen OSM {stats.get('o')}, OCM {stats.get('c')}, Türkiye dışı {disari}, aynı adreste birleştirilen EPDK ünitesi {sum(g.get('c', 1) - 1 for g in groups.values())}, toplam {len(recs)}, {len(txt)//1024} KB")
+    print(f"resmi ağ listeleri {len(resmi)} ({ozet}); EPDK {len(seen)} kayıt (özel {ozel} çıkarıldı), EPDK'dan gelen {sum(1 for r in recs if r.get('e'))}, eşleşen/eklenen OSM {stats.get('o')}, OCM {stats.get('c')}, Türkiye dışı {disari}, aynı adreste birleştirilen EPDK ünitesi {birlesen}, EPDK ile tamamlanan resmi ağ kaydı {tamam}, mükerrer sayılıp atılan OSM/OCM {mukerrer}, EPDK kaynağı {'açık servis (kesin koordinat)' if api else 'CSV + adres araması'}, toplam {len(recs)}, {len(txt)//1024} KB")
 
 
 if __name__ == "__main__":
