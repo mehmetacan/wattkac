@@ -1,6 +1,6 @@
 name: İstasyon verisini güncelle
 
-# 1) OpenStreetMap'ten istasyonları çeker  1b) ZES/Ovolt/WAT/ASTOR'un kendi haritalarından çeker  2) EPDK adreslerini konuma çevirir (kaldığı yerden devam eder)
+# 1) OpenStreetMap'ten istasyonları çeker  1b) ZES/Ovolt/WAT/Trugo'nun kendi haritalarından çeker  2) EPDK'nın açık servisinden tüm halka açık istasyonları (kesin koordinat + soket) çeker
 # 3) ikisini birleştirip site/istasyonlar.json üretir.
 on:
   schedule:
@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       konum_cevir:
-        description: "EPDK adreslerini konuma çevirme adımı da çalışsın mı (4 saate kadar sürer)?"
+        description: "(Yalnızca EPDK servisi verisi yoksa) adres arama adımı da çalışsın mı (4 saate kadar sürer)?"
         type: boolean
         default: true
 
@@ -35,11 +35,16 @@ jobs:
           OCM_API_KEY: ${{ secrets.OCM_API_KEY }}
         run: python3 -u tools/ocm_cek.py data/ocm/istasyonlar_ocm.json
         continue-on-error: true
-      - name: EPDK adreslerini konuma çevir (en fazla 4 saat)
-        if: github.event_name != 'workflow_dispatch' || inputs.konum_cevir
+      - name: EPDK'nın açık servisinden istasyonları çek (kesin koordinat + soketler; günde tek istek)
+        run: python3 -u tools/epdk_cek.py
+        continue-on-error: true
+      # Aşağıdaki iki adım yalnızca EPDK servisinden hiç veri alınamadıysa (data/epdk/epdk_api.json yoksa) çalışan eski yöntemdir
+      - name: (Yedek) EPDK adreslerini konuma çevir (en fazla 4 saat)
+        if: hashFiles('data/epdk/epdk_api.json') == '' && (github.event_name != 'workflow_dispatch' || inputs.konum_cevir)
         run: python3 -u tools/epdk_konum.py 14400
         continue-on-error: true
-      - name: Yaklaşık konumları tesislere (Shell, AVM, dinlenme tesisi) göre kesinleştir
+      - name: (Yedek) Yaklaşık konumları tesislere (Shell, AVM, dinlenme tesisi) göre kesinleştir
+        if: hashFiles('data/epdk/epdk_api.json') == ''
         run: python3 -u tools/poi_konum.py
         continue-on-error: true
       - name: Seçili istasyon kampanya listelerini oku (Otopriz %30 vb.)

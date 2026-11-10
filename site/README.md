@@ -24,8 +24,14 @@ kampanya, 7 günden eski fiyat kontrolü, aksayan günlük tarama). `.github/wor
 ve her gün 09:10'da çalıştırır.
 
 ## İstasyon verisi (istasyonlar.json)
-`tools/istasyon_cek.py` Türkiye'deki tüm şarj istasyonlarını OpenStreetMap'ten çeker ve `site/istasyonlar.json` dosyasına yazar.
-`.github/workflows/istasyonlar.yml` bunu her gün 05:17'de çalıştırıp değişiklik varsa commit eder. Haritadaki arama önce bu dosyayı kullanır; dosya yoksa canlı Overpass'a düşer.
+`.github/workflows/istasyonlar.yml` her gün 05:17'de şu kaynakları çekip `tools/istasyon_birlestir.py` ile `site/istasyonlar.json` üretir:
+- **EPDK açık servisi** (`tools/epdk_cek.py` → `data/epdk/epdk_api.json`): lisanslı tüm halka açık istasyonlar; kesin koordinat,
+  soket türü ve gücü. Günde tek istek atılır (servisin kotası dar). Fiyat ve anlık durum içermez.
+- **Ağların resmi haritaları** (`tools/ag_istasyonlari.py`): ZES, Trugo, Ovolt, WAT. Bu ağlarda resmi liste kullanılır; eksik güç/soket
+  bilgisi EPDK kaydından tamamlanır.
+- **OpenStreetMap ve Open Charge Map**: yalnızca EPDK'da karşılığı olmayan istasyonlar eklenir; EPDK kayıtlarına saat/web bilgisi katar.
+
+EPDK servisinden hiç veri alınamadıysa eski yönteme (CSV listesi + adresten konum arama) düşülür.
 
 ## Uygulama olarak (PWA)
 `manifest.webmanifest`, `icons/` ve `sw.js` sitenin telefona "ana ekrana ekle" ile uygulama gibi kurulmasını sağlar.

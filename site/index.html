@@ -831,8 +831,17 @@ function sockets(t) {
   if (!hasAc && !hasDc && max > 0) { if (max >= 40) hasDc = true; else hasAc = true; }
   return { kw: max || null, types, hasAc, hasDc };
 }
+// tarifeler.json'da ağ adı ya da "adlar" listesindeki yazımlardan biri, harf/boşluk farkı gözetmeden eşleşir (ör. "EN YAKIT" = "Enyakıt")
+const tarKey = n => fold(n || "").replace(/[^a-z0-9]/g, "");
+let TARX = null;
+function tarOf(net) {
+  if (!net || !TAR.aglar) return null;
+  if (TAR.aglar[net]) return TAR.aglar[net];
+  if (!TARX) { TARX = new Map(); Object.entries(TAR.aglar).forEach(([k, x]) => [k, ...(x.adlar || [])].forEach(a => TARX.set(tarKey(a), x))); }
+  return TARX.get(tarKey(net)) || null;
+}
 function priceFor(net, mode, st) {
-  const x = TAR.aglar && TAR.aglar[net];
+  const x = tarOf(net);
   if (!x) return null;
   const pick = k => {
     const p = x[k]; if (p === null || p === undefined) return null;
@@ -961,8 +970,8 @@ function fromRec(r) {
   const op = typeof r.p === "number" ? (STATIC.isletmeciler || [])[r.p] : r.p;
   const t = { brand: r.b, operator: op, network: r.w, name: r.n, opening_hours: r.h, website: r.u };
   const b = brandOf(t), nm = r.n || "";
-  return { id: r.i, lat: r.a, lon: r.o, brand: b.name, known: b.known, named: !!nm, name: nm || b.name || "Şarj istasyonu",
-    kw: r.k || null, types: r.t ? [...r.t] : [], hasAc: !!r.ac || (!r.ac && !r.dc && typeFromName(r.n).ac), hasDc: !!r.dc || (!r.ac && !r.dc && typeFromName(r.n).dc), tags: t, addr: r.ad || "", approx: r.q === "i" || r.q === "m", official: r.q === "r", pr: r.pr || null, tesis: r.tesis || "", pasif: !!r.pasif, prn: r.prn || "", sk: r.sk || [], tz: r.tz || [], camp: NETC[b.name] || [], count: r.c || null, d: 0, mode: null, price: null };
+  return { id: r.i, lat: r.a, lon: r.o, brand: b.name, known: b.known || (!!r.e && !!b.name), epdk: r.q === "e", named: !!nm, name: nm || b.name || "Şarj istasyonu",
+    kw: r.k || null, types: r.t ? [...r.t] : [], hasAc: !!r.ac || (!r.ac && !r.dc && typeFromName(r.n).ac), hasDc: !!r.dc || (!r.ac && !r.dc && typeFromName(r.n).dc), tags: t, addr: r.ad || "", approx: r.q === "i" || r.q === "m", official: r.q === "r", pr: r.pr || null, tesis: r.tesis || "", pasif: !!r.pasif || !!r.bakim, prn: r.prn || "", sk: r.sk || [], tz: r.tz || [], camp: NETC[b.name] || [], count: r.c || null, d: 0, mode: null, price: null };
 }
 async function overpass(lat, lon, rM) {
   const key = `wk.st2.${lat.toFixed(3)}.${lon.toFixed(3)}.${rM}`;
@@ -1271,7 +1280,7 @@ function renderDetail(s) {
   $("sh-h").innerHTML = `<span class="back">← Listeye dön</span><span class="tg" style="color:var(--mut)">${fmtKm(s.d)}</span>`;
   const t = s.tags;
   const general = C.filter(c => c.tip === "banka" && c.st.includes(ALL));
-  const pr = s.price && TAR.aglar[s.brand];
+  const pr = s.price && tarOf(s.brand);
   const effTxt = c => {
     const r = campRate(c); if (!r || !s.price || s.viaShell.includes(c)) return "";
     if (c.tip === "ag" && !(s.net && s.net.c === c)) return ""; // ağ indirimi bu istasyonda kesin değilse hesap gösterme
@@ -1314,7 +1323,7 @@ function renderDetail(s) {
   if (web) rows.push(["Web", `<a href="${esc(safeUrl(web))}" target="_blank" rel="noopener nofollow">Site ↗</a>`]);
   $("sh-b").innerHTML = `<div class="dn">${esc(pretty(s.brand) || s.name)}</div><div class="alt">${esc(s.brand && s.named && s.name !== s.brand ? s.name + " · " : "")}${fmtKm(s.d)} uzakta</div>
     ${s.net ? `<p class="eff" style="font-size:15px">İndirimli fiyat: ${fmtNum(s.net.v)} TL/kWh · ${esc(s.net.c.kurum)} ${esc(s.net.c.big)} (bu istasyon kampanya listesinde)</p>` : ""}
-    ${s.pasif ? `<p class="note" style="color:var(--r)">Bu istasyon ağın kendi haritasında şu an pasif görünüyor; gitmeden önce uygulamadan kontrol et.</p>` : ""}
+    ${s.pasif ? `<p class="note" style="color:var(--r)">Bu istasyon ağın kendi haritasında şu an pasif ya da bakımda görünüyor; gitmeden önce uygulamadan kontrol et.</p>` : ""}
     ${s.approx ? `<p class="note">Konum yaklaşık; gitmeden adresi kontrol et.</p>` : ""}
     ${rows.length ? `<dl class="kv">${rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>` : ""}
     <div class="dacts"><a class="btn primary dir" href="https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lon}" target="_blank" rel="noopener">Yol tarifi al</a>
@@ -1323,7 +1332,7 @@ function renderDetail(s) {
     ${s.shellTrugo ? `<div class="shellbox"><b>Shell istasyonundaki Trugo:</b> Shell Recharge uygulamasıyla da şarj başlatılabilir. Togg'a özel Trugo indirimi Shell Recharge'da geçmez.</div>
       ${s.viaShell.length ? `<div class="lbl">Shell Recharge uygulamasıyla</div><div class="cmps">${s.viaShell.map(mc).join("")}</div>` : ""}` : ""}
     <details class="bkay"><summary>Bilgi kaynağı ›</summary>${srcTxt.map(x => `<p>${x}</p>`).join("")}
-      <p>${s.official ? "İstasyon bilgisi ağın kendi resmi haritasından, günde bir kez güncellenir." : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
+      <p>${s.official ? "İstasyon bilgisi ağın kendi resmi haritasından, günde bir kez güncellenir." : s.epdk ? "Konum ve soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir." : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
       ${s.net ? `<p>İndirimli fiyat yalnızca kampanya listesinde olduğu kesin bilinen istasyonlarda yazılır. Kart kampanyaları fiyata eklenmez.</p>` : ""}</details>`;
   $("sh-b").scrollTop = 0;
 }

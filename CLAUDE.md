@@ -27,6 +27,7 @@ Günlük tarama her çalıştığında, değişiklik olmasa bile:
   - Fiyat okunabildiyse `ac`/`dc` (min–max, TL/kWh, KDV dahil) ve `kontrol` tarihi güncellenir; sayfa geçerlilik tarihi veriyorsa `gecerlilik` yazılır.
   - Sayfa açılamadıysa fiyata ve `kontrol` tarihine dokunulmaz; tahminle fiyat yazılmaz. Fiyat yalnızca ağın kendi sayfasından alınır.
   - En az bir fiyat değiştiyse dosyanın üstündeki `guncelleme` bugüne çekilir.
+  - `ac`/`dc` değeri `null` olan ağlar henüz doğrulanmamıştır: sayfa açılıp fiyat okunursa doldurulur. Yeni ağ eklerken anahtar, ağın sitede görünen adı olur; EPDK kaydındaki farklı yazımlar `adlar` listesine yazılır.
 - **Tarih alanları:** `data/kampanyalar.json` → `son_kontrol` her taramada bugün yapılır (site "Bugün kontrol edildi" yazar). `guncelleme` yalnızca kampanya verisi gerçekten değiştiğinde değişir.
 - **Denetim:** Commit'ten önce `python3 tools/veri_kontrol.py` çalıştırılır; hata varsa düzeltilmeden push edilmez. Aynı denetim GitHub Actions'ta her gün 09:10'da çalışır ve tarama 2 günden fazla aksarsa kırmızı olur.
 - `docs/kampanyalar/` elle kopyalanmaz; `pages-kopya.yml` iş akışı main'e her push'ta kendisi eşitler.
