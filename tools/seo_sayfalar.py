@@ -130,7 +130,8 @@ def main():
 
     def teklif_kart(baslik, o, alt=""):
         tarihler = f"Son gün: {e(o.get('son'))}" if o.get("son") else ""
-        return (f'<div class="card"><h3>{e(baslik)} · <span class="big">{e(o.get("big"))}</span></h3>'
+        dogrulama = ' <span class="mut">(doğrulanıyor: resmi sayfadan teyit edin)</span>' if o.get("kontrol") else ""
+        return (f'<div class="card"><h3>{e(baslik)} · <span class="big">{e(o.get("big"))}</span>{dogrulama}</h3>'
                 f'<div>{e(o.get("det"))}</div>{f"<div class=mut>{e(alt)}</div>" if alt else ""}'
                 f'<div class="mut">{tarihler}{" · " if tarihler and o.get("join") else ""}{e(o.get("join"))}</div>'
                 + (f'<div class="mut" style="margin-top:4px">{e(o.get("kosul"))}</div>' if o.get("kosul") else "")

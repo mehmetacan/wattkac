@@ -1,0 +1,34 @@
+name: Veri denetimi
+
+# data/kampanyalar.json ve site/tarifeler.json dosyalarını denetler (tools/veri_kontrol.py); hiçbir şeyi değiştirmez.
+# - Veri değişince: yapı denetimi (bozuk alan, derleme sitesi bağlantısı, süresi dolmuş kampanya, ters fiyat aralığı).
+# - Her gün 09:10'da (günlük kampanya taramasından sonra): ayrıca güncellik denetimi. Tarama 2 günden uzun süredir
+#   çalışmadıysa ya da süresi dolmuş kampanya veride kaldıysa bu iş akışı kırmızı olur ve GitHub e-posta gönderir.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/kampanyalar.json"
+      - "site/tarifeler.json"
+      - "tools/veri_kontrol.py"
+      - ".github/workflows/veri-kontrol.yml"
+  pull_request:
+    paths:
+      - "data/kampanyalar.json"
+      - "site/tarifeler.json"
+      - "tools/veri_kontrol.py"
+  schedule:
+    - cron: "10 6 * * *"   # her gün 09:10 (Türkiye saati)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  denetle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Veriyi denetle
+        run: python3 tools/veri_kontrol.py ${{ github.event_name == 'pull_request' && '--yapi' || '' }}

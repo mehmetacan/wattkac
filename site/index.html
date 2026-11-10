@@ -58,25 +58,24 @@ button,.top,.sheet .handle,.seg,.fab,.radius,.chip,.tabs{-webkit-user-select:non
 .topin{height:100%;display:flex;align-items:center;gap:8px;margin:0 auto;padding:0 10px}
 .brand{display:flex;align-items:center;gap:7px;font-weight:900;font-size:21px;letter-spacing:-.5px;flex:none;background:none;border:0;padding:4px 2px;color:var(--txt)}
 .brand b{color:#E0A100}
-.tbtn{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 12px;font:800 13.5px Inter,sans-serif;color:var(--txt);white-space:nowrap}
-.tbtn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.tbtn.camp{background:var(--gbg);border-color:var(--gline);color:var(--g)}
-.tbtn.camp i{font-style:normal;background:var(--g);color:#fff;border-radius:999px;font-size:11.5px;padding:0 6px}
-.tbtn.icon{padding:7px;position:relative}
-.tbtn .dot{position:absolute;top:2px;right:2px;width:9px;height:9px;border-radius:50%;background:var(--y);border:1px solid #fff}
-.back-map{display:inline-flex;align-items:center;gap:4px;white-space:nowrap;background:none;border:0;font:800 15px Inter,sans-serif;color:#1D4ED8;padding:6px 2px}
+.tabs{display:flex;gap:2px;margin-left:auto;background:var(--card2);border-radius:12px;padding:3px}
+.tabs button{display:inline-flex;align-items:center;gap:6px;border:0;background:none;border-radius:9px;padding:0 12px;min-height:36px;font:700 13.5px Inter,sans-serif;color:var(--mut);white-space:nowrap}
+.tabs button[aria-current=page]{background:#fff;color:var(--txt);box-shadow:0 1px 2px rgba(17,24,39,.14)}
+.tabs svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tabs i{font-style:normal;background:var(--g);color:#fff;border-radius:999px;font-size:11px;font-weight:800;padding:0 6px}
+.tabs i:empty{display:none}
+@media(max-width:560px){.tabs svg,.tabs i{display:none}.tabs button{padding:0 10px}.brand{font-size:18px!important}}
+@media(max-width:374px){.brand span{display:none}}
 .spacer{flex:1}
-.upd{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--g);background:var(--gbg);border:1px solid var(--gline);border-radius:999px;padding:4px 10px;white-space:nowrap;margin-top:10px}
-.upd::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--g)}
-@media(max-width:360px){.tbtn.camp span{display:none}}
-@media(max-width:430px){body:not(.on-map) .tbtn.camp span{display:none}}
+.upd{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--g);background:var(--gbg);border:1px solid var(--gline);border-radius:999px;padding:4px 10px;white-space:nowrap;margin-left:auto}
+.upd::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:currentColor}
+.upd.stale{color:#92400E;background:#FEF3C7;border-color:#FDE68A}
 
 /* Kampanyalar */
-.hero{padding:20px 0 4px}
-h1{font-size:clamp(24px,7vw,40px);line-height:1.1;font-weight:900;letter-spacing:-1.2px;max-width:720px}
-h1 em{font-style:normal;background:linear-gradient(transparent 62%,#FFE680 62%)}
-.lead{color:var(--mut);margin-top:8px;font-size:15px;max-width:620px}
-.searchrow{display:flex;gap:8px;margin-top:14px}
+.hero{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;padding:18px 0 12px}
+h1{font-size:clamp(22px,6vw,30px);line-height:1.15;font-weight:900;letter-spacing:-.8px}
+.lead{flex-basis:100%;color:var(--mut);font-size:14.5px;max-width:620px}
+.searchrow{display:flex;gap:8px}
 .search{flex:1;min-width:0;background:#fff;color:var(--txt);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:16px}
 .fbtn{flex:none;display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:0 14px;font-weight:700;font-size:15px}
 .fbtn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
@@ -88,36 +87,47 @@ h1 em{font-style:normal;background:linear-gradient(transparent 62%,#FFE680 62%)}
 .chip[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
 .chip.ag[aria-pressed=true]{background:var(--g);border-color:var(--g)}
 .chip.setup{border-style:dashed;color:var(--g);border-color:var(--gline);background:var(--gbg)}
+.chip svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;margin-right:6px}
 .bar{display:flex;align-items:center;gap:10px;margin:14px 0 10px}
 .count{font-weight:800}
 .count span{color:var(--mut);font-weight:600}
 select{background:#fff;color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:9px 10px;font:600 14px Inter,sans-serif;min-height:40px}
 .bar select{margin-left:auto}
 .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:12px;padding-bottom:20px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 2px rgba(17,24,39,.04)}
-.card.mine{border-color:var(--g)}
-.ct{display:flex;align-items:flex-start;gap:8px}
-.kurum{font-weight:900;font-size:18px;letter-spacing:-.3px;line-height:1.2}
-.alt{color:var(--mut);font-size:13px;font-weight:600}
-.tip{margin-left:auto;flex:none;font-size:11px;font-weight:800;letter-spacing:.5px;border-radius:7px;padding:3px 7px;text-transform:uppercase}
-.tip.banka{background:var(--y);color:var(--ink)}.tip.ag{background:var(--g);color:#fff}
-.big{font-size:30px;font-weight:900;color:var(--ink);letter-spacing:-.8px;line-height:1.15;background:linear-gradient(transparent 62%,#FFE680 62%);display:inline}
-.big.sm{font-size:20px}
-.det{font-weight:600;margin-top:4px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.card.mine{border-color:var(--g);box-shadow:0 0 0 1px var(--g)}
+.ct{display:flex;align-items:center;gap:10px}
+.ico{flex:none;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:#FFF7D6;color:#92400E}
+.ico.ag{background:var(--gbg);color:var(--g)}
+.ico svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.who{flex:1;min-width:0}
+.kurum{font-weight:800;font-size:16px;letter-spacing:-.2px;line-height:1.25}
+.alt{color:var(--mut);font-size:13px;font-weight:500}
+.who .alt{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bdg{flex:none;font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;white-space:nowrap}
+.bdg.new{background:var(--ink);color:#fff}.bdg.wait{background:#FEF3C7;color:#92400E}.bdg.me{background:var(--gbg);color:var(--g);border:1px solid var(--gline)}
+.big{font-size:26px;font-weight:900;color:var(--ink);letter-spacing:-.7px;line-height:1.15;margin-top:4px}
+.det{font-size:14px;font-weight:500;color:#374151;line-height:1.4}
 .lbl{font-size:11px;font-weight:800;letter-spacing:.7px;color:var(--mut);text-transform:uppercase;margin-bottom:5px}
-.st{display:flex;flex-wrap:wrap;gap:5px}
-.st span{font-size:12px;font-weight:700;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:3px 9px}
-.st span.hit{background:var(--g);border-color:var(--g);color:#fff}
-.st span.all{background:var(--gbg);border-color:var(--gline);color:var(--g)}
-.join{font-size:14px;color:var(--mut)}.join b{color:var(--txt);font-weight:600}
-.foot{display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:10px;border-top:1px solid var(--line);flex-wrap:wrap}
-.days{font-size:13px;font-weight:800;border-radius:8px;padding:4px 9px;background:var(--card2);border:1px solid var(--line)}
-.days.soon{background:var(--rbg);border-color:#FECACA;color:var(--r)}
-.src{margin-left:auto;font-size:13px;font-weight:700;text-decoration:none;padding:6px 0}
-.mark{font-size:12px;font-weight:800;color:var(--g)}
+.st{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
+.st span{font-size:12px;font-weight:600;background:var(--card2);border-radius:999px;padding:3px 9px}
+.st span.hit{background:var(--g);color:#fff}
+.st span.all{background:var(--gbg);color:var(--g)}
+.st span.rest{background:none;color:var(--mut);padding-left:2px}
+.foot{display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:6px}
+.days{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:700;color:var(--mut)}
+.days svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.days.soon{color:var(--r)}
+.src{margin-left:auto;font-size:13px;font-weight:800;text-decoration:none;color:var(--txt);background:var(--card2);border-radius:999px;padding:7px 13px;white-space:nowrap}
 details{font-size:13px;color:var(--mut)}
 details summary{cursor:pointer;font-weight:700;padding:4px 0}
 details p{margin-top:6px}
+.how summary{color:var(--txt);list-style:none;display:inline-flex;align-items:center;gap:4px}
+.how summary::-webkit-details-marker{display:none}
+.how summary::after{content:"›";font-size:16px;line-height:1;transition:transform .15s}
+.how[open] summary::after{transform:rotate(90deg)}
+.how h4{font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--mut);margin-top:10px}
+.how p{color:#374151;margin-top:2px;line-height:1.45}
 .empty{grid-column:1/-1;text-align:center;color:var(--mut);padding:44px 12px;background:#fff;border:1px dashed var(--line);border-radius:16px}
 .btn{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 16px;min-height:44px;font:700 14px Inter,sans-serif}
 .btn.primary{background:var(--y);border-color:var(--y);color:var(--ink)}
@@ -142,11 +152,17 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 
 /* Profil */
 .sec{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
-.sec h2{font-size:20px;font-weight:900;letter-spacing:-.4px}
-.sec p{color:var(--mut);font-size:14px;margin-top:4px}
-.privacy{display:flex;gap:10px;align-items:flex-start;background:var(--gbg);border:1px solid var(--gline);border-radius:14px;padding:12px 14px;color:var(--g);font-size:14px;font-weight:600;margin:16px 0 12px}
-.sumbox{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.sumbox b{font-size:28px;font-weight:900;color:var(--ink)}
+.sec h2{font-size:13px;font-weight:800;letter-spacing:.3px;color:var(--mut);margin:16px 0 8px}
+.sec h2:first-child{margin-top:0}
+.sec p{color:var(--mut);font-size:14px}
+.privacy{display:flex;gap:7px;align-items:center;color:var(--mut);font-size:13px;font-weight:600;margin:0 2px 12px}
+.sumbox{display:flex;align-items:center;gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:14px;font-weight:600}
+.sumbox b{font-size:24px;font-weight:900;color:var(--ink)}
+.sumbox span{flex:1;min-width:0}
+.fold summary{font-size:14.5px;color:var(--txt);font-weight:700;padding:0}
+.rowsec{display:flex;align-items:center;gap:12px}.rowsec p{flex:1}
+.plinks{justify-content:space-between;margin:4px 2px 28px}
+.linkbtn.danger{color:var(--r)}
 .field{width:100%;background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:12px;font:13px ui-monospace,Menlo,monospace}
 .row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
 .row .field{flex:1;min-width:0}
@@ -167,9 +183,18 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .fab svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .fab i{font-style:normal;background:var(--ink);color:#fff;border-radius:999px;font-size:11.5px;padding:0 6px}
 .mtop .fab{margin-left:auto}
-.legend{top:66px;left:10px;display:flex;gap:6px;flex-wrap:wrap;pointer-events:none}
-.legend span{background:rgba(255,255,255,.94);border-radius:999px;padding:3px 9px 3px 7px;font-size:11.5px;font-weight:800;box-shadow:0 1px 4px rgba(17,24,39,.15);display:inline-flex;align-items:center;gap:5px}
-.legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.fab span{white-space:nowrap}
+.helpbtn{top:66px;right:10px;min-height:40px;min-width:40px;padding:0;border-radius:50%;font-size:17px;font-weight:900}
+.guide{list-style:none;display:grid;gap:16px;padding:8px 0 6px}
+.guide li{display:flex;align-items:center;gap:14px;font-size:14px;line-height:1.4;color:var(--mut)}
+.guide li b{display:block;font-size:15px;font-weight:800;color:var(--txt)}
+.gi{flex:none;width:44px;height:44px;display:grid;place-items:center;position:relative}
+.gi svg{filter:drop-shadow(0 1px 2px rgba(17,24,39,.35))}
+.gi .gtag{position:absolute;top:0;right:1px;width:19px;height:19px}
+.gnum{width:34px;height:34px;border-radius:50%;background:#111827;color:#fff;border:2px solid #fff;display:grid;place-items:center;font:900 13px Inter,sans-serif;box-shadow:0 1px 4px rgba(17,24,39,.35)}
+.gbtn{width:40px;height:40px;border-radius:12px;background:#fff;display:grid;place-items:center;box-shadow:0 2px 10px rgba(17,24,39,.18)}
+.gbtn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;filter:none;color:var(--txt)}
+@media(max-width:350px){#mf-open span{display:none}}
 .locbtn{right:10px;bottom:calc(var(--sheet-h) + 14px)}
 .locbtn.busy svg{animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -240,6 +265,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .cmp summary{list-style:none;display:flex;align-items:center;gap:10px;padding:12px 12px;cursor:pointer;min-height:48px}
 .cmp summary::-webkit-details-marker{display:none}
 .cmp .cn{font-weight:800;font-size:14.5px;flex:1;min-width:0}
+.cmp .cn i.wait{color:#92400E;background:#FEF3C7;border-color:#FDE68A}
 .cmp .cn i{font-style:normal;font-size:11px;font-weight:800;color:var(--g);background:var(--gbg);border:1px solid var(--gline);border-radius:6px;padding:0 5px;margin-left:4px}
 .cmp .cr{font-weight:900;font-size:14px;color:var(--g);text-align:right;max-width:55%}
 .cmp .ch{color:var(--mut);font-size:20px;line-height:1;transition:transform .15s}
@@ -301,7 +327,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
   .mapview[data-s] {--sheet-h:0px}
   .mapview[data-s=peek] .sh-b{display:block}
   .handle .bar,.sh-h .tg{display:none}
-  .mtop{left:414px}.legend{left:414px}
+  .mtop{left:414px}
   .radius{left:414px;bottom:14px}.locbtn{bottom:14px}
   .mapmsg{left:414px;bottom:90px}
 }
@@ -312,14 +338,15 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 
 <header class="top">
   <div class="topin">
-    <button class="back-map" id="back-map" data-go="harita" hidden aria-label="Haritaya dön">← Harita</button>
-    <button class="brand" data-go="kamp" aria-label="Kampanyalar">
-      <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M13.5 2 4 13.5h6.2L9.5 22 20 9.8h-6.4z" fill="#FFC800" stroke="#E0A100" stroke-width="1" stroke-linejoin="round"/></svg>
+    <button class="brand" data-go="harita" aria-label="WattKaç · Harita">
+      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M13.5 2 4 13.5h6.2L9.5 22 20 9.8h-6.4z" fill="#FFC800" stroke="#E0A100" stroke-width="1" stroke-linejoin="round"/></svg>
       <span>Watt<b>Kaç</b></span>
     </button>
-    <span class="spacer"></span>
-    <button class="tbtn camp" data-go="kamp" id="to-kamp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8z"/><path d="M7 7h.01"/></svg><span>Kampanyalar</span><i id="kamp-n"></i></button>
-    <button class="tbtn icon" data-go="profil" aria-label="Profilim (kartlarım)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="dot" id="pdot" hidden></span></button>
+    <nav class="tabs" aria-label="Bölümler">
+      <button data-go="harita" data-tab="harita"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5a7 7 0 0 0-14 0C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Harita</span></button>
+      <button data-go="kamp" data-tab="kamp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8z"/><path d="M7 7h.01"/></svg><span>Kampanyalar</span><i id="kamp-n"></i></button>
+      <button data-go="profil" data-tab="profil"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6.5 15h4"/></svg><span>Kartlarım</span></button>
+    </nav>
   </div>
 </header>
 
@@ -327,8 +354,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
   <!-- KAMPANYALAR -->
   <section id="v-kamp" class="view wrap" aria-label="Kampanyalar" hidden>
     <div class="hero">
-      <h1>Hangi kartla, hangi istasyonda <em>ne kazanırsın?</em></h1>
-      <p class="lead">Elektrikli araç şarjında geçerli banka kartı ve şarj ağı kampanyaları.</p>
+      <h1>Şarj kampanyaları</h1>
       <div class="upd" id="upd">Yükleniyor…</div>
     </div>
     <div class="searchrow">
@@ -348,9 +374,8 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
     <div class="list" id="list"></div>
     <p class="note" id="nocamp"></p>
     <footer>
-      Bilgiler bankaların ve şarj ağlarının duyurularından derlenir; koşullar değişebilir. Kampanyaya katılmadan önce kampanya sahibinin resmi kanallarından kontrol edin.
-      Her kampanya, kampanyayı yapan banka veya şarj ağının kendi sayfasında doğrulanır ve bağlantı o sayfaya gider. WattKaç hiçbir banka veya şarj ağıyla bağlantılı değildir.
-      <br><button class="linkbtn" data-go="geri">Geri bildirim gönder</button>
+      Kampanyalar her sabah bankaların ve şarj ağlarının resmi sayfalarından kontrol edilir. Koşullar değişebilir; katılmadan önce resmi sayfaya bak. WattKaç hiçbir banka veya şarj ağıyla bağlantılı değildir.
+      <br><button class="linkbtn" data-go="geri">Hata mı gördün? Bildir</button>
       <nav class="seolinks" aria-label="Şarj ağları"><a href="/kampanyalar/">Tüm kampanyalar</a> · <a href="/sarj-agi/">Şarj ağları ve fiyatlar</a> ·
         <a href="/sarj-agi/trugo/">Trugo</a> · <a href="/sarj-agi/zes/">ZES</a> · <a href="/sarj-agi/esarj/">Eşarj</a> · <a href="/sarj-agi/shell-recharge/">Shell Recharge</a> ·
         <a href="/sarj-agi/voltrun/">Voltrun</a> · <a href="/sarj-agi/otopriz/">Otopriz</a> · <a href="/sarj-agi/ovolt/">Ovolt</a> · <a href="/sarj-agi/wat-mobilite/">WAT Mobilite</a> · <a href="/sarj-agi/astor-sarj/">ASTOR</a></nav>
@@ -362,10 +387,10 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
     <div id="map" role="application" aria-label="Şarj istasyonları haritası"></div>
     <div class="ov mtop">
       <div class="seg" id="seg" role="group" aria-label="Akım türü"></div>
-      <button class="fab" id="mf-open" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Filtre<i id="mf-n" hidden></i></button>
+      <button class="fab" id="mf-open" aria-haspopup="dialog" aria-label="Filtre"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span>Filtre</span><i id="mf-n" hidden></i></button>
     </div>
-    <div class="ov legend" aria-hidden="true"><span><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M3 12.2V4.6A1.6 1.6 0 0 1 4.6 3h7.6l9 9-9.4 9.4z" fill="#FFC800" stroke="#B45309" stroke-width="1.4"/><path d="M10.6 15.6l5-5" stroke="#78350F" stroke-width="1.6" stroke-linecap="round"/><circle cx="11" cy="11" r="1.15" fill="#78350F"/><circle cx="15.3" cy="15.2" r="1.15" fill="#78350F"/></svg>Kampanya var</span></div>
-    <div class="ov radius"><label for="rad-r">Çap<b id="rad-v">5 km</b></label><input type="range" id="rad-r" min="1" max="50" step="1" value="5" aria-label="Arama çapı (km)"></div>
+    <button class="fab ov helpbtn" id="help" aria-haspopup="dialog" aria-label="Haritadaki işaretler ne anlama geliyor?">?</button>
+    <div class="ov radius"><label for="rad-r">Arama çapı<b id="rad-v">5 km</b></label><input type="range" id="rad-r" min="1" max="50" step="1" value="5" aria-label="Arama çapı (km)"></div>
     <button class="fab ov locbtn" id="loc" aria-label="Konumuma git"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg></button>
     <div class="ov cpin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6" fill="#fff"/></svg></div>
     <div class="ov mapmsg" id="mapmsg" hidden></div>
@@ -382,7 +407,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 
   <!-- GERİ BİLDİRİM -->
   <section id="v-geri" class="view wrap" aria-label="Geri bildirim" hidden>
-    <div class="hero"><h1>Bir şey mi <em>yanlış</em>?</h1><p class="lead">Eksik istasyon, yanlış fiyat, hata ya da öneri; yaz, düzeltelim.</p></div>
+    <div class="hero"><h1>Geri bildirim</h1><p class="lead">Eksik istasyon, yanlış fiyat ya da öneri; yaz, düzeltelim.</p></div>
     <form class="sec fb" id="fb" novalidate>
       <div class="chips" id="fb-tur" role="group" aria-label="Konu">
         <button type="button" class="chip" data-fbt="fiyat" aria-pressed="false">Yanlış fiyat</button>
@@ -400,41 +425,32 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
       <div class="row"><button class="btn primary" id="fb-go" type="submit">Gönder</button></div>
       <div class="fbmsg" id="fb-msg" role="status" aria-live="polite"></div>
     </form>
-    <p class="note">Ad, plaka, kart numarası gibi kişisel bilgi yazma. Mesajın yalnızca siteyi düzeltmek için kullanılır.</p>
+    <p class="note">Ad, plaka, kart numarası gibi kişisel bilgi yazma.</p>
   </section>
 
   <!-- PROFİL -->
-  <section id="v-profil" class="view wrap" aria-label="Profilim" hidden>
-    <div class="hero"><h1>Kartlarını ve uygulamalarını <em>bir kere seç</em></h1></div>
-    <div class="privacy"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;margin-top:2px"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span>Hesap, e-posta ya da şifre yok. Seçimlerin yalnızca bu cihazın tarayıcısında saklanır; sunucuya gönderilmez.</span></div>
+  <section id="v-profil" class="view wrap" aria-label="Kartlarım" hidden>
+    <div class="hero"><h1>Kartlarım</h1><p class="lead">Kartını ve şarj uygulamanı seç; sana uyan kampanyalar öne çıksın.</p></div>
     <div class="sec">
-      <h2>Kartlarım</h2><p>Sahip olduğun kredi kartlarının bankası.</p>
-      <div class="chips" id="p-banka" style="margin-top:12px"></div>
-      <h2 style="margin-top:20px">Şarj uygulamalarım</h2><p>Kullandığın şarj ağları.</p>
-      <div class="chips" id="p-ag" style="margin-top:12px"></div>
+      <h2>Kartlarım</h2>
+      <div class="chips" id="p-banka"></div>
+      <h2>Şarj uygulamalarım</h2>
+      <div class="chips" id="p-ag"></div>
+      <div class="sumbox"><b id="p-n">0</b><span id="p-sum"></span><button class="btn primary" id="p-go">Göster</button></div>
     </div>
-    <div class="sec">
-      <div class="sumbox"><b id="p-n">0</b><span id="p-sum" style="flex:1;min-width:0"></span></div>
-      <div class="row"><button class="btn primary" id="p-go">Bana uyan kampanyaları gör</button></div>
-    </div>
-    <div class="sec">
-      <h2>Başka cihaza taşı</h2>
-      <p>Seçimlerini bu kodla başka bir telefonda ya da tarayıcıda yükleyebilirsin. Kod yalnızca seçtiğin banka ve ağ adlarını içerir.</p>
+    <p class="privacy"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Hesap yok. Seçimlerin yalnızca bu cihazda saklanır.</p>
+    <details class="sec fold">
+      <summary>Başka cihaza taşı</summary>
+      <p>Bu kodu diğer cihazında yapıştır. Kod yalnızca seçtiğin banka ve ağ adlarını içerir.</p>
       <div class="row"><input class="field" id="p-code" readonly aria-label="Profil kodu"><button class="btn" id="p-copy">Kopyala</button></div>
-      <div class="row"><input class="field" id="p-in" placeholder="Başka cihazdaki kodu yapıştır" aria-label="Profil kodunu yapıştır" autocomplete="off"><button class="btn" id="p-apply">Uygula</button></div>
-      <div id="pmsg" role="status" aria-live="polite"></div>
+      <div class="row"><input class="field" id="p-in" placeholder="Diğer cihazdaki kodu yapıştır" aria-label="Profil kodunu yapıştır" autocomplete="off"><button class="btn" id="p-apply">Uygula</button></div>
+    </details>
+    <div id="pmsg" role="status" aria-live="polite"></div>
+    <div class="sec rowsec" id="p-app">
+      <p id="p-app-t">WattKaç'ı ana ekranına ekle, uygulama gibi aç.</p>
+      <button class="btn primary" id="p-install">Ana ekrana ekle</button>
     </div>
-    <div class="sec" id="p-app">
-      <h2>Uygulama olarak kullan</h2>
-      <p id="p-app-t">WattKaç'ı telefonunun ana ekranına ekleyerek uygulama gibi açabilirsin; mağazadan indirmen gerekmez.</p>
-      <div class="row"><button class="btn primary" id="p-install">Ana ekrana ekle</button></div>
-    </div>
-    <div class="sec">
-      <h2>Geri bildirim</h2>
-      <p>Eksik istasyon, yanlış fiyat ya da bir hata mı gördün? Bize yaz.</p>
-      <div class="row"><button class="btn primary" data-go="geri">Geri bildirim gönder</button></div>
-    </div>
-    <div class="row" style="margin-bottom:24px"><button class="btn danger" id="p-reset">Seçimlerimi sıfırla</button></div>
+    <div class="row plinks"><button class="linkbtn" data-go="geri">Geri bildirim gönder</button><button class="linkbtn danger" id="p-reset">Seçimlerimi sıfırla</button></div>
   </section>
 </main>
 
@@ -450,6 +466,21 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
     <h3>Kampanya türü</h3><div class="chips" id="f-tip"></div>
   </div>
   <div class="fs-f"><button class="btn" id="fs-clear">Temizle</button><button class="btn primary" id="fs-ok">Sonuçları göster</button></div>
+</div>
+
+<!-- Harita rehberi: işaretlerin anlamı (ilk ziyarette bir kez, sonra "?" düğmesiyle) -->
+<div class="fsheet" id="gs" role="dialog" aria-modal="true" aria-label="Harita nasıl okunur?" hidden>
+  <div class="fs-h"><span>Harita nasıl okunur?</span><button id="gs-x" aria-label="Kapat">✕</button></div>
+  <div class="fs-b">
+    <ul class="guide">
+      <li><span class="gi"><svg viewBox="0 0 24 30" width="26" height="33" aria-hidden="true"><path d="M12 29s9-8.6 9-16.5A9 9 0 0 0 3 12.5C3 20.4 12 29 12 29z" fill="#1D4ED8" stroke="#fff" stroke-width="1.6"/><path d="M10.2 7.5v2.6M13.8 7.5v2.6M9 10.1h6v1.7a3 3 0 0 1-6 0zM12 14.8v2.4" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>Şarj istasyonu</b>Rengi şarj ağını gösterir. Dokun: fiyat ve yol tarifi.</span></li>
+      <li><span class="gi"><svg viewBox="0 0 24 30" width="26" height="33" aria-hidden="true"><path d="M12 29s9-8.6 9-16.5A9 9 0 0 0 3 12.5C3 20.4 12 29 12 29z" fill="#16A34A" stroke="#fff" stroke-width="1.6"/><path d="M10.2 7.5v2.6M13.8 7.5v2.6M9 10.1h6v1.7a3 3 0 0 1-6 0zM12 14.8v2.4" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gtag" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12.2V4.6A1.6 1.6 0 0 1 4.6 3h7.6l9 9-9.4 9.4z" fill="#FFC800" stroke="#B45309" stroke-width="1.4" stroke-linejoin="round"/><path d="M10.6 15.6l5-5" stroke="#78350F" stroke-width="1.6" stroke-linecap="round"/><circle cx="11" cy="11" r="1.15" fill="#78350F"/><circle cx="15.3" cy="15.2" r="1.15" fill="#78350F"/></svg></span><span><b>Kampanyalı istasyon</b>Sarı etiket, burada indirim olduğunu gösterir.</span></li>
+      <li><span class="gi"><span class="gnum">12</span></span><span><b>Birden çok istasyon</b>Dokun, harita yakınlaşsın.</span></li>
+      <li><span class="gi"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z" fill="#2563EB" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="10" r="2.6" fill="#fff"/></svg></span><span><b>Arama noktası</b>Haritayı kaydır; alttaki liste bu noktanın çevresini gösterir.</span></li>
+      <li><span class="gi"><span class="gbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg></span></span><span><b>Konumuma git</b>Haritayı bulunduğun yere getirir.</span></li>
+    </ul>
+  </div>
+  <div class="fs-f"><button class="btn primary" id="gs-ok">Anladım</button></div>
 </div>
 
 <!-- Harita filtre çekmecesi -->
@@ -510,7 +541,7 @@ function flatten(d) {
 function daysLeft(bit) { return Math.round((new Date(bit + "T00:00:00Z") - new Date(todayIst() + "T00:00:00Z")) / 864e5); }
 function daysText(c) {
   const dl = c.bit ? daysLeft(c.bit) : null;
-  return { dl, txt: dl === null ? (c.son || "") : dl === 0 ? "Son gün bugün" : `${dl} gün kaldı · ${c.son}` };
+  return { dl, txt: dl === null ? (c.son || "") : dl === 0 ? "Son gün bugün" : `${dl} gün kaldı`, son: c.son || "" };
 }
 function buildIndexes() {
   NETS = D.istasyonlar.map(s => s.name);
@@ -571,7 +602,7 @@ function profileChanged() {
   saveProfile(); renderProfile(); renderQuick(); render(); updateDot();
   if (M.map) renderMap();
 }
-function updateDot() { $("pdot").hidden = !profileEmpty(); }
+function updateDot() {}
 function renderProfile() {
   const group = (el, key, items) => {
     $(el).innerHTML = items.map(([v, label]) => `<button class="chip ${key === "ag" ? "ag" : ""}" aria-pressed="${P[key].includes(v)}" data-pk="${key}" data-v="${esc(v)}">${esc(label)}</button>`).join("");
@@ -580,8 +611,8 @@ function renderProfile() {
   group("p-ag", "ag", [...NETS].sort(tr).map(n => [n, n]));
   const n = profileEmpty() ? 0 : C.filter(mine).length;
   $("p-n").textContent = n;
-  $("p-sum").textContent = profileEmpty() ? "Kart ya da şarj uygulaması seçtiğinde, sana uyan kampanyalar burada sayılır." : "kampanya, seçtiğin kart ve uygulamalara uyuyor.";
-  $("p-go").hidden = profileEmpty();
+  $("p-sum").textContent = "kampanya sana uyuyor";
+  $("p-n").parentElement.hidden = profileEmpty();
   $("p-code").value = profileEmpty() ? "" : encodeProfile();
   $("p-copy").disabled = profileEmpty();
 }
@@ -616,10 +647,10 @@ function buildFilters() {
 }
 function renderQuick() {
   $("quick").innerHTML = (profileEmpty()
-    ? `<button class="chip setup" id="q-setup">+ Kartlarını ekle</button>`
+    ? `<button class="chip setup" id="q-setup">+ Kartlarını seç</button>`
     : `<button class="chip" id="q-mine" aria-pressed="${useMine()}">Bana uyanlar</button>`)
-    + `<button class="chip" data-k="tip" data-v="banka" aria-pressed="${S.tip.has("banka")}">Banka kartı</button>`
-    + `<button class="chip ag" data-k="tip" data-v="ag" aria-pressed="${S.tip.has("ag")}">Şarj ağı</button>`;
+    + `<button class="chip" data-k="tip" data-v="banka" aria-pressed="${S.tip.has("banka")}">${IC.banka}Banka kartı</button>`
+    + `<button class="chip ag" data-k="tip" data-v="ag" aria-pressed="${S.tip.has("ag")}">${IC.ag}Şarj ağı</button>`;
 }
 function match(c) {
   if (S.banka.size && !(c.tip === "banka" && S.banka.has(c.kid))) return false;
@@ -632,19 +663,38 @@ function match(c) {
   }
   return true;
 }
+// Kart simgesi = banka kartı kampanyası, şimşek = şarj ağının kendi indirimi (üstteki hızlı filtrelerde de aynı simgeler var)
+const IC = {
+  banka: `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6.5 15h4"/></svg>`,
+  ag: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12z"/></svg>`,
+  saat: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>`
+};
+// Son 7 günde eklenen (ya da başlayan) kampanya "Yeni" etiketi alır
+const isNew = c => { const t = c.eklendi || c.bas; if (!t) return false; const d = -daysLeft(t); return d >= 0 && d <= 7; };
 function card(c) {
-  const { dl, txt } = daysText(c);
-  const st = c.st.map(s => `<span class="${s === ALL ? "all" : S.ag.has(s) || P.ag.includes(s) ? "hit" : ""}">${esc(s)}</span>`).join("");
-  const mk = c.tip === "banka" && P.banka.includes(c.kid) ? `<span class="mark">✓ Kartına uyuyor</span>` : "";
-  return `<article class="card ${mk ? "mine" : ""}">
-    <div class="ct"><div><div class="kurum">${esc(c.kurum)}</div><div class="alt">${esc(c.alt)}</div></div>
-      <span class="tip ${c.tip}">${c.tip === "banka" ? "Kart" : "Şarj ağı"}</span></div>
-    <div><span class="big">${esc(c.big)}</span><div class="det">${esc(c.det)}</div></div>
-    <div><div class="lbl">${c.st.includes(ALL) ? "Nerede geçerli" : "Geçerli istasyonlar"}</div><div class="st">${st}</div></div>
-    ${c.tip === "banka" && c.join ? `<div class="join">Katılım: <b>${esc(c.join)}</b></div>` : ""}
-    ${c.kosul ? `<details><summary>Koşullar</summary><p>${esc(c.kosul)}</p></details>` : ""}
-    <div class="foot">${txt ? `<span class="days ${dl !== null && dl <= 3 ? "soon" : ""}">${esc(txt)}</span>` : ""}${mk}
-      <a class="src" data-kk="${esc(c.kurum)}" href="${esc(safeUrl(c.link))}" target="_blank" rel="noopener nofollow">Resmi kampanya sayfası ↗</a></div>
+  const { dl, txt, son } = daysText(c);
+  const hit = s => S.ag.has(s) || P.ag.includes(s);
+  const sts = [...c.st].sort((a, b) => hit(b) - hit(a)), MAXST = 3;
+  const st = sts.slice(0, MAXST).map(s => `<span class="${s === ALL ? "all" : hit(s) ? "hit" : ""}">${esc(s)}</span>`).join("")
+    + (sts.length > MAXST ? `<span class="rest">+${sts.length - MAXST}</span>` : "");
+  const my = c.tip === "banka" && P.banka.includes(c.kid);
+  const badges = (isNew(c) ? `<span class="bdg new">Yeni</span>` : "")
+    + (c.kontrol ? `<span class="bdg wait" title="Resmi sayfa otomatik açılamadı">Doğrulanıyor</span>` : "")
+    + (my ? `<span class="bdg me">Kartın</span>` : "");
+  const how = c.tip === "banka" ? c.join : (c.join && c.join !== c.kosul ? c.join : "");
+  return `<article class="card ${my ? "mine" : ""}">
+    <div class="ct"><span class="ico ${c.tip}" title="${c.tip === "banka" ? "Banka kartı kampanyası" : "Şarj ağının kendi indirimi"}">${IC[c.tip]}</span>
+      <div class="who"><div class="kurum">${esc(c.kurum)}</div><div class="alt">${esc(c.alt)}</div></div>${badges}</div>
+    <div class="big">${esc(c.big)}</div><div class="det">${esc(c.det)}</div>
+    <div class="st" aria-label="Geçerli olduğu istasyonlar">${st}</div>
+    <details class="how"><summary>Nasıl katılırım?</summary>
+      ${how ? `<p>${esc(how)}</p>` : ""}
+      ${c.kosul ? `<h4>Koşullar</h4><p>${esc(c.kosul)}</p>` : ""}
+      ${sts.length > MAXST ? `<h4>Geçerli istasyonlar</h4><p>${esc(sts.join(", "))}</p>` : ""}
+      ${c.kontrol ? `<h4>Doğrulanıyor</h4><p>Resmi sayfa otomatik açılamadı; tarih ve oranı resmi sayfadan teyit et.</p>` : ""}
+    </details>
+    <div class="foot">${txt ? `<span class="days ${dl !== null && dl <= 3 ? "soon" : ""}" title="${esc(son)}">${IC.saat}${esc(txt)}</span>` : ""}
+      <a class="src" data-kk="${esc(c.kurum)}" href="${esc(safeUrl(c.link))}" target="_blank" rel="noopener nofollow">Resmi sayfa ↗</a></div>
   </article>`;
 }
 function render() {
@@ -654,7 +704,7 @@ function render() {
   const rel = c => (sel.size && c.st.some(s => sel.has(s))) ? 0 : 1;
   const list = C.filter(match).sort((a, b) => rel(a) - rel(b) || (S.sort === "kurum" ? tr(a.kurum, b.kurum)
     : (a.bit || "9").localeCompare(b.bit || "9") || tr(a.kurum, b.kurum)));
-  $("count").innerHTML = `${list.length} kampanya <span>/ ${C.length}</span>`;
+  $("count").innerHTML = list.length === C.length ? `${C.length} kampanya` : `${list.length} kampanya <span>/ ${C.length}</span>`;
   const n = S.banka.size + S.ag.size + S.tip.size;
   $("fcount").hidden = !n; $("fcount").textContent = n;
   $("list").innerHTML = list.length ? list.map(card).join("") :
@@ -667,7 +717,10 @@ function resetAll() {
   S.banka.clear(); S.ag.clear(); S.tip.clear(); S.q = ""; S.bana = false;
   $("q").value = ""; renderQuick(); render();
 }
-function closeSheets() { $("fs").hidden = true; $("mfs").hidden = true; $("bd").hidden = true; }
+function closeSheets() { if (!$("gs").hidden) lsSet("wk.rehber", "1"); $("fs").hidden = true; $("mfs").hidden = true; $("gs").hidden = true; $("bd").hidden = true; }
+// Harita rehberi: işaretlerin anlamı. İlk ziyarette bir kez kendiliğinden açılır, sonra "?" düğmesiyle.
+function openGuide() { $("gs").hidden = false; $("bd").hidden = false; $("gs-ok").focus(); }
+function maybeGuide() { if (S.view === "harita" && !lsGet("wk.rehber") && $("bd").hidden) openGuide(); }
 function openFilters(open) {
   if (!open) return closeSheets();
   $("fs").hidden = false; $("bd").hidden = false; $("fs-ok").focus();
@@ -684,8 +737,7 @@ function show(v) {
   if (changed && v !== "harita" && !S.pushed) { try { history.pushState(null, "", "#g=" + v); S.pushed = true; } catch {} }
   if (v === "harita") S.pushed = false;
   ["kamp", "harita", "profil", "geri"].forEach(x => $("v-" + x).hidden = x !== v);
-  $("back-map").hidden = v === "harita";
-  $("to-kamp").hidden = v === "kamp";
+  document.querySelectorAll("[data-tab]").forEach(b => b.dataset.tab === v ? b.setAttribute("aria-current", "page") : b.removeAttribute("aria-current"));
   document.body.classList.toggle("on-map", v === "harita");
   window.scrollTo(0, 0);
   if (v === "harita") openMap();
@@ -1043,6 +1095,7 @@ async function loadAll() {
     M.all = mergeAll(list.filter(s => !/^test\b/i.test(s.name))); M.all.forEach(enrich);
     M.byId = new Map(M.all.map(s => [s.id, s]));
     setMsg(""); refresh();
+    setTimeout(maybeGuide, 600);
   } catch (e) {
     setMsg("İstasyon verisi alınamadı. Bağlantını kontrol edip tekrar dene." + (M.errs ? " (" + M.errs + ")" : ""), true, true);
   }
@@ -1084,8 +1137,8 @@ function refresh() {
   if (!$("mfs").hidden) renderMapSheet();
 }
 function renderSeg() {
-  const b = (v, l, n) => `<button data-akim="${v}" aria-pressed="${(M.f.akim || "") === v}">${l}${M.all.length ? ` · ${n}` : ""}</button>`;
-  $("seg").innerHTML = b("", "Tümü", M.cnt.all) + b("ac", "AC", M.cnt.ac) + b("dc", "DC", M.cnt.dc);
+  const b = (v, l, t) => `<button data-akim="${v}" title="${t}" aria-pressed="${(M.f.akim || "") === v}">${l}</button>`;
+  $("seg").innerHTML = b("", "Tümü", "Tüm istasyonlar") + b("ac", "AC", "AC: normal hızda şarj") + b("dc", "DC · hızlı", "DC: hızlı şarj");
   const n = M.f.brands.size + (M.f.kamp ? 1 : 0) + (M.f.bana ? 1 : 0) + (M.f.tum ? 1 : 0);
   $("mf-n").hidden = !n; $("mf-n").textContent = n;
 }
@@ -1165,7 +1218,7 @@ function renderSheet() {
     h.innerHTML = `<b>Şarj istasyonları</b>`;
     b.innerHTML = `<p class="note">İstasyonlar yükleniyor…</p>`; return;
   }
-  h.innerHTML = `<span><b>${M.view.length}</b> istasyon · ${M.radius} km</span>`;
+  h.innerHTML = `<span><b>${M.view.length}</b> istasyon · ${M.radius} km içinde</span>${open ? "" : `<span class="tg">Listeyi aç ↑</span>`}`;
   const hidden = M.f.tum ? 0 : M.cnt.unk || 0;
   const srt = [["yakin", "En yakın"], ["ucuz", "En ucuz"], ...(P.banka.length ? [["kamp", "Kartımla en ucuz"]] : []), ["guc", "En güçlü"], ["pahali", "En pahalı"]];
   if (M.sort === "kamp" && !P.banka.length) M.sort = "ucuz";
@@ -1226,13 +1279,13 @@ function renderDetail(s) {
   };
   // Kısa satır: kurum + kazanç (+ oran); dokununca açılır: ayrıntı, nasıl katılınır, koşullar, kampanya sayfası
   const mc = c => {
-    const { txt } = daysText(c), r = campRate(c), my = c.tip === "banka" && P.banka.includes(c.kid);
+    const { txt, son } = daysText(c), r = campRate(c), my = c.tip === "banka" && P.banka.includes(c.kid);
     const how = c.tip === "banka" ? (c.join || "Kampanya sayfasındaki katılım adımlarını izle.") : (c.join && c.join !== c.kosul ? c.join : `${c.kurum} uygulamasıyla şarj et; indirim otomatik uygulanır.`);
-    return `<details class="cmp ${my ? "mine" : ""}"><summary><span class="cn">${esc(c.kurum)}${my ? ` <i>kartın</i>` : ""}</span><span class="cr">${esc(c.big)}${r && !/%/.test(c.big) ? ` · ≈%${Math.round(r * 100)}` : ""}</span><span class="ch" aria-hidden="true">›</span></summary>
+    return `<details class="cmp ${my ? "mine" : ""}"><summary><span class="cn">${esc(c.kurum)}${my ? ` <i>kartın</i>` : ""}${c.kontrol ? ` <i class="wait">doğrulanıyor</i>` : ""}</span><span class="cr">${esc(c.big)}${r && !/%/.test(c.big) ? ` · ≈%${Math.round(r * 100)}` : ""}</span><span class="ch" aria-hidden="true">›</span></summary>
       <div class="cb"><p>${esc(c.det)}</p>${effTxt(c)}
         <h4>Nasıl katılırım?</h4><p>${esc(how)}</p>
         ${c.kosul && c.kosul !== how ? `<h4>Koşullar</h4><p>${esc(c.kosul)}</p>` : ""}
-        ${txt ? `<p class="alt">${esc(txt)}</p>` : ""}
+        ${txt ? `<p class="alt">${esc(txt)}${son && son !== txt ? " · " + esc(son) : ""}</p>` : ""}
         <a class="btn primary go" data-kk="${esc(c.kurum)}" href="${esc(safeUrl(c.link))}" target="_blank" rel="noopener nofollow">${esc(c.kurum)} kampanya sayfasına git ↗</a></div></details>`;
   };
   // Bu istasyonda geçerli tüm kampanyalar: ağın kendi indirimi, bu ağda geçerli kart kampanyaları, her istasyonda geçerli kart kampanyaları
@@ -1311,7 +1364,7 @@ function bindEvents() {
     else if (d.showunk) { M.f.tum = true; renderMap(); }
     else if (b.id === "more") { M.shown += PAGE; renderSheet(); }
     else if (d.sid) selectStation(d.sid);
-    else if (b.id === "back-map" && S.pushed) { S.pushed = false; history.back(); }
+    else if (d.go === "harita" && S.pushed) { S.pushed = false; history.back(); }
     else if (d.fbt) { FB.tur = FB.tur === d.fbt ? "" : d.fbt; drawFbTur(); }
     else if (d.fbs) { const st = M.byId.get(d.fbs); FB.ctx = st ? [pretty(st.brand) || "", st.name, st.addr].filter(Boolean).join(" · ") : ""; FB.sid = st ? st.id : ""; FB.tur = FB.tur || "istasyon"; show("geri"); }
     else if (d.go) show(d.go);
@@ -1320,7 +1373,8 @@ function bindEvents() {
   $("open-f").onclick = () => openFilters(true);
   $("fb").onsubmit = sendFeedback;
   $("mf-open").onclick = () => openMapFilters(true);
-  $("fs-x").onclick = $("fs-ok").onclick = $("mfs-x").onclick = $("mfs-ok").onclick = $("bd").onclick = () => closeSheets();
+  $("fs-x").onclick = $("fs-ok").onclick = $("mfs-x").onclick = $("mfs-ok").onclick = $("gs-x").onclick = $("gs-ok").onclick = $("bd").onclick = () => closeSheets();
+  $("help").onclick = openGuide;
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheets(); });
   $("fs-clear").onclick = () => { S.banka.clear(); S.ag.clear(); S.tip.clear(); render(); };
   $("mfs-clear").onclick = () => { M.f = { akim: null, kamp: false, bana: false, tum: false, brands: new Set() }; M.shown = PAGE; renderMap(); };
@@ -1439,8 +1493,11 @@ async function init() {
     if (!r.ok) throw new Error(r.status);
     D = await r.json();
     C = flatten(D); buildIndexes();
-    const [y, m, g] = D.guncelleme.split("-");
-    $("upd").textContent = `Son değişiklik: ${+g} ${AY[+m - 1]}`; $("upd").title = "Kampanyalar her sabah resmi sayfalardan kontrol edilir; bu tarih son değişikliğin tarihidir.";
+    // son_kontrol: günlük taramanın en son çalıştığı gün (değişiklik olmasa da güncellenir); guncelleme: verinin en son değiştiği gün
+    const sk = D.son_kontrol || D.guncelleme, fark = -daysLeft(sk), [, m, g] = sk.split("-");
+    $("upd").textContent = fark <= 0 ? "Bugün kontrol edildi" : fark === 1 ? "Dün kontrol edildi" : `Son kontrol: ${+g} ${AY[+m - 1]}`;
+    $("upd").classList.toggle("stale", fark > 2);
+    $("upd").title = `Kampanyalar her sabah resmi sayfalardan kontrol edilir. Son değişiklik: ${dateTr(D.guncelleme)}.`;
   } catch (e) {
     $("list").innerHTML = `<div class="err">Kampanyalar yüklenemedi (${esc(e.message)}). Lütfen sayfayı yenileyin.</div>`;
     $("upd").textContent = "Veri alınamadı"; return;
