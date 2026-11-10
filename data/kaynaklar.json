@@ -1,0 +1,99 @@
+{
+ "_not": "Günlük kampanya taramasının izlediği kaynaklar. 'sosyal': takip edilecek resmi sosyal medya hesapları (kurumun KENDİ hesabı; kampanya duyurusu burada görülürse resmi sayfada doğrulanıp eklenir). 'kesif': yalnızca yeni kampanyayı fark etmek için bakılan, kaynak gösterilmeyen hesap ve siteler. 'resmi_alanlar': kurumların kampanya yayımladığı resmi alan adları (mevcut kampanya bağlantılarından).",
+ "sosyal": [],
+ "kesif": [],
+ "resmi_alanlar": [
+  {
+   "kurum": "Garanti BBVA",
+   "alanlar": [
+    "www.shell.com.tr",
+    "www.bonus.com.tr"
+   ]
+  },
+  {
+   "kurum": "Ziraat Bankası",
+   "alanlar": [
+    "www.bankkart.com.tr"
+   ]
+  },
+  {
+   "kurum": "Yapı Kredi",
+   "alanlar": [
+    "www.worldcard.com.tr"
+   ]
+  },
+  {
+   "kurum": "Akbank",
+   "alanlar": [
+    "www.axess.com.tr"
+   ]
+  },
+  {
+   "kurum": "Halkbank",
+   "alanlar": [
+    "www.paraf.com.tr"
+   ]
+  },
+  {
+   "kurum": "QNB",
+   "alanlar": [
+    "www.qnbcard.com.tr",
+    "milesandsmilesqnb.com.tr"
+   ]
+  },
+  {
+   "kurum": "ON Dijital",
+   "alanlar": [
+    "on.com.tr"
+   ]
+  },
+  {
+   "kurum": "VakıfBank",
+   "alanlar": [
+    "www.vakifkart.com.tr"
+   ]
+  },
+  {
+   "kurum": "DenizBank",
+   "alanlar": [
+    "www.denizkartim.com"
+   ]
+  },
+  {
+   "kurum": "Kuveyt Türk",
+   "alanlar": [
+    "www.kuveytturk.com.tr"
+   ]
+  },
+  {
+   "kurum": "Eşarj",
+   "alanlar": [
+    "www.allianz.com.tr"
+   ]
+  },
+  {
+   "kurum": "ASTOR Şarj",
+   "alanlar": [
+    "www.instagram.com"
+   ]
+  },
+  {
+   "kurum": "Trugo",
+   "alanlar": [
+    "trugo.com.tr"
+   ]
+  },
+  {
+   "kurum": "ZES",
+   "alanlar": [
+    "zes.net"
+   ]
+  },
+  {
+   "kurum": "Otopriz",
+   "alanlar": [
+    "otopriz.com.tr"
+   ]
+  }
+ ]
+}
