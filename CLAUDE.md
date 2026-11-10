@@ -23,6 +23,9 @@ Günlük tarama her çalıştığında, değişiklik olmasa bile:
   - Süresi dolan kampanya veriden çıkarılır.
   - `"kontrol": true` olanlar yeniden denenir; resmi sayfa açılıp doğrulanırsa `kontrol` alanı silinir. Site bu kampanyaları "Doğrulanıyor" etiketiyle gösterir.
   - Yeni eklenen kampanyaya `"eklendi": "YYYY-AA-GG"` yazılır (site 7 gün "Yeni" etiketi gösterir).
+  - Kampanya yalnızca belli marka araçlara özelse `"arac": ["Togg"]`, yalnızca belli illerde geçerliyse `"iller": ["Ankara", "İzmir"]` yazılır (il adları sitedeki il listesindeki yazımla). Bu alanlar profil eşleşmesinde ve bildirimlerde kullanılır; herkese / her yerde geçerli kampanyada yazılmaz.
+  - `eklendi` tarihi bildirimleri tetikler (aboneye yalnızca abonelikten sonra eklenen kampanya bildirilir); bu yüzden yalnızca gerçekten yeni kampanyada yazılır, mevcut kampanyanın metni düzeltilirken değiştirilmez.
+- **İzlenen kaynaklar:** `data/kaynaklar.json` okunur. `sosyal` listesindeki resmi hesaplar ve `kesif` listesindeki hesap/siteler son paylaşımları için kontrol edilir (açılamayan hesap raporda yazılır). Sosyal medyada görülen kampanya, kurumun resmi sayfasında doğrulanmadan eklenmez; resmi hesabın kendi duyurusu tek kaynaksa `"kontrol": true` ile eklenir ve bağlantı o gönderiye gider.
 - **Fiyatlar:** `site/tarifeler.json` içindeki her ağın `kaynak` sayfası açılır.
   - Fiyat okunabildiyse `ac`/`dc` (min–max, TL/kWh, KDV dahil) ve `kontrol` tarihi güncellenir; sayfa geçerlilik tarihi veriyorsa `gecerlilik` yazılır.
   - Sayfa açılamadıysa fiyata ve `kontrol` tarihine dokunulmaz; tahminle fiyat yazılmaz. Fiyat yalnızca ağın kendi sayfasından alınır.
@@ -34,6 +37,10 @@ Günlük tarama her çalıştığında, değişiklik olmasa bile:
 
 ## Açıklama metni
 - Her gönderi ve Reels açıklamasında hashtag'lerden önce şu satır bulunur: "ℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz."
+
+## Bildirimler
+- Site, profiline uyan yeni kampanyada aboneye web push bildirimi gönderir (`worker/index.js` → "Bildirimler"): kampanya başına bir kez, kişi başına günde en fazla bir, yalnızca doğrulanmış ve abonelikten sonra eklenmiş kampanyalar.
+- Bildirim gönderimi tümüyle otomatiktir; tarama oturumu bildirim göndermez, yalnızca veriyi doğru doldurur (`eklendi`, `arac`, `iller`, `kontrol`).
 
 ## Güvenlik
 - `onaylar/` klasörüne yazılmaz.

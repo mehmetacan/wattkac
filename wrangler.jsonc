@@ -17,6 +17,8 @@
   "d1_databases": [
     { "binding": "DB", "database_name": "wattkac-geri-bildirim", "database_id": "d33da3c0-3f38-4200-8bfc-78ab66f7385d" }
   ]
+  // Bildirim gönderimi: her gün 09:00–21:45 (Türkiye saati) arası 15 dakikada bir; her çalışmada en çok 35 bildirim (worker/index.js → bildirimGonder)
+  ,"triggers": { "crons": ["*/15 6-18 * * *"] }
   ,"routes": [
     { "pattern": "wattkac.com", "custom_domain": true },
     { "pattern": "www.wattkac.com", "custom_domain": true }

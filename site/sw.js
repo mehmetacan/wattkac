@@ -1,5 +1,5 @@
 /* WattKaç service worker: uygulamayı hızlı açar ve bağlantı yokken son görülen veriyi gösterir. */
-const SURUM = "wk-v8";
+const SURUM = "wk-v9";
 const KABUK = ["./", "./index.html", "./manifest.webmanifest", "./logo.png", "./icons/icon-192.png", "./icons/icon-512.png",
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js", "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"];
 const VERI = /\/(kampanyalar|istasyonlar|tarifeler)\.json$/;
@@ -41,4 +41,25 @@ self.addEventListener("fetch", e => {
   if (u.hostname === "tile.openstreetmap.org") return e.respondWith(onbellekOnce(req, KAROLAR, KARO_SINIR));
   if (u.hostname === "cdnjs.cloudflare.com" || (u.origin === location.origin && /\.(png|webmanifest)$/.test(u.pathname)))
     return e.respondWith(onbellekOnce(req, SURUM));
+});
+
+/* Bildirimler: sunucu içeriksiz bir "uyandırma" gönderir; gösterilecek metin /api/bildirim/icerik'ten alınır. */
+self.addEventListener("push", e => e.waitUntil((async () => {
+  let d = { baslik: "WattKaç", metin: "Sana uyan yeni bir kampanya var.", url: "./#g=kamp&bana=1" };
+  try {
+    const s = await self.registration.pushManager.getSubscription();
+    if (s) {
+      const r = await fetch("/api/bildirim/icerik", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ endpoint: s.endpoint }) });
+      const j = await r.json(); if (j.ok && j.baslik) d = { ...d, ...j };
+    }
+  } catch {}
+  await self.registration.showNotification(d.baslik, { body: d.metin, icon: "icons/icon-192.png", badge: "icons/icon-192.png", tag: "wk-kampanya", data: { url: d.url } });
+})()));
+self.addEventListener("notificationclick", e => {
+  e.notification.close();
+  const url = new URL((e.notification.data && e.notification.data.url) || "./#g=kamp&bana=1", self.registration.scope).href;
+  e.waitUntil(clients.matchAll({ type: "window", includeUncontrolled: true }).then(ws => {
+    const w = ws.find(x => x.url.startsWith(self.registration.scope));
+    return w ? w.navigate(url).then(c => (c || w).focus()) : clients.openWindow(url);
+  }));
 });

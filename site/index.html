@@ -158,7 +158,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .sec h2{font-size:13px;font-weight:800;letter-spacing:.3px;color:var(--mut);margin:16px 0 8px}
 .sec h2:first-child{margin-top:0}
 .sec p{color:var(--mut);font-size:14px}
-.privacy{display:flex;gap:7px;align-items:center;color:var(--mut);font-size:13px;font-weight:600;margin:0 2px 12px}
+.privacy{display:flex;gap:7px;align-items:flex-start;line-height:1.4;color:var(--mut);font-size:13px;font-weight:600;margin:0 2px 12px}
 .sumbox{display:flex;align-items:center;gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:14px;font-weight:600}
 .sumbox b{font-size:24px;font-weight:900;color:var(--ink)}
 .sumbox span{flex:1;min-width:0}
@@ -166,6 +166,8 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .rowsec{display:flex;align-items:center;gap:12px}.rowsec p{flex:1}
 .plinks{justify-content:space-between;margin:4px 2px 28px}
 .linkbtn.danger{color:var(--r)}
+#p-il{width:100%}
+#p-bil.on{border-color:var(--gline);background:var(--gbg)}
 .field{width:100%;background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:12px;font:13px ui-monospace,Menlo,monospace}
 .row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
 .row .field{flex:1;min-width:0}
@@ -233,19 +235,21 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .mk.pasif{opacity:.5}
 /* tek istasyon: marka renginde, üzerinde ağın kısa adı yazan rozet; altında konumu gösteren uç.
    Yeşil % rozeti = şarj ağının kendi indirimi (rozet yeşil halkayla da vurgulanır), sarı kart rozeti = banka kartı kampanyası */
-.pinb{position:absolute;transform:translate(-50%,-100%);padding-bottom:7px;cursor:pointer;filter:drop-shadow(0 2px 3px rgba(17,24,39,.35))}
-.pinb .lb{position:relative;z-index:1;display:block;background:var(--bg-b,#9CA3AF);color:var(--fg-b,#fff);font:800 11.5px/1 Inter,sans-serif;letter-spacing:.1px;padding:6px 9px;border-radius:999px;border:2px solid #fff;white-space:nowrap}
-.pinb::after{content:"";position:absolute;left:50%;bottom:2px;width:10px;height:10px;background:var(--bg-b,#9CA3AF);border-right:2px solid #fff;border-bottom:2px solid #fff;transform:translateX(-50%) rotate(45deg)}
-.pinb.own .lb{border-color:#22C55E;box-shadow:0 0 0 3px rgba(34,197,94,.35)}
+.pinb{position:absolute;transform:translate(-50%,-100%);padding-bottom:8px;cursor:pointer;filter:drop-shadow(0 2px 3px rgba(17,24,39,.4))}
+.pinb .lb{position:relative;z-index:1;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--bg-b,#9CA3AF);color:var(--fg-b,#fff);border:2.5px solid #fff;font:900 11px/1 Inter,sans-serif;letter-spacing:-.3px;white-space:nowrap;overflow:hidden}
+.pinb .lb.t4{font-size:9.5px}.pinb .lb.t5{font-size:8.5px;letter-spacing:-.4px}
+.pinb .lb svg{width:24px;height:24px}
+.pinb::after{content:"";position:absolute;left:50%;bottom:1px;width:13px;height:13px;background:var(--bg-b,#9CA3AF);border-right:2.5px solid #fff;border-bottom:2.5px solid #fff;transform:translateX(-50%) rotate(45deg);border-radius:0 0 3px 0}
+.pinb.own .lb{border-color:#22C55E;box-shadow:0 0 0 3px rgba(34,197,94,.4)}
 .pinb.own::after{border-color:#22C55E}
-.pinb .pc{position:absolute;z-index:2;top:-9px;right:-9px;min-width:19px;height:19px;border-radius:999px;display:grid;place-items:center;font:900 11px/1 Inter,sans-serif;font-style:normal;border:2px solid #fff}
+.pinb .pc{position:absolute;z-index:2;top:-7px;right:-8px;min-width:19px;height:19px;border-radius:999px;display:grid;place-items:center;font:900 11px/1 Inter,sans-serif;font-style:normal;border:2px solid #fff}
 .pinb .pc.ag{background:#16A34A;color:#fff}
 .pinb .pc.bk{background:#FFC800;color:#78350F}
 .pinb .pc svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
-.pinb .pc.ag+.pc.bk{right:auto;left:-9px}
-.pinb.sel{z-index:5}.pinb.sel .lb{font-size:13.5px;padding:8px 11px;border-color:#111827}.pinb.sel::after{border-color:#111827}
+.pinb .pc.ag+.pc.bk{right:auto;left:-8px}
+.pinb.sel{z-index:5}.pinb.sel .lb{width:46px;height:46px;border-color:#111827;font-size:13px}.pinb.sel .lb svg{width:31px;height:31px}.pinb.sel::after{border-color:#111827;width:15px;height:15px}
 .pinb.pasif{opacity:.55}
-.pinb.unk{padding-bottom:5px}.pinb.unk .lb{padding:0;width:14px;height:14px}.pinb.unk::after{width:7px;height:7px}
+.pinb.unk{padding-bottom:5px}.pinb.unk .lb{width:14px;height:14px;border-width:2px}.pinb.unk::after{width:7px;height:7px;border-width:2px}
 .gpin{position:relative;transform:none;display:inline-block;filter:none}
 .mk.grp.big{width:42px;height:42px;font-size:12px}
 .sortbar{display:flex;gap:6px;overflow-x:auto;margin:0 -12px 10px;padding:2px 12px 4px;scrollbar-width:none}
@@ -261,7 +265,8 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .mk.grp .sw i{width:7px;height:7px;border-radius:50%;border:1px solid #fff}
 .mk.sel{width:38px;height:38px;z-index:5;border-width:3px;border-color:#111827}
 .mk.small{width:18px;height:18px;font-size:0;border-width:2px}
-.bdot{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-1px;margin-right:6px;border:1px solid rgba(0,0,0,.1)}
+.bdot{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;vertical-align:-5px;margin-right:7px;background:var(--bg-b);color:var(--fg-b);font:900 7.5px/1 Inter,sans-serif;letter-spacing:-.3px;overflow:hidden}
+.bdot svg{width:15px;height:15px}
 .cmps{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
 .cmp{border-top:1px solid var(--line)}.cmp:first-child{border-top:0}
 .cmp summary{list-style:none;display:flex;align-items:center;gap:10px;padding:12px 12px;cursor:pointer;min-height:48px}
@@ -447,12 +452,21 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
       <div class="chips" id="p-banka"></div>
       <h2>Şarj uygulamalarım</h2>
       <div class="chips" id="p-ag"></div>
+      <h2>Aracım</h2>
+      <div class="chips" id="p-arac"></div>
+      <h2>Bölgem</h2>
+      <select id="p-il" aria-label="Yaşadığın il"></select>
       <div class="sumbox"><b id="p-n">0</b><span id="p-sum"></span><button class="btn primary" id="p-go">Göster</button></div>
     </div>
-    <p class="privacy"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Hesap yok. Seçimlerin yalnızca bu cihazda saklanır.</p>
+    <div class="sec rowsec" id="p-bil">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+      <p id="p-bil-t">Sana uyan yeni kampanya çıkınca bildirim gelsin. Günde en fazla bir bildirim.</p>
+      <button class="btn primary" id="p-bil-b">Aç</button>
+    </div>
+    <p class="privacy"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span>Hesap yok. Seçimlerin bu cihazda saklanır; yalnızca bildirimleri açarsan, sana uygun kampanyayı seçebilmek için sunucuya da kaydedilir.</span></p>
     <details class="sec fold">
       <summary>Başka cihaza taşı</summary>
-      <p>Bu kodu diğer cihazında yapıştır. Kod yalnızca seçtiğin banka ve ağ adlarını içerir.</p>
+      <p>Bu kodu diğer cihazında yapıştır. Kod yalnızca seçimlerini içerir.</p>
       <div class="row"><input class="field" id="p-code" readonly aria-label="Profil kodu"><button class="btn" id="p-copy">Kopyala</button></div>
       <div class="row"><input class="field" id="p-in" placeholder="Diğer cihazdaki kodu yapıştır" aria-label="Profil kodunu yapıştır" autocomplete="off"><button class="btn" id="p-apply">Uygula</button></div>
     </details>
@@ -484,9 +498,9 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
   <div class="fs-h"><span>Bu ekranda ne var?</span><button id="gs-x" aria-label="Kapat">✕</button></div>
   <div class="fs-b">
     <ul class="guide" data-help="harita">
-      <li><span class="gi"><span class="pinb gpin " style="--bg-b:#E11D2E;--fg-b:#fff"><span class="lb">ZES</span></span></span><span><b>Şarj istasyonu</b>Üzerinde şarj ağının kısa adı yazar. Dokun: fiyat ve yol tarifi.</span></li>
-      <li><span class="gi"><span class="pinb gpin own" style="--bg-b:#E11D2E;--fg-b:#fff"><span class="lb">ZES</span><i class="pc ag">%</i></span></span><span><b>Şarj ağının indirimi</b>Yeşil % rozeti: ağın kendi indirimi bu istasyonda geçerli.</span></li>
-      <li><span class="gi"><span class="pinb gpin " style="--bg-b:#E11D2E;--fg-b:#fff"><span class="lb">ZES</span><i class="pc bk"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19"/></svg></i></span></span><span><b>Banka kartı kampanyası</b>Sarı kart rozeti: bu ağda geçerli kart kampanyası var.</span></li>
+      <li><span class="gi"><span class="pinb gpin " style="--bg-b:#E11D2E;--fg-b:#fff"><span class="lb">zes</span></span></span><span><b>Şarj istasyonu</b>Üzerinde şarj ağının simgesi ya da kısa adı olur. Dokun: fiyat ve yol tarifi.</span></li>
+      <li><span class="gi"><span class="pinb gpin own" style="--bg-b:#E11D2E;--fg-b:#fff"><span class="lb">zes</span><i class="pc ag">%</i></span></span><span><b>Şarj ağının indirimi</b>Yeşil % rozeti: ağın kendi indirimi bu istasyonda geçerli.</span></li>
+      <li><span class="gi"><span class="pinb gpin " style="--bg-b:#E11D2E;--fg-b:#fff"><span class="lb">zes</span><i class="pc bk"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19"/></svg></i></span></span><span><b>Banka kartı kampanyası</b>Sarı kart rozeti: bu ağda geçerli kart kampanyası var.</span></li>
       <li><span class="gi"><span class="gnum">12</span></span><span><b>Birden çok istasyon</b>Dokun, harita yakınlaşsın.</span></li>
       <li><span class="gi"><span class="gbtn ac"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6.5h12a8.3 8.3 0 1 1-12 0z"/><g class="pin"><circle cx="9.3" cy="10.6" r="1.25"/><circle cx="14.7" cy="10.6" r="1.25"/><circle cx="7.9" cy="14.6" r="1.25"/><circle cx="12" cy="14.6" r="1.25"/><circle cx="16.1" cy="14.6" r="1.25"/></g></svg></span></span><span><b>AC şarj</b>Normal hızda şarj (Type 2 fişi). Dokun, yalnızca AC istasyonlar kalsın.</span></li>
       <li><span class="gi"><span class="gbtn dc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.3 2.8h9.4a5.6 5.6 0 1 1-9.4 0z"/><rect x="5.2" y="14.6" width="13.6" height="7.4" rx="3.7"/><g class="pin"><circle cx="10.2" cy="6" r=".95"/><circle cx="13.8" cy="6" r=".95"/><circle cx="12" cy="9" r=".95"/><circle cx="9.3" cy="18.3" r="1.7"/><circle cx="14.7" cy="18.3" r="1.7"/></g></svg></span></span><span><b>DC hızlı şarj</b>Hızlı şarj (CCS fişi). Dokun, yalnızca DC istasyonlar kalsın.</span></li>
@@ -559,7 +573,11 @@ const ssGet = k => { try { return sessionStorage.getItem(k); } catch { return nu
 const ssSet = (k, v) => { try { sessionStorage.setItem(k, v); } catch {} };
 
 let D = null, C = [], NETS = [], BANKS = [], NETC = {}, NET_RES = [], TAR = { aglar: {} };
-let P = { banka: [], ag: [] };
+let P = { banka: [], ag: [], arac: "", il: "" };
+// Profildeki araç markaları ve iller. Kampanya verisinde "arac" (yalnızca şu marka araçlara) ve "iller" (yalnızca şu illerde) alanları bunlarla eşleşir.
+const ARACLAR = ["Togg", "Tesla", "BYD", "Renault", "Hyundai", "Kia", "MG", "Volvo", "BMW", "Mercedes-Benz", "Volkswagen", "Skoda", "Audi", "Peugeot", "Citroën", "Opel", "Fiat", "Ford", "Toyota", "Nissan", "Chery", "Mini", "Porsche", "Diğer"];
+const ILLER = ["Adana","Adıyaman","Afyonkarahisar","Ağrı","Aksaray","Amasya","Ankara","Antalya","Ardahan","Artvin","Aydın","Balıkesir","Bartın","Batman","Bayburt","Bilecik","Bingöl","Bitlis","Bolu","Burdur","Bursa","Çanakkale","Çankırı","Çorum","Denizli","Diyarbakır","Düzce","Edirne","Elazığ","Erzincan","Erzurum","Eskişehir","Gaziantep","Giresun","Gümüşhane","Hakkari","Hatay","Iğdır","Isparta","İstanbul","İzmir","Kahramanmaraş","Karabük","Karaman","Kars","Kastamonu","Kayseri","Kilis","Kırıkkale","Kırklareli","Kırşehir","Kocaeli","Konya","Kütahya","Malatya","Manisa","Mardin","Mersin","Muğla","Muş","Nevşehir","Niğde","Ordu","Osmaniye","Rize","Sakarya","Samsun","Şanlıurfa","Siirt","Sinop","Sivas","Şırnak","Tekirdağ","Tokat","Trabzon","Tunceli","Uşak","Van","Yalova","Yozgat","Zonguldak"];
+const one = (v, allowed) => typeof v === "string" && allowed.includes(v) ? v : "";
 let S = { q: "", banka: new Set(), ag: new Set(), tip: new Set(), sort: "son", bana: null, view: "harita" };
 
 /* ---------- Veri ---------- */
@@ -595,14 +613,17 @@ function buildIndexes() {
 function loadProfile() {
   try {
     const j = JSON.parse(lsGet(PKEY) || "null");
-    if (j && j.v === 1) P = { banka: sanitize(j.banka, BANKS.map(b => b.id)), ag: sanitize(j.ag, NETS) };
+    if (j && j.v === 1) P = { banka: sanitize(j.banka, BANKS.map(b => b.id)), ag: sanitize(j.ag, NETS), arac: one(j.arac, ARACLAR), il: one(j.il, ILLER) };
   } catch {}
 }
 const sanitize = (arr, allowed) => [...new Set((Array.isArray(arr) ? arr : []).filter(x => typeof x === "string" && allowed.includes(x)))];
-function saveProfile() { lsSet(PKEY, JSON.stringify({ v: 1, banka: P.banka, ag: P.ag })); }
+function saveProfile() { lsSet(PKEY, JSON.stringify({ v: 1, banka: P.banka, ag: P.ag, arac: P.arac, il: P.il })); }
 const profileEmpty = () => !P.banka.length && !P.ag.length;
 const useMine = () => S.bana ?? !profileEmpty();
 function mine(c) {
+  // Yalnızca belli marka araçlara ya da belli illere özel kampanya, profilde başka bir marka / il seçiliyse uymaz
+  if (c.arac && c.arac.length && P.arac && !c.arac.includes(P.arac)) return false;
+  if (c.iller && c.iller.length && P.il && !c.iller.includes(P.il)) return false;
   if (profileEmpty()) return true;
   if (c.tip === "banka") {
     if (P.banka.length && !P.banka.includes(c.kid)) return false;
@@ -617,7 +638,7 @@ function stationMine(net) {
   return (NETC[net] || []).some(c => c.tip === "banka" && P.banka.includes(c.kid));
 }
 function encodeProfile() {
-  const bytes = new TextEncoder().encode(JSON.stringify({ b: P.banka, a: P.ag }));
+  const bytes = new TextEncoder().encode(JSON.stringify({ b: P.banka, a: P.ag, r: P.arac, i: P.il }));
   let bin = ""; bytes.forEach(x => bin += String.fromCharCode(x));
   return "WK1." + btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
@@ -628,11 +649,11 @@ function decodeProfile(code) {
     const b64 = m[1].replace(/-/g, "+").replace(/_/g, "/");
     const bin = atob(b64 + "=".repeat((4 - b64.length % 4) % 4));
     const j = JSON.parse(new TextDecoder().decode(Uint8Array.from(bin, c => c.charCodeAt(0))));
-    return { banka: sanitize(j.b, BANKS.map(b => b.id)), ag: sanitize(j.a, NETS) };
+    return { banka: sanitize(j.b, BANKS.map(b => b.id)), ag: sanitize(j.a, NETS), arac: one(j.r, ARACLAR), il: one(j.i, ILLER) };
   } catch { return null; }
 }
 function profileChanged() {
-  saveProfile(); renderProfile(); renderQuick(); render(); updateDot();
+  saveProfile(); renderProfile(); renderQuick(); render(); updateDot(); pushSync();
   if (M.map) renderMap();
 }
 function updateDot() {}
@@ -642,6 +663,8 @@ function renderProfile() {
   };
   group("p-banka", "banka", BANKS.map(b => [b.id, b.name]));
   group("p-ag", "ag", [...NETS].sort(tr).map(n => [n, n]));
+  $("p-arac").innerHTML = ARACLAR.map(a => `<button class="chip" aria-pressed="${P.arac === a}" data-arac="${esc(a)}">${esc(a)}</button>`).join("");
+  $("p-il").innerHTML = `<option value="">İl seç</option>` + ILLER.map(i => `<option${P.il === i ? " selected" : ""}>${esc(i)}</option>`).join("");
   const n = profileEmpty() ? 0 : C.filter(mine).length;
   $("p-n").textContent = n;
   $("p-sum").textContent = "kampanya sana uyuyor";
@@ -1177,7 +1200,7 @@ function renderSeg() {
 }
 // Ekranda birbirine yakın istasyonları tek rozette topla (açgözlü kümeleme; rozetler üst üste binmez)
 function groupStations(list) {
-  const z = M.map.getZoom(), R = z >= 16 ? 30 : z >= 13 ? 44 : 54, G = new Map(), out = [];
+  const z = M.map.getZoom(), R = z >= 15 ? 20 : z >= 12 ? 28 : 38, G = new Map(), out = [];
   for (const [s, p] of list) {
     const cx = Math.floor(p.x / R), cy = Math.floor(p.y / R); let g = null;
     for (let i = -1; i <= 1 && !g; i++) for (let j = -1; j <= 1 && !g; j++)
@@ -1201,6 +1224,22 @@ function shortName(b) {
   if (n.length > 7) n = w.length > 1 ? w.slice(0, 3).map(x => x[0]).join("").toLocaleUpperCase("tr") : n.slice(0, 6);
   SHORTC.set(b, n); return n;
 }
+// Ağı çağrıştıran sade simgeler (firmaların tescilli logoları değil; onlara benzeyen genel biçimler). Simgesi olmayan ağda kısa ad yazar.
+const GLYPH = {
+  "Shell Recharge": `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.2c-1.7 0-2.9-.5-3.6-1.4L4.3 13A8 8 0 1 1 19.7 13l-4.1 5.8c-.7.9-1.9 1.4-3.6 1.4z" fill="#DD1D21"/><path d="M12 5.2v13.4M8.4 6 10.9 18.4M15.6 6 13.1 18.4M5.6 9.2l4.3 8.6M18.4 9.2l-4.3 8.6" stroke="#FFD500" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg>`,
+  "Trugo": `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3.8 3.8 12l7.2 8.2v-4.9L8.1 12 11 8.7zM13 3.8l7.2 8.2-7.2 8.2v-4.9l2.9-3.3L13 8.7z" fill="currentColor"/></svg>`,
+  "Tesla": `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 6.4c4.8-2.2 10.2-2.2 15 0l-1.3 2.1c-1.4-.6-2.8-1-4.3-1.1L12 20.5 10.1 7.4c-1.5.1-2.9.5-4.3 1.1z" fill="currentColor"/></svg>`,
+  "TOGG": `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3.8 3.8 12l7.2 8.2v-4.9L8.1 12 11 8.7zM13 3.8l7.2 8.2-7.2 8.2v-4.9l2.9-3.3L13 8.7z" fill="currentColor"/></svg>`,
+  "Eşarj": `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.6 15.6A6.4 6.4 0 1 1 18.4 12H7.2" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M13.4 13.6 11.2 17h2.2l-1 3.4 3.4-4.6h-2.3l1.1-2.2z" fill="#FFC800"/></svg>`,
+  "Beefull": `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 19.4 7.7v8.6L12 20.5l-7.4-4.2V7.7z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M13 7.5 9.5 12.6h2.3L11 16.5l3.6-5.2h-2.3z" fill="currentColor"/></svg>`
+};
+const badgeLabel = b => ({ "ZES": "zes", "BP": "bp" })[b] || shortName(b);
+// Rozetin içi: simge varsa simge, yoksa kısa ad (uzunluğa göre küçülen yazı)
+function brandMark(s) {
+  if (GLYPH[s.brand]) return { html: GLYPH[s.brand], cls: "" };
+  const t = badgeLabel(s.brand), n = [...t].length;
+  return { html: esc(n > 5 ? brandStyle(s)[2] : t), cls: n >= 5 ? "t5" : n === 4 ? "t4" : "" };
+}
 // İstasyona özel doğrulanmış kampanyalar: ağın herkese açık kendi indirimi / banka kartı kampanyası.
 // Yalnızca belli müşterilere (ör. Togg, kasko sahipleri) özel ağ indirimleri ve Shell uygulaması üzerinden gelenler rozet almaz; detayda görünür.
 const campKinds = s => { const l = s.camp.filter(c => !(s.viaShell || []).includes(c)); return { ag: l.filter(c => c.tip === "ag" && !conditional(c)), bk: l.filter(c => c.tip === "banka") }; };
@@ -1212,7 +1251,7 @@ function markerHtml(g) {
     const cls = `pinb ${k.ag.length ? "own" : ""} ${sel ? "sel" : ""} ${s0.pasif ? "pasif" : ""} ${st ? "" : "unk"}`;
     const style = st ? `style="--bg-b:${st[0]};--fg-b:${st[1]}"` : "";
     const tip = esc(pretty(s0.brand) || s0.name) + (k.ag.length ? " · ağ indirimi" : "") + (k.bk.length ? " · kart kampanyası" : "");
-    return `<div class="mkw"><div class="${cls}" ${style} title="${tip}"><span class="lb">${st ? esc(shortName(s0.brand)) : ""}</span>${k.ag.length ? `<i class="pc ag">%</i>` : ""}${k.bk.length ? `<i class="pc bk">${PC_CARD}</i>` : ""}</div></div>`;
+    return `<div class="mkw"><div class="${cls}" ${style} title="${tip}"><span class="lb ${st ? brandMark(s0).cls : ""}">${st ? brandMark(s0).html : ""}</span>${k.ag.length ? `<i class="pc ag">%</i>` : ""}${k.bk.length ? `<i class="pc bk">${PC_CARD}</i>` : ""}</div></div>`;
   }
   const sw = [...new Set(g.items.map(s => (brandStyle(s) || ["#9CA3AF"])[0]))].slice(0, 4).map(c => `<i style="background:${c}"></i>`).join("");
   const n = g.items.length > 999 ? "999+" : g.items.length;
@@ -1309,7 +1348,7 @@ function stationItem(s) {
   const price = v === null || v === undefined ? "" : `<span class="${useCard || s.net ? "deal" : "pr"}">${fmtNum(v)} TL/kWh</span>`
     + (useCard ? `<span class="dealsrc">${esc(s.deal.c.kurum)} kartınla</span>` : s.net ? `<span class="dealsrc">${esc(s.net.c.kurum)} ${esc(s.net.c.big)}</span>` : "");
   return `<button class="stn ${s.id === M.sel ? "sel" : ""}" data-sid="${esc(s.id)}">
-    <div class="r1"><span class="nm">${brandStyle(s) ? `<span class="bdot" style="background:${brandStyle(s)[0]}"></span>` : ""}${esc(head)}</span><span class="ds">${fmtKm(s.d)}</span></div>
+    <div class="r1"><span class="nm">${brandStyle(s) ? `<span class="bdot" style="--bg-b:${brandStyle(s)[0]};--fg-b:${brandStyle(s)[1]}">${GLYPH[s.brand] || esc(brandStyle(s)[2])}</span>` : ""}${esc(head)}</span><span class="ds">${fmtKm(s.d)}</span></div>
     ${sub ? `<div class="sub">${sub}</div>` : ""}
     <div class="r2">${tb || s.kw ? `<span class="pill ${tb ? (s.hasDc ? "dc" : "ac") : ""}">${[tb, s.kw ? Math.round(s.kw) + " kW" : ""].filter(Boolean).join(" · ")}</span>` : ""}${price}
       ${kk.ag.length && !s.net ? `<span class="tag ag" title="Şarj ağının kendi indirimi">${IC.ag}${esc(kk.ag[0].big)}</span>` : ""}${kk.bk.length && !useCard ? `<span class="tag bk" title="Bu ağda geçerli banka kartı kampanyası">${IC.banka}${kk.bk.length}</span>` : ""}</div>
@@ -1411,6 +1450,7 @@ function bindEvents() {
     if (d.k) { const set = S[d.k]; set.has(d.v) ? set.delete(d.v) : set.add(d.v); render(); }
     else if (b.id === "q-mine") { S.bana = !useMine(); render(); }
     else if (b.id === "q-setup") show("profil");
+    else if (d.arac) { P.arac = P.arac === d.arac ? "" : d.arac; profileChanged(); }
     else if (d.pk) { const a = P[d.pk]; a.includes(d.v) ? a.splice(a.indexOf(d.v), 1) : a.push(d.v); profileChanged(); }
     else if (d.akim !== undefined) { an("filtre", "akım: " + (d.akim || "tümü")); M.f.akim = M.f.akim === d.akim ? null : d.akim; M.shown = PAGE; renderMap(); }
     else if (d.mf) { an("filtre", d.mf); M.f[d.mf] = !M.f[d.mf]; M.shown = PAGE; renderMap(); }
@@ -1424,6 +1464,8 @@ function bindEvents() {
     else if (d.fbs) { const st = M.byId.get(d.fbs); FB.ctx = st ? [pretty(st.brand) || "", st.name, st.addr].filter(Boolean).join(" · ") : ""; FB.sid = st ? st.id : ""; FB.tur = FB.tur || "istasyon"; show("geri"); }
     else if (d.go) show(d.go);
   });
+  $("p-il").onchange = e => { P.il = one(e.target.value, ILLER); profileChanged(); };
+  $("p-bil-b").onclick = pushToggle;
   document.addEventListener("change", e => { if (e.target.id === "m-tum") { M.f.tum = e.target.checked; M.shown = PAGE; renderMap(); } });
   $("open-f").onclick = () => openFilters(true);
   $("fb").onsubmit = sendFeedback;
@@ -1486,7 +1528,7 @@ function bindEvents() {
     if (!r) return pmsg("Bu kod geçerli görünmüyor.", true);
     P = r; $("p-in").value = ""; profileChanged(); pmsg("Seçimlerin yüklendi.");
   };
-  $("p-reset").onclick = () => { if (confirm("Seçtiğin kartlar ve uygulamalar silinsin mi?")) { P = { banka: [], ag: [] }; S.bana = null; profileChanged(); pmsg("Seçimlerin silindi."); } };
+  $("p-reset").onclick = () => { if (confirm("Seçtiğin kartlar ve uygulamalar silinsin mi?")) { P = { banka: [], ag: [], arac: "", il: "" }; S.bana = null; profileChanged(); pmsg("Seçimlerin silindi."); } };
   addEventListener("hashchange", () => { readHash(); $("q").value = S.q; $("sort").value = S.sort; renderQuick(); render(); if (S.view !== currentView()) show(S.view); });
 }
 const currentView = () => ["kamp", "harita", "profil"].find(v => !$("v-" + v).hidden);
@@ -1531,6 +1573,46 @@ function maybeShowInstall() {
   $("install").hidden = false;
 }
 
+/* ---------- Bildirimler (web push) ----------
+   Kullanıcı profilde "Aç"a basarsa tarayıcıdan izin istenir; abonelik adresi ve profil seçimleri (banka, ağ, araç, il) /api/bildirim/abone'ye kaydedilir.
+   Sunucu, profile uyan YENİ bir kampanya eklendiğinde bildirim gönderir: kampanya başına bir kez, kişi başına günde en fazla bir. */
+const PUSH_OK = "serviceWorker" in navigator && "PushManager" in window && "Notification" in window;
+const pushOn = () => lsGet("wk.bildirim") === "1";
+const pushBody = sub => JSON.stringify({ abonelik: sub.toJSON(), profil: { banka: P.banka, ag: P.ag, arac: P.arac, il: P.il } });
+const pushPost = (yol, body) => fetch("/api/bildirim/" + yol, { method: "POST", headers: { "content-type": "application/json" }, body });
+async function pushSub() { try { return await (await navigator.serviceWorker.ready).pushManager.getSubscription(); } catch { return null; } }
+async function pushSync() { // profil değişince sunucudaki kayıt da güncellenir
+  if (!PUSH_OK || !pushOn() || location.protocol !== "https:") return;
+  const s = await pushSub(); if (s) pushPost("abone", pushBody(s)).catch(() => {});
+}
+function updatePushUi(msg) {
+  const on = PUSH_OK && pushOn() && Notification.permission === "granted", b = $("p-bil-b"), t = $("p-bil-t");
+  $("p-bil").classList.toggle("on", on);
+  b.textContent = on ? "Kapat" : "Aç"; b.className = on ? "btn" : "btn primary"; b.hidden = !PUSH_OK;
+  t.textContent = msg || (!PUSH_OK ? (IS_IOS && !IS_STANDALONE() ? "Bildirim almak için önce WattKaç'ı ana ekrana ekle, sonra uygulamadan bu ekranı aç." : "Bu tarayıcı bildirimleri desteklemiyor.")
+    : on ? "Bildirimler açık. Sana uyan yeni kampanyada haber veririz; günde en fazla bir bildirim."
+    : "Sana uyan yeni kampanya çıkınca bildirim gelsin. Günde en fazla bir bildirim.");
+}
+async function pushToggle() {
+  const b = $("p-bil-b"); b.disabled = true;
+  try {
+    if (pushOn()) {
+      const s = await pushSub();
+      if (s) { await pushPost("cik", JSON.stringify({ endpoint: s.endpoint })).catch(() => {}); await s.unsubscribe().catch(() => {}); }
+      lsSet("wk.bildirim", "0"); an("filtre", "bildirim kapat"); return updatePushUi();
+    }
+    if (profileEmpty() && !P.arac) return updatePushUi("Önce yukarıdan kartını, şarj uygulamanı ya da aracını seç; bildirimler bu seçimlere göre gelir.");
+    if ((await Notification.requestPermission()) !== "granted") return updatePushUi("Bildirim izni verilmedi. Tarayıcı ayarlarından WattKaç için bildirimlere izin verebilirsin.");
+    const k = await (await fetch("/api/bildirim/anahtar")).json(); if (!k.ok) throw new Error("anahtar");
+    const raw = atob(k.anahtar.replace(/-/g, "+").replace(/_/g, "/")), key = Uint8Array.from(raw, c => c.charCodeAt(0));
+    const reg = await navigator.serviceWorker.ready;
+    const s = (await reg.pushManager.getSubscription()) || await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: key });
+    const r = await (await pushPost("abone", pushBody(s))).json(); if (!r.ok) throw new Error(r.hata || "kayıt");
+    lsSet("wk.bildirim", "1"); an("filtre", "bildirim aç"); updatePushUi();
+  } catch { updatePushUi("Bildirimler açılamadı. Biraz sonra tekrar dene."); }
+  finally { b.disabled = false; }
+}
+
 /* ---------- Başlat ---------- */
 async function init() {
   readHash();
@@ -1556,7 +1638,7 @@ async function init() {
   if (!lsSet("wattkac.test", "1")) pmsg("Tarayıcın depolamaya izin vermiyor; seçimlerin yalnızca bu oturumda geçerli olur.", true);
   $("kamp-n").textContent = C.length;
   show(S.view);
-  initPwa();
+  initPwa(); updatePushUi();
 }
 // Dış bağlantı tıklamaları (resmi kampanya sayfası, yol tarifi) sayılır
 document.addEventListener("click", e => {
