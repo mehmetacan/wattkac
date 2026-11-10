@@ -1,5 +1,5 @@
 {
- "_not": "Günlük kampanya taramasının izlediği kaynaklar. 'sosyal': takip edilecek resmi sosyal medya hesapları (kurumun KENDİ hesabı; kampanya duyurusu burada görülürse resmi sayfada doğrulanıp eklenir). 'kesif': yalnızca yeni kampanyayı fark etmek için bakılan, kaynak gösterilmeyen hesap ve siteler. 'resmi_alanlar': kurumların kampanya yayımladığı resmi alan adları (mevcut kampanya bağlantılarından).",
+ "_not": "Günlük kampanya taramasının izlediği kaynaklar. 'sosyal': takip edilecek resmi sosyal medya hesapları (kurumun KENDİ hesabı; kampanya duyurusu burada görülürse resmi sayfada doğrulanıp eklenir). 'kesif': yalnızca yeni kampanyayı fark etmek için bakılan, kaynak gösterilmeyen hesap ve siteler. 'resmi_alanlar': kurumların kampanya yayımladığı resmi alan adları (mevcut kampanya bağlantılarından). 'arastir': resmi kaynağı henüz doğrulanmamış, taramada özellikle bakılacak konular.",
  "sosyal": [],
  "kesif": [],
  "resmi_alanlar": [
@@ -95,5 +95,8 @@
     "otopriz.com.tr"
    ]
   }
+ ],
+ "arastir": [
+  "Tesla Supercharger: Tesla sahiplerine ve diğer marka araçlara ayrı kWh fiyatı uygulanıyor. Tesla'nın resmi sayfasında doğrulanırsa: site/tarifeler.json'a 'Tesla' ağı (diğer araçlar için liste fiyatı) eklenir ve data/kampanyalar.json → istasyonlar'a Tesla için 'arac': ['Tesla'] alanlı kendi indirimi (own) yazılır; site bunu Tesla seçen kullanıcıya indirimli fiyat olarak gösterir."
  ]
 }
