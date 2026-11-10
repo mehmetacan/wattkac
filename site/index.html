@@ -191,6 +191,17 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .fab svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .fab i{font-style:normal;background:var(--ink);color:#fff;border-radius:999px;font-size:11.5px;padding:0 6px}
 .mtop .fab{margin-left:auto}
+/* Hızlı filtreler: filtre düğmesinin altında, yalnızca simge. Bana uyan · ağ indirimi · kart kampanyası · ZES · Trugo */
+.qf{top:66px;right:10px;display:flex;flex-direction:column;gap:8px}
+.qf button{width:46px;height:46px;border:2px solid transparent;border-radius:14px;background:#fff;box-shadow:0 2px 10px rgba(17,24,39,.18);display:grid;place-items:center;color:var(--txt);padding:0}
+.qf button>svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.qf .qi{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:900 12px/1 Inter,sans-serif;letter-spacing:-.3px;background:var(--bg-b);color:var(--fg-b)}
+.qf .qi svg{width:20px;height:20px}
+.qf .qi.kag{background:#16A34A;color:#fff;font-size:15px}
+.qf .qi.kbk{background:#FFC800;color:#78350F}.qf .qi.kbk svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.qf button[aria-pressed=true]{border-color:var(--ink);background:#FFF7D6}
+.qf button[data-mf=bana][aria-pressed=true]{background:var(--ink);color:#fff}
+@media(max-height:620px){.qf{gap:5px}.qf button{width:40px;height:40px}}
 .guide{list-style:none;display:grid;gap:16px;padding:8px 0 6px}
 .guide li{display:flex;align-items:center;gap:14px;font-size:14px;line-height:1.4;color:var(--mut)}
 .guide li b{display:block;font-size:15px;font-weight:800;color:var(--txt)}
@@ -201,6 +212,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .gbtn{width:40px;height:40px;border-radius:12px;background:#fff;display:grid;place-items:center;box-shadow:0 2px 10px rgba(17,24,39,.18)}
 .gbtn{color:var(--txt)}.gbtn svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;filter:none}
 .gbtn.kart{background:#FFF7D6;color:#92400E}.gbtn.ag{background:var(--gbg);color:var(--g)}
+.gq{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:900 11px/1 Inter,sans-serif}.gq.kag{background:#16A34A;color:#fff;font-size:14px}.gq.kbk{background:#FFC800;color:#78350F}.gq svg{width:16px!important;height:16px!important}
 .gbar{width:36px;height:5px;border-radius:3px;background:#D1D5DB}
 .guide+h3{margin-top:22px}
 .guide[hidden]+h3{margin-top:0}
@@ -408,6 +420,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
       <div class="seg" id="seg" role="group" aria-label="Akım türü"></div>
       <button class="fab" id="mf-open" aria-haspopup="dialog" aria-label="Filtre" title="Filtre"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 5h17l-6.5 8v6l-4 1.5V13z"/></svg><i id="mf-n" hidden></i></button>
     </div>
+    <div class="ov qf" id="qf" role="group" aria-label="Hızlı filtreler"></div>
     <button class="fab ov locbtn" id="loc" aria-label="Konumuma git" title="Konumuma git"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg></button>
     <div class="ov mapmsg" id="mapmsg" hidden></div>
     <div class="install" id="install" role="dialog" aria-label="Uygulamayı yükle" hidden>
@@ -504,7 +517,11 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
       <li><span class="gi"><span class="gnum">12</span></span><span><b>Birden çok istasyon</b>Dokun, harita yakınlaşsın.</span></li>
       <li><span class="gi"><span class="gbtn ac"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6.5h12a8.3 8.3 0 1 1-12 0z"/><g class="pin"><circle cx="9.3" cy="10.6" r="1.25"/><circle cx="14.7" cy="10.6" r="1.25"/><circle cx="7.9" cy="14.6" r="1.25"/><circle cx="12" cy="14.6" r="1.25"/><circle cx="16.1" cy="14.6" r="1.25"/></g></svg></span></span><span><b>AC şarj</b>Normal hızda şarj (Type 2 fişi). Dokun, yalnızca AC istasyonlar kalsın.</span></li>
       <li><span class="gi"><span class="gbtn dc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.3 2.8h9.4a5.6 5.6 0 1 1-9.4 0z"/><rect x="5.2" y="14.6" width="13.6" height="7.4" rx="3.7"/><g class="pin"><circle cx="10.2" cy="6" r=".95"/><circle cx="13.8" cy="6" r=".95"/><circle cx="12" cy="9" r=".95"/><circle cx="9.3" cy="18.3" r="1.7"/><circle cx="14.7" cy="18.3" r="1.7"/></g></svg></span></span><span><b>DC hızlı şarj</b>Hızlı şarj (CCS fişi). Dokun, yalnızca DC istasyonlar kalsın.</span></li>
-      <li><span class="gi"><span class="gbtn "><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 5h17l-6.5 8v6l-4 1.5V13z"/></svg></span></span><span><b>Filtre</b>Markaya göre süz, yalnızca kampanyalı istasyonları göster.</span></li>
+      <li><span class="gi"><span class="gbtn "><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 5h17l-6.5 8v6l-4 1.5V13z"/></svg></span></span><span><b>Filtre</b>Şarj ağına (markaya) göre süz.</span></li>
+      <li><span class="gi"><span class="gbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></span></span><span><b>Bana uyan</b>Profilindeki kart ve uygulamalara uyan istasyonlar.</span></li>
+      <li><span class="gi"><span class="gbtn"><span class="gq kag">%</span></span></span><span><b>Ağ indirimi</b>Şarj ağının kendi indirimi olan istasyonlar.</span></li>
+      <li><span class="gi"><span class="gbtn"><span class="gq kbk"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19"/></svg></span></span></span><span><b>Kart kampanyası</b>Banka kartı kampanyası geçerli olan istasyonlar.</span></li>
+      <li><span class="gi"><span class="gbtn"><span class="gq" style="background:#E11D2E;color:#fff">zes</span></span></span><span><b>ZES / Trugo</b>Yalnızca o ağın istasyonları. Diğer ağlar filtre penceresinde.</span></li>
       <li><span class="gi"><span class="gbtn "><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg></span></span><span><b>Konumum</b>Haritayı bulunduğun yere getirir.</span></li>
       <li><span class="gi"><span class="gbar"></span></span><span><b>İstasyon listesi</b>Haritada gördüğün alandaki istasyonlar. Haritayı kaydır ya da yakınlaş, liste değişir.</span></li>
     </ul>
@@ -857,7 +874,7 @@ async function sendFeedback(e) {
 
 /* ---------- Harita ---------- */
 const M = { map: null, layer: null, circle: null, meMark: null, me: null, center: null, radius: 5, sort: "yakin",
-  f: { akim: null, kamp: false, bana: false, tum: false, brands: new Set() },
+  f: { akim: null, kag: false, kbk: false, bana: false, tum: false, brands: new Set() },
   sel: null, markers: new Map(), all: [], byId: new Map(), filtered: null, view: [], shown: PAGE, sig: "", cnt: { all: 0, ac: 0, dc: 0 }, brands: [] };
 
 function brandOf(t) {
@@ -1168,7 +1185,8 @@ function refresh() {
   const base = M.all.filter(s => M.f.tum || s.known);
   let a = M.f.akim === "ac" ? base.filter(s => s.hasAc) : M.f.akim === "dc" ? base.filter(s => s.hasDc) : base;
   if (M.f.brands.size) a = a.filter(s => M.f.brands.has(s.brand));
-  if (M.f.kamp) a = a.filter(s => s.camp.length);
+  if (M.f.kag) a = a.filter(s => campKinds(s).ag.length);   // şarj ağının herkese açık kendi indirimi
+  if (M.f.kbk) a = a.filter(s => campKinds(s).bk.length);   // o ağda geçerli banka kartı kampanyası
   if (M.f.bana) a = a.filter(s => stationMine(s.brand));
   M.filtered = a;
   // Liste = haritada görünen alan (liste çekmecesinin örttüğü şerit hariç: telefonda alttaki tutamak, geniş ekranda soldaki panel)
@@ -1195,7 +1213,14 @@ function refresh() {
 function renderSeg() {
   const b = (v, ic, t) => `<button data-akim="${v}" title="${t}" aria-label="${t}" aria-pressed="${M.f.akim === v}">${ic}</button>`;
   $("seg").innerHTML = b("ac", `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6.5h12a8.3 8.3 0 1 1-12 0z"/><g class="pin"><circle cx="9.3" cy="10.6" r="1.25"/><circle cx="14.7" cy="10.6" r="1.25"/><circle cx="7.9" cy="14.6" r="1.25"/><circle cx="12" cy="14.6" r="1.25"/><circle cx="16.1" cy="14.6" r="1.25"/></g></svg>`, "AC: normal şarj") + b("dc", `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.3 2.8h9.4a5.6 5.6 0 1 1-9.4 0z"/><rect x="5.2" y="14.6" width="13.6" height="7.4" rx="3.7"/><g class="pin"><circle cx="10.2" cy="6" r=".95"/><circle cx="13.8" cy="6" r=".95"/><circle cx="12" cy="9" r=".95"/><circle cx="9.3" cy="18.3" r="1.7"/><circle cx="14.7" cy="18.3" r="1.7"/></g></svg>`, "DC: hızlı şarj");
-  const n = M.f.brands.size + (M.f.kamp ? 1 : 0) + (M.f.bana ? 1 : 0) + (M.f.tum ? 1 : 0);
+  // Hızlı filtreler (filtre penceresinde değil, burada): bana uyan, ağ indirimi, kart kampanyası ve en çok kullanılan iki ağ
+  const q = (attr, on, t, ic) => `<button ${attr} title="${t}" aria-label="${t}" aria-pressed="${!!on}">${ic}</button>`;
+  const marka = n => { const st = BRAND[n]; return `<span class="qi" style="--bg-b:${st[0]};--fg-b:${st[1]}">${GLYPH[n] || esc(badgeLabel(n))}</span>`; };
+  $("qf").innerHTML = q('data-mf="bana"', M.f.bana, "Bana uyan istasyonlar", `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>`)
+    + q('data-mf="kag"', M.f.kag, "Şarj ağı indirimi olan istasyonlar", `<span class="qi kag">%</span>`)
+    + q('data-mf="kbk"', M.f.kbk, "Banka kartı kampanyası olan istasyonlar", `<span class="qi kbk">${PC_CARD}</span>`)
+    + q('data-mb="ZES"', M.f.brands.has("ZES"), "Yalnızca ZES", marka("ZES")) + q('data-mb="Trugo"', M.f.brands.has("Trugo"), "Yalnızca Trugo", marka("Trugo"));
+  const n = M.f.brands.size + (M.f.tum ? 1 : 0);
   $("mf-n").hidden = !n; $("mf-n").textContent = n;
 }
 // Ekranda birbirine yakın istasyonları tek rozette topla (açgözlü kümeleme; rozetler üst üste binmez)
@@ -1434,7 +1459,6 @@ function renderMapSheet() {
   const chip = (attr, label, on, cls = "") => `<button class="chip ${cls}" ${attr} aria-pressed="${on}">${esc(label)}</button>`;
   const br = M.brands.map(([b, n]) => chip(`data-mb="${esc(b)}"`, `${b} · ${n}`, M.f.brands.has(b))).join("");
   $("mfs-b").innerHTML = (br ? `<h3>Marka</h3><div class="chips">${br}</div>` : "")
-    + `<h3>Ayrıca</h3><div class="chips">${chip('data-mf="kamp"', "Kampanyalı", M.f.kamp, "ag")}${profileEmpty() ? "" : chip('data-mf="bana"', "Bana uyan", M.f.bana)}</div>`
     + `<label class="chk"><input type="checkbox" id="m-tum" ${M.f.tum ? "checked" : ""}><span>Tanımsız istasyonları da göster</span></label>`
     + `<p class="note">Markası bilinmeyen ya da tanınmayan istasyonlar varsayılan olarak gizlenir.</p>`;
   $("mfs-ok").textContent = `${M.view.length} istasyonu göster`;
@@ -1453,6 +1477,7 @@ function bindEvents() {
     else if (d.arac) { P.arac = P.arac === d.arac ? "" : d.arac; profileChanged(); }
     else if (d.pk) { const a = P[d.pk]; a.includes(d.v) ? a.splice(a.indexOf(d.v), 1) : a.push(d.v); profileChanged(); }
     else if (d.akim !== undefined) { an("filtre", "akım: " + (d.akim || "tümü")); M.f.akim = M.f.akim === d.akim ? null : d.akim; M.shown = PAGE; renderMap(); }
+    else if (d.mf === "bana" && profileEmpty()) show("profil");   // önce kart / uygulama seçilmeli
     else if (d.mf) { an("filtre", d.mf); M.f[d.mf] = !M.f[d.mf]; M.shown = PAGE; renderMap(); }
     else if (d.mb) { an("filtre", "marka"); const s = M.f.brands; s.has(d.mb) ? s.delete(d.mb) : s.add(d.mb); M.shown = PAGE; renderMap(); }
     else if (d.ms) { an("siralama", d.ms); M.sort = d.ms; if ($("v-harita").dataset.s === "peek") $("v-harita").dataset.s = "half"; refresh(); $("sh-b").scrollTop = 0; }
@@ -1474,7 +1499,7 @@ function bindEvents() {
   $("help").onclick = openGuide;
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheets(); });
   $("fs-clear").onclick = () => { S.banka.clear(); S.ag.clear(); S.tip.clear(); render(); };
-  $("mfs-clear").onclick = () => { M.f = { akim: null, kamp: false, bana: false, tum: false, brands: new Set() }; M.shown = PAGE; renderMap(); };
+  $("mfs-clear").onclick = () => { M.f = { akim: null, kag: false, kbk: false, bana: false, tum: false, brands: new Set() }; M.shown = PAGE; renderMap(); };
   $("loc").onclick = () => locate(false);
   // Alt pencere: tutamaktan yukarı/aşağı sürükleyerek aç-kapat (en yakın konuma oturur); dokunmak da bir sonraki konuma geçirir
   (() => {
