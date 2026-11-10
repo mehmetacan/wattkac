@@ -1,0 +1,38 @@
+name: GitHub Pages kopyasını eşitle
+
+# Asıl site Cloudflare'den (wattkac.com) yayınlanır. https://mehmetacan.github.io/wattkac/kampanyalar/ adresindeki
+# yedek kopya (docs/kampanyalar/) eskiden elle kopyalanıyordu ve geride kalıyordu; bu iş akışı onu kendiliğinden eşitler.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "data/kampanyalar.json"
+      - "tools/pages_kopya.sh"
+      - ".github/workflows/pages-kopya.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-kopya
+  cancel-in-progress: false
+
+jobs:
+  esitle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Kopyala
+        run: bash tools/pages_kopya.sh
+      - name: Değişiklik varsa kaydet
+        run: |
+          git config user.name "wattkac-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/kampanyalar
+          if git diff --cached --quiet; then echo "Değişiklik yok"; exit 0; fi
+          git commit -m "GitHub Pages kopyası eşitlendi"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push

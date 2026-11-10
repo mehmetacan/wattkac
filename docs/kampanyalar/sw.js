@@ -1,5 +1,5 @@
 /* WattKaç service worker: uygulamayı hızlı açar ve bağlantı yokken son görülen veriyi gösterir. */
-const SURUM = "wk-v1";
+const SURUM = "wk-v5";
 const KABUK = ["./", "./index.html", "./manifest.webmanifest", "./logo.png", "./icons/icon-192.png", "./icons/icon-512.png",
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js", "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"];
 const VERI = /\/(kampanyalar|istasyonlar|tarifeler)\.json$/;

@@ -17,6 +17,20 @@ Bu depo @wattkac Instagram sayfasının kampanya verisini, görsellerini ve payl
   - Her satır tek bir kartla hesaplanır.
   - "Başka indirimle birleşmez" yazan kart kampanyaları (ör. Paraf Doğal) birleşik hesaba katılmaz.
 
+## Günlük kontrol (kampanya + fiyat)
+Günlük tarama her çalıştığında, değişiklik olmasa bile:
+- **Kampanyalar:** `data/kampanyalar.json` içindeki her kampanyanın resmi sayfası yeniden açılır.
+  - Süresi dolan kampanya veriden çıkarılır.
+  - `"kontrol": true` olanlar yeniden denenir; resmi sayfa açılıp doğrulanırsa `kontrol` alanı silinir. Site bu kampanyaları "Doğrulanıyor" etiketiyle gösterir.
+  - Yeni eklenen kampanyaya `"eklendi": "YYYY-AA-GG"` yazılır (site 7 gün "Yeni" etiketi gösterir).
+- **Fiyatlar:** `site/tarifeler.json` içindeki her ağın `kaynak` sayfası açılır.
+  - Fiyat okunabildiyse `ac`/`dc` (min–max, TL/kWh, KDV dahil) ve `kontrol` tarihi güncellenir; sayfa geçerlilik tarihi veriyorsa `gecerlilik` yazılır.
+  - Sayfa açılamadıysa fiyata ve `kontrol` tarihine dokunulmaz; tahminle fiyat yazılmaz. Fiyat yalnızca ağın kendi sayfasından alınır.
+  - En az bir fiyat değiştiyse dosyanın üstündeki `guncelleme` bugüne çekilir.
+- **Tarih alanları:** `data/kampanyalar.json` → `son_kontrol` her taramada bugün yapılır (site "Bugün kontrol edildi" yazar). `guncelleme` yalnızca kampanya verisi gerçekten değiştiğinde değişir.
+- **Denetim:** Commit'ten önce `python3 tools/veri_kontrol.py` çalıştırılır; hata varsa düzeltilmeden push edilmez. Aynı denetim GitHub Actions'ta her gün 09:10'da çalışır ve tarama 2 günden fazla aksarsa kırmızı olur.
+- `docs/kampanyalar/` elle kopyalanmaz; `pages-kopya.yml` iş akışı main'e her push'ta kendisi eşitler.
+
 ## Açıklama metni
 - Her gönderi ve Reels açıklamasında hashtag'lerden önce şu satır bulunur: "ℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz."
 
