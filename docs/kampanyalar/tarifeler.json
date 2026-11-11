@@ -1,6 +1,6 @@
 {
  "_not": "Şarj ağlarının kendi resmi sayfalarında doğrulanan liste fiyatları (TL/kWh). Fiyatlar konuma göre aralık olarak yayınlanıyor: min-max. 'kontrol' sayfanın okunduğu tarih, 'gecerlilik' sayfanın kendi belirttiği tarih (yoksa null). Doğrulanamayan ağlarda ac/dc null kalır ve haritada 'Fiyat yok' görünür. Kampanya indirimleri bu fiyatlara dahil değildir.",
- "guncelleme": "2026-11-07",
+ "guncelleme": "2026-11-11",
  "aglar": {
   "Eşarj": {
    "ac": {
@@ -36,11 +36,11 @@
     "max": 9.95
    },
    "dc": {
-    "min": 14.98,
+    "min": 12.0,
     "max": 14.98
    },
    "kaynak": "https://trugo.com.tr/price",
-   "kontrol": "2026-11-07",
+   "kontrol": "2026-11-11",
    "gecerlilik": null,
    "not": "AC tüm istasyonlarda 9,95; DC 14,98 TL/kWh. Duyurudaki seçili istasyonlarda DC 12 TL/kWh (https://trugo.com.tr/individual/news/secili-istasyonlarda-12-tl-kwh); istasyon bazlı fiyat haritada gösterilir."
   },
@@ -62,7 +62,7 @@
     "max": 13.9
    },
    "kaynak": "https://otopriz.com.tr/uyelik-ve-tarifeler",
-   "kontrol": "2026-11-06",
+   "kontrol": "2026-11-11",
    "gecerlilik": "2026-01-20",
    "not": "KDV dahil. İstasyon bazlı güncel fiyat Otopriz uygulamasında."
   },
@@ -76,7 +76,7 @@
     "max": 13.49
    },
    "kaynak": "https://ovolt.com.tr/tarifeler",
-   "kontrol": "2026-11-06",
+   "kontrol": "2026-11-11",
    "gecerlilik": null,
    "not": "Sayfa geçerlilik tarihi vermiyor; DC fiyat lokasyona göre değişiyor."
   },
@@ -119,7 +119,7 @@
     "max": 14.49
    },
    "kaynak": "https://www.watmobilite.com/cozumler/kamusal-alanlar#guncel-fiyat-ve-tarifeler",
-   "kontrol": "2026-11-06",
+   "kontrol": "2026-11-11",
    "gecerlilik": "2026-10-08",
    "not": "Fiyat lokasyona göre değişiyor; güncel tarife mobil uygulamada. Sayfanın tarih bilgileri tutarsız olabilir."
   },
@@ -132,37 +132,52 @@
    "not": "Sitede fiyat yok."
   },
   "ZES": {
-   "ac": null,
-   "dc": null,
+   "ac": {
+    "min": 10.99,
+    "max": 10.99
+   },
+   "dc": {
+    "min": 12.99,
+    "max": 16.49
+   },
    "kaynak": "https://zes.net/tr/fiyatlandirma",
-   "kontrol": null,
+   "kontrol": "2026-11-11",
    "gecerlilik": null,
    "adlar": [
     "zes"
    ],
-   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+   "not": "DC-1 ve DC-2 tek aralık; fiyat lokasyona göre değişir."
   },
   "Enyakıt": {
    "ac": null,
-   "dc": null,
+   "dc": {
+    "min": 14.9,
+    "max": 14.9
+   },
    "kaynak": "https://www.enyakit.com.tr/ucretlendirme",
-   "kontrol": null,
+   "kontrol": "2026-11-11",
    "gecerlilik": null,
    "adlar": [
     "EN YAKIT"
    ],
-   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+   "not": "Ağ yalnızca DC istasyonlardan oluşuyor; AC fiyatı yok."
   },
   "Oncharge": {
-   "ac": null,
-   "dc": null,
+   "ac": {
+    "min": 9.99,
+    "max": 9.99
+   },
+   "dc": {
+    "min": 13.5,
+    "max": 13.5
+   },
    "kaynak": "https://www.oncharge.com.tr/fiyatlar",
-   "kontrol": null,
-   "gecerlilik": null,
+   "kontrol": "2026-11-11",
+   "gecerlilik": "2026-10-30",
    "adlar": [
     "oncharge"
    ],
-   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+   "not": "KDV dahil. AC ≤22 kW, DC 40–320 kW."
   },
   "Otojet": {
    "ac": null,
@@ -176,147 +191,222 @@
    "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
   },
   "D-Charge": {
-   "ac": null,
-   "dc": null,
+   "ac": {
+    "min": 10.9,
+    "max": 10.9
+   },
+   "dc": {
+    "min": 14.9,
+    "max": 14.9
+   },
    "kaynak": "https://dcharge.com.tr/tarifeler",
-   "kontrol": null,
+   "kontrol": "2026-11-11",
    "gecerlilik": null,
    "adlar": [
     "D-Charge"
    ],
-   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+   "not": "KDV dahil."
   },
   "Zeplin": {
-   "ac": null,
-   "dc": null,
+   "ac": {
+    "min": 9.5,
+    "max": 9.5
+   },
+   "dc": {
+    "min": 12.0,
+    "max": 12.0
+   },
    "kaynak": "https://www.zeplinenerji.com",
-   "kontrol": null,
+   "kontrol": "2026-11-11",
    "gecerlilik": null,
    "adlar": [
     "ZEPLİN CAR rental"
-   ],
-   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+   ]
   },
   "Tunçmatik": {
-   "ac": null,
-   "dc": null,
+   "ac": {
+    "min": 10.99,
+    "max": 10.99
+   },
+   "dc": {
+    "min": 15.49,
+    "max": 15.49
+   },
    "kaynak": "https://tuncmatikcharge.com/fiyatlar/",
-   "kontrol": null,
+   "kontrol": "2026-11-11",
    "gecerlilik": null,
    "adlar": [
     "tunçmatik"
-   ],
-   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+   ]
   },
   "Beefull": {
-   "ac": null,
-   "dc": null,
+   "ac": {
+    "min": 9.9,
+    "max": 9.9
+   },
+   "dc": {
+    "min": 13.99,
+    "max": 13.99
+   },
    "kaynak": "https://beefull.com/tarifeler/elektrikli-arac-tarifesi/",
-   "kontrol": null,
+   "kontrol": "2026-11-11",
    "gecerlilik": null,
    "adlar": [
     "beefull"
    ],
-   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+   "not": "KDV dahil."
   },
   "Aksa Şarj": {
-   "ac": null,
-   "dc": null,
+   "ac": {
+    "min": 9.9,
+    "max": 10.9
+   },
+   "dc": {
+    "min": 11.99,
+    "max": 13.99
+   },
    "kaynak": "https://www.aksasarj.com.tr/ucretler",
-   "kontrol": null,
-   "gecerlilik": null,
+   "kontrol": "2026-11-11",
+   "gecerlilik": "2026-08-07",
    "adlar": [
     "AKSA ŞARJ"
    ],
-   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+   "not": "KDV dahil."
   },
   "MKS Şarj": {
-   "ac": null,
-   "dc": null,
+   "ac": {
+    "min": 9.49,
+    "max": 9.49
+   },
+   "dc": {
+    "min": 13.99,
+    "max": 13.99
+   },
    "kaynak": "https://mkssarj.com/tarife",
-   "kontrol": null,
-   "gecerlilik": null,
+   "kontrol": "2026-11-11",
+   "gecerlilik": "2026-04-11",
    "adlar": [
     "MKS-ŞARJ"
    ],
-   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+   "not": "DC ≥50 kW."
   },
   "Miggo": {
-   "ac": null,
-   "dc": null,
+   "ac": {
+    "min": 9.5,
+    "max": 9.5
+   },
+   "dc": {
+    "min": 12.5,
+    "max": 12.5
+   },
    "kaynak": "https://www.mig-go.com",
-   "kontrol": null,
-   "gecerlilik": null,
+   "kontrol": "2026-11-11",
+   "gecerlilik": "2026-02-19",
    "adlar": [
     "MİGGO"
    ],
-   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+   "not": "AC ≤22 kW, DC ≤180 kW."
   },
   "Neva Şarj": {
-   "ac": null,
-   "dc": null,
+   "ac": {
+    "min": 9.9,
+    "max": 9.9
+   },
+   "dc": {
+    "min": 13.9,
+    "max": 13.9
+   },
    "kaynak": "https://nevasarj.com/sayfalar/istasyonlarimiz/arac-sarj-ac-dc-kwh-fiyat-tarifeleri.html",
-   "kontrol": null,
-   "gecerlilik": null,
+   "kontrol": "2026-11-11",
+   "gecerlilik": "2026-02-17",
    "adlar": [
     "NEVA ŞARJ"
    ],
-   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+   "not": "AC ≤22 kW, DC ≤240 kW."
   },
   "Varr": {
-   "ac": null,
-   "dc": null,
+   "ac": {
+    "min": 9.9,
+    "max": 9.9
+   },
+   "dc": {
+    "min": 13.9,
+    "max": 13.9
+   },
    "kaynak": "https://www.varr.com.tr",
-   "kontrol": null,
+   "kontrol": "2026-11-11",
    "gecerlilik": null,
    "adlar": [
     "varr TM"
-   ],
-   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+   ]
   },
   "i-Şarj": {
-   "ac": null,
-   "dc": null,
+   "ac": {
+    "min": 9.98,
+    "max": 9.98
+   },
+   "dc": {
+    "min": 13.49,
+    "max": 13.49
+   },
    "kaynak": "https://www.isarj.com/tarifeler/",
-   "kontrol": null,
+   "kontrol": "2026-11-11",
    "gecerlilik": null,
    "adlar": [
     "i-şarj"
    ],
-   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+   "not": "KDV dahil üyeliksiz liste fiyatı; üyelere avantajlı fiyat uygulamada."
   },
   "ŞarjMatik": {
-   "ac": null,
-   "dc": null,
+   "ac": {
+    "min": 9.99,
+    "max": 9.99
+   },
+   "dc": {
+    "min": 12.5,
+    "max": 12.5
+   },
    "kaynak": "https://sarjmatik.com.tr/ChargingPrices/",
-   "kontrol": null,
+   "kontrol": "2026-11-11",
    "gecerlilik": null,
    "adlar": [
     "ŞarjMatik"
    ],
-   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+   "not": "AC 22 kW, DC 60–90 kW."
   },
   "Şarjon": {
-   "ac": null,
-   "dc": null,
+   "ac": {
+    "min": 10.99,
+    "max": 10.99
+   },
+   "dc": {
+    "min": 11.99,
+    "max": 13.99
+   },
    "kaynak": "https://sarjon.com.tr/fiyatlar/",
-   "kontrol": null,
+   "kontrol": "2026-11-11",
    "gecerlilik": null,
    "adlar": [
     "ŞARJON"
    ],
-   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+   "not": "DC-1 / DC-2 farklı fiyat; sadakat sözleşmesiyle özel fiyat var."
   },
   "ADZE": {
-   "ac": null,
-   "dc": null,
+   "ac": {
+    "min": 9.4,
+    "max": 9.4
+   },
+   "dc": {
+    "min": 13.4,
+    "max": 13.4
+   },
    "kaynak": "https://www.adze.com/tr/fiyat-tarifesi",
-   "kontrol": null,
+   "kontrol": "2026-11-11",
    "gecerlilik": null,
    "adlar": [
     "ADZE"
    ],
-   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+   "not": "KDV dahil. AC 11–22 kW, DC 40–350 kW."
   },
   "Lumicle": {
    "ac": null,
@@ -330,26 +420,37 @@
    "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
   },
   "Tora": {
-   "ac": null,
-   "dc": null,
+   "ac": {
+    "min": 9.99,
+    "max": 9.99
+   },
+   "dc": {
+    "min": 13.49,
+    "max": 13.49
+   },
    "kaynak": "https://torasarj.com/fiyatlar/",
-   "kontrol": null,
+   "kontrol": "2026-11-11",
    "gecerlilik": null,
    "adlar": [
     "TORA"
    ],
-   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+   "not": "KDV dahil."
   },
   "Efish": {
-   "ac": null,
-   "dc": null,
+   "ac": {
+    "min": 10.99,
+    "max": 10.99
+   },
+   "dc": {
+    "min": 15.99,
+    "max": 15.99
+   },
    "kaynak": "https://www.efish.com.tr/tr/fiyatlandirma/",
-   "kontrol": null,
-   "gecerlilik": null,
+   "kontrol": "2026-11-11",
+   "gecerlilik": "2026-10-21",
    "adlar": [
     "efish"
-   ],
-   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+   ]
   }
  }
 }
