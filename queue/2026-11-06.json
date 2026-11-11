@@ -297,10 +297,11 @@
    "media/2026-11-06/banka_qnb/hikaye.jpg"
   ],
   "aciklama": "",
-  "durum": "bekliyor",
+  "durum": "paylasildi",
   "deneme": 0,
-  "ig_media_id": null,
-  "hata": null
+  "ig_media_id": "18452580949134000",
+  "hata": null,
+  "paylasim_zamani": "2026-11-11T11:00:05+00:00"
  },
  {
   "id": "istasyon_ovolt_post",
