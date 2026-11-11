@@ -108,10 +108,11 @@
    "media/2026-11-08/banka_vakifbank/hikaye.jpg"
   ],
   "aciklama": "",
-  "durum": "bekliyor",
+  "durum": "paylasildi",
   "deneme": 0,
-  "ig_media_id": null,
-  "hata": null
+  "ig_media_id": "18061367012558900",
+  "hata": null,
+  "paylasim_zamani": "2026-11-11T18:06:44+00:00"
  },
  {
   "id": "istasyon_trugo_post",
