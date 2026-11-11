@@ -213,10 +213,11 @@
    "media/2026-11-08/banka_denizbank/hikaye.jpg"
   ],
   "aciklama": "",
-  "durum": "bekliyor",
+  "durum": "paylasildi",
   "deneme": 0,
-  "ig_media_id": null,
-  "hata": null
+  "ig_media_id": "18102191525550867",
+  "hata": null,
+  "paylasim_zamani": "2026-11-11T11:00:05+00:00"
  },
  {
   "id": "istasyon_otopriz_post",
