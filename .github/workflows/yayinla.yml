@@ -3,7 +3,7 @@ name: Instagram'a yayınla
 on:
   push:
     branches: [main]
-    paths: ["onaylar/**"]   # panelde onay verildiği anda çalışır
+    paths: ["onaylar/**", ".github/workflows/yayinla.yml"]   # panelde onay verildiği anda çalışır
   schedule:
     - cron: "*/15 * * * *"   # 15 dakikada bir kuyruğu kontrol eder (UTC)
   workflow_dispatch:
@@ -23,6 +23,7 @@ concurrency:
 jobs:
   yayinla:
     runs-on: ubuntu-latest
+    timeout-minutes: 355
     steps:
       - uses: actions/checkout@v4
         with:
@@ -41,7 +42,7 @@ jobs:
           GRAPH_BASE: ${{ vars.GRAPH_BASE || 'https://graph.facebook.com/v23.0' }}
           YAYIN_AKTIF: ${{ vars.YAYIN_AKTIF }}
           DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && '1' || '0' }}
-          BEKLE_DK: "75"
+          BEKLE_DK: "340"   # GitHub zamanlayıcısı saatlerce gecikebiliyor; çalışma bir sonraki onaylı paylaşımı kendisi bekler
           GIT_COMMIT_EACH: "1"
         run: python scripts/publish.py
       - name: Kuyruk durumunu kaydet
