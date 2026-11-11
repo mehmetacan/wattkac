@@ -170,10 +170,11 @@
    "media/2026-11-08/istasyon_trugo/hikaye.jpg"
   ],
   "aciklama": "",
-  "durum": "bekliyor",
+  "durum": "paylasildi",
   "deneme": 0,
-  "ig_media_id": null,
-  "hata": null
+  "ig_media_id": "18200394871389838",
+  "hata": null,
+  "paylasim_zamani": "2026-11-11T07:30:04+00:00"
  },
  {
   "id": "banka_denizbank_post",
