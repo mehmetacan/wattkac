@@ -1,5 +1,5 @@
 {
- "zaman": "2026-11-10T02:14:56+00:00",
+ "zaman": "2026-11-11T00:05:41+00:00",
  "hatalar": {
   "medya_metrik": {
    "profile_visits": "(#100) The Media Insights API does not support the profile_visits metric for this media product type.",
@@ -14,11 +14,11 @@
   "username": "wattkac"
  },
  "hesap_7gun": {
-  "reach": 934,
-  "views": 1632,
-  "profile_views": 58,
-  "accounts_engaged": 9,
-  "total_interactions": 54
+  "reach": 971,
+  "views": 1850,
+  "profile_views": 62,
+  "accounts_engaged": 11,
+  "total_interactions": 61
  },
  "medya": [
   {
@@ -30,13 +30,13 @@
    "link": "https://www.instagram.com/reel/DfiTp_BozdS/",
    "baslik": "Fikirleri yolumuz, ilkeleri pusulamız. Ulu Önder Mustafa Kemal Atatürk",
    "istatistik": {
-    "reach": 22,
-    "views": 35,
+    "reach": 69,
+    "views": 97,
     "saved": 0,
     "shares": 1,
     "total_interactions": 1,
-    "ig_reels_avg_watch_time": 8773,
-    "ig_reels_video_view_total_time": 201785
+    "ig_reels_avg_watch_time": 6551,
+    "ig_reels_video_view_total_time": 517531
    },
    "olmayan": [
     "follows",
@@ -47,18 +47,18 @@
    "tur": "REELS",
    "tip": "VIDEO",
    "zaman": "2026-11-09T21:14:00+0000",
-   "begeni": 0,
+   "begeni": 1,
    "yorum": 0,
    "link": "https://www.instagram.com/reel/DfiRORFopLk/",
    "baslik": "Saygı, sevgi ve özlemle… 🇹🇷 Mustafa Kemal Atatürk · 1881 – 193∞  #10Ka",
    "istatistik": {
-    "reach": 16,
-    "views": 30,
+    "reach": 125,
+    "views": 156,
     "saved": 0,
-    "shares": 1,
-    "total_interactions": 1,
-    "ig_reels_avg_watch_time": 7242,
-    "ig_reels_video_view_total_time": 130363
+    "shares": 2,
+    "total_interactions": 3,
+    "ig_reels_avg_watch_time": 3082,
+    "ig_reels_video_view_total_time": 428490
    },
    "olmayan": [
     "follows",
@@ -74,13 +74,13 @@
    "link": "https://www.instagram.com/reel/DfhWAcHIKhZ/",
    "baslik": "🌙⚡ DC şarj 7 TL/kWh! Gece kuşlarına özel hesap 👇  Shell Recharge'ın ba",
    "istatistik": {
-    "reach": 128,
-    "views": 145,
+    "reach": 129,
+    "views": 147,
     "saved": 0,
     "shares": 0,
     "total_interactions": 2,
-    "ig_reels_avg_watch_time": 6810,
-    "ig_reels_video_view_total_time": 912580
+    "ig_reels_avg_watch_time": 6677,
+    "ig_reels_video_view_total_time": 928104
    },
    "olmayan": [
     "follows",
@@ -116,7 +116,7 @@
    "baslik": "⚡ ON Dijital ile şarjda %20 iade!  ✅ %20 iade: Şarj harcamalarında · t",
    "istatistik": {
     "reach": 5,
-    "views": 18,
+    "views": 22,
     "saved": 0,
     "shares": 0,
     "total_interactions": 1,
@@ -154,12 +154,12 @@
    "baslik": "⚡ Yılda 20.000 km yapıyorsan şarja ne kadar ödüyorsun? Hesapladık 👇  🔋",
    "istatistik": {
     "reach": 145,
-    "views": 167,
+    "views": 170,
     "saved": 0,
     "shares": 0,
     "total_interactions": 3,
-    "ig_reels_avg_watch_time": 5148,
-    "ig_reels_video_view_total_time": 797964
+    "ig_reels_avg_watch_time": 5129,
+    "ig_reels_video_view_total_time": 805283
    },
    "olmayan": [
     "follows",
@@ -219,13 +219,13 @@
    "link": "https://www.instagram.com/reel/DfeQ8tmooDi/",
    "baslik": "⚡💳 Garanti BBVA kartın varsa şarjın yarısı bonus olarak geri!  Shell R",
    "istatistik": {
-    "reach": 118,
-    "views": 139,
+    "reach": 120,
+    "views": 140,
     "saved": 0,
     "shares": 0,
     "total_interactions": 2,
-    "ig_reels_avg_watch_time": 3830,
-    "ig_reels_video_view_total_time": 501840
+    "ig_reels_avg_watch_time": 3900,
+    "ig_reels_video_view_total_time": 518763
    },
    "olmayan": [
     "follows",
@@ -279,8 +279,8 @@
    "link": "https://www.instagram.com/p/Dfc-yotiaP0/",
    "baslik": "⚡ Halkbank ile şarjda 75 TL ParafPara!  ✅ %10 indirim: Paraf Doğal ile",
    "istatistik": {
-    "reach": 4,
-    "views": 17,
+    "reach": 5,
+    "views": 21,
     "saved": 0,
     "shares": 0,
     "total_interactions": 1,
@@ -298,13 +298,13 @@
    "link": "https://www.instagram.com/reel/DfaXz2wowWT/",
    "baslik": "☕⚡ Araban şarj olurken sen de kahveni kap!  En Yakıt × Starbucks kampa",
    "istatistik": {
-    "reach": 121,
-    "views": 153,
+    "reach": 122,
+    "views": 154,
     "saved": 0,
     "shares": 6,
     "total_interactions": 8,
-    "ig_reels_avg_watch_time": 6125,
-    "ig_reels_video_view_total_time": 814668
+    "ig_reels_avg_watch_time": 6210,
+    "ig_reels_video_view_total_time": 832174
    },
    "olmayan": [
     "follows",
