@@ -1051,7 +1051,8 @@ const seciliKamp = c => c.tip === "ag" && ((STATIC && (STATIC.secili_aglar || []
 function enrich(s) {
   s.sk = s.sk || [];
   // Haritada yalnızca resmi sayfası doğrulanmış kampanyalar kullanılır ("kontrol": true olanlar Kampanyalar sekmesinde "Doğrulanıyor" etiketiyle durur)
-  s.camp = s.camp.filter(c => !c.kontrol && (!seciliKamp(c) || s.sk.includes(kampKey(c))));
+  // Başlangıç tarihi gelmemiş kampanya haritada rozet ve indirimli fiyat olarak sayılmaz (Kampanyalar sekmesinde tarihiyle görünür)
+  s.camp = s.camp.filter(c => !c.kontrol && !(c.bas && c.bas > todayIst()) && (!seciliKamp(c) || s.sk.includes(kampKey(c))));
   s.viaShell = [];
   if (/trugo/i.test(s.brand) && /shell/i.test(fold([s.name, s.addr].join(" ")))) {
     s.shellTrugo = true;

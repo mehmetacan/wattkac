@@ -1124,7 +1124,18 @@
     {
       "id": "ovolt",
       "name": "Ovolt",
-      "own": [],
+      "own": [
+        {
+          "big": "%12 indirim",
+          "det": "Ovolt istasyonlarında · 12–22 Kasım arası 11 gün",
+          "son": "22 Kasım",
+          "link": "https://www.instagram.com/ovolt.tr/",
+          "bas": "2026-11-12",
+          "bit": "2026-11-22",
+          "kosul": "Her ayın 12'sine özel %12 indirim, Kasım ayında 12–22 Kasım tarihleri arasında geçerli. Kaynak: Ovolt'un resmi Instagram hesabındaki duyuru (11 Kasım 2026). Uygulama koşulları için Ovolt uygulamasına bakın.",
+          "eklendi": "2026-11-11"
+        }
+      ],
       "banks": [
         [
           "Garanti BBVA Bonus",
@@ -1136,9 +1147,9 @@
         ]
       ],
       "cover": {
-        "big": "75 TL bonus",
-        "sub": "Garanti Bonus ile",
-        "son": "30 Kasım"
+        "big": "%12 indirim",
+        "sub": "12–22 Kasım · tüm Ovolt istasyonları",
+        "son": "22 Kasım"
       }
     },
     {
