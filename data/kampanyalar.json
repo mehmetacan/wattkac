@@ -1,7 +1,7 @@
 {
   "donem": "Kasım 2026",
-  "guncelleme": "2026-11-10",
-  "son_kontrol": "2026-11-10",
+  "guncelleme": "2026-11-11",
+  "son_kontrol": "2026-11-11",
   "genel_kartlar": "Paraf Doğal · QNB · ON",
   "kampanyasiz_bankalar": [
     "İş Bankası (Maximum)"
@@ -198,7 +198,6 @@
           "link": "https://www.paraf.com.tr/tr/kampanyalar/akaryakit/elektrikli-arac-sarj-istasyonu-harcamalariniza-450-tl-parafpara1.html",
           "bas": "2026-11-01",
           "bit": "2026-11-30",
-          "kontrol": true,
           "kosul": "Paraf, Parafly, sanal ve ek kartlar; aynı gün aynı iş yerinde yalnızca ilk 350 TL+ harcama; Paraf Genç/GençİZ, banka ve ticari kartlar, Halkcard, ParafPara ile ödemeler hariç."
         }
       ]
@@ -295,7 +294,6 @@
           "link": "https://www.vakifkart.com.tr/kampanyalar/elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41122",
           "bas": "2026-11-01",
           "bit": "2026-11-30",
-          "kontrol": true,
           "kosul": "İndirim 3 Aralık'ta ekstreye yansır; 5.000 TL+ işlemler, ticari kart, Bankomat, Recycle Card, mobil temassız ödeme hariç; Express Card katılım bedeli 9,99 TL."
         },
         {
@@ -320,7 +318,6 @@
           "link": "https://www.vakifkart.com.tr/kampanyalar/recycle-card-ile-elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41128",
           "bas": "2026-11-01",
           "bit": "2026-11-30",
-          "kontrol": true,
           "kosul": "Yalnızca Recycle Card (ek ve sanal dahil); 5.000 TL+ işlemler ve mobil temassız ödeme hariç; indirim 3 Aralık'ta ekstreye yansır."
         }
       ]
@@ -374,7 +371,6 @@
           "link": "https://www.kuveytturk.com.tr/kampanyalar/kendim-icin/kart-kampanyalari/elektrikli-arac-sarjiniza-ozel-750-tlye-varan-indirim",
           "bas": "2026-11-01",
           "bit": "2026-11-30",
-          "kontrol": true,
           "kosul": "Bireysel, ek ve sanal kartlar (Miles&Smiles, Sağlam Kart, Özel Bankacılık World Elite dahil); katılım 50.000 müşteriyle sınırlı; diğer kampanyalarla birleşmez."
         }
       ]
@@ -422,7 +418,8 @@
           "link": "https://www.instagram.com/astorsarj/",
           "bas": "2026-11-01",
           "bit": "2026-11-30",
-          "kosul": "Astor Şarj mobil uygulamasının güncel sürümüyle başlatılan şarjlarda; fiyat tarifesi Kasım ayı boyunca geçerli. Kaynak: Astor Şarj resmi Instagram duyurusu (6 Kasım 2026). Güncel tarife uygulamada geçerlidir."
+          "kosul": "Astor Şarj mobil uygulamasının güncel sürümüyle başlatılan şarjlarda; fiyat tarifesi Kasım ayı boyunca geçerli. Kaynak: Astor Şarj resmi Instagram duyurusu (6 Kasım 2026). Güncel tarife uygulamada geçerlidir.",
+          "kontrol": true
         }
       ],
       "banks": [
@@ -457,7 +454,9 @@
       "own": [
         {
           "big": "Togg'a %20 indirim",
-          "arac": ["Togg"],
+          "arac": [
+            "Togg"
+          ],
           "det": "Trugo DC'de · Autocharge ya da uygulamadan mobil ödemeyle",
           "son": "30 Kasım",
           "link": "https://trugo.com.tr/",
@@ -520,6 +519,16 @@
           "bas": "2026-02-16",
           "bit": "2026-12-31",
           "kosul": "Yalnızca bireysel Vodafone Red Premium (ayda 2 kez) ve Red Elite (ayda 3 kez) müşterileri, Zes üyesi olmalı (misafir kullanıcı hariç). Kod Vodafone Happy'den alınır; her şarjdan önce Zes uygulamasında Profil > Kampanyalar > Kampanya Kodu Ekle ile tanımlanır; kod tek kullanımlık. Zes'in halka açık AC, DC ve HPC istasyonları; Solarşarj hariç. Taksitli/kredili ödemeyle kullanılamaz, diğer kampanya ve hediye çekleriyle birleşmez; stoklarla sınırlı."
+        },
+        {
+          "big": "%10 indirim",
+          "det": "Anadolu Sigorta kasko sahiplerine · ayda 1 kez, Sigortam Cepte'den alınan kodla",
+          "son": "31 Aralık",
+          "link": "https://zes.net/tr/kampanyalar/anadolusigorta",
+          "bas": "2026-01-20",
+          "bit": "2026-12-31",
+          "kosul": "Anadolu Sigorta'da aktif kasko poliçesi olan bireysel müşteriler (kurumsal hariç). Kod Sigortam Cepte > Kampanyalar'dan katılıp Profil > Kuponlarım'dan alınır, ayda bir kez, tek kullanımlık; Zes uygulamasında Profil > Kampanyalar > Kampanya Kodu Ekle ile tanımlanır, misafir kullanıcı hariç. Zes'in halka açık AC, DC ve HPC istasyonları. Taksitli/kredili ödemeyle kullanılamaz; diğer kampanya, çek ve puanlarla birleşmez.",
+          "eklendi": "2026-11-11"
         }
       ],
       "banks": [
@@ -534,7 +543,7 @@
       ],
       "cover": {
         "big": "%15 indirim",
-        "sub": "Vodafone Red'e özel · ON kartla 100 TL'lik şarj 68 TL",
+        "sub": "Vodafone Red ve Anadolu Sigorta kaskoya özel · ON kartla 100 TL'lik şarj 68 TL",
         "son": "31 Aralık"
       },
       "birlesik": {
@@ -547,6 +556,14 @@
           [
             "+ ON Kredi Kartı %20 iade",
             "68 TL"
+          ],
+          [
+            "Sadece Anadolu Sigorta %10",
+            "90 TL"
+          ],
+          [
+            "+ ON Kredi Kartı %20 iade",
+            "72 TL"
           ]
         ],
         "not": "Tek kartla hesaplandı; ON iadesi 30 Kasım'a kadar, sonradan karta yansır, katılım ve 500 TL tavan geçerli. Zes kodu diğer Zes kampanyalarıyla birleşmez; ON iadesi bankanın kendi kampanyasıdır, kart koşullarını kontrol et."
@@ -588,6 +605,17 @@
           "bas": "2026-11-01",
           "bit": "2026-11-30",
           "kosul": "Yalnızca listedeki istasyonlarda; bireysel ve kurumsal işlemler; 30 Kasım 23:59'a kadar, sonra standart tarife. Otopriz'e göre diğer kampanya ve indirimlerle birleştirilemez."
+        },
+        {
+          "big": "DC'de %30 indirim",
+          "det": "Ayın Otopriz Günü · her ayın son günü (30 Kasım) 00:00–23:59, tüm DC istasyonlarda",
+          "son": "Süreli değil",
+          "link": "https://otopriz.com.tr/kampanyalar/otopriz-gunu-kampanyasi/kampanya-detaylari",
+          "bas": "",
+          "bit": "",
+          "kosul": "Her ayın son günü 00:00–23:59; yalnızca DC (hızlı şarj) cihazlarında, AC hariç. Katılım, kod veya aktivasyon gerekmez, indirim otomatik uygulanır; kullanım limiti yok. Diğer kampanya ve indirimlerle birleştirilemez. Otopriz şarjı %90 dolulukta durdurabilir.",
+          "join": "Gerekmez, otomatik",
+          "eklendi": "2026-11-11"
         }
       ],
       "banks": [
@@ -1149,7 +1177,21 @@
     {
       "id": "wat",
       "name": "WAT Mobilite",
-      "own": [],
+      "own": [
+        {
+          "big": "Ford'a %4 indirim",
+          "arac": [
+            "Ford"
+          ],
+          "det": "AC ve DC tarifelerin tamamında · alt/üst sınır yok",
+          "son": "31 Aralık",
+          "link": "https://www.watmobilite.com/kampanyalar/ford-kullanicilarina-ozel-4-indirim",
+          "bas": "2026-11-03",
+          "bit": "2026-12-31",
+          "kosul": "Ford markalı elektrikli araç kullanıcıları ve araç alımında 10.000 TL şarj bakiyesi almış bireysel kullanıcılar; WAT Mobilite Şarj uygulamasındaki WAT istasyonlarında, kredi kartı işlemlerinde. Roaming istasyonları, filo ve kurumsal müşteriler hariç; kampanyalar birleştirilemez.",
+          "eklendi": "2026-11-11"
+        }
+      ],
       "banks": [
         [
           "Yapı Kredi World",
@@ -1161,9 +1203,9 @@
         ]
       ],
       "cover": {
-        "big": "435 TL Worldpuan",
-        "sub": "Yapı Kredi ile · + Ziraat %20",
-        "son": "30 Kasım"
+        "big": "Ford'a %4",
+        "sub": "WAT istasyonlarında AC ve DC · + Yapı Kredi Worldpuan",
+        "son": "31 Aralık"
       }
     },
     {
