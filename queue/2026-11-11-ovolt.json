@@ -1,0 +1,42 @@
+[
+ {
+  "id": "istasyon_ovolt_post",
+  "grup": "2026-11-11-ovolt__istasyon_ovolt",
+  "tip": "karusel",
+  "zaman": "2026-11-14T09:30:00+03:00",
+  "baslik": "Ovolt",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "Ovolt: %12 indirim",
+    "url": "https://www.instagram.com/ovolt.tr/",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-11-ovolt/istasyon_ovolt/1_kapak.jpg",
+   "media/2026-11-11-ovolt/istasyon_ovolt/2_detay.jpg"
+  ],
+  "aciklama": "⚡ Ovolt: %12 indirim!\n\n✅ %12 indirim: Ovolt istasyonlarında · 12–22 Kasım arası 11 gün (son gün 22 Kasım)\n\nKart kampanyalarının tamamı ve geçerli istasyonlar banka postlarımızda.\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #ovolt",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "istasyon_ovolt_hikaye",
+  "grup": "2026-11-11-ovolt__istasyon_ovolt",
+  "baslik": "Ovolt",
+  "tur": "istasyon",
+  "tip": "hikaye",
+  "zaman": "2026-11-14T10:30:00+03:00",
+  "gorseller": [
+   "media/2026-11-11-ovolt/istasyon_ovolt/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ }
+]

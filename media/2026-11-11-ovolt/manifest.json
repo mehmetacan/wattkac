@@ -1,0 +1,12 @@
+[
+ {
+  "id": "istasyon_ovolt",
+  "tur": "istasyon",
+  "baslik": "Ovolt",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ }
+]
