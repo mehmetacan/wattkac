@@ -51,7 +51,7 @@ AG_ANAHTAR = {"Eşarj": "esarj", "ASTOR Şarj": "astor", "Trugo": "trugo", "ZES"
 CSS = """@font-face{font-family:"Plus Jakarta Sans";font-style:normal;font-display:swap;font-weight:200 800;src:url(/fonts/plus-jakarta-sans-latin-ext-wght-normal.woff2) format("woff2-variations");unicode-range:U+0100-02BA,U+1E00-1E9F,U+20A0-20C0}
 @font-face{font-family:"Plus Jakarta Sans";font-style:normal;font-display:swap;font-weight:200 800;src:url(/fonts/plus-jakarta-sans-latin-wght-normal.woff2) format("woff2-variations");unicode-range:U+0000-00FF,U+0131,U+2000-206F,U+20AC}
 /* Ana uygulamayla (site/index.html) aynı koyu lacivert tema; renkler belirteçten okunur (bkz. TASARIM.md) */
-:root{color-scheme:dark;--bg:#0A1020;--card:#111A2E;--card2:#1A2640;--line:#263556;--line2:#5B72A0;--txt:#F4F6FB;--txt2:#D5DCEB;--mut:#9FB0D0;--pri:#22D3EE;--on-pri:#06202A;--g:#34D399;--brand-y:#FFC800}
+:root{color-scheme:light;--bg:#E9EDF2;--card:#F5F7FA;--card2:#ECEFF4;--line:#D5DCE6;--line2:#77869A;--txt:#0F172A;--txt2:#334155;--mut:#475569;--pri:#0E7490;--on-pri:#fff;--g:#047857;--brand-y:#E0A100}
 *{box-sizing:border-box;margin:0;padding:0}body{background:var(--bg);color:var(--txt);font:16px/1.6 "Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:var(--pri)}.w{max-width:760px;margin:0 auto;padding:0 16px 48px}
 header{display:flex;align-items:center;gap:10px;padding:14px 0}header a.logo{display:flex;align-items:center;gap:6px;text-decoration:none;color:var(--txt);font-weight:900;font-size:20px;letter-spacing:-.3px}
@@ -83,7 +83,7 @@ def sayfa(yol, baslik, aciklama, govde, jsonld=None, bc=None):
 <meta property="og:type" content="website"><meta property="og:site_name" content="WattKaç"><meta property="og:title" content="{e(baslik)}">
 <meta property="og:description" content="{e(aciklama)}"><meta property="og:url" content="{e(url)}"><meta property="og:image" content="{ALAN}/og.png">
 <meta property="og:locale" content="tr_TR"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
-<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"><meta name="theme-color" content="#0A1020"><style>{CSS}</style>{ld}</head>
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"><meta name="theme-color" content="#F5F7FA"><style>{CSS}</style>{ld}</head>
 <body><div class="w"><header><a class="logo" href="/"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M13.5 2 4 13.5h6.2L9.5 22 20 9.8h-6.4z" fill="#FFC800" stroke="#E0A100" stroke-width="1" stroke-linejoin="round"/></svg><span>Watt<b>Kaç</b></span></a>
 <span class="sp"></span><a class="cta" href="/">Haritayı aç</a></header>{bct}{govde}
 <footer>Bilgiler bankaların ve şarj ağlarının resmi sayfalarından derlenir; koşullar değişebilir, katılmadan önce resmi sayfadan kontrol edin.

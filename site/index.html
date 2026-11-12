@@ -16,58 +16,61 @@
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://wattkac.com/#site","name":"WattKaç","url":"https://wattkac.com/","inLanguage":"tr-TR","description":"Elektrikli araç şarj istasyonları haritası, kWh fiyatları ve kredi kartı şarj kampanyaları."},{"@type":"Organization","@id":"https://wattkac.com/#org","name":"WattKaç","url":"https://wattkac.com/","logo":"https://wattkac.com/icons/icon-512.png","sameAs":["https://www.instagram.com/wattkac/"]}]}</script>
-<meta name="theme-color" content="#0A1020">
+<meta name="theme-color" content="#F5F7FA">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="WattKaç">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="format-detection" content="telephone=no">
 <link rel="preload" href="fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
 :root{
-  /* Tasarım sistemi v3 (bkz. TASARIM.md). Varsayılan: tek koyu lacivert tema (markanın Instagram görselleri ve harita denetimleriyle aynı aile).
-     Ana renk: camgöbeği; indirim: yeşil; banka kartı: kehribar. Tüm yüzey, çerçeve ve metin renkleri buradaki belirteçlerden okunur;
-     açık temaya dönmek için <html data-theme="light"> yeterli (aşağıdaki blok). */
+  /* Tasarım sistemi v4 (bkz. TASARIM.md). Varsayılan: açık, griye çalan yumuşak tema. Sayfa zemini serin açık gri, yüzeyler kırık beyaz gri
+     (saf beyaz yüzey yok); harita denetimleri de aynı yüzey renginden cam. Ana renk: camgöbeği; indirim: yeşil; banka kartı: kehribar.
+     Tüm yüzey, çerçeve ve metin renkleri buradaki belirteçlerden okunur; koyu lacivert tema için <html data-theme="dark"> yeterli (aşağıdaki blok). */
   --font:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  color-scheme:dark;
+  color-scheme:light;
   /* yüzeyler */
+  --bg:#E9EDF2;--card:#F5F7FA;--card2:#ECEFF4;--ctl:#EEF1F5;--pop:#F5F7FA;--bar:rgba(245,247,250,.92);
+  --line:#D5DCE6;--line2:#77869A;--grip:#B6C0CE;--scrim:rgba(15,23,42,.42);
+  /* metin */
+  --txt:#0F172A;--txt2:#334155;--ink:#0F172A;--mut:#475569;--ico:#64748B;
+  /* ana eylem */
+  --pri:#0E7490;--pri-strong:#155E75;--pri-soft:#DDEFF3;--pri-line:#9FCCD7;--on-pri:#fff;--pri-sh:rgba(14,116,144,.28);
+  /* durum renkleri: griye uyan, hafif kısık açık zemin + koyu tonlu yazı */
+  --y:#FFC800;--brand-y:#E0A100;
+  --g:#047857;--gbg:#DDEFE6;--gline:#A8D5C0;--g-fill:#047857;--on-g:#fff;
+  --r:#B91C1C;--rbg:#F6E4E4;--rline:#E6B9B9;
+  --amber-bg:#F4EACD;--amber-fg:#7C4A03;--amber-line:#E2CC8E;
+  --blue-bg:#DEE7F4;--blue-fg:#1E40AF;
+  --ac:#2563EB;--dc:#EA580C;--acdc:#7C3AED;
+  /* harita: denetimler sayfa yüzeyiyle (--card) aynı tondan yarı saydam cam, koyu simge; işaretçiler temadan bağımsız */
+  --glass:rgba(245,247,250,.9);--glass-h:rgba(245,247,250,.98);--glass-line:rgba(15,23,42,.12);--map-bg:#E3E6E9;
+  --on-glass:#0F172A;--map-ink:#0F172A;--map-halo:#fff;--dot-ring:rgba(15,23,42,.14);
+  --r-sm:10px;--r-md:14px;--r-lg:20px;--r-xl:28px;
+  --sh-1:0 1px 2px rgba(15,23,42,.05),0 1px 3px rgba(15,23,42,.07);--sh-2:0 4px 14px rgba(15,23,42,.12);--sh-3:0 -8px 30px rgba(15,23,42,.14);--sh-pop:0 8px 24px rgba(15,23,42,.18);
+  --sh-ctl:0 1px 2px rgba(15,23,42,.10),0 4px 12px rgba(15,23,42,.14);
+  --sat:env(safe-area-inset-top,0px);--sa:env(safe-area-inset-bottom,0px);--top:calc(54px + var(--sat));--nav:62px}
+/* Koyu lacivert tema (yedek, arayüzde düğmesi yok): v3'ün değerleri. <html data-theme="dark"> ile tüm uygulama koyuya döner. */
+:root[data-theme="dark"]{
+  color-scheme:dark;
   --bg:#0A1020;--card:#111A2E;--card2:#1A2640;--ctl:#18233B;--pop:#1B2742;--bar:rgba(17,26,46,.94);
   --line:#263556;--line2:#5B72A0;--grip:#4A5F8A;--scrim:rgba(2,6,16,.66);
-  /* metin */
   --txt:#F4F6FB;--txt2:#D5DCEB;--ink:#FFFFFF;--mut:#9FB0D0;--ico:#8EA0C4;
-  /* ana eylem */
   --pri:#22D3EE;--pri-strong:#67E8F9;--pri-soft:#0B3340;--pri-line:#1E7A8C;--on-pri:#06202A;--pri-sh:rgba(34,211,238,.28);
-  /* durum renkleri: koyu tonlu zemin + açık tonlu yazı */
-  --y:#FFC800;--brand-y:#FFC800;
+  --brand-y:#FFC800;
   --g:#34D399;--gbg:#0B2E24;--gline:#1C6B4E;--g-fill:#34D399;--on-g:#052E1C;
   --r:#F87171;--rbg:#3A1219;--rline:#7F1D1D;
   --amber-bg:#3A2A06;--amber-fg:#FCD34D;--amber-line:#6B4E0B;
   --blue-bg:#14254A;--blue-fg:#93C5FD;
-  --ac:#2563EB;--dc:#EA580C;--acdc:#7C3AED;
-  /* harita: denetimler sayfa yüzeyiyle (--card) aynı tondan cam; işaretçiler açık harita üstünde kaldığı için temadan bağımsız */
   --glass:rgba(17,26,46,.88);--glass-h:rgba(17,26,46,.97);--glass-line:rgba(159,176,208,.22);--map-bg:#1B2438;
-  --on-glass:#fff;--map-ink:#0F172A;--map-halo:#fff;--dot-ring:rgba(255,255,255,.22);
-  --r-sm:10px;--r-md:14px;--r-lg:20px;--r-xl:28px;
+  --on-glass:#fff;--dot-ring:rgba(255,255,255,.22);
   --sh-1:0 1px 2px rgba(0,0,0,.28),0 1px 3px rgba(0,0,0,.22);--sh-2:0 4px 14px rgba(0,0,0,.38);--sh-3:0 -8px 30px rgba(0,0,0,.45);--sh-pop:0 8px 24px rgba(0,0,0,.45);
-  --sat:env(safe-area-inset-top,0px);--sa:env(safe-area-inset-bottom,0px);--top:calc(54px + var(--sat));--nav:62px}
-/* Açık tema (yedek, arayüzde düğmesi yok): v2'nin değerleri */
-:root[data-theme="light"]{
-  color-scheme:light;
-  --bg:#F8FAFC;--card:#fff;--card2:#F1F5F9;--ctl:#fff;--pop:#0F172A;--bar:rgba(255,255,255,.92);
-  --line:#E2E8F0;--line2:#E2E8F0;--grip:#CBD5E1;--scrim:rgba(15,23,42,.5);
-  --txt:#0F172A;--txt2:#334155;--ink:#0F172A;--mut:#475569;--ico:#94A3B8;
-  --pri:#0E7490;--pri-strong:#155E75;--pri-soft:#ECFEFF;--pri-line:#A5F3FC;--on-pri:#fff;--pri-sh:rgba(14,116,144,.3);
-  --brand-y:#E0A100;
-  --g:#047857;--gbg:#ECFDF5;--gline:#A7F3D0;--g-fill:#047857;--on-g:#fff;
-  --r:#B91C1C;--rbg:#FEF2F2;--rline:#FECACA;
-  --amber-bg:#FEF3C7;--amber-fg:#92400E;--amber-line:#FDE68A;
-  --blue-bg:#DBEAFE;--blue-fg:#1E40AF;
-  --glass:rgba(15,23,42,.74);--glass-h:rgba(15,23,42,.86);--glass-line:transparent;--map-bg:#EEF0EB;--dot-ring:rgba(0,0,0,.1);
-  --sh-1:0 1px 2px rgba(15,23,42,.06),0 1px 3px rgba(15,23,42,.08);--sh-2:0 4px 14px rgba(15,23,42,.12);--sh-3:0 -8px 30px rgba(15,23,42,.16);--sh-pop:0 8px 24px rgba(15,23,42,.35)}
+  --sh-ctl:0 2px 8px rgba(2,6,16,.32)}
 @font-face{font-family:"Plus Jakarta Sans";font-style:normal;font-display:swap;font-weight:200 800;src:url(fonts/plus-jakarta-sans-latin-ext-wght-normal.woff2) format("woff2-variations");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
 @font-face{font-family:"Plus Jakarta Sans";font-style:normal;font-display:swap;font-weight:200 800;src:url(fonts/plus-jakarta-sans-latin-wght-normal.woff2) format("woff2-variations");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -217,11 +220,12 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .ov{position:absolute;z-index:1000}
 .mtop{top:10px;left:10px;right:10px;display:flex;gap:8px;align-items:flex-start;pointer-events:none}
 .mtop>*{pointer-events:auto}
-/* Harita denetimleri: tek biçim (bkz. TASARIM.md → Simgeler). Hepsi aynı 46×46 koyu yarı saydam "cam" kare; beyaz kutu ya da çerçeve yok.
-   İçinde 22 px beyaz dolu simge (24×24 çizim alanı, #spr içindeki s-* simgeleri). Seçili: düz --pri zemin + koyu (--on-pri) simge.
+/* Harita denetimleri: tek biçim (bkz. TASARIM.md → Simgeler). Hepsi aynı 46×46 yarı saydam "cam" kare: alt pencere ve alt çubukla aynı
+   yüzey rengi (--card), ince kenar ve yumuşak gölge; saf beyaz kutu yok. İçinde 22 px koyu (--on-glass) dolu simge (24×24 çizim alanı,
+   #spr içindeki s-* simgeleri). Seçili: düz --pri zemin + --on-pri (beyaz) simge.
    Denetimlerde simgeye özel renk yok; durum renkleri (yeşil %, sarı kart) yalnızca işaretçi rozetlerinde. */
 .mbtn{flex:none;width:46px;height:46px;padding:0;border:0;border-radius:var(--r-md);background:var(--glass);color:var(--on-glass);display:grid;place-items:center;
-  -webkit-backdrop-filter:blur(10px) saturate(1.4);backdrop-filter:blur(10px) saturate(1.4);box-shadow:inset 0 0 0 1px var(--glass-line),0 2px 8px rgba(2,6,16,.32)}
+  -webkit-backdrop-filter:blur(10px) saturate(1.4);backdrop-filter:blur(10px) saturate(1.4);box-shadow:inset 0 0 0 1px var(--glass-line),var(--sh-ctl)}
 .mbtn svg,.gbtn svg{width:22px;height:22px}
 @media(hover:hover){.mbtn:hover{background:var(--glass-h)}}
 .mbtn[aria-pressed=true],.mbtn.on{background:var(--pri);color:var(--on-pri);box-shadow:0 2px 10px var(--pri-sh)}
@@ -323,8 +327,25 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .cmp .cb h4{font-size:11.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--mut);margin:12px 0 2px}
 .cmp .go{display:flex;justify-content:center;margin-top:12px;text-decoration:none;color:var(--ink)}
 .cmp.mine .cn{color:var(--g)}
-.shellbox{background:var(--amber-bg);color:var(--txt);border:1px solid var(--amber-line);border-radius:14px;padding:12px;margin:10px 0;font-size:13.5px}
-.shellbox b{font-weight:800}
+.shellbox{background:var(--amber-bg);color:var(--txt);border:1px solid var(--amber-line);border-radius:14px;padding:10px 12px;margin:10px 0;font-size:13.5px;font-weight:600}
+/* Fiyat satırı: üstü çizili liste fiyatı + yeşil indirimli fiyat + bilgi düğmesi (dokununca tek cümlelik açıklama) */
+.kv dd.fy{display:flex;align-items:center;flex-wrap:wrap;gap:2px 6px}
+.kv s,.stn s{color:var(--mut);font-weight:600}
+.kv .deal{font-size:15px}
+.ibtn{flex:none;width:44px;height:44px;margin:-12px -10px -12px -8px;padding:0;border:0;background:none;color:var(--mut);display:grid;place-items:center;border-radius:50%}
+.ibtn svg{width:18px;height:18px}
+.ibtn[aria-expanded=true]{color:var(--pri)}
+.tip{position:fixed;z-index:1400;max-width:min(300px,calc(100vw - 24px));background:var(--pop);color:var(--txt);border:1px solid var(--line);border-radius:var(--r-md);box-shadow:var(--sh-pop);padding:10px 12px;font-size:13.5px;font-weight:600;line-height:1.4}
+.tip a{display:inline-block;margin-top:4px;font-weight:800;font-size:13px;text-decoration:none}
+/* Ağın diğer kampanyaları: tek satır; solda kısa koşul, sağda o kampanyayla fiyat */
+.nls{border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;background:var(--card)}
+.nl{display:flex;align-items:center;gap:10px;width:100%;min-height:46px;padding:8px 4px 8px 12px;border:0;border-top:1px solid var(--line);background:none;color:var(--txt);text-align:left;font:600 14.5px var(--font)}
+.nl:first-child{border-top:0}
+.nl .nk{flex:1;min-width:0}
+.nl .nv{font-weight:800;color:var(--g);white-space:nowrap}
+.nl .ni{flex:none;width:28px;display:grid;place-items:center;color:var(--mut)}.nl .ni svg{width:17px;height:17px}
+.nl[aria-expanded=true]{background:var(--card2)}
+.dnote{font-size:13px;font-weight:600;color:var(--mut);margin:4px 0 0}.dnote.bad{color:var(--r)}
 .stn{display:block;width:100%;text-align:left;background:var(--card);color:var(--txt);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px}
 .stn .r1{display:flex;gap:8px;align-items:baseline}
 .stn .nm{font-weight:800;font-size:16px;line-height:1.25;flex:1;min-width:0;letter-spacing:-.2px}
@@ -333,7 +354,6 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .stn .sub b{color:var(--txt);font-weight:600}
 .old{text-decoration:line-through;color:var(--mut);font-weight:600;font-size:12px}
 .deal{font-size:13px;font-weight:800;color:var(--g)}
-.dealsrc{font-size:11.5px;font-weight:700;color:var(--g);background:var(--gbg);border:1px solid var(--gline);border-radius:7px;padding:1px 7px}
 .eff{margin-top:4px;font-size:13px;font-weight:800;color:var(--g)}
 .stn .r2{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:center}
 .pill{font-size:12px;font-weight:800;border-radius:7px;padding:2px 8px;background:var(--card2);color:var(--txt)}
@@ -466,7 +486,7 @@ a{color:var(--pri)}
 /* Leaflet denetimleri temaya uyar (döşemelere dokunulmaz): atıf ve yakınlaştırma da harita denetimleriyle aynı cam */
 .leaflet-container .leaflet-control-attribution{background:var(--glass);color:var(--txt2);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-radius:8px 0 0 0;padding:1px 7px;font-size:11px}
 .leaflet-container .leaflet-control-attribution a{color:var(--pri)}
-.leaflet-touch .leaflet-bar,.leaflet-bar{border:0;box-shadow:inset 0 0 0 1px var(--glass-line),0 2px 8px rgba(2,6,16,.32);border-radius:var(--r-md);overflow:hidden}
+.leaflet-touch .leaflet-bar,.leaflet-bar{border:0;box-shadow:inset 0 0 0 1px var(--glass-line),var(--sh-ctl);border-radius:var(--r-md);overflow:hidden}
 .leaflet-bar a,.leaflet-touch .leaflet-bar a{background:var(--glass);color:var(--on-glass);border-bottom:1px solid var(--glass-line);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 .leaflet-bar a:hover,.leaflet-bar a:focus{background:var(--glass-h);color:var(--on-glass)}
 .leaflet-bar a.leaflet-disabled{background:var(--glass);color:var(--mut)}
@@ -474,7 +494,7 @@ a{color:var(--pri)}
 </head>
 <body>
 <!-- Simge kümesi (bkz. TASARIM.md → Simgeler). Hepsi 24×24 çizim alanında.
-     s-* : haritanın üstündeki denetimler için dolu (solid) simgeler, cam zeminde beyaz.
+     s-* : haritanın üstündeki denetimler için dolu (solid) simgeler, cam zeminde koyu (--on-glass).
      c-* : sayfa içi çizgisel simgeler, 2 px kalınlık, yuvarlak uç ve köşe. Aynı anlamdaki simgeler (kart, %, yıldız, filtre) iki türde de aynı biçimdedir. -->
 <svg id="spr" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <symbol id="s-ac" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M6.01 4.6h11.98A9.8 9.8 0 1 1 6.01 4.6zM9.4 7.0a1.2 1.2 0 1 0 0 2.4a1.2 1.2 0 1 0 0-2.4zM14.6 7.0a1.2 1.2 0 1 0 0 2.4a1.2 1.2 0 1 0 0-2.4zM7.2 10.9a1.7 1.7 0 1 0 0 3.4a1.7 1.7 0 1 0 0-3.4zM12 10.9a1.7 1.7 0 1 0 0 3.4a1.7 1.7 0 1 0 0-3.4zM16.8 10.9a1.7 1.7 0 1 0 0 3.4a1.7 1.7 0 1 0 0-3.4zM9.4 15.5a1.7 1.7 0 1 0 0 3.4a1.7 1.7 0 1 0 0-3.4zM14.6 15.5a1.7 1.7 0 1 0 0 3.4a1.7 1.7 0 1 0 0-3.4z"/></symbol>
@@ -497,6 +517,7 @@ a{color:var(--pri)}
   <symbol id="c-kilit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
   <symbol id="c-mesaj" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M12 7v4M12 14h.01"/></symbol>
   <symbol id="c-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="c-bilgi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><path d="M12 7.6h.01"/></symbol>
   <symbol id="c-geri" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></symbol>
 </svg>
 <noscript><div class="wrap"><div class="err">Harita için JavaScript gerekiyor. Kampanyaları JavaScript olmadan görmek için: <a href="/kampanyalar/">Tüm kampanyalar</a> · <a href="/sarj-agi/">Şarj ağları ve fiyatlar</a></div></div></noscript>
@@ -628,6 +649,9 @@ a{color:var(--pri)}
 
 
 
+<!-- Bilgi kutusu: fiyat satırındaki (i) ve ağ kampanyası satırlarına dokununca açılır; dışarı dokunmak ya da Esc kapatır -->
+<div class="tip" id="tip" role="dialog" aria-label="Bilgi" hidden></div>
+
 <!-- Kampanya filtre çekmecesi -->
 <div class="bd" id="bd" hidden></div>
 <div class="fsheet" id="fs" role="dialog" aria-modal="true" aria-label="Filtreler" hidden>
@@ -648,6 +672,7 @@ a{color:var(--pri)}
       <li><span class="gi"><span class="pinb gpin " style="--bg-b:#E11D2E;--fg-b:#fff"><span class="lb">ZES</span></span></span><span><b>Şarj istasyonu</b>Üzerinde şarj ağının kısa adı yazar, rengi ağa göredir. Dokun: fiyat ve yol tarifi.</span></li>
       <li><span class="gi"><span class="pinb gpin own" style="--bg-b:#E11D2E;--fg-b:#fff"><span class="lb">ZES</span><i class="pc ag">%</i></span></span><span><b>Şarj ağının indirimi</b>Yeşil % rozeti: ağın kendi indirimi bu istasyonda geçerli.</span></li>
       <li><span class="gi"><span class="pinb gpin " style="--bg-b:#E11D2E;--fg-b:#fff"><span class="lb">ZES</span><i class="pc bk"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19"/></svg></i></span></span><span><b>Banka kartı kampanyası</b>Sarı kart rozeti: bu ağda geçerli kart kampanyası var.</span></li>
+      <li><span class="gi"><span class="gline"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#c-bilgi"/></svg></span></span><span><b>İndirimli fiyat</b>Üstü çizili liste fiyatı, yanında indirimli fiyat. Bilgi simgesine dokun: indirimin koşulu.</span></li>
       <li><span class="gi"><span class="gnum">12</span></span><span><b>Birden çok istasyon</b>Dokun, harita yakınlaşsın.</span></li>
       <li><span class="gi"><span class="gbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#s-ac"/></svg></span></span><span><b>AC şarj</b>Normal hızda şarj (Type 2 fişi). Dokun, yalnızca AC istasyonlar kalsın.</span></li>
       <li><span class="gi"><span class="gbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#s-dc"/></svg></span></span><span><b>DC hızlı şarj</b>Hızlı şarj, 120 kW altı (CCS fişi). Dokun, yalnızca bunlar kalsın.</span></li>
@@ -881,7 +906,7 @@ function match(c) {
 // Sayfa içi çizgisel simgeler (#spr içindeki c-* simgeleri). Kart = banka kartı kampanyası, % = şarj ağının kendi indirimi
 // (haritadaki hızlı filtreler ve işaretçi rozetleri de aynı iki biçimi kullanır).
 const svgUse = id => `<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#${id}"/></svg>`;
-const IC = { banka: svgUse("c-kart"), ag: svgUse("c-yuzde"), saat: svgUse("c-saat"), geri: svgUse("c-geri"), x: svgUse("c-x"), mesaj: svgUse("c-mesaj") };
+const IC = { banka: svgUse("c-kart"), ag: svgUse("c-yuzde"), saat: svgUse("c-saat"), geri: svgUse("c-geri"), x: svgUse("c-x"), mesaj: svgUse("c-mesaj"), bilgi: svgUse("c-bilgi") };
 // Son 7 günde eklenen (ya da başlayan) kampanya "Yeni" etiketi alır
 const isNew = c => { const t = c.eklendi || c.bas; if (!t) return false; const d = -daysLeft(t); return d >= 0 && d <= 7; };
 function card(c) {
@@ -1164,20 +1189,23 @@ function bestDeal(s) {
   let best = null;
   for (const c of stationOffers(s)) {
     if (c.tip !== "banka") continue;
-    const listed = seciliKamp(c) && s.sk && s.sk.includes(kampKey(c));
-    const r = campRate(c); if (!r || (conditional(c) && !listed) || (s.viaShell && s.viaShell.includes(c))) continue;
+    const r = campRate(c); if (!r || bankCond(c) || (s.viaShell && s.viaShell.includes(c))) continue;
     const k = cardPrice(s, c, r);
     if (!best || k.v < best.v) best = { v: k.v, r, c, ek: k.ek };
   }
   return best;
 }
-// Kartla ödenecek fiyat: şarj ağının bu istasyonda geçerli kendi indirimi varsa kart indirimi ONUN ÜZERİNE uygulanır (ikisi ayrı indirimdir).
-// İki taraftan biri "başka indirimle birleşmez" diyorsa birleştirilmez; kart indirimi liste fiyatına uygulanır.
+// Kartla ödenecek fiyat: şarj ağının bu istasyonda geçerli kendi indirimi varsa kart indirimi ONUN ÜZERİNE uygulanır
+// (banka indirimi karttan yapılır, ağın indirimi faturadan; ikisi ayrı indirimdir).
+// Yalnızca BANKA kampanyasının kendi metni "başka indirimle birleşmez" diyorsa kart indirimi liste fiyatına uygulanır.
+// Ağ kampanyasındaki "birleştirilemez" ifadesi ağın kendi diğer kampanyalarını anlatır; kart indirimini engellemez.
 const birlesmez = c => /birleş(mez|tirilemez|tirilmez)/i.test([c.det, c.kosul].join(" "));
 function cardPrice(s, c, r) {
-  const ek = !!(s.net && !birlesmez(c) && !birlesmez(s.net.c));
+  const ek = !!(s.net && !birlesmez(c));
   return { v: (ek ? s.net.v : s.price.v) * (1 - r), ek };
 }
+// Kart kampanyası yalnızca belli müşterilere mi (araç, abonelik vb.)? "seçili ağlarda" ifadesi ağ listesini (st) anlatır, koşul sayılmaz.
+const bankCond = c => (c.arac && c.arac.length && !c.arac.includes(P.arac)) || COND.test([c.det, c.kosul].join(" ").replace(/seçili (şarj )?ağ\S*/gi, ""));
 // Shell akaryakıt istasyonlarındaki Trugo şarj cihazları (Trugo–Shell iş birliği) Shell Recharge uygulamasıyla da kullanılabilir.
 // Bu istasyonlara Shell Recharge kampanyaları "uygulama üzerinden" notuyla eklenir; liste fiyatı bilinmediği için sıralamaya katılmaz.
 // Ağın "seçili istasyonlarda" geçerli kendi kampanyası (ör. Otopriz %30) yalnızca resmi listedeki istasyonlarda gösterilir
@@ -1396,7 +1424,7 @@ function refresh() {
   if (!$("mfs").hidden) renderMapSheet();
 }
 function renderSeg() {
-  // Haritanın üstündeki denetimler: hepsi aynı cam kare (.mbtn), içinde dolu beyaz simge; yazı yok, adları title/aria-label'da
+  // Haritanın üstündeki denetimler: hepsi aynı cam kare (.mbtn), içinde dolu simge; yazı yok, adları title/aria-label'da
   const b = (v, t) => `<button class="mbtn" data-akim="${v}" title="${t}" aria-label="${t}" aria-pressed="${M.f.akim.has(v)}">${svgUse("s-" + v)}</button>`;
   $("seg").innerHTML = b("ac", "AC: normal şarj") + b("dc", "DC: hızlı şarj (120 kW altı)") + b("hpc", "Çok hızlı DC: 120 kW ve üzeri");
   // Hızlı filtreler (filtre penceresinde değil, burada): bana uyan, ağ indirimi, kart kampanyası. Markalar filtre penceresinde.
@@ -1495,6 +1523,7 @@ function openGroup(g) {
 function highlight() { renderMarkers(true); }
 function typeBadge(s) { return s.hasAc && s.hasDc ? "AC/DC" : s.hasDc ? "DC" : s.hasAc ? "AC" : ""; }
 function renderSheet() {
+  closeTip();
   const h = $("sh-h"), b = $("sh-b"), s = M.sel && M.byId.get(M.sel);
   if (s) { renderDetail(prep(s)); return; }
   const open = $("v-harita").dataset.s !== "peek";
@@ -1548,84 +1577,123 @@ function stationItem(s) {
   const head = pretty(s.brand) || s.name;
   const sub = s.brand && s.named && s.name !== s.brand ? esc(s.name) : "";
   // Her istasyonda tek fiyat: "Kartımla en ucuz" sıralamasında kartlı fiyat, aksi hâlde istasyon fiyatı (indirim kesinse indirimli)
+  // İndirim varsa liste fiyatı üstü çizili, yanında indirimli fiyat; kampanya adı yazılmaz (ayrıntı istasyon detayında)
   const useCard = M.sort === "kamp" && s.deal, kk = campKinds(s);
   const v = useCard ? s.deal.v : s.final;
-  const price = v === null || v === undefined ? "" : `<span class="${useCard || s.net ? "deal" : "pr"}">${fmtNum(v)} TL/kWh</span>`
-    + (useCard ? `<span class="dealsrc">${esc(s.deal.c.kurum)} kartınla</span>` : s.net ? `<span class="dealsrc">${esc(s.net.c.kurum)} ${esc(s.net.c.big)}</span>` : "");
+  const price = v === null || v === undefined ? "" : (useCard || s.net ? `<s>${fmtNum(s.price.v)}</s><span class="deal">${fmtNum(v)} TL/kWh</span>` : `<span class="pr">${fmtNum(v)} TL/kWh</span>`);
   return `<button class="stn ${s.id === M.sel ? "sel" : ""}" data-sid="${esc(s.id)}">
     <div class="r1"><span class="nm">${brandStyle(s) ? `<span class="bdot" style="--bg-b:${brandStyle(s)[0]}"></span>` : ""}${esc(head)}</span><span class="ds">${fmtKm(s.d)}</span></div>
     ${sub ? `<div class="sub">${sub}</div>` : ""}
     <div class="r2">${tb || s.kw ? `<span class="pill ${tb ? (s.hasDc ? "dc" : "ac") : ""}">${[tb, s.kw ? Math.round(s.kw) + " kW" : ""].filter(Boolean).join(" · ")}</span>` : ""}${price}
-      ${kk.ag.length && !s.net ? `<span class="tag ag" title="Şarj ağının kendi indirimi">${IC.ag}${esc(kk.ag[0].big)}</span>` : ""}${kk.bk.length && !useCard ? `<span class="tag bk" title="Bu ağda geçerli banka kartı kampanyası">${IC.banka}${kk.bk.length}</span>` : ""}</div>
+      ${kk.ag.length && !s.net ? `<span class="tag ag" title="Şarj ağının kendi indirimi" aria-label="Şarj ağı indirimi">${IC.ag}</span>` : ""}${useCard ? `<span class="tag bk" title="${esc(s.deal.c.kurum)} kartınla">${IC.banka}${esc(s.deal.c.kurum.split(" ")[0])}</span>` : kk.bk.length ? `<span class="tag bk" title="Bu ağda geçerli banka kartı kampanyası">${IC.banka}${kk.bk.length}</span>` : ""}</div>
   </button>`;
 }
+// Kampanyanın kısa değeri: "%20 indirim" → "%20", "75 TL bonus" → "75 TL". Ayrıntı açıklamada kalır.
+function kisaDeger(c) {
+  const b = String(c.big || ""), p = /%\s*(\d+(?:[.,]\d+)?)/.exec(b);
+  if (p) return "%" + p[1];
+  const m = /(\d[\d.,]*)\s*(TL|mil)(?![\p{L}])/iu.exec(b);
+  return m ? `${m[1]} ${m[2]}` : b;
+}
+// Ağ kampanyasının 1–3 kelimelik koşulu (veride "kisa"; yoksa "big")
+const kisaAd = c => c.kisa || c.big || "";
+// Fiyat satırındaki (i): tek cümle. Araca özelse "Togg araç sahiplerine özel", değilse "Otopriz: seçili istasyonlarda %30 indirim"
+function netCumle(n) {
+  const c = n.c;
+  if (c.arac && c.arac.length) return `${c.arac.join(" / ")} araç sahiplerine özel`;
+  let k = kisaAd(c);
+  if (c.kisa && !/^\p{Lu}{2}/u.test(k)) k = k.charAt(0).toLocaleLowerCase("tr") + k.slice(1);
+  return `${pretty(c.kurum)}: ${c.kisa ? k + " " : ""}%${Math.round(n.r * 100)} indirim`;
+}
+const tipBtn = (cls, tip, link, kk, inner, label) => `<button class="${cls}" data-tip="${esc(tip)}"${link ? ` data-tl="${esc(safeUrl(link))}" data-tk="${esc(kk)}"` : ""} aria-expanded="false" aria-controls="tip"${label ? ` aria-label="${esc(label)}"` : ""}>${inner}</button>`;
 function renderDetail(s) {
   $("sh-h").innerHTML = `<span class="back">${IC.geri}Listeye dön</span><span class="tg" style="color:var(--mut)">${fmtKm(s.d)}</span>`;
   const t = s.tags;
   const general = C.filter(c => c.tip === "banka" && c.st.includes(ALL) && !c.kontrol);
   const pr = s.price && tarOf(s.brand);
-  const effTxt = c => {
-    const r = campRate(c); if (!r || !s.price || s.viaShell.includes(c)) return "";
-    if (c.tip === "ag" && !(s.net && s.net.c === c)) return ""; // ağ indirimi bu istasyonda kesin değilse hesap gösterme
-    const k = c.tip === "banka" ? cardPrice(s, c, r) : { v: s.price.v * (1 - r), ek: false };
-    return `<div class="eff">Bu kampanyayla ≈ ${fmtNum(k.v)} TL/kWh <small style="color:var(--mut);font-weight:600">(${k.ek ? `ağ indirimi + %${Math.round(r * 100)}` : `%${Math.round(r * 100)} karşılığı`})</small></div>`;
+  // Ağın diğer kendi kampanyaları: ağ kampanyaları birbiriyle birleşmez, bu yüzden her biri LİSTE fiyatına tek başına uygulanır.
+  // Yalnızca DC'de (ya da AC'de) geçerli kampanya, istasyonda o akım türü yoksa gösterilmez; varsa o akımın fiyatıyla hesaplanır.
+  const netList = (list, fiyatli) => list.filter(c => akimOk(c, s)).map(c => {
+    const r = campRate(c), base = !fiyatli ? null : modeOk(c, s) ? s.price : stationPrice(s, s.mode === "dc" ? "ac" : "dc");
+    const val = r && base ? `${fmtNum(base.v * (1 - r))} TL/kWh` : esc(c.big);
+    return tipBtn("nl", c.det, c.link, c.kurum, `<span class="nk">${esc(kisaAd(c))}</span><span class="nv">${val}</span><span class="ni" aria-hidden="true">${IC.bilgi}</span>`);
+  }).join("");
+  // Banka kartı: banka başına tek satır, kısa değer (%20 / 75 TL); açınca kısa açıklama, kartlı fiyat ve resmi sayfa
+  const offer = (c, fiyatli) => {
+    const r = campRate(c), k = fiyatli && r && s.price ? cardPrice(s, c, r) : null;
+    return `<div class="of"><b>${esc(kisaDeger(c))}</b> <span class="det">${esc(c.det)}</span>
+      ${k ? `<div class="eff" title="${k.ek ? "Şarj ağının indirimli fiyatına kart indirimi uygulanarak" : "Liste fiyatına kart indirimi uygulanarak"}">≈ ${fmtNum(k.v)} TL/kWh</div>` : ""}
+      <p><a data-kk="${esc(c.kurum)}" href="${esc(safeUrl(c.link))}" target="_blank" rel="noopener nofollow">Resmi sayfa ↗</a></p></div>`;
   };
-  // Ağın kendi indirimi: tek satır; dokununca ayrıntı. Banka kartı kampanyaları bankaya göre gruplanır: banka başına tek satır.
-  const offer = c => {
-    const { txt } = daysText(c);
-    const how = c.tip === "banka" ? c.join : (c.join && c.join !== c.kosul ? c.join : "");
-    return `<div class="of"><b>${esc(c.big)}</b><p>${esc(c.det)}</p>${effTxt(c)}${how ? `<p class="how">${esc(how)}</p>` : ""}
-      <p class="alt">${txt ? esc(txt) + " · " : ""}<a data-kk="${esc(c.kurum)}" href="${esc(safeUrl(c.link))}" target="_blank" rel="noopener nofollow">Resmi sayfa ↗</a></p></div>`;
+  const bankRow = (l, my, fiyatli) => {
+    const best = [...l].sort((a, b) => (campRate(b) || 0) - (campRate(a) || 0))[0];
+    return `<details class="cmp ${my ? "mine" : ""}"><summary><span class="cn">${esc(l[0].kurum)}${my ? ` <i>kartın</i>` : ""}</span><span class="cr">${esc(kisaDeger(best))}${l.length > 1 ? ` <small>+${l.length - 1}</small>` : ""}</span><span class="ch" aria-hidden="true">›</span></summary>
+      <div class="cb">${l.map(c => offer(c, fiyatli)).join("")}</div></details>`;
   };
-  const row = (ad, list, my) => {
-    const best = [...list].sort((a, b) => (campRate(b) || 0) - (campRate(a) || 0))[0];
-    return `<details class="cmp ${my ? "mine" : ""}"><summary><span class="cn">${esc(ad)}${my ? ` <i>kartın</i>` : ""}</span><span class="cr">${esc(best.big)}${list.length > 1 ? ` <small>+${list.length - 1}</small>` : ""}</span><span class="ch" aria-hidden="true">›</span></summary>
-      <div class="cb">${list.map(offer).join("")}</div></details>`;
-  };
-  const section = list => {
-    const ag = list.filter(c => c.tip === "ag"), groups = new Map();
+  const section = (list, fiyatli) => {
+    const ag = netList(list.filter(c => c.tip === "ag" && !(s.net && s.net.c === c)), fiyatli), groups = new Map();
     list.filter(c => c.tip === "banka").forEach(c => (groups.get(c.kid) || groups.set(c.kid, []).get(c.kid)).push(c));
     const rate = l => Math.max(0, ...l.map(c => campRate(c) || 0));
     const banks = [...groups.entries()].sort((a, b) => P.banka.includes(b[0]) - P.banka.includes(a[0]) || rate(b[1]) - rate(a[1]));
-    return (ag.length ? `<div class="lbl sec2 ag">${IC.ag}Şarj ağının indirimi</div><div class="cmps">${ag.map(c => row(c.kurum, [c], false)).join("")}</div>` : "")
-      + (banks.length ? `<div class="lbl sec2 bk">${IC.banka}Banka kartıyla</div><div class="cmps">${banks.map(([kid, l]) => row(l[0].kurum, l, P.banka.includes(kid))).join("")}</div>` : "");
+    return (ag ? `<div class="lbl sec2 ag">${IC.ag}Şarj ağının indirimi</div><div class="nls">${ag}</div>` : "")
+      + (banks.length ? `<div class="lbl sec2 bk">${IC.banka}Banka kartıyla</div><div class="cmps">${banks.map(([kid, l]) => bankRow(l, P.banka.includes(kid), fiyatli)).join("")}</div>` : "");
   };
   const here = [...s.camp.filter(c => !s.viaShell.includes(c)), ...general.filter(c => !s.camp.includes(c))].filter(c => !c.kontrol);
   const rows = [];
-  // Fiyat satırı kısa; nereden geldiği ve nasıl hesaplandığı alttaki "Fiyat kaynağı" bölümünde
+  // Fiyat satırı kısa; nereden geldiği ve nasıl hesaplandığı alttaki "Bilgi kaynağı" bölümünde
   const srcTxt = [];
-  if (s.price && s.price.own) {
-    rows.push(["Fiyat", `<b>${priceStr(s.price)}</b> <small>${s.price.kind.toUpperCase()}</small>`]);
-    srcTxt.push(`Bu istasyonun fiyatı, ağın resmi sayfasından${s.prn ? " (" + esc(s.prn) + ")" : ""}.`);
-  } else if (s.price) {
-    const gece = s.price.tou ? s.price.tou.filter(z => z.v !== s.price.v).map(z => `${esc(z.bas)}–${esc(z.etiket || z.bit)} ${fmtNum(z.v)}`).join(" · ") : "";
-    rows.push(["Fiyat", `<b>${fmtNum(s.price.v)} TL/kWh</b> <small>${s.price.kind.toUpperCase()}${gece ? ` · ${gece}` : ""}</small>`]);
-    srcTxt.push(s.price.range ? `Ağ konuma göre ${fmtNum(s.price.min)}–${fmtNum(s.price.max)} TL arası fiyat uyguluyor; bu istasyonun fiyatı bilinmediği için en yüksek fiyat gösteriliyor.` : "Ağın liste fiyatı.");
-    if (s.price.tou) srcTxt.push("Bu istasyonda saate göre tarife var; şu an geçerli fiyat gösteriliyor.");
-    if (pr && (pr.gecerlilik || pr.kontrol)) srcTxt.push([pr.gecerlilik ? `${esc(dateTr(pr.gecerlilik))} tarihli` : "", pr.kontrol ? `${esc(dateTr(pr.kontrol))} tarihinde kontrol edildi` : ""].filter(Boolean).join(", ") + ".");
-    if (pr && pr.kaynak) srcTxt.push(`<a href="${esc(safeUrl(pr.kaynak))}" target="_blank" rel="noopener nofollow">Resmi fiyat sayfası ↗</a>`);
+  if (s.price) {
+    const gece = !s.price.own && s.price.tou ? s.price.tou.filter(z => z.v !== s.price.v).map(z => `${esc(z.bas)}–${esc(z.etiket || z.bit)} ${fmtNum(z.v)}`).join(" · ") : "";
+    const tur = `<small>${s.price.kind.toUpperCase()}${gece ? ` · ${gece}` : ""}</small>`;
+    rows.push(["Fiyat", s.net
+      ? `<s>${fmtNum(s.price.v)}</s> <b class="deal">${fmtNum(s.net.v)} TL/kWh</b> ${tur}${tipBtn("ibtn", netCumle(s.net), s.net.c.link, s.net.c.kurum, IC.bilgi, "İndirim bilgisi")}`
+      : `<b>${s.price.own ? priceStr(s.price) : fmtNum(s.price.v) + " TL/kWh"}</b> ${tur}`, "fy"]);
+    if (s.price.own) srcTxt.push(`Bu istasyonun fiyatı, ağın resmi sayfasından${s.prn ? " (" + esc(s.prn) + ")" : ""}.`);
+    else {
+      srcTxt.push(s.price.range ? `Ağ konuma göre ${fmtNum(s.price.min)}–${fmtNum(s.price.max)} TL arası fiyat uyguluyor; bu istasyonun fiyatı bilinmediği için en yüksek fiyat gösteriliyor.` : "Ağın liste fiyatı.");
+      if (s.price.tou) srcTxt.push("Bu istasyonda saate göre tarife var; şu an geçerli fiyat gösteriliyor.");
+      if (pr && (pr.gecerlilik || pr.kontrol)) srcTxt.push([pr.gecerlilik ? `${esc(dateTr(pr.gecerlilik))} tarihli` : "", pr.kontrol ? `${esc(dateTr(pr.kontrol))} tarihinde kontrol edildi` : ""].filter(Boolean).join(", ") + ".");
+      if (pr && pr.kaynak) srcTxt.push(`<a href="${esc(safeUrl(pr.kaynak))}" target="_blank" rel="noopener nofollow">Resmi fiyat sayfası ↗</a>`);
+    }
   }
   const tur = s.hasAc && s.hasDc ? "AC ve DC" : s.hasDc ? "DC" : s.hasAc ? "AC" : "";
   if (tur || s.kw) rows.push(["Tür / güç", esc([tur, s.kw ? `${Math.round(s.kw)} kW` : ""].filter(Boolean).join(" · "))]);
   if (s.types.length) rows.push(["Soket", esc(s.types.join(", ")) + (s.count ? ` <small>(${s.count} araç)</small>` : "")]);
-  if (s.addr) rows.push(["Adres", esc(s.addr)]);
   if (t.opening_hours) rows.push(["Saatler", esc(t.opening_hours)]);
   const web = /^https?:\/\//i.test(t.website || t["contact:website"] || "") ? (t.website || t["contact:website"]) : "";
   if (web) rows.push(["Web", `<a href="${esc(safeUrl(web))}" target="_blank" rel="noopener nofollow">Site ↗</a>`]);
-  $("sh-b").innerHTML = `<div class="dn">${esc(pretty(s.brand) || s.name)}</div><div class="alt">${esc(s.brand && s.named && s.name !== s.brand ? s.name + " · " : "")}${fmtKm(s.d)} uzakta</div>
-    ${s.net ? `<p class="eff" style="font-size:15px">İndirimli fiyat: ${fmtNum(s.net.v)} TL/kWh · ${esc(s.net.c.kurum)} ${esc(s.net.c.big)} (${s.net.c.arac && s.net.c.arac.length ? "aracına özel" : "bu istasyon kampanya listesinde"})</p>` : ""}
-    ${s.pasif ? `<p class="note" style="color:var(--r)">Bu istasyon ağın kendi haritasında şu an pasif ya da bakımda görünüyor; gitmeden önce uygulamadan kontrol et.</p>` : ""}
-    ${s.approx ? `<p class="note">Konum yaklaşık; gitmeden adresi kontrol et.</p>` : ""}
-    ${rows.length ? `<dl class="kv">${rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>` : ""}
+  const alt = s.brand && s.named && s.name !== s.brand ? s.name : "";
+  $("sh-b").innerHTML = `<div class="dn">${esc(pretty(s.brand) || s.name)}</div>${alt ? `<div class="alt">${esc(alt)}</div>` : ""}
+    ${s.pasif ? `<p class="dnote bad">Şu an pasif ya da bakımda görünüyor.</p>` : ""}
+    ${s.approx ? `<p class="dnote">Konum yaklaşık.</p>` : ""}
+    ${rows.length ? `<dl class="kv">${rows.map(([k, v, cls]) => `<dt>${k}</dt><dd${cls ? ` class="${cls}"` : ""}>${v}</dd>`).join("")}</dl>` : ""}
     <div class="dacts"><a class="btn primary dir" href="https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lon}" target="_blank" rel="noopener">Yol tarifi al</a>
       <button class="btn dir fbbtn" data-fbs="${esc(s.id)}">${IC.mesaj}Geri bildirim</button></div>
-    ${section(here)}
-    ${s.shellTrugo ? `<div class="shellbox"><b>Shell istasyonundaki Trugo:</b> Shell Recharge uygulamasıyla da şarj başlatılabilir. Togg'a özel Trugo indirimi Shell Recharge'da geçmez.</div>
-      ${s.viaShell.length ? `<div class="lbl" style="margin-top:14px">Shell Recharge uygulamasıyla şarj edersen</div>${section(s.viaShell)}` : ""}` : ""}
+    ${section(here, true)}
+    ${s.shellTrugo ? `<div class="shellbox">Shell Recharge uygulamasıyla da şarj edilebilir.</div>
+      ${s.viaShell.length ? `<div class="lbl" style="margin-top:14px">Shell Recharge uygulamasıyla</div>${section(s.viaShell, false)}` : ""}` : ""}
     <details class="bkay"><summary>Bilgi kaynağı ›</summary>${srcTxt.map(x => `<p>${x}</p>`).join("")}
       <p>${s.official ? "İstasyon bilgisi ağın kendi resmi haritasından, günde bir kez güncellenir." : s.epdk ? "Konum ve soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir." : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
-      ${s.net ? `<p>İndirimli fiyat yalnızca kampanya listesinde olduğu kesin bilinen istasyonlarda yazılır. Kart kampanyasındaki fiyat, ağ indiriminin üzerine kart indirimi uygulanarak hesaplanır; "başka indirimle birleşmez" diyen kampanyalar birleştirilmez.</p>` : ""}</details>`;
+      ${s.net ? `<p>İndirimli fiyat yalnızca kampanyanın geçerli olduğu kesin bilinen istasyonlarda yazılır. Ağın kampanyaları birbiriyle birleşmez. Kart indirimi ağ indiriminin üzerine hesaplanır; kart kampanyası "başka indirimle birleşmez" diyorsa liste fiyatına.</p>` : ""}</details>`;
   $("sh-b").scrollTop = 0;
+}
+// Bilgi kutusu: düğmenin hemen altında (yer yoksa üstünde) açılır; aynı düğme, dışarı dokunmak ya da Esc kapatır
+const TIP = { b: null };
+function closeTip(focus) {
+  const b = TIP.b; if (!b) return;
+  TIP.b = null; $("tip").hidden = true; b.setAttribute("aria-expanded", "false");
+  if (focus && b.isConnected) b.focus();
+}
+function openTip(b) {
+  if (TIP.b === b) return closeTip();
+  closeTip();
+  const el = $("tip"), d = b.dataset;
+  el.innerHTML = `<p>${esc(d.tip)}</p>${d.tl ? `<a data-kk="${esc(d.tk || "")}" href="${esc(d.tl)}" target="_blank" rel="noopener nofollow">Resmi sayfa ↗</a>` : ""}`;
+  el.hidden = false; b.setAttribute("aria-expanded", "true"); TIP.b = b;
+  const r = b.getBoundingClientRect(), w = el.offsetWidth, h = el.offsetHeight;
+  const x = Math.min(innerWidth - w - 12, Math.max(12, r.left + r.width / 2 - w / 2));
+  let y = r.bottom + 4; if (y + h > innerHeight - 12) y = Math.max(12, r.top - h - 4);
+  el.style.left = x + "px"; el.style.top = y + "px";
 }
 function selectStation(id, pan = true) {
   M.sel = id; const s = M.byId.get(id);
@@ -1662,9 +1730,11 @@ function bindEvents() {
   let t; $("q").oninput = e => { clearTimeout(t); t = setTimeout(() => { S.q = e.target.value.trim(); render(); }, 150); };
   $("sort").onchange = e => { S.sort = e.target.value; render(); };
   document.addEventListener("click", e => {
+    if (TIP.b && !e.target.closest("#tip") && !e.target.closest("[data-tip]")) closeTip();
     const b = e.target.closest("button"); if (!b) return;
     const d = b.dataset;
-    if (d.k) { const set = S[d.k]; set.has(d.v) ? set.delete(d.v) : set.add(d.v); render(); }
+    if (d.tip !== undefined) openTip(b);
+    else if (d.k) { const set = S[d.k]; set.has(d.v) ? set.delete(d.v) : set.add(d.v); render(); }
     else if (b.id === "q-mine") { S.bana = !useMine(); render(); }
     else if (b.id === "q-setup") show("profil");
     else if (d.arac) { P.arac = P.arac === d.arac ? "" : d.arac; profileChanged(); }
@@ -1692,7 +1762,9 @@ function bindEvents() {
   $("help").onclick = openGuide;
   $("ob-x").onclick = $("ob-skip").onclick = () => closeSheets();
   $("ob-next").onclick = () => { if (OB.i < OB.adim.length - 1) { OB.i++; renderOb(); $("ob").querySelector(".fs-b").scrollTop = 0; } else { an("filtre", "kurulum bitti"); closeSheets(); } };
-  document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheets(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") { if (TIP.b) closeTip(true); else closeSheets(); } });
+  $("sh-b").addEventListener("scroll", () => closeTip(), { passive: true });
+  addEventListener("resize", () => closeTip());
   $("fs-clear").onclick = () => { S.banka.clear(); S.ag.clear(); S.tip.clear(); render(); };
   $("mfs-clear").onclick = () => { M.f = { akim: new Set(), kag: false, kbk: false, bana: false, tum: false, brands: new Set() }; M.shown = PAGE; renderMap(); };
   $("loc").onclick = () => locate(false);
