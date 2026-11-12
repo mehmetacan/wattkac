@@ -180,15 +180,21 @@
    "not": "KDV dahil. AC ≤22 kW, DC 40–320 kW."
   },
   "Otojet": {
-   "ac": null,
-   "dc": null,
+   "ac": {
+    "min": 10.99,
+    "max": 10.99
+   },
+   "dc": {
+    "min": 15.49,
+    "max": 15.49
+   },
    "kaynak": "https://www.oto-jet.com.tr/fiyatlarimiz",
-   "kontrol": null,
+   "kontrol": "2026-11-12",
    "gecerlilik": null,
    "adlar": [
     "Otojet"
    ],
-   "not": "Resmi fiyat sayfası 10 Kasım 2026'da eklendi; fiyat henüz doğrulanmadı, günlük tarama sayfayı açıp dolduracak."
+   "not": "KDV dahil, tüm istasyonlarda tek fiyat. Seçili istasyonlarda şarj bittikten sonra araç bekletilirse işgaliye bedeli: AC'de 30. dakikadan sonra 3 TL/dk, DC'de 15. dakikadan sonra 5 TL/dk."
   },
   "D-Charge": {
    "ac": {
