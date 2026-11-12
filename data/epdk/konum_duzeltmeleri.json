@@ -1,0 +1,1083 @@
+{
+"guncelleme": "2026-11-12",
+"ozet": {
+"denetlenen": {
+"e": 13253,
+"r": 4162,
+"o": 747,
+"c": 2257
+},
+"isaretlenen": {
+"e": {
+"ilce_uyumsuz": 132,
+"il_uyumsuz": 13,
+"il_uzak": 28,
+"turkiye_disi": 2
+},
+"r": {
+"il_uzak": 45,
+"il_uyumsuz": 18,
+"bozuk": 4,
+"yurt_disi": 71
+},
+"c": {
+"il_uyumsuz": 6,
+"konum_yok": 4,
+"il_uzak": 7
+}
+},
+"duzeltme": {
+"yer_degistirme": 19,
+"basamak": 4,
+"kaynak": 16,
+"adres": 2,
+"ilce_merkezi": 6,
+"cikarildi": 10,
+"birakildi": 6
+},
+"korunan": {
+"ilce_uyumsuz": 120,
+"il_uyumsuz": 5,
+"ad_yeri": 1,
+"diger_kaynak_il": 76
+},
+"yurt_disi": 71,
+"gecersiz_yardimci": 13,
+"ilce": {
+"toplam": 756,
+"guvenilir": 470
+},
+"esikler": {
+"kiyi_km": 7.0,
+"il_esik_km": [
+40.0,
+60.0
+],
+"il_uzak_km": 80.0,
+"il_oran": 1.5,
+"ilce_taban_km": 25.0,
+"basamak_m": 300
+}
+},
+"kurallar": {
+"yer_degistirme": "enlem/boylam yer değiştirmiş; takas edildi",
+"basamak": "tek basamak hatası; başka kaynakla doğrulanan düzeltme",
+"kaynak": "aynı istasyonun başka kaynaktaki konumu alındı",
+"adres": "aynı adresin adres araması (yaklaşık)",
+"ilce_merkezi": "ilçe merkezine yerleştirildi (yaklaşık)",
+"cikarildi": "makul konum bulunamadı; haritadan çıkarıldı",
+"birakildi": "ilinin dışında görünüyor ama doğrulayan kaynak yok; olduğu gibi bırakıldı (elle bakılmalı)"
+},
+"kayitlar": [
+{
+"id": "ŞRJ/24095",
+"kaynak": "e",
+"ad": "Eryıl Akaryakıt, Sur - DC",
+"il": "Diyarbakır",
+"eski": [
+40.44435,
+38.09876
+],
+"yeni": [
+37.94507,
+40.29814
+],
+"kural": "adres",
+"neden": "il_uzak",
+"km": 336.4
+},
+{
+"id": "ŞRJ/7909",
+"kaynak": "e",
+"ad": "LEZZETÇİ ÇAMLIK",
+"il": "Sivas",
+"eski": [
+39.933363,
+32.85974
+],
+"yeni": [
+39.73906,
+36.97572
+],
+"kural": "adres",
+"neden": "il_uzak",
+"km": 352.1
+},
+{
+"id": "ŞRJ/19697",
+"kaynak": "e",
+"ad": "Petrolcity AVM-2",
+"il": "Batman",
+"eski": [
+37.9199,
+40.1369
+],
+"yeni": [
+37.9199,
+41.1369
+],
+"kural": "basamak",
+"neden": "il_uzak",
+"dayanak": "trugo7703",
+"km": 87.7
+},
+{
+"id": "ŞRJ/21447",
+"kaynak": "e",
+"ad": "Kubilay Hyundai Oto",
+"il": "Elazığ",
+"eski": [
+38.3169,
+39.1002
+],
+"yeni": [
+38.6169,
+39.1002
+],
+"kural": "basamak",
+"neden": "ilce_uyumsuz",
+"dayanak": "trugo8234",
+"km": 33.4
+},
+{
+"id": "ŞRJ/3881",
+"kaynak": "e",
+"ad": "ASTORŞARJ SULTANGAZİ VEGA AVM",
+"il": "İstanbul",
+"eski": [
+41.09371,
+29.90331
+],
+"yeni": [
+41.09371,
+28.90331
+],
+"kural": "basamak",
+"neden": "ilce_uyumsuz",
+"dayanak": "ŞRJ/15681",
+"km": 83.8
+},
+{
+"id": "ŞRJ/8240",
+"kaynak": "e",
+"ad": "IYAŞPARK AVM",
+"il": "Isparta",
+"eski": [
+37.181177,
+30.54498
+],
+"yeni": [
+37.781177,
+30.54498
+],
+"kural": "basamak",
+"neden": "il_uyumsuz",
+"dayanak": "zes1550",
+"km": 66.7
+},
+{
+"id": "ŞRJ/11952",
+"kaynak": "e",
+"ad": "NİL SINAİ",
+"il": "İstanbul",
+"eski": [
+40.734897,
+29.97368
+],
+"kural": "birakildi",
+"neden": "il_uyumsuz"
+},
+{
+"id": "ŞRJ/1236",
+"kaynak": "e",
+"ad": "Orallar Petrol",
+"il": "Bilecik",
+"eski": [
+40.177333,
+30.51353
+],
+"kural": "birakildi",
+"neden": "il_uyumsuz"
+},
+{
+"id": "ŞRJ/13523",
+"kaynak": "e",
+"ad": "Opet Adem Kocatepe Petrol 2",
+"il": "Muğla",
+"eski": [
+36.927602,
+29.72394
+],
+"kural": "birakildi",
+"neden": "il_uyumsuz"
+},
+{
+"id": "ŞRJ/21872",
+"kaynak": "e",
+"ad": "Kemaliye Belediyesi Otoparkı",
+"il": "Erzincan",
+"eski": [
+39.262056,
+38.495611
+],
+"kural": "birakildi",
+"neden": "il_uyumsuz"
+},
+{
+"id": "ŞRJ/4015",
+"kaynak": "e",
+"ad": "Petrol Ofisi - Kızılağaç",
+"il": "İzmir",
+"eski": [
+37.0986,
+28.3785
+],
+"kural": "birakildi",
+"neden": "il_uzak",
+"dayanak": "n11082588658"
+},
+{
+"id": "ŞRJ/8990",
+"kaynak": "e",
+"ad": "DİVADİNLENMETESİSİ_AVANOS_ŞARJMATİK",
+"il": "Nevşehir",
+"eski": [
+38.720668,
+35.482359
+],
+"kural": "birakildi",
+"neden": "il_uyumsuz"
+},
+{
+"id": "ocm267423",
+"kaynak": "c",
+"ad": "POWERŞARJ - Iyaşpark Otel",
+"il": "Isparta",
+"eski": null,
+"yeni": null,
+"kural": "cikarildi",
+"neden": "konum_yok"
+},
+{
+"id": "ocm274244",
+"kaynak": "c",
+"ad": "POWERŞARJ - Doğuş Dijital Enerji Köz Kanat Ataşehir",
+"il": "İstanbul",
+"eski": null,
+"yeni": null,
+"kural": "cikarildi",
+"neden": "konum_yok"
+},
+{
+"id": "ocm274246",
+"kaynak": "c",
+"ad": "POWERŞARJ - Doğuş Dijital Enerji Elite Hotel Darıca",
+"il": "Kocaeli",
+"eski": null,
+"yeni": null,
+"kural": "cikarildi",
+"neden": "konum_yok"
+},
+{
+"id": "ocm298083",
+"kaynak": "c",
+"ad": "Powerşarj - Zirve Turistik Dinlenme Tesisi",
+"il": "Mersin",
+"eski": null,
+"yeni": null,
+"kural": "cikarildi",
+"neden": "konum_yok"
+},
+{
+"id": "wat4163590",
+"kaynak": "r",
+"ad": "Kocaeli Koçtaş",
+"il": "Kocaeli",
+"eski": [
+40.75124,
+40.75124
+],
+"yeni": null,
+"kural": "cikarildi",
+"neden": "bozuk"
+},
+{
+"id": "wat4163605",
+"kaynak": "r",
+"ad": "Opet Baştaş",
+"il": "Balıkesir",
+"eski": [
+40.33117,
+40.33117
+],
+"yeni": null,
+"kural": "cikarildi",
+"neden": "bozuk"
+},
+{
+"id": "wat4163606",
+"kaynak": "r",
+"ad": "Can Osman Dinlenme Tesisleri",
+"il": "Eskişehir",
+"eski": [
+39.43984,
+39.43984
+],
+"yeni": null,
+"kural": "cikarildi",
+"neden": "bozuk"
+},
+{
+"id": "wat4163957",
+"kaynak": "r",
+"ad": "İzmit rafineri trafo yanı",
+"il": "Kocaeli",
+"eski": [
+40.75767,
+40.75767
+],
+"yeni": null,
+"kural": "cikarildi",
+"neden": "bozuk"
+},
+{
+"id": "ŞRJ/21672",
+"kaynak": "e",
+"ad": "ASTORŞARJ KARAMAN KAZIM KARABEKİR AKARYAKIT",
+"il": "Karaman",
+"eski": [
+39.573708,
+32.123406
+],
+"yeni": null,
+"kural": "cikarildi",
+"neden": "il_uzak"
+},
+{
+"id": "ŞRJ/22366",
+"kaynak": "e",
+"ad": "AFŞİN GO PETROL",
+"il": "Kahramanmaraş",
+"eski": [
+39.915422,
+38.24733
+],
+"yeni": null,
+"kural": "cikarildi",
+"neden": "il_uzak"
+},
+{
+"id": "ŞRJ/13195",
+"kaynak": "e",
+"ad": "DERYA MOBİLYA",
+"il": "Sinop",
+"eski": [
+40.975584,
+37.931946
+],
+"yeni": [
+42.015,
+35.124
+],
+"kural": "ilce_merkezi",
+"neden": "il_uzak",
+"km": 260.8
+},
+{
+"id": "ŞRJ/21968",
+"kaynak": "e",
+"ad": "Hasanbaşoğlu Oto, Trabzon",
+"il": "Trabzon",
+"eski": [
+40.990389,
+37.799306
+],
+"yeni": [
+40.992,
+39.748
+],
+"kural": "ilce_merkezi",
+"neden": "il_uzak",
+"km": 163.6
+},
+{
+"id": "ŞRJ/23629",
+"kaynak": "e",
+"ad": "KÜRE PETROL OFİSİ",
+"il": "Diyarbakır",
+"eski": [
+41.7429,
+33.6776
+],
+"yeni": [
+37.919,
+40.15
+],
+"kural": "ilce_merkezi",
+"neden": "il_uzak",
+"km": 697.0
+},
+{
+"id": "ŞRJ/6610",
+"kaynak": "e",
+"ad": "LADİK GÖKKUŞAĞI RESTORANT",
+"il": "Konya",
+"eski": [
+41.008237,
+28.978358
+],
+"yeni": [
+38.209,
+32.401
+],
+"kural": "ilce_merkezi",
+"neden": "il_uzak",
+"km": 427.5
+},
+{
+"id": "ŞRJ/7884",
+"kaynak": "e",
+"ad": "KAVAKLI",
+"il": "İstanbul",
+"eski": [
+40.154166,
+28.101666
+],
+"yeni": [
+41.0005,
+28.658
+],
+"kural": "ilce_merkezi",
+"neden": "il_uzak",
+"km": 105.2
+},
+{
+"id": "ŞRJ/8460",
+"kaynak": "e",
+"ad": "SİVAS TED KOLEJİ",
+"il": "Sivas",
+"eski": [
+40.49008,
+29.308805
+],
+"yeni": [
+39.741,
+37.015
+],
+"kural": "ilce_merkezi",
+"neden": "il_uzak",
+"km": 660.4
+},
+{
+"id": "ŞRJ/10001",
+"kaynak": "e",
+"ad": "Tatlak Kocalar Dinlenme Tesisleri Ankara Yönü",
+"il": "Ankara",
+"eski": [
+40.241444,
+32.501756
+],
+"yeni": [
+40.467062,
+32.360435
+],
+"kural": "kaynak",
+"neden": "ilce_uyumsuz",
+"dayanak": "trugo3025",
+"km": 27.8
+},
+{
+"id": "ŞRJ/10002",
+"kaynak": "e",
+"ad": "Tatlak Kocalar Dinlenme Tesisleri İstanbul Yönü",
+"il": "Ankara",
+"eski": [
+40.241482,
+32.50434
+],
+"yeni": [
+40.467062,
+32.360435
+],
+"kural": "kaynak",
+"neden": "ilce_uyumsuz",
+"dayanak": "trugo3025",
+"km": 27.9
+},
+{
+"id": "ŞRJ/14405",
+"kaynak": "e",
+"ad": "Özel Tınaztepe Torbalı Hastanesi",
+"il": "İzmir",
+"eski": [
+38.395031,
+27.048656
+],
+"yeni": [
+38.14287,
+27.36697
+],
+"kural": "kaynak",
+"neden": "ilce_uyumsuz",
+"dayanak": "wat4163608",
+"km": 39.5
+},
+{
+"id": "ŞRJ/14702",
+"kaynak": "e",
+"ad": "Shell Şereflikoçhisar Çıkışı",
+"il": "Ankara",
+"eski": [
+39.933363,
+32.859741
+],
+"yeni": [
+38.917291,
+33.561281
+],
+"kural": "kaynak",
+"neden": "ilce_uyumsuz",
+"dayanak": "trugo4316",
+"km": 128.0
+},
+{
+"id": "ŞRJ/17290",
+"kaynak": "e",
+"ad": "İğneada Resort Otel",
+"il": "Kırklareli",
+"eski": [
+41.5235,
+27.5911
+],
+"yeni": [
+41.876627,
+27.987202
+],
+"kural": "kaynak",
+"neden": "ilce_uyumsuz",
+"dayanak": "trugo5697",
+"km": 51.2
+},
+{
+"id": "ŞRJ/17518",
+"kaynak": "e",
+"ad": "Arinna Garden Sitesi, Çorum Merkez - AC 1, AC 2, AC 3, AC 4",
+"il": "Çorum",
+"eski": [
+40.343,
+34.582
+],
+"yeni": [
+40.57324,
+34.9709
+],
+"kural": "kaynak",
+"neden": "ilce_uyumsuz",
+"dayanak": "ocm463923",
+"km": 41.7
+},
+{
+"id": "ŞRJ/21609",
+"kaynak": "e",
+"ad": "TOGER - HAZRETİ ÜZEYR PEYGAMBER TÜRBESİ",
+"il": "Adıyaman",
+"eski": [
+38.8131,
+37.9258
+],
+"yeni": [
+38.02902,
+39.03509
+],
+"kural": "kaynak",
+"neden": "il_uzak",
+"dayanak": "ocm477965",
+"km": 130.2
+},
+{
+"id": "ŞRJ/22140",
+"kaynak": "e",
+"ad": "Köfteci Yusuf Çay",
+"il": "Afyonkarahisar",
+"eski": [
+40.77389,
+29.58531
+],
+"yeni": [
+38.597155,
+30.993226
+],
+"kural": "kaynak",
+"neden": "il_uzak",
+"dayanak": "trugo5864",
+"km": 270.4
+},
+{
+"id": "ŞRJ/22188",
+"kaynak": "e",
+"ad": "Can Kardeşler Akaryakıt, Isparta Merkez - DC",
+"il": "Isparta",
+"eski": [
+40.146681,
+37.775043
+],
+"yeni": [
+37.77498,
+30.51225
+],
+"kural": "kaynak",
+"neden": "il_uzak",
+"dayanak": "ocm507282",
+"km": 680.8
+},
+{
+"id": "ŞRJ/22681",
+"kaynak": "e",
+"ad": "Opet AHL Petrol",
+"il": "Samsun",
+"eski": [
+41.099169,
+30.720488
+],
+"yeni": [
+41.35919,
+36.23421
+],
+"kural": "kaynak",
+"neden": "il_uzak",
+"dayanak": "wat4164002",
+"km": 461.9
+},
+{
+"id": "ŞRJ/23488",
+"kaynak": "e",
+"ad": "Abidin Usta Restoran - Uludağ Üniversitesi, Nilüfer - DC",
+"il": "Bursa",
+"eski": [
+39.570118,
+27.89977
+],
+"yeni": [
+40.22025,
+28.86595
+],
+"kural": "kaynak",
+"neden": "il_uyumsuz",
+"dayanak": "ocm507338",
+"km": 109.6
+},
+{
+"id": "ŞRJ/23650",
+"kaynak": "e",
+"ad": "ASTORŞARJ SİNCAN TAYMEK",
+"il": "Ankara",
+"eski": [
+39.75422,
+32.444455
+],
+"yeni": [
+39.85466,
+32.60626
+],
+"kural": "kaynak",
+"neden": "ilce_uyumsuz",
+"dayanak": "ocm461883",
+"km": 17.8
+},
+{
+"id": "ŞRJ/23673",
+"kaynak": "e",
+"ad": "Özsad Akaryakıt İstasyonu",
+"il": "Antalya",
+"eski": [
+36.141875,
+29.504052
+],
+"yeni": [
+36.238521,
+29.994575
+],
+"kural": "kaynak",
+"neden": "turkiye_disi",
+"dayanak": "trugo9559",
+"km": 45.3
+},
+{
+"id": "ŞRJ/4270",
+"kaynak": "e",
+"ad": "Maidan AVM",
+"il": "Ankara",
+"eski": [
+39.5431,
+32.4554
+],
+"yeni": [
+39.9093,
+32.76443
+],
+"kural": "kaynak",
+"neden": "ilce_uyumsuz",
+"dayanak": "ocm169862",
+"km": 48.5
+},
+{
+"id": "ŞRJ/4301",
+"kaynak": "e",
+"ad": "Ankara Yaşamkent",
+"il": "Ankara",
+"eski": [
+39.5006,
+32.3901
+],
+"yeni": [
+39.85761,
+32.6455
+],
+"kural": "kaynak",
+"neden": "ilce_uyumsuz",
+"dayanak": "ocm461895",
+"km": 45.3
+},
+{
+"id": "ŞRJ/7339",
+"kaynak": "e",
+"ad": "Akadia Modern",
+"il": "Ankara",
+"eski": [
+39.5323,
+32.5557
+],
+"yeni": [
+39.889694,
+32.927323
+],
+"kural": "kaynak",
+"neden": "ilce_uyumsuz",
+"dayanak": "trugo9461",
+"km": 50.9
+},
+{
+"id": "ŞRJ/17168",
+"kaynak": "e",
+"ad": "FOLEYA TATİL KÖYÜ",
+"il": "Trabzon",
+"eski": [
+39.757842,
+40.98513
+],
+"yeni": [
+40.98513,
+39.757842
+],
+"kural": "yer_degistirme",
+"neden": "il_uzak",
+"km": 171.6
+},
+{
+"id": "ŞRJ/20235",
+"kaynak": "e",
+"ad": "Kahramanmaraş Ticaret ve Sanayi Odası",
+"il": "Kahramanmaraş",
+"eski": [
+36.9378,
+37.5626
+],
+"yeni": [
+37.5626,
+36.9378
+],
+"kural": "yer_degistirme",
+"neden": "il_uyumsuz",
+"km": 88.8
+},
+{
+"id": "ŞRJ/20830",
+"kaynak": "e",
+"ad": "JET10 Oto Yıkama",
+"il": "Kahramanmaraş",
+"eski": [
+36.8354,
+37.5923
+],
+"yeni": [
+37.5923,
+36.8354
+],
+"kural": "yer_degistirme",
+"neden": "il_uyumsuz",
+"km": 107.6
+},
+{
+"id": "ŞRJ/21666",
+"kaynak": "e",
+"ad": "HG Hospital",
+"il": "Kahramanmaraş",
+"eski": [
+36.8187,
+37.5991
+],
+"yeni": [
+37.5991,
+36.8187
+],
+"kural": "yer_degistirme",
+"neden": "il_uyumsuz",
+"km": 110.9
+},
+{
+"id": "ŞRJ/22688",
+"kaynak": "e",
+"ad": "Fırat Bulvarı, Kayapınar - DC",
+"il": "Diyarbakır",
+"eski": [
+40.12897,
+37.94063
+],
+"yeni": [
+37.94063,
+40.12897
+],
+"kural": "yer_degistirme",
+"neden": "il_uzak",
+"km": 308.1
+},
+{
+"id": "ŞRJ/23198",
+"kaynak": "e",
+"ad": "AZD Konutları",
+"il": "Diyarbakır",
+"eski": [
+40.16316,
+37.95156
+],
+"yeni": [
+37.95156,
+40.16316
+],
+"kural": "yer_degistirme",
+"neden": "il_uzak",
+"km": 311.3
+},
+{
+"id": "ŞRJ/23199",
+"kaynak": "e",
+"ad": "Çeysa Park",
+"il": "Diyarbakır",
+"eski": [
+40.14321,
+37.96297
+],
+"yeni": [
+37.96297,
+40.14321
+],
+"kural": "yer_degistirme",
+"neden": "il_uzak",
+"km": 306.9
+},
+{
+"id": "ŞRJ/23200",
+"kaynak": "e",
+"ad": "Ed-Yıl Paris Villaları",
+"il": "Diyarbakır",
+"eski": [
+40.26957,
+37.9674
+],
+"yeni": [
+37.9674,
+40.26957
+],
+"kural": "yer_degistirme",
+"neden": "il_uzak",
+"km": 324.0
+},
+{
+"id": "ŞRJ/23205",
+"kaynak": "e",
+"ad": "Ronay Park",
+"il": "Diyarbakır",
+"eski": [
+40.16694,
+37.94574
+],
+"yeni": [
+37.94574,
+40.16694
+],
+"kural": "yer_degistirme",
+"neden": "il_uzak",
+"km": 312.7
+},
+{
+"id": "ŞRJ/23214",
+"kaynak": "e",
+"ad": "İpek Şehir Konutları",
+"il": "Diyarbakır",
+"eski": [
+40.16251,
+37.95166
+],
+"yeni": [
+37.95166,
+40.16251
+],
+"kural": "yer_degistirme",
+"neden": "il_uzak",
+"km": 311.2
+},
+{
+"id": "ŞRJ/23517",
+"kaynak": "e",
+"ad": "Şanlıurfa Arkeoloji Müzesi",
+"il": "Şanlıurfa",
+"eski": [
+38.78131,
+37.15298
+],
+"yeni": [
+37.15298,
+38.78131
+],
+"kural": "yer_degistirme",
+"neden": "il_uzak",
+"km": 230.6
+},
+{
+"id": "ŞRJ/23518",
+"kaynak": "e",
+"ad": "Ceylan Karavil Park AVM Kapalı Otopark",
+"il": "Diyarbakır",
+"eski": [
+40.17051,
+37.92876
+],
+"yeni": [
+37.92876,
+40.17051
+],
+"kural": "yer_degistirme",
+"neden": "il_uzak",
+"km": 315.6
+},
+{
+"id": "ŞRJ/23675",
+"kaynak": "e",
+"ad": "Shell Eskiyol Mahallesi Nusaybin",
+"il": "Mardin",
+"eski": [
+41.11721,
+37.10243
+],
+"yeni": [
+37.10243,
+41.11721
+],
+"kural": "yer_degistirme",
+"neden": "il_uzak",
+"km": 564.9
+},
+{
+"id": "ŞRJ/23878",
+"kaynak": "e",
+"ad": "Andera Park AVM, Siirt Merkez - DC",
+"il": "Siirt",
+"eski": [
+41.94368,
+37.93837
+],
+"yeni": [
+37.93837,
+41.94368
+],
+"kural": "yer_degistirme",
+"neden": "turkiye_disi",
+"km": 561.1
+},
+{
+"id": "ŞRJ/23889",
+"kaynak": "e",
+"ad": "KARAKÖPRÜ BELEDİYESİ",
+"il": "Şanlıurfa",
+"eski": [
+38.79877,
+37.21299
+],
+"yeni": [
+37.21299,
+38.79877
+],
+"kural": "yer_degistirme",
+"neden": "il_uzak",
+"km": 224.5
+},
+{
+"id": "ŞRJ/24074",
+"kaynak": "e",
+"ad": "Naz Konutları",
+"il": "Kahramanmaraş",
+"eski": [
+36.8775,
+37.5886
+],
+"yeni": [
+37.5886,
+36.8775
+],
+"kural": "yer_degistirme",
+"neden": "il_uyumsuz",
+"km": 101.1
+},
+{
+"id": "ŞRJ/24176",
+"kaynak": "e",
+"ad": "Göbeklitepe Ören Yeri",
+"il": "Şanlıurfa",
+"eski": [
+38.93698,
+37.20414
+],
+"yeni": [
+37.20414,
+38.93698
+],
+"kural": "yer_degistirme",
+"neden": "il_uzak",
+"km": 245.2
+},
+{
+"id": "ŞRJ/7403",
+"kaynak": "e",
+"ad": "GÜLEÇ OTOMOTİV",
+"il": "Elazığ",
+"eski": [
+39.2552,
+38.6141
+],
+"yeni": [
+38.6141,
+39.2552
+],
+"kural": "yer_degistirme",
+"neden": "il_uyumsuz",
+"km": 90.3
+},
+{
+"id": "ŞRJ/8162",
+"kaynak": "e",
+"ad": "UYGURLAR ELAZIĞ",
+"il": "Elazığ",
+"eski": [
+39.132447,
+38.646444
+],
+"yeni": [
+38.646444,
+39.132447
+],
+"kural": "yer_degistirme",
+"neden": "il_uyumsuz",
+"km": 68.5
+}
+]
+}

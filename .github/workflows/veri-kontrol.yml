@@ -1,6 +1,7 @@
 name: Veri denetimi
 
 # data/kampanyalar.json ve site/tarifeler.json dosyalarını denetler (tools/veri_kontrol.py); hiçbir şeyi değiştirmez.
+# İstasyon konum denetiminin raporu (data/epdk/konum_duzeltmeleri.json) çok sayıda kaydı çıkarmış/taşımışsa uyarı verir.
 # - Veri değişince: yapı denetimi (bozuk alan, derleme sitesi bağlantısı, süresi dolmuş kampanya, ters fiyat aralığı).
 # - Her gün 09:10'da (günlük kampanya taramasından sonra): ayrıca güncellik denetimi. Tarama 2 günden uzun süredir
 #   çalışmadıysa ya da süresi dolmuş kampanya veride kaldıysa bu iş akışı kırmızı olur ve GitHub e-posta gönderir.
@@ -10,6 +11,7 @@ on:
     paths:
       - "data/kampanyalar.json"
       - "site/tarifeler.json"
+      - "data/epdk/konum_duzeltmeleri.json"
       - "tools/veri_kontrol.py"
       - ".github/workflows/veri-kontrol.yml"
   pull_request:
