@@ -389,7 +389,8 @@
           "link": "https://www.allianz.com.tr/tr_TR/faaliyetlerimiz/kampanyalar/elektrikli-arac-sarj-kampanyasi.html",
           "bas": "2026-07-01",
           "bit": "2026-12-31",
-          "kosul": "Her ay Allianz'ım'dan yeni kod alıp Eşarj Mobil'e tanımla; yalnızca Eşarj istasyonları"
+          "kosul": "Her ay Allianz'ım'dan yeni kod alıp Eşarj Mobil'e tanımla; yalnızca Eşarj istasyonları",
+          "herkese": false
         }
       ],
       "banks": [
@@ -420,7 +421,8 @@
           "bas": "2026-11-01",
           "bit": "2026-11-30",
           "kosul": "Astor Şarj mobil uygulamasının güncel sürümüyle başlatılan şarjlarda; fiyat tarifesi Kasım ayı boyunca geçerli. Kaynak: Astor Şarj resmi Instagram duyurusu (6 Kasım 2026). Güncel tarife uygulamada geçerlidir.",
-          "kontrol": true
+          "kontrol": true,
+          "herkese": true
         }
       ],
       "banks": [
@@ -519,7 +521,8 @@
           "link": "https://zes.net/tr/kampanyalar/vodafonered",
           "bas": "2026-02-16",
           "bit": "2026-12-31",
-          "kosul": "Yalnızca bireysel Vodafone Red Premium (ayda 2 kez) ve Red Elite (ayda 3 kez) müşterileri, Zes üyesi olmalı (misafir kullanıcı hariç). Kod Vodafone Happy'den alınır; her şarjdan önce Zes uygulamasında Profil > Kampanyalar > Kampanya Kodu Ekle ile tanımlanır; kod tek kullanımlık. Zes'in halka açık AC, DC ve HPC istasyonları; Solarşarj hariç. Taksitli/kredili ödemeyle kullanılamaz, diğer kampanya ve hediye çekleriyle birleşmez; stoklarla sınırlı."
+          "kosul": "Yalnızca bireysel Vodafone Red Premium (ayda 2 kez) ve Red Elite (ayda 3 kez) müşterileri, Zes üyesi olmalı (misafir kullanıcı hariç). Kod Vodafone Happy'den alınır; her şarjdan önce Zes uygulamasında Profil > Kampanyalar > Kampanya Kodu Ekle ile tanımlanır; kod tek kullanımlık. Zes'in halka açık AC, DC ve HPC istasyonları; Solarşarj hariç. Taksitli/kredili ödemeyle kullanılamaz, diğer kampanya ve hediye çekleriyle birleşmez; stoklarla sınırlı.",
+          "herkese": false
         },
         {
           "big": "%10 indirim",
@@ -529,7 +532,8 @@
           "bas": "2026-01-20",
           "bit": "2026-12-31",
           "kosul": "Anadolu Sigorta'da aktif kasko poliçesi olan bireysel müşteriler (kurumsal hariç). Kod Sigortam Cepte > Kampanyalar'dan katılıp Profil > Kuponlarım'dan alınır, ayda bir kez, tek kullanımlık; Zes uygulamasında Profil > Kampanyalar > Kampanya Kodu Ekle ile tanımlanır, misafir kullanıcı hariç. Zes'in halka açık AC, DC ve HPC istasyonları. Taksitli/kredili ödemeyle kullanılamaz; diğer kampanya, çek ve puanlarla birleşmez.",
-          "eklendi": "2026-11-11"
+          "eklendi": "2026-11-11",
+          "herkese": false
         },
         {
           "big": "%15 indirim",
@@ -539,7 +543,8 @@
           "bas": "2026-05-05",
           "bit": "2026-12-31",
           "kosul": "TAV Passport müşterileri; Zes üyesi olmalı (misafir ve kurumsal hariç). Kod Zes uygulamasında Profil > Kampanyalar > Kampanya Kodu Ekle ile bir kez tanımlanır, ayda bir kez %15 uygulanır. Zes'in halka açık AC, DC ve HPC istasyonları; Solarşarj hariç. Taksitli/kredili ödemeyle kullanılamaz; diğer kampanya ve hediye çekleriyle birleşmez.",
-          "eklendi": "2026-11-12"
+          "eklendi": "2026-11-12",
+          "herkese": false
         },
         {
           "big": "%15 nakit iade",
@@ -550,7 +555,8 @@
           "bit": "2026-12-31",
           "join": "Harcamadan önce Vodafone Pay › Kampanyalar › Kampanyaya Katıl",
           "kosul": "Zes istasyonlarında Vodafone Pay fiziksel veya sanal kartla yapılan harcamaların %15'i nakit iade; kullanıcı başına toplam en fazla 500 TL. Katılım talebinden önceki harcamalar kapsam dışı. İade anında aktif Vodafone Pay Kartı olmalı. Vodafone Pay'deki diğer kart kampanyalarıyla birleşmez.",
-          "eklendi": "2026-11-12"
+          "eklendi": "2026-11-12",
+          "herkese": false
         }
       ],
       "banks": [
@@ -618,18 +624,20 @@
           "link": "https://otopriz.com.tr/kampanyalar/indirimli-istasyonlar/kampanya-detaylari",
           "bas": "2026-11-01",
           "bit": "2026-11-30",
-          "kosul": "Yalnızca listedeki istasyonlarda; bireysel ve kurumsal işlemler; 30 Kasım 23:59'a kadar, sonra standart tarife. Otopriz'e göre diğer kampanya ve indirimlerle birleştirilemez."
+          "kosul": "Yalnızca listedeki istasyonlarda; bireysel ve kurumsal işlemler; 30 Kasım 23:59'a kadar, sonra standart tarife. Otopriz'e göre diğer kampanya ve indirimlerle birleştirilemez.",
+          "herkese": true
         },
         {
           "big": "DC'de %30 indirim",
           "det": "Ayın Otopriz Günü · her ayın son günü (30 Kasım) 00:00–23:59, tüm DC istasyonlarda",
-          "son": "Süreli değil",
+          "son": "30 Kasım",
           "link": "https://otopriz.com.tr/kampanyalar/otopriz-gunu-kampanyasi/kampanya-detaylari",
-          "bas": "",
-          "bit": "",
+          "bas": "2026-11-30",
+          "bit": "2026-11-30",
           "kosul": "Her ayın son günü 00:00–23:59; yalnızca DC (hızlı şarj) cihazlarında, AC hariç. Katılım, kod veya aktivasyon gerekmez, indirim otomatik uygulanır; kullanım limiti yok. Diğer kampanya ve indirimlerle birleştirilemez. Otopriz şarjı %90 dolulukta durdurabilir.",
           "join": "Gerekmez, otomatik",
-          "eklendi": "2026-11-11"
+          "eklendi": "2026-11-11",
+          "herkese": true
         },
         {
           "big": "DC'de %10 indirim",
@@ -640,7 +648,8 @@
           "bit": "",
           "join": "Otopriz uygulaması › Profil › Kampanyalar › Kampanyaya Git › 2 DC istasyon seç",
           "kosul": "14.09.2026'dan itibaren yalnızca DC (yüksek hızlı) istasyonlarda; yalnızca AC bulunan lokasyonlar kapsam dışı. Haritadaki kalp simgesiyle veya şarj başlatma ekranından eklenen favoriler sayılmaz; seçim kampanya ekranından yapılır. İndirim faturaya otomatik yansır.",
-          "eklendi": "2026-11-12"
+          "eklendi": "2026-11-12",
+          "herkese": false
         },
         {
           "big": "Doğum gününde %20",
@@ -651,7 +660,8 @@
           "bit": "",
           "join": "Doğum tarihin Otopriz sisteminde kayıtlı olmalı",
           "kosul": "Doğum günü ayında yapılan bir şarj işleminde %20 indirim; her kullanıcı ayda yalnızca bir kez. Doğum tarihi Otopriz sisteminde kayıtlı olmalı. Başka kampanya ve indirimlerle birleşmez.",
-          "eklendi": "2026-11-12"
+          "eklendi": "2026-11-12",
+          "herkese": false
         }
       ],
       "banks": [
@@ -1171,7 +1181,8 @@
           "bit": "2026-11-22",
           "kosul": "Her ayın 12'sine özel %12 indirim, Kasım ayında 12–22 Kasım tarihleri arasında geçerli. Kaynak: Ovolt'un resmi Instagram hesabındaki duyuru (11 Kasım 2026). Uygulama koşulları için Ovolt uygulamasına bakın.",
           "eklendi": "2026-11-11",
-          "kontrol": true
+          "kontrol": true,
+          "herkese": true
         },
         {
           "big": "50 TL VoltPuan",
@@ -1182,7 +1193,8 @@
           "bit": "2026-12-31",
           "join": "Ovolt uygulamasına ilk kez üye ol, puan anında tanımlanır",
           "kosul": "Her kullanıcı ve telefon numarası bir kez; şarj veya harcama şartı yok. VoltPuan tek şarj işleminde ve tek seferde kullanılır, 50 TL'nin altında kalan bakiye iade edilmez; 31 Ocak 2027 23:59'a kadar geçerli. Yalnızca Ovolt istasyonlarında; diğer kampanya ve puanlarla birleşmez.",
-          "eklendi": "2026-11-12"
+          "eklendi": "2026-11-12",
+          "herkese": false
         }
       ],
       "banks": [

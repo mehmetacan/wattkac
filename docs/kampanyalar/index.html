@@ -182,12 +182,15 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .mtop{top:10px;left:10px;right:10px;display:flex;gap:8px;align-items:flex-start;pointer-events:none}
 .mtop>*{pointer-events:auto}
 .seg{display:flex;gap:4px;background:#fff;border-radius:14px;padding:4px;box-shadow:0 2px 10px rgba(17,24,39,.18)}
-.seg button{border:0;background:none;border-radius:10px;width:46px;height:40px;display:grid;place-items:center;color:var(--mut)}
-.seg svg,.gbtn.ac svg,.gbtn.dc svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round}
+.seg button{border:0;background:none;border-radius:10px;width:46px;height:50px;padding:3px 0 2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;color:var(--mut)}
+.seg small{font:800 9.5px/1 Inter,sans-serif;letter-spacing:.3px}
+.seg svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round}
+.gbtn.ac svg,.gbtn.dc svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round}
 .seg .pin,.gbtn .pin{fill:currentColor;stroke:none}
 .seg button[data-akim=ac][aria-pressed=true],.gbtn.ac{background:#DBEAFE;color:#1E40AF}
 .seg button[data-akim=dc][aria-pressed=true],.gbtn.dc{background:#FEF3C7;color:#92400E}
-.seg button[data-akim=hpc]{width:60px}.seg button[data-akim=hpc] svg,.gbtn.hpc svg{width:46px;height:30px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round}
+.seg button[data-akim=hpc]{width:58px}.seg button[data-akim=hpc] svg{width:44px;height:28px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round}
+.gbtn.hpc svg{width:46px;height:30px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round}
 .seg .blt,.gbtn .blt{fill:#F59E0B;stroke:none}
 .seg button[data-akim=hpc][aria-pressed=true],.gbtn.hpc{background:#FEE2E2;color:#B91C1C}
 .seg button[data-akim=hpc][aria-pressed=true] .blt,.gbtn.hpc .blt{fill:#DC2626}
@@ -197,17 +200,18 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .fab i{font-style:normal;background:var(--ink);color:#fff;border-radius:999px;font-size:11.5px;padding:0 6px}
 .mtop .fab{margin-left:auto}
 /* Hızlı filtreler: filtre düğmesinin altında, yalnızca simge. Bana uyan · ağ indirimi · kart kampanyası · ZES · Trugo */
-.qf{top:66px;right:10px;display:flex;flex-direction:column;gap:8px}
-.qf button{width:46px;height:46px;border:2px solid transparent;border-radius:14px;background:#fff;box-shadow:0 2px 10px rgba(17,24,39,.18);display:grid;place-items:center;color:var(--txt);padding:0}
-.qf button>svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.qf .qi{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:800 12px/1 Inter,sans-serif;letter-spacing:-.3px;background:var(--bg-b);color:var(--fg-b)}
-.qf .qi.qm{width:40px;height:24px;border-radius:8px;font-size:10.5px;letter-spacing:0}
-.qf .qi.kag{background:#16A34A;color:#fff;font-size:15px}
-.qf .qi.kbk{background:#FFC800;color:#78350F}.qf .qi.kbk svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-.qf button[aria-pressed=true]{border-color:var(--ink);background:#FFF7D6}
-.qf button[data-mf=bana]{color:#B45309}
-.qf button[data-mf=bana][aria-pressed=true]{background:#FFC800;color:#111827}.qf button[data-mf=bana][aria-pressed=true] svg{fill:currentColor}
-@media(max-height:620px){.qf{gap:5px}.qf button{width:40px;height:40px}}
+.qf{top:66px;right:10px;display:flex;flex-direction:column;gap:10px;align-items:center;width:46px}
+.qf button{border:0;background:none;padding:0;display:grid;place-items:center}
+.qf .qi{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font:800 12px/1 Inter,sans-serif;letter-spacing:-.3px;background:var(--bg-b);color:var(--fg-b);border:2px solid #fff;box-shadow:0 2px 6px rgba(17,24,39,.35);transition:filter .12s,box-shadow .12s,transform .12s}
+.qf .qi svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.qf .qi.qm{width:46px;height:26px;border-radius:9px;font-size:10.5px;letter-spacing:0}
+.qf .qi.bana{background:#FDE68A;color:#92400E}
+.qf .qi.kag{background:#16A34A;color:#fff;font-size:16px}
+.qf .qi.kbk{background:#FFC800;color:#78350F}
+/* seçili: aynı renk koyulaşır, koyu çerçeve alır */
+.qf button[aria-pressed=true] .qi{filter:brightness(.62) saturate(1.4);border-color:#111827;box-shadow:0 0 0 2px #111827,0 2px 6px rgba(17,24,39,.35);transform:scale(1.06)}
+.qf button[aria-pressed=true] .qi.bana svg{fill:currentColor}
+@media(max-height:620px){.qf{gap:6px}.qf .qi{width:32px;height:32px}}
 .guide{list-style:none;display:grid;gap:16px;padding:8px 0 6px}
 .guide li{display:flex;align-items:center;gap:14px;font-size:14px;line-height:1.4;color:var(--mut)}
 .guide li b{display:block;font-size:15px;font-weight:800;color:var(--txt)}
@@ -1008,9 +1012,11 @@ function stationOffers(s) {
   return profileEmpty() ? all : all.filter(c => c.tip === "ag" || (P.banka.length ? P.banka.includes(c.kid) : true));
 }
 // Herkese değil yalnızca belli müşterilere ya da seçili istasyonlara uygulanan kampanyalar sıralamaya katılmaz
-const COND = /seçili|listedeki istasyon|sahiplerine|sahibi olan|yalnızca .*müşteri|togg/i;
+const COND = /seçili|listedeki istasyon|sahiplerine|sahibi olan|yalnızca .*müşteri|müşterilerine|abonelerine|abonesi|üyelerine|çalışanlarına|öğrencilere|togg/i;
 // Araca özel kampanya ("arac": ["Togg"]) profilde o araç seçiliyse koşullu sayılmaz: rozet, filtre ve indirimli fiyat ona göre çalışır.
-const conditional = c => (c.arac && c.arac.length) ? !c.arac.includes(P.arac) : COND.test([c.det, c.kosul].join(" "));
+// Ağın kendi kampanyasında "herkese" alanı varsa o esas alınır (true: o ağda şarj eden herkese kendiliğinden uygulanır; false: kod, üyelik, sigorta, abonelik gibi bir koşul var).
+// Alan yoksa metindeki ifadelere bakılır.
+const conditional = c => (c.arac && c.arac.length) ? !c.arac.includes(P.arac) : typeof c.herkese === "boolean" ? !c.herkese : COND.test([c.det, c.kosul].join(" "));
 // Yalnızca DC'de (ya da yalnızca AC'de) geçerli indirim, diğer akım türündeki fiyata uygulanmaz
 const modeOk = (c, s) => { const t = [c.big, c.det].join(" "), dc = /\bDC\b/.test(t), ac = /\bAC\b/.test(t); return dc === ac || (dc ? s.mode === "dc" : s.mode === "ac"); };
 // Ağın kendi indirimi: yalnızca indirimin geçerli olduğu kesin bilinen istasyonlarda (Togg'a özel vb. koşullular hariç)
@@ -1034,10 +1040,17 @@ function bestDeal(s) {
     if (c.tip !== "banka") continue;
     const listed = seciliKamp(c) && s.sk && s.sk.includes(kampKey(c));
     const r = campRate(c); if (!r || (conditional(c) && !listed) || (s.viaShell && s.viaShell.includes(c))) continue;
-    const v = s.price.v * (1 - r);
-    if (!best || v < best.v) best = { v, r, c };
+    const k = cardPrice(s, c, r);
+    if (!best || k.v < best.v) best = { v: k.v, r, c, ek: k.ek };
   }
   return best;
+}
+// Kartla ödenecek fiyat: şarj ağının bu istasyonda geçerli kendi indirimi varsa kart indirimi ONUN ÜZERİNE uygulanır (ikisi ayrı indirimdir).
+// İki taraftan biri "başka indirimle birleşmez" diyorsa birleştirilmez; kart indirimi liste fiyatına uygulanır.
+const birlesmez = c => /birleş(mez|tirilemez|tirilmez)/i.test([c.det, c.kosul].join(" "));
+function cardPrice(s, c, r) {
+  const ek = !!(s.net && !birlesmez(c) && !birlesmez(s.net.c));
+  return { v: (ek ? s.net.v : s.price.v) * (1 - r), ek };
 }
 // Shell akaryakıt istasyonlarındaki Trugo şarj cihazları (Trugo–Shell iş birliği) Shell Recharge uygulamasıyla da kullanılabilir.
 // Bu istasyonlara Shell Recharge kampanyaları "uygulama üzerinden" notuyla eklenir; liste fiyatı bilinmediği için sıralamaya katılmaz.
@@ -1257,12 +1270,12 @@ function refresh() {
   if (!$("mfs").hidden) renderMapSheet();
 }
 function renderSeg() {
-  const b = (v, ic, t) => `<button data-akim="${v}" title="${t}" aria-label="${t}" aria-pressed="${M.f.akim.has(v)}">${ic}</button>`;
+  const b = (v, ic, t) => `<button data-akim="${v}" title="${t}" aria-label="${t}" aria-pressed="${M.f.akim.has(v)}">${ic}<small>${{ ac: "AC", dc: "DC", hpc: "DC+" }[v]}</small></button>`;
   $("seg").innerHTML = b("ac", `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6.5h12a8.3 8.3 0 1 1-12 0z"/><g class="pin"><circle cx="9.3" cy="10.6" r="1.25"/><circle cx="14.7" cy="10.6" r="1.25"/><circle cx="7.9" cy="14.6" r="1.25"/><circle cx="12" cy="14.6" r="1.25"/><circle cx="16.1" cy="14.6" r="1.25"/></g></svg>`, "AC: normal şarj") + b("dc", `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.3 2.8h9.4a5.6 5.6 0 1 1-9.4 0z"/><rect x="5.2" y="14.6" width="13.6" height="7.4" rx="3.7"/><g class="pin"><circle cx="10.2" cy="6" r=".95"/><circle cx="13.8" cy="6" r=".95"/><circle cx="12" cy="9" r=".95"/><circle cx="9.3" cy="18.3" r="1.7"/><circle cx="14.7" cy="18.3" r="1.7"/></g></svg>`, "DC: hızlı şarj (120 kW altı)") + b("hpc", `<svg viewBox="0 0 38 24" aria-hidden="true"><path d="M7.3 2.8h9.4a5.6 5.6 0 1 1-9.4 0z"/><rect x="5.2" y="14.6" width="13.6" height="7.4" rx="3.7"/><g class="pin"><circle cx="10.2" cy="6" r=".95"/><circle cx="13.8" cy="6" r=".95"/><circle cx="12" cy="9" r=".95"/><circle cx="9.3" cy="18.3" r="1.7"/><circle cx="14.7" cy="18.3" r="1.7"/></g><path class="blt" d="M30.5 1.5 25 11h3.6l-1.8 7 6.7-9.6h-3.7z"/><path class="blt" d="M36 8.5 32.2 15h2.5l-1.3 5.5 4.3-6.8h-2.5z"/></svg>`, "Çok hızlı DC: 120 kW ve üzeri");
   // Hızlı filtreler (filtre penceresinde değil, burada): bana uyan, ağ indirimi, kart kampanyası ve en çok kullanılan iki ağ
   const q = (attr, on, t, ic) => `<button ${attr} title="${t}" aria-label="${t}" aria-pressed="${!!on}">${ic}</button>`;
   const marka = n => { const st = BRAND[n]; return `<span class="qi qm" style="--bg-b:${st[0]};--fg-b:${st[1]}">${esc(shortName(n))}</span>`; };
-  $("qf").innerHTML = q('data-mf="bana"', M.f.bana, "Bana uyan istasyonlar (profilime göre süz)", `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2l2.7 5.6 6.1.8-4.5 4.2 1.1 6-5.4-3-5.4 3 1.1-6-4.5-4.2 6.1-.8z"/></svg>`)
+  $("qf").innerHTML = q('data-mf="bana"', M.f.bana, "Bana uyan istasyonlar (profilime göre süz)", `<span class="qi bana"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2l2.7 5.6 6.1.8-4.5 4.2 1.1 6-5.4-3-5.4 3 1.1-6-4.5-4.2 6.1-.8z"/></svg></span>`)
     + q('data-mf="kag"', M.f.kag, "Şarj ağı indirimi olan istasyonlar", `<span class="qi kag">%</span>`)
     + q('data-mf="kbk"', M.f.kbk, "Banka kartı kampanyası olan istasyonlar", `<span class="qi kbk">${PC_CARD}</span>`)
     + q('data-mb="ZES"', M.f.brands.has("ZES"), "Yalnızca ZES", marka("ZES")) + q('data-mb="Trugo"', M.f.brands.has("Trugo"), "Yalnızca Trugo", marka("Trugo"));
@@ -1429,7 +1442,8 @@ function renderDetail(s) {
   const effTxt = c => {
     const r = campRate(c); if (!r || !s.price || s.viaShell.includes(c)) return "";
     if (c.tip === "ag" && !(s.net && s.net.c === c)) return ""; // ağ indirimi bu istasyonda kesin değilse hesap gösterme
-    return `<div class="eff">Bu kampanyayla ≈ ${fmtNum(s.price.v * (1 - r))} TL/kWh <small style="color:var(--mut);font-weight:600">(%${Math.round(r * 100)} karşılığı)</small></div>`;
+    const k = c.tip === "banka" ? cardPrice(s, c, r) : { v: s.price.v * (1 - r), ek: false };
+    return `<div class="eff">Bu kampanyayla ≈ ${fmtNum(k.v)} TL/kWh <small style="color:var(--mut);font-weight:600">(${k.ek ? `ağ indirimi + %${Math.round(r * 100)}` : `%${Math.round(r * 100)} karşılığı`})</small></div>`;
   };
   // Ağın kendi indirimi: tek satır; dokununca ayrıntı. Banka kartı kampanyaları bankaya göre gruplanır: banka başına tek satır.
   const offer = c => {
@@ -1485,7 +1499,7 @@ function renderDetail(s) {
       ${s.viaShell.length ? `<div class="lbl" style="margin-top:14px">Shell Recharge uygulamasıyla şarj edersen</div>${section(s.viaShell)}` : ""}` : ""}
     <details class="bkay"><summary>Bilgi kaynağı ›</summary>${srcTxt.map(x => `<p>${x}</p>`).join("")}
       <p>${s.official ? "İstasyon bilgisi ağın kendi resmi haritasından, günde bir kez güncellenir." : s.epdk ? "Konum ve soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir." : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
-      ${s.net ? `<p>İndirimli fiyat yalnızca kampanya listesinde olduğu kesin bilinen istasyonlarda yazılır. Kart kampanyaları fiyata eklenmez.</p>` : ""}</details>`;
+      ${s.net ? `<p>İndirimli fiyat yalnızca kampanya listesinde olduğu kesin bilinen istasyonlarda yazılır. Kart kampanyasındaki fiyat, ağ indiriminin üzerine kart indirimi uygulanarak hesaplanır; "başka indirimle birleşmez" diyen kampanyalar birleştirilmez.</p>` : ""}</details>`;
   $("sh-b").scrollTop = 0;
 }
 function selectStation(id, pan = true) {
@@ -1495,7 +1509,19 @@ function selectStation(id, pan = true) {
   if ($("v-harita").dataset.s === "peek") $("v-harita").dataset.s = "half";
   prep(s); renderSheet(); highlight();
   an("istasyon", pretty(s.brand) || "markasız");
-  if (pan) M.map.panTo([s.lat, s.lon]);
+  if (pan) focusStation(s);
+}
+// Listeden seçilen istasyon: adı tek başına görünecek kadar yaklaşılır (gruptan ayrılana dek, en çok 18. düzey) ve
+// açık liste / detay penceresinin örtmediği alanın ortasına getirilir. Aynı noktadaki istasyonlar ayrılamaz; onlar grup olarak kalır.
+function focusStation(s, z = Math.max(M.map.getZoom(), 15), deneme = 0) {
+  const wide = matchMedia("(min-width:900px)").matches, sheet = wide ? 0 : $("sheet").offsetHeight;
+  const hedef = M.map.unproject(M.map.project([s.lat, s.lon], z).add([wide ? -207 : 0, sheet / 2]), z);
+  M.map.setView(hedef, z, { animate: deneme === 0 });
+  setTimeout(() => {
+    if (M.sel !== s.id) return;
+    const g = (M.groups || []).find(x => x.items.some(i => i.id === s.id));
+    if (g && g.items.length > 1 && z < 18 && deneme < 4) focusStation(s, z + 1, deneme + 1);
+  }, deneme === 0 ? 650 : 350);
 }
 function renderMapSheet() {
   const chip = (attr, label, on, cls = "") => `<button class="chip ${cls}" ${attr} aria-pressed="${on}">${esc(label)}</button>`;
