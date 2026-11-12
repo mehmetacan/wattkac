@@ -312,9 +312,10 @@
    "media/2026-11-08/banka_kuveytturk/hikaye.jpg"
   ],
   "aciklama": "",
-  "durum": "bekliyor",
+  "durum": "paylasildi",
   "deneme": 0,
-  "ig_media_id": null,
-  "hata": null
+  "ig_media_id": "18104906747054485",
+  "hata": null,
+  "paylasim_zamani": "2026-11-12T08:04:56+00:00"
  }
 ]
