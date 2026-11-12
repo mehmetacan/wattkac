@@ -958,6 +958,11 @@ function openGuide() {
   document.querySelectorAll("#gs [data-help]").forEach(u => u.hidden = u.dataset.help !== S.view);
   $("gs").hidden = false; $("bd").hidden = false; $("gs").querySelector(".fs-b").scrollTop = 0; $("gs-ok").focus();
 }
+// Kampanya filtre penceresi (kart, ağ, tür)
+function openFilters(open) {
+  if (!open) return closeSheets();
+  $("fs").hidden = false; $("bd").hidden = false; $("fs-ok").focus();
+}
 function openMapFilters(open) {
   if (!open) return closeSheets();
   renderMapSheet(); $("mfs").hidden = false; $("bd").hidden = false; $("mfs-ok").focus();
