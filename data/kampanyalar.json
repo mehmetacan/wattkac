@@ -384,6 +384,7 @@
       "own": [
         {
           "big": "%10 Eşarj Puan",
+          "kisa": "Allianz kasko",
           "det": "Allianz Elektrikli Araç Kasko sahiplerine, 400 TL+ şarjda · toplam 500 puan",
           "son": "31 Aralık",
           "link": "https://www.allianz.com.tr/tr_TR/faaliyetlerimiz/kampanyalar/elektrikli-arac-sarj-kampanyasi.html",
@@ -415,6 +416,7 @@
       "own": [
         {
           "big": "DC 10,90 TL/kWh",
+          "kisa": "Güncel uygulamada",
           "det": "AC 8,99 TL/kWh · uygulamayı güncelleyen kullanıcılara, Kasım boyunca",
           "son": "30 Kasım",
           "link": "https://www.instagram.com/astorsarj/",
@@ -457,6 +459,7 @@
       "own": [
         {
           "big": "Togg'a %20 indirim",
+          "kisa": "Togg'a",
           "arac": [
             "Togg"
           ],
@@ -516,6 +519,7 @@
       "own": [
         {
           "big": "%15 indirim",
+          "kisa": "Vodafone Red",
           "det": "Vodafone Red Premium ve Elite abonelerine · Happy kodu",
           "son": "31 Aralık",
           "link": "https://zes.net/tr/kampanyalar/vodafonered",
@@ -526,6 +530,7 @@
         },
         {
           "big": "%10 indirim",
+          "kisa": "Anadolu Sigorta kasko",
           "det": "Anadolu Sigorta kaskolulara · ayda 1, Sigortam Cepte kodu",
           "son": "31 Aralık",
           "link": "https://zes.net/tr/kampanyalar/anadolusigorta",
@@ -537,6 +542,7 @@
         },
         {
           "big": "%15 indirim",
+          "kisa": "TAV Passport",
           "det": "TAV Passport müşterilerine · ayda 1, TAV Passport kodu",
           "son": "31 Aralık",
           "link": "https://zes.net/tr/kampanyalar/tavkampanyasi",
@@ -548,6 +554,7 @@
         },
         {
           "big": "%15 nakit iade",
+          "kisa": "Vodafone Pay",
           "det": "Vodafone Pay kartla ödemede · toplam 500 TL",
           "son": "31 Aralık",
           "link": "https://zes.net/tr/kampanyalar/vodafonepay",
@@ -619,6 +626,7 @@
       "own": [
         {
           "big": "%30 indirim",
+          "kisa": "Seçili istasyonlarda",
           "det": "36 ilde 73 istasyonda · AC ve DC · kod gerekmez, faturaya otomatik yansır",
           "son": "30 Kasım",
           "link": "https://otopriz.com.tr/kampanyalar/indirimli-istasyonlar/kampanya-detaylari",
@@ -629,6 +637,7 @@
         },
         {
           "big": "DC'de %30 indirim",
+          "kisa": "Ayın son günü",
           "det": "Ayın Otopriz Günü · her ayın son günü (30 Kasım) 00:00–23:59, tüm DC istasyonlarda",
           "son": "30 Kasım",
           "link": "https://otopriz.com.tr/kampanyalar/otopriz-gunu-kampanyasi/kampanya-detaylari",
@@ -641,6 +650,7 @@
         },
         {
           "big": "DC'de %10 indirim",
+          "kisa": "Favori istasyonunda",
           "det": "Favori İstasyon · seçtiğin 2 DC istasyonda her şarjda, otomatik",
           "son": "Süreli değil",
           "link": "https://otopriz.com.tr/kampanyalar/favori-istasyon-kampanyasi/kampanya-detaylari",
@@ -653,6 +663,7 @@
         },
         {
           "big": "Doğum gününde %20",
+          "kisa": "Doğum gününde",
           "det": "Doğum günü ayında 1 şarjda %20 indirim",
           "son": "Süreli değil",
           "link": "https://otopriz.com.tr/kampanyalar/dogum-gunu-kampanyasi/kampanya-detay",
@@ -1174,6 +1185,7 @@
       "own": [
         {
           "big": "%12 indirim",
+          "kisa": "12–22 Kasım",
           "det": "Ovolt istasyonlarında · 12–22 Kasım arası 11 gün",
           "son": "22 Kasım",
           "link": "https://www.instagram.com/ovolt.tr/",
@@ -1186,6 +1198,7 @@
         },
         {
           "big": "50 TL VoltPuan",
+          "kisa": "Yeni üyeye",
           "det": "Ovolt uygulamasına ilk kez üye olanlara · tek şarjda kullanılır",
           "son": "31 Aralık",
           "link": "https://ovolt.com.tr/duyurular/1/8",
@@ -1251,6 +1264,7 @@
       "own": [
         {
           "big": "Ford'a %4 indirim",
+          "kisa": "Ford'a",
           "arac": [
             "Ford"
           ],

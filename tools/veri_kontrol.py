@@ -92,6 +92,15 @@ def kampanyalar(bugun, guncellik):
         idler.add(s.get("id"))
         for i, o in enumerate(s.get("own", [])):
             teklif_denetle(f"{yer} #{i + 1} ({o.get('big')})", o, bugun, False)
+            # isteğe bağlı kısa koşul etiketi (sitede istasyon detayında): 1–3 kelime, yüzde yok
+            if "kisa" in o:
+                k = o.get("kisa")
+                if not isinstance(k, str) or not k.strip():
+                    hata(f"{yer} #{i + 1}: 'kisa' boş ya da metin değil")
+                elif len(k) > 32 or len(k.split()) > 4:
+                    uyari(f"{yer} #{i + 1}: 'kisa' uzun ({k!r}); 1–3 kelimelik koşul olmalı")
+                elif "%" in k:
+                    uyari(f"{yer} #{i + 1}: 'kisa' yüzde içeriyor ({k!r}); oran sitede ayrıca hesaplanır")
         if not s.get("own") and not s.get("banks"):
             uyari(f"{yer}: ne kendi indirimi ne banka kampanyası var; listeden çıkarılabilir")
         if s.get("banks") and not any(str(s.get("name")) in st for st in st_banka):
