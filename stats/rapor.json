@@ -1,5 +1,5 @@
 {
- "zaman": "2026-11-11T00:05:41+00:00",
+ "zaman": "2026-11-12T01:34:24+00:00",
  "hatalar": {
   "medya_metrik": {
    "profile_visits": "(#100) The Media Insights API does not support the profile_visits metric for this media product type.",
@@ -8,35 +8,133 @@
  },
  "hesap": {
   "id": "17841424717954969",
-  "followers_count": 8,
-  "follows_count": 14,
-  "media_count": 22,
+  "followers_count": 9,
+  "follows_count": 22,
+  "media_count": 27,
   "username": "wattkac"
  },
  "hesap_7gun": {
-  "reach": 971,
-  "views": 1850,
-  "profile_views": 62,
-  "accounts_engaged": 11,
-  "total_interactions": 61
+  "reach": 974,
+  "views": 2043,
+  "profile_views": 77,
+  "accounts_engaged": 13,
+  "total_interactions": 100
  },
  "medya": [
+  {
+   "tur": "FEED",
+   "tip": "CAROUSEL_ALBUM",
+   "zaman": "2026-11-11T16:30:22+0000",
+   "begeni": 2,
+   "yorum": 0,
+   "link": "https://www.instagram.com/p/Dfm6gYtD45d/",
+   "baslik": "⚡ VakıfBank ile şarjda %20 indirim!  ✅ %20 indirim: Kredi kartlarıyla ",
+   "istatistik": {
+    "reach": 6,
+    "views": 17,
+    "saved": 0,
+    "shares": 0,
+    "total_interactions": 3,
+    "profile_visits": 1,
+    "follows": 0
+   },
+   "olmayan": []
+  },
+  {
+   "tur": "REELS",
+   "tip": "VIDEO",
+   "zaman": "2026-11-11T12:27:39+0000",
+   "begeni": 4,
+   "yorum": 2,
+   "link": "https://www.instagram.com/reel/DfmejZrI3sN/",
+   "baslik": "⚡ Ovolt'ta 11 gün boyunca %12 indirim! 📅 12–22 Kasım  Her ayın 12'sind",
+   "istatistik": {
+    "reach": 14,
+    "views": 32,
+    "saved": 0,
+    "shares": 0,
+    "total_interactions": 8,
+    "ig_reels_avg_watch_time": 13212,
+    "ig_reels_video_view_total_time": 290684
+   },
+   "olmayan": [
+    "follows",
+    "profile_visits"
+   ]
+  },
+  {
+   "tur": "FEED",
+   "tip": "CAROUSEL_ALBUM",
+   "zaman": "2026-11-11T10:00:56+0000",
+   "begeni": 1,
+   "yorum": 0,
+   "link": "https://www.instagram.com/p/DfmN7rgDVW3/",
+   "baslik": "⚡ DenizBank ile şarjda %10 indirim!  ✅ %10 indirim: 500 TL+ şarj harca",
+   "istatistik": {
+    "reach": 4,
+    "views": 8,
+    "saved": 0,
+    "shares": 0,
+    "total_interactions": 2,
+    "profile_visits": 0,
+    "follows": 0
+   },
+   "olmayan": []
+  },
+  {
+   "tur": "FEED",
+   "tip": "CAROUSEL_ALBUM",
+   "zaman": "2026-11-11T10:00:31+0000",
+   "begeni": 2,
+   "yorum": 0,
+   "link": "https://www.instagram.com/p/DfmN4oVjXe3/",
+   "baslik": "⚡ QNB ile şarjda 500 TL ParaPuan!  ✅ 50 TL ParaPuan: Her 750 TL+ şarjd",
+   "istatistik": {
+    "reach": 5,
+    "views": 13,
+    "saved": 0,
+    "shares": 0,
+    "total_interactions": 2,
+    "profile_visits": 1,
+    "follows": 0
+   },
+   "olmayan": []
+  },
+  {
+   "tur": "FEED",
+   "tip": "CAROUSEL_ALBUM",
+   "zaman": "2026-11-11T06:50:18+0000",
+   "begeni": 2,
+   "yorum": 0,
+   "link": "https://www.instagram.com/p/Dfl4FHajVuU/",
+   "baslik": "⚡ Trugo: Togg'a %20!  ✅ Togg'a %20 indirim: Trugo DC'de · Autocharge y",
+   "istatistik": {
+    "reach": 5,
+    "views": 16,
+    "saved": 0,
+    "shares": 0,
+    "total_interactions": 2,
+    "profile_visits": 2,
+    "follows": 0
+   },
+   "olmayan": []
+  },
   {
    "tur": "REELS",
    "tip": "VIDEO",
    "zaman": "2026-11-09T21:36:00+0000",
-   "begeni": 0,
+   "begeni": 1,
    "yorum": 0,
    "link": "https://www.instagram.com/reel/DfiTp_BozdS/",
    "baslik": "Fikirleri yolumuz, ilkeleri pusulamız. Ulu Önder Mustafa Kemal Atatürk",
    "istatistik": {
-    "reach": 69,
-    "views": 97,
+    "reach": 70,
+    "views": 106,
     "saved": 0,
     "shares": 1,
-    "total_interactions": 1,
-    "ig_reels_avg_watch_time": 6551,
-    "ig_reels_video_view_total_time": 517531
+    "total_interactions": 3,
+    "ig_reels_avg_watch_time": 6421,
+    "ig_reels_video_view_total_time": 539413
    },
    "olmayan": [
     "follows",
@@ -52,13 +150,13 @@
    "link": "https://www.instagram.com/reel/DfiRORFopLk/",
    "baslik": "Saygı, sevgi ve özlemle… 🇹🇷 Mustafa Kemal Atatürk · 1881 – 193∞  #10Ka",
    "istatistik": {
-    "reach": 125,
-    "views": 156,
+    "reach": 131,
+    "views": 167,
     "saved": 0,
     "shares": 2,
-    "total_interactions": 3,
-    "ig_reels_avg_watch_time": 3082,
-    "ig_reels_video_view_total_time": 428490
+    "total_interactions": 4,
+    "ig_reels_avg_watch_time": 2928,
+    "ig_reels_video_view_total_time": 439296
    },
    "olmayan": [
     "follows",
@@ -69,18 +167,18 @@
    "tur": "REELS",
    "tip": "VIDEO",
    "zaman": "2026-11-09T12:36:06+0000",
-   "begeni": 2,
+   "begeni": 3,
    "yorum": 0,
    "link": "https://www.instagram.com/reel/DfhWAcHIKhZ/",
    "baslik": "🌙⚡ DC şarj 7 TL/kWh! Gece kuşlarına özel hesap 👇  Shell Recharge'ın ba",
    "istatistik": {
-    "reach": 129,
-    "views": 147,
+    "reach": 130,
+    "views": 150,
     "saved": 0,
     "shares": 0,
-    "total_interactions": 2,
-    "ig_reels_avg_watch_time": 6677,
-    "ig_reels_video_view_total_time": 928104
+    "total_interactions": 4,
+    "ig_reels_avg_watch_time": 6593,
+    "ig_reels_video_view_total_time": 936212
    },
    "olmayan": [
     "follows",
@@ -91,16 +189,16 @@
    "tur": "FEED",
    "tip": "CAROUSEL_ALBUM",
    "zaman": "2026-11-09T08:50:18+0000",
-   "begeni": 2,
+   "begeni": 3,
    "yorum": 0,
    "link": "https://www.instagram.com/p/Dfg8RH3DhJc/",
    "baslik": "⚡ ZES: %15 indirim!  ✅ %15 indirim: Vodafone Red Premium ve Red Elite ",
    "istatistik": {
-    "reach": 5,
-    "views": 13,
+    "reach": 6,
+    "views": 16,
     "saved": 0,
     "shares": 0,
-    "total_interactions": 2,
+    "total_interactions": 3,
     "profile_visits": 2,
     "follows": 0
    },
@@ -134,8 +232,8 @@
    "link": "https://www.instagram.com/p/DffZFIwDG9X/",
    "baslik": "⚡ Akbank ile şarjda %20 indirim!  ✅ %20 indirim: Voltla üzerinden şarj",
    "istatistik": {
-    "reach": 4,
-    "views": 14,
+    "reach": 5,
+    "views": 20,
     "saved": 0,
     "shares": 0,
     "total_interactions": 1,
@@ -148,18 +246,18 @@
    "tur": "REELS",
    "tip": "VIDEO",
    "zaman": "2026-11-08T16:27:57+0000",
-   "begeni": 2,
+   "begeni": 3,
    "yorum": 0,
    "link": "https://www.instagram.com/reel/DffLywMI3B7/",
    "baslik": "⚡ Yılda 20.000 km yapıyorsan şarja ne kadar ödüyorsun? Hesapladık 👇  🔋",
    "istatistik": {
-    "reach": 145,
-    "views": 170,
+    "reach": 146,
+    "views": 172,
     "saved": 0,
     "shares": 0,
-    "total_interactions": 3,
-    "ig_reels_avg_watch_time": 5129,
-    "ig_reels_video_view_total_time": 805283
+    "total_interactions": 4,
+    "ig_reels_avg_watch_time": 5116,
+    "ig_reels_video_view_total_time": 813558
    },
    "olmayan": [
     "follows",
@@ -170,18 +268,18 @@
    "tur": "REELS",
    "tip": "VIDEO",
    "zaman": "2026-11-08T11:31:41+0000",
-   "begeni": 2,
+   "begeni": 3,
    "yorum": 0,
    "link": "https://www.instagram.com/reel/Dfep5Q4oBec/",
    "baslik": "💳⚡ Axess, Wings ya da Free kartın varsa şarjda %20 indirim!  Akbank kr",
    "istatistik": {
-    "reach": 112,
-    "views": 134,
+    "reach": 113,
+    "views": 136,
     "saved": 0,
     "shares": 0,
-    "total_interactions": 2,
-    "ig_reels_avg_watch_time": 2489,
-    "ig_reels_video_view_total_time": 308660
+    "total_interactions": 4,
+    "ig_reels_avg_watch_time": 2521,
+    "ig_reels_video_view_total_time": 317658
    },
    "olmayan": [
     "follows",
@@ -197,13 +295,13 @@
    "link": "https://www.instagram.com/reel/Dfeb0dMIgob/",
    "baslik": "🎁⚡ Şarj et, iPhone 18 Pro Max ya da PS5 kazan!  Eşarj'ta çekiliş başla",
    "istatistik": {
-    "reach": 7,
-    "views": 18,
+    "reach": 9,
+    "views": 21,
     "saved": 0,
     "shares": 0,
-    "total_interactions": 1,
-    "ig_reels_avg_watch_time": 13485,
-    "ig_reels_video_view_total_time": 229251
+    "total_interactions": 2,
+    "ig_reels_avg_watch_time": 11882,
+    "ig_reels_video_view_total_time": 237643
    },
    "olmayan": [
     "follows",
@@ -214,18 +312,18 @@
    "tur": "REELS",
    "tip": "VIDEO",
    "zaman": "2026-11-08T07:53:42+0000",
-   "begeni": 2,
+   "begeni": 3,
    "yorum": 0,
    "link": "https://www.instagram.com/reel/DfeQ8tmooDi/",
    "baslik": "⚡💳 Garanti BBVA kartın varsa şarjın yarısı bonus olarak geri!  Shell R",
    "istatistik": {
-    "reach": 120,
-    "views": 140,
+    "reach": 122,
+    "views": 143,
     "saved": 0,
     "shares": 0,
-    "total_interactions": 2,
-    "ig_reels_avg_watch_time": 3900,
-    "ig_reels_video_view_total_time": 518763
+    "total_interactions": 4,
+    "ig_reels_avg_watch_time": 3874,
+    "ig_reels_video_view_total_time": 526910
    },
    "olmayan": [
     "follows",
@@ -241,8 +339,8 @@
    "link": "https://www.instagram.com/p/DfeHePuFD-3/",
    "baslik": "⚡ Ziraat Bankası ile şarjda %20 Jest Lira!  ✅ %20 Jest Lira: Anlaşmalı",
    "istatistik": {
-    "reach": 5,
-    "views": 13,
+    "reach": 6,
+    "views": 14,
     "saved": 0,
     "shares": 0,
     "total_interactions": 1,
@@ -255,16 +353,16 @@
    "tur": "FEED",
    "tip": "CAROUSEL_ALBUM",
    "zaman": "2026-11-07T20:31:02+0000",
-   "begeni": 1,
+   "begeni": 2,
    "yorum": 0,
    "link": "https://www.instagram.com/p/DfdC3MkmFPz/",
    "baslik": "⚡ Otopriz: %30 indirim!  ✅ %30 indirim: 37 ilde seçili istasyonlarda, ",
    "istatistik": {
-    "reach": 4,
-    "views": 20,
+    "reach": 6,
+    "views": 22,
     "saved": 0,
     "shares": 0,
-    "total_interactions": 1,
+    "total_interactions": 2,
     "profile_visits": 1,
     "follows": 0
    },
@@ -298,13 +396,13 @@
    "link": "https://www.instagram.com/reel/DfaXz2wowWT/",
    "baslik": "☕⚡ Araban şarj olurken sen de kahveni kap!  En Yakıt × Starbucks kampa",
    "istatistik": {
-    "reach": 122,
-    "views": 154,
+    "reach": 125,
+    "views": 158,
     "saved": 0,
     "shares": 6,
-    "total_interactions": 8,
-    "ig_reels_avg_watch_time": 6210,
-    "ig_reels_video_view_total_time": 832174
+    "total_interactions": 9,
+    "ig_reels_avg_watch_time": 6158,
+    "ig_reels_video_view_total_time": 849937
    },
    "olmayan": [
     "follows",
@@ -315,18 +413,18 @@
    "tur": "REELS",
    "tip": "VIDEO",
    "zaman": "2026-11-06T19:14:38+0000",
-   "begeni": 1,
+   "begeni": 2,
    "yorum": 0,
    "link": "https://www.instagram.com/reel/DfaUhswImoj/",
    "baslik": "⚡ Togg sahipleri, Trugo'da şarj %20 indirimli!  Togg'unla Trugo DC ist",
    "istatistik": {
-    "reach": 112,
-    "views": 134,
+    "reach": 113,
+    "views": 138,
     "saved": 0,
     "shares": 2,
-    "total_interactions": 3,
-    "ig_reels_avg_watch_time": 5284,
-    "ig_reels_video_view_total_time": 649978
+    "total_interactions": 5,
+    "ig_reels_avg_watch_time": 5592,
+    "ig_reels_video_view_total_time": 699109
    },
    "olmayan": [
     "follows",
@@ -356,16 +454,16 @@
    "tur": "FEED",
    "tip": "CAROUSEL_ALBUM",
    "zaman": "2026-11-06T15:25:29+0000",
-   "begeni": 1,
+   "begeni": 2,
    "yorum": 0,
    "link": "https://www.instagram.com/p/DfZ7Gc2EXVj/",
    "baslik": "⚡ ASTOR Şarj'da Kasım tarifesi: DC 10,90 TL/kWh, AC 8,99 TL/kWh!  📲 As",
    "istatistik": {
-    "reach": 4,
-    "views": 14,
+    "reach": 5,
+    "views": 15,
     "saved": 0,
     "shares": 0,
-    "total_interactions": 1,
+    "total_interactions": 2,
     "profile_visits": 1,
     "follows": 0
    },
@@ -380,8 +478,8 @@
    "link": "https://www.instagram.com/p/DfZvqMGFKwo/",
    "baslik": "⚡ VakıfBank ile şarjda %20 indirim!  ✅ %20 indirim: Bireysel kredi kar",
    "istatistik": {
-    "reach": 3,
-    "views": 16,
+    "reach": 4,
+    "views": 17,
     "saved": 0,
     "shares": 0,
     "total_interactions": 2,
@@ -394,16 +492,16 @@
    "tur": "FEED",
    "tip": "CAROUSEL_ALBUM",
    "zaman": "2026-11-06T13:30:26+0000",
-   "begeni": 2,
+   "begeni": 3,
    "yorum": 0,
    "link": "https://www.instagram.com/p/DfZt7_HIZ5o/",
    "baslik": "⚡ Eşarj istasyonlarında bu ay ne kazandırıyor?  ✅ %10 Eşarj Puan: Alli",
    "istatistik": {
-    "reach": 4,
-    "views": 15,
+    "reach": 5,
+    "views": 16,
     "saved": 0,
     "shares": 0,
-    "total_interactions": 2,
+    "total_interactions": 3,
     "profile_visits": 5,
     "follows": 0
    },
@@ -437,8 +535,8 @@
    "link": "https://www.instagram.com/p/DfZqZBxl-Wa/",
    "baslik": "⚡ Kasım 2026: şarj ağlarında hangi kampanyalar var?  • Eşarj: %20'ye v",
    "istatistik": {
-    "reach": 5,
-    "views": 24,
+    "reach": 6,
+    "views": 29,
     "saved": 0,
     "shares": 0,
     "total_interactions": 1,
@@ -456,12 +554,12 @@
    "link": "https://www.instagram.com/p/DfZp7OhF5Wk/",
    "baslik": "⚡ Kasım 2026 şarj kampanyaları: hangi banka ne veriyor?  • Garanti BBV",
    "istatistik": {
-    "reach": 6,
-    "views": 25,
+    "reach": 7,
+    "views": 30,
     "saved": 0,
     "shares": 0,
     "total_interactions": 1,
-    "profile_visits": 0,
+    "profile_visits": 2,
     "follows": 0
    },
    "olmayan": []
