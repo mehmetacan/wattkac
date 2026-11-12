@@ -48,10 +48,12 @@ def tl(v):
 AG_ANAHTAR = {"Eşarj": "esarj", "ASTOR Şarj": "astor", "Trugo": "trugo", "ZES": "zes", "Voltrun": "voltrun", "Otopriz": "otopriz",
               "Ovolt": "ovolt", "Shell Recharge": "shell", "WAT Mobilite": "wat", "Voltla": "voltla"}
 
-CSS = """*{box-sizing:border-box;margin:0;padding:0}body{background:#F6F7F9;color:#111827;font:16px/1.6 Inter,system-ui,-apple-system,Segoe UI,sans-serif;-webkit-font-smoothing:antialiased}
-a{color:#1D4ED8}.w{max-width:760px;margin:0 auto;padding:0 16px 48px}
+CSS = """@font-face{font-family:"Plus Jakarta Sans";font-style:normal;font-display:swap;font-weight:200 800;src:url(/fonts/plus-jakarta-sans-latin-ext-wght-normal.woff2) format("woff2-variations");unicode-range:U+0100-02BA,U+1E00-1E9F,U+20A0-20C0}
+@font-face{font-family:"Plus Jakarta Sans";font-style:normal;font-display:swap;font-weight:200 800;src:url(/fonts/plus-jakarta-sans-latin-wght-normal.woff2) format("woff2-variations");unicode-range:U+0000-00FF,U+0131,U+2000-206F,U+20AC}
+*{box-sizing:border-box;margin:0;padding:0}body{background:#F8FAFC;color:#0F172A;font:16px/1.6 "Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#0E7490}.w{max-width:760px;margin:0 auto;padding:0 16px 48px}
 header{display:flex;align-items:center;gap:10px;padding:14px 0}header a.logo{display:flex;align-items:center;gap:6px;text-decoration:none;color:#111827;font-weight:900;font-size:20px;letter-spacing:-.3px}
-header a.logo b{color:#E0A100}header .sp{flex:1}header a.cta{background:#FFC800;color:#111827;text-decoration:none;font-weight:800;border-radius:999px;padding:8px 14px;font-size:14px}
+header a.logo b{color:#E0A100}header .sp{flex:1}header a.cta{background:#0E7490;color:#fff;text-decoration:none;font-weight:800;border-radius:999px;padding:8px 14px;font-size:14px}
 nav.bc{font-size:13px;color:#6B7280;margin:4px 0 10px}nav.bc a{color:#6B7280}
 h1{font-size:28px;line-height:1.2;letter-spacing:-.5px;margin:6px 0 8px}h2{font-size:19px;margin:26px 0 10px;letter-spacing:-.2px}
 p.lead{color:#4B5563;margin-bottom:14px}.card{background:#fff;border:1px solid #E5E7EB;border-radius:14px;padding:14px 16px;margin-bottom:10px}

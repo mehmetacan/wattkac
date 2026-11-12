@@ -1,5 +1,5 @@
 /* WattKaç service worker: uygulamayı hızlı açar ve bağlantı yokken son görülen veriyi gösterir. */
-const SURUM = "wk-v15";
+const SURUM = "wk-v16";
 const KABUK = ["./", "./index.html", "./manifest.webmanifest", "./logo.png", "./icons/icon-192.png", "./icons/icon-512.png",
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js", "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"];
 const VERI = /\/(kampanyalar|istasyonlar|tarifeler)\.json$/;
@@ -39,7 +39,7 @@ self.addEventListener("fetch", e => {
   if (req.mode === "navigate") return e.respondWith(agOnce(req, SURUM));
   if (u.origin === location.origin && VERI.test(u.pathname)) return e.respondWith(agOnceVeri(req));
   if (u.hostname === "tile.openstreetmap.org") return e.respondWith(onbellekOnce(req, KAROLAR, KARO_SINIR));
-  if (u.hostname === "cdnjs.cloudflare.com" || (u.origin === location.origin && /\.(png|webmanifest)$/.test(u.pathname)))
+  if (u.hostname === "cdnjs.cloudflare.com" || (u.origin === location.origin && /\.(png|webmanifest|woff2)$/.test(u.pathname)))
     return e.respondWith(onbellekOnce(req, SURUM));
 });
 
