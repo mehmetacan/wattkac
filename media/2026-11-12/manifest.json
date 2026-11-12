@@ -1,0 +1,53 @@
+[
+ {
+  "id": "ozet_istasyonlar",
+  "tur": "ozet",
+  "baslik": "Şarj ağı kampanyaları özeti",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_liste.jpg"
+  ]
+ },
+ {
+  "id": "banka_ziraat",
+  "tur": "banka",
+  "baslik": "Ziraat Bankası",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_zes",
+  "tur": "istasyon",
+  "baslik": "ZES",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_otopriz",
+  "tur": "istasyon",
+  "baslik": "Otopriz",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "3_liste1.jpg",
+   "3_liste2.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_ovolt",
+  "tur": "istasyon",
+  "baslik": "Ovolt",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ }
+]

@@ -18,10 +18,10 @@
    "media/2026-11-11-ovolt/istasyon_ovolt/2_detay.jpg"
   ],
   "aciklama": "⚡ Ovolt: %12 indirim!\n\n✅ %12 indirim: Ovolt istasyonlarında · 12–22 Kasım arası 11 gün (son gün 22 Kasım)\n\nKart kampanyalarının tamamı ve geçerli istasyonlar banka postlarımızda.\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #ovolt",
-  "durum": "bekliyor",
+  "durum": "iptal",
   "deneme": 0,
   "ig_media_id": null,
-  "hata": null
+  "hata": "2026-11-12 taramasında kampanya içeriği değişti (yeni kampanyalar eklendi); yerine 2026-11-12 etiketli yeni post kuyruğa alındı."
  },
  {
   "id": "istasyon_ovolt_hikaye",
@@ -34,9 +34,9 @@
    "media/2026-11-11-ovolt/istasyon_ovolt/hikaye.jpg"
   ],
   "aciklama": "",
-  "durum": "bekliyor",
+  "durum": "iptal",
   "deneme": 0,
   "ig_media_id": null,
-  "hata": null
+  "hata": "2026-11-12 taramasında kampanya içeriği değişti (yeni kampanyalar eklendi); yerine 2026-11-12 etiketli yeni post kuyruğa alındı."
  }
 ]
