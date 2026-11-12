@@ -201,9 +201,10 @@
    "media/2026-11-11/istasyon_wat/hikaye.jpg"
   ],
   "aciklama": "",
-  "durum": "bekliyor",
+  "durum": "paylasildi",
   "deneme": 0,
-  "ig_media_id": null,
-  "hata": null
+  "ig_media_id": "18129875659864057",
+  "hata": null,
+  "paylasim_zamani": "2026-11-12T16:50:30+00:00"
  }
 ]
