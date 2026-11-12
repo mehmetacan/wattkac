@@ -50,19 +50,22 @@ AG_ANAHTAR = {"Eşarj": "esarj", "ASTOR Şarj": "astor", "Trugo": "trugo", "ZES"
 
 CSS = """@font-face{font-family:"Plus Jakarta Sans";font-style:normal;font-display:swap;font-weight:200 800;src:url(/fonts/plus-jakarta-sans-latin-ext-wght-normal.woff2) format("woff2-variations");unicode-range:U+0100-02BA,U+1E00-1E9F,U+20A0-20C0}
 @font-face{font-family:"Plus Jakarta Sans";font-style:normal;font-display:swap;font-weight:200 800;src:url(/fonts/plus-jakarta-sans-latin-wght-normal.woff2) format("woff2-variations");unicode-range:U+0000-00FF,U+0131,U+2000-206F,U+20AC}
-*{box-sizing:border-box;margin:0;padding:0}body{background:#F8FAFC;color:#0F172A;font:16px/1.6 "Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,sans-serif;-webkit-font-smoothing:antialiased}
-a{color:#0E7490}.w{max-width:760px;margin:0 auto;padding:0 16px 48px}
-header{display:flex;align-items:center;gap:10px;padding:14px 0}header a.logo{display:flex;align-items:center;gap:6px;text-decoration:none;color:#111827;font-weight:900;font-size:20px;letter-spacing:-.3px}
-header a.logo b{color:#E0A100}header .sp{flex:1}header a.cta{background:#0E7490;color:#fff;text-decoration:none;font-weight:800;border-radius:999px;padding:8px 14px;font-size:14px}
-nav.bc{font-size:13px;color:#6B7280;margin:4px 0 10px}nav.bc a{color:#6B7280}
+/* Ana uygulamayla (site/index.html) aynı koyu lacivert tema; renkler belirteçten okunur (bkz. TASARIM.md) */
+:root{color-scheme:dark;--bg:#0A1020;--card:#111A2E;--card2:#1A2640;--line:#263556;--line2:#5B72A0;--txt:#F4F6FB;--txt2:#D5DCEB;--mut:#9FB0D0;--pri:#22D3EE;--on-pri:#06202A;--g:#34D399;--brand-y:#FFC800}
+*{box-sizing:border-box;margin:0;padding:0}body{background:var(--bg);color:var(--txt);font:16px/1.6 "Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--pri)}.w{max-width:760px;margin:0 auto;padding:0 16px 48px}
+header{display:flex;align-items:center;gap:10px;padding:14px 0}header a.logo{display:flex;align-items:center;gap:6px;text-decoration:none;color:var(--txt);font-weight:900;font-size:20px;letter-spacing:-.3px}
+header a.logo b{color:var(--brand-y)}header .sp{flex:1}header a.cta{background:var(--pri);color:var(--on-pri);text-decoration:none;font-weight:800;border-radius:999px;padding:8px 14px;font-size:14px}
+nav.bc{font-size:13px;color:var(--mut);margin:4px 0 10px}nav.bc a{color:var(--mut)}
 h1{font-size:28px;line-height:1.2;letter-spacing:-.5px;margin:6px 0 8px}h2{font-size:19px;margin:26px 0 10px;letter-spacing:-.2px}
-p.lead{color:#4B5563;margin-bottom:14px}.card{background:#fff;border:1px solid #E5E7EB;border-radius:14px;padding:14px 16px;margin-bottom:10px}
-.card h3{font-size:16px;margin-bottom:2px}.big{font-weight:800;color:#047857}.mut{color:#6B7280;font-size:14px}
-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #E5E7EB;border-radius:14px;overflow:hidden}
-th,td{padding:10px 12px;border-bottom:1px solid #F3F4F6;text-align:left}th{font-size:13px;color:#6B7280;font-weight:700}td.n{font-weight:800;white-space:nowrap}
-ul.ag{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}ul.ag a{display:block;background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:10px 12px;text-decoration:none;color:#111827;font-weight:700}
-ul.ag small{display:block;color:#6B7280;font-weight:500}footer{margin-top:28px;font-size:13px;color:#6B7280}
-.btn{display:inline-block;background:#111827;color:#fff;text-decoration:none;font-weight:800;border-radius:12px;padding:11px 16px;margin:6px 6px 0 0}"""
+p.lead{color:var(--txt2);margin-bottom:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px}
+.card h3{font-size:16px;margin-bottom:2px}.big{font-weight:800;color:var(--g)}.mut{color:var(--mut);font-size:14px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left}th{font-size:13px;color:var(--mut);font-weight:700}td.n{font-weight:800;white-space:nowrap}
+ul.ag{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}ul.ag a{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;text-decoration:none;color:var(--txt);font-weight:700}
+ul.ag small{display:block;color:var(--mut);font-weight:500}footer{margin-top:28px;font-size:13px;color:var(--mut)}
+.btn{display:inline-block;background:var(--pri);color:var(--on-pri);text-decoration:none;font-weight:800;border-radius:12px;padding:11px 16px;margin:6px 6px 0 0}
+.btn.ikincil{background:var(--card2);color:var(--txt);border:1px solid var(--line2)}"""
 
 BEACON = """<script>(function(){try{var r=document.referrer?new URL(document.referrer).hostname:"",ua=navigator.userAgent,k=/Instagram/i.test(ua)||/instagram/.test(r)?"instagram":/google\\./.test(r)?"google":/bing\\.|yandex\\.|duckduckgo/.test(r)?"diğer arama":!r||r===location.hostname?"doğrudan":r.replace(/^www\\./,"");
 var b=JSON.stringify({e:[["seo_sayfa",location.pathname,1],["kaynak",k,1]]});if(location.protocol==="https:")navigator.sendBeacon?navigator.sendBeacon("/api/olay",b):fetch("/api/olay",{method:"POST",body:b,keepalive:true});}catch(x){}})();</script>"""
@@ -80,7 +83,7 @@ def sayfa(yol, baslik, aciklama, govde, jsonld=None, bc=None):
 <meta property="og:type" content="website"><meta property="og:site_name" content="WattKaç"><meta property="og:title" content="{e(baslik)}">
 <meta property="og:description" content="{e(aciklama)}"><meta property="og:url" content="{e(url)}"><meta property="og:image" content="{ALAN}/og.png">
 <meta property="og:locale" content="tr_TR"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="/icons/favicon-32.png" sizes="32x32">
-<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"><meta name="theme-color" content="#ffffff"><style>{CSS}</style>{ld}</head>
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"><meta name="theme-color" content="#0A1020"><style>{CSS}</style>{ld}</head>
 <body><div class="w"><header><a class="logo" href="/"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M13.5 2 4 13.5h6.2L9.5 22 20 9.8h-6.4z" fill="#FFC800" stroke="#E0A100" stroke-width="1" stroke-linejoin="round"/></svg><span>Watt<b>Kaç</b></span></a>
 <span class="sp"></span><a class="cta" href="/">Haritayı aç</a></header>{bct}{govde}
 <footer>Bilgiler bankaların ve şarj ağlarının resmi sayfalarından derlenir; koşullar değişebilir, katılmadan önce resmi sayfadan kontrol edin.
@@ -184,7 +187,7 @@ def main():
                     f". {ag} istasyonlarında geçerli {len(own) + len(bank)} kampanya" + (f", Türkiye'de {n} istasyon" if n else "") + ". Resmi kaynaklardan, her gün güncellenir.")
         govde = (f"<h1>{e(ag)} şarj fiyatı ve kampanyaları</h1><p class='lead'>{e(donem)} itibarıyla {e(ag)} istasyonlarında kWh fiyatı ve kredi kartıyla "
                  f"kazanabileceğin indirimler." + (f" Haritamızda {n} {e(ag)} istasyonu var." if n else "") + "</p>"
-                 f'<a class="btn" href="/">Yakınımdaki istasyonları gör</a><a class="btn" style="background:#fff;color:#111827;border:1px solid #E5E7EB" href="/#g=kamp&amp;ag={e(ag)}">Kampanyaları uygulamada aç</a>'
+                 f'<a class="btn" href="/">Yakınımdaki istasyonları gör</a><a class="btn ikincil" href="/#g=kamp&amp;ag={e(ag)}">Kampanyaları uygulamada aç</a>'
                  + fiyat_html + kamp_html + f'<p class="mut" style="margin-top:14px">Son güncelleme: {tarih(guncel)}</p>')
         ld = [{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "WattKaç", "item": ALAN + "/"},
