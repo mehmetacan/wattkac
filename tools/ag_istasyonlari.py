@@ -23,6 +23,10 @@ Kaynaklar (her biri ağın kendi sitesindeki haritanın kullandığı adres):
   Acropol Şarj https://ipi8yuvwgw.eu-central-1.awsapprunner.com/api/getAllAndFilteredStations  (acropolsarj.com/evsarjharitasi.aspx)
                Tek istekte tüm istasyonlar, üniteler ve soketler (giriş/anahtar yok). Yalnızca yayında ve herkese açık
                istasyonlar; konut sitesi / test istasyonları atlanır. Soket kimlikleri anlık durum için "cih"te tutulur.
+  K-Şarj       https://www.google.com/maps/d/kml?mid=…&forcekml=1      (ksarj.com/sarj-istasyonlarimiz; sayfadaki Google My Maps
+               haritasının KML dışa aktarımı). Yalnızca ad + konum var ve liste EPDK kaydından çok daha az istasyon içeriyor:
+               bu liste istasyonların yerine geçmez, yalnızca EPDK "K-ŞARJ" kayıtlarını doğrulamak için kullanılır
+               (istasyon_birlestir.py DOGRULA). Her kayıtta eşleşen EPDK numarası "e"de tutulur.
   (ASTOR Şarj'ın haritası map-api.echargo.com kullanıyor ama sunucudan yapılan istekleri reddediyor (HTTP 404);
    erişim kısıtını aşmaya çalışmıyoruz, ASTOR istasyonları EPDK + OSM'den gelir.)
 
@@ -31,7 +35,7 @@ Bir ağın çekimi başarısız olursa o ağın önceki dosyası korunur.
 Yalnızca bazı ağları çekmek için adlarını verin: python3 tools/ag_istasyonlari.py voltup
 Kayıt alanları istasyon_cek.py ile aynıdır (i, a, o, n, b, k, t, ac, dc, c, ad) + pr (soket fiyatları, varsa).
 """
-import html, json, math, pathlib, re, sys, urllib.request, datetime
+import html, json, math, pathlib, re, sys, urllib.request, datetime, zlib
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from html.parser import HTMLParser
@@ -923,6 +927,106 @@ def acropol():
         print(f"acropol: resmi listede 300 m içinde karşılığı olmayan EPDK kayıtları gösterilmiyor ({len(yok)})" + (f": {'; '.join(yok)}" if yok else ""))
     return out
 
+
+# K-Şarj (Kayseri; işletmeci Hunat Enerji): ksarj.com/sarj-istasyonlarimiz sayfasında gömülü bir Google My Maps haritası var. Haritanın
+# KML dışa aktarımı yalnızca istasyon adı ve konumu veriyor (soket, güç, adres yok; konum 4 basamak) ve EPDK kaydındaki K-ŞARJ
+# istasyonlarının yarısından azını içeriyor (sayfa 2024'ten beri güncellenmemiş). Bu yüzden liste istasyonların yerine geçmez:
+# istasyon_birlestir.py (DOGRULA) EPDK kayıtlarını tutar, bu listede karşılığı olanları "rl" ile işaretler. Eşleştirme burada
+# yapılır ve EPDK numarası "e"ye yazılır: önce 60 m içindeki en yakın kayıt (eşit uzaklıkta adı daha çok örtüşen), sonra kalanlar
+# adla (en az iki ortak ayırt edici sözcük, sayılar aynı, 20 km içinde). Resmi haritada aynı koordinata iki ayrı istasyon girilmiş
+# olabiliyor (görüldü): adla eşleşen kaydın konumu EPDK'dan farklıysa raporlanır, konum her durumda EPDK'dan gelir.
+KSARJ_SAYFA = "https://ksarj.com/sarj-istasyonlarimiz/"
+KSARJ_KML = "https://www.google.com/maps/d/kml?mid={}&forcekml=1"
+KSARJ_HARIC = [(r"\bsite(si|leri)?\b|\bkonak(lari)?\b|\bkonut(lari)?\b|\bevleri\b|\bapartman|\blojman", "konut/site"),
+               (r"\btest\b|\bdeneme\b", "test istasyonu"), (r"\bpersonel\b|\bozel\b|\bkapali\b|\bpasif\b", "özel/kapalı")]
+KSARJ_EPDK = r"\bk-sarj\b|\bhunat enerji"
+KSARJ_YAKIN_KM = 0.06
+KSARJ_AD_KM = 20
+_KSARJ_GENEL = {"mahal", "mah", "mh", "cadde", "cad", "cd", "sokak", "sok", "sk", "bulva", "blv", "bulv", "kayse", "onu", "yani",
+                "karsi", "arkas", "uzeri", "istik", "otopa", "parki", "park"}
+
+
+def _ksarj_kok(s):
+    return {w[:5] for w in _tok(s) if not w.isdigit() and len(w) > 1} - _KSARJ_GENEL
+
+
+def _ksarj_sayi(s):
+    return set(re.findall(r"\d+", s or ""))
+
+
+def ksarj():
+    import konum_denetim as kd
+    from xml.etree import ElementTree as ET
+    sayfa = get(KSARJ_SAYFA)
+    m = re.search(r"google\.com/maps/d/(?:u/\d+/)?(?:embed|viewer)\?mid=([\w-]+)", sayfa)
+    if not m:
+        raise RuntimeError("sayfada Google My Maps haritası bulunamadı")
+    kok = ET.fromstring(get(KSARJ_KML.format(m.group(1))).encode())
+    ns = {"k": "http://www.opengis.net/kml/2.2"}
+    liste, haric, disari = [], [], []
+    for pm in kok.iterfind(".//k:Placemark", ns):
+        ad_ham = " ".join((pm.findtext("k:name", "", ns) or "").split())
+        try:
+            o, a = (float(x) for x in (pm.findtext(".//k:Point/k:coordinates", "", ns) or "").strip().split(",")[:2])
+        except ValueError:
+            a = o = 0.0
+        neden = next((n for rx, n in KSARJ_HARIC if re.search(rx, _big_duz(ad_ham + " " + (pm.findtext("k:description", "", ns) or "")))), None)
+        if neden:
+            haric.append(f"{ad_ham} ({neden})"); continue
+        if not (kd.in_turkey(a, o) or kd.sinira_km(a, o) <= kd.KIYI_KM):
+            disari.append(f"{ad_ham} ({a}, {o})"); continue
+        liste.append({"ad": ad_ham, "a": a, "o": o})
+    if not liste:
+        raise RuntimeError("KML'de istasyon yok")
+    epdk = [x for x in json.loads(EPDK_API.read_text(encoding="utf-8")).get("istasyonlar", [])
+            if re.search(KSARJ_EPDK, kd.fold(x.get("marka", "") + " " + x.get("isletmeci", ""))) and ok_coord(x.get("a"), x.get("o"))] \
+        if EPDK_API.exists() else []
+    es, kullanilan, uzak = {}, set(), []
+    # 1) konum: 60 m içinde en yakın kayıt, eşit uzaklıkta (10 m'ye yuvarlanmış) adı daha çok örtüşen önce
+    ciftler = sorted((round(_km(r["a"], r["o"], x["a"], x["o"]) * 100), -len(_ksarj_kok(r["ad"]) & _ksarj_kok(x.get("ad", ""))), i, j)
+                     for i, r in enumerate(liste) for j, x in enumerate(epdk) if _km(r["a"], r["o"], x["a"], x["o"]) <= KSARJ_YAKIN_KM)
+    for _, _, i, j in ciftler:
+        if i not in es and j not in kullanilan:
+            es[i] = j; kullanilan.add(j)
+    # 2) ad: kalanlar en az iki ortak ayırt edici sözcük ve aynı sayılarla (ör. "Otopark 1" ≠ "Otopark 8"), 20 km içinde
+    ciftler = []
+    for i, r in enumerate(liste):
+        if i in es:
+            continue
+        for j, x in enumerate(epdk):
+            ortak = _ksarj_kok(r["ad"]) & _ksarj_kok(x.get("ad", ""))
+            if j in kullanilan or len(ortak) < 2 or _ksarj_sayi(r["ad"]) != _ksarj_sayi(x.get("ad", "")):
+                continue
+            d = _km(r["a"], r["o"], x["a"], x["o"])
+            if d <= KSARJ_AD_KM:
+                ciftler.append((-len(ortak), d, i, j))
+    for _, d, i, j in sorted(ciftler):
+        if i not in es and j not in kullanilan:
+            es[i] = j; kullanilan.add(j)
+            uzak.append(f"{liste[i]['ad']} → {epdk[j]['no']} {epdk[j].get('ad', '')} ({d:.1f} km)")
+    out = []
+    for i, r in enumerate(liste):
+        ad = " ".join(_tr_baslik(w) for w in r["ad"].split()) if r["ad"] == r["ad"].upper() else r["ad"]
+        rec = {"i": "ksarj%08x" % (zlib.crc32(_big_duz(r["ad"]).encode()) & 0xFFFFFFFF), "a": round(r["a"], 6), "o": round(r["o"], 6),
+               "n": ad, "b": "K-Şarj"}
+        if i in es:
+            rec["e"] = epdk[es[i]]["no"]
+        out.append(rec)
+    if len({r["i"] for r in out}) != len(out):
+        raise RuntimeError("aynı adlı iki istasyon (kimlik çakışması)")
+    print(f"ksarj: resmi haritada {len(liste) + len(haric) + len(disari)} istasyon → {len(out)}; atlanan {len(haric)}" + (": " + "; ".join(haric) if haric else ""))
+    if disari:
+        print(f"ksarj: Türkiye dışı/konumsuz {len(disari)}: " + "; ".join(disari))
+    print(f"ksarj: EPDK K-ŞARJ kaydı {len(epdk)}; resmi haritayla eşleşen {len(es)} (konumla {len(es) - len(uzak)}, adla {len(uzak)})")
+    if uzak:
+        print("ksarj: adla eşleşen, resmi haritadaki konumu EPDK'dan farklı: " + "; ".join(uzak))
+    yok = [r["ad"] for i, r in enumerate(liste) if i not in es]
+    if yok:
+        print(f"ksarj: resmi haritada olup EPDK'da karşılığı bulunamayan ({len(yok)}; haritaya eklenmez): " + "; ".join(yok))
+    print(f"ksarj: resmi haritada olmayan EPDK kayıtları ({len(epdk) - len(kullanilan)}) EPDK kaydıyla gösterilmeye devam eder")
+    return out
+
+
 SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            "zes": (zes, "https://zes.net/tr/sarj-istasyonlari", 500),
            "ovolt": (ovolt, "https://ovolt.com.tr/istasyon-haritasi", 50),
@@ -931,7 +1035,8 @@ SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            "rst": (rst, "https://rstchargepoint.com/#fiyatlar", 30),
            "bigstation": (bigstation, BIG_SAYFA, 15),
            "cv": (cv, CV_SAYFA, 50),
-           "acropol": (acropol, ACROPOL_SAYFA, 15)}
+           "acropol": (acropol, ACROPOL_SAYFA, 15),
+           "ksarj": (ksarj, KSARJ_SAYFA, 30)}
 
 
 def main():

@@ -27,7 +27,7 @@ ve her gün 09:10'da çalıştırır.
 `.github/workflows/istasyonlar.yml` her gün 05:17'de şu kaynakları çekip `tools/istasyon_birlestir.py` ile `site/istasyonlar.json` üretir:
 - **EPDK açık servisi** (`tools/epdk_cek.py` → `data/epdk/epdk_api.json`): lisanslı tüm halka açık istasyonlar; kesin koordinat,
   soket türü ve gücü. Günde tek istek atılır (servisin kotası dar). Fiyat ve anlık durum içermez.
-- **Ağların resmi haritaları** (`tools/ag_istasyonlari.py`): ZES, Trugo, Ovolt, WAT, VoltUp, RST Charge Point, BIG Station, CV Charging, Acropol Şarj. Bu ağlarda resmi liste kullanılır; eksik güç/soket
+- **Ağların resmi haritaları** (`tools/ag_istasyonlari.py`): ZES, Trugo, Ovolt, WAT, VoltUp, RST Charge Point, BIG Station, CV Charging, Acropol Şarj (K-Şarj'ın listesi yalnızca doğrulama için). Bu ağlarda resmi liste kullanılır; eksik güç/soket
   bilgisi EPDK kaydından tamamlanır.
 - **VoltUp** (`tools/voltup_fiyat.mjs` → `data/aglar/voltup_fiyat.json`, ardından `ag_istasyonlari.py voltup` → `data/aglar/voltup.json`):
   voltup.com.tr'deki istasyon bazlı fiyat listesi (aktif lokasyonlar, AC/DC fiyatı). Liste bir Blazor sayfası olduğundan Node + Playwright
@@ -55,6 +55,12 @@ ve her gün 09:10'da çalıştırır.
   kayıtları gösterilmez. Fiyat tek tarife (`tarifeler.json`, acropolsarj.com ana sayfasındaki tablo). **Anlık durum:** detay açılınca
   `GET /api/durum/acropol?c=59,60`; worker aynı listeyi tek istekle okur, her soketi hemen `bos` (Available) / `sarj` (Preparing,
   Charging, SuspendedEV/EVSE, Finishing) / `bilinmiyor` (Closed, Faulted vb.) durumuna indirger ve 60 sn önbellekte tutar.
+- **K-Şarj** (Kayseri; işletmeci Hunat Enerji; `ag_istasyonlari.py ksarj` → `data/aglar/ksarj.json`): yalnızca **doğrulama** listesi.
+  ksarj.com/sarj-istasyonlarimiz sayfasındaki Google My Maps haritasının KML dışa aktarımı yalnızca ad + konum veriyor ve EPDK'daki
+  K-ŞARJ istasyonlarının yarısından azını içeriyor. Bu yüzden istasyonlar EPDK kaydından gösterilir (`istasyon_birlestir.py` `DOGRULA`);
+  listede karşılığı olan EPDK kaydı (eşleşme konumla 60 m, olmazsa adla; EPDK numarası listede `e`) `rl: 1` alır ve detayda
+  "K-Şarj'ın kendi haritasında da yer alıyor" yazar. Listede olup EPDK'da olmayan nokta eklenmez, raporlanır. Fiyat tek tarife
+  (`tarifeler.json`, ksarj.com/fiyatlandirma).
 - **OpenStreetMap ve Open Charge Map**: yalnızca EPDK'da karşılığı olmayan istasyonlar eklenir; EPDK kayıtlarına saat/web bilgisi katar.
 
 EPDK servisinden hiç veri alınamadıysa eski yönteme (CSV listesi + adresten konum arama) düşülür.

@@ -11,7 +11,8 @@ Konum denetimi: birleştirmeden önce her kaynaktaki her kayıt tools/konum_dene
 il/ilçe ile tutarlılık, yer değiştirmiş enlem/boylam, tek basamak hatası, başka kaynaktaki aynı istasyon). Düzeltilen ve
 çıkarılan kayıtlar data/epdk/konum_duzeltmeleri.json'a yazılır.
 Kayıt alanları: i=kimlik, e=EPDK no, a/o=enlem/boylam, q=konum kalitesi (e EPDK kaydındaki resmi koordinat, p adresteki tesisin OSM konumu, r resmi ağ haritası, o OSM, c Open Charge Map, a adres, m mahalle, i ilçe),
-                n=ad, b=marka, p=işletmeci (isletmeciler tablosuna indeks ya da OSM'de metin), k=kW, t=soketler, ac/dc, c=adet, ad=adres, h=saat, u=web
+                n=ad, b=marka, p=işletmeci (isletmeciler tablosuna indeks ya da OSM'de metin), k=kW, t=soketler, ac/dc, c=adet, ad=adres, h=saat, u=web,
+                rl=1 EPDK kaydı ağın kendi (eksik) haritasında da var (DOGRULA)
 """
 import csv, json, math, pathlib, re, sys, datetime
 
@@ -37,6 +38,11 @@ RESMI = {"trugo": r"trugo", "zes": r"\bzes\b", "ovolt": r"ovolt|sharz", "wat": r
 # Bu ağların EPDK kayıtları yalnızca resmi listede RESMI_YAKIN_M içinde karşılığı varsa atlanır; karşılığı olmayanlar (listede konumu
 # girilmemiş cihazlar) EPDK kaydıyla gösterilmeye devam eder.
 EKSIK_TUT = {"bigstation"}
+# Resmi listesi eksik ya da yalnızca ad + konumdan oluşan ağlar: liste istasyonların yerine geçmez, EPDK kayıtları gösterilmeye devam
+# eder. Listede karşılığı olan EPDK kaydı (eşleştirme ag_istasyonlari.py'de yapılır, EPDK numarası listede "e") "rl" ile işaretlenir.
+# K-Şarj: ksarj.com'daki Google My Maps haritası EPDK "K-ŞARJ" (işletmeci HUNAT ENERJİ…) kayıtlarının yarısından azını içeriyor,
+# soket/güç/adres yok. OSM ve OCM'de K-Şarj kaydı yok.
+DOGRULA = {"ksarj": r"\bk-sarj\b|\bhunat enerji"}
 RESMI_YAKIN_M = 300
 SECILI = pathlib.Path("data/secili_istasyonlar.json")  # yalnızca seçili istasyonlarda geçerli ağ kampanyaları
 SECILI_AG = {"otopriz": r"otopriz|dicle kok"}
@@ -92,6 +98,13 @@ def main():
             kaynaklar[d["ag"]] = {"sayfa": d.get("kaynak"), "cekildi": d.get("cekildi"), "sayi": len(d["istasyonlar"])}
             for r in d["istasyonlar"]:
                 r = dict(r); r["q"] = "r"; resmi.append(r); resmi_ag.setdefault(d["ag"], []).append(r)
+    dogrulanan, dogrula_say = {}, {}
+    for ag in DOGRULA:
+        f = AGLAR / f"{ag}.json"
+        d = json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
+        if d.get("istasyonlar"):
+            dogrulanan[ag] = {r["e"] for r in d["istasyonlar"] if r.get("e")}
+            dogrula_say[ag] = [len(d["istasyonlar"]), 0, 0]  # resmi liste, işaretlenen EPDK kaydı, listede olmayan EPDK kaydı
     covered = re.compile("|".join(RESMI[k] for k in kaynaklar)) if kaynaklar else None
     is_covered = lambda *names: bool(covered and covered.search(fold(" ".join(x for x in names if x))))
 
@@ -144,6 +157,11 @@ def main():
                 epdk_resmi.append(x)
             continue  # bu ağın resmi listesi var
         rec = {"i": "e" + re.sub(r"\D", "", no), "e": no, "n": ad, "b": marka, "p": op(isletmeci), "ad": adres}
+        dag = next((k for k in dogrulanan if re.search(DOGRULA[k], fold(marka + " " + isletmeci))), None)
+        if dag:
+            dogrula_say[dag][1 if no in dogrulanan[dag] else 2] += 1
+            if no in dogrulanan[dag]:
+                rec["rl"] = 1  # ağın kendi haritasında da var
         if konum:
             rec["a"], rec["o"], rec["q"] = konum[0], konum[1], kalite
         elif no in poi:
@@ -156,6 +174,8 @@ def main():
         ana = groups.get(g)
         if ana is not None and (not konum or dist(ana["a"], ana["o"], konum[0], konum[1]) < 150):
             birlesen += 1
+            if rec.get("rl"):
+                ana["rl"] = 1
             if soketler:
                 soket_ekle(ana, soketler)
             else:
@@ -325,6 +345,8 @@ def main():
     print(konum_denetim.ozet_satiri(rapor) + f" (EPDK'dan çıkarılan {konum_cikan}; ayrıntı: {konum_denetim.RAPOR})")
     if resmi_disi:
         print(f"resmi listede karşılığı olmayan, EPDK kaydıyla gösterilen ({len(resmi_disi)}): " + "; ".join(resmi_disi))
+    for ag, (n, var, yok) in dogrula_say.items():
+        print(f"{ag}: resmi liste {n} istasyon (yalnızca doğrulama); EPDK kaydı listede var {var}, listede yok {yok} (ikisi de gösterilir)")
     print("seçili kampanya eşleşmeleri:", sk_hits)
     print("saatli tarife eşleşmeleri:", tz_hits)
     ozet = ", ".join("%s %d" % (k, v["sayi"]) for k, v in kaynaklar.items())
