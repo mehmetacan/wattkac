@@ -1,5 +1,5 @@
 {
- "_not": "Günlük kampanya taramasının izlediği kaynaklar. 'sosyal': takip edilecek resmi sosyal medya hesapları (kurumun KENDİ hesabı; kampanya duyurusu burada görülürse resmi sayfada doğrulanıp eklenir). 'kesif': yalnızca yeni kampanyayı fark etmek için bakılan, kaynak gösterilmeyen hesap ve siteler. 'resmi_alanlar': kurumların kampanya yayımladığı resmi alan adları (mevcut kampanya bağlantılarından). 'arastir': resmi kaynağı henüz doğrulanmamış, taramada özellikle bakılacak konular.",
+ "_not": "Günlük kampanya taramasının izlediği kaynaklar. 'sosyal': takip edilecek resmi sosyal medya hesapları (kurumun KENDİ hesabı; kampanya duyurusu burada görülürse resmi sayfada doğrulanıp eklenir). 'kesif': yalnızca yeni kampanyayı fark etmek için bakılan, kaynak gösterilmeyen hesap ve siteler. 'resmi_alanlar': kurumların kampanya yayımladığı resmi alan adları (mevcut kampanya bağlantılarından). 'arastir': resmi kaynağı henüz doğrulanmamış, taramada özellikle bakılacak konular. 'izinler': robots.txt'nin yasakladığı bir adresi kullanmak için kurumdan alınmış izinler (kim, ne zaman, hangi adres, nasıl kullanılıyor).",
  "sosyal": [],
  "kesif": [],
  "resmi_alanlar": [
@@ -98,5 +98,13 @@
  ],
  "arastir": [
   "Tesla Supercharger: Tesla sahiplerine ve diğer marka araçlara ayrı kWh fiyatı uygulanıyor. Tesla'nın resmi sayfasında doğrulanırsa: site/tarifeler.json'a 'Tesla' ağı (diğer araçlar için liste fiyatı) eklenir ve data/kampanyalar.json → istasyonlar'a Tesla için 'arac': ['Tesla'] alanlı kendi indirimi (own) yazılır; site bunu Tesla seçen kullanıcıya indirimli fiyat olarak gösterir."
+ ],
+ "izinler": [
+  {
+   "kurum": "EPSIS",
+   "tarih": "2026-11-14",
+   "adres": "https://www.epsis.net/api/public/locations?lang=tr",
+   "not": "EPSIS telefonda izin verdi (14 Kasım 2026): 'siteden alabilirsiniz, kaynaklarımız açık'. robots.txt /api/ yasağı bu izinle aşılıyor; yalnızca /api/public/locations kullanılır. Kullanım: istasyon listesi günde 1 istek (tools/ag_istasyonlari.py epsis), anlık durum Worker'da 60 sn önbellekli (/api/durum/epsis). /api/public/locations/soon ve başka /api/ yolu kullanılmaz."
+  }
  ]
 }
