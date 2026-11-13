@@ -27,7 +27,7 @@ ve her gün 09:10'da çalıştırır.
 `.github/workflows/istasyonlar.yml` her gün 05:17'de şu kaynakları çekip `tools/istasyon_birlestir.py` ile `site/istasyonlar.json` üretir:
 - **EPDK açık servisi** (`tools/epdk_cek.py` → `data/epdk/epdk_api.json`): lisanslı tüm halka açık istasyonlar; kesin koordinat,
   soket türü ve gücü. Günde tek istek atılır (servisin kotası dar). Fiyat ve anlık durum içermez.
-- **Ağların resmi haritaları** (`tools/ag_istasyonlari.py`): ZES, Trugo, Ovolt, WAT, VoltUp, RST Charge Point, BIG Station. Bu ağlarda resmi liste kullanılır; eksik güç/soket
+- **Ağların resmi haritaları** (`tools/ag_istasyonlari.py`): ZES, Trugo, Ovolt, WAT, VoltUp, RST Charge Point, BIG Station, CV Charging, Acropol Şarj. Bu ağlarda resmi liste kullanılır; eksik güç/soket
   bilgisi EPDK kaydından tamamlanır.
 - **VoltUp** (`tools/voltup_fiyat.mjs` → `data/aglar/voltup_fiyat.json`, ardından `ag_istasyonlari.py voltup` → `data/aglar/voltup.json`):
   voltup.com.tr'deki istasyon bazlı fiyat listesi (aktif lokasyonlar, AC/DC fiyatı). Liste bir Blazor sayfası olduğundan Node + Playwright
@@ -48,6 +48,13 @@ ve her gün 09:10'da çalıştırır.
   `GET /api/durum/bigstation?c=95,96` ister (yoklama yok, detay başına bir istek). Worker aynı servisin listesini okur, her cihazı hemen
   `bos` / `sarj` / `bilinmiyor` durumuna indirger (diğer alanlar saklanmaz) ve Cloudflare Cache API'de 60 sn tutar; böylece kullanıcı
   sayısından bağımsız olarak konum başına dakikada en çok bir yenileme (≈4 istek) yapılır. Bağlı olmayan (offline) cihazın durumu bilinmiyor sayılır.
+- **Acropol Şarj** (işletmeci Greenleaf Yenilenebilir Enerji; `ag_istasyonlari.py acropol` → `data/aglar/acropol.json`): ağın kendi
+  haritasının (acropolsarj.com/evsarjharitasi.aspx) kullandığı, giriş gerektirmeyen tek liste (`getAllAndFilteredStations`; tüm
+  istasyonlar, üniteler ve soketler tek istekte). Ad, konum, adres, soket türü/gücü ve soket kimlikleri (`cih`) tutulur; konut sitesi,
+  yayında olmayan ve test istasyonları atlanır, ev tipi priz (scooter çıkışı) soket sayılmaz. Resmi listede olmayan EPDK "ACROPOL"
+  kayıtları gösterilmez. Fiyat tek tarife (`tarifeler.json`, acropolsarj.com ana sayfasındaki tablo). **Anlık durum:** detay açılınca
+  `GET /api/durum/acropol?c=59,60`; worker aynı listeyi tek istekle okur, her soketi hemen `bos` (Available) / `sarj` (Preparing,
+  Charging, SuspendedEV/EVSE, Finishing) / `bilinmiyor` (Closed, Faulted vb.) durumuna indirger ve 60 sn önbellekte tutar.
 - **OpenStreetMap ve Open Charge Map**: yalnızca EPDK'da karşılığı olmayan istasyonlar eklenir; EPDK kayıtlarına saat/web bilgisi katar.
 
 EPDK servisinden hiç veri alınamadıysa eski yönteme (CSV listesi + adresten konum arama) düşülür.

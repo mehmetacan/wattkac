@@ -30,7 +30,10 @@ AGLAR = pathlib.Path("data/aglar")
 RESMI = {"trugo": r"trugo", "zes": r"\bzes\b", "ovolt": r"ovolt|sharz", "wat": r"wat mobilite|watmobilite|\bwat\b", "astor": r"astor", "voltup": r"\bvolt ?up\b",
          "rst": r"\brst\b ?(charge|sarj|teknoloji)",  # EPDK "Rst ChargePoint" / "RST TEKNOLOJİ…", OSM "RST Şarj İstasyonu", OCM "RST Charge Point"
          "bigstation": r"windmark|\bbig ?station\b|\bbsx enerji|\bx ?sarj\b",  # EPDK marka "windmark" / "BSX ENERJİ A.Ş."; OCM "Xşarj - …" (cihazların eski adı)
-         "cv": r"charging vehicles|\bcv charging\b|\bcw enerji"}  # EPDK marka "CHARGING VEHICLES CV" (işletmeci CW ENERJİ…); OCM "CV Charging Vehicles"
+         "cv": r"charging vehicles|\bcv charging\b|\bcw enerji",  # EPDK marka "CHARGING VEHICLES CV" (işletmeci CW ENERJİ…); OCM "CV Charging Vehicles"
+         # EPDK marka "ACROPOL" (işletmeci GREENLEAF YENİLENEBİLİR ENERJİ…); OSM operator "acropol"; OCM "Acropol - …". Resmi listede
+         # olmayan (konut sitesi, yayında olmayan) EPDK kayıtları gösterilmez: EKSIK_TUT'ta değil.
+         "acropol": r"\bacropol\b|\bgreenleaf yenilenebilir"}
 # Bu ağların EPDK kayıtları yalnızca resmi listede RESMI_YAKIN_M içinde karşılığı varsa atlanır; karşılığı olmayanlar (listede konumu
 # girilmemiş cihazlar) EPDK kaydıyla gösterilmeye devam eder.
 EKSIK_TUT = {"bigstation"}
