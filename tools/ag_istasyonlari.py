@@ -1059,7 +1059,7 @@ def ksarj():
 # Haritada gösterilmeyenler (ad üzerinden; MKS'de sokak adresi de): konut sitesi / rezidans / blok, test cihazı, sahada olmayan ya da
 # kurulmamış cihaz, askerî alan, şirket deposu / fabrika / merkez binası. Ayıklananlar her çekimde raporlanır.
 YENI_HARIC = [(r"(?<!sanayi )(?<!san )\bsite(si|leri)?\b|\bkonaklari\b|\bkonut(lari|lar)?\b|\bevleri\b|\bresid[ae]n|\brezidan"
-               r"|\bapartman|\blojman|\bvillalari\b", "konut/site"),
+               r"|\bapartman|\bapt\b|\blojman|\bvillalari\b", "konut/site"),
               (r"\bblok(lar)?\b", "konut/site"),
               (r"\btest|electroop ?test|\bdeneme\b", "test cihazı"),
               (r"\bsahada yok\b|\bepdk kisitli\b|\bmontaja hazir\b|\bkurulu degil\b|\bstokta\b", "sahada değil/kurulmamış"),
