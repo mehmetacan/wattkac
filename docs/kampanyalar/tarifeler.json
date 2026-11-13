@@ -507,6 +507,27 @@
     "RST"
    ],
    "not": "KDV dahil, tüm istasyonlarda tek fiyat. AC 22 kW'a kadar, DC 120 kW'a kadar şarj için."
+  },
+  "BIG Station": {
+   "ac": {
+    "min": 8.9,
+    "max": 11
+   },
+   "dc": {
+    "min": 12.5,
+    "max": 12.5
+   },
+   "kaynak": "https://bsx-reverse.ee-w.workers.dev/app",
+   "kontrol": "2026-11-13",
+   "gecerlilik": null,
+   "adlar": [
+    "windmark",
+    "Windmark",
+    "BIG Station",
+    "BigStation",
+    "BSX Enerji"
+   ],
+   "not": "Fiyat istasyona göre değişiyor; istasyon bazlı fiyat BIG Station sisteminden günlük alınır (eski adı Windmark)."
   }
  }
 }
