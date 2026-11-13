@@ -15,15 +15,20 @@ Kaynaklar (her biri ağın kendi sitesindeki haritanın kullandığı adres):
   RST Charge Point https://rstchargepoint.com/#fiyatlar               (ana sayfadaki haritanın kendi içindeki istasyon dizisi)
                Soketler EPDK kaydından (konuma, ad ve ilçeye göre birebir eşleşme); listedeki "durum" alanı ağın elle
                güncellediği bir alandır (arizali → pasif, bakimda → bakim), canlı durum değildir.
+  BIG Station  https://bsx-reverse.ee-w.workers.dev/api/stations       (eski adı Windmark, işletmeci BSX Enerji)
+               Big Station'ın kendi sistemini okuyan, giriş gerektirmeyen üçüncü taraf salt okunur servis. Yalnızca
+               GET /api/stations; yalnızca halka açık cihazlar ve kişisel olmayan alanlar tutulur.
   (ASTOR Şarj'ın haritası map-api.echargo.com kullanıyor ama sunucudan yapılan istekleri reddediyor (HTTP 404);
    erişim kısıtını aşmaya çalışmıyoruz, ASTOR istasyonları EPDK + OSM'den gelir.)
 
-Kurallar: günde bir kez, her kaynağa tek istek; anahtar/oturum gerektiren kaynaklar KULLANILMAZ.
+Kurallar: günde bir kez, her kaynağa tek istek (BIG Station: 100'erlik sayfalar, aralarında 1 sn); anahtar/oturum gerektiren kaynaklar KULLANILMAZ.
 Bir ağın çekimi başarısız olursa o ağın önceki dosyası korunur.
 Yalnızca bazı ağları çekmek için adlarını verin: python3 tools/ag_istasyonlari.py voltup
 Kayıt alanları istasyon_cek.py ile aynıdır (i, a, o, n, b, k, t, ac, dc, c, ad) + pr (soket fiyatları, varsa).
 """
 import html, json, math, pathlib, re, sys, urllib.request, datetime
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from html.parser import HTMLParser
 
 OUT = pathlib.Path("data/aglar")
@@ -482,12 +487,253 @@ def rst():
     return out
 
 
+# BIG Station (eski adı Windmark; işletmeci BSX Enerji A.Ş.): Big Station'ın kendi sistemini okuyan, giriş gerektirmeyen üçüncü taraf
+# salt okunur servis. YALNIZCA GET /api/stations kullanılır (giriş, şarj, izleme vb. hiçbir başka adres çağrılmaz). Yanıttaki kayıtlar
+# okunur okunmaz BIG_ALAN alanlarına indirgenir: cihaz kimliği, anlık oturum/ölçüm ve kullanıcı (ad, plaka) bilgileri diske de loga da
+# yazılmaz. Yalnızca halka açık (usageType "public") cihazlar; konut sitesi / şirket içi / test cihazları adlarından ayıklanır.
+# Aynı yerdeki cihazlar (aynı temel ad ya da ortak ayırt edici sözcük, BIG_GRUP_M içinde) tek istasyonda toplanır.
+BIG_URL = "https://bsx-reverse.ee-w.workers.dev/api/stations?offset={}&limit=100"
+BIG_SAYFA = "https://bsx-reverse.ee-w.workers.dev/app"
+BIG_ALAN = ("id", "name", "code", "city", "latitude", "longitude", "deviceType", "isDc", "usageType", "powerKw", "pricePerKwh")
+BIG_EN_AZ = 100      # bundan az halka açık cihaz gelirse yanıt eksik sayılır, önceki dosya korunur
+BIG_GRUP_M = 60      # ortak ayırt edici sözcüklü cihazlar bu uzaklıkta tek istasyon
+BIG_AYNI_AD_M = 150  # aynı adlı cihazlar bu uzaklıkta tek istasyon
+BIG_AYNI_YER_M = 25  # adı ne olursa olsun bu kadar yakın cihazlar aynı yerdedir (ör. "SDÜ Batı" adlı DC ünitesi Doğu otoparkında)
+BIG_EPDK_M = 300     # EPDK windmark kaydının karşılığı sayılma uzaklığı (istasyon_birlestir.py ile aynı)
+# Halka açık işaretli olsa da haritada gösterilmeyenler (ad ya da şehir alanında): konut sitesi/rezidans/villa, şirket ofisi, test,
+# kurulmamış ya da stoktaki cihaz. "Kurt Safir": aynı adlı konut sitesi ("Kurt Safir Avsallar Sitesi").
+BIG_HARIC = [(r"\bsitesi\b|\bkonaklar|\bkonutlar|\bevleri\b|\brezidan|\bresiden|\bmy world\b|\bvilla\b|\bapartman|\bkurt safir\b", "konut/site"),
+             (r"\bpersonel\b|\bofis\b", "şirket içi/ofis"),
+             (r"\btest|\btesttt\b", "test cihazı"),
+             (r"\bkurulu degil\b|\bstokta\b", "kurulu değil/stokta")]
+_BIG_AD = {"sdu": "SDÜ", "maku": "MAKÜ", "aosb": "AOSB", "incekum": "İncekum", "bati": "Batı", "dogu": "Doğu", "the": "The"}
+_BIG_GENEL = {"hotel", "otel", "resort", "beach", "palace", "club", "hotels", "otopark", "the", "isparta", "denizli", "antalya", "burdur", "sdu"}
+
+
+def _big_cek():
+    """Sayfa sayfa (100'er, aralarında 1 sn) çeker; her kaydı hemen BIG_ALAN alanlarına indirger; kimliğe göre tekilleştirir
+    (servisin sayfalaması sabit sıralı değil, aynı cihaz iki sayfada gelebiliyor: uygulamanın kendisi de böyle tekilleştiriyor)."""
+    import time
+    tum, gorulen, tekrar = [], set(), 0
+    for sayfa in range(20):
+        if sayfa:
+            time.sleep(1)
+        liste = json.loads(get(BIG_URL.format(sayfa * 100))).get("stations")
+        if not isinstance(liste, list):
+            raise RuntimeError("yanıtta 'stations' listesi yok")
+        for s in liste:
+            s = {k: s.get(k) for k in BIG_ALAN} if isinstance(s, dict) else {}
+            if s.get("id") is None:
+                continue
+            if str(s["id"]) in gorulen:
+                tekrar += 1; continue
+            gorulen.add(str(s["id"])); tum.append(s)
+        if len(liste) < 100:
+            break
+    return tum, tekrar
+
+
+def _big_ad(ad):
+    """Cihaz adı → okunur istasyon adı: "XŞARJ-000027A (Alexius Beach Hotel)" → "Alexius Beach Hotel", "ISPARTA SDU BATI 2 TABANCALI - 1"
+    → "Isparta SDÜ Batı", "Makü - 10 (Burdur)" → "MAKÜ", "Dc Denizli Eren Soket-1" → "Denizli Eren"."""
+    s = re.sub(r"\s+", " ", str(ad or "")).strip()
+    s = re.sub(r"(?i)\s*tak\s+[cç]al[ıi][sş]t[ıi]r\s+[cç]evr[ıi]l?d[ıi]\s*$", "", s)  # iç not: "tak çalıştır çevrildi"
+    s = re.sub(r"(?i)^asel\s*-\s*", "", s)  # kurulumu yapan firmanın öneki
+    m = re.match(r"(?i)^(?:x\s?[sş]arj|bsx)[-\s]*[0-9a-f]*\s*\((.+?)\s*\)", s)
+    if m:
+        s = m.group(1)
+    s = re.sub(r"\s*\(\s*(?:\d+|\d+\.\s*tabanca|" + "|".join(re.escape(x) for x in IL_KISA) + r")\s*\)", "", s, flags=re.I)
+    s = re.sub(r"(?i)^dc\s+", "", s)
+    s = re.sub(r"(?i)\s*\b\d\s*tabancal[ıi]\b", "", s)
+    s = re.sub(r"(?i)[\s\-#]*(?:soket|ac|dc)?[\s\-#]*\d{1,2}$", "", s).strip(" -#")
+    s = re.sub(r"(?i)\s+soket$", "", s)
+    def kelime(w):
+        f = " ".join(_tok(w))
+        if f in _BIG_AD:
+            return _BIG_AD[f]
+        # tümü büyük harf yazılmış adlar: ilk harf korunur, gerisi küçültülür ("MERIDIA" → "Meridia"; I → ı yapılmaz, adlar çoğunlukla yabancı)
+        return "-".join(x[:1] + x[1:].replace("İ", "i").replace("I", "i").lower() for x in w.split("-")) if w.isupper() and len(w) > 1 else w
+    return " ".join(kelime(w) for w in s.split()) or str(ad)
+
+
+IL_KISA = ("Adana Antalya Burdur Denizli Isparta Muğla İstanbul Ankara Konya Hatay Çanakkale Afyonkarahisar Gaziantep Van Tekirdağ "
+           "İzmir Kocaeli").split()
+
+
+def _big_duz(s):
+    """Sıralı, sade metin (Türkçe harfler sadeleşir): "Kurt Safir Avsallar Sitesi" → "kurt safir avsallar sitesi"."""
+    import konum_denetim as kd
+    return " ".join(re.sub(r"[^a-z0-9]+", " ", kd.fold(s)).split())
+
+
+def _big_kok(ad):
+    return {w for w in _big_duz(ad).split() if len(w) >= 3 and not w.isdigit()}
+
+
+def bigstation():
+    import konum_denetim as kd
+    cihaz, tekrar = _big_cek()
+    acik = [s for s in cihaz if s.get("usageType") == "public"]
+    print(f"bigstation: {len(cihaz)} cihaz (sayfalar arası tekrar {tekrar}), halka açık {len(acik)}, özel {len(cihaz) - len(acik)}")
+    if len(acik) < BIG_EN_AZ:
+        raise RuntimeError(f"yalnızca {len(acik)} halka açık cihaz (beklenen ≥{BIG_EN_AZ})")
+    # EPDK: il/ilçe yazımı ve konum tutarlılığı için başvuru noktaları; windmark kayıtları karşılaştırma için
+    epdk, windmark, ilce_ad = [], [], {}
+    if EPDK_API.exists():
+        for x in json.loads(EPDK_API.read_text(encoding="utf-8")).get("istasyonlar", []):
+            if not ok_coord(x.get("a"), x.get("o")):
+                continue
+            il, ilce = kd.il_ilce_epdk(x.get("adres"))
+            if il:
+                epdk.append((x["a"], x["o"], il, ilce))
+                if ilce:
+                    w = kd.ADA.sub("", x["adres"]).rsplit("/", 1)[0].split()
+                    ilce_ad.setdefault((il, ilce), w[-1] if w[-1][:1].isupper() else _tr_baslik(w[-1]))
+            if re.search(r"windmark|\bbsx\b", " ".join(_tok(x.get("marka", "") + " " + x.get("isletmeci", "")))):
+                windmark.append(x)
+    hucre = {}
+    for p in epdk:
+        hucre.setdefault((int(p[0] * 5), int(p[1] * 5)), []).append(p)
+
+    def cevre(a, o, km_, n=7):
+        """Konumun çevresindeki en yakın n EPDK noktası (km_ içinde) → [(uzaklık, il, ilçe)]."""
+        cx, cy = int(a * 5), int(o * 5); r = int(km_ / 20) + 1
+        ys = [(_km(a, o, p[0], p[1]), p[2], p[3]) for dx in range(-r, r + 1) for dy in range(-r, r + 1) for p in hucre.get((cx + dx, cy + dy), [])]
+        return sorted(y for y in ys if y[0] <= km_)[:n]
+
+    def il_ilce_metin(t):
+        """"Antalya/Alanya", "ANTALYA - MANAVGAT", "ANTALYA KEMER", "İStanbul/Kartal" → (il, ilçe anahtarı | None)."""
+        if not isinstance(t, str):
+            return None, None
+        parca = [p for p in re.split(r"[/,\-]+|\s+", t) if p.strip()]
+        il = next((kd.ILLER[kd.harfler(p)] for p in parca if kd.harfler(p) in kd.ILLER), None)
+        if not il:
+            return None, None
+        ilce = next((kd.harfler(p) for p in parca if (il, kd.harfler(p)) in ilce_ad), None)
+        return il, ilce
+
+    haric, konumsuz, disari = [], 0, []
+    aday = []
+    for s in acik:
+        metin = _big_duz(f"{s.get('name') or ''} {s.get('city') if isinstance(s.get('city'), str) else ''}")
+        neden = next((n for rx, n in BIG_HARIC if re.search(rx, metin)), None)
+        a, o = s.get("latitude"), s.get("longitude")
+        try:
+            a, o = float(a), float(o)
+        except (TypeError, ValueError):
+            a = o = 0.0
+        kw = s.get("powerKw") if isinstance(s.get("powerKw"), (int, float)) else 0
+        fiyat = s.get("pricePerKwh") if isinstance(s.get("pricePerKwh"), (int, float)) and 1 <= s["pricePerKwh"] <= 100 else None
+        if neden:
+            haric.append((neden, s.get("name"), bool(a or o))); continue
+        if not kw and fiyat is None:
+            haric.append(("güç ve fiyat yok", s.get("name"), bool(a or o))); continue
+        if not (a or o) or abs(a - o) < 1e-9:
+            konumsuz += 1; continue
+        if not (kd.in_turkey(a, o) or kd.sinira_km(a, o) <= kd.KIYI_KM):
+            disari.append(f"{s.get('name')} ({a:.5f}, {o:.5f})"); continue
+        dc = s.get("deviceType") == "dc" or s.get("isDc") is True
+        aday.append({"id": str(s["id"]), "ham": s.get("name") or "", "n": _big_ad(s.get("name")), "a": a, "o": o, "dc": dc, "kw": kw,
+                     "fiyat": fiyat, "il_ilce": il_ilce_metin(s.get("city"))})
+    def konum_ilce(a, o, il):
+        """Konumun 8 km çevresindeki en yakın 5 EPDK kaydından en az 4'ünün ilçesi (yoksa None)."""
+        say = {}
+        for d, il2, ic in cevre(a, o, 8, 5):
+            if il2 == il and ic:
+                say[ic] = say.get(ic, 0) + 1
+        return max(say, key=say.get) if say and max(say.values()) >= 4 else None
+
+    # Gruplama (birleşim-bul): BIG_AYNI_YER_M içinde her cihaz; aynı ad BIG_AYNI_AD_M; ortak ayırt edici sözcük BIG_GRUP_M içinde.
+    # Ayrıca şehir alanındaki ilçesi konumuyla çelişen cihaz, aynı adlı ve konumu o ilçeye uyan cihaz 20 km içindeyse onun yerine
+    # taşınır (ör. "Limak Deluxe Hotel" A ünitesi 9 km ötede Muratpaşa'da görünüyor, B ünitesi otelin bulunduğu Aksu'da).
+    for x in aday:
+        il, ilce = x["il_ilce"]
+        x["uyar"] = None if not (il and ilce) else (konum_ilce(x["a"], x["o"], il) in (ilce, None))
+    tasinan = []
+    ust = list(range(len(aday)))
+    def kok(i):
+        while ust[i] != i:
+            ust[i] = ust[ust[i]]; i = ust[i]
+        return i
+    for i, x in enumerate(aday):
+        for j in range(i):
+            y = aday[j]
+            m = _km(x["a"], x["o"], y["a"], y["o"]) * 1000
+            if (m <= BIG_AYNI_YER_M or (m <= BIG_AYNI_AD_M and _big_duz(x["n"]) == _big_duz(y["n"]))
+                    or (m <= BIG_GRUP_M and (_big_kok(x["n"]) & _big_kok(y["n"])) - _BIG_GENEL)):
+                ust[kok(i)] = kok(j)
+            elif ({x["uyar"], y["uyar"]} == {True, False} and x["il_ilce"] == y["il_ilce"] and _big_duz(x["n"]) == _big_duz(y["n"])
+                  and m <= 20000):
+                yanlis = x if x["uyar"] is False else y
+                dogru = y if yanlis is x else x
+                yanlis["a"], yanlis["o"] = dogru["a"], dogru["o"]
+                tasinan.append(f"{yanlis['n']} (cihaz {yanlis['id']}, {m / 1000:.1f} km)")
+                ust[kok(i)] = kok(j)
+    gruplar = {}
+    for i, x in enumerate(aday):
+        gruplar.setdefault(kok(i), []).append(x)
+    out, fiyat_farkli, il_duzelen = [], [], []
+    for g in gruplar.values():
+        adlar = [x["n"] for x in g]
+        ad = sorted(set(adlar), key=lambda n: (-adlar.count(n), len(n)))[0]
+        a, o = sum(x["a"] for x in g) / len(g), sum(x["o"] for x in g) / len(g)
+        nac, ndc = sum(not x["dc"] for x in g), sum(x["dc"] for x in g)
+        pr = {}
+        for tur, uy in (("ac", [x for x in g if not x["dc"]]), ("dc", [x for x in g if x["dc"]])):
+            f = sorted({x["fiyat"] for x in uy if x["fiyat"] is not None})
+            if f:
+                pr[tur] = f[-1]
+                if len(f) > 1:
+                    fiyat_farkli.append(f"{ad}: {tur.upper()} {'/'.join(f'{v:g}' for v in f)}")
+        # il/ilçe: cihazların şehir metni; konumun çevresindeki EPDK kayıtlarının iliyle çelişiyorsa ya da yoksa konumdan
+        cv = cevre(a, o, 30)
+        il_say = {}
+        for d, il, _ in cv[:5]:
+            il_say[il] = il_say.get(il, 0) + 1
+        konum_il = max(il_say, key=il_say.get) if il_say and max(il_say.values()) >= 3 else None
+        metin = [x["il_ilce"] for x in g if x["il_ilce"][0]]
+        il = metin[0][0] if metin else None
+        if konum_il and il != konum_il and (il is None or not any(y[1] == il for y in cv[:5] if y[0] < 15)):
+            if il:
+                il_duzelen.append(f"{ad}: şehir alanı {il}, konum {konum_il} (konuma göre yazıldı)")
+            il = konum_il
+        ki = konum_ilce(a, o, il) if il else None
+        ilceler = [x[1] for x in metin if x[0] == il and x[1]]
+        ilce = ki or (ilceler[0] if ilceler else None)  # çevresindeki EPDK kayıtları ilçede birleşiyorsa o, yoksa şehir alanı
+        if ki and ilceler and ki not in ilceler:
+            il_duzelen.append(f"{ad}: şehir alanında ilçe {ilce_ad.get((il, ilceler[0]))}, konum {ilce_ad.get((il, ki))} (konuma göre yazıldı)")
+        yer = ", ".join(v for v in (ilce_ad.get((il, ilce)) if ilce and ilce != "merkez" else None, il) if v)
+        kws = [x["kw"] for x in g if x["kw"]]
+        r = {"i": "bigstation" + min((x["id"] for x in g), key=int), "a": round(a, 6), "o": round(o, 6), "n": ad, "b": "BIG Station",
+             "ac": nac, "dc": ndc, "c": len(g), "k": max(kws) if kws else 0, "t": (["Type 2"] if nac else []) + (["CCS"] if ndc else []),
+             "ad": yer, "pr": pr}
+        if any(f"{ad}: " in x for x in fiyat_farkli):
+            r["prn"] = "fiyat ünitelere göre değişiyor, en yükseği gösteriliyor"
+        out.append(clean(r))
+    print(f"bigstation: dışarıda bırakılan {len(haric)} cihaz (" + "; ".join(f"{n}: {a}{'' if k else ' [konumsuz]'}" for n, a, k in sorted(haric, key=str)) + ")")
+    print(f"bigstation: konumu 0/0 ya da bozuk {konumsuz} cihaz atlandı; Türkiye dışı {len(disari)}" + (f" ({'; '.join(disari)})" if disari else ""))
+    print(f"bigstation: {len(aday)} cihaz → {len(out)} istasyon")
+    if fiyat_farkli:
+        print("bigstation: aynı istasyonda farklı fiyat (en yükseği yazıldı): " + "; ".join(fiyat_farkli))
+    if tasinan:
+        print("bigstation: konumu aynı adlı ünitenin konumuna taşınan (ilçesi konumuyla çelişiyordu): " + "; ".join(tasinan))
+    if il_duzelen:
+        print("bigstation: il/ilçe uyuşmazlığı: " + "; ".join(il_duzelen))
+    for x in sorted(windmark, key=lambda x: x["no"]):
+        en = min(out, key=lambda r: _km(x["a"], x["o"], r["a"], r["o"]), default=None)
+        d = _km(x["a"], x["o"], en["a"], en["o"]) * 1000 if en else 1e9
+        print(f"bigstation: EPDK {x['no']} {x.get('ad', '')} ({kd.il_ilce_epdk(x.get('adres'))[0]}) → "
+              + (f"{en['n']} {d:.0f} m" if d <= BIG_EPDK_M else f"karşılığı yok (en yakın {en['n'] if en else '-'} {d / 1000:.1f} km)"))
+    return out
+
+
 SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            "zes": (zes, "https://zes.net/tr/sarj-istasyonlari", 500),
            "ovolt": (ovolt, "https://ovolt.com.tr/istasyon-haritasi", 50),
            "wat": (wat, "https://www.watmobilite.com/istasyon-haritasi", 100),
            "voltup": (voltup, "https://voltup.com.tr/#istasyonlar", 20),
-           "rst": (rst, "https://rstchargepoint.com/#fiyatlar", 30)}
+           "rst": (rst, "https://rstchargepoint.com/#fiyatlar", 30),
+           "bigstation": (bigstation, BIG_SAYFA, 15)}
 
 
 def main():
