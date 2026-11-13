@@ -18,6 +18,8 @@ Kaynaklar (her biri ağın kendi sitesindeki haritanın kullandığı adres):
   BIG Station  https://bsx-reverse.ee-w.workers.dev/api/stations       (eski adı Windmark, işletmeci BSX Enerji)
                Big Station'ın kendi sistemini okuyan, giriş gerektirmeyen üçüncü taraf salt okunur servis. Yalnızca
                GET /api/stations; yalnızca halka açık cihazlar ve kişisel olmayan alanlar tutulur.
+  CV Charging  https://cv-charging.com/views/api/get_istasyon_api.php   (cv-charging.com/tr/cv-arac-sarj-istasyonlari)
+               Soketler aynı sayfanın istasyon başına çağırdığı get_istasyon_soket_api.php'den (aralarında 0,3 sn).
   (ASTOR Şarj'ın haritası map-api.echargo.com kullanıyor ama sunucudan yapılan istekleri reddediyor (HTTP 404);
    erişim kısıtını aşmaya çalışmıyoruz, ASTOR istasyonları EPDK + OSM'den gelir.)
 
@@ -729,13 +731,106 @@ def bigstation():
     return out
 
 
+# CV Charging (Charging Vehicles; işletmeci CW Enerji): istasyon adresleri sayfasındaki haritanın kullandığı iki açık adres.
+# Liste (konum, ad, adres, il/ilçe) tek istekle; soketler (AC/DC, kW) istasyon başına bir istekle (aralarında CV_BEKLE sn).
+# Sayfada ve istasyon detay sayfalarında istasyon bazlı fiyat yok: tarife tek (arac-sarj-tarifeleri, site/tarifeler.json).
+# Anlık durum alanları (müsait/kullanımda, soket durumu) haritada gösterilmediği için yazılmaz.
+CV_SAYFA = "https://cv-charging.com/tr/cv-arac-sarj-istasyonlari"
+CV_LISTE = "https://cv-charging.com/views/api/get_istasyon_api.php"
+CV_SOKET = "https://cv-charging.com/views/api/get_istasyon_soket_api.php?location_id={}"
+CV_BEKLE = 0.3
+CV_BUYUK = {"BMW", "AVM", "ODC", "AOSB", "CMC", "CW", "EGS", "MCG", "MYV", "PH", "VIB"}
+
+
+CV_YABANCI = {"CAPITAL"}
+
+
+def _cv_ad(t):
+    """"ABANT ADEN BOUTIQUE HOTEL & SPA" → "Abant Aden Boutique Hotel & Spa"; kısaltmalar (BMW, AVM) korunur. Türkçe harfi olmayan,
+    I içeren sözcük ünlü uyumuna uymuyorsa (E ile I bir arada) ya da yabancı harf dizisi içeriyorsa yabancı sayılır, I → i
+    ("SEMERKANDLINE" → "Semerkandline", "POINT" → "Point"); uyanlar Türkçe ("GIDA" → "Gıda", "AKARYAKIT" → "Akaryakıt")."""
+    def kelime(w):
+        if w in CV_BUYUK or not w[:1].isalpha():
+            return w
+        if ("I" in w and not re.search("[İŞĞÜÖÇ]", w)
+                and (w in CV_YABANCI or ("E" in w) or re.search(r"[WQX]|OI|IO|Y$", w))):
+            return "-".join(x[:1] + x[1:].lower() for x in w.split("-"))
+        return _tr_baslik(w)
+    return " ".join(kelime(w) for w in str(t or "").split())
+
+
+def _cv_adres(adres, il, ilce):
+    """Adres satırlarını tek satıra indirir, sondaki boş "/" ve "Turkey" parçalarını atar; il adresin sonunda yoksa adreste geçmeyen ilçe ve il eklenir."""
+    import konum_denetim as kd
+    s = re.sub(r"\s+", " ", " / ".join(p.strip() for p in str(adres or "").splitlines() if p.strip()))
+    s = re.sub(r"^[\s/:]+|[\s/]+$", "", s)
+    s = re.sub(r"(?i)\s+turkey$", "", s).strip(" /")
+    m = re.search(r"([^\s/]+)\s+([^\s/]+)$", s)  # "Muratpaşa/Antalya Antalya", "AYDIN Aydın": sondaki yinelenen il atılır
+    if m and kd.fold(m[1]) == kd.fold(m[2]):
+        s = s[:m.start(2)].rstrip()
+    if kd.il_serbest(s) != il:
+        var = set(re.findall(r"[a-z]+", kd.fold(s)))
+        ek = [x for x in (ilce if ilce and kd.harfler(ilce) != "merkez" else None, il) if x and kd.fold(x) not in var]
+        s = ", ".join([s] + ek) if s else ", ".join(x for x in (ilce, il) if x)
+    return s
+
+
+def cv():
+    import time
+    import konum_denetim as kd
+    liste = json.loads(get(CV_LISTE))
+    if not liste.get("ok") or not isinstance(liste.get("istasyonlar"), list):
+        raise RuntimeError("yanıtta 'istasyonlar' listesi yok")
+    out, soketsiz, disari = [], [], []
+    for n, s in enumerate(liste["istasyonlar"]):
+        try:
+            a, o = float(s.get("latitude")), float(s.get("longitude"))
+        except (TypeError, ValueError):
+            a = o = 0.0
+        if not (kd.in_turkey(a, o) or kd.sinira_km(a, o) <= kd.KIYI_KM):
+            disari.append(f"{s.get('title')} ({a}, {o})"); continue
+        if n:
+            time.sleep(CV_BEKLE)
+        try:
+            sk = json.loads(get(CV_SOKET.format(int(s["api_location_id"]))))
+        except Exception as e:  # noqa: BLE001  soketleri okunamayan istasyon yine gösterilir (soket sayısı listeden)
+            sk = {}; soketsiz.append(f"{s.get('title')}: {e}")
+        r = {"i": f"cv{int(s['i_id'])}", "a": round(a, 6), "o": round(o, 6), "n": _cv_ad(s.get("title")), "b": "CV Charging", "t": []}
+        il = kd.ILLER.get(kd.harfler(s.get("il_name") or ""))
+        r["ad"] = _cv_adres(s.get("adres"), il, (s.get("ilce_name") or "").strip())
+        for ist in sk.get("istasyonlar") or []:
+            for k in ist.get("soketler") or []:
+                dc = str(k.get("soket_tipi") or "").upper().startswith("DC")
+                tip = "dc" if dc else "ac"
+                r[tip] = r.get(tip, 0) + 1; r["c"] = r.get("c", 0) + 1
+                kw = k.get("power_kw") if isinstance(k.get("power_kw"), (int, float)) else 0
+                r["k"] = max(r.get("k", 0), round(kw))
+                t = "CCS" if dc else "Type 2"
+                if t not in r["t"]:
+                    r["t"].append(t)
+        if not r.get("c"):
+            r["c"] = s.get("toplam_soket") if isinstance(s.get("toplam_soket"), int) else 0
+        out.append(clean(r))
+    print(f"cv: listede {len(liste['istasyonlar'])} istasyon → {len(out)}; Türkiye dışı/konumsuz {len(disari)}"
+          + (f" ({'; '.join(disari)})" if disari else ""))
+    if soketsiz:
+        print(f"cv: soketleri okunamayan {len(soketsiz)}: " + "; ".join(soketsiz))
+    if EPDK_API.exists():  # karşılaştırma: resmi listede 300 m içinde karşılığı olmayan EPDK kayıtları
+        yok = [f"{x['no']} {x.get('ad', '')}" for x in json.loads(EPDK_API.read_text(encoding="utf-8")).get("istasyonlar", [])
+               if re.search(r"charging vehicles|\bcw enerji", kd.fold(x.get("marka", "") + " " + x.get("isletmeci", "")))
+               and ok_coord(x.get("a"), x.get("o")) and not any(_km(x["a"], x["o"], r["a"], r["o"]) <= 0.3 for r in out)]
+        print(f"cv: resmi listede 300 m içinde karşılığı olmayan EPDK kayıtları gösterilmiyor ({len(yok)})" + (f": {'; '.join(yok)}" if yok else ""))
+    return out
+
+
 SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            "zes": (zes, "https://zes.net/tr/sarj-istasyonlari", 500),
            "ovolt": (ovolt, "https://ovolt.com.tr/istasyon-haritasi", 50),
            "wat": (wat, "https://www.watmobilite.com/istasyon-haritasi", 100),
            "voltup": (voltup, "https://voltup.com.tr/#istasyonlar", 20),
            "rst": (rst, "https://rstchargepoint.com/#fiyatlar", 30),
-           "bigstation": (bigstation, BIG_SAYFA, 15)}
+           "bigstation": (bigstation, BIG_SAYFA, 15),
+           "cv": (cv, CV_SAYFA, 50)}
 
 
 def main():

@@ -528,6 +528,27 @@
     "BSX Enerji"
    ],
    "not": "Fiyat istasyona göre değişiyor; istasyon bazlı fiyat BIG Station sisteminden günlük alınır (eski adı Windmark)."
+  },
+  "CV Charging": {
+   "ac": {
+    "min": 9.99,
+    "max": 9.99
+   },
+   "dc": {
+    "min": 13.49,
+    "max": 13.49
+   },
+   "kaynak": "https://cv-charging.com/tr/cv-arac-sarj-istasyonlari",
+   "kontrol": "2026-11-13",
+   "gecerlilik": null,
+   "adlar": [
+    "CV Şarj",
+    "CV Charging Vehicles",
+    "Charging Vehicles",
+    "CHARGING VEHICLES CV",
+    "CW Enerji"
+   ],
+   "not": "KDV dahil, tüm istasyonlarda tek fiyat: AC (22 kW) 9,99, DC (60–240 kW) 13,49 TL/kWh (ağın tarife sayfası: cv-charging.com/tr/arac-sarj-tarifeleri). İşgaliye ve blokaj bedeli ayrıca yansıtılabilir."
   }
  }
 }

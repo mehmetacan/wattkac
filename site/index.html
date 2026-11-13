@@ -741,7 +741,7 @@ const ALIAS = { "Eşarj": ["esarj", "enerjisa"], "ASTOR Şarj": ["astor"], "Shel
 const KNOWN_EXTRA = { "ZES": ["\\bzes\\b"], "Sharz.net": ["sharz"], "Tesla": ["tesla"], "Beefull": ["beefull"], "Aksa Şarj": ["\\baksa\\b"], "Enyakıt": ["enyakit", "en yakit"],
   "Petrol Ofisi": ["petrol ofisi"], "Opet": ["\\bopet\\b"], "BP": ["\\bbp\\b"], "Aytemiz": ["aytemiz"], "Power Şarj": ["powersarj", "power sarj"],
   "Zeplin": ["zeplin"], "Otojet": ["otojet"], "Oncharge": ["oncharge"], "D-Charge": ["d-charge", "d charge"], "5 Şarj": ["\\b5 sarj"], "otoWATT": ["otowatt"],
-  "Efish": ["efish"], "EPSIS": ["epsis"], "EKA Enerji": ["eka enerji"], "Magic Line": ["magic line"], "K-Şarj": ["k-sarj", "k sarj"], "Neva Şarj": ["neva sarj"], "TOGG": ["\\btogg\\b"], "CV Şarj": ["charging vehicles", "cv charging"],
+  "Efish": ["efish"], "EPSIS": ["epsis"], "EKA Enerji": ["eka enerji"], "Magic Line": ["magic line"], "K-Şarj": ["k-sarj", "k sarj"], "Neva Şarj": ["neva sarj"], "TOGG": ["\\btogg\\b"], "CV Charging": ["charging vehicles", "\\bcv charging\\b", "\\bcw enerji"],
   "VoltUp": ["\\bvolt ?up\\b"], "RST Charge Point": ["\\brst\\b ?(charge|sarj|teknoloji)"],
   // Windmark markası BIG Station adını aldı (işletmeci BSX Enerji); EPDK kaydında marka hâlâ "windmark" yazıyor
   "BIG Station": ["\\bbig ?station\\b", "\\bwindmark\\b", "\\bbsx enerji"] };
@@ -1463,7 +1463,7 @@ function groupStations(list) {
 // İşaretçinin üzerindeki kısa ad: en çok 6 harf, hepsi aynı yazı tipi ve boyutta. Yaygın ağlar elle kısaltılır (anahtar: adın sadeleştirilmiş hâli),
 // diğerlerinde kural: "plus" → "+", "şarj / charge / enerji" gibi genel sözcükler atılır, ilk sözcük alınır, 6 harfi geçerse kesilir.
 const SHORT = { shellrecharge: "Shell", shell: "Shell", watmobilite: "WAT", astorsarj: "Astor", astor: "Astor", sharznet: "Sharz", aksasarj: "Aksa", petrolofisi: "PO", petrolofisiepower: "PO",
-  powersarj: "Power", tuncmatik: "Tunç", dcharge: "D-Chg", oncharge: "OnChg", cvsarj: "CV", zeplin: "Zeplin", zeplinenerji: "Zeplin", nevasarj: "Neva", ekaenerji: "EKA", magicline: "Magic",
+  powersarj: "Power", tuncmatik: "Tunç", dcharge: "D-Chg", oncharge: "OnChg", cvsarj: "CV", cvcharging: "CV", zeplin: "Zeplin", zeplinenerji: "Zeplin", nevasarj: "Neva", ekaenerji: "EKA", magicline: "Magic",
   dogusdijitalenerji: "Doğuş", togg: "Togg", enyakit: "Enyakt", otopriz: "Otoprz", voltrun: "Voltrn", beefull: "Beeful", otowatt: "otoWat", "5sarj": "5Şarj", ksarj: "K-Şarj", aostechnology: "AOS",
   mkssarj: "MKS", greenscience: "Green", sarjmatik: "ŞMatik", isarj: "i-Şarj", acropol: "Acro", lumicle: "Lumi", epower: "ePower", onizsarj: "Öniz", solarsarj: "Solar", mycharge: "MyChg",
   rstchargepoint: "RST", hizzlanchargendrive: "Hızz", getacharge: "GetChg", fixcharge: "FixChg", checkpoint: "ChkPt", tuvturk: "TÜV", qcquiksarj: "Quik", plugdrive: "P&D", biogreen: "BioGr",
@@ -1574,7 +1574,8 @@ const BRAND = {
   "TOGG": ["#111827", "#fff", "Tg"], "Petrol Ofisi": ["#E30613", "#fff", "PO"], "Petrol Ofisi e-POWER": ["#E30613", "#fff", "PO"],
   "Opet": ["#0057A8", "#fff", "Op"], "BP": ["#009B3A", "#FFE600", "bp"], "Powerşarj": ["#2563EB", "#fff", "P"],
   "Tunçmatik": ["#DC2626", "#fff", "Tm"], "D-Charge": ["#0F172A", "#fff", "D"], "Oncharge": ["#0891B2", "#fff", "On"],
-  "VoltUp": ["#FF5714", "#fff", "VU"], "RST Charge Point": ["#0B213E", "#00D26A", "R"], "BIG Station": ["#2E7D32", "#fff", "BS"]
+  "VoltUp": ["#FF5714", "#fff", "VU"], "RST Charge Point": ["#0B213E", "#00D26A", "R"], "BIG Station": ["#2E7D32", "#fff", "BS"],
+  "CV Charging": ["#96C94F", "#0F172A", "CV"]
 };
 const PALETTE = ["#2563EB", "#DB2777", "#059669", "#D97706", "#7C3AED", "#0891B2", "#B45309", "#4338CA", "#BE123C", "#0D9488"];
 function brandStyle(s) {
@@ -1689,7 +1690,7 @@ function renderDetail(s) {
     ${s.shellTrugo ? `<div class="shellbox">Shell Recharge uygulamasıyla da şarj edilebilir.</div>
       ${s.viaShell.length ? `<div class="lbl" style="margin-top:14px">Shell Recharge uygulamasıyla</div>${section(s.viaShell, false)}` : ""}` : ""}
     <details class="bkay"><summary>Bilgi kaynağı ›</summary>${srcTxt.map(x => `<p>${x}</p>`).join("")}
-      <p>${/^bigstation/.test(s.id) ? "İstasyon bilgisi BIG Station sisteminden, üçüncü taraf bir hizmet aracılığıyla günde bir kez alınır." : s.official ? "İstasyon bilgisi ağın kendi resmi haritasından, günde bir kez güncellenir." : s.epdk ? "Konum ve soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir." : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
+      <p>${/^bigstation/.test(s.id) ? "İstasyon bilgisi BIG Station sisteminden, üçüncü taraf bir hizmet aracılığıyla günde bir kez alınır." : /^cv\d/.test(s.id) ? "İstasyon bilgisi CV Charging'in resmi istasyon listesinden (cv-charging.com), günde bir kez alınır." : s.official ? "İstasyon bilgisi ağın kendi resmi haritasından, günde bir kez güncellenir." : s.epdk ? "Konum ve soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir." : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
       ${s.cih ? `<p>Anlık durum BIG Station sisteminden, üçüncü taraf bir hizmet aracılığıyla; 1 dakikaya kadar gecikebilir.</p>` : ""}
       ${s.net ? `<p>İndirimli fiyat yalnızca kampanyanın geçerli olduğu kesin bilinen istasyonlarda yazılır. Ağın kampanyaları birbiriyle birleşmez. Kart indirimi ağ indiriminin üzerine hesaplanır; kart kampanyası "başka indirimle birleşmez" diyorsa liste fiyatına.</p>` : ""}</details>`;
   $("sh-b").scrollTop = 0;
