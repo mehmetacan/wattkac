@@ -1715,13 +1715,11 @@ function renderDetail(s) {
 /* Anlık durum (BIG Station, Acropol Şarj, Neva Şarj, EPSIS, Lumicle, Ecojet, Solinved; kimlikleri "cih" olan istasyonlar): detay açılınca /api/durum/<ağ>'a BİR istek.
    Yoklama yok; detay yeniden çizilirse (liste yenilenmesi vb.) aynı sonuç kullanılır. Detay kapanır ya da başka istasyon seçilirse
    bekleyen istek iptal edilir. Sunucu yanıtı 60 sn önbellekli; aynı detay kısa sürede yeniden açılırsa tarayıcı önbelleği yanıtlar. */
+// Neva, EPSIS, Lumicle, Ecojet (electroop OCPI): kaynak Cloudflare'den gelen isteklere 403 veriyor (13 Kasım 2026);
+// worker'daki uç yerinde, ağ izin verirse buraya geri eklenir.
 const DURUM_AG = {
   bigstation: { birim: "cihazın", kaynak: "Anlık durum BIG Station sisteminden, üçüncü taraf bir hizmet aracılığıyla" },
   acropol: { birim: "soketin", kaynak: "Anlık durum Acropol Şarj'ın kendi haritasından" },
-  neva: { birim: "ünitenin", kaynak: "Anlık durum ağın kendi haritasından", enCok: 40 },
-  epsis: { birim: "ünitenin", kaynak: "Anlık durum ağın kendi haritasından", enCok: 40 },
-  lumicle: { birim: "ünitenin", kaynak: "Anlık durum ağın kendi haritasından", enCok: 40 },
-  ecojet: { birim: "ünitenin", kaynak: "Anlık durum ağın kendi haritasından", enCok: 40 },
   solinved: { birim: "soketin", kaynak: "Anlık durum ağın kendi haritasından" } };
 const durumAg = s => s.cih ? Object.keys(DURUM_AG).find(k => s.id.startsWith(k)) || null : null;
 const DUR = { id: null, ac: null, d: undefined };   // d: undefined = alınıyor, null = alınamadı, {cihazlar} = sonuç
