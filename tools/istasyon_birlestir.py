@@ -49,6 +49,7 @@ RESMI = {"trugo": r"trugo", "zes": r"\bzes\b", "ovolt": r"ovolt|sharz", "wat": r
          # OSM "Neva Şarj"/"Neva"), EPSIS (işletmeci FORM ELEKTRİK İNŞAAT), Lumicle (EPDK "LUMİCLE", işletmeci LUMHOUSE ENERJİ; OCM
          # "Lumicle (TR)"), Ecojet (işletmeci YENİ SÜRDÜRÜLEBİLİR ENERJİ)
          "otopriz": r"\botopriz\b|\bdicle kok enerji",
+         "neva": r"\bneva\b",
          }
 # Bu ağların EPDK kayıtları yalnızca resmi listede RESMI_YAKIN_M içinde karşılığı varsa atlanır; karşılığı olmayanlar (listede konumu
 # girilmemiş cihazlar) EPDK kaydıyla gösterilmeye devam eder.
