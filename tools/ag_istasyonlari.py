@@ -12,6 +12,9 @@ Kaynaklar (her biri ağın kendi sitesindeki haritanın kullandığı adres):
                okunamaz; tools/voltup_fiyat.mjs onu tarayıcıyla bir kez açıp data/aglar/voltup_fiyat.json'a yazar. Burada
                o dosya okunur, istasyonların konumu ve soketleri EPDK kaydından (data/epdk/epdk_api.json) ad eşleşmesiyle,
                EPDK'da bulunamayanlar ana sayfadaki işaretçilerden alınır.
+  RST Charge Point https://rstchargepoint.com/#fiyatlar               (ana sayfadaki haritanın kendi içindeki istasyon dizisi)
+               Soketler EPDK kaydından (konuma, ad ve ilçeye göre birebir eşleşme); listedeki "durum" alanı ağın elle
+               güncellediği bir alandır (arizali → pasif, bakimda → bakim), canlı durum değildir.
   (ASTOR Şarj'ın haritası map-api.echargo.com kullanıyor ama sunucudan yapılan istekleri reddediyor (HTTP 404);
    erişim kısıtını aşmaya çalışmıyoruz, ASTOR istasyonları EPDK + OSM'den gelir.)
 
@@ -20,7 +23,7 @@ Bir ağın çekimi başarısız olursa o ağın önceki dosyası korunur.
 Yalnızca bazı ağları çekmek için adlarını verin: python3 tools/ag_istasyonlari.py voltup
 Kayıt alanları istasyon_cek.py ile aynıdır (i, a, o, n, b, k, t, ac, dc, c, ad) + pr (soket fiyatları, varsa).
 """
-import html, json, pathlib, re, sys, urllib.request, datetime
+import html, json, math, pathlib, re, sys, urllib.request, datetime
 from html.parser import HTMLParser
 
 OUT = pathlib.Path("data/aglar")
@@ -335,11 +338,156 @@ def voltup():
     return out
 
 
+# RST Charge Point: rstchargepoint.com ana sayfasındaki Leaflet haritasının "hamVeriler" dizisi
+# ({ isim, lat, lng, il, durum?, kw? }; koordinatlar ondalık ya da '38°02\'44.8"N' biçiminde). Fiyat tek tarife (tarifeler.json).
+RST_URL = "https://rstchargepoint.com/"
+RST_UZAK_KM = 1.0  # listedeki konum eşleşen EPDK kaydından bundan uzaksa EPDK konumu kullanılır (listede kopyalanmış/yanlış koordinatlar görüldü)
+_RST_GENEL = {"petro", "akary", "lukoi", "opet", "shell", "bp", "total", "po", "class", "teco", "aytem", "sunpe", "kadoi", "turko",
+              "resto", "rest", "otel", "hotel", "park", "otopa", "dinle", "tesis", "mahal", "merke", "sanay", "kucuk", "mm", "ss", "ens",
+              "ofisi", "fox", "rst", "tek"}
+_RST_BUYUK = {"BP", "PO", "TECO", "MM", "SS"}
+
+
+def _rst_koord(v):
+    """Sayfadaki parseCoord() ile aynı: ondalık sayı ya da 38°02'44.8"N biçimi."""
+    v = str(v).strip()
+    if "°" not in v and "'" not in v:
+        return float(v)
+    m = re.search(r"(\d+)°(\d+)'([\d.]+)\"([NSEW])", v)
+    if not m:
+        return 0.0
+    x = float(m[1]) + float(m[2]) / 60 + float(m[3]) / 3600
+    return -x if m[4] in "SW" else x
+
+
+def _rst_dizi(page):
+    """var hamVeriler = [ {...}, ... ]; → [{isim, lat, lng, il, durum, kw}] (yorum satırları atlanır)."""
+    m = re.search(r"var\s+hamVeriler\s*=\s*\[(.*?)\];", page, re.S)
+    if not m:
+        raise RuntimeError("hamVeriler dizisi bulunamadı")
+    govde = re.sub(r"^\s*//.*$", "", m.group(1), flags=re.M)
+    out = []
+    for obj in re.findall(r"\{([^{}]*)\}", govde):
+        d = {}
+        for k, v in re.findall(r"(\w+)\s*:\s*(\"(?:[^\"\\]|\\.)*\"|'(?:[^'\\]|\\.)*'|-?[\d.]+)", obj):
+            d[k] = re.sub(r"\\(.)", r"\1", v[1:-1]) if v[0] in "\"'" else v
+        if d.get("isim") and d.get("lat") and d.get("lng"):
+            out.append(d)
+    return out
+
+
+def _km(a, b, c, d):
+    t = math.radians
+    h = math.sin(t(c - a) / 2) ** 2 + math.cos(t(a)) * math.cos(t(c)) * math.sin(t(d - b) / 2) ** 2
+    return 2 * 6371 * math.asin(math.sqrt(h))
+
+
+def _tr_baslik(w):
+    """Türkçe baş harf: "ŞEHİTLİK" → "Şehitlik", "TÜRKOİL-ŞAHMERAN" → "Türkoil-Şahmeran"."""
+    if w in _RST_BUYUK:
+        return w
+    def bir(x):
+        x = x.replace("I", "ı").replace("İ", "i").lower()
+        return (x[:1].replace("i", "İ").replace("ı", "I").upper() + x[1:]) if x else x
+    return "-".join(bir(x) for x in w.split("-"))
+
+
+def _rst_ad(isim, il, ilce):
+    """"ESKİŞEHİR NASRETTİN HOCA" + Sivrihisar → "Nasrettin Hoca, Sivrihisar"; ilçe Merkez ise il adı eklenir."""
+    w = [x.strip("-") or x for x in isim.split()]
+    f = lambda x: " ".join(_tok(x))
+    if len(w) > 1 and (f(w[0]) == f(il) or f(il).startswith(f(w[0]))):
+        w = w[1:]
+    w = [x for x in w if f(x) != "merkez" and x != "-"] or w
+    w = [ilce if ilce and f(x) == f(ilce) else _tr_baslik(x) for x in w]
+    ad = " ".join(w)
+    yer = ilce if ilce and f(ilce) != "merkez" else _tr_baslik(il)
+    return ad if not yer or f(yer) in f(ad).split() else f"{ad}, {yer}"
+
+
+def rst():
+    liste = _rst_dizi(get(RST_URL))
+    epdk = []
+    if EPDK_API.exists():
+        for x in json.loads(EPDK_API.read_text(encoding="utf-8")).get("istasyonlar", []):
+            if re.search(r"\brst\b", " ".join(_tok(" ".join([x.get("marka", ""), x.get("isletmeci", "")])))) and ok_coord(x.get("a"), x.get("o")):
+                epdk.append(x)
+    il_ilce = lambda adres: (lambda m: (m[2].strip(), m[1]) if m else ("", ""))(re.search(r"(\S+)\s*/\s*([^/]+)$", adres or ""))
+    kok = lambda s: {w[:5] for w in _tok(s) if len(w) > 1} - _RST_GENEL
+    for s in liste:
+        s["a"], s["o"] = _rst_koord(s["lat"]), _rst_koord(s["lng"])
+    liste = [s for s in liste if ok_coord(s["a"], s["o"])]
+    # Birebir eşleştirme: ad/ilçe kökü ortaklığı (aynı il içinde) her ortak kök için 10 puan, 1 km içindeki yakınlık en çok 5 puan.
+    # Listede adlar EPDK'dakinden farklı olabildiği için ("UŞAK 7 KITA PETROL BANAZ" = EPDK "GÜLCE PETROL", Banaz) yakınlık tek başına yeter.
+    puan = []
+    for i, s in enumerate(liste):
+        ks, il_s = kok(s["isim"]), " ".join(_tok(s.get("il", "")))
+        for j, x in enumerate(epdk):
+            il_x, ilce_x = il_ilce(x.get("adres"))
+            il_x = " ".join(_tok(il_x))
+            ayni_il = bool(il_s and il_x and (il_x.startswith(il_s) or il_s.startswith(il_x)))
+            ortak = len(ks & kok(x.get("ad", "") + " " + ilce_x)) if ayni_il else 0
+            d = _km(s["a"], s["o"], x["a"], x["o"])
+            p = 10 * ortak + (5 * (1 - d / RST_UZAK_KM) if d < RST_UZAK_KM else 0)
+            if p > 0:
+                puan.append((p, i, j, d))
+    es, kullanilan = {}, set()
+    for p, i, j, d in sorted(puan, key=lambda x: -x[0]):
+        if i not in es and j not in kullanilan:
+            es[i] = (j, d); kullanilan.add(j)
+    out, uzak, durumlu = [], [], []
+    for i, s in enumerate(liste):
+        r = {"b": "RST Charge Point"}
+        il, ilce = s.get("il", ""), ""
+        if i in es:
+            x, d = epdk[es[i][0]], es[i][1]
+            il_x, ilce = il_ilce(x.get("adres"))
+            r["i"] = "rst" + re.sub(r"\D", "", x["no"])
+            r["ad"] = re.sub(r"\s+", " ", x.get("adres", "")).strip()
+            a, o = (x["a"], x["o"]) if d > RST_UZAK_KM else (s["a"], s["o"])
+            if d > RST_UZAK_KM:
+                uzak.append(f"{s['isim']} ({d:.1f} km; EPDK {x['no']} {x.get('ad', '')} konumu kullanıldı)")
+            for tur, kw, n in x.get("s") or []:
+                tip = "dc" if tur.startswith("DC") else "ac"
+                r[tip] = r.get(tip, 0) + n; r["c"] = r.get("c", 0) + n
+                if kw and kw > r.get("k", 0):
+                    r["k"] = kw
+                t = SOKET_AD.get(tur) or tur.split("_", 1)[-1].title()
+                if t not in r.setdefault("t", []):
+                    r["t"].append(t)
+        else:
+            a, o = s["a"], s["o"]
+            r["i"] = "rst-" + "-".join(sorted(_tok(s["isim"])))
+            r["ad"] = il
+        if not r.get("ac") and not r.get("dc"):  # EPDK'da yoksa listedeki güç (yazılmamışsa sayfanın varsayılanı 120 kW)
+            kw = float((re.search(r"[\d.]+", s.get("kw") or "120") or ["120"])[0])
+            r["k"] = round(kw)
+            r["dc" if kw >= 50 else "ac"] = 1
+            r["t"] = ["CCS"] if kw >= 50 else ["Type 2"]
+        r.update({"a": round(a, 6), "o": round(o, 6), "n": _rst_ad(s["isim"], il, ilce)})
+        durum = (s.get("durum") or "").lower()
+        if durum == "arizali":
+            r["pasif"] = 1; durumlu.append(f"{r['n']}: arızalı")
+        elif durum == "bakimda":
+            r["bakim"] = 1; durumlu.append(f"{r['n']}: bakımda")
+        out.append(clean(r))
+    print(f"rst: listede {len(liste)} istasyon; EPDK ile eşleşen {len(es)}, eşleşmeyen {len(liste) - len(es)}"
+          + (f" ({'; '.join(liste[i]['isim'] for i in range(len(liste)) if i not in es)})" if len(es) < len(liste) else ""))
+    if uzak:
+        print(f"rst: listedeki konumu EPDK kaydından {RST_UZAK_KM:g} km'den uzak olanlar: {'; '.join(uzak)}")
+    print("rst: listede arızalı/bakımda işaretli: " + ("; ".join(durumlu) if durumlu else "yok"))
+    disarda = [f"{x['no']} {x.get('ad', '')}" for j, x in enumerate(epdk) if j not in kullanilan]
+    if disarda:
+        print(f"rst: resmi listede olmayan EPDK kayıtları gösterilmiyor ({len(disarda)}): {'; '.join(disarda)}")
+    return out
+
+
 SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            "zes": (zes, "https://zes.net/tr/sarj-istasyonlari", 500),
            "ovolt": (ovolt, "https://ovolt.com.tr/istasyon-haritasi", 50),
            "wat": (wat, "https://www.watmobilite.com/istasyon-haritasi", 100),
-           "voltup": (voltup, "https://voltup.com.tr/#istasyonlar", 20)}
+           "voltup": (voltup, "https://voltup.com.tr/#istasyonlar", 20),
+           "rst": (rst, "https://rstchargepoint.com/#fiyatlar", 30)}
 
 
 def main():
