@@ -2,8 +2,8 @@
 "guncelleme": "2026-11-13",
 "ozet": {
 "denetlenen": {
-"e": 13256,
-"r": 6263,
+"e": 13259,
+"r": 6372,
 "o": 753,
 "c": 2257
 },
@@ -15,8 +15,8 @@
 "turkiye_disi": 2
 },
 "r": {
-"il_uyumsuz": 19,
-"il_uzak": 45,
+"il_uyumsuz": 20,
+"il_uzak": 47,
 "bozuk": 4,
 "yurt_disi": 71
 },
@@ -29,9 +29,9 @@
 "duzeltme": {
 "yer_degistirme": 19,
 "basamak": 4,
-"kaynak": 17,
+"kaynak": 18,
 "adres": 2,
-"ilce_merkezi": 6,
+"ilce_merkezi": 5,
 "cikarildi": 10,
 "birakildi": 6
 },
@@ -39,7 +39,7 @@
 "ilce_uyumsuz": 119,
 "il_uyumsuz": 5,
 "ad_yeri": 1,
-"diger_kaynak_il": 77
+"diger_kaynak_il": 80
 },
 "yurt_disi": 71,
 "gecersiz_yardimci": 13,
@@ -367,23 +367,6 @@
 "neden": "il_uzak"
 },
 {
-"id": "ŞRJ/13195",
-"kaynak": "e",
-"ad": "DERYA MOBİLYA",
-"il": "Sinop",
-"eski": [
-40.975584,
-37.931946
-],
-"yeni": [
-42.015,
-35.124
-],
-"kural": "ilce_merkezi",
-"neden": "il_uzak",
-"km": 260.8
-},
-{
 "id": "ŞRJ/21968",
 "kaynak": "e",
 "ad": "Hasanbaşoğlu Oto, Trabzon",
@@ -503,6 +486,24 @@
 "neden": "ilce_uyumsuz",
 "dayanak": "trugo3025",
 "km": 27.9
+},
+{
+"id": "ŞRJ/13195",
+"kaynak": "e",
+"ad": "DERYA MOBİLYA",
+"il": "Sinop",
+"eski": [
+40.975584,
+37.931946
+],
+"yeni": [
+42.020545,
+35.125543
+],
+"kural": "kaynak",
+"neden": "il_uzak",
+"dayanak": "trugo9494",
+"km": 261.0
 },
 {
 "id": "ŞRJ/14405",
