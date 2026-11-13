@@ -44,6 +44,10 @@ ve her gün 09:10'da çalıştırır.
   giriş yok) günde bir kez alınır. Yalnızca halka açık istasyonlar ve kişisel olmayan alanlar (ad, şehir, konum, AC/DC, güç, fiyat)
   tutulur; konut sitesi / ofis / test cihazları ve konumu girilmemiş (0/0) cihazlar atlanır, aynı yerdeki cihazlar tek istasyonda
   toplanır, fiyat her istasyonun `pr` alanına yazılır. Listede karşılığı (300 m içinde) olmayan EPDK "windmark" kayıtları EPDK'dan gösterilir.
+  Her istasyonun cihaz kimlikleri `cih` alanında tutulur (ör. `["95","96"]`). **Anlık durum:** biri BIG Station detayını açınca site
+  `GET /api/durum/bigstation?c=95,96` ister (yoklama yok, detay başına bir istek). Worker aynı servisin listesini okur, her cihazı hemen
+  `bos` / `sarj` / `bilinmiyor` durumuna indirger (diğer alanlar saklanmaz) ve Cloudflare Cache API'de 60 sn tutar; böylece kullanıcı
+  sayısından bağımsız olarak konum başına dakikada en çok bir yenileme (≈4 istek) yapılır. Bağlı olmayan (offline) cihazın durumu bilinmiyor sayılır.
 - **OpenStreetMap ve Open Charge Map**: yalnızca EPDK'da karşılığı olmayan istasyonlar eklenir; EPDK kayıtlarına saat/web bilgisi katar.
 
 EPDK servisinden hiç veri alınamadıysa eski yönteme (CSV listesi + adresten konum arama) düşülür.

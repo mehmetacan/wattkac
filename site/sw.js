@@ -2,7 +2,7 @@
 /* Depolama notu: başka alan adından "no-cors" ile alınan yanıtlar (opak yanıt) önbellekte saklanırsa tarayıcı her birini
    kota hesabında birkaç MB sayar. Eskiden harita karoları böyle saklandığı için uygulama telefonda GB'larca yer gösteriyordu.
    Artık harita karoları önbelleğe alınmaz (tarayıcının kendi HTTP önbelleği yeterli) ve kütüphaneler CORS ile, gerçek boyutlarıyla saklanır. */
-const SURUM = "wk-v24";
+const SURUM = "wk-v25";
 const KABUK = ["./", "./index.html", "./manifest.webmanifest", "./logo.png", "./icons/icon-192.png", "./icons/icon-512.png",
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js", "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"];
 const VERI = /\/(kampanyalar|istasyonlar|tarifeler)\.json$/;
@@ -35,6 +35,7 @@ self.addEventListener("fetch", e => {
   const req = e.request;
   if (req.method !== "GET") return;
   const u = new URL(req.url);
+  // /api/* (ör. anlık durum) hiç ele alınmaz: service worker önbelleğine girmez, doğrudan ağa gider
   if (req.mode === "navigate") return e.respondWith(agOnce(req, SURUM));
   if (u.origin === location.origin && VERI.test(u.pathname)) return e.respondWith(agOnceVeri(req));
   if (u.hostname === "cdnjs.cloudflare.com" || (u.origin === location.origin && /\.(png|webmanifest|woff2)$/.test(u.pathname)))

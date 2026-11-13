@@ -16,6 +16,8 @@ içinde ya da JS şablonlarında `#fff`, açık gri gibi sabit renk yazılmaz. S
   `<html data-theme="dark">` yazmak tüm uygulamayı koyu temaya döndürür. Yeni belirteç eklenirse iki bloğa da yazılır.
 - **Az yazı:** istasyon detayı ve listesinde cümle yerine değer gösterilir. İndirimli fiyat "üstü çizili liste fiyatı + yeşil indirimli fiyat"
   olarak yazılır, koşulu (i) bilgi düğmesindeki tek cümlede durur. Kampanya değeri kısa yazılır ("%20", "75 TL"); ayrıntı açılır kısımdadır.
+- **Anlık durum (BIG Station):** detay başlığının altında tek satır, renkli nokta + sayılar ("Şimdi: 2 boşta · 1 şarj ediyor"); bilinmeyen,
+  yükleniyor ve hata hâlleri `--mut` renkte ve noktasız. Kaynağı "Bilgi kaynağı" bölümünde yazar.
 - **Kaçınılacaklar (veri setindeki uyarı):** kötü harita deneyimi ve gizli maliyet. Fiyat ve indirim her zaman açık yazılır.
 
 ## Renk
@@ -40,6 +42,7 @@ Değerler açık temanındır (varsayılan). Koyu tema karşılıkları `:root[d
 | `--g` / `--gbg` / `--gline` | `#047857` / `#DDEFE6` / `#A8D5C0` | Şarj ağı indirimi, "kontrol edildi", indirimli fiyat: yazı / zemin / çerçeve |
 | `--g-fill` / `--on-g` | `#047857` / `#FFFFFF` | Dolu yeşil zemin (seçili ağ çipi, sayaç rozeti) ve üstündeki yazı |
 | `--amber-bg` / `--amber-fg` / `--amber-line` | `#F4EACD` / `#7C4A03` / `#E2CC8E` | Banka kartı kampanyası, "Doğrulanıyor", DC etiketi, Shell kutusu |
+| `--amber-dot` | `#B45309` | Anlık durum noktası: istasyonda boş cihaz yok, bilinenlerin hepsi şarj ediyor (boş varsa nokta `--g`) |
 | `--blue-bg` / `--blue-fg` | `#DEE7F4` / `#1E40AF` | AC etiketi |
 | `--r` / `--rbg` / `--rline` | `#B91C1C` / `#F6E4E4` / `#E6B9B9` | Hata, pasif istasyon, son günler |
 | `--y` / `--brand-y` | `#FFC800` / `#E0A100` | Marka şimşeği ve "Kaç" yazısı (düğme rengi olarak kullanılmaz) |

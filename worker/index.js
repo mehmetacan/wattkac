@@ -10,6 +10,7 @@
 //   GET  /api/panel/geri-bildirim?durum=yeni|tum
 //   POST /api/panel/geri-bildirim {id, durum}
 //   /api/bildirim/*              → web push aboneliği (aşağıda "Bildirimler")
+//   GET  /api/durum/bigstation?c=95,96 → BIG Station cihazlarının anlık boş / şarjda durumu (aşağıda "Anlık durum")
 const ANA = "wattkac.com";
 const YONLENDIR = new Set(["www.wattkac.com", "wattkac.xyz", "www.wattkac.xyz"]);
 const TURLER = new Set(["hata", "istasyon", "fiyat", "kampanya", "oneri", "diger"]);
@@ -282,17 +283,103 @@ async function bildirimGonder(env, gonder = fetch) {
   return { bakilan: aboneler.length, giden };
 }
 
+/* ---------- Anlık durum: BIG Station ----------
+   GET /api/durum/bigstation?c=95,96,97  → {ok, zaman, cihazlar: {"95": "bos" | "sarj" | "bilinmiyor", …}}
+   Kaynak: BIG Station'ın kendi sistemini okuyan, giriş gerektirmeyen üçüncü taraf salt okunur servisin halka açık listesi
+   (GET /api/stations, 100'erli sayfalar). O servisin başka hiçbir adresi çağrılmaz.
+   - Bu uç noktanın tek kullanıcısı sitedir ve yalnızca biri haritada BIG Station istasyonunun detayını açınca çağrılır.
+     Zamanlanmış görev ya da arka planda yoklama yoktur.
+   - Yanıt GELİR GELMEZ cihaz başına tek duruma indirgenir: liveStatus "offline" (ya da bilinmeyen) → "bilinmiyor";
+     bağlı (wifionline / gsmonline) ve status "active" (şarj oturumu sürüyor) → "sarj"; bağlı ve "passive" → "bos".
+     Diğer alanlar (ölçümler, oturum sahibi adı / plakası vb.) hiçbir yerde saklanmaz, loglanmaz, döndürülmez.
+   - İndirgenmiş liste Cache API'de (her Cloudflare konumunda ayrı) DURUM_SN saniye tutulur: kullanıcı sayısından bağımsız olarak
+     konum başına dakikada en çok bir yenileme (≈4 sayfa isteği). Önbellek süresi dolduğu anda aynı konumda eşzamanlı gelen birkaç
+     istek ayrı ayrı yenileyebilir; Workers'ta istekler arası ortak Promise beklemek (başka isteğin G/Ç'si) güvenli olmadığından
+     birleştirme yapılmaz, bu kısa pencere dışında yük değişmez.
+     Yenileme başarısızsa DURUM_HATA_SN saniye yeniden denenmez (servis çöktüğünde üstüne istek yağmasın).
+   - Ücretsiz plan: çağrı başına 50 dış istek sınırı; burada en çok 1 önbellek okuma + DURUM_SAYFA sayfa + 1 önbellek yazma. */
+const DURUM_URL = "https://bsx-reverse.ee-w.workers.dev/api/stations?offset={o}&limit=100";
+const DURUM_ANAHTAR = "https://wattkac.com/__durum/bigstation";
+const DURUM_SN = 60, DURUM_HATA_SN = 30, DURUM_SURE_MS = 6000, DURUM_SAYFA = 10, DURUM_EN_COK = 20;
+const DURUM_UA = "WattKac/1.0 (+https://wattkac.com; anlik durum)";
+const BAGLI = new Set(["wifionline", "gsmonline"]);
+
+// Tek cihaz kaydı → "sarj" | "bos" | "bilinmiyor" (yalnızca status ve liveStatus okunur)
+function cihazDurumu(x) {
+  if (!BAGLI.has(x.liveStatus)) return "bilinmiyor";
+  return x.status === "active" ? "sarj" : x.status === "passive" ? "bos" : "bilinmiyor";
+}
+// Bir sayfanın kayıtlarını indirgenmiş haritaya ekler (sayfalama sabit sıralı değil: aynı kimlik iki kez gelirse ilki kalır)
+function durumEkle(harita, liste) {
+  for (const x of liste) {
+    if (!x || typeof x !== "object") continue;
+    const id = String(x.id ?? "");
+    if (/^\d{1,9}$/.test(id) && !(id in harita)) harita[id] = cihazDurumu(x);
+  }
+}
+async function durumCek(getir) {
+  const ac = new AbortController(), zam = setTimeout(() => ac.abort(), DURUM_SURE_MS);
+  try {
+    const harita = {};
+    for (let sayfa = 0; sayfa < DURUM_SAYFA; sayfa++) {
+      const r = await getir(DURUM_URL.replace("{o}", String(sayfa * 100)), { headers: { "user-agent": DURUM_UA, accept: "application/json" }, signal: ac.signal });
+      if (!r.ok) throw new Error("durum " + r.status);
+      let liste = (await r.json()).stations;   // ham yanıt yalnızca bu blokta yaşar
+      if (!Array.isArray(liste)) throw new Error("durum biçim");
+      const n = liste.length;
+      durumEkle(harita, liste); liste = null;
+      if (n < 100) return { zaman: new Date().toISOString(), c: harita };
+    }
+    throw new Error("durum sayfa");
+  } finally { clearTimeout(zam); }
+}
+const durumYanit = (o, sn) => new Response(JSON.stringify(o), { headers: { "content-type": "application/json", "cache-control": `max-age=${sn}` } });
+async function durumAnlik(ctx, getir) {
+  const onb = typeof caches !== "undefined" && caches.default, anahtar = DURUM_ANAHTAR;
+  if (onb) {
+    try {
+      const h = await onb.match(anahtar);
+      if (h) {
+        const d = await h.json(), yas = Date.now() - Date.parse(d.zaman);
+        if (yas >= 0 && yas < (d.hata ? DURUM_HATA_SN : DURUM_SN) * 1000) return d;
+      }
+    } catch {}
+  }
+  let d;
+  try { d = await durumCek(getir); } catch { d = { zaman: new Date().toISOString(), hata: 1 }; }
+  if (onb) {
+    const yaz = onb.put(anahtar, durumYanit(d, d.hata ? DURUM_HATA_SN : DURUM_SN)).catch(() => {});
+    if (ctx && ctx.waitUntil) ctx.waitUntil(yaz); else await yaz;
+  }
+  return d;
+}
+async function durumBigstation(request, url, ctx, getir = fetch) {
+  if (request.method !== "GET") return json({ ok: false }, 405);
+  const ham = String(url.searchParams.get("c") || "");
+  const ids = [...new Set(ham.split(","))];
+  if (!ham || ham.length > 220 || ids.length > DURUM_EN_COK || !ids.every(x => /^\d{1,9}$/.test(x))) return json({ ok: false, hata: "c" }, 400);
+  let d;
+  try { d = await durumAnlik(ctx, getir); } catch { d = { hata: 1 }; }
+  if (d.hata || !d.c) return json({ ok: false }, 503);
+  const cihazlar = {};
+  for (const id of ids) cihazlar[id] = Object.prototype.hasOwnProperty.call(d.c, id) ? d.c[id] : "bilinmiyor";
+  return json({ ok: true, zaman: d.zaman, cihazlar }, 200, { "cache-control": "public, max-age=60" });
+}
+
 export default {
   async scheduled(olayi, env, ctx) {
     if (env.DB) ctx.waitUntil(bildirimGonder(env).catch(() => {}));
   },
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     if (YONLENDIR.has(url.hostname)) {
       url.protocol = "https:";
       url.hostname = ANA;
       url.port = "";
       return Response.redirect(url.toString(), 301);
+    }
+    if (url.pathname === "/api/durum/bigstation") {   // veritabanı gerektirmez
+      try { return await durumBigstation(request, url, ctx); } catch { return json({ ok: false }, 503); }
     }
     if (url.pathname.startsWith("/api/")) {
       if (!env.DB) return json({ ok: false, hata: "veritabanı yok" }, 503);
