@@ -449,7 +449,11 @@ async function durumAnlik(ag, ctx, getir) {
     } catch {}
   }
   let d;
-  try { d = await durumCek(ag, getir); } catch { d = { zaman: new Date().toISOString(), hata: 1 }; }
+  try { d = await durumCek(ag, getir); } catch (e) {
+    // neden yalnızca bizim kısa iletimiz (ör. "durum 403", "durum boş", AbortError); kaynak yanıtından metin taşınmaz
+    const m = String(e && e.message || e && e.name || "");
+    d = { zaman: new Date().toISOString(), hata: 1, neden: /^(durum [0-9a-zçğıöşü ]{1,12}|AbortError|TypeError)$/i.test(m) ? m : "diğer" };
+  }
   if (onb) {
     const yaz = onb.put(anahtar, durumYanit(d, d.hata ? DURUM_HATA_SN : DURUM_SN)).catch(() => {});
     if (ctx && ctx.waitUntil) ctx.waitUntil(yaz); else await yaz;
@@ -464,7 +468,7 @@ async function durumIstek(ag, request, url, ctx, getir = fetch) {
   if (!ham || ham.length > (a.kimlik ? enCok * 41 : 220) || ids.length > enCok || !ids.every(gecerli)) return json({ ok: false, hata: "c" }, 400);
   let d;
   try { d = await durumAnlik(ag, ctx, getir); } catch { d = { hata: 1 }; }
-  if (d.hata || !d.c) return json({ ok: false }, 503);
+  if (d.hata || !d.c) return json({ ok: false, neden: d.neden || "diğer" }, 503);
   const cihazlar = {};
   for (const id of ids) cihazlar[id] = Object.prototype.hasOwnProperty.call(d.c, id) ? d.c[id] : "bilinmiyor";
   return json({ ok: true, zaman: d.zaman, cihazlar }, 200, { "cache-control": "public, max-age=60" });
