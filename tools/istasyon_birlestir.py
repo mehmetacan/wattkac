@@ -27,7 +27,7 @@ OSM = pathlib.Path("data/osm/istasyonlar_osm.json")
 OCM = pathlib.Path("data/ocm/istasyonlar_ocm.json")
 AGLAR = pathlib.Path("data/aglar")
 # Resmi listesi olan ağlar: bu ağlara ait EPDK/OSM kayıtları atlanır, ağın kendi listesi kullanılır
-RESMI = {"trugo": r"trugo", "zes": r"\bzes\b", "ovolt": r"ovolt|sharz", "wat": r"wat mobilite|watmobilite|\bwat\b", "astor": r"astor"}
+RESMI = {"trugo": r"trugo", "zes": r"\bzes\b", "ovolt": r"ovolt|sharz", "wat": r"wat mobilite|watmobilite|\bwat\b", "astor": r"astor", "voltup": r"\bvolt ?up\b"}
 SECILI = pathlib.Path("data/secili_istasyonlar.json")  # yalnızca seçili istasyonlarda geçerli ağ kampanyaları
 SECILI_AG = {"otopriz": r"otopriz|dicle kok"}
 SAATLI = pathlib.Path("data/saatli_tarife.json")  # saate göre fiyatın (ör. gece tarifesi) yalnızca listedeki istasyonlarda geçerli olduğu ağlar

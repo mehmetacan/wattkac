@@ -27,8 +27,13 @@ ve her gün 09:10'da çalıştırır.
 `.github/workflows/istasyonlar.yml` her gün 05:17'de şu kaynakları çekip `tools/istasyon_birlestir.py` ile `site/istasyonlar.json` üretir:
 - **EPDK açık servisi** (`tools/epdk_cek.py` → `data/epdk/epdk_api.json`): lisanslı tüm halka açık istasyonlar; kesin koordinat,
   soket türü ve gücü. Günde tek istek atılır (servisin kotası dar). Fiyat ve anlık durum içermez.
-- **Ağların resmi haritaları** (`tools/ag_istasyonlari.py`): ZES, Trugo, Ovolt, WAT. Bu ağlarda resmi liste kullanılır; eksik güç/soket
+- **Ağların resmi haritaları** (`tools/ag_istasyonlari.py`): ZES, Trugo, Ovolt, WAT, VoltUp. Bu ağlarda resmi liste kullanılır; eksik güç/soket
   bilgisi EPDK kaydından tamamlanır.
+- **VoltUp** (`tools/voltup_fiyat.mjs` → `data/aglar/voltup_fiyat.json`, ardından `ag_istasyonlari.py voltup` → `data/aglar/voltup.json`):
+  voltup.com.tr'deki istasyon bazlı fiyat listesi (aktif lokasyonlar, AC/DC fiyatı). Liste bir Blazor sayfası olduğundan Node + Playwright
+  ile günde bir kez açılır; okunamazsa önceki dosya kullanılır. Konum ve soketler aynı adlı EPDK kaydından (bulunamazsa sitedeki harita
+  işaretçisinden) alınır; fiyat her istasyonun `pr` alanına yazılır. Yalnızca VoltUp'ı yenilemek için:
+  `node tools/voltup_fiyat.mjs && python3 tools/ag_istasyonlari.py voltup && python3 tools/istasyon_birlestir.py site/istasyonlar.json`.
 - **OpenStreetMap ve Open Charge Map**: yalnızca EPDK'da karşılığı olmayan istasyonlar eklenir; EPDK kayıtlarına saat/web bilgisi katar.
 
 EPDK servisinden hiç veri alınamadıysa eski yönteme (CSV listesi + adresten konum arama) düşülür.

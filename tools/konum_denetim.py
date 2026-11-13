@@ -634,7 +634,9 @@ def main():
     epdk = [{"no": no, "ad": ad, "marka": m, "adres": adr, "a": k[0], "o": k[1]}
             for no, ad, m, _, adr, acik, k, _ in B.epdk_kayitlari() if k]
     oku = lambda p, alan="istasyonlar": json.loads(p.read_text(encoding="utf-8")).get(alan, []) if p.exists() else []
-    resmi = [r for f in sorted(B.AGLAR.glob("*.json")) for r in oku(f)]
+    # istasyon_birlestir.py gibi yalnızca RESMI ağların istasyon dosyaları (ör. voltup_fiyat.json istasyon listesi değildir)
+    ag = lambda p: json.loads(p.read_text(encoding="utf-8")).get("ag")
+    resmi = [r for f in sorted(B.AGLAR.glob("*.json")) if ag(f) in B.RESMI for r in oku(f)]
     cache = json.loads(B.CACHE.read_text(encoding="utf-8")) if B.CACHE.exists() else {}
     poi = json.loads(B.POI.read_text(encoding="utf-8")) if B.POI.exists() else {}
     _, _, _, rapor = denetle(epdk, resmi, oku(B.OSM), oku(B.OCM), poi, cache, B.key, yaz="--yazma" not in sys.argv)

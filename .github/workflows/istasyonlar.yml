@@ -1,6 +1,6 @@
 name: İstasyon verisini güncelle
 
-# 1) OpenStreetMap'ten istasyonları çeker  1b) ZES/Ovolt/WAT/Trugo'nun kendi haritalarından çeker  2) EPDK'nın açık servisinden tüm halka açık istasyonları (kesin koordinat + soket) çeker
+# 1) OpenStreetMap'ten istasyonları çeker  1b) ZES/Ovolt/WAT/Trugo/VoltUp'ın kendi haritalarından (VoltUp: istasyon fiyatlarıyla) çeker  2) EPDK'nın açık servisinden tüm halka açık istasyonları (kesin koordinat + soket) çeker
 # 3) ikisini birleştirip site/istasyonlar.json üretir.
 on:
   schedule:
@@ -27,6 +27,15 @@ jobs:
       - uses: actions/checkout@v4
       - name: OpenStreetMap istasyonlarını çek
         run: python3 tools/istasyon_cek.py data/osm/istasyonlar_osm.json
+      # VoltUp'ın istasyon bazlı fiyat listesi bir Blazor Server sayfası (düz HTTP ile okunamıyor, JSON adresi yok):
+      # sayfa tarayıcıyla günde bir kez açılır. Başarısız olursa data/aglar/voltup_fiyat.json'daki önceki fiyatlar kullanılır.
+      - name: VoltUp istasyon fiyatlarını oku (tarayıcıyla tek sayfa yüklemesi)
+        timeout-minutes: 10
+        run: |
+          npm install --no-save --no-package-lock --prefix "$RUNNER_TEMP/pw" playwright@1.63.0
+          "$RUNNER_TEMP/pw/node_modules/.bin/playwright" install --with-deps chromium
+          NODE_PATH="$RUNNER_TEMP/pw/node_modules" node tools/voltup_fiyat.mjs
+        continue-on-error: true
       - name: Ağların resmi haritalarından istasyonları çek
         run: python3 -u tools/ag_istasyonlari.py
         continue-on-error: true

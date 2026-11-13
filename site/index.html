@@ -737,7 +737,8 @@ const ALIAS = { "Eşarj": ["esarj", "enerjisa"], "ASTOR Şarj": ["astor"], "Shel
 const KNOWN_EXTRA = { "ZES": ["\\bzes\\b"], "Sharz.net": ["sharz"], "Tesla": ["tesla"], "Beefull": ["beefull"], "Aksa Şarj": ["\\baksa\\b"], "Enyakıt": ["enyakit", "en yakit"],
   "Petrol Ofisi": ["petrol ofisi"], "Opet": ["\\bopet\\b"], "BP": ["\\bbp\\b"], "Aytemiz": ["aytemiz"], "Power Şarj": ["powersarj", "power sarj"],
   "Zeplin": ["zeplin"], "Otojet": ["otojet"], "Oncharge": ["oncharge"], "D-Charge": ["d-charge", "d charge"], "5 Şarj": ["\\b5 sarj"], "otoWATT": ["otowatt"],
-  "Efish": ["efish"], "EPSIS": ["epsis"], "EKA Enerji": ["eka enerji"], "Magic Line": ["magic line"], "K-Şarj": ["k-sarj", "k sarj"], "Neva Şarj": ["neva sarj"], "TOGG": ["\\btogg\\b"], "CV Şarj": ["charging vehicles", "cv charging"] };
+  "Efish": ["efish"], "EPSIS": ["epsis"], "EKA Enerji": ["eka enerji"], "Magic Line": ["magic line"], "K-Şarj": ["k-sarj", "k sarj"], "Neva Şarj": ["neva sarj"], "TOGG": ["\\btogg\\b"], "CV Şarj": ["charging vehicles", "cv charging"],
+  "VoltUp": ["\\bvolt ?up\\b"] };
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -1070,9 +1071,13 @@ const M = { map: null, layer: null, circle: null, meMark: null, me: null, center
   f: { akim: new Set(), kag: false, kbk: false, bana: false, tum: false, brands: new Set() },
   sel: null, markers: new Map(), all: [], byId: new Map(), filtered: null, view: [], shown: PAGE, sig: "", cnt: { all: 0, ac: 0, dc: 0 }, brands: [] };
 
+// Önce marka / işletmeci / ağ alanları, ancak bunlarda bilinen marka yoksa istasyon adı aranır: adı "VoltUp Kepez Hesapçıoğlu Opet"
+// olan VoltUp istasyonu, adındaki akaryakıt markası (Opet, Shell, PO…) yüzünden o markaya yazılmasın.
 function brandOf(t) {
-  const hay = fold([t.brand, t.operator, t.network, t.name].filter(Boolean).join(" | "));
-  for (const [n, re] of NET_RES) if (re.test(hay)) return { name: n, known: true };
+  for (const parts of [[t.brand, t.operator, t.network], [t.name]]) {
+    const hay = fold(parts.filter(Boolean).join(" | "));
+    if (hay) for (const [n, re] of NET_RES) if (re.test(hay)) return { name: n, known: true };
+  }
   return { name: (t.brand || t.operator || t.network || "").trim().slice(0, 28), known: false };
 }
 function sockets(t) {
@@ -1456,7 +1461,7 @@ const SHORT = { shellrecharge: "Shell", shell: "Shell", watmobilite: "WAT", asto
   mkssarj: "MKS", greenscience: "Green", sarjmatik: "ŞMatik", isarj: "i-Şarj", acropol: "Acro", lumicle: "Lumi", epower: "ePower", onizsarj: "Öniz", solarsarj: "Solar", mycharge: "MyChg",
   rstchargepoint: "RST", hizzlanchargendrive: "Hızz", getacharge: "GetChg", fixcharge: "FixChg", checkpoint: "ChkPt", tuvturk: "TÜV", qcquiksarj: "Quik", plugdrive: "P&D", biogreen: "BioGr",
   monokonelektrik: "Mono", fastgo: "FastGo", bp: "BP", opet: "Opet", aytemiz: "Aytmz", zes: "ZES", trugo: "Trugo", esarj: "Eşarj", ovolt: "Ovolt", otojet: "Otojet", tesla: "Tesla", varr: "Varr",
-  voltla: "Voltla", efish: "Efish", epsis: "Epsis", "360enerji": "360°", sarjtak: "ŞTak", gioev: "GioEV", e4sarj: "E4", bcharge: "B-Chg", qcharge: "Q-Chg", gsmcharge: "GSM", evccharge: "EVC", usarj: "U-Şarj", onlife: "onLife", tora: "Tora", adze: "Adze", ekos: "Ekos", kes: "KES" };
+  voltla: "Voltla", voltup: "VoltUp", efish: "Efish", epsis: "Epsis", "360enerji": "360°", sarjtak: "ŞTak", gioev: "GioEV", e4sarj: "E4", bcharge: "B-Chg", qcharge: "Q-Chg", gsmcharge: "GSM", evccharge: "EVC", usarj: "U-Şarj", onlife: "onLife", tora: "Tora", adze: "Adze", ekos: "Ekos", kes: "KES" };
 const SHORTC = new Map();
 const GENEL = /^(şarj|sarj|charge|charging|enerji|energy|elektrik|mobilite|tm|car|rental|solar|akıllı|ve)$/i;
 function shortName(b) {
@@ -1560,7 +1565,8 @@ const BRAND = {
   "Zeplin Enerji": ["#7C3AED", "#fff", "Ze"], "Otojet": ["#B91C1C", "#fff", "Oj"], "otojet": ["#B91C1C", "#fff", "Oj"],
   "TOGG": ["#111827", "#fff", "Tg"], "Petrol Ofisi": ["#E30613", "#fff", "PO"], "Petrol Ofisi e-POWER": ["#E30613", "#fff", "PO"],
   "Opet": ["#0057A8", "#fff", "Op"], "BP": ["#009B3A", "#FFE600", "bp"], "Powerşarj": ["#2563EB", "#fff", "P"],
-  "Tunçmatik": ["#DC2626", "#fff", "Tm"], "D-Charge": ["#0F172A", "#fff", "D"], "Oncharge": ["#0891B2", "#fff", "On"]
+  "Tunçmatik": ["#DC2626", "#fff", "Tm"], "D-Charge": ["#0F172A", "#fff", "D"], "Oncharge": ["#0891B2", "#fff", "On"],
+  "VoltUp": ["#FF5714", "#fff", "VU"]
 };
 const PALETTE = ["#2563EB", "#DB2777", "#059669", "#D97706", "#7C3AED", "#0891B2", "#B45309", "#4338CA", "#BE123C", "#0D9488"];
 function brandStyle(s) {
