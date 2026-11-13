@@ -1268,8 +1268,10 @@ async function loadStatic() {
 const AG_SITE = { "Otopriz": "otopriz.com.tr", "Neva Şarj": "nevasarj.com", "EPSIS": "electroop.io", "Lumicle": "lumicle.com.tr", "Ecojet": "electroop.io",
   "Şarjon": "sarjon.com.tr", "Solinved": "solinvedcharge.com", "D-Charge": "dcharge.com.tr", "Aksa Şarj": "aksasarj.com.tr", "En Yakıt": "enyakit.com.tr",
   "MKS Şarj": "mkssarj.com", "Oncharge": "oncharge.com.tr", "AOS Technology": "aostechnology.com.tr", "otoWATT": "aydemplus.com.tr",
-  "K-Şarj": "ksarj.com", "5 Şarj": "5sarj.com" };
-const agSite = s => AG_SITE[s.brand] ? ` (${AG_SITE[s.brand]})` : "";
+  "K-Şarj": "ksarj.com", "5 Şarj": "5sarj.com", "EKA Enerji": "ekaenerjiteknoloji.com.tr" };
+// Haritası elle güncellenen kopyadan gelen DOGRULA ağları (marka → istasyonlar.json resmi_kaynaklar anahtarı)
+const KOPYA_AG = { "EKA Enerji": "eka" };
+const agSite = s => AG_SITE[s.brand] ? ` (${AG_SITE[s.brand]}${KOPYA_AG[s.brand] ? `; elle güncellenen kopya${kopyaTarih(KOPYA_AG[s.brand])}` : ""})` : "";
 // Elle güncellenen ağ kopyasının tarihi (istasyonlar.json → resmi_kaynaklar[ag].cekildi): ", son: 13 Kasım 2026"
 const kopyaTarih = ag => { const t = STATIC && STATIC.resmi_kaynaklar && STATIC.resmi_kaynaklar[ag] && STATIC.resmi_kaynaklar[ag].cekildi;
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(t || ""); return m ? `, son: ${+m[3]} ${AY[+m[2] - 1]} ${m[1]}` : ""; };

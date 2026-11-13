@@ -41,6 +41,9 @@ Kaynaklar (her biri ağın kendi sitesindeki haritanın kullandığı adres):
   Oncharge     https://oncharge.com.tr/Home/GetStations                 (oncharge.com.tr/sarj-istasyonlari)
   AOS Technology https://aostechnology.com.tr/sarj-istasyonlarimiz/    (tablo; DOGRULA — /haritalarimiz/ bot korumalı, kullanılmaz)
   otoWATT      https://www.aydemplus.com.tr/otowatt-sarj-istasyonlari   (konumsuz kartlar; yalnızca ad/adresle DOGRULA)
+  EKA Enerji   ekaenerjiteknoloji.com.tr/sarj/istasyonlar haritayı electroop'tan gömüyor (company=ekaenerji). electroop Actions'a 403
+               verdiği için SOURCES'ta yok: data/aglar/eka.json elle güncellenen kopya (--dosya, aşağıda). Liste çoğunlukla konut sitesi
+               (Emlak Konut/TOKİ projeleri) garaj cihazları ve halka açık olup olmadığı yazmıyor: DOGRULA (istasyon_birlestir.py).
                Hepsinde konut sitesi / test / sahada olmayan / şirket içi istasyonlar ayıklanır ve raporlanır (YENI_HARIC); her ağın
                listesi aynı ağın EPDK kayıtlarıyla karşılaştırılıp özeti yazılır, eşleşen EPDK numaraları "e"de tutulur.
   (ASTOR Şarj'ın haritası map-api.echargo.com kullanıyor ama sunucudan yapılan istekleri reddediyor (HTTP 404);
@@ -49,6 +52,7 @@ Kaynaklar (her biri ağın kendi sitesindeki haritanın kullandığı adres):
 Kurallar: günde bir kez, her kaynağa tek istek (BIG Station: 100'erlik sayfalar, aralarında 1 sn); anahtar/oturum gerektiren kaynaklar KULLANILMAZ.
 Bir ağın çekimi başarısız olursa o ağın önceki dosyası korunur.
 Yalnızca bazı ağları çekmek için adlarını verin: python3 tools/ag_istasyonlari.py voltup
+Elle güncellenen electroop kopyası (EKA Enerji; uca istek atılmaz): python3 tools/ag_istasyonlari.py eka --dosya <ocpi.json> [--tarih …]
 Kayıt alanları istasyon_cek.py ile aynıdır (i, a, o, n, b, k, t, ac, dc, c, ad) + pr (soket fiyatları, varsa).
 """
 import html, json, math, pathlib, re, sys, urllib.parse, urllib.request, datetime, zlib
@@ -1239,7 +1243,10 @@ ELECTROOP = {"otopriz": ("otopriz", "Otopriz", r"\botopriz\b|\bdicle kok enerji"
              "neva": ("nevasarj", "Neva Şarj", r"\bneva\b", ""),
              "epsis": ("epsis", "EPSIS", r"\bepsis\b|\bform elektrik insaat", ""),
              "lumicle": ("lumicle", "Lumicle", r"\blumicle\b|\blumhouse enerji", r"lumicle"),
-             "ecojet": ("ecojet", "Ecojet", r"\becojet\b|\byeni surdurulebilir enerji", r"ecojet")}
+             "ecojet": ("ecojet", "Ecojet", r"\becojet\b|\byeni surdurulebilir enerji", r"ecojet"),
+             # EKA Enerji: ekaenerjiteknoloji.com.tr/sarj/istasyonlar haritayı electroop'tan gömüyor. electroop Actions/Cloudflare'e 403
+             # verdiği için SOURCES'ta yok: ELLE_KOPYA (aşağıda) ile kullanıcının aldığı OCPI kopyasından üretilir.
+             "eka": ("ekaenerji", "EKA Enerji", r"\beka enerji", r"eka")}
 ELECTROOP_CANLI = {"neva", "epsis", "lumicle", "ecojet"}
 _OCPI_SOKET = {"IEC_62196_T2": "Type 2", "IEC_62196_T2_COMBO": "CCS", "CHADEMO": "CHAdeMO", "IEC_62196_T1": "Type 1",
                "IEC_62196_T1_COMBO": "CCS", "DOMESTIC_F": "Schuko", "GBT_DC": "GB/T"}
@@ -1250,6 +1257,7 @@ def _ocpi_kok(n):
     "LUMICLE KÜTAHYA MERKEZ 240 kW DC-1" → "LUMICLE KÜTAHYA MERKEZ"; "Tuna Panorama - E" → "Tuna Panorama"; "ECOJET ŞİŞLİ-2" → "ECOJET ŞİŞLİ"."""
     s = " ".join(str(n or "").split())
     s = re.sub(r"(?i)^(\(?sahada yok\)?|ar[ıi]zal[ıi])\s*", "", s)
+    s = re.sub(r"(?i)\s*\(\s*\d+([.,]\d+)?\s*kw\s*\)", "", s)  # "COP31 - VIP - 04 (200 kW)"
     s = re.sub(r"(?i)[\s_-]*\b(ac|dc)?[\s_-]*\d+([.,]\d+)?\s*kw\b.*$", "", s)
     s = re.sub(r"(?i)[\s_]+-?\s*\d+\s*soket$", "", s)
     for _ in range(3):
@@ -1276,10 +1284,12 @@ def _ocpi_cek(sirket):
     return tum
 
 
-def _electroop(ag):
+def _electroop(ag, liste=None):
+    """liste verilirse (elle alınmış OCPI kopyası, ELLE_KOPYA) uca istek atılmaz."""
     import konum_denetim as kd
     sirket, marka, rx, onek = ELECTROOP[ag]
-    liste = _ocpi_cek(sirket)
+    if liste is None:
+        liste = _ocpi_cek(sirket)
     birim, haric, takas, disari, haric_unite = [], [], [], [], {}
     for x in liste:
         if x.get("publish") is False:
@@ -1922,8 +1932,37 @@ SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            }
 
 
+# Elle güncellenen electroop kopyaları: electroop GitHub Actions ve Cloudflare IP'lerine 403 veriyor; bu ağlar SOURCES'ta yok, listeleri
+# bir kez alınmış OCPI "locations" yanıtından üretilir (uca istek atılmaz):
+#   python3 tools/ag_istasyonlari.py eka --dosya <ocpi.json> [--tarih YYYY-AA-GG]
+# Kopyaların tek listesi ve 60 gün eskime uyarısı: tools/veri_kontrol.py ELLE_KOPYA. Haritadaki kullanımı istasyon_birlestir.py'de.
+ELLE_KOPYA_SAYFA = {"eka": "https://ekaenerjiteknoloji.com.tr/sarj/istasyonlar"}  # ağın kendi sitesi (haritayı electroop'tan gömer)
+
+
+def elle_kopya(ag, dosya, tarih):
+    if ag not in ELECTROOP:
+        sys.exit(f"--dosya yalnızca electroop ağları için: {', '.join(ELECTROOP)}")
+    j = json.loads(pathlib.Path(dosya).read_text(encoding="utf-8"))
+    liste = j.get("data") if isinstance(j, dict) else j
+    if not isinstance(liste, list):
+        sys.exit("OCPI yanıtında 'data' listesi yok")
+    recs = sorted(_electroop(ag, liste), key=lambda r: r["i"])
+    data = {"ag": ag, "kaynak": ELLE_KOPYA_SAYFA.get(ag) or ELECTROOP_SAYFA.format(ELECTROOP[ag][0]), "cekildi": tarih, "sayi": len(recs),
+            "not": "electroop haritasından alınan anlık kopya; otomatik güncellenmez", "istasyonlar": recs}
+    (OUT / f"{ag}.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    print(f"{ag}: {len(recs)} istasyon → {OUT / (ag + '.json')} (cekildi {tarih})")
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
+    if "--dosya" in sys.argv:
+        args = sys.argv[1:]
+        dosya = args[args.index("--dosya") + 1]
+        tarih = args[args.index("--tarih") + 1] if "--tarih" in args else datetime.date.today().isoformat()
+        ag = [a for i, a in enumerate(args) if not a.startswith("--") and (i == 0 or args[i - 1] not in ("--dosya", "--tarih"))]
+        if len(ag) != 1:
+            sys.exit("kullanım: ag_istasyonlari.py <ağ> --dosya <ocpi.json> [--tarih YYYY-AA-GG]")
+        return elle_kopya(ag[0], dosya, tarih)
     secilen = [a for a in sys.argv[1:] if a in SOURCES] or list(SOURCES)
     if len(secilen) < len(sys.argv[1:]):
         sys.exit("bilinmeyen ağ: " + ", ".join(a for a in sys.argv[1:] if a not in SOURCES) + " (seçenekler: " + ", ".join(SOURCES) + ")")
