@@ -45,7 +45,9 @@ RESMI = {"trugo": r"trugo", "zes": r"\bzes\b", "ovolt": r"ovolt|sharz", "wat": r
          "5sarj": r"\b5 sarj\b|\bborenco",
          # Ağların kendi haritaları (tools/ag_istasyonlari.py; her birinin kaynağı orada). Desenler sözcük sınırıyla: "lumi" BLADECO
          # ALÜMİNYUM'u, "aksa" Aksa Doğalgaz adlı istasyonları, "d-charge" Doğuş Dijital Enerji'nin (ayrı ağ) kayıtlarını yakalamasın.
-         # electroop OCPI: Otopriz (EPDK marka "Otopriz", işletmeci DİCLE KÖK ENERJİ; OCM "Otopriz (Türkiye)"), Neva Şarj (EPDK "NEVA ŞARJ";
+         # Otopriz: Open Charge Map'teki "Otopriz" veri sağlayıcılı kayıtlar (CC-0; EPDK marka "Otopriz", işletmeci DİCLE KÖK ENERJİ;
+         # OCM işletmeci "Otopriz (Türkiye)": OCM'den gelen Otopriz kayıtları bu yüzden ayrıca eklenmez).
+         # electroop OCPI: Neva Şarj (EPDK "NEVA ŞARJ";
          # OSM "Neva Şarj"/"Neva"), EPSIS (işletmeci FORM ELEKTRİK İNŞAAT), Lumicle (EPDK "LUMİCLE", işletmeci LUMHOUSE ENERJİ; OCM
          # "Lumicle (TR)"), Ecojet (işletmeci YENİ SÜRDÜRÜLEBİLİR ENERJİ)
          "otopriz": r"\botopriz\b|\bdicle kok enerji",
@@ -65,12 +67,21 @@ RESMI = {"trugo": r"trugo", "zes": r"\bzes\b", "ovolt": r"ovolt|sharz", "wat": r
 # girilmemiş cihazlar) EPDK kaydıyla gösterilmeye devam eder.
 EKSIK_TUT = {"bigstation",
              "mks",
+             # Otopriz: liste Otopriz'in Open Charge Map'te paylaştığı veri (CC-0). 13 Kasım 2026'da electroop listesindeki 399
+             # istasyonun 145'i (%36; çoğu eski istasyonlar: Saray Otopark, Vizyon Park, File Liv …) bu veride yok: EPDK'dan gösterilir.
+             "otopriz",
              }
 # EKSIK_TUT ağlarında listede karşılığı olmayan EPDK kaydı bu desene (ad + adres) uyuyorsa yine gösterilmez: ağın listesinden konut
 # olduğu için ayıklanan kayıtlar EPDK üzerinden geri gelmesin (MKS: Batalgazi 5./6. Etap konut blokları, "… Evleri", "Emlak Konut Sitesi").
 # MKS'nin haritası EPDK'daki yeni kayıtların bir kısmını (Arapgir Belediyesi, Baykara Petrol, Gezsan Petrol Yazıhan…) henüz içermiyor.
 EKSIK_HARIC = {
     "mks": r"\betap\b|\bsite(si)?\b|\bevleri\b|\bkonut|\bresid|\brezid|\bblok\b",
+    }
+# Aynısı, yalnızca EPDK kaydının adına bakılır (adreste "Küme Evleri", "Sanayi Sitesi 11. Blok" gibi konut olmayan ifadeler geçebilir).
+# Otopriz: ağın listesindeki ayıklamayla aynı (ag_istasyonlari.YENI_HARIC: konut/site, test, sahada olmayan, depo).
+EKSIK_HARIC_AD = {
+    "otopriz": r"(?<!sanayi )\bsite(si|leri)?\b|\bkonut|\bresid|\brezid|\bblok\b|\bevleri\b|\bkonaklari\b|\bvilla|\bapartman|\blojman"
+               r"|\btest|\bdeneme\b|\bsahada yok\b|\bdepo\b",
     }
 # Resmi listesi eksik ya da yalnızca ad + konumdan oluşan ağlar: liste istasyonların yerine geçmez, EPDK kayıtları gösterilmeye devam
 # eder. Listede karşılığı olan EPDK kaydı (eşleştirme ag_istasyonlari.py'de yapılır, EPDK numarası listede "e") "rl" ile işaretlenir ve
@@ -220,7 +231,8 @@ def main():
             konum, kalite = duzelt[no][:2], duzelt[no][2]
         tut = next((k for k in EKSIK_TUT if k in kaynaklar and re.search(RESMI[k], fold(marka + " " + isletmeci))), None)
         if tut and konum and not any(dist(konum[0], konum[1], r["a"], r["o"]) <= RESMI_YAKIN_M for r in resmi_ag[tut]):
-            if tut in EKSIK_HARIC and re.search(EKSIK_HARIC[tut], fold(ad + " " + adres)):
+            if (tut in EKSIK_HARIC and re.search(EKSIK_HARIC[tut], fold(ad + " " + adres))) or \
+                    (tut in EKSIK_HARIC_AD and re.search(EKSIK_HARIC_AD[tut], fold(ad))):
                 continue  # ağın listesinde konut olduğu için ayıklanan türden kayıt
             resmi_disi.append(f"{tut}: {no} {ad}")  # resmi listede karşılığı yok: EPDK kaydı gösterilir
         elif is_covered(marka, isletmeci):
@@ -422,7 +434,7 @@ def main():
         if b:
             cnt[b.lower()] = cnt.get(b.lower(), 0) + 1
     data = {"guncelleme": datetime.date.today().isoformat(),
-            "kaynak": "EPDK Şarj İstasyonları kaydı, ağların resmi haritaları, © OpenStreetMap katkıda bulunanlar (ODbL), © Open Charge Map (CC BY 4.0)",
+            "kaynak": "EPDK Şarj İstasyonları kaydı, ağların resmi haritaları, © OpenStreetMap katkıda bulunanlar (ODbL), © Open Charge Map (CC BY 4.0), Otopriz açık verisi (CC-0, Open Charge Map üzerinden)",
             "sayi": len(recs), "resmi_kaynaklar": kaynaklar, "secili_aglar": sorted(secili.keys()),
             "isletmeciler": ops, "istasyonlar": recs}
     txt = json.dumps(data, ensure_ascii=False, separators=(",", ":"))

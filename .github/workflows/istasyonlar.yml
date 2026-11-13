@@ -1,6 +1,6 @@
 name: İstasyon verisini güncelle
 
-# 1) OpenStreetMap'ten istasyonları çeker  1b) ZES/Ovolt/WAT/Trugo/VoltUp/RST/CV Charging/Acropol Şarj/Otopriz/Neva Şarj/EPSIS/Lumicle/Ecojet/Şarjon/Solinved/D-Charge/Aksa Şarj/En Yakıt/MKS Şarj/Oncharge'ın kendi haritalarından (VoltUp: istasyon fiyatlarıyla; K-Şarj ve AOS Technology'nin haritası EPDK kayıtlarını doğrulamak ve konumlarını almak, otoWATT'ın konumsuz listesi yalnızca doğrulamak için; 5 Şarj bot korumalı, data/aglar/5sarj.json elle güncellenen kopya) ve BIG Station'ın sisteminden (istasyon fiyatlarıyla) çeker  2) EPDK'nın açık servisinden tüm halka açık istasyonları (kesin koordinat + soket) çeker
+# 1) OpenStreetMap'ten istasyonları çeker  1b) ZES/Ovolt/WAT/Trugo/VoltUp/RST/CV Charging/Acropol Şarj/Neva Şarj/EPSIS/Lumicle/Ecojet/Şarjon/Solinved/D-Charge/Aksa Şarj/En Yakıt/MKS Şarj/Oncharge'ın kendi haritalarından (VoltUp: istasyon fiyatlarıyla; K-Şarj ve AOS Technology'nin haritası EPDK kayıtlarını doğrulamak ve konumlarını almak, otoWATT'ın konumsuz listesi yalnızca doğrulamak için; 5 Şarj bot korumalı, data/aglar/5sarj.json elle güncellenen kopya) ve BIG Station'ın sisteminden (istasyon fiyatlarıyla) çeker (Otopriz: Open Charge Map'te paylaştığı açık veri, CC-0)  2) EPDK'nın açık servisinden tüm halka açık istasyonları (kesin koordinat + soket) çeker
 # 3) ikisini birleştirip site/istasyonlar.json üretir.
 on:
   schedule:
@@ -36,13 +36,14 @@ jobs:
           "$RUNNER_TEMP/pw/node_modules/.bin/playwright" install --with-deps chromium
           NODE_PATH="$RUNNER_TEMP/pw/node_modules" node tools/voltup_fiyat.mjs
         continue-on-error: true
-      - name: Ağların resmi haritalarından istasyonları çek
-        run: python3 -u tools/ag_istasyonlari.py
-        continue-on-error: true
+      # Otopriz'in listesi OCM'deki Otopriz verisinden (CC-0) alınır: OCM ağ listelerinden önce çekilir
       - name: Open Charge Map istasyonlarını çek
         env:
           OCM_API_KEY: ${{ secrets.OCM_API_KEY }}
         run: python3 -u tools/ocm_cek.py data/ocm/istasyonlar_ocm.json
+        continue-on-error: true
+      - name: Ağların resmi haritalarından istasyonları çek
+        run: python3 -u tools/ag_istasyonlari.py
         continue-on-error: true
       - name: EPDK'nın açık servisinden istasyonları çek (kesin koordinat + soketler; günde tek istek)
         run: python3 -u tools/epdk_cek.py
