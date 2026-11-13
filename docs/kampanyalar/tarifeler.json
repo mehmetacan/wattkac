@@ -934,6 +934,22 @@
     "Beş Şarj"
    ],
    "not": "AC ≤22 kW 8,99, DC 150 kW 15,9 TL/kWh. Sayfaya göre fiyat lokasyona/sokete göre değişebilir; kullanıcı 5 istasyonu uygulamada kontrol etti, aynı. Sayfa bot korumalı: günlük tarama açamaz, fiyat elle (sayfanın ekran görüntüsüyle) güncellenir."
+  },
+  "Tesla": {
+   "ac": null,
+   "dc": {
+    "min": 10.4,
+    "max": 13.0
+   },
+   "kaynak": "https://www.tesla.com/tr_TR/supercharger",
+   "kontrol": "2026-11-13",
+   "gecerlilik": null,
+   "adlar": [
+    "Tesla",
+    "Tesla Supercharger",
+    "Tesla Motors"
+   ],
+   "not": "Tesla Supercharger (250 kW): Tesla dışı araçlar 13,00 TL/kWh; Tesla araçlara %20 indirimli 10,40 TL/kWh. Kaynak Tesla uygulaması (kullanıcının ekran görüntüsü, 13 Kasım 2026); tesla.com otomatik erişime kapalı, fiyat elle güncellenir."
   }
  }
 }
