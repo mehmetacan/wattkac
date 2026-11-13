@@ -1087,6 +1087,26 @@
     "Epsis"
    ],
    "not": "AC (22 kW, Type 2) 9,90, DC (30–480 kW, CCS2) 12,50 TL/kWh, vergiler dahil, 81 ilde aynı fiyat."
+  },
+  "Fast-Go": {
+   "ac": {
+    "min": 9.49,
+    "max": 9.49
+   },
+   "dc": {
+    "min": 12.49,
+    "max": 12.49
+   },
+   "kaynak": "https://fast-go.com.tr/fiyatlandirma/",
+   "kontrol": "2026-11-14",
+   "gecerlilik": null,
+   "adlar": [
+    "Fast-Go",
+    "FastGo",
+    "Fast Go",
+    "FAST-GO"
+   ],
+   "not": "AC (22 kW'a kadar) 9,49, DC (30–180 kW) 12,49 TL/kWh. Kaynak: fiyat sayfasının ekran görüntüsü, kullanıcı uygulamadan doğruladı (14 Kasım 2026). Sitenin SSL sertifikası süresi dolmuş; günlük kontrol açamaz, fiyat elle güncellenir."
   }
  }
 }
