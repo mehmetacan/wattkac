@@ -3,7 +3,7 @@
 "ozet": {
 "denetlenen": {
 "e": 13259,
-"r": 6372,
+"r": 6233,
 "o": 753,
 "c": 2257
 },
@@ -623,12 +623,12 @@
 37.775043
 ],
 "yeni": [
-37.774981,
-30.512252
+37.77498,
+30.51225
 ],
 "kural": "kaynak",
 "neden": "il_uzak",
-"dayanak": "otopriz1032000301",
+"dayanak": "otoprizocm507282",
 "km": 680.8
 },
 {
@@ -659,12 +659,12 @@
 27.89977
 ],
 "yeni": [
-40.220254,
-28.865951
+40.22025,
+28.86595
 ],
 "kural": "kaynak",
 "neden": "il_uyumsuz",
-"dayanak": "otopriz1039000401",
+"dayanak": "otoprizocm507338",
 "km": 109.6
 },
 {

@@ -5,7 +5,10 @@ Lisans: OCM katkıcı verisi CC BY 4.0 (atıf: "© Open Charge Map"). Bazı kay�
 gelir ve kendi lisansları vardır; yalnızca lisansı açık (CC BY / CC0 / ODbL / Open) sağlayıcıların kayıtları alınır.
 API anahtarı OCM_API_KEY ortam değişkeninden okunur (GitHub Actions secret).
 
-Çıktı: data/ocm/istasyonlar_ocm.json  (istasyon_cek.py ile aynı kayıt biçimi)
+Çıktı: data/ocm/istasyonlar_ocm.json  (istasyon_cek.py ile aynı kayıt biçimi; ek alan "v": kaydın OCM'ye geldiği veri
+sağlayıcısı, yalnızca OCM katkıcıları dışındaki sağlayıcılarda yazılır, ör. "Otopriz", "Toger.co").
+Otopriz'in istasyon listesi bu dosyadaki "v": "Otopriz" kayıtlarıdır (Otopriz'in OCM'de paylaştığı açık veri, CC-0):
+tools/ag_istasyonlari.py otopriz bu dosyayı okur, bu yüzden iş akışında bu adım ondan önce çalışır.
 Kullanım: python3 tools/ocm_cek.py [çıktı] [--ozet]
 """
 import json, os, pathlib, re, sys, urllib.parse, urllib.request, datetime, collections
@@ -13,6 +16,7 @@ import json, os, pathlib, re, sys, urllib.parse, urllib.request, datetime, colle
 API = "https://api.openchargemap.io/v3/poi/"
 UA = "WattKac/1.0 (+https://wattkac.com)"
 OPEN_LICENSE = re.compile(r"Creative Commons Attribution|CC[\s-]?BY|CC[\s-]?0|ODbL|Open Data|Public Domain|Open Government", re.I)
+OCM_KATKI = re.compile(r"^Open Charge Map Contributors", re.I)  # OCM'nin kendi katkıcı verisi: "v" yazılmaz
 DC_TYPES = re.compile(r"CCS|CHAdeMO|Supercharger|Combo|GB/T DC", re.I)
 
 
@@ -47,6 +51,9 @@ def conv(p):
     addr = ", ".join(x for x in [ai.get("AddressLine1"), ai.get("Town"), ai.get("StateOrProvince")] if x)
     rec = {"i": f"ocm{p['ID']}", "a": round(a, 5), "o": round(o, 5), "n": (ai.get("Title") or "").strip(), "p": op,
            "k": round(kw), "t": types, "ac": int(ac), "dc": int(dc), "c": cnt, "ad": addr.strip()}
+    dp = ((p.get("DataProvider") or {}).get("Title") or "").strip()
+    if dp and not OCM_KATKI.match(dp):
+        rec["v"] = dp
     return {k: v for k, v in rec.items() if v not in ("", 0, [], None) or k in ("a", "o", "i")}
 
 
@@ -81,7 +88,7 @@ def main():
         sys.exit("Çok az kayıt; dosya güncellenmedi")
     out.parent.mkdir(parents=True, exist_ok=True)
     recs.sort(key=lambda r: r["i"])
-    out.write_text(json.dumps({"kaynak": "© Open Charge Map katkıda bulunanlar (CC BY 4.0)", "cekildi": datetime.date.today().isoformat(),
+    out.write_text(json.dumps({"kaynak": "© Open Charge Map katkıda bulunanlar (CC BY 4.0); Otopriz verisi CC-0", "cekildi": datetime.date.today().isoformat(),
                                "sayi": len(recs), "istasyonlar": recs}, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     print(f"{out}: {len(recs)} istasyon")
 

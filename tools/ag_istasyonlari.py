@@ -27,8 +27,11 @@ Kaynaklar (her biri ağın kendi sitesindeki haritanın kullandığı adres):
                haritasının KML dışa aktarımı). Yalnızca ad + konum var ve liste EPDK kaydından çok daha az istasyon içeriyor:
                bu liste istasyonların yerine geçmez, yalnızca EPDK "K-ŞARJ" kayıtlarını doğrulamak için kullanılır
                (istasyon_birlestir.py DOGRULA). Her kayıtta eşleşen EPDK numarası "e"de tutulur.
-  Otopriz, Neva Şarj, EPSIS, Lumicle, Ecojet   https://<ağ>.mapcontentpartners.service.electroop.io/2.2/locations (electroop OCPI;
+  Neva Şarj, EPSIS, Lumicle, Ecojet   https://<ağ>.mapcontentpartners.service.electroop.io/2.2/locations (electroop OCPI;
                ağların haritası electroop.io/chargestations/index?company=<ağ>). Kayıtlar ünite (EVSE) düzeyinde: istasyonda toplanır.
+  Otopriz      data/ocm/istasyonlar_ocm.json içindeki "v": "Otopriz" kayıtları: Otopriz'in Open Charge Map'te kendi veri
+               sağlayıcısıyla paylaştığı açık veri (CC-0; tools/ocm_cek.py çeker, bu yüzden iş akışında önce çalışır). Otopriz'in
+               electroop listesi Actions sunucularına 403 veriyor (13 Kasım 2026): kodu otopriz_electroop()'ta duruyor, kullanılmıyor.
   Şarjon       https://info.sarjon.com.tr/api/public/stations          (info.sarjon.com.tr/Stations)
   Solinved     https://cpms-api.doldurapp.com/ChargePoint/GetChargePointLocationsMap?tenantCode=SOL (solinvedcharge.com haritası)
   D-Charge     https://dcharge.com.tr/istasyonlar/stations              (dcharge.com.tr/istasyonlar)
@@ -1344,8 +1347,77 @@ def _electroop(ag):
     return [_bitir(r) for r in out]
 
 
-def otopriz():
+def otopriz_electroop():
+    """Otopriz'in electroop OCPI listesi. electroop GitHub Actions sunucularına 403 veriyor (13 Kasım 2026): SOURCES'ta kullanılmıyor,
+    yerine otopriz() (Open Charge Map'teki Otopriz verisi) geçti. İzin gelirse SOURCES'ta yeniden otopriz için kullanılabilir."""
     return _electroop("otopriz")
+
+
+# Otopriz: kendi istasyon verisini Open Charge Map'te "Otopriz" veri sağlayıcısıyla (lisans CC-0) paylaşıyor. tools/ocm_cek.py
+# OCM'yi günde bir kez çeker ve kaydın veri sağlayıcısını "v" alanına yazar; burada yalnızca "v": "Otopriz" kayıtları alınır (OCM
+# katkıcılarının Otopriz işletmecili kayıtları alınmaz). OCM kayıtları çoğunlukla ünite düzeyinde ("Kiza, Seyhan - DC-1", "- AC"):
+# electroop'taki gibi ad kökü + konumla istasyonda toplanır, aynı ayıklama kuralları (YENI_HARIC: konut/site, test, depo …) uygulanır.
+OTOPRIZ_OCM = pathlib.Path("data/ocm/istasyonlar_ocm.json")
+OTOPRIZ_OCM_SAYFA = "https://openchargemap.org/site/country/TR"
+OTOPRIZ_SAGLAYICI = r"^otopriz\b"
+OTOPRIZ_ISLETMECI = r"\botopriz\b"
+
+
+def _otopriz_kok(n):
+    return _ocpi_kok(re.sub(r"(?i)^oto ?priz\s*(-\s*)?", "", " ".join(str(n or "").split())))
+
+
+def otopriz():
+    import konum_denetim as kd
+    sirket, marka, rx, onek = ELECTROOP["otopriz"]
+    d = json.loads(OTOPRIZ_OCM.read_text(encoding="utf-8"))
+    tum = d.get("istasyonlar") or []
+    if any("v" in x for x in tum):
+        liste = [x for x in tum if re.search(OTOPRIZ_SAGLAYICI, kd.fold(x.get("v") or ""))]
+    else:  # veri sağlayıcısı alanı olmayan eski dosya (ocm_cek.py "v" yazmadan önce): işletmeci adına göre, uyarıyla
+        liste = [x for x in tum if re.search(OTOPRIZ_ISLETMECI, kd.fold(x.get("p") or ""))]
+        print(f"otopriz: UYARI {OTOPRIZ_OCM} veri sağlayıcısı alanı (v) içermiyor; işletmeci adına göre seçildi ({len(liste)} kayıt)")
+    birim, haric, disari, haric_unite = [], [], [], {}
+    for x in liste:
+        a, o = x.get("a"), x.get("o")
+        if not _turkiyede(a, o):
+            disari.append(f"{x.get('n')} ({a}, {o})"); continue
+        neden = _haric(x.get("n"), grup=False)
+        if neden:
+            k = (_tr_ad(_otopriz_kok(x.get("n"))), neden)
+            haric_unite[k] = haric_unite.get(k, 0) + 1; continue
+        birim.append(dict(x, n=x.get("n") or "", il=kd.il_serbest(x.get("ad")), adres=x.get("ad") or ""))
+    out = []
+    for g in _grupla(birim, _otopriz_kok):
+        neden = next((n for b in g for n in [_haric(b["n"], grup=True)] if n), None)
+        ad = _cok_gecen([_otopriz_kok(b["n"]) for b in g])
+        if neden:
+            haric.append(f"{_tr_ad(ad)} ({neden}, {len(g)} ünite)"); continue
+        ad = _tr_ad(ad)
+        a, o = sum(b["a"] for b in g) / len(g), sum(b["o"] for b in g) / len(g)
+        r = {"i": "otopriz" + min(b["i"] for b in g), "a": round(a, 6), "o": round(o, 6), "n": ad, "b": marka}
+        for b in g:
+            # OCM kaydında soket sayısı (c) ve AC/DC var mı bilgisi var; ikisi birden varsa bir soket AC, kalanı DC sayılır
+            n = int(b.get("c") or 1)
+            for tip, adet in ((("ac", 1), ("dc", max(n - 1, 1))) if b.get("dc") and b.get("ac") else (("dc" if b.get("dc") else "ac", n),)):
+                r[tip] = r.get(tip, 0) + adet
+                r["c"] = r.get("c", 0) + adet
+            for t in b.get("t") or []:
+                if t not in r.setdefault("t", []):
+                    r["t"].append(t)
+            if b.get("k") and b["k"] <= 400:
+                r["k"] = max(r.get("k", 0), b["k"])
+        il = next((b["il"] for b in g if b["il"]), None)
+        r["ad"] = _cv_adres(_cok_gecen([b["adres"] for b in g]), il, None)
+        if il:
+            r["il"] = il
+        out.append(r)
+    haric = [f"{ad} ({n}, {k} ünite)" for (ad, n), k in sorted(haric_unite.items())] + haric
+    print(f"otopriz: Open Charge Map ({d.get('cekildi')}) Otopriz kaydı {len(liste)} → gösterilecek {len(birim)} → {len(out)} istasyon"
+          + (f"; Türkiye dışı {len(disari)}: {'; '.join(disari)}" if disari else ""))
+    _rapor_haric("otopriz", haric)
+    _epdk_eslestir("otopriz", out, rx)
+    return [_bitir(r) for r in out]
 
 
 def neva():
@@ -1832,7 +1904,8 @@ SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            "cv": (cv, CV_SAYFA, 50),
            "acropol": (acropol, ACROPOL_SAYFA, 15),
            "ksarj": (ksarj, KSARJ_SAYFA, 30),
-           "otopriz": (otopriz, ELECTROOP_SAYFA.format("otopriz"), 250),
+           # Otopriz: electroop (otopriz_electroop) Actions sunucularına 403 veriyor; kaynak Otopriz'in OCM'deki açık verisi (CC-0)
+           "otopriz": (otopriz, OTOPRIZ_OCM_SAYFA, 250),
            "neva": (neva, ELECTROOP_SAYFA.format("nevasarj"), 30),
            "epsis": (epsis, ELECTROOP_SAYFA.format("epsis"), 10),
            "lumicle": (lumicle, ELECTROOP_SAYFA.format("lumicle"), 30),
