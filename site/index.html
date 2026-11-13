@@ -738,7 +738,9 @@ const KNOWN_EXTRA = { "ZES": ["\\bzes\\b"], "Sharz.net": ["sharz"], "Tesla": ["t
   "Petrol Ofisi": ["petrol ofisi"], "Opet": ["\\bopet\\b"], "BP": ["\\bbp\\b"], "Aytemiz": ["aytemiz"], "Power Şarj": ["powersarj", "power sarj"],
   "Zeplin": ["zeplin"], "Otojet": ["otojet"], "Oncharge": ["oncharge"], "D-Charge": ["d-charge", "d charge"], "5 Şarj": ["\\b5 sarj"], "otoWATT": ["otowatt"],
   "Efish": ["efish"], "EPSIS": ["epsis"], "EKA Enerji": ["eka enerji"], "Magic Line": ["magic line"], "K-Şarj": ["k-sarj", "k sarj"], "Neva Şarj": ["neva sarj"], "TOGG": ["\\btogg\\b"], "CV Şarj": ["charging vehicles", "cv charging"],
-  "VoltUp": ["\\bvolt ?up\\b"], "RST Charge Point": ["\\brst\\b ?(charge|sarj|teknoloji)"] };
+  "VoltUp": ["\\bvolt ?up\\b"], "RST Charge Point": ["\\brst\\b ?(charge|sarj|teknoloji)"],
+  // Windmark markası BIG Station adını aldı (işletmeci BSX Enerji); EPDK kaydında marka hâlâ "windmark" yazıyor
+  "BIG Station": ["\\bbig ?station\\b", "\\bwindmark\\b", "\\bbsx enerji"] };
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -1566,7 +1568,7 @@ const BRAND = {
   "TOGG": ["#111827", "#fff", "Tg"], "Petrol Ofisi": ["#E30613", "#fff", "PO"], "Petrol Ofisi e-POWER": ["#E30613", "#fff", "PO"],
   "Opet": ["#0057A8", "#fff", "Op"], "BP": ["#009B3A", "#FFE600", "bp"], "Powerşarj": ["#2563EB", "#fff", "P"],
   "Tunçmatik": ["#DC2626", "#fff", "Tm"], "D-Charge": ["#0F172A", "#fff", "D"], "Oncharge": ["#0891B2", "#fff", "On"],
-  "VoltUp": ["#FF5714", "#fff", "VU"], "RST Charge Point": ["#0B213E", "#00D26A", "R"]
+  "VoltUp": ["#FF5714", "#fff", "VU"], "RST Charge Point": ["#0B213E", "#00D26A", "R"], "BIG Station": ["#2E7D32", "#fff", "BS"]
 };
 const PALETTE = ["#2563EB", "#DB2777", "#059669", "#D97706", "#7C3AED", "#0891B2", "#B45309", "#4338CA", "#BE123C", "#0D9488"];
 function brandStyle(s) {
