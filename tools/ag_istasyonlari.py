@@ -1829,6 +1829,7 @@ SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            "epsis": (epsis, ELECTROOP_SAYFA.format("epsis"), 10),
            "lumicle": (lumicle, ELECTROOP_SAYFA.format("lumicle"), 30),
            "ecojet": (ecojet, ELECTROOP_SAYFA.format("ecojet"), 3),
+           "sarjon": (sarjon, SARJON_SAYFA, 40),
            }
 
 
