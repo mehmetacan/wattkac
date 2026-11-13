@@ -27,8 +27,11 @@ Kaynaklar (her biri ağın kendi sitesindeki haritanın kullandığı adres):
                haritasının KML dışa aktarımı). Yalnızca ad + konum var ve liste EPDK kaydından çok daha az istasyon içeriyor:
                bu liste istasyonların yerine geçmez, yalnızca EPDK "K-ŞARJ" kayıtlarını doğrulamak için kullanılır
                (istasyon_birlestir.py DOGRULA). Her kayıtta eşleşen EPDK numarası "e"de tutulur.
-  Neva Şarj, EPSIS, Lumicle, Ecojet   https://<ağ>.mapcontentpartners.service.electroop.io/2.2/locations (electroop OCPI;
+  Neva Şarj, Lumicle, Ecojet   https://<ağ>.mapcontentpartners.service.electroop.io/2.2/locations (electroop OCPI;
                ağların haritası electroop.io/chargestations/index?company=<ağ>). Kayıtlar ünite (EVSE) düzeyinde: istasyonda toplanır.
+  EPSIS        https://www.epsis.net/api/public/locations?lang=tr      (www.epsis.net/lokasyonlar; tek istek, istasyon düzeyinde GeoJSON).
+               EPSIS telefonda izin verdi (14 Kasım 2026): 'siteden alabilirsiniz, kaynaklarımız açık'. robots.txt /api/ yasağı bu
+               izinle aşılıyor; yalnızca /api/public/locations kullanılır. Eski electroop kaynağı epsis_electroop()'ta, kullanılmıyor.
   Otopriz      data/ocm/istasyonlar_ocm.json içindeki "v": "Otopriz" kayıtları: Otopriz'in Open Charge Map'te kendi veri
                sağlayıcısıyla paylaştığı açık veri (CC-0; tools/ocm_cek.py çeker, bu yüzden iş akışında önce çalışır). Otopriz'in
                electroop listesi Actions sunucularına 403 veriyor (13 Kasım 2026): kodu otopriz_electroop()'ta duruyor, kullanılmıyor.
@@ -1434,8 +1437,104 @@ def neva():
     return _electroop("neva")
 
 
-def epsis():
+def epsis_electroop():
+    """EPSIS'in electroop OCPI listesi (eski kaynak). electroop Actions/Cloudflare sunucularına 403 veriyor (13 Kasım 2026): SOURCES'ta
+    kullanılmıyor, kaynak EPSIS'in kendi haritasının ucu (epsis(), aşağıda)."""
     return _electroop("epsis")
+
+
+# EPSIS: ağın kendi haritası (www.epsis.net/lokasyonlar) tüm istasyonları tek istekte https://www.epsis.net/api/public/locations?lang=tr
+# ucundan okur (GeoJSON FeatureCollection + meta). EPSIS telefonda izin verdi (14 Kasım 2026): 'siteden alabilirsiniz, kaynaklarımız
+# açık'. robots.txt /api/ yasağı bu izinle aşılıyor; yalnızca /api/public/locations kullanılır (yakında açılacaklar ucu
+# /api/public/locations/soon ve başka /api/ yolu kullanılmaz). Günde bir istek (iş akışı).
+# Alanlar (sitenin map.js / map-shared.js kodundan): id lokasyon (istasyon) kimliği, s slug, n ad, c il, d ilçe, p plaka kodu, a adres,
+# st durum (a boşta, b dolu, f arızalı/çevrimdışı, u bilinmiyor, m bakımda, p yakında), aa/ad müsait AC/DC soket, ta/td toplam AC/DC
+# soket, bb dolu soket, ff arızalı+çevrimdışı soket, ka/kd en yüksek AC/DC kW, k güç düzeyleri ("a22x1,d80x2": AC 22 kW 1 soket, DC
+# 80 kW 2 soket), cx soket standardı bitleri (1 Type 2, 2 CCS2, 4 CHAdeMO, 8 GB/T, 16 Schuko), fm soket biçimi (1 priz, 2 kablolu),
+# ac erişim (p herkese açık, c müşterilere, diğer: site sakinlerine), r kısıtlı erişim, nw yeni, im görsel, l electroop OCPI lokasyon
+# kimlikleri. Tutulanlar: ad, konum, adres/il, soket sayısı/türü/gücü; anlık durum listeye yazılmaz. Kimlik electroop listesindeki
+# gibi "epsis" + en küçük OCPI lokasyon kimliği (önceki kayıtlarla aynı kalsın); "cih"te EPSIS lokasyon kimliği: site detay açılınca
+# /api/durum/epsis?c=… ile o lokasyonun boş/dolu soket sayısını sorar. meta.tariff (AC/DC TL/kWh) kayda "tarife" olarak yazılır ve
+# site/tarifeler.json "EPSIS" ile karşılaştırılır (fark raporlanır; fiyat buradan değiştirilmez).
+EPSIS_URL = "https://www.epsis.net/api/public/locations?lang=tr"
+EPSIS_SAYFA = "https://www.epsis.net/lokasyonlar"
+_EPSIS_CX = [(1, "ac", "Type 2"), (16, "ac", "Schuko"), (8, "ac", "GB/T"), (2, "dc", "CCS"), (4, "dc", "CHAdeMO")]
+EK = {}  # ağ → çıktı dosyasına eklenecek alanlar (EPSIS: tarife)
+
+
+def _epsis_tarife(meta):
+    t = (meta or {}).get("tariff") or {}
+    try:
+        ac, dc = float(t["ac_kwh"]), float(t["dc_kwh"])
+    except (KeyError, TypeError, ValueError):
+        print("epsis: meta.tariff okunamadı")
+        return
+    trf = {"ac": ac, "dc": dc, "gecerlilik": t.get("valid_from"), "kdv_dahil": t.get("vat_included")}
+    EK["epsis"] = {"tarife": trf}
+    try:
+        k = json.loads(pathlib.Path("site/tarifeler.json").read_text(encoding="utf-8"))["aglar"]["EPSIS"]
+        ayni = k["ac"]["min"] == k["ac"]["max"] == ac and k["dc"]["min"] == k["dc"]["max"] == dc
+        print(f"epsis: haritadaki tarife AC {ac} / DC {dc} TL/kWh (geçerlilik {trf['gecerlilik']}, KDV dahil {trf['kdv_dahil']}); "
+              + ("site/tarifeler.json ile aynı" if ayni else f"site/tarifeler.json FARKLI (AC {k['ac']}, DC {k['dc']}): resmi tarife sayfasında doğrulanmalı"))
+    except (OSError, KeyError, TypeError, ValueError):
+        print(f"epsis: haritadaki tarife AC {ac} / DC {dc} TL/kWh; site/tarifeler.json'da EPSIS okunamadı")
+
+
+def epsis():
+    import konum_denetim as kd
+    j = json.loads(get(EPSIS_URL, timeout=90))
+    feats = ((j.get("data") or {}).get("features")) if isinstance(j, dict) else None
+    if not isinstance(feats, list):
+        raise RuntimeError("yanıtta data.features yok")
+    meta = j.get("meta") or {}
+    _, _, rx, _ = ELECTROOP["epsis"]
+    out, haric, disari = [], [], []
+    for f in feats:
+        p = (f or {}).get("properties") or {}
+        ad = _tr_ad(p.get("n"))
+        try:
+            o, a = (float(x) for x in f["geometry"]["coordinates"][:2])
+        except (KeyError, TypeError, ValueError):
+            disari.append(ad); continue
+        if not _turkiyede(a, o):
+            disari.append(f"{ad} ({a}, {o})"); continue
+        if p.get("st") == "p":
+            haric.append(f"{ad} (yakında açılacak)"); continue
+        if p.get("r") or p.get("ac", "p") != "p":
+            haric.append(f"{ad} (kısıtlı erişim)"); continue
+        neden = _haric(p.get("n"))
+        if neden:
+            haric.append(f"{ad} ({neden})"); continue
+        ocpi = sorted(str(x) for x in p.get("l") or [] if re.fullmatch(r"[A-Za-z0-9_-]{1,40}", str(x)))
+        lid = str(p.get("id", ""))
+        if not re.fullmatch(r"\d{1,9}", lid):
+            disari.append(f"{ad} (kimlik yok)"); continue
+        r = {"i": "epsis" + re.sub(r"\W", "", ocpi[0] if ocpi else "e" + lid).lower(), "a": round(a, 6), "o": round(o, 6), "n": ad, "b": "EPSIS"}
+        cx = int(p.get("cx") or 0)
+        for m in re.finditer(r"([ad])(\d+(?:\.\d+)?)x(\d+)", str(p.get("k") or "")):
+            yan = "ac" if m[1] == "a" else "dc"
+            tur = next((t for b, y, t in _EPSIS_CX if y == yan and cx & b), None)
+            _soket(r, yan, int(m[3]), float(m[2]), tur)
+        if not r.get("c"):  # güç düzeyi yoksa toplam soket sayıları
+            _soket(r, "ac", int(p.get("ta") or 0), float(p.get("ka") or 0))
+            _soket(r, "dc", int(p.get("td") or 0), float(p.get("kd") or 0))
+        for b, y, t in _EPSIS_CX:
+            if cx & b and r.get(y) and t not in r.setdefault("t", []):
+                r["t"].append(t)
+        if p.get("st") == "m":
+            r["bakim"] = 1
+        r["cih"] = [lid]
+        il = _il(p.get("c")) or kd.il_serbest(p.get("a"))
+        r["ad"] = _cv_adres(" ".join(str(p.get("a") or "").split()), il, p.get("d") or None)
+        if il:
+            r["il"] = il
+        out.append(r)
+    print(f"epsis: haritada {len(feats)} istasyon → {len(out)}" + (f"; konumsuz/Türkiye dışı {len(disari)}: {'; '.join(disari)}" if disari else "")
+          + f"; meta: count {meta.get('count')}, updated_at {meta.get('updated_at')}, stale {meta.get('stale')}")
+    _rapor_haric("epsis", haric)
+    _epdk_eslestir("epsis", out, rx)
+    _epsis_tarife(meta)
+    return [_bitir(r) for r in out]
 
 
 def lumicle():
@@ -1917,7 +2016,8 @@ SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            # Otopriz: electroop (otopriz_electroop) Actions sunucularına 403 veriyor; kaynak Otopriz'in OCM'deki açık verisi (CC-0)
            "otopriz": (otopriz, OTOPRIZ_OCM_SAYFA, 250),
            "neva": (neva, ELECTROOP_SAYFA.format("nevasarj"), 30),
-           "epsis": (epsis, ELECTROOP_SAYFA.format("epsis"), 10),
+           # EPSIS: kendi haritasının ucu (EPSIS telefonda izin verdi, 14 Kasım 2026; electroop listesi epsis_electroop()'ta, kullanılmıyor)
+           "epsis": (epsis, EPSIS_SAYFA, 50),
            "lumicle": (lumicle, ELECTROOP_SAYFA.format("lumicle"), 30),
            "ecojet": (ecojet, ELECTROOP_SAYFA.format("ecojet"), 3),
            "sarjon": (sarjon, SARJON_SAYFA, 40),
@@ -1979,7 +2079,7 @@ def main():
             continue
         recs.sort(key=lambda r: r["i"])
         f = OUT / f"{key}.json"
-        data = {"ag": key, "kaynak": page, "cekildi": datetime.date.today().isoformat(), "sayi": len(recs), "istasyonlar": recs}
+        data = {"ag": key, "kaynak": page, "cekildi": datetime.date.today().isoformat(), "sayi": len(recs), **EK.pop(key, {}), "istasyonlar": recs}
         f.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
         print(f"{key}: {len(recs)} istasyon")
     if failed == len(secilen):

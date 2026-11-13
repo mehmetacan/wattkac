@@ -12,7 +12,8 @@
 //   /api/bildirim/*              → web push aboneliği (aşağıda "Bildirimler")
 //   GET  /api/durum/bigstation?c=95,96 → BIG Station cihazlarının anlık boş / şarjda durumu (aşağıda "Anlık durum")
 //   GET  /api/durum/acropol?c=59,60   → Acropol Şarj soketlerinin anlık boş / şarjda durumu (aynı bölüm)
-//   GET  /api/durum/<ağ>?c=…          → neva, epsis, lumicle, ecojet (electroop OCPI) ve solinved için aynısı (aynı bölüm)
+//   GET  /api/durum/<ağ>?c=…          → neva, lumicle, ecojet (electroop OCPI) ve solinved için aynısı (aynı bölüm)
+//   GET  /api/durum/epsis?c=183,97    → EPSIS lokasyonlarının boş / dolu / toplam soket sayısı (aynı bölüm)
 const ANA = "wattkac.com";
 const YONLENDIR = new Set(["www.wattkac.com", "wattkac.xyz", "www.wattkac.xyz"]);
 const TURLER = new Set(["hata", "istasyon", "fiyat", "kampanya", "oneri", "diger"]);
@@ -288,7 +289,9 @@ async function bildirimGonder(env, gonder = fetch) {
 /* ---------- Anlık durum: BIG Station, Acropol Şarj, electroop OCPI ağları, Solinved ----------
    GET /api/durum/bigstation?c=95,96,97  → {ok, zaman, cihazlar: {"95": "bos" | "sarj" | "bilinmiyor", …}}
    GET /api/durum/acropol?c=59,60        → aynı biçim; kimlikler Acropol soket kimlikleri
-   GET /api/durum/neva|epsis|lumicle|ecojet?c=L231,L230 → aynı biçim; kimlikler OCPI lokasyon kimlikleri (her lokasyon bir ünite)
+   GET /api/durum/neva|lumicle|ecojet?c=L231,L230 → aynı biçim; kimlikler OCPI lokasyon kimlikleri (her lokasyon bir ünite)
+   GET /api/durum/epsis?c=183,97         → {ok, zaman, guncel, cihazlar: {"183": {bos, dolu, toplam} | "bilinmiyor", …}}; kimlikler EPSIS
+                                           lokasyon (istasyon) kimlikleri, sayılar soket sayısı
    GET /api/durum/solinved?c=28656       → aynı biçim; kimlikler Solinved soket (connector) kimlikleri
    Ağ yalnızca DURUM_AGLAR'daki izinli listeden seçilir; her ağın kimlik biçimi ve istek başına en çok kimlik sayısı ayrıdır.
    Ortak kurallar (her ağ için ayrı önbellek girdisi):
@@ -309,7 +312,7 @@ async function bildirimGonder(env, gonder = fetch) {
      (getAllAndFilteredStations, ≈150 KB, tüm istasyonlar tek istekte; yenileme başına 1 istek). Soket durumu (OCPP):
      Available → "bos"; Preparing / Charging / SuspendedEV / SuspendedEVSE / Finishing → "sarj" (soket dolu);
      Closed (çevrimdışı), Faulted, Unavailable, Reserved ve bilinmeyenler → "bilinmiyor".
-   Neva Şarj, EPSIS, Lumicle, Ecojet: kaynak, ağların haritasının (electroop.io/chargestations/index?company=<ağ>) kullandığı giriş
+   Neva Şarj, Lumicle, Ecojet: kaynak, ağların haritasının (electroop.io/chargestations/index?company=<ağ>) kullandığı giriş
      gerektirmeyen OCPI 2.2 "locations" listesi (<ağ>.mapcontentpartners.service.electroop.io/2.2/locations). Tek lokasyon ucu
      (/locations/{id}) yok (404) ve sayfalama parametreleri yok sayılıyor: yenileme başına tüm liste, 1 istek (50–650 KB; sıkıştırılmış
      5–60 KB). CPU sınırı için JSON.parse yapılmaz: metin yalnızca '{"id":"…","country_code"' (lokasyon başı) ve
@@ -317,6 +320,16 @@ async function bildirimGonder(env, gonder = fetch) {
      OCPI 2.2 EVSE durumu: AVAILABLE → "bos"; CHARGING ve BLOCKED (soketin önü/park yeri dolu) → "sarj"; RESERVED, OUTOFORDER,
      INOPERATIVE, PLANNED, REMOVED, UNKNOWN ve bilinmeyenler → "bilinmiyor" (Acropol'deki Reserved gibi).
      Otopriz aynı platformda ama listesi 1,2 MB: metne çevirip taramak ≈10–15 ms CPU (ücretsiz plan sınırı 10 ms); eklenmedi.
+     EPSIS de electroop'taydı; electroop Cloudflare'e 403 verdiği için EPSIS artık kendi haritasının ucundan (aşağıda) okunur.
+   EPSIS: kaynak, ağın kendi haritasının (www.epsis.net/lokasyonlar) kullandığı https://www.epsis.net/api/public/locations?lang=tr
+     (GeoJSON, ≈100 KB, tüm istasyonlar tek istekte; yenileme başına 1 istek). EPSIS telefonda izin verdi (14 Kasım 2026): 'siteden
+     alabilirsiniz, kaynaklarımız açık'. robots.txt /api/ yasağı bu izinle aşılıyor; yalnızca /api/public/locations kullanılır (başka
+     /api/ yolu çağrılmaz). Alanlar (EPSIS'in map.js / map-shared.js kodundan): properties.id lokasyon kimliği, aa/ad müsait AC/DC
+     soket, ta/td toplam AC/DC soket, bb dolu (şarjda / bloke / rezerve) soket, st lokasyon durumu (m bakımda, p yakında). Yalnızca
+     bunlar okunur: boş = aa+ad, dolu = bb, toplam = ta+td; kalan (arızalı, çevrimdışı, bilinmeyen) sitede "durumu bilinmiyor" olur.
+     EPSIS sunucusu sayıları kendi kaynağından (electroop) yeniler; meta.updated_at son yenileme, meta.stale yenilemenin aksadığını
+     bildirir. meta.stale true ise ya da meta.updated_at EPSIS_TAZE_DK dakikadan eskiyse (veya okunamıyorsa) tüm kimlikler
+     "bilinmiyor" döner: bayat sayı gösterilmez. Bayatlık her istekte önbellekteki "guncel" ile yeniden hesaplanır.
    Solinved: kaynak, ağın haritası (solinvedcharge.com) olan Doldur CPMS kiracı sayfası (GetChargePointLocationsMap?tenantCode=SOL,
      ≈55 KB HTML; yenileme başına 1 istek). Sayfadaki chargePointsData dizisinden yalnızca soket kimliği ve lastStatus (OCPP) okunur;
      eşleme Acropol ile aynı. */
@@ -331,6 +344,10 @@ const OCPI_URL = "https://{}.mapcontentpartners.service.electroop.io/2.2/locatio
 const OCPI_DURUM = { AVAILABLE: "bos", CHARGING: "sarj", BLOCKED: "sarj" };
 const OCPI_KALIP = /\{"id":"([A-Za-z0-9][A-Za-z0-9_-]{0,39})","country_code"|"evse_id":"[^"]{0,80}","status":"([A-Z_]{1,20})"/g;
 const SOL_URL = "https://cpms-api.doldurapp.com/ChargePoint/GetChargePointLocationsMap?tenantCode=SOL";
+// EPSIS telefonda izin verdi (14 Kasım 2026): 'siteden alabilirsiniz, kaynaklarımız açık'. robots.txt /api/ yasağı bu izinle
+// aşılıyor; yalnızca /api/public/locations kullanılır.
+const EPSIS_URL = "https://www.epsis.net/api/public/locations?lang=tr";
+const EPSIS_TAZE_DK = 15;
 
 // BIG Station: tek cihaz kaydı → durum (yalnızca status ve liveStatus okunur)
 function cihazDurumu(x) {
@@ -420,20 +437,55 @@ async function solCek(getir, signal) {
   if (!Object.keys(harita).length) throw new Error("durum boş");
   return harita;
 }
+// EPSIS: lokasyon kimliği → {bos, dolu, toplam} (yalnızca id, aa, ad, ta, td, bb, st okunur) + meta güncelliği.
+// Ham yanıt yalnızca bu blokta yaşar.
+const sayi = v => (Number.isInteger(v) && v >= 0 && v <= 999 ? v : null);
+async function epsisCek(getir, signal) {
+  const r = await getir(EPSIS_URL, { headers: DURUM_BASLIK, signal });
+  if (!r.ok) throw new Error("durum " + r.status);
+  let j = await r.json();
+  const liste = j && j.data && j.data.features, meta = (j && j.meta) || {};
+  if (!Array.isArray(liste)) throw new Error("durum biçim");
+  const harita = {};
+  for (const f of liste) {
+    const p = f && f.properties;
+    if (!p || typeof p !== "object") continue;
+    const id = String(p.id ?? "");
+    if (!kimlikGecerli(id) || id in harita) continue;
+    const aa = sayi(p.aa), ad = sayi(p.ad), ta = sayi(p.ta), td = sayi(p.td), bb = sayi(p.bb);
+    if (p.st === "m" || p.st === "p" || [aa, ad, ta, td, bb].includes(null) || aa > ta || ad > td || aa + ad + bb > ta + td || !(ta + td)) {
+      harita[id] = "bilinmiyor"; continue;
+    }
+    harita[id] = { bos: aa + ad, dolu: bb, toplam: ta + td };
+  }
+  const guncel = meta.stale === false && typeof meta.updated_at === "string" && meta.updated_at.length <= 40 ? meta.updated_at : null;
+  j = null;
+  if (!Object.keys(harita).length) throw new Error("durum boş");
+  return { c: harita, guncel };
+}
+// EPSIS verisi taze mi (meta.stale false ve updated_at son EPSIS_TAZE_DK dakika içinde; saat farkı için 2 dk ileriye izin)
+function epsisTaze(guncel, simdi = Date.now()) {
+  const t = typeof guncel === "string" ? Date.parse(guncel) : NaN;
+  return Number.isFinite(t) && simdi - t <= EPSIS_TAZE_DK * 60000 && t - simdi <= 120000;
+}
 const ocpiAg = sirket => ({ anahtar: `https://wattkac.com/__durum/${sirket}`, cek: (g, s) => ocpiCek(sirket, g, s), kimlik: ocpiKimlik, enCok: 40 });
 // İzinli ağlar. kimlik: kimlik biçimi (yoksa 1–9 haneli sayı), enCok: istek başına en çok kimlik (yoksa DURUM_EN_COK)
 const DURUM_AGLAR = {
   bigstation: { anahtar: "https://wattkac.com/__durum/bigstation", cek: bigCek },
   acropol: { anahtar: "https://wattkac.com/__durum/acropol", cek: acropolCek },
   neva: ocpiAg("nevasarj"),
-  epsis: ocpiAg("epsis"),
+  // EPSIS: kendi haritasının ucu (electroop'taki eski "epsis" girdisinin yerine); guncellik: meta güncelliği denetlenir
+  epsis: { anahtar: "https://wattkac.com/__durum/epsis", cek: epsisCek, guncellik: true },
   lumicle: ocpiAg("lumicle"),
   ecojet: ocpiAg("ecojet"),
   solinved: { anahtar: "https://wattkac.com/__durum/solinved", cek: solCek },
 };
 async function durumCek(ag, getir) {
   const ac = new AbortController(), zam = setTimeout(() => ac.abort(), DURUM_SURE_MS);
-  try { return { zaman: new Date().toISOString(), c: await DURUM_AGLAR[ag].cek(getir, ac.signal) }; }
+  try {
+    const a = DURUM_AGLAR[ag], c = await a.cek(getir, ac.signal);
+    return a.guncellik ? { zaman: new Date().toISOString(), c: c.c, guncel: c.guncel } : { zaman: new Date().toISOString(), c };
+  }
   finally { clearTimeout(zam); }
 }
 const durumYanit = (o, sn) => new Response(JSON.stringify(o), { headers: { "content-type": "application/json", "cache-control": `max-age=${sn}` } });
@@ -469,9 +521,10 @@ async function durumIstek(ag, request, url, ctx, getir = fetch) {
   let d;
   try { d = await durumAnlik(ag, ctx, getir); } catch { d = { hata: 1 }; }
   if (d.hata || !d.c) return json({ ok: false, neden: d.neden || "diğer" }, 503);
-  const cihazlar = {};
-  for (const id of ids) cihazlar[id] = Object.prototype.hasOwnProperty.call(d.c, id) ? d.c[id] : "bilinmiyor";
-  return json({ ok: true, zaman: d.zaman, cihazlar }, 200, { "cache-control": "public, max-age=60" });
+  const cihazlar = {}, bayat = a.guncellik && !epsisTaze(d.guncel);   // bayat veri: tüm kimlikler "bilinmiyor"
+  for (const id of ids) cihazlar[id] = !bayat && Object.prototype.hasOwnProperty.call(d.c, id) ? d.c[id] : "bilinmiyor";
+  const o = a.guncellik ? { ok: true, zaman: d.zaman, guncel: d.guncel || null, cihazlar } : { ok: true, zaman: d.zaman, cihazlar };
+  return json(o, 200, { "cache-control": "public, max-age=60" });
 }
 
 export default {
