@@ -11,6 +11,8 @@ UYARI: gözden geçirilmesi iyi olan durumlar
   - "kontrol": true (resmi sayfası açılamamış) kampanyalar, 7 günden eski fiyat kontrolü, fiyatı olmayan ağlar
   - istasyon konum denetimi (tools/konum_denetim.py) haritadan istasyonların %1'inden fazlasını çıkarmış ya da
     %2'sinden fazlasının konumunu değiştirmiş: kaynak verisinde toplu bir bozulma olabilir
+  - elle güncellenen ağ kopyası (bot korumalı site, ör. data/aglar/5sarj.json) KOPYA_GUN günden eski: haritada o ağın listesi
+    gösterildiğinden kullanıcıdan yeni kopya istenmeli
 
 Girdiler: data/kampanyalar.json, site/tarifeler.json, data/epdk/konum_duzeltmeleri.json, site/istasyonlar.json
 """
@@ -24,6 +26,9 @@ TARAMA_GUN = 2   # günlük tarama en fazla bu kadar gün gecikebilir
 FIYAT_GUN = 7    # fiyatlar en fazla bu kadar gün kontrolsüz kalabilir
 KONUM_CIKAN = 0.01    # konum denetiminin haritadan çıkardığı kayıt / istasyon sayısı bu oranı aşarsa uyarı
 KONUM_DEGISEN = 0.02  # konumu değiştirilen kayıt oranı bunu aşarsa uyarı
+KOPYA_GUN = 60        # elle güncellenen ağ kopyası en fazla bu kadar gün eski olabilir (sonra uyarı)
+# Günlük iş akışının çekemediği (bot korumalı), kullanıcının tarayıcısından elle kopyalanan ağ listeleri: dosya → (ağ adı, ne istenmeli)
+ELLE_KOPYA = {"5sarj": ("5 Şarj", "5sarj.com/api/locations/map-pins kopyası (tools/5sarj_kopya.py ile dönüştürülür)")}
 
 hatalar, uyarilar = [], []
 hata, uyari = hatalar.append, uyarilar.append
@@ -168,6 +173,19 @@ def konum_denetimi():
               "data/epdk/konum_duzeltmeleri.json'a bakılmalı")
 
 
+def elle_kopyalar(bugun):
+    """Elle güncellenen ağ kopyaları eskidiyse uyarır (hata değil: veri haritada gösterilmeye devam eder)."""
+    for ag, (ad, iste) in ELLE_KOPYA.items():
+        f = KOK / "data/aglar" / f"{ag}.json"
+        if not f.exists():
+            continue
+        c = json.loads(f.read_text(encoding="utf-8")).get("cekildi") or ""
+        if not TARIH.match(c):
+            uyari(f"{ad} kopyası ({f.relative_to(KOK)}): 'cekildi' tarihi yok; kullanıcıdan {iste} istenmeli")
+        elif gun_farki(c, bugun) > KOPYA_GUN:
+            uyari(f"{ad} kopyası {gun_farki(c, bugun)} gündür güncellenmedi (son: {c}); kullanıcıdan {iste} istenmeli")
+
+
 def main():
     guncellik = "--yapi" not in sys.argv
     bugun = bugun_tr()
@@ -175,6 +193,8 @@ def main():
         aglar = kampanyalar(bugun, guncellik)
         tarifeler(bugun, guncellik, aglar)
         konum_denetimi()
+        if guncellik:
+            elle_kopyalar(bugun)
     except (OSError, ValueError) as ex:
         hata(f"Dosya okunamadı: {ex}")
     for u in uyarilar:

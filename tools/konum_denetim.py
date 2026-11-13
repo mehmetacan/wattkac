@@ -44,6 +44,9 @@ OSM / OCM / resmi liste kayıtları: adreslerindeki il çoğu zaman güvenilmez 
 WAT'ta yanlış il), bu yüzden il uyuşmazlığında yalnızca kesin kanıtla işlem yapılır: çok uzaksa takas, ya da aynı
 istasyonun adresteki ildeki EPDK kaydı. Türkiye dışındaki nokta takasla düzelmiyorsa: komşu ülkedeki gerçek istasyonlar
 (Bulgaristan, Yunanistan, KKTC) "yurt dışı" sayılıp sessizce, diğerleri "cikarildi" olarak çıkarılır.
+Resmi liste kayıtlarında il, adresten ya da ağın kendi "il" alanından (ör. 5 Şarj) alınır. DOGRULA ağlarının (ör. K-Şarj) koordinatları
+eşleşen EPDK kaydının konumu yerine kullanıldığından onlar da resmi liste kaydı olarak denetlenir (kimlik "<resmi kimlik>|<EPDK no>",
+adres olarak EPDK adresi); denetimden geçmeyen koordinat kullanılmaz, EPDK konumu korunur.
 
 Rapor: data/epdk/konum_duzeltmeleri.json (düzeltilen ve çıkarılan her kayıt; kural adları KURAL sözlüğünde).
 """
@@ -288,7 +291,8 @@ def denetle(epdk, resmi, osm, ocm, poi, cache, anahtar, yaz=True):
     for q, liste in (("r", resmi), ("o", osm), ("c", ocm)):
         for s in liste:
             m = anahtar(s.get("b") or s.get("p") or s.get("w") or s.get("n") or "")
-            K.append(Kayit(q, s["i"], s.get("a"), s.get("o"), s.get("n") or "", m, s.get("ad") or "", il_serbest(s.get("ad")), None, s, q))
+            K.append(Kayit(q, s["i"], s.get("a"), s.get("o"), s.get("n") or "", m, s.get("ad") or "",
+                           il_serbest(s.get("ad")) or il_serbest(s.get("il")), None, s, q))  # "il": ağın kendi il alanı (ör. 5 Şarj)
     # yardımcı kaynaklar (yalnızca karşılaştırma ve onarım için): tesis eşleşmesi ve adres araması önbelleği
     yardim = []
     for no, v in (poi or {}).items():
@@ -637,6 +641,15 @@ def main():
     # istasyon_birlestir.py gibi yalnızca RESMI ağların istasyon dosyaları (ör. voltup_fiyat.json istasyon listesi değildir)
     ag = lambda p: json.loads(p.read_text(encoding="utf-8")).get("ag")
     resmi = [r for f in sorted(B.AGLAR.glob("*.json")) if ag(f) in B.RESMI for r in oku(f)]
+    # DOGRULA ağlarının (ör. K-Şarj) koordinatları da EPDK kaydının konumu yerine kullanıldığından denetlenir; adres olarak eşleşen
+    # EPDK kaydının adresi verilir (istasyon_birlestir.py ile aynı)
+    adres = {x["no"]: x for x in epdk}
+    for f in sorted(B.AGLAR.glob("*.json")):
+        if ag(f) in B.DOGRULA:
+            for r in oku(f):
+                for no in ([r["e"]] if isinstance(r.get("e"), str) else r.get("e") or []):
+                    if no in adres:
+                        resmi.append(dict(r, i=r["i"] + "|" + no, ad=adres[no]["adres"], b=adres[no]["marka"] or r.get("b")))
     cache = json.loads(B.CACHE.read_text(encoding="utf-8")) if B.CACHE.exists() else {}
     poi = json.loads(B.POI.read_text(encoding="utf-8")) if B.POI.exists() else {}
     _, _, _, rapor = denetle(epdk, resmi, oku(B.OSM), oku(B.OCM), poi, cache, B.key, yaz="--yazma" not in sys.argv)

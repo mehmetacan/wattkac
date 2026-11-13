@@ -934,7 +934,8 @@ def acropol():
 # istasyon_birlestir.py (DOGRULA) EPDK kayıtlarını tutar, bu listede karşılığı olanları "rl" ile işaretler. Eşleştirme burada
 # yapılır ve EPDK numarası "e"ye yazılır: önce 60 m içindeki en yakın kayıt (eşit uzaklıkta adı daha çok örtüşen), sonra kalanlar
 # adla (en az iki ortak ayırt edici sözcük, sayılar aynı, 20 km içinde). Resmi haritada aynı koordinata iki ayrı istasyon girilmiş
-# olabiliyor (görüldü): adla eşleşen kaydın konumu EPDK'dan farklıysa raporlanır, konum her durumda EPDK'dan gelir.
+# olabiliyor (görüldü): adla eşleşen kaydın konumu EPDK'dan farklıysa raporlanır. Eşleşen EPDK kaydının konumu istasyon_birlestir.py'de
+# bu haritanın koordinatına çekilir; aynı koordinat farklı adlı birden çok istasyona aitse güvenilmez sayılıp EPDK konumu korunur.
 KSARJ_SAYFA = "https://ksarj.com/sarj-istasyonlarimiz/"
 KSARJ_KML = "https://www.google.com/maps/d/kml?mid={}&forcekml=1"
 KSARJ_HARIC = [(r"\bsite(si|leri)?\b|\bkonak(lari)?\b|\bkonut(lari)?\b|\bevleri\b|\bapartman|\blojman", "konut/site"),
