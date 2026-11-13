@@ -989,6 +989,26 @@
     "ekaenerji"
    ],
    "not": "AC (7,4–22 kW) 9,70, DC (60–720 kW) 12,80 TL/kWh, KDV dahil."
+  },
+  "otoWATT": {
+   "ac": {
+    "min": 10.99,
+    "max": 10.99
+   },
+   "dc": {
+    "min": 13.99,
+    "max": 13.99
+   },
+   "kaynak": "https://www.aydemplus.com.tr/otowatt-tarifelerimiz",
+   "kontrol": "2026-11-13",
+   "gecerlilik": "2026-04-15",
+   "adlar": [
+    "otoWATT",
+    "OTOWATT",
+    "Aydem Plus",
+    "otoWATT (Aydem Plus)"
+   ],
+   "not": "Genel tarife AC 10,99, DC 13,99 TL/kWh. Konut sitelerinde lokasyon bazlı indirimli site tarifesi AC 9,49, DC 11,99 (data/site_tarifesi.json; istasyon adından tanınan sitelerde istasyon fiyatı olarak gösterilir)."
   }
  }
 }

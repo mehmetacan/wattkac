@@ -107,6 +107,7 @@ SECILI = pathlib.Path("data/secili_istasyonlar.json")  # yalnızca seçili istas
 SECILI_AG = {"otopriz": r"otopriz|dicle kok"}
 SAATLI = pathlib.Path("data/saatli_tarife.json")  # saate göre fiyatın (ör. gece tarifesi) yalnızca listedeki istasyonlarda geçerli olduğu ağlar
 SAATLI_AG = {"shell": r"\bshell\b"}
+SITE_TARIFE = pathlib.Path("data/site_tarifesi.json")  # konut sitelerine özel indirimli fiyat (ad deseniyle)
 OUT = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else "site/istasyonlar.json")
 TR = str.maketrans({"İ": "i", "I": "ı", "Ş": "ş", "Ğ": "ğ", "Ü": "ü", "Ö": "ö", "Ç": "ç"})
 fold = lambda s: s.translate(TR).lower().replace("ı", "i").replace("ş", "s").replace("ğ", "g").replace("ü", "u").replace("ö", "o").replace("ç", "c")
@@ -434,6 +435,20 @@ def main():
             if any(L and L <= nt and (not IL or IL <= place) for L, IL in items):
                 r.setdefault("tz", []).append(ag); hit += 1
         tz_hits[ag] = hit
+    # Site tarifesi (ör. otoWATT konut sitelerinde indirimli fiyat): ağın kaydı + adı desene uyan istasyona "pr" yazılır
+    site_t = json.loads(SITE_TARIFE.read_text(encoding="utf-8")) if SITE_TARIFE.exists() else {}
+    st_hits = {}
+    for ag, d in site_t.items():
+        if ag.startswith("_"):
+            continue
+        rx_ag, rx_ad = re.compile(d["ag"]), re.compile(d["ad"])
+        rx_h = re.compile(d["haric"]) if d.get("haric") else None
+        st_hits[ag] = []
+        for r in recs:
+            opn = ops[r["p"]] if isinstance(r.get("p"), int) else (r.get("p") or "")
+            ad = fold(r.get("n") or "")
+            if rx_ag.search(fold(" ".join([r.get("b") or "", opn]))) and rx_ad.search(ad) and not (rx_h and rx_h.search(ad)):
+                r["pr"] = dict(d["pr"]); r["prn"] = "Site tarifesi"; st_hits[ag].append(r.get("n"))
     located = [r for r in recs if "a" in r]
     # konumu bilinmeyen ve Türkiye dışı kayıtlar gösterilmez. Kayıtlar konum_denetim'den geçtiği için bu yalnızca güvenlik ağıdır;
     # kıyı ilçelerindeki noktalar (Bodrum, Gazipaşa) kaba sınırın birkaç km dışında kalabildiğinden sınıra yakınlık da kabul edilir.
@@ -467,6 +482,8 @@ def main():
         print(f"konum denetiminden geçmeyen ağ koordinatı (EPDK konumu korundu) ({len(denetim_dusen)}): " + "; ".join(denetim_dusen))
     print("seçili kampanya eşleşmeleri:", sk_hits)
     print("saatli tarife eşleşmeleri:", tz_hits)
+    for ag, adlar in st_hits.items():
+        print(f"site tarifesi {ag}: {len(adlar)} istasyon: " + "; ".join(adlar))
     ozet = ", ".join("%s %d%s" % (k, v["sayi"], " (yalnızca doğrulama)" if v.get("dogrula") else "") for k, v in kaynaklar.items())
     print(f"resmi ağ listeleri {len(resmi)} ({ozet}); EPDK {len(seen)} kayıt (özel {ozel} çıkarıldı), EPDK'dan gelen {sum(1 for r in recs if r.get('e'))}, eşleşen/eklenen OSM {stats.get('o')}, OCM {stats.get('c')}, Türkiye dışı {disari}, aynı adreste birleştirilen EPDK ünitesi {birlesen}, EPDK ile tamamlanan resmi ağ kaydı {tamam}, mükerrer sayılıp atılan OSM/OCM {mukerrer}, EPDK kaynağı {'açık servis (kesin koordinat)' if api else 'CSV + adres araması'}, toplam {len(recs)}, {len(txt)//1024} KB")
 
