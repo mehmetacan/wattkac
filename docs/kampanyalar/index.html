@@ -145,6 +145,7 @@ select{background:var(--ctl);color:var(--txt);border:1px solid var(--line2);bord
 .who{flex:1;min-width:0}
 .kurum{font-weight:800;font-size:16px;letter-spacing:-.2px;line-height:1.25}
 .alt{color:var(--mut);font-size:13px;font-weight:500}
+.ozel{color:var(--r);font-size:12.5px;font-weight:600;margin-top:3px}
 .who .alt{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bdg{flex:none;font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;white-space:nowrap}
 .bdg.new{background:var(--pri);color:var(--on-pri)}.bdg.wait{background:var(--amber-bg);color:var(--amber-fg);border:1px solid var(--amber-line)}.bdg.me{background:var(--gbg);color:var(--g);border:1px solid var(--gline)}
@@ -1641,6 +1642,11 @@ function netCumle(n) {
   return `${pretty(c.kurum)}: ${c.kisa ? k + " " : ""}%${Math.round(n.r * 100)} indirim`;
 }
 const tipBtn = (cls, tip, link, kk, inner, label) => `<button class="${cls}" data-tip="${esc(tip)}"${link ? ` data-tl="${esc(safeUrl(link))}" data-tk="${esc(kk)}"` : ""} aria-expanded="false" aria-controls="tip"${label ? ` aria-label="${esc(label)}"` : ""}>${inner}</button>`;
+// Adı konut sitesi / apartman gibi görünen istasyon: detayda kırmızı "halka açık olmayabilir" uyarısı.
+// Çarşı, pazar, meydan, AVM, otel, belediye, sanayi sitesi gibi herkese açık yerlerde gösterilmez.
+const OZEL_RE = /\bapartman|\bapt\b|\bsitesi\b|\bkonutlari\b|\bkonutlar\b|\bevleri\b|\brezidans|\bresidence\b|\blojman|\bvillalari\b|\bvillas?\b/;
+const ACIK_RE = /\bcarsi|\bpazar|\bmeydan|\bavm\b|\bis merkezi|\bplaza\b|\bbelediye|\bhotel\b|\botel\b|\bsanayi|\bsan\. sitesi|\bticaret merkezi|\bmall\b|\bstadyum|\bhastane/;
+const ozelOlabilir = s => { const n = fold(s.name || ""); return OZEL_RE.test(n) && !ACIK_RE.test(n); };
 function renderDetail(s) {
   $("sh-h").innerHTML = `<span class="back">${IC.geri}Listeye dön</span><span class="tg" style="color:var(--mut)">${fmtKm(s.d)}</span>`;
   const t = s.tags;
@@ -1699,7 +1705,7 @@ function renderDetail(s) {
   const web = /^https?:\/\//i.test(t.website || t["contact:website"] || "") ? (t.website || t["contact:website"]) : "";
   if (web) rows.push(["Web", `<a href="${esc(safeUrl(web))}" target="_blank" rel="noopener nofollow">Site ↗</a>`]);
   const alt = s.brand && s.named && s.name !== s.brand ? s.name : "";
-  $("sh-b").innerHTML = `<div class="dn">${esc(pretty(s.brand) || s.name)}</div>${alt ? `<div class="alt">${esc(alt)}</div>` : ""}
+  $("sh-b").innerHTML = `<div class="dn">${esc(pretty(s.brand) || s.name)}</div>${alt ? `<div class="alt">${esc(alt)}</div>` : ""}${ozelOlabilir(s) ? `<div class="ozel">Halka açık olmayabilir · konut / site otoparkı</div>` : ""}
     ${durumAg(s) ? durumHtml(durumAg(s)) : ""}
     ${s.pasif ? `<p class="dnote bad">Şu an pasif ya da bakımda görünüyor.</p>` : ""}
     ${s.approx ? `<p class="dnote">Konum yaklaşık.</p>` : ""}
