@@ -742,6 +742,7 @@ const KNOWN_EXTRA = { "ZES": ["\\bzes\\b"], "Sharz.net": ["sharz"], "Tesla": ["t
   "Petrol Ofisi": ["petrol ofisi"], "Opet": ["\\bopet\\b"], "BP": ["\\bbp\\b"], "Aytemiz": ["aytemiz"], "Power Şarj": ["powersarj", "power sarj"],
   "Zeplin": ["zeplin"], "Otojet": ["otojet"], "Oncharge": ["oncharge"], "D-Charge": ["d-charge", "d charge"], "5 Şarj": ["\\b5 sarj"], "otoWATT": ["otowatt"],
   "Efish": ["efish"], "EPSIS": ["epsis"], "EKA Enerji": ["eka enerji"], "Magic Line": ["magic line"], "K-Şarj": ["k-sarj", "k sarj"], "Neva Şarj": ["neva sarj"], "TOGG": ["\\btogg\\b"], "CV Charging": ["charging vehicles", "\\bcv charging\\b", "\\bcw enerji"],
+  "Acropol Şarj": ["\\bacropol\\b", "\\bgreenleaf yenilenebilir"],
   "VoltUp": ["\\bvolt ?up\\b"], "RST Charge Point": ["\\brst\\b ?(charge|sarj|teknoloji)"],
   // Windmark markası BIG Station adını aldı (işletmeci BSX Enerji); EPDK kaydında marka hâlâ "windmark" yazıyor
   "BIG Station": ["\\bbig ?station\\b", "\\bwindmark\\b", "\\bbsx enerji"] };
@@ -1465,7 +1466,7 @@ function groupStations(list) {
 const SHORT = { shellrecharge: "Shell", shell: "Shell", watmobilite: "WAT", astorsarj: "Astor", astor: "Astor", sharznet: "Sharz", aksasarj: "Aksa", petrolofisi: "PO", petrolofisiepower: "PO",
   powersarj: "Power", tuncmatik: "Tunç", dcharge: "D-Chg", oncharge: "OnChg", cvsarj: "CV", cvcharging: "CV", zeplin: "Zeplin", zeplinenerji: "Zeplin", nevasarj: "Neva", ekaenerji: "EKA", magicline: "Magic",
   dogusdijitalenerji: "Doğuş", togg: "Togg", enyakit: "Enyakt", otopriz: "Otoprz", voltrun: "Voltrn", beefull: "Beeful", otowatt: "otoWat", "5sarj": "5Şarj", ksarj: "K-Şarj", aostechnology: "AOS",
-  mkssarj: "MKS", greenscience: "Green", sarjmatik: "ŞMatik", isarj: "i-Şarj", acropol: "Acro", lumicle: "Lumi", epower: "ePower", onizsarj: "Öniz", solarsarj: "Solar", mycharge: "MyChg",
+  mkssarj: "MKS", greenscience: "Green", sarjmatik: "ŞMatik", isarj: "i-Şarj", acropol: "Acro", acropolsarj: "Acro", lumicle: "Lumi", epower: "ePower", onizsarj: "Öniz", solarsarj: "Solar", mycharge: "MyChg",
   rstchargepoint: "RST", hizzlanchargendrive: "Hızz", getacharge: "GetChg", fixcharge: "FixChg", checkpoint: "ChkPt", tuvturk: "TÜV", qcquiksarj: "Quik", plugdrive: "P&D", biogreen: "BioGr",
   monokonelektrik: "Mono", fastgo: "FastGo", bp: "BP", opet: "Opet", aytemiz: "Aytmz", zes: "ZES", trugo: "Trugo", esarj: "Eşarj", ovolt: "Ovolt", otojet: "Otojet", tesla: "Tesla", varr: "Varr",
   voltla: "Voltla", voltup: "VoltUp", efish: "Efish", epsis: "Epsis", "360enerji": "360°", sarjtak: "ŞTak", gioev: "GioEV", e4sarj: "E4", bcharge: "B-Chg", qcharge: "Q-Chg", gsmcharge: "GSM", evccharge: "EVC", usarj: "U-Şarj", onlife: "onLife", tora: "Tora", adze: "Adze", ekos: "Ekos", kes: "KES" };
@@ -1575,7 +1576,7 @@ const BRAND = {
   "Opet": ["#0057A8", "#fff", "Op"], "BP": ["#009B3A", "#FFE600", "bp"], "Powerşarj": ["#2563EB", "#fff", "P"],
   "Tunçmatik": ["#DC2626", "#fff", "Tm"], "D-Charge": ["#0F172A", "#fff", "D"], "Oncharge": ["#0891B2", "#fff", "On"],
   "VoltUp": ["#FF5714", "#fff", "VU"], "RST Charge Point": ["#0B213E", "#00D26A", "R"], "BIG Station": ["#2E7D32", "#fff", "BS"],
-  "CV Charging": ["#96C94F", "#0F172A", "CV"]
+  "CV Charging": ["#96C94F", "#0F172A", "CV"], "Acropol Şarj": ["#E26827", "#fff", "Ac"]
 };
 const PALETTE = ["#2563EB", "#DB2777", "#059669", "#D97706", "#7C3AED", "#0891B2", "#B45309", "#4338CA", "#BE123C", "#0D9488"];
 function brandStyle(s) {
@@ -1680,7 +1681,7 @@ function renderDetail(s) {
   if (web) rows.push(["Web", `<a href="${esc(safeUrl(web))}" target="_blank" rel="noopener nofollow">Site ↗</a>`]);
   const alt = s.brand && s.named && s.name !== s.brand ? s.name : "";
   $("sh-b").innerHTML = `<div class="dn">${esc(pretty(s.brand) || s.name)}</div>${alt ? `<div class="alt">${esc(alt)}</div>` : ""}
-    ${s.cih ? durumHtml() : ""}
+    ${durumAg(s) ? durumHtml(durumAg(s)) : ""}
     ${s.pasif ? `<p class="dnote bad">Şu an pasif ya da bakımda görünüyor.</p>` : ""}
     ${s.approx ? `<p class="dnote">Konum yaklaşık.</p>` : ""}
     ${rows.length ? `<dl class="kv">${rows.map(([k, v, cls]) => `<dt>${k}</dt><dd${cls ? ` class="${cls}"` : ""}>${v}</dd>`).join("")}</dl>` : ""}
@@ -1690,38 +1691,42 @@ function renderDetail(s) {
     ${s.shellTrugo ? `<div class="shellbox">Shell Recharge uygulamasıyla da şarj edilebilir.</div>
       ${s.viaShell.length ? `<div class="lbl" style="margin-top:14px">Shell Recharge uygulamasıyla</div>${section(s.viaShell, false)}` : ""}` : ""}
     <details class="bkay"><summary>Bilgi kaynağı ›</summary>${srcTxt.map(x => `<p>${x}</p>`).join("")}
-      <p>${/^bigstation/.test(s.id) ? "İstasyon bilgisi BIG Station sisteminden, üçüncü taraf bir hizmet aracılığıyla günde bir kez alınır." : /^cv\d/.test(s.id) ? "İstasyon bilgisi CV Charging'in resmi istasyon listesinden (cv-charging.com), günde bir kez alınır." : s.official ? "İstasyon bilgisi ağın kendi resmi haritasından, günde bir kez güncellenir." : s.epdk ? "Konum ve soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir." : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
-      ${s.cih ? `<p>Anlık durum BIG Station sisteminden, üçüncü taraf bir hizmet aracılığıyla; 1 dakikaya kadar gecikebilir.</p>` : ""}
+      <p>${/^bigstation/.test(s.id) ? "İstasyon bilgisi BIG Station sisteminden, üçüncü taraf bir hizmet aracılığıyla günde bir kez alınır." : /^cv\d/.test(s.id) ? "İstasyon bilgisi CV Charging'in resmi istasyon listesinden (cv-charging.com), günde bir kez alınır." : /^acropol\d/.test(s.id) ? "İstasyon bilgisi Acropol Şarj'ın kendi haritasından (acropolsarj.com), günde bir kez alınır. Konut sitelerindeki cihazlar gösterilmez." : s.official ? "İstasyon bilgisi ağın kendi resmi haritasından, günde bir kez güncellenir." : s.epdk ? "Konum ve soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir." : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
+      ${durumAg(s) ? `<p>${DURUM_AG[durumAg(s)].kaynak}; 1 dakikaya kadar gecikebilir.</p>` : ""}
       ${s.net ? `<p>İndirimli fiyat yalnızca kampanyanın geçerli olduğu kesin bilinen istasyonlarda yazılır. Ağın kampanyaları birbiriyle birleşmez. Kart indirimi ağ indiriminin üzerine hesaplanır; kart kampanyası "başka indirimle birleşmez" diyorsa liste fiyatına.</p>` : ""}</details>`;
   $("sh-b").scrollTop = 0;
-  if (s.cih) durumIste(s);
+  if (durumAg(s)) durumIste(s, durumAg(s));
 }
-/* Anlık durum (yalnızca BIG Station, cihaz kimliği "cih" olan istasyonlar): detay açılınca /api/durum/bigstation'a BİR istek.
+/* Anlık durum (BIG Station ve Acropol Şarj; kimlikleri "cih" olan istasyonlar): detay açılınca /api/durum/<ağ>'a BİR istek.
    Yoklama yok; detay yeniden çizilirse (liste yenilenmesi vb.) aynı sonuç kullanılır. Detay kapanır ya da başka istasyon seçilirse
    bekleyen istek iptal edilir. Sunucu yanıtı 60 sn önbellekli; aynı detay kısa sürede yeniden açılırsa tarayıcı önbelleği yanıtlar. */
+const DURUM_AG = {
+  bigstation: { birim: "cihazın", kaynak: "Anlık durum BIG Station sisteminden, üçüncü taraf bir hizmet aracılığıyla" },
+  acropol: { birim: "soketin", kaynak: "Anlık durum Acropol Şarj'ın kendi haritasından" } };
+const durumAg = s => s.cih ? Object.keys(DURUM_AG).find(k => s.id.startsWith(k)) || null : null;
 const DUR = { id: null, ac: null, d: undefined };   // d: undefined = alınıyor, null = alınamadı, {cihazlar} = sonuç
 function durumBirak() { if (DUR.ac) DUR.ac.abort(); DUR.id = null; DUR.ac = null; DUR.d = undefined; }
-function durumHtml() {
+function durumHtml(ag) {
   const d = DUR.d;
   if (d === undefined) return `<p class="durum sn" id="durum" aria-live="polite">Durum alınıyor…</p>`;
   if (!d) return `<p class="durum sn" id="durum" aria-live="polite">Anlık durum alınamadı</p>`;
   const v = Object.values(d.cihazlar || {}), bos = v.filter(x => x === "bos").length, sarj = v.filter(x => x === "sarj").length, bil = v.length - bos - sarj;
   if (!bos && !sarj) return `<p class="durum sn" id="durum" aria-live="polite">Anlık durum bilinmiyor</p>`;
   const sayi = [bos ? `${bos} boşta` : "", sarj ? `${sarj} şarj ediyor` : ""].filter(Boolean).join(" · ");
-  return `<p class="durum" id="durum" aria-live="polite"><span class="nk${bos ? "" : " dolu"}" aria-hidden="true"></span>Şimdi: ${sayi}${bil ? ` <span class="sn">· ${bil} cihazın durumu bilinmiyor</span>` : ""}</p>`;
+  return `<p class="durum" id="durum" aria-live="polite"><span class="nk${bos ? "" : " dolu"}" aria-hidden="true"></span>Şimdi: ${sayi}${bil ? ` <span class="sn">· ${bil} ${DURUM_AG[ag].birim} durumu bilinmiyor</span>` : ""}</p>`;
 }
-function durumIste(s) {
+function durumIste(s, ag) {
   if (DUR.id === s.id) return;   // bu detay için zaten istendi
   durumBirak();
   const ac = new AbortController(), id = s.id;
   DUR.id = id; DUR.ac = ac;
-  fetch("/api/durum/bigstation?c=" + s.cih.slice(0, 20).map(encodeURIComponent).join(","), { signal: ac.signal })
+  fetch(`/api/durum/${ag}?c=` + s.cih.slice(0, 20).map(encodeURIComponent).join(","), { signal: ac.signal })
     .then(r => r.ok ? r.json() : null).catch(() => null)
     .then(j => {
       if (ac.signal.aborted || DUR.id !== id) return;
       DUR.ac = null; DUR.d = j && j.ok && j.cihazlar ? j : null;
       const el = $("durum");
-      if (el && M.sel === id) el.outerHTML = durumHtml();
+      if (el && M.sel === id) el.outerHTML = durumHtml(ag);
     });
 }
 // Bilgi kutusu: düğmenin hemen altında (yer yoksa üstünde) açılır; aynı düğme, dışarı dokunmak ya da Esc kapatır

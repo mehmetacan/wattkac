@@ -16,7 +16,7 @@ içinde ya da JS şablonlarında `#fff`, açık gri gibi sabit renk yazılmaz. S
   `<html data-theme="dark">` yazmak tüm uygulamayı koyu temaya döndürür. Yeni belirteç eklenirse iki bloğa da yazılır.
 - **Az yazı:** istasyon detayı ve listesinde cümle yerine değer gösterilir. İndirimli fiyat "üstü çizili liste fiyatı + yeşil indirimli fiyat"
   olarak yazılır, koşulu (i) bilgi düğmesindeki tek cümlede durur. Kampanya değeri kısa yazılır ("%20", "75 TL"); ayrıntı açılır kısımdadır.
-- **Anlık durum (BIG Station):** detay başlığının altında tek satır, renkli nokta + sayılar ("Şimdi: 2 boşta · 1 şarj ediyor"); bilinmeyen,
+- **Anlık durum (BIG Station, Acropol Şarj):** detay başlığının altında tek satır, renkli nokta + sayılar ("Şimdi: 2 boşta · 1 şarj ediyor"); bilinmeyen,
   yükleniyor ve hata hâlleri `--mut` renkte ve noktasız. Kaynağı "Bilgi kaynağı" bölümünde yazar.
 - **Kaçınılacaklar (veri setindeki uyarı):** kötü harita deneyimi ve gizli maliyet. Fiyat ve indirim her zaman açık yazılır.
 

@@ -20,6 +20,9 @@ Kaynaklar (her biri ağın kendi sitesindeki haritanın kullandığı adres):
                GET /api/stations; yalnızca halka açık cihazlar ve kişisel olmayan alanlar tutulur.
   CV Charging  https://cv-charging.com/views/api/get_istasyon_api.php   (cv-charging.com/tr/cv-arac-sarj-istasyonlari)
                Soketler aynı sayfanın istasyon başına çağırdığı get_istasyon_soket_api.php'den (aralarında 0,3 sn).
+  Acropol Şarj https://ipi8yuvwgw.eu-central-1.awsapprunner.com/api/getAllAndFilteredStations  (acropolsarj.com/evsarjharitasi.aspx)
+               Tek istekte tüm istasyonlar, üniteler ve soketler (giriş/anahtar yok). Yalnızca yayında ve herkese açık
+               istasyonlar; konut sitesi / test istasyonları atlanır. Soket kimlikleri anlık durum için "cih"te tutulur.
   (ASTOR Şarj'ın haritası map-api.echargo.com kullanıyor ama sunucudan yapılan istekleri reddediyor (HTTP 404);
    erişim kısıtını aşmaya çalışmıyoruz, ASTOR istasyonları EPDK + OSM'den gelir.)
 
@@ -823,6 +826,102 @@ def cv():
     return out
 
 
+
+# Acropol Şarj (işletmeci Greenleaf Yenilenebilir Enerji): ağın kendi haritası (acropolsarj.com/evsarjharitasi.aspx) tek bir
+# açık adresten tüm istasyonları, ünitelerini ve soketlerini (anlık durumuyla) alıyor. Burada yalnızca ad, konum, adres, il ve
+# soketlerin türü/gücü ile soket kimlikleri (cih: site detay açılınca /api/durum/acropol?c=… ile anlık boş/şarjda durumu sorar)
+# tutulur; anlık durum, şarj yüzdesi, görseller, ceza/rezervasyon ayarları yazılmaz. Fiyat alanları (priceType, nomUnitePrice)
+# kaynakta boş: tarife tek (acropolsarj.com ana sayfasındaki tablo, site/tarifeler.json).
+# Haritada konut sitelerinin otopark cihazları da var (sitede oturanlara yönelik): BIG Station'daki gibi atlanır. Yayında
+# olmayan (publish ≠ 1) ve test istasyonları da atlanır. Ev tipi priz (scooter çıkışı, 3,3 kW) soket sayılmaz.
+ACROPOL_SAYFA = "https://acropolsarj.com/evsarjharitasi.aspx"
+ACROPOL_API = "https://ipi8yuvwgw.eu-central-1.awsapprunner.com/api/getAllAndFilteredStations"
+ACROPOL_HARIC = [(r"\bsite(si|leri)?\b|\bkonak(lari)?\b|\bkonut(lari)?\b|\bevleri\b|\bresid[ae]n|\brezidan|\bapartman|\btower\b"
+                  r"|\bblok\b|\bhopel city\b|\byasamkule\b", "konut/site"),
+                 (r"\btest\b", "test istasyonu"),
+                 (r"\bpersonel\b|\bofis\b", "şirket içi/ofis")]
+# cityID plaka kodu (7 Antalya, 6 Ankara, 16 Bursa, 35 İzmir, 25 Erzurum)
+PLAKA = ("Adana Adıyaman Afyonkarahisar Ağrı Amasya Ankara Antalya Artvin Aydın Balıkesir Bilecik Bingöl Bitlis Bolu Burdur Bursa "
+         "Çanakkale Çankırı Çorum Denizli Diyarbakır Edirne Elazığ Erzincan Erzurum Eskişehir Gaziantep Giresun Gümüşhane Hakkari "
+         "Hatay Isparta Mersin İstanbul İzmir Kars Kastamonu Kayseri Kırklareli Kırşehir Kocaeli Konya Kütahya Malatya Manisa "
+         "Kahramanmaraş Mardin Muğla Muş Nevşehir Niğde Ordu Rize Sakarya Samsun Siirt Sinop Sivas Tekirdağ Tokat Trabzon Tunceli "
+         "Şanlıurfa Uşak Van Yozgat Zonguldak Aksaray Bayburt Karaman Kırıkkale Batman Şırnak Bartın Ardahan Iğdır Yalova Karabük "
+         "Kilis Osmaniye Düzce").split()
+
+
+def _acropol_ad(t):
+    """"Alku Muhendislik Giris Otopark 22 KW_AC" → "Alku Muhendislik Giris Otopark"; "JUMP BUMP PLAYGROUND" → "Jump Bump Playground";
+    sondaki "DC İstasyon(u)" / "Şarj İstasyonları" atılır."""
+    t = " ".join(str(t or "").split())
+    t = re.sub(r"(?i)\s+\d+([.,]\d+)?\s*kw(?:[\s_]*(ac|dc))?$", "", t)
+    t = re.sub(r"(?i)\s+((ac|dc)\s+)?(sarj\s+)?[iİI]stasyon(u|lari|ları)?$", "", t)
+    if t == t.upper():
+        t = " ".join(_tr_baslik(w) for w in t.split())
+    return t.strip(" /-")
+
+
+def acropol():
+    import konum_denetim as kd
+    j = json.loads(get(ACROPOL_API))
+    liste = j.get("data") if isinstance(j, dict) else None
+    if not isinstance(liste, list):
+        raise RuntimeError("yanıtta 'data' listesi yok")
+    out, haric, disari, il_farkli = [], [], [], []
+    for s in liste:
+        if not isinstance(s, dict):
+            continue
+        ad_ham = s.get("stationTitle") or ""
+        metin = _big_duz(" ".join(str(s.get(k) or "") for k in ("stationTitle", "locationInfo", "stationDescription")))
+        neden = "yayında değil" if s.get("publish") != 1 else next((n for rx, n in ACROPOL_HARIC if re.search(rx, metin)), None)
+        if neden:
+            haric.append(f"{ad_ham} ({neden})"); continue
+        try:
+            a, o = float(s.get("latitude")), float(s.get("longitude"))
+        except (TypeError, ValueError):
+            a = o = 0.0
+        if not (kd.in_turkey(a, o) or kd.sinira_km(a, o) <= kd.KIYI_KM):
+            disari.append(f"{ad_ham} ({a}, {o})"); continue
+        r = {"i": f"acropol{int(s['id'])}", "a": round(a, 6), "o": round(o, 6), "n": _acropol_ad(ad_ham), "b": "Acropol Şarj", "t": []}
+        cih = []
+        for u in s.get("unites") or []:
+            for k in (u or {}).get("sockets") or []:
+                adlar = [str(t.get("name") or "") for t in k.get("dfnSocketTypes") or [] if isinstance(t, dict)]
+                if not adlar or all(re.fullmatch(r"(?i)priz|schuko", x) for x in adlar):
+                    continue  # ev tipi priz (scooter çıkışı)
+                dc = any(re.search(r"(?i)ccs|chademo|\bdc\b|gb/?t", x) for x in adlar)
+                tip = "dc" if dc else "ac"
+                r[tip] = r.get(tip, 0) + 1; r["c"] = r.get("c", 0) + 1
+                kw = k.get("socketKwh") if isinstance(k.get("socketKwh"), (int, float)) else 0
+                r["k"] = max(r.get("k", 0), round(kw))
+                for x in adlar:
+                    t = "CCS" if re.search(r"(?i)ccs", x) else "CHAdeMO" if re.search(r"(?i)chademo", x) else "Type 2" if re.search(r"(?i)type ?2", x) else None
+                    if t and t not in r["t"]:
+                        r["t"].append(t)
+                if isinstance(k.get("id"), int):
+                    cih.append(str(k["id"]))
+        if not r.get("c"):
+            haric.append(f"{ad_ham} (soket yok)"); continue
+        il = PLAKA[s["cityID"] - 1] if isinstance(s.get("cityID"), int) and 1 <= s["cityID"] <= len(PLAKA) else None
+        adres = re.sub(r"(?i),?\s*t[uü]rkiye$", "", " ".join(str(s.get("address") or "").split())).strip(" ,")
+        adres = re.sub(r"(?i)\s*posta kodu:\s*\d{5}", "", adres).replace("i\u0307", "i")  # "Ni̇lüfer": i + birleşik nokta
+        il_adres = kd.il_serbest(adres)
+        if il and il_adres and il_adres != il:
+            il_farkli.append(f"{ad_ham}: adres {il_adres}, il kodu {il}")
+        r["ad"] = _cv_adres(adres, il or il_adres, None)
+        r["cih"] = sorted(set(cih), key=int)
+        out.append(clean(r))
+    print(f"acropol: listede {len(liste)} istasyon → {len(out)}; atlanan {len(haric)}: " + "; ".join(haric))
+    if disari:
+        print(f"acropol: Türkiye dışı/konumsuz {len(disari)}: " + "; ".join(disari))
+    if il_farkli:
+        print(f"acropol: adresteki il ile il kodu farklı {len(il_farkli)}: " + "; ".join(il_farkli))
+    if EPDK_API.exists():  # karşılaştırma: resmi listede 300 m içinde karşılığı olmayan EPDK kayıtları (gösterilmez)
+        yok = [f"{x['no']} {x.get('ad', '')}" for x in json.loads(EPDK_API.read_text(encoding="utf-8")).get("istasyonlar", [])
+               if re.search(r"\bacropol\b|\bgreenleaf yenilenebilir", kd.fold(x.get("marka", "") + " " + x.get("isletmeci", "")))
+               and ok_coord(x.get("a"), x.get("o")) and not any(_km(x["a"], x["o"], r["a"], r["o"]) <= 0.3 for r in out)]
+        print(f"acropol: resmi listede 300 m içinde karşılığı olmayan EPDK kayıtları gösterilmiyor ({len(yok)})" + (f": {'; '.join(yok)}" if yok else ""))
+    return out
+
 SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            "zes": (zes, "https://zes.net/tr/sarj-istasyonlari", 500),
            "ovolt": (ovolt, "https://ovolt.com.tr/istasyon-haritasi", 50),
@@ -830,7 +929,8 @@ SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            "voltup": (voltup, "https://voltup.com.tr/#istasyonlar", 20),
            "rst": (rst, "https://rstchargepoint.com/#fiyatlar", 30),
            "bigstation": (bigstation, BIG_SAYFA, 15),
-           "cv": (cv, CV_SAYFA, 50)}
+           "cv": (cv, CV_SAYFA, 50),
+           "acropol": (acropol, ACROPOL_SAYFA, 15)}
 
 
 def main():

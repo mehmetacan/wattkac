@@ -11,6 +11,7 @@
 //   POST /api/panel/geri-bildirim {id, durum}
 //   /api/bildirim/*              → web push aboneliği (aşağıda "Bildirimler")
 //   GET  /api/durum/bigstation?c=95,96 → BIG Station cihazlarının anlık boş / şarjda durumu (aşağıda "Anlık durum")
+//   GET  /api/durum/acropol?c=59,60   → Acropol Şarj soketlerinin anlık boş / şarjda durumu (aynı bölüm)
 const ANA = "wattkac.com";
 const YONLENDIR = new Set(["www.wattkac.com", "wattkac.xyz", "www.wattkac.xyz"]);
 const TURLER = new Set(["hata", "istasyon", "fiyat", "kampanya", "oneri", "diger"]);
@@ -283,59 +284,94 @@ async function bildirimGonder(env, gonder = fetch) {
   return { bakilan: aboneler.length, giden };
 }
 
-/* ---------- Anlık durum: BIG Station ----------
+/* ---------- Anlık durum: BIG Station ve Acropol Şarj ----------
    GET /api/durum/bigstation?c=95,96,97  → {ok, zaman, cihazlar: {"95": "bos" | "sarj" | "bilinmiyor", …}}
-   Kaynak: BIG Station'ın kendi sistemini okuyan, giriş gerektirmeyen üçüncü taraf salt okunur servisin halka açık listesi
-   (GET /api/stations, 100'erli sayfalar). O servisin başka hiçbir adresi çağrılmaz.
-   - Bu uç noktanın tek kullanıcısı sitedir ve yalnızca biri haritada BIG Station istasyonunun detayını açınca çağrılır.
+   GET /api/durum/acropol?c=59,60        → aynı biçim; kimlikler Acropol soket kimlikleri
+   Ortak kurallar (her ağ için ayrı önbellek girdisi):
+   - Bu uç noktaların tek kullanıcısı sitedir ve yalnızca biri haritada o ağın istasyon detayını açınca çağrılır.
      Zamanlanmış görev ya da arka planda yoklama yoktur.
-   - Yanıt GELİR GELMEZ cihaz başına tek duruma indirgenir: liveStatus "offline" (ya da bilinmeyen) → "bilinmiyor";
-     bağlı (wifionline / gsmonline) ve status "active" (şarj oturumu sürüyor) → "sarj"; bağlı ve "passive" → "bos".
-     Diğer alanlar (ölçümler, oturum sahibi adı / plakası vb.) hiçbir yerde saklanmaz, loglanmaz, döndürülmez.
+   - Kaynak yanıtı GELİR GELMEZ kimlik başına tek duruma ("sarj" | "bos" | "bilinmiyor") indirgenir; diğer alanlar (ölçümler,
+     şarj yüzdesi, oturum sahibi adı / plakası vb.) hiçbir yerde saklanmaz, loglanmaz, döndürülmez.
    - İndirgenmiş liste Cache API'de (her Cloudflare konumunda ayrı) DURUM_SN saniye tutulur: kullanıcı sayısından bağımsız olarak
-     konum başına dakikada en çok bir yenileme (≈4 sayfa isteği). Önbellek süresi dolduğu anda aynı konumda eşzamanlı gelen birkaç
-     istek ayrı ayrı yenileyebilir; Workers'ta istekler arası ortak Promise beklemek (başka isteğin G/Ç'si) güvenli olmadığından
-     birleştirme yapılmaz, bu kısa pencere dışında yük değişmez.
-     Yenileme başarısızsa DURUM_HATA_SN saniye yeniden denenmez (servis çöktüğünde üstüne istek yağmasın).
-   - Ücretsiz plan: çağrı başına 50 dış istek sınırı; burada en çok 1 önbellek okuma + DURUM_SAYFA sayfa + 1 önbellek yazma. */
-const DURUM_URL = "https://bsx-reverse.ee-w.workers.dev/api/stations?offset={o}&limit=100";
-const DURUM_ANAHTAR = "https://wattkac.com/__durum/bigstation";
+     konum başına dakikada en çok bir yenileme. Önbellek süresi dolduğu anda aynı konumda eşzamanlı gelen birkaç istek ayrı ayrı
+     yenileyebilir; Workers'ta istekler arası ortak Promise beklemek (başka isteğin G/Ç'si) güvenli olmadığından birleştirme
+     yapılmaz, bu kısa pencere dışında yük değişmez. Yenileme başarısızsa DURUM_HATA_SN saniye yeniden denenmez (servis
+     çöktüğünde üstüne istek yağmasın). Yenileme toplamda DURUM_SURE_MS içinde bitmezse kesilir.
+   BIG Station: kaynak, BIG Station'ın kendi sistemini okuyan, giriş gerektirmeyen üçüncü taraf salt okunur servisin halka açık
+     listesi (GET /api/stations, 100'erli sayfalar; yenileme başına ≈4 istek). O servisin başka hiçbir adresi çağrılmaz.
+     liveStatus "offline" (ya da bilinmeyen) → "bilinmiyor"; bağlı (wifionline / gsmonline) ve status "active" → "sarj";
+     bağlı ve "passive" → "bos". Ücretsiz plan: çağrı başına 50 dış istek sınırı; en çok 1 önbellek okuma + DURUM_SAYFA sayfa + 1 yazma.
+   Acropol Şarj: kaynak, ağın kendi haritasının (acropolsarj.com/evsarjharitasi.aspx) kullandığı giriş gerektirmeyen tek liste
+     (getAllAndFilteredStations, ≈150 KB, tüm istasyonlar tek istekte; yenileme başına 1 istek). Soket durumu (OCPP):
+     Available → "bos"; Preparing / Charging / SuspendedEV / SuspendedEVSE / Finishing → "sarj" (soket dolu);
+     Closed (çevrimdışı), Faulted, Unavailable, Reserved ve bilinmeyenler → "bilinmiyor". */
 const DURUM_SN = 60, DURUM_HATA_SN = 30, DURUM_SURE_MS = 6000, DURUM_SAYFA = 10, DURUM_EN_COK = 20;
 const DURUM_UA = "WattKac/1.0 (+https://wattkac.com; anlik durum)";
+const DURUM_BASLIK = { "user-agent": DURUM_UA, accept: "application/json" };
+const BIG_URL = "https://bsx-reverse.ee-w.workers.dev/api/stations?offset={o}&limit=100";
 const BAGLI = new Set(["wifionline", "gsmonline"]);
+const ACROPOL_URL = "https://ipi8yuvwgw.eu-central-1.awsapprunner.com/api/getAllAndFilteredStations";
+const ACROPOL_DOLU = new Set(["preparing", "charging", "suspendedev", "suspendedevse", "finishing"]);
 
-// Tek cihaz kaydı → "sarj" | "bos" | "bilinmiyor" (yalnızca status ve liveStatus okunur)
+// BIG Station: tek cihaz kaydı → durum (yalnızca status ve liveStatus okunur)
 function cihazDurumu(x) {
   if (!BAGLI.has(x.liveStatus)) return "bilinmiyor";
   return x.status === "active" ? "sarj" : x.status === "passive" ? "bos" : "bilinmiyor";
 }
-// Bir sayfanın kayıtlarını indirgenmiş haritaya ekler (sayfalama sabit sıralı değil: aynı kimlik iki kez gelirse ilki kalır)
-function durumEkle(harita, liste) {
+// Acropol: tek soket kaydı → durum (yalnızca status okunur)
+function soketDurumu(x) {
+  const st = typeof x.status === "string" ? x.status.toLowerCase() : "";
+  return st === "available" ? "bos" : ACROPOL_DOLU.has(st) ? "sarj" : "bilinmiyor";
+}
+const kimlikGecerli = id => /^\d{1,9}$/.test(id);
+// Kayıtları indirgenmiş haritaya ekler (BIG sayfalaması sabit sıralı değil: aynı kimlik iki kez gelirse ilki kalır)
+function durumEkle(harita, liste, durumu = cihazDurumu) {
   for (const x of liste) {
     if (!x || typeof x !== "object") continue;
     const id = String(x.id ?? "");
-    if (/^\d{1,9}$/.test(id) && !(id in harita)) harita[id] = cihazDurumu(x);
+    if (kimlikGecerli(id) && !(id in harita)) harita[id] = durumu(x);
   }
 }
-async function durumCek(getir) {
-  const ac = new AbortController(), zam = setTimeout(() => ac.abort(), DURUM_SURE_MS);
-  try {
-    const harita = {};
-    for (let sayfa = 0; sayfa < DURUM_SAYFA; sayfa++) {
-      const r = await getir(DURUM_URL.replace("{o}", String(sayfa * 100)), { headers: { "user-agent": DURUM_UA, accept: "application/json" }, signal: ac.signal });
-      if (!r.ok) throw new Error("durum " + r.status);
-      let liste = (await r.json()).stations;   // ham yanıt yalnızca bu blokta yaşar
-      if (!Array.isArray(liste)) throw new Error("durum biçim");
-      const n = liste.length;
-      durumEkle(harita, liste); liste = null;
-      if (n < 100) return { zaman: new Date().toISOString(), c: harita };
+async function bigCek(getir, signal) {
+  const harita = {};
+  for (let sayfa = 0; sayfa < DURUM_SAYFA; sayfa++) {
+    const r = await getir(BIG_URL.replace("{o}", String(sayfa * 100)), { headers: DURUM_BASLIK, signal });
+    if (!r.ok) throw new Error("durum " + r.status);
+    let liste = (await r.json()).stations;   // ham yanıt yalnızca bu blokta yaşar
+    if (!Array.isArray(liste)) throw new Error("durum biçim");
+    const n = liste.length;
+    durumEkle(harita, liste); liste = null;
+    if (n < 100) return harita;
+  }
+  throw new Error("durum sayfa");
+}
+async function acropolCek(getir, signal) {
+  const r = await getir(ACROPOL_URL, { headers: DURUM_BASLIK, signal });
+  if (!r.ok) throw new Error("durum " + r.status);
+  let liste = (await r.json()).data;   // ham yanıt yalnızca bu blokta yaşar
+  if (!Array.isArray(liste)) throw new Error("durum biçim");
+  const harita = {};
+  for (const ist of liste) {
+    for (const u of (ist && Array.isArray(ist.unites) ? ist.unites : [])) {
+      if (u && Array.isArray(u.sockets)) durumEkle(harita, u.sockets, soketDurumu);
     }
-    throw new Error("durum sayfa");
-  } finally { clearTimeout(zam); }
+  }
+  liste = null;
+  if (!Object.keys(harita).length) throw new Error("durum boş");
+  return harita;
+}
+const DURUM_AGLAR = {
+  bigstation: { anahtar: "https://wattkac.com/__durum/bigstation", cek: bigCek },
+  acropol: { anahtar: "https://wattkac.com/__durum/acropol", cek: acropolCek },
+};
+async function durumCek(ag, getir) {
+  const ac = new AbortController(), zam = setTimeout(() => ac.abort(), DURUM_SURE_MS);
+  try { return { zaman: new Date().toISOString(), c: await DURUM_AGLAR[ag].cek(getir, ac.signal) }; }
+  finally { clearTimeout(zam); }
 }
 const durumYanit = (o, sn) => new Response(JSON.stringify(o), { headers: { "content-type": "application/json", "cache-control": `max-age=${sn}` } });
-async function durumAnlik(ctx, getir) {
-  const onb = typeof caches !== "undefined" && caches.default, anahtar = DURUM_ANAHTAR;
+async function durumAnlik(ag, ctx, getir) {
+  const onb = typeof caches !== "undefined" && caches.default, anahtar = DURUM_AGLAR[ag].anahtar;
   if (onb) {
     try {
       const h = await onb.match(anahtar);
@@ -346,20 +382,20 @@ async function durumAnlik(ctx, getir) {
     } catch {}
   }
   let d;
-  try { d = await durumCek(getir); } catch { d = { zaman: new Date().toISOString(), hata: 1 }; }
+  try { d = await durumCek(ag, getir); } catch { d = { zaman: new Date().toISOString(), hata: 1 }; }
   if (onb) {
     const yaz = onb.put(anahtar, durumYanit(d, d.hata ? DURUM_HATA_SN : DURUM_SN)).catch(() => {});
     if (ctx && ctx.waitUntil) ctx.waitUntil(yaz); else await yaz;
   }
   return d;
 }
-async function durumBigstation(request, url, ctx, getir = fetch) {
+async function durumIstek(ag, request, url, ctx, getir = fetch) {
   if (request.method !== "GET") return json({ ok: false }, 405);
   const ham = String(url.searchParams.get("c") || "");
   const ids = [...new Set(ham.split(","))];
-  if (!ham || ham.length > 220 || ids.length > DURUM_EN_COK || !ids.every(x => /^\d{1,9}$/.test(x))) return json({ ok: false, hata: "c" }, 400);
+  if (!ham || ham.length > 220 || ids.length > DURUM_EN_COK || !ids.every(kimlikGecerli)) return json({ ok: false, hata: "c" }, 400);
   let d;
-  try { d = await durumAnlik(ctx, getir); } catch { d = { hata: 1 }; }
+  try { d = await durumAnlik(ag, ctx, getir); } catch { d = { hata: 1 }; }
   if (d.hata || !d.c) return json({ ok: false }, 503);
   const cihazlar = {};
   for (const id of ids) cihazlar[id] = Object.prototype.hasOwnProperty.call(d.c, id) ? d.c[id] : "bilinmiyor";
@@ -378,8 +414,9 @@ export default {
       url.port = "";
       return Response.redirect(url.toString(), 301);
     }
-    if (url.pathname === "/api/durum/bigstation") {   // veritabanı gerektirmez
-      try { return await durumBigstation(request, url, ctx); } catch { return json({ ok: false }, 503); }
+    const durumAg = /^\/api\/durum\/(bigstation|acropol)$/.exec(url.pathname);
+    if (durumAg) {   // veritabanı gerektirmez
+      try { return await durumIstek(durumAg[1], request, url, ctx); } catch { return json({ ok: false }, 503); }
     }
     if (url.pathname.startsWith("/api/")) {
       if (!env.DB) return json({ ok: false, hata: "veritabanı yok" }, 503);
