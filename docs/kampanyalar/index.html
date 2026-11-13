@@ -738,7 +738,9 @@ const MAXM = 100, PAGE = 40;
 // Eşleştirme kalıpları: boşluksuz, aksansız (fold edilmiş) yazılır; \b kelime sınırıdır
 const ALIAS = { "Eşarj": ["esarj", "enerjisa"], "ASTOR Şarj": ["astor"], "Shell Recharge": ["shell"], "WAT Mobilite": ["wat mobilite", "watmobilite", "\\bwat\\b"],
   // EPDK: marka "e-POwer", işletmeci "Petrol Ofisi A.Ş." → kampanyadaki "Petrol Ofisi e-POWER" ağı
-  "Petrol Ofisi e-POWER": ["petrol ofisi", "\\be-power\\b"] };
+  "Petrol Ofisi e-POWER": ["petrol ofisi", "\\be-power\\b"],
+  // kampanyadaki "EPSIS Emobility" ağı = haritadaki EPSIS istasyonları
+  "EPSIS Emobility": ["\\bepsis\\b"] };
 // Kampanya verisinde olmasa da tanınan, yaygın markalar
 const KNOWN_EXTRA = { "ZES": ["\\bzes\\b"], "Sharz.net": ["sharz"], "Tesla": ["tesla"], "Beefull": ["beefull"], "Aksa Şarj": ["\\baksa\\b"], "Enyakıt": ["enyakit", "en yakit"],
   "Petrol Ofisi": ["petrol ofisi"], "Opet": ["\\bopet\\b"], "BP": ["\\bbp\\b"], "Aytemiz": ["aytemiz"], "Power Şarj": ["powersarj", "power sarj"],
@@ -1265,7 +1267,7 @@ async function loadStatic() {
 }
 // Akım türü verilmemişse istasyon adındaki "DC"/"AC" ifadesinden çıkar (EPDK/OCM adları: "Meydan, Zeytinburnu - DC")
 // İstasyon bilgisinin alındığı ağ sitesi ("Bilgi kaynağı"): resmi liste (RESMI) ya da EPDK kaydını doğrulayan liste (DOGRULA)
-const AG_SITE = { "Otopriz": "otopriz.com.tr", "Neva Şarj": "nevasarj.com", "EPSIS": "electroop.io", "Lumicle": "lumicle.com.tr", "Ecojet": "electroop.io",
+const AG_SITE = { "Otopriz": "otopriz.com.tr", "Neva Şarj": "nevasarj.com", "EPSIS": "epsis.net", "EPSIS Emobility": "epsis.net", "Lumicle": "lumicle.com.tr", "Ecojet": "electroop.io",
   "Şarjon": "sarjon.com.tr", "Solinved": "solinvedcharge.com", "D-Charge": "dcharge.com.tr", "Aksa Şarj": "aksasarj.com.tr", "En Yakıt": "enyakit.com.tr",
   "MKS Şarj": "mkssarj.com", "Oncharge": "oncharge.com.tr", "AOS Technology": "aostechnology.com.tr", "otoWATT": "aydemplus.com.tr",
   "K-Şarj": "ksarj.com", "5 Şarj": "5sarj.com", "EKA Enerji": "ekaenerjiteknoloji.com.tr" };
