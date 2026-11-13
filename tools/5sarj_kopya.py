@@ -7,15 +7,16 @@ Kullanım: python3 tools/5sarj_kopya.py <map-pins.json> [YYYY-AA-GG]
 Girdi, sitenin haritasının kullandığı 5sarj.com/api/locations/map-pins yanıtıdır ({"content": [lokasyon, ...]}); kullanıcı kendi
 tarayıcısından kaydedip verir. 5sarj.com Cloudflare bot korumalı: bu betik ve günlük iş akışı siteye istek ATMAZ, korumayı aşmaya
 çalışılmaz (ag_istasyonlari.py'de 5 Şarj yoktur). Dosya bu yüzden otomatik güncellenmez; yeni bir kopya gelince betik yeniden çalıştırılır.
+Kopya KOPYA_GUN (veri_kontrol.py, 60 gün) günden eskiyse veri_kontrol.py uyarır: kullanıcıdan yeni map-pins kopyası istenir.
 
-Liste istasyonların yerine geçmez (fiyat yok, soketlerin gücü yok): istasyon_birlestir.py DOGRULA ile EPDK kayıtları gösterilmeye devam
-eder, listede karşılığı olan EPDK kaydı "rl" alır. Eşleştirme burada yapılır, EPDK numaraları "e"ye yazılır (bir lokasyonda birden çok
-EPDK ünitesi olabildiği için liste):
+Haritada bu liste gösterilir (istasyon_birlestir.py RESMI; konum 5 Şarj'ın koordinatı). EPDK "5 şarj" kayıtları yalnızca eşleşen
+lokasyonun soket türü/gücünü tamamlar; listede olmayan EPDK kaydı haritada gösterilmez. Eşleştirme burada yapılır, EPDK numaraları
+"e"ye yazılır (bir lokasyonda birden çok EPDK ünitesi olabildiği için liste):
   1) konum: her EPDK "5 şarj" kaydı, 300 m içindeki lokasyonlardan adı en çok benzeyene (eşitse en yakına) bağlanır. Yakındaki
      lokasyonların hiçbirinin adı benzemiyor ve listede adı birebir aynı başka bir lokasyon varsa bağlanmaz (EPDK konumu yanlış
      girilmiş olabilir, ör. ŞRJ/18836 Defacto-Küçükçekmece EPDK'da Büyükçekmece'deki bir PO istasyonunun üstünde);
   2) ad: hâlâ eşleşmemiş lokasyon ve kayıtlar adla (benzerlik ≥ 0,5) eşleştirilir: 5 km içinde ya da adresteki ilçe aynıysa 25 km
-     içinde. Bunlar konumu farklı diye raporlanır (konum her durumda EPDK'dan gelir; hangisinin doğru olduğu elle değerlendirilir).
+     içinde. Bunlar konumu farklı diye raporlanır (konum 5 Şarj'ın koordinatıdır).
 Kayıt alanları: i="5sarj<id>", a/o, n (ad), b, il, ilce, ad (adres), ac/dc (soket sayısı; HPC DC sayılır), c (toplam soket), e.
 """
 import json, pathlib, re, sys
@@ -101,9 +102,9 @@ def main():
         print(f"5sarj: konumu farklı ({d * 1000:.0f} m): {r['n']} [{r['ilce']}/{r['il']}] {r['a']},{r['o']} ↔ {no} {x['ad']} "
               f"[{x.get('adres', '')}] {x['a']},{x['o']}")
     yok = [r for i, r in enumerate(liste) if i not in eslesen]
-    print(f"5sarj: listede olup EPDK 5 şarj kaydı bulunamayan ({len(yok)}; haritaya eklenmez): " + "; ".join(f"{r['n']} ({r['ilce']}/{r['il']})" for r in yok))
+    print(f"5sarj: listede olup EPDK 5 şarj kaydı bulunamayan ({len(yok)}; haritada 5 Şarj kaydıyla gösterilir, soket gücü tamamlanmaz): " + "; ".join(f"{r['n']} ({r['ilce']}/{r['il']})" for r in yok))
     disari = [x for x in epdk if x["no"] not in es]
-    print(f"5sarj: EPDK'da 5 şarj olup listede olmayan ({len(disari)}; EPDK kaydıyla gösterilmeye devam eder): "
+    print(f"5sarj: EPDK'da 5 şarj olup listede olmayan ({len(disari)}; haritada gösterilmez): "
           + "; ".join(f"{x['no']} {x['ad']}" for x in disari))
 
 

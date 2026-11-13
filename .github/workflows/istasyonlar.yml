@@ -1,6 +1,6 @@
 name: İstasyon verisini güncelle
 
-# 1) OpenStreetMap'ten istasyonları çeker  1b) ZES/Ovolt/WAT/Trugo/VoltUp/RST/CV Charging/Acropol Şarj'ın kendi haritalarından (VoltUp: istasyon fiyatlarıyla; K-Şarj'ın haritası yalnızca EPDK kayıtlarını doğrulamak için) ve BIG Station'ın sisteminden (istasyon fiyatlarıyla) çeker  2) EPDK'nın açık servisinden tüm halka açık istasyonları (kesin koordinat + soket) çeker
+# 1) OpenStreetMap'ten istasyonları çeker  1b) ZES/Ovolt/WAT/Trugo/VoltUp/RST/CV Charging/Acropol Şarj'ın kendi haritalarından (VoltUp: istasyon fiyatlarıyla; K-Şarj'ın haritası EPDK kayıtlarını doğrulamak ve konumlarını almak için; 5 Şarj bot korumalı, data/aglar/5sarj.json elle güncellenen kopya) ve BIG Station'ın sisteminden (istasyon fiyatlarıyla) çeker  2) EPDK'nın açık servisinden tüm halka açık istasyonları (kesin koordinat + soket) çeker
 # 3) ikisini birleştirip site/istasyonlar.json üretir.
 on:
   schedule:

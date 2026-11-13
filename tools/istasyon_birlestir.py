@@ -12,7 +12,10 @@ il/ilçe ile tutarlılık, yer değiştirmiş enlem/boylam, tek basamak hatası,
 çıkarılan kayıtlar data/epdk/konum_duzeltmeleri.json'a yazılır.
 Kayıt alanları: i=kimlik, e=EPDK no, a/o=enlem/boylam, q=konum kalitesi (e EPDK kaydındaki resmi koordinat, p adresteki tesisin OSM konumu, r resmi ağ haritası, o OSM, c Open Charge Map, a adres, m mahalle, i ilçe),
                 n=ad, b=marka, p=işletmeci (isletmeciler tablosuna indeks ya da OSM'de metin), k=kW, t=soketler, ac/dc, c=adet, ad=adres, h=saat, u=web,
-                rl=1 EPDK kaydı ağın kendi (eksik) haritasında da var (DOGRULA)
+                rl=1 EPDK kaydı ağın kendi (eksik) haritasında da var (DOGRULA), rk=1 bu kaydın konumu ağın kendi haritasından (DOGRULA)
+Kaynak önceliği: istasyon listesi ve konumu için ağın kendi sitesi/uygulaması EPDK'dan önce gelir. Ağın güncel listesi varsa (RESMI)
+haritada o liste gösterilir, EPDK kayıtları yalnızca eşleşen kaydın soket/güç bilgisini tamamlar; listede olmayan EPDK kaydı
+gösterilmez. Liste eksik/eskiyse (DOGRULA) EPDK kayıtları korunur, ama listede karşılığı olan kaydın konumu ağın koordinatıdır.
 """
 import csv, json, math, pathlib, re, sys, datetime
 
@@ -34,17 +37,23 @@ RESMI = {"trugo": r"trugo", "zes": r"\bzes\b", "ovolt": r"ovolt|sharz", "wat": r
          "cv": r"charging vehicles|\bcv charging\b|\bcw enerji",  # EPDK marka "CHARGING VEHICLES CV" (işletmeci CW ENERJİ…); OCM "CV Charging Vehicles"
          # EPDK marka "ACROPOL" (işletmeci GREENLEAF YENİLENEBİLİR ENERJİ…); OSM operator "acropol"; OCM "Acropol - …". Resmi listede
          # olmayan (konut sitesi, yayında olmayan) EPDK kayıtları gösterilmez: EKSIK_TUT'ta değil.
-         "acropol": r"\bacropol\b|\bgreenleaf yenilenebilir"}
+         "acropol": r"\bacropol\b|\bgreenleaf yenilenebilir",
+         # 5 Şarj: 5sarj.com haritasının anlık kopyası (kullanıcının tarayıcısından; site bot korumalı, günlük iş akışı ÇEKEMEZ,
+         # data/aglar/5sarj.json elle güncellenir: tools/5sarj_kopya.py; eskiyince veri_kontrol.py uyarır). EPDK marka "5 şarj",
+         # işletmeci "BORENCO ŞARJ TEKNOLOJİ YATIRIMLARI…". Listedeki "e" (EPDK numaraları; bir lokasyonda birden çok ünite olabilir)
+         # yalnızca soket/güç tamamlamak için kullanılır.
+         "5sarj": r"\b5 sarj\b|\bborenco"}
 # Bu ağların EPDK kayıtları yalnızca resmi listede RESMI_YAKIN_M içinde karşılığı varsa atlanır; karşılığı olmayanlar (listede konumu
 # girilmemiş cihazlar) EPDK kaydıyla gösterilmeye devam eder.
 EKSIK_TUT = {"bigstation"}
 # Resmi listesi eksik ya da yalnızca ad + konumdan oluşan ağlar: liste istasyonların yerine geçmez, EPDK kayıtları gösterilmeye devam
-# eder. Listede karşılığı olan EPDK kaydı (eşleştirme ag_istasyonlari.py'de yapılır, EPDK numarası listede "e") "rl" ile işaretlenir.
+# eder. Listede karşılığı olan EPDK kaydı (eşleştirme ag_istasyonlari.py'de yapılır, EPDK numarası listede "e") "rl" ile işaretlenir ve
+# konumu ağın koordinatına çekilir ("rk"). Ağın koordinatı konum denetiminden (konum_denetim.py; adres olarak EPDK adresi) geçmezse ya
+# da aynı koordinat ağın listesinde farklı adlı birden çok istasyona aitse (resmi haritada kopyalama hatası) güvenilmez sayılır, EPDK
+# konumu korunur ve raporlanır.
 # K-Şarj: ksarj.com'daki Google My Maps haritası EPDK "K-ŞARJ" (işletmeci HUNAT ENERJİ…) kayıtlarının yarısından azını içeriyor,
-# soket/güç/adres yok. OSM ve OCM'de K-Şarj kaydı yok.
-# 5 Şarj: 5sarj.com haritasının anlık kopyası (kullanıcının tarayıcısından; site bot korumalı, otomatik çekilmez; tools/5sarj_kopya.py).
-# EPDK marka "5 şarj", işletmeci "BORENCO ŞARJ TEKNOLOJİ YATIRIMLARI…". Bir lokasyonda birden çok EPDK ünitesi olabildiği için "e" liste.
-DOGRULA = {"ksarj": r"\bk-sarj\b|\bhunat enerji", "5sarj": r"\b5 sarj\b|\bborenco"}
+# soket/güç/adres yok (konum 4 basamak ≈ 11 m). OSM ve OCM'de K-Şarj kaydı yok.
+DOGRULA = {"ksarj": r"\bk-sarj\b|\bhunat enerji"}
 RESMI_YAKIN_M = 300
 SECILI = pathlib.Path("data/secili_istasyonlar.json")  # yalnızca seçili istasyonlarda geçerli ağ kampanyaları
 SECILI_AG = {"otopriz": r"otopriz|dicle kok"}
@@ -100,13 +109,17 @@ def main():
             kaynaklar[d["ag"]] = {"sayfa": d.get("kaynak"), "cekildi": d.get("cekildi"), "sayi": len(d["istasyonlar"])}
             for r in d["istasyonlar"]:
                 r = dict(r); r["q"] = "r"; resmi.append(r); resmi_ag.setdefault(d["ag"], []).append(r)
-    dogrulanan, dogrula_say = {}, {}
+    dogrulanan, dogrula_say, dogrula_kayit = {}, {}, {}  # dogrula_kayit: EPDK no → ağın listesindeki kayıt
     for ag in DOGRULA:
         f = AGLAR / f"{ag}.json"
         d = json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
         if d.get("istasyonlar"):
-            dogrulanan[ag] = {e for r in d["istasyonlar"] for e in ([r["e"]] if isinstance(r.get("e"), str) else r.get("e") or [])}
-            dogrula_say[ag] = [len(d["istasyonlar"]), 0, 0]  # resmi liste, işaretlenen EPDK kaydı, listede olmayan EPDK kaydı
+            dogrulanan[ag] = set()
+            for r in d["istasyonlar"]:
+                for e in ([r["e"]] if isinstance(r.get("e"), str) else r.get("e") or []):
+                    dogrulanan[ag].add(e)
+                    dogrula_kayit[e] = dict(r, ag=ag)
+            dogrula_say[ag] = [len(d["istasyonlar"]), 0, 0, 0]  # resmi liste, işaretlenen EPDK kaydı, listede olmayan, konumu ağdan alınan
     covered = re.compile("|".join(RESMI[k] for k in kaynaklar)) if kaynaklar else None
     is_covered = lambda *names: bool(covered and covered.search(fold(" ".join(x for x in names if x))))
 
@@ -121,7 +134,21 @@ def main():
     for x in epdk:
         if x[6] and x[0] not in ilk:
             ilk[x[0]] = {"no": x[0], "ad": x[1], "marka": x[2], "adres": x[4], "a": x[6][0], "o": x[6][1]}
-    duzelt, sil, gecersiz, rapor = konum_denetim.denetle(list(ilk.values()), resmi, osm, ocm, poi, cache, key)
+    # DOGRULA ağlarının koordinatları da denetlenir; ağın listesinde adres olmadığından eşleşen EPDK kaydının adresi (il/ilçe) kullanılır.
+    # Aynı koordinat ağın listesinde farklı adlı birden çok istasyona aitse (resmi haritada kopyalama hatası) güvenilmez sayılır.
+    ayni_yer = {}
+    yer = lambda r: (r["ag"], round(r["a"], 5), round(r["o"], 5))
+    for r in dogrula_kayit.values():
+        ayni_yer.setdefault(yer(r), set()).add(fold(r.get("n") or ""))
+    guvenilmez = {no for no, r in dogrula_kayit.items() if len(ayni_yer[yer(r)]) > 1}
+    dogrula_denetim = [dict(r, i=r["i"] + "|" + no, ad=ilk[no]["adres"], b=ilk[no]["marka"] or r.get("b"))
+                       for no, r in sorted(dogrula_kayit.items()) if no in ilk and no not in guvenilmez]
+    duzelt, sil, gecersiz, rapor = konum_denetim.denetle(list(ilk.values()), resmi + dogrula_denetim, osm, ocm, poi, cache, key)
+    dogrula_konum = {r["i"].split("|", 1)[1]: (r["a"], r["o"]) for r in dogrula_denetim if r["i"] not in sil}  # EPDK no → ağın koordinatı
+    guvenilmez_rapor = sorted("%s: %s (%s, %s) ↔ %s %s" % (dogrula_kayit[no]["ag"], dogrula_kayit[no]["n"], dogrula_kayit[no]["a"],
+                                                         dogrula_kayit[no]["o"], no, ilk[no]["ad"] if no in ilk else "") for no in guvenilmez)
+    denetim_dusen = sorted("%s ↔ %s" % (r["n"], r["i"].split("|", 1)[1]) for r in dogrula_denetim if r["i"] in sil)
+    konum_cekilen = []  # (mesafe m, ağ, EPDK no, ad)
     resmi = [r for r in resmi if r["i"] not in sil]
     osm = [s for s in osm if s["i"] not in sil]
     ocm = [s for s in ocm if s["i"] not in sil]
@@ -136,6 +163,7 @@ def main():
 
     seen, recs, ozel, groups, birlesen, resmi_disi = set(), [], 0, {}, 0, []
     epdk_resmi = []  # resmi listesi olan ağların EPDK kayıtları: yalnızca o listedeki eksik güç/soket bilgisini tamamlamak için
+    epdk_soket = {}  # EPDK no → soketler (listesi EPDK numarasıyla eşleştirilmiş ağlar için, ör. 5 Şarj "e")
     for no, ad, marka, isletmeci, adres, acik, konum, soketler in epdk:
         if no in seen:
             continue
@@ -144,7 +172,15 @@ def main():
             ozel += 1
             continue  # halka açık olmayan (özel) istasyonlar haritada gösterilmez
         kalite = "e"
-        if konum and no in duzelt:
+        dag = next((k for k in dogrulanan if re.search(DOGRULA[k], fold(marka + " " + isletmeci))), None)
+        if dag and no in dogrula_konum:
+            # ağın kendi koordinatı EPDK'nınkinden önce gelir (konum denetiminden geçmiş ve güvenilir sayılmışsa)
+            yeni = dogrula_konum[no]
+            if konum:
+                konum_cekilen.append((dist(konum[0], konum[1], yeni[0], yeni[1]), dag, no, ad))
+            konum = yeni
+            dogrula_say[dag][3] += 1
+        elif konum and no in duzelt:
             if duzelt[no] is None:
                 konum_cikan += 1
                 continue  # makul konumu bulunamadı: yanlış yerde göstermektense gösterilmez
@@ -157,13 +193,15 @@ def main():
                 x = {"a": konum[0], "o": konum[1], "b": marka}
                 soket_ekle(x, soketler)
                 epdk_resmi.append(x)
+                epdk_soket[no] = soketler
             continue  # bu ağın resmi listesi var
         rec = {"i": "e" + re.sub(r"\D", "", no), "e": no, "n": ad, "b": marka, "p": op(isletmeci), "ad": adres}
-        dag = next((k for k in dogrulanan if re.search(DOGRULA[k], fold(marka + " " + isletmeci))), None)
         if dag:
             dogrula_say[dag][1 if no in dogrulanan[dag] else 2] += 1
             if no in dogrulanan[dag]:
                 rec["rl"] = 1  # ağın kendi haritasında da var
+            if no in dogrula_konum:
+                rec["rk"] = 1  # konum ağın kendi haritasından
         if konum:
             rec["a"], rec["o"], rec["q"] = konum[0], konum[1], kalite
         elif no in poi:
@@ -178,6 +216,8 @@ def main():
             birlesen += 1
             if rec.get("rl"):
                 ana["rl"] = 1
+            if rec.get("rk"):
+                ana["rk"] = 1
             if soketler:
                 soket_ekle(ana, soketler)
             else:
@@ -246,7 +286,8 @@ def main():
                     s["p"] = op(s["p"])
                 extra.append(s)
                 xgrid.setdefault(cell(s["a"], s["o"]), []).append((k, s))
-    # Resmi ağ listelerindeki eksik güç / soket / akım türü bilgisini aynı ağın 150 m içindeki EPDK kaydından tamamla
+    # Resmi ağ listelerindeki eksik güç / soket / akım türü bilgisini aynı ağın 150 m içindeki EPDK kaydından tamamla. Liste EPDK
+    # numarasıyla eşleştirilmişse ("e", ör. 5 Şarj) yalnızca o kayıtlar kullanılır (konumdan bağımsız; birden çok ünite toplanır).
     egrid, tamam = {}, 0
     for x in epdk_resmi:
         egrid.setdefault(cell(x["a"], x["o"]), []).append(x)
@@ -254,7 +295,11 @@ def main():
         if r.get("k") and r.get("t") and (r.get("ac") or r.get("dc")):
             continue
         cx, cy = cell(r["a"], r["o"]); k = key(r.get("b") or ""); best, bd = None, 150
-        for dx in (-1, 0, 1):
+        nolar = [e for e in ([r["e"]] if isinstance(r.get("e"), str) else r.get("e") or []) if e in epdk_soket]
+        for e in nolar:
+            best = best or {}
+            soket_ekle(best, epdk_soket[e])
+        for dx in () if nolar else (-1, 0, 1):
             for dy in (-1, 0, 1):
                 for x in egrid.get((cx + dx, cy + dy), []):
                     d = dist(r["a"], r["o"], x["a"], x["o"])
@@ -289,6 +334,9 @@ def main():
             else:
                 kalan.append(s)
         extra = kalan
+    for r in resmi:
+        for f in ("e", "il", "ilce"):  # yalnızca eşleştirme için (EPDK numaraları, ağın il/ilçe alanı)
+            r.pop(f, None)
     recs += extra + resmi
     # Seçili istasyon kampanyaları: resmi listedeki "Ad, İlçe" kayıtlarını istasyon adı/ilçe/il ile eşleştir
     secili = json.loads(SECILI.read_text(encoding="utf-8")) if SECILI.exists() else {}
@@ -347,8 +395,17 @@ def main():
     print(konum_denetim.ozet_satiri(rapor) + f" (EPDK'dan çıkarılan {konum_cikan}; ayrıntı: {konum_denetim.RAPOR})")
     if resmi_disi:
         print(f"resmi listede karşılığı olmayan, EPDK kaydıyla gösterilen ({len(resmi_disi)}): " + "; ".join(resmi_disi))
-    for ag, (n, var, yok) in dogrula_say.items():
-        print(f"{ag}: resmi liste {n} istasyon (yalnızca doğrulama); EPDK kaydı listede var {var}, listede yok {yok} (ikisi de gösterilir)")
+    for ag, (n, var, yok, cek) in dogrula_say.items():
+        print(f"{ag}: resmi liste {n} istasyon (eksik liste: EPDK kayıtları korunur); EPDK kaydı listede var {var}, listede yok {yok} "
+              f"(ikisi de gösterilir); konumu ağın koordinatına çekilen {cek}")
+    if konum_cekilen:
+        konum_cekilen.sort(reverse=True)
+        print(f"ağ koordinatına çekilen EPDK kaydı {len(konum_cekilen)}, 100 m'den fazla değişen {sum(1 for d, *_ in konum_cekilen if d > 100)}; en büyük: "
+              + "; ".join(f"{ag} {no} {ad} {d:.0f} m" for d, ag, no, ad in konum_cekilen[:5]))
+    if guvenilmez_rapor:
+        print(f"güvenilmez ağ koordinatı (aynı koordinat farklı adlı birden çok istasyonda; EPDK konumu korundu) ({len(guvenilmez_rapor)}): " + "; ".join(guvenilmez_rapor))
+    if denetim_dusen:
+        print(f"konum denetiminden geçmeyen ağ koordinatı (EPDK konumu korundu) ({len(denetim_dusen)}): " + "; ".join(denetim_dusen))
     print("seçili kampanya eşleşmeleri:", sk_hits)
     print("saatli tarife eşleşmeleri:", tz_hits)
     ozet = ", ".join("%s %d" % (k, v["sayi"]) for k, v in kaynaklar.items())
