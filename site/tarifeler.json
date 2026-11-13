@@ -1,6 +1,6 @@
 {
  "_not": "Şarj ağlarının kendi resmi sayfalarında doğrulanan liste fiyatları (TL/kWh). Fiyatlar konuma göre aralık olarak yayınlanıyor: min-max. 'kontrol' sayfanın okunduğu tarih, 'gecerlilik' sayfanın kendi belirttiği tarih (yoksa null). Doğrulanamayan ağlarda ac/dc null kalır ve haritada 'Fiyat yok' görünür. Kampanya indirimleri bu fiyatlara dahil değildir.",
- "guncelleme": "2026-11-12",
+ "guncelleme": "2026-11-13",
  "aglar": {
   "Eşarj": {
    "ac": {
@@ -40,7 +40,7 @@
     "max": 14.98
    },
    "kaynak": "https://trugo.com.tr/price",
-   "kontrol": "2026-11-11",
+   "kontrol": "2026-11-13",
    "gecerlilik": null,
    "not": "AC tüm istasyonlarda 9,95; DC 14,98 TL/kWh. Duyurudaki seçili istasyonlarda DC 12 TL/kWh (https://trugo.com.tr/individual/news/secili-istasyonlarda-12-tl-kwh); istasyon bazlı fiyat haritada gösterilir."
   },
@@ -68,21 +68,21 @@
     "max": 13.9
    },
    "kaynak": "https://otopriz.com.tr/uyelik-ve-tarifeler",
-   "kontrol": "2026-11-11",
+   "kontrol": "2026-11-13",
    "gecerlilik": "2026-01-20",
    "not": "KDV dahil. İstasyon bazlı güncel fiyat Otopriz uygulamasında."
   },
   "Ovolt": {
    "ac": {
-    "min": 8.99,
-    "max": 8.99
+    "min": 8.79,
+    "max": 8.79
    },
    "dc": {
     "min": 10.49,
-    "max": 13.49
+    "max": 12.75
    },
    "kaynak": "https://ovolt.com.tr/tarifeler",
-   "kontrol": "2026-11-11",
+   "kontrol": "2026-11-13",
    "gecerlilik": null,
    "not": "Sayfa geçerlilik tarihi vermiyor; DC fiyat lokasyona göre değişiyor."
   },
@@ -125,7 +125,7 @@
     "max": 14.49
    },
    "kaynak": "https://www.watmobilite.com/cozumler/kamusal-alanlar#guncel-fiyat-ve-tarifeler",
-   "kontrol": "2026-11-12",
+   "kontrol": "2026-11-13",
    "gecerlilik": "2026-10-08",
    "not": "Fiyat lokasyona göre değişiyor; güncel tarife mobil uygulamada. Sayfanın tarih bilgileri tutarsız olabilir."
   },
@@ -147,7 +147,7 @@
     "max": 16.49
    },
    "kaynak": "https://zes.net/tr/fiyatlandirma",
-   "kontrol": "2026-11-12",
+   "kontrol": "2026-11-13",
    "gecerlilik": null,
    "adlar": [
     "zes"
@@ -161,7 +161,7 @@
     "max": 14.9
    },
    "kaynak": "https://www.enyakit.com.tr/ucretlendirme",
-   "kontrol": "2026-11-12",
+   "kontrol": "2026-11-13",
    "gecerlilik": null,
    "adlar": [
     "EN YAKIT"
@@ -178,7 +178,7 @@
     "max": 13.5
    },
    "kaynak": "https://www.oncharge.com.tr/fiyatlar",
-   "kontrol": "2026-11-12",
+   "kontrol": "2026-11-13",
    "gecerlilik": "2026-10-30",
    "adlar": [
     "oncharge"
@@ -212,7 +212,7 @@
     "max": 14.9
    },
    "kaynak": "https://dcharge.com.tr/tarifeler",
-   "kontrol": "2026-11-12",
+   "kontrol": "2026-11-13",
    "gecerlilik": null,
    "adlar": [
     "D-Charge"
@@ -229,7 +229,7 @@
     "max": 12.0
    },
    "kaynak": "https://www.zeplinenerji.com",
-   "kontrol": "2026-11-12",
+   "kontrol": "2026-11-13",
    "gecerlilik": null,
    "adlar": [
     "ZEPLİN CAR rental"
@@ -245,7 +245,7 @@
     "max": 15.49
    },
    "kaynak": "https://tuncmatikcharge.com/fiyatlar/",
-   "kontrol": "2026-11-12",
+   "kontrol": "2026-11-13",
    "gecerlilik": null,
    "adlar": [
     "tunçmatik"
@@ -261,7 +261,7 @@
     "max": 13.99
    },
    "kaynak": "https://beefull.com/tarifeler/elektrikli-arac-tarifesi/",
-   "kontrol": "2026-11-12",
+   "kontrol": "2026-11-13",
    "gecerlilik": null,
    "adlar": [
     "beefull"
@@ -278,7 +278,7 @@
     "max": 13.99
    },
    "kaynak": "https://www.aksasarj.com.tr/ucretler",
-   "kontrol": "2026-11-12",
+   "kontrol": "2026-11-13",
    "gecerlilik": "2026-08-07",
    "adlar": [
     "AKSA ŞARJ"
@@ -295,7 +295,7 @@
     "max": 13.99
    },
    "kaynak": "https://mkssarj.com/tarife",
-   "kontrol": "2026-11-12",
+   "kontrol": "2026-11-13",
    "gecerlilik": "2026-04-11",
    "adlar": [
     "MKS-ŞARJ"
@@ -312,7 +312,7 @@
     "max": 12.5
    },
    "kaynak": "https://www.mig-go.com",
-   "kontrol": "2026-11-12",
+   "kontrol": "2026-11-13",
    "gecerlilik": "2026-02-19",
    "adlar": [
     "MİGGO"
@@ -329,7 +329,7 @@
     "max": 13.9
    },
    "kaynak": "https://nevasarj.com/sayfalar/istasyonlarimiz/arac-sarj-ac-dc-kwh-fiyat-tarifeleri.html",
-   "kontrol": "2026-11-12",
+   "kontrol": "2026-11-13",
    "gecerlilik": "2026-02-17",
    "adlar": [
     "NEVA ŞARJ"
@@ -346,7 +346,7 @@
     "max": 13.9
    },
    "kaynak": "https://www.varr.com.tr",
-   "kontrol": "2026-11-12",
+   "kontrol": "2026-11-13",
    "gecerlilik": null,
    "adlar": [
     "varr TM"
@@ -362,7 +362,7 @@
     "max": 13.49
    },
    "kaynak": "https://www.isarj.com/tarifeler/",
-   "kontrol": "2026-11-12",
+   "kontrol": "2026-11-13",
    "gecerlilik": null,
    "adlar": [
     "i-şarj"
@@ -379,7 +379,7 @@
     "max": 12.5
    },
    "kaynak": "https://sarjmatik.com.tr/ChargingPrices/",
-   "kontrol": "2026-11-12",
+   "kontrol": "2026-11-13",
    "gecerlilik": null,
    "adlar": [
     "ŞarjMatik"
@@ -396,7 +396,7 @@
     "max": 13.99
    },
    "kaynak": "https://sarjon.com.tr/fiyatlar/",
-   "kontrol": "2026-11-12",
+   "kontrol": "2026-11-13",
    "gecerlilik": null,
    "adlar": [
     "ŞARJON"
@@ -413,7 +413,7 @@
     "max": 13.4
    },
    "kaynak": "https://www.adze.com/tr/fiyat-tarifesi",
-   "kontrol": "2026-11-12",
+   "kontrol": "2026-11-13",
    "gecerlilik": null,
    "adlar": [
     "ADZE"
@@ -430,7 +430,7 @@
     "max": 13.49
    },
    "kaynak": "https://lumicle.com.tr/istasyonlar/",
-   "kontrol": "2026-11-12",
+   "kontrol": "2026-11-13",
    "gecerlilik": null,
    "adlar": [
     "LUMİCLE"
@@ -447,7 +447,7 @@
     "max": 13.49
    },
    "kaynak": "https://torasarj.com/fiyatlar/",
-   "kontrol": "2026-11-12",
+   "kontrol": "2026-11-13",
    "gecerlilik": null,
    "adlar": [
     "TORA"
@@ -464,7 +464,7 @@
     "max": 15.99
    },
    "kaynak": "https://www.efish.com.tr/tr/fiyatlandirma/",
-   "kontrol": "2026-11-12",
+   "kontrol": "2026-11-13",
    "gecerlilik": "2026-10-21",
    "adlar": [
     "efish"

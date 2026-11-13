@@ -1,7 +1,7 @@
 {
   "donem": "Kasım 2026",
-  "guncelleme": "2026-11-12",
-  "son_kontrol": "2026-11-12",
+  "guncelleme": "2026-11-13",
+  "son_kontrol": "2026-11-13",
   "genel_kartlar": "Paraf Doğal · QNB · ON",
   "kampanyasiz_bankalar": [
     "İş Bankası (Maximum)"
@@ -563,6 +563,38 @@
           "join": "Harcamadan önce Vodafone Pay › Kampanyalar › Kampanyaya Katıl",
           "kosul": "Zes istasyonlarında Vodafone Pay fiziksel veya sanal kartla yapılan harcamaların %15'i nakit iade; kullanıcı başına toplam en fazla 500 TL. Katılım talebinden önceki harcamalar kapsam dışı. İade anında aktif Vodafone Pay Kartı olmalı. Vodafone Pay'deki diğer kart kampanyalarıyla birleşmez.",
           "eklendi": "2026-11-12",
+          "herkese": false
+        },
+        {
+          "big": "1.250 TL şarj desteği",
+          "kisa": "Pirelli lastik alana",
+          "det": "4 Pirelli ELECT lastik alana · Zes kampanya kodu",
+          "son": "30 Aralık",
+          "link": "https://zes.net/tr/kampanyalar/pirelli",
+          "bas": "2026-11-02",
+          "bit": "2026-12-30",
+          "join": "pirelli.com.tr'de My Pirelli hesabıyla faturayı yükle; kod SMS/e-postayla gelir, Zes uygulaması › Profil › Kampanyalar › Kampanya Kodu Ekle",
+          "kosul": "2 Kasım – 30 Aralık 2026 arasında katılımcı bayiden tek seferde en az 4 adet Pirelli binek/SUV (4x4) yaz, kış veya dört mevsim \"ELECT\" ibareli lastik alımı; online alımlar hariç. Başvuru pirelli.com.tr'den faturayla; KDV dahil 1.250 TL'lik Zes kodu 3 iş günü içinde gelir, 30 Eylül 2027'ye kadar kullanılır. Bireysel tüketici bir kez katılabilir; 1.250 kodla sınırlı. Zes üyeliği gerekir; Zes'in halka açık istasyonları, roaming hariç. Nakde çevrilemez, devredilemez, başka kampanyalarla birleşmez.",
+          "eklendi": "2026-11-13",
+          "herkese": false
+        },
+        {
+          "big": "30 kWh şarj hediyesi",
+          "kisa": "Metro alışverişine",
+          "det": "Seçili Metro Market'lerde 5.000 TL alışverişe · ayda 1 kupon",
+          "son": "31 Aralık",
+          "link": "https://zes.net/tr/kampanyalar/metrokampanyasi",
+          "bas": "2026-10-30",
+          "bit": "2026-12-31",
+          "join": "Kupon kodunu mağazanın kasa şefliğinden al, Zes uygulamasına ekle ve şarj başlatma ekranında seç",
+          "kosul": "Metro Market Nilüfer, Kepez, Mersin, Kozyatağı ve Güneşli mağazalarında alkol ve tütün hariç 5.000 TL alışverişe 30 kWh şarj kuponu; kişi başı ayda en fazla 1 kod (Ekim, Kasım, Aralık ayrı). Kupon şarj başlamadan önce seçilir, tek şarjda geçerli, 31.12.2026'ya kadar kullanılır. Yalnızca Zes'in halka açık istasyonları; ağdaki diğer operatörler, Zes Kart ve Autocharge hariç. Diğer kupon, çek ve puanlarla birleşmez.",
+          "iller": [
+            "Bursa",
+            "Antalya",
+            "Mersin",
+            "İstanbul"
+          ],
+          "eklendi": "2026-11-13",
           "herkese": false
         }
       ],
@@ -1185,16 +1217,16 @@
       "own": [
         {
           "big": "%12 indirim",
-          "kisa": "12–22 Kasım",
-          "det": "Ovolt istasyonlarında · 12–22 Kasım arası 11 gün",
+          "kisa": "Dahil istasyonlarda",
+          "det": "Kampanyaya dahil Ovolt istasyonlarında · 12–22 Kasım",
           "son": "22 Kasım",
-          "link": "https://www.instagram.com/ovolt.tr/",
+          "link": "https://ovolt.com.tr/duyurular/1/15",
           "bas": "2026-11-12",
           "bit": "2026-11-22",
-          "kosul": "Her ayın 12'sine özel %12 indirim, Kasım ayında 12–22 Kasım tarihleri arasında geçerli. Kaynak: Ovolt'un resmi Instagram hesabındaki duyuru (11 Kasım 2026). Uygulama koşulları için Ovolt uygulamasına bakın.",
+          "kosul": "Her ayın 12'sine özel %12 indirim Kasım'da 12 Kasım 00.00 – 22 Kasım 23.59 arasında geçerli. Yalnızca Ovolt kampanyasına dahil şarj istasyonlarında (liste duyuruda yok); Ovolt mobil uygulamasında kayıtlı ve aktif kullanıcı hesabı gerekir. Teknik, bağlantı veya ödeme kaynaklı tamamlanamayan şarjlar kapsam dışı; nakde çevrilemez, devredilemez; Ovolt aksini belirtmedikçe diğer indirim, kupon ve kampanyalarla birleşmez.",
           "eklendi": "2026-11-11",
-          "kontrol": true,
-          "herkese": true
+          "herkese": false,
+          "join": "Ovolt uygulamasında kayıtlı ve aktif hesap"
         },
         {
           "big": "50 TL VoltPuan",
@@ -1222,7 +1254,7 @@
       ],
       "cover": {
         "big": "%12 indirim",
-        "sub": "12–22 Kasım · tüm Ovolt istasyonları",
+        "sub": "12–22 Kasım · kampanyaya dahil Ovolt istasyonlarında",
         "son": "22 Kasım"
       }
     },
@@ -1307,6 +1339,34 @@
         "big": "%20 indirim",
         "sub": "Akbank Axess · Wings · Free ile",
         "son": "22 Kasım"
+      }
+    },
+    {
+      "id": "aksa",
+      "name": "Aksa Şarj",
+      "own": [
+        {
+          "big": "%15 indirim",
+          "kisa": "Seçili istasyonda",
+          "det": "Karaköprü Belediyesi istasyonunda · açılışa özel",
+          "son": "26 Kasım",
+          "link": "https://www.aksasarj.com.tr/tr/kampanyalar",
+          "bas": "2026-10-26",
+          "bit": "2026-11-26",
+          "join": "Aksa Şarj uygulamasında şarjdan önce veya şarj sırasında kampanyayı seç",
+          "kosul": "26.10.2026 – 26.11.2026 arasında yalnızca Şanlıurfa Karaköprü Belediyesi istasyonunda (1 DC 80 kW, 1 AC 22 kW halka açık ünite) güncel soket tarifesine %15 indirim. Yalnızca bireysel müşteriler; Aksa Şarj uygulamasında aktif ve onaylı hesap gerekir. Kampanya seçilmeyen şarjlar standart tarifeden ücretlendirilir, sonradan indirim uygulanmaz. Kurumsal anlaşmalı işlemler hariç; diğer indirim, puan veya hediye çekleriyle birleşmez.",
+          "iller": [
+            "Şanlıurfa"
+          ],
+          "eklendi": "2026-11-13",
+          "herkese": false
+        }
+      ],
+      "banks": [],
+      "cover": {
+        "big": "%15 indirim",
+        "sub": "Şanlıurfa Karaköprü Belediyesi istasyonu · açılışa özel",
+        "son": "26 Kasım"
       }
     }
   ]

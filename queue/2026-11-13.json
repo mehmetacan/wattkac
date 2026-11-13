@@ -1,0 +1,261 @@
+[
+ {
+  "id": "ozet_istasyonlar_post",
+  "grup": "2026-11-13__ozet_istasyonlar",
+  "tip": "karusel",
+  "zaman": "2026-11-14T09:30:00+03:00",
+  "baslik": "Şarj ağı kampanyaları özeti",
+  "tur": "ozet",
+  "kaynaklar": [
+   {
+    "ad": "Eşarj: %10 Eşarj Puan",
+    "url": "https://www.allianz.com.tr/tr_TR/faaliyetlerimiz/kampanyalar/elektrikli-arac-sarj-kampanyasi.html",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ASTOR Şarj: DC 10,90 TL/kWh",
+    "url": "https://www.instagram.com/astorsarj/",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Trugo: Togg'a %20 indirim",
+    "url": "https://trugo.com.tr/",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ZES: %15 indirim",
+    "url": "https://zes.net/tr/kampanyalar/vodafonered",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ZES: %10 indirim",
+    "url": "https://zes.net/tr/kampanyalar/anadolusigorta",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ZES: %15 indirim",
+    "url": "https://zes.net/tr/kampanyalar/tavkampanyasi",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ZES: %15 nakit iade",
+    "url": "https://zes.net/tr/kampanyalar/vodafonepay",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ZES: 1.250 TL şarj desteği",
+    "url": "https://zes.net/tr/kampanyalar/pirelli",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ZES: 30 kWh şarj hediyesi",
+    "url": "https://zes.net/tr/kampanyalar/metrokampanyasi",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Otopriz: %30 indirim",
+    "url": "https://otopriz.com.tr/kampanyalar/indirimli-istasyonlar/kampanya-detaylari",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Otopriz: DC'de %30 indirim",
+    "url": "https://otopriz.com.tr/kampanyalar/otopriz-gunu-kampanyasi/kampanya-detaylari",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Otopriz: DC'de %10 indirim",
+    "url": "https://otopriz.com.tr/kampanyalar/favori-istasyon-kampanyasi/kampanya-detaylari",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Otopriz: Doğum gününde %20",
+    "url": "https://otopriz.com.tr/kampanyalar/dogum-gunu-kampanyasi/kampanya-detay",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Ovolt: %12 indirim",
+    "url": "https://ovolt.com.tr/duyurular/1/15",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Ovolt: 50 TL VoltPuan",
+    "url": "https://ovolt.com.tr/duyurular/1/8",
+    "tur": "resmi"
+   },
+   {
+    "ad": "WAT Mobilite: Ford'a %4 indirim",
+    "url": "https://www.watmobilite.com/kampanyalar/ford-kullanicilarina-ozel-4-indirim",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Aksa Şarj: %15 indirim",
+    "url": "https://www.aksasarj.com.tr/tr/kampanyalar",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-13/ozet_istasyonlar/1_kapak.jpg",
+   "media/2026-11-13/ozet_istasyonlar/2_liste.jpg"
+  ],
+  "aciklama": "⚡ Kasım 2026: şarj ağlarında hangi kampanyalar var?\n\n• Eşarj: %20'ye varan (Ziraat · Allianz kasko)\n• ASTOR Şarj: DC 8,72 TL (Kasım fiyatı + kart puanıyla efektif · AC 7,19)\n• Trugo: Togg'a %20 (Trugo DC · kartla 100 TL'lik şarj 64 TL)\n• ZES: %15 indirim (Vodafone Red, TAV Passport, Vodafone Pay ve Anadolu Sigorta kaskoya özel · ON kartla 100 TL'lik şarj 68 TL)\n• Voltrun: %20 Jest Lira (Ziraat Bankkart ile)\n• Otopriz: %30 indirim (36 ilde 73 istasyon · liste içeride)\n• Ovolt: %12 indirim (12–22 Kasım · kampanyaya dahil Ovolt istasyonlarında)\n• Shell Recharge: %50 bonus (Garanti BBVA kartlarıyla)\n• Varr: 100 TL bonus (Garanti Bonus ile)\n• WAT Mobilite: Ford'a %4 (WAT istasyonlarında AC ve DC · + Yapı Kredi Worldpuan)\n• Voltla: %20 indirim (Akbank Axess · Wings · Free ile)\n• Aksa Şarj: %15 indirim (Şanlıurfa Karaköprü Belediyesi istasyonu · açılışa özel)\n\nHer kurumun detayı ayrı postta. Kaydedin, şarj etmeden önce bakın.\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "istasyon_zes_post",
+  "grup": "2026-11-13__istasyon_zes",
+  "tip": "karusel",
+  "zaman": "2026-11-14T19:30:00+03:00",
+  "baslik": "ZES",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "ZES: %15 indirim",
+    "url": "https://zes.net/tr/kampanyalar/vodafonered",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ZES: %10 indirim",
+    "url": "https://zes.net/tr/kampanyalar/anadolusigorta",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ZES: %15 indirim",
+    "url": "https://zes.net/tr/kampanyalar/tavkampanyasi",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ZES: %15 nakit iade",
+    "url": "https://zes.net/tr/kampanyalar/vodafonepay",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ZES: 1.250 TL şarj desteği",
+    "url": "https://zes.net/tr/kampanyalar/pirelli",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ZES: 30 kWh şarj hediyesi",
+    "url": "https://zes.net/tr/kampanyalar/metrokampanyasi",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ON Dijital: %20 iade",
+    "url": "https://on.com.tr/on-kredi-karti-elektrikli-arac-sarj-kampanyasi",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-13/istasyon_zes/1_kapak.jpg",
+   "media/2026-11-13/istasyon_zes/2_detay.jpg"
+  ],
+  "aciklama": "⚡ ZES: %15 indirim!\n\n✅ %15 indirim: Vodafone Red Premium ve Elite abonelerine · Happy kodu (son gün 31 Aralık)\n✅ %10 indirim: Anadolu Sigorta kaskolulara · ayda 1, Sigortam Cepte kodu (son gün 31 Aralık)\n✅ %15 indirim: TAV Passport müşterilerine · ayda 1, TAV Passport kodu (son gün 31 Aralık)\n✅ %15 nakit iade: Vodafone Pay kartla ödemede · toplam 500 TL (son gün 31 Aralık)\n✅ 1.250 TL şarj desteği: 4 Pirelli ELECT lastik alana · Zes kampanya kodu (son gün 30 Aralık)\n✅ 30 kWh şarj hediyesi: Seçili Metro Market'lerde 5.000 TL alışverişe · ayda 1 kupon (son gün 31 Aralık)\n\n💳 Banka kartıyla birleşince (100 TL'lik şarjda net maliyet):\n• Sadece %15 kodla (Vodafone Red / TAV): 85 TL\n• + ON Kredi Kartı %20 iade: 68 TL\nTek kartla; ON iadesi 30 Kasım'a kadar, 500 TL tavan. Kodlar birleşmez.\n\nKart kampanyalarının tamamı ve geçerli istasyonlar banka postlarımızda.\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #zes",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "istasyon_zes_hikaye",
+  "grup": "2026-11-13__istasyon_zes",
+  "baslik": "ZES",
+  "tur": "istasyon",
+  "tip": "hikaye",
+  "zaman": "2026-11-14T20:30:00+03:00",
+  "gorseller": [
+   "media/2026-11-13/istasyon_zes/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "istasyon_ovolt_post",
+  "grup": "2026-11-13__istasyon_ovolt",
+  "tip": "karusel",
+  "zaman": "2026-11-15T09:30:00+03:00",
+  "baslik": "Ovolt",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "Ovolt: %12 indirim",
+    "url": "https://ovolt.com.tr/duyurular/1/15",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Ovolt: 50 TL VoltPuan",
+    "url": "https://ovolt.com.tr/duyurular/1/8",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-13/istasyon_ovolt/1_kapak.jpg",
+   "media/2026-11-13/istasyon_ovolt/2_detay.jpg"
+  ],
+  "aciklama": "⚡ Ovolt: %12 indirim!\n\n✅ %12 indirim: Kampanyaya dahil Ovolt istasyonlarında · 12–22 Kasım (son gün 22 Kasım)\n✅ 50 TL VoltPuan: Ovolt uygulamasına ilk kez üye olanlara · tek şarjda kullanılır (son gün 31 Aralık)\n\nKart kampanyalarının tamamı ve geçerli istasyonlar banka postlarımızda.\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #ovolt",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "istasyon_ovolt_hikaye",
+  "grup": "2026-11-13__istasyon_ovolt",
+  "baslik": "Ovolt",
+  "tur": "istasyon",
+  "tip": "hikaye",
+  "zaman": "2026-11-15T10:30:00+03:00",
+  "gorseller": [
+   "media/2026-11-13/istasyon_ovolt/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "istasyon_aksa_post",
+  "grup": "2026-11-13__istasyon_aksa",
+  "tip": "karusel",
+  "zaman": "2026-11-15T13:00:00+03:00",
+  "baslik": "Aksa Şarj",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "Aksa Şarj: %15 indirim",
+    "url": "https://www.aksasarj.com.tr/tr/kampanyalar",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-13/istasyon_aksa/1_kapak.jpg",
+   "media/2026-11-13/istasyon_aksa/2_detay.jpg"
+  ],
+  "aciklama": "⚡ Aksa Şarj: %15 indirim!\n\n✅ %15 indirim: Karaköprü Belediyesi istasyonunda · açılışa özel (son gün 26 Kasım)\n\nKart kampanyalarının tamamı ve geçerli istasyonlar banka postlarımızda.\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #aksaşarj",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "istasyon_aksa_hikaye",
+  "grup": "2026-11-13__istasyon_aksa",
+  "baslik": "Aksa Şarj",
+  "tur": "istasyon",
+  "tip": "hikaye",
+  "zaman": "2026-11-15T14:00:00+03:00",
+  "gorseller": [
+   "media/2026-11-13/istasyon_aksa/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ }
+]

@@ -1,0 +1,41 @@
+[
+ {
+  "id": "ozet_istasyonlar",
+  "tur": "ozet",
+  "baslik": "Şarj ağı kampanyaları özeti",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_liste.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_ovolt",
+  "tur": "istasyon",
+  "baslik": "Ovolt",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_aksa",
+  "tur": "istasyon",
+  "baslik": "Aksa Şarj",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ },
+ {
+  "id": "istasyon_zes",
+  "tur": "istasyon",
+  "baslik": "ZES",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ }
+]

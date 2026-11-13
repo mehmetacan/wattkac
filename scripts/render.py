@@ -119,7 +119,16 @@ def station_html(s, d, story):
         bp = (f'<div class="lbl" style="margin-top:{34 if story else 24}px">Banka kartıyla birleşince · {esc(bl["baslik"])}</div>'
               f'<div class="offers" style="margin-top:10px;gap:12px">{rows}</div>'
               f'<div class="foot" style="margin-top:12px">{esc(bl.get("not", ""))}</div>')
-    return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{base_css(W, H, story)}</style></head><body><div class="wrap">'
+    # 5+ kampanyalı ağda kartlar sığsın diye sıkı düzen
+    css = base_css(W, H, story)
+    if len(s["own"]) >= 5:
+        css += (f".offers{{gap:{14 if story else 10}px}}.of{{padding:{18 if story else 12}px 24px;border-radius:20px}}"
+                f".big{{font-size:{44 if story else 34}px}}.son{{font-size:20px;padding:4px 12px}}"
+                f".det{{margin-top:4px;font-size:{26 if story else 22}px}}")
+        if not story:
+            css += (".h1{margin-top:22px;font-size:64px}.of{padding:10px 24px}"
+                    ".row{padding:10px 24px}.rk{font-size:24px}.rv{font-size:22px}.note{padding:12px 20px;font-size:22px}")
+    return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{css}</style></head><body><div class="wrap">'
             f'{brand("Şarj ağı · " + d["donem"])}<div class="h1">{esc(s["name"])}</div><div class="h2">Ağın kendi indirimi</div>'
             f'<div class="offers">{own}</div>{bp}<div class="spacer"></div>'
             f'<div class="note"><b>Kart kampanyalarının tamamı</b> banka postlarımızda; orada hangi istasyonlarda geçerli olduğu yazıyor.</div>'
