@@ -1049,6 +1049,25 @@
     "360 Enerji Şarj"
    ],
    "not": "AC-1 (3,7–22 kW) 9,49, DC (60–180 kW) 12,49 TL/kWh. Düşük güçlü bazı lokasyonlarda AC-2 8,99 (lokasyona özel, uygulanmadı). İşgaliye: şarjdan 15 dk sonra her 15 dk için 50 TL."
+  },
+  "Voltgo": {
+   "ac": {
+    "min": 9.5,
+    "max": 9.5
+   },
+   "dc": {
+    "min": 12.4,
+    "max": 12.4
+   },
+   "kaynak": "https://voltgo.com.tr/voltgo-tarife/",
+   "kontrol": "2026-11-14",
+   "gecerlilik": null,
+   "adlar": [
+    "Voltgo",
+    "VOLTGO",
+    "Voltgo Şarj"
+   ],
+   "not": "AC Tip 2 9,5, DC CCS2 12,4 TL/kWh. Sayfada KDV durumu belirtilmiyor."
   }
  }
 }
