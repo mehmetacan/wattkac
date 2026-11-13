@@ -915,6 +915,25 @@
     "HIZZLAN Charge N'Drive",
     "HIZZLAN Charge N’Drive"
    ]
+  },
+  "5 Şarj": {
+   "ac": {
+    "min": 8.99,
+    "max": 8.99
+   },
+   "dc": {
+    "min": 15.9,
+    "max": 15.9
+   },
+   "kaynak": "https://5sarj.com/tr/fiyatlandirma",
+   "kontrol": "2026-11-13",
+   "gecerlilik": null,
+   "adlar": [
+    "5 Şarj",
+    "5Şarj",
+    "Beş Şarj"
+   ],
+   "not": "AC ≤22 kW 8,99, DC 150 kW 15,9 TL/kWh. Sayfaya göre fiyat lokasyona/sokete göre değişebilir; kullanıcı 5 istasyonu uygulamada kontrol etti, aynı. Sayfa bot korumalı: günlük tarama açamaz, fiyat elle (sayfanın ekran görüntüsüyle) güncellenir."
   }
  }
 }
