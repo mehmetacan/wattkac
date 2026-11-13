@@ -568,6 +568,24 @@
     "Greenleaf Yenilenebilir Enerji"
    ],
    "not": "KDV dahil (ana sayfadaki AC-DC şarj tarifeleri tablosu): AC 22 kW ve altı 11,21; DC 100 kW altı ve üstü 13,88 TL/kWh. Sayfaya göre tarife ve işgaliye istasyon konumu ve soket tipine göre farklılık gösterebilir; ağın haritasında istasyon bazlı fiyat yok."
+  },
+  "K-Şarj": {
+   "ac": {
+    "min": 9.15,
+    "max": 9.15
+   },
+   "dc": {
+    "min": 11.65,
+    "max": 11.65
+   },
+   "kaynak": "https://ksarj.com/fiyatlandirma/",
+   "kontrol": "2026-11-13",
+   "gecerlilik": null,
+   "adlar": [
+    "K-ŞARJ",
+    "Hunat Enerji"
+   ],
+   "not": "Tüm istasyonlarda tek fiyat (ağın fiyatlandırma sayfası): AC soket 9,15, DC soket 11,65 TL/kWh; güç kademesine göre ayrı fiyat yok. Sayfa KDV'yi ayrıca belirtmiyor (tüketiciye gösterilen fiyat). İstasyon bazlı fiyat yok."
   }
  }
 }
