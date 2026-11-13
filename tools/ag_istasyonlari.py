@@ -838,6 +838,7 @@ ACROPOL_SAYFA = "https://acropolsarj.com/evsarjharitasi.aspx"
 ACROPOL_API = "https://ipi8yuvwgw.eu-central-1.awsapprunner.com/api/getAllAndFilteredStations"
 ACROPOL_HARIC = [(r"\bsite(si|leri)?\b|\bkonak(lari)?\b|\bkonut(lari)?\b|\bevleri\b|\bresid[ae]n|\brezidan|\bapartman|\btower\b"
                   r"|\bblok\b|\bhopel city\b|\byasamkule\b", "konut/site"),
+                 (r"^gold city\b(?! migros)", "tatil/konut kompleksi (AC)"),
                  (r"\btest\b", "test istasyonu"),
                  (r"\bpersonel\b|\bofis\b", "şirket içi/ofis")]
 # cityID plaka kodu (7 Antalya, 6 Ankara, 16 Bursa, 35 İzmir, 25 Erzurum)
