@@ -2,9 +2,12 @@
  "_not": "Ağın yalnızca konut sitelerinde uyguladığı indirimli fiyat (ağın resmi tarife sayfası). Haritada ağın kaydı ve adı 'ad' desenine uyan istasyonlara 'pr' yazılır; 'haric' deseni uyan adlar (sanayi sitesi, otel vb.) dışarıda kalır.",
  "otowatt": {
   "ag": "\\botowatt\\b",
-  "ad": "\\bsitesi\\b|\\bkonutlari\\b|\\bevleri\\b|\\brezidans\\b|\\bresidence\\b|\\bgolden life\\b",
-  "haric": "\\bsanayi sitesi\\b|\\bhotel\\b|\\botel\\b",
-  "pr": {"ac": 9.49, "dc": 11.99},
+  "ad": "\\bsitesi\\b|\\bkonutlari\\b|\\bevleri\\b|\\brezidans\\b|\\bresidence\\b|\\bgolden life\\b|\\btoki\\b|\\bmegapol tower\\b|\\bgolftas unique\\b",
+  "haric": "\\bsanayi sitesi\\b",
+  "pr": {
+   "ac": 9.49,
+   "dc": 11.99
+  },
   "kaynak": "https://www.aydemplus.com.tr/otowatt-tarifelerimiz"
  }
 }
