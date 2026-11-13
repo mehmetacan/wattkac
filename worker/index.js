@@ -12,6 +12,7 @@
 //   /api/bildirim/*              → web push aboneliği (aşağıda "Bildirimler")
 //   GET  /api/durum/bigstation?c=95,96 → BIG Station cihazlarının anlık boş / şarjda durumu (aşağıda "Anlık durum")
 //   GET  /api/durum/acropol?c=59,60   → Acropol Şarj soketlerinin anlık boş / şarjda durumu (aynı bölüm)
+//   GET  /api/durum/<ağ>?c=…          → neva, epsis, lumicle, ecojet (electroop OCPI) ve solinved için aynısı (aynı bölüm)
 const ANA = "wattkac.com";
 const YONLENDIR = new Set(["www.wattkac.com", "wattkac.xyz", "www.wattkac.xyz"]);
 const TURLER = new Set(["hata", "istasyon", "fiyat", "kampanya", "oneri", "diger"]);
@@ -284,9 +285,12 @@ async function bildirimGonder(env, gonder = fetch) {
   return { bakilan: aboneler.length, giden };
 }
 
-/* ---------- Anlık durum: BIG Station ve Acropol Şarj ----------
+/* ---------- Anlık durum: BIG Station, Acropol Şarj, electroop OCPI ağları, Solinved ----------
    GET /api/durum/bigstation?c=95,96,97  → {ok, zaman, cihazlar: {"95": "bos" | "sarj" | "bilinmiyor", …}}
    GET /api/durum/acropol?c=59,60        → aynı biçim; kimlikler Acropol soket kimlikleri
+   GET /api/durum/neva|epsis|lumicle|ecojet?c=L231,L230 → aynı biçim; kimlikler OCPI lokasyon kimlikleri (her lokasyon bir ünite)
+   GET /api/durum/solinved?c=28656       → aynı biçim; kimlikler Solinved soket (connector) kimlikleri
+   Ağ yalnızca DURUM_AGLAR'daki izinli listeden seçilir; her ağın kimlik biçimi ve istek başına en çok kimlik sayısı ayrıdır.
    Ortak kurallar (her ağ için ayrı önbellek girdisi):
    - Bu uç noktaların tek kullanıcısı sitedir ve yalnızca biri haritada o ağın istasyon detayını açınca çağrılır.
      Zamanlanmış görev ya da arka planda yoklama yoktur.
@@ -304,7 +308,18 @@ async function bildirimGonder(env, gonder = fetch) {
    Acropol Şarj: kaynak, ağın kendi haritasının (acropolsarj.com/evsarjharitasi.aspx) kullandığı giriş gerektirmeyen tek liste
      (getAllAndFilteredStations, ≈150 KB, tüm istasyonlar tek istekte; yenileme başına 1 istek). Soket durumu (OCPP):
      Available → "bos"; Preparing / Charging / SuspendedEV / SuspendedEVSE / Finishing → "sarj" (soket dolu);
-     Closed (çevrimdışı), Faulted, Unavailable, Reserved ve bilinmeyenler → "bilinmiyor". */
+     Closed (çevrimdışı), Faulted, Unavailable, Reserved ve bilinmeyenler → "bilinmiyor".
+   Neva Şarj, EPSIS, Lumicle, Ecojet: kaynak, ağların haritasının (electroop.io/chargestations/index?company=<ağ>) kullandığı giriş
+     gerektirmeyen OCPI 2.2 "locations" listesi (<ağ>.mapcontentpartners.service.electroop.io/2.2/locations). Tek lokasyon ucu
+     (/locations/{id}) yok (404) ve sayfalama parametreleri yok sayılıyor: yenileme başına tüm liste, 1 istek (50–650 KB; sıkıştırılmış
+     5–60 KB). CPU sınırı için JSON.parse yapılmaz: metin yalnızca '{"id":"…","country_code"' (lokasyon başı) ve
+     '"evse_id":"…","status":"…"' (EVSE durumu) kalıplarıyla taranır; başka alan okunmaz. Biçim değişirse sonuç boş çıkar → hata.
+     OCPI 2.2 EVSE durumu: AVAILABLE → "bos"; CHARGING ve BLOCKED (soketin önü/park yeri dolu) → "sarj"; RESERVED, OUTOFORDER,
+     INOPERATIVE, PLANNED, REMOVED, UNKNOWN ve bilinmeyenler → "bilinmiyor" (Acropol'deki Reserved gibi).
+     Otopriz aynı platformda ama listesi 1,2 MB: metne çevirip taramak ≈10–15 ms CPU (ücretsiz plan sınırı 10 ms); eklenmedi.
+   Solinved: kaynak, ağın haritası (solinvedcharge.com) olan Doldur CPMS kiracı sayfası (GetChargePointLocationsMap?tenantCode=SOL,
+     ≈55 KB HTML; yenileme başına 1 istek). Sayfadaki chargePointsData dizisinden yalnızca soket kimliği ve lastStatus (OCPP) okunur;
+     eşleme Acropol ile aynı. */
 const DURUM_SN = 60, DURUM_HATA_SN = 30, DURUM_SURE_MS = 6000, DURUM_SAYFA = 10, DURUM_EN_COK = 20;
 const DURUM_UA = "WattKac/1.0 (+https://wattkac.com; anlik durum)";
 const DURUM_BASLIK = { "user-agent": DURUM_UA, accept: "application/json" };
@@ -312,18 +327,25 @@ const BIG_URL = "https://bsx-reverse.ee-w.workers.dev/api/stations?offset={o}&li
 const BAGLI = new Set(["wifionline", "gsmonline"]);
 const ACROPOL_URL = "https://ipi8yuvwgw.eu-central-1.awsapprunner.com/api/getAllAndFilteredStations";
 const ACROPOL_DOLU = new Set(["preparing", "charging", "suspendedev", "suspendedevse", "finishing"]);
+const OCPI_URL = "https://{}.mapcontentpartners.service.electroop.io/2.2/locations";
+const OCPI_DURUM = { AVAILABLE: "bos", CHARGING: "sarj", BLOCKED: "sarj" };
+const OCPI_KALIP = /\{"id":"([A-Za-z0-9][A-Za-z0-9_-]{0,39})","country_code"|"evse_id":"[^"]{0,80}","status":"([A-Z_]{1,20})"/g;
+const SOL_URL = "https://cpms-api.doldurapp.com/ChargePoint/GetChargePointLocationsMap?tenantCode=SOL";
 
 // BIG Station: tek cihaz kaydı → durum (yalnızca status ve liveStatus okunur)
 function cihazDurumu(x) {
   if (!BAGLI.has(x.liveStatus)) return "bilinmiyor";
   return x.status === "active" ? "sarj" : x.status === "passive" ? "bos" : "bilinmiyor";
 }
-// Acropol: tek soket kaydı → durum (yalnızca status okunur)
-function soketDurumu(x) {
-  const st = typeof x.status === "string" ? x.status.toLowerCase() : "";
+// OCPP soket durumu → durum (Acropol status, Solinved lastStatus)
+function ocppDurumu(v) {
+  const st = typeof v === "string" ? v.toLowerCase() : "";
   return st === "available" ? "bos" : ACROPOL_DOLU.has(st) ? "sarj" : "bilinmiyor";
 }
+// Acropol: tek soket kaydı → durum (yalnızca status okunur)
+const soketDurumu = x => ocppDurumu(x.status);
 const kimlikGecerli = id => /^\d{1,9}$/.test(id);
+const ocpiKimlik = id => /^[A-Za-z0-9][A-Za-z0-9_-]{0,39}$/.test(id);
 // Kayıtları indirgenmiş haritaya ekler (BIG sayfalaması sabit sıralı değil: aynı kimlik iki kez gelirse ilki kalır)
 function durumEkle(harita, liste, durumu = cihazDurumu) {
   for (const x of liste) {
@@ -360,9 +382,54 @@ async function acropolCek(getir, signal) {
   if (!Object.keys(harita).length) throw new Error("durum boş");
   return harita;
 }
+// electroop OCPI: metin taranır (yukarıda); lokasyon kimliği → ilk EVSE'nin durumu. Ham metin yalnızca bu blokta yaşar.
+async function ocpiCek(sirket, getir, signal) {
+  const r = await getir(OCPI_URL.replace("{}", sirket), { headers: DURUM_BASLIK, signal });
+  if (!r.ok) throw new Error("durum " + r.status);
+  let t = await r.text();
+  const harita = Object.create(null), kalip = new RegExp(OCPI_KALIP);
+  let id = null;
+  for (let m; (m = kalip.exec(t));) {
+    if (m[1] !== undefined) id = m[1];
+    else if (id !== null) { if (!(id in harita)) harita[id] = OCPI_DURUM[m[2]] || "bilinmiyor"; id = null; }
+  }
+  t = null;
+  if (!Object.keys(harita).length) throw new Error("durum boş");
+  return { ...harita };
+}
+// Solinved: sayfadaki chargePointsData → soket kimliği → durum (yalnızca connectors[].id ve lastStatus okunur)
+async function solCek(getir, signal) {
+  const r = await getir(SOL_URL, { headers: { ...DURUM_BASLIK, accept: "text/html" }, signal });
+  if (!r.ok) throw new Error("durum " + r.status);
+  let t = await r.text();
+  const m = /const\s+chargePointsData\s*=\s*'(.*?)';/s.exec(t);
+  t = null;
+  if (!m) throw new Error("durum biçim");
+  let liste = JSON.parse(m[1]);   // ham dizi yalnızca bu blokta yaşar
+  if (!Array.isArray(liste)) throw new Error("durum biçim");
+  const harita = {};
+  for (const s of liste) {
+    for (const u of (s && Array.isArray(s.chargeUnits) ? s.chargeUnits : [])) {
+      for (const c of (u && Array.isArray(u.connectors) ? u.connectors : [])) {
+        const id = String(c && c.id != null ? c.id : "");
+        if (kimlikGecerli(id) && !(id in harita)) harita[id] = ocppDurumu(c.lastStatus);
+      }
+    }
+  }
+  liste = null;
+  if (!Object.keys(harita).length) throw new Error("durum boş");
+  return harita;
+}
+const ocpiAg = sirket => ({ anahtar: `https://wattkac.com/__durum/${sirket}`, cek: (g, s) => ocpiCek(sirket, g, s), kimlik: ocpiKimlik, enCok: 40 });
+// İzinli ağlar. kimlik: kimlik biçimi (yoksa 1–9 haneli sayı), enCok: istek başına en çok kimlik (yoksa DURUM_EN_COK)
 const DURUM_AGLAR = {
   bigstation: { anahtar: "https://wattkac.com/__durum/bigstation", cek: bigCek },
   acropol: { anahtar: "https://wattkac.com/__durum/acropol", cek: acropolCek },
+  neva: ocpiAg("nevasarj"),
+  epsis: ocpiAg("epsis"),
+  lumicle: ocpiAg("lumicle"),
+  ecojet: ocpiAg("ecojet"),
+  solinved: { anahtar: "https://wattkac.com/__durum/solinved", cek: solCek },
 };
 async function durumCek(ag, getir) {
   const ac = new AbortController(), zam = setTimeout(() => ac.abort(), DURUM_SURE_MS);
@@ -391,9 +458,10 @@ async function durumAnlik(ag, ctx, getir) {
 }
 async function durumIstek(ag, request, url, ctx, getir = fetch) {
   if (request.method !== "GET") return json({ ok: false }, 405);
+  const a = DURUM_AGLAR[ag], gecerli = a.kimlik || kimlikGecerli, enCok = a.enCok || DURUM_EN_COK;
   const ham = String(url.searchParams.get("c") || "");
   const ids = [...new Set(ham.split(","))];
-  if (!ham || ham.length > 220 || ids.length > DURUM_EN_COK || !ids.every(kimlikGecerli)) return json({ ok: false, hata: "c" }, 400);
+  if (!ham || ham.length > (a.kimlik ? enCok * 41 : 220) || ids.length > enCok || !ids.every(gecerli)) return json({ ok: false, hata: "c" }, 400);
   let d;
   try { d = await durumAnlik(ag, ctx, getir); } catch { d = { hata: 1 }; }
   if (d.hata || !d.c) return json({ ok: false }, 503);
@@ -414,8 +482,8 @@ export default {
       url.port = "";
       return Response.redirect(url.toString(), 301);
     }
-    const durumAg = /^\/api\/durum\/(bigstation|acropol)$/.exec(url.pathname);
-    if (durumAg) {   // veritabanı gerektirmez
+    const durumAg = /^\/api\/durum\/([a-z]{1,20})$/.exec(url.pathname);
+    if (durumAg && Object.prototype.hasOwnProperty.call(DURUM_AGLAR, durumAg[1])) {   // veritabanı gerektirmez
       try { return await durumIstek(durumAg[1], request, url, ctx); } catch { return json({ ok: false }, 503); }
     }
     if (url.pathname.startsWith("/api/")) {
