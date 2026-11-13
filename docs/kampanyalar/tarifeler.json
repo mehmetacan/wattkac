@@ -1,6 +1,6 @@
 {
  "_not": "Şarj ağlarının kendi resmi sayfalarında doğrulanan liste fiyatları (TL/kWh). Fiyatlar konuma göre aralık olarak yayınlanıyor: min-max. 'kontrol' sayfanın okunduğu tarih, 'gecerlilik' sayfanın kendi belirttiği tarih (yoksa null). Doğrulanamayan ağlarda ac/dc null kalır ve haritada 'Fiyat yok' görünür. Kampanya indirimleri bu fiyatlara dahil değildir.",
- "guncelleme": "2026-11-13",
+ "guncelleme": "2026-11-14",
  "aglar": {
   "Eşarj": {
    "ac": {
@@ -1009,6 +1009,26 @@
     "otoWATT (Aydem Plus)"
    ],
    "not": "Genel tarife AC 10,99, DC 13,99 TL/kWh. Konut sitelerinde lokasyon bazlı indirimli site tarifesi AC 9,49, DC 11,99 (data/site_tarifesi.json; istasyon adından tanınan sitelerde istasyon fiyatı olarak gösterilir)."
+  },
+  "Toger": {
+   "ac": {
+    "min": 9.9,
+    "max": 9.9
+   },
+   "dc": {
+    "min": 13.39,
+    "max": 13.39
+   },
+   "kaynak": "https://toger.co/pricing",
+   "kontrol": "2026-11-14",
+   "gecerlilik": null,
+   "adlar": [
+    "TOGER",
+    "Toger (TR)",
+    "Toger.co",
+    "Toger Şarj"
+   ],
+   "not": "KDV dahil. Şarj bittikten 15 dk sonra 5 TL/dk işgaliye (en çok 450 TL)."
   }
  }
 }
