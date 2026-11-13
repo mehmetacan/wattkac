@@ -736,7 +736,9 @@ const TILE_ATTR = '© <a href="https://www.openstreetmap.org/copyright">OpenStre
 const PKEY = "wattkac.profil.v1";
 const MAXM = 100, PAGE = 40;
 // Eşleştirme kalıpları: boşluksuz, aksansız (fold edilmiş) yazılır; \b kelime sınırıdır
-const ALIAS = { "Eşarj": ["esarj", "enerjisa"], "ASTOR Şarj": ["astor"], "Shell Recharge": ["shell"], "WAT Mobilite": ["wat mobilite", "watmobilite", "\\bwat\\b"] };
+const ALIAS = { "Eşarj": ["esarj", "enerjisa"], "ASTOR Şarj": ["astor"], "Shell Recharge": ["shell"], "WAT Mobilite": ["wat mobilite", "watmobilite", "\\bwat\\b"],
+  // EPDK: marka "e-POwer", işletmeci "Petrol Ofisi A.Ş." → kampanyadaki "Petrol Ofisi e-POWER" ağı
+  "Petrol Ofisi e-POWER": ["petrol ofisi", "\\be-power\\b"] };
 // Kampanya verisinde olmasa da tanınan, yaygın markalar
 const KNOWN_EXTRA = { "ZES": ["\\bzes\\b"], "Sharz.net": ["sharz"], "Tesla": ["tesla"], "Beefull": ["beefull"], "Aksa Şarj": ["\\baksa\\b"], "Enyakıt": ["enyakit", "en yakit"],
   "Petrol Ofisi": ["petrol ofisi"], "Opet": ["\\bopet\\b"], "BP": ["\\bbp\\b"], "Aytemiz": ["aytemiz"], "Power Şarj": ["powersarj", "power sarj"],
@@ -796,7 +798,7 @@ function buildIndexes() {
   NETS.forEach(n => add(n, ALIAS[n] || [fold(n)]));
   const names = new Set();
   C.forEach(c => c.st.forEach(s => { if (s !== ALL && !NETS.includes(s) && !/uygulama/i.test(s)) names.add(s); }));
-  names.forEach(n => add(n, [fold(n)]));
+  names.forEach(n => add(n, ALIAS[n] || [fold(n)]));
   Object.entries(KNOWN_EXTRA).forEach(([n, p]) => { if (!NET_RES.some(([x]) => x === n)) add(n, p); });
 }
 
