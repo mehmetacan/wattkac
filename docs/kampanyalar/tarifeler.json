@@ -969,6 +969,26 @@
     "AOS Teknoloji"
    ],
    "not": "AC (22 kW) 10,90, DC (120 kW) 14,90 TL/kWh. Kaynak AOS uygulaması (kullanıcının ekran görüntüsü, 13 Kasım 2026); sitede fiyat yayımlanmıyor, fiyat elle güncellenir."
+  },
+  "EKA Enerji": {
+   "ac": {
+    "min": 9.7,
+    "max": 9.7
+   },
+   "dc": {
+    "min": 12.8,
+    "max": 12.8
+   },
+   "kaynak": "https://ekaenerjiteknoloji.com.tr/sarj/fiyat",
+   "kontrol": "2026-11-13",
+   "gecerlilik": "2026-08-27",
+   "adlar": [
+    "EKA Enerji",
+    "EKA Enerji Teknoloji",
+    "Eka Enerji Teknoloji",
+    "ekaenerji"
+   ],
+   "not": "AC (7,4–22 kW) 9,70, DC (60–720 kW) 12,80 TL/kWh, KDV dahil."
   }
  }
 }
