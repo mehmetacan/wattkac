@@ -469,6 +469,25 @@
    "adlar": [
     "efish"
    ]
+  },
+  "VoltUp": {
+   "ac": {
+    "min": 9.49,
+    "max": 9.49
+   },
+   "dc": {
+    "min": 12.49,
+    "max": 12.49
+   },
+   "kaynak": "https://voltup.com.tr/#istasyonlar",
+   "kontrol": "2026-11-13",
+   "gecerlilik": null,
+   "adlar": [
+    "VOLTUP",
+    "VoltUp",
+    "Volt Up"
+   ],
+   "not": "Fiyat istasyona göre değişebiliyor; VoltUp'ın kendi sitesindeki istasyon bazlı fiyat listesinden (Şarj Tarifeleri) alınır; haritada her istasyonun kendi fiyatı gösterilir, bu aralık yalnızca listede fiyatı bulunmayan istasyon için kullanılır."
   }
  }
 }
