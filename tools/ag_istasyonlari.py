@@ -1828,6 +1828,7 @@ SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            "neva": (neva, ELECTROOP_SAYFA.format("nevasarj"), 30),
            "epsis": (epsis, ELECTROOP_SAYFA.format("epsis"), 10),
            "lumicle": (lumicle, ELECTROOP_SAYFA.format("lumicle"), 30),
+           "ecojet": (ecojet, ELECTROOP_SAYFA.format("ecojet"), 3),
            }
 
 
