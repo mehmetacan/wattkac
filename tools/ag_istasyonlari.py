@@ -27,6 +27,19 @@ Kaynaklar (her biri ağın kendi sitesindeki haritanın kullandığı adres):
                haritasının KML dışa aktarımı). Yalnızca ad + konum var ve liste EPDK kaydından çok daha az istasyon içeriyor:
                bu liste istasyonların yerine geçmez, yalnızca EPDK "K-ŞARJ" kayıtlarını doğrulamak için kullanılır
                (istasyon_birlestir.py DOGRULA). Her kayıtta eşleşen EPDK numarası "e"de tutulur.
+  Otopriz, Neva Şarj, EPSIS, Lumicle, Ecojet   https://<ağ>.mapcontentpartners.service.electroop.io/2.2/locations (electroop OCPI;
+               ağların haritası electroop.io/chargestations/index?company=<ağ>). Kayıtlar ünite (EVSE) düzeyinde: istasyonda toplanır.
+  Şarjon       https://info.sarjon.com.tr/api/public/stations          (info.sarjon.com.tr/Stations)
+  Solinved     https://cpms-api.doldurapp.com/ChargePoint/GetChargePointLocationsMap?tenantCode=SOL (solinvedcharge.com haritası)
+  D-Charge     https://dcharge.com.tr/istasyonlar/stations              (dcharge.com.tr/istasyonlar)
+  Aksa Şarj    https://aksasarj.com.tr/raquun/harita.asp?istasyon=0     (aksasarj.com.tr/tr/istasyonlar; sayfa içindeki locationsRawData)
+  En Yakıt     https://m.enyakit.com.tr/ea_Locations.aspx               (enyakit.com.tr/sarj-istasyonlari; 502'de en çok 3 deneme)
+  MKS Şarj     https://mkssarj.com/sarj-istasyonlari/viewer/ajax/get_markers.php (POST; telefon/e-posta alanları okunmaz)
+  Oncharge     https://oncharge.com.tr/Home/GetStations                 (oncharge.com.tr/sarj-istasyonlari)
+  AOS Technology https://aostechnology.com.tr/sarj-istasyonlarimiz/    (tablo; DOGRULA — /haritalarimiz/ bot korumalı, kullanılmaz)
+  otoWATT      https://www.aydemplus.com.tr/otowatt-sarj-istasyonlari   (konumsuz kartlar; yalnızca ad/adresle DOGRULA)
+               Hepsinde konut sitesi / test / sahada olmayan / şirket içi istasyonlar ayıklanır ve raporlanır (YENI_HARIC); her ağın
+               listesi aynı ağın EPDK kayıtlarıyla karşılaştırılıp özeti yazılır, eşleşen EPDK numaraları "e"de tutulur.
   (ASTOR Şarj'ın haritası map-api.echargo.com kullanıyor ama sunucudan yapılan istekleri reddediyor (HTTP 404);
    erişim kısıtını aşmaya çalışmıyoruz, ASTOR istasyonları EPDK + OSM'den gelir.)
 
@@ -35,7 +48,7 @@ Bir ağın çekimi başarısız olursa o ağın önceki dosyası korunur.
 Yalnızca bazı ağları çekmek için adlarını verin: python3 tools/ag_istasyonlari.py voltup
 Kayıt alanları istasyon_cek.py ile aynıdır (i, a, o, n, b, k, t, ac, dc, c, ad) + pr (soket fiyatları, varsa).
 """
-import html, json, math, pathlib, re, sys, urllib.request, datetime, zlib
+import html, json, math, pathlib, re, sys, urllib.parse, urllib.request, datetime, zlib
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from html.parser import HTMLParser
@@ -749,7 +762,8 @@ CV_BEKLE = 0.3
 CV_BUYUK = {"BMW", "AVM", "ODC", "AOSB", "CMC", "CW", "EGS", "MCG", "MYV", "PH", "VIB"}
 
 
-CV_YABANCI = {"CAPITAL"}
+CV_YABANCI = {"CAPITAL", "AIRPORT", "HILTON", "KING", "MILIAMALL", "OASIS", "SIU", "BABILLON", "KING'S", "QUEEN'S"}  # (Aksa Şarj adları da)
+CV_TURKCE = {"AYDINBEY"}  # E ile I bir arada ama Türkçe
 
 
 def _cv_ad(t):
@@ -759,7 +773,7 @@ def _cv_ad(t):
     def kelime(w):
         if w in CV_BUYUK or not w[:1].isalpha():
             return w
-        if ("I" in w and not re.search("[İŞĞÜÖÇ]", w)
+        if ("I" in w and not re.search("[İŞĞÜÖÇ]", w) and w not in CV_TURKCE
                 and (w in CV_YABANCI or ("E" in w) or re.search(r"[WQX]|OI|IO|Y$", w))):
             return "-".join(x[:1] + x[1:].lower() for x in w.split("-"))
         return _tr_baslik(w)
@@ -1028,6 +1042,778 @@ def ksarj():
     return out
 
 
+# ---------------------------------------------------------------------------------------------------------------------------
+# Ağların kendi haritalarından gelen listeler için ortak yardımcılar (electroop OCPI ailesi, Şarjon, Solinved, D-Charge, Aksa Şarj,
+# En Yakıt, MKS Şarj, Oncharge, AOS Technology, otoWATT). Her kaynak tek istekle okunur; yalnızca ad, konum, adres/il ve soket türü/
+# sayısı/gücü tutulur (telefon, e-posta, anlık durum, görsel, cihaz kullanıcısı vb. yazılmaz).
+# Haritada gösterilmeyenler (ad üzerinden; MKS'de sokak adresi de): konut sitesi / rezidans / blok, test cihazı, sahada olmayan ya da
+# kurulmamış cihaz, askerî alan, şirket deposu / fabrika / merkez binası. Ayıklananlar her çekimde raporlanır.
+YENI_HARIC = [(r"(?<!sanayi )(?<!san )\bsite(si|leri)?\b|\bkonaklari\b|\bkonut(lari|lar)?\b|\bevleri\b|\bresid[ae]n|\brezidan"
+               r"|\bapartman|\blojman|\bvillalari\b", "konut/site"),
+              (r"\bblok(lar)?\b", "konut/site"),
+              (r"\btest|electroop ?test|\bdeneme\b", "test cihazı"),
+              (r"\bsahada yok\b|\bepdk kisitli\b|\bmontaja hazir\b|\bkurulu degil\b|\bstokta\b", "sahada değil/kurulmamış"),
+              (r"\bkislasi\b|\bkomutanligi\b|\bmakam otopark", "askerî/kurum içi"),
+              (r"\bdepo\b|\bfabrika\b|\bhq\b", "şirket deposu/fabrika/merkez")]
+# Ad bir alışveriş merkezi / otel / iş yeri bildiriyorsa konut kuralı uygulanmaz ("Priva AVM & Residence", "Mobiliyum A Blok", "Mg Hill
+# Residance Otel"); yalnızca "blok" geçen adlarda iş merkezi / plaza / ofis / ticari de yeter.
+YENI_KONUT_DEGIL = r"\b(avm|alisveris|otel|oteli|hotel|hotels|mobiliyum)\b"
+YENI_BLOK_DEGIL = r"\b(is merkezi|plaza|ofis|ticari|ticaret|carsi|carsisi)\b"
+# Gruplanan ağlarda (OCPI) bu nedenler ünite düzeyinde değil, istasyonun tümüne uygulanır (deponun "Burhaniye Ecojet AC-14" adlı üniteleri)
+YENI_GRUP_HARIC = {"şirket deposu/fabrika/merkez"}
+YENI_EPDK_YAKIN_KM = 0.3  # ağın listesindeki istasyonun EPDK karşılığı sayılma uzaklığı (istasyon_birlestir.RESMI_YAKIN_M ile aynı)
+YENI_AD_KM = 20           # adla eşleşen EPDK kaydının listedeki konuma en fazla uzaklığı
+
+
+def _haric(*metinler, grup=None):
+    """Haritada gösterilmeme nedeni (yoksa None). grup=False: yalnızca ünite düzeyindeki nedenler, grup=True: yalnızca istasyon düzeyindekiler."""
+    m = _big_duz(" ".join(x for x in metinler if x))
+    for i, (rx, n) in enumerate(YENI_HARIC):
+        if grup is not None and (n in YENI_GRUP_HARIC) != grup:
+            continue
+        if not re.search(rx, m):
+            continue
+        if n == "konut/site" and (re.search(YENI_KONUT_DEGIL, m) or (i == 1 and re.search(YENI_BLOK_DEGIL, m))):
+            continue
+        return n
+    return None
+
+
+def _il(*adaylar):
+    """Kaynaktaki il / şehir alanı ya da serbest adres → sitedeki il yazımı (bulunamazsa None)."""
+    import konum_denetim as kd
+    for x in adaylar:
+        if x and kd.ILLER.get(kd.harfler(x)):
+            return kd.ILLER[kd.harfler(x)]
+    for x in adaylar:
+        il = kd.il_serbest(x) if x else None
+        if il:
+            return il
+    return None
+
+
+def _tr_ad(t):
+    """Tümü büyük harfle yazılmış adları Türkçe başlık biçimine çevirir ("KÖRFEZ PARK ANKARA YÖNÜ" → "Körfez Park Ankara Yönü")."""
+    t = " ".join(str(t or "").split())
+    return _cv_ad(t) if t and t == t.upper() and re.search(r"[A-ZÇĞİÖŞÜ]{3}", t) else t
+
+
+def _turkiyede(a, o):
+    import konum_denetim as kd
+    return isinstance(a, (int, float)) and isinstance(o, (int, float)) and (kd.in_turkey(a, o) or kd.sinira_km(a, o) <= kd.KIYI_KM)
+
+
+def _grupla(birimler, kok, yakin_m=25, ayni_ad_m=300):
+    """Ünite/EVSE düzeyindeki kayıtları istasyonlarda toplar (birleşim-bul): aynı kök adlı kayıtlar ayni_ad_m, her kayıt yakin_m
+    içinde aynı istasyondur. Dönüş: [[birim, ...], ...] (kaynaktaki sırayla)."""
+    ust = list(range(len(birimler)))
+
+    def bul(i):
+        while ust[i] != i:
+            ust[i] = ust[ust[i]]; i = ust[i]
+        return i
+    kokler = [_big_duz(kok(b["n"])) for b in birimler]
+    for i, x in enumerate(birimler):
+        for j in range(i):
+            y = birimler[j]
+            if abs(x["a"] - y["a"]) > 0.01 or abs(x["o"] - y["o"]) > 0.015:
+                continue
+            m = _km(x["a"], x["o"], y["a"], y["o"]) * 1000
+            if m <= yakin_m or (m <= ayni_ad_m and kokler[i] and kokler[i] == kokler[j]):
+                ust[bul(i)] = bul(j)
+    gruplar = {}
+    for i, b in enumerate(birimler):
+        gruplar.setdefault(bul(i), []).append(b)
+    return list(gruplar.values())
+
+
+def _cok_gecen(adlar):
+    return sorted(set(adlar), key=lambda n: (-adlar.count(n), len(n), n))[0] if adlar else ""
+
+
+def _soket(r, tip, adet, kw=0, tur=None):
+    """Kayda soket ekler: tip "ac"/"dc", adet, kW (varsa), soket adı (yoksa AC → Type 2, DC → CCS)."""
+    if adet <= 0:
+        return
+    r[tip] = r.get(tip, 0) + adet
+    r["c"] = r.get("c", 0) + adet
+    if kw:
+        r["k"] = max(r.get("k", 0), round(kw))
+    t = tur or ("CCS" if tip == "dc" else "Type 2")
+    if t not in r.setdefault("t", []):
+        r["t"].append(t)
+
+
+def _epdk_ag(rx):
+    if not EPDK_API.exists():
+        return []
+    import konum_denetim as kd
+    return [x for x in json.loads(EPDK_API.read_text(encoding="utf-8")).get("istasyonlar", [])
+            if re.search(rx, kd.fold(x.get("marka", "") + " | " + x.get("isletmeci", ""))) and ok_coord(x.get("a"), x.get("o"))]
+
+
+def _epdk_eslestir(ag, out, rx, haric=(), yakin_km=YENI_EPDK_YAKIN_KM, ad_km=YENI_AD_KM, konumsuz=False, yaz_e=True):
+    """Ağın listesini aynı ağın EPDK kayıtlarıyla karşılaştırır ve özetini yazar. Önce her EPDK kaydı listedeki en yakın istasyona
+    (yakin_km içinde), kalanlar ad benzerliğiyle (konum_denetim.benzer ≥ 0,6; ad_km içinde; konumsuz listede aynı ilde) eşleşir. Bir
+    istasyonun birden çok EPDK ünitesi olabilir; eşleşen EPDK numaraları kayıttaki "e" listesine yazılır (soket/güç tamamlama ve
+    DOGRULA için). Dönüş: eşleşmeyen EPDK kayıtları."""
+    import konum_denetim as kd
+    epdk = _epdk_ag(rx)
+    es, uzak = {}, []
+    if not konumsuz:
+        for j, x in enumerate(epdk):
+            en = min(range(len(out)), key=lambda i: _km(x["a"], x["o"], out[i]["a"], out[i]["o"]), default=None)
+            if en is not None and _km(x["a"], x["o"], out[en]["a"], out[en]["o"]) <= yakin_km:
+                es[j] = en
+    for j, x in enumerate(epdk):
+        if j in es:
+            continue
+        il_x = kd.il_ilce_epdk(x.get("adres"))[0]
+        aday = []
+        for i, r in enumerate(out):
+            s = kd.benzer(x.get("ad", ""), r.get("n", ""), haric)
+            if konumsuz and kd.benzer(x.get("adres", ""), r.get("ad0") or "", haric) >= 0.6:
+                s = max(s, 0.6)
+            if s < 0.6:
+                continue
+            if konumsuz:
+                if il_x and r.get("il") and il_x != r["il"]:
+                    continue
+                aday.append((-s, 0, i))
+            else:
+                d = _km(x["a"], x["o"], r["a"], r["o"])
+                if d <= ad_km:
+                    aday.append((-s, d, i))
+        if aday:
+            s, d, i = min(aday)
+            es[j] = i
+            if d > 1:
+                uzak.append((d, f"{x['no']} {x.get('ad', '')} → {out[i]['n']} ({d:.1f} km)"))
+    for j, i in es.items():
+        if yaz_e:
+            out[i].setdefault("e", []).append(epdk[j]["no"])
+    tesis = len({(kd.fold(x.get("adres", "")).strip()) for x in epdk})
+    eslesen_liste = len(set(es.values()))
+    yok = [x for j, x in enumerate(epdk) if j not in es]
+    print(f"{ag}: liste {len(out)} istasyon; EPDK {len(epdk)} kayıt ({tesis} adres); eşleşen EPDK kaydı {len(es)} (listede {eslesen_liste} "
+          f"istasyon), listede karşılığı olmayan EPDK {len(yok)}, EPDK'da karşılığı olmayan liste istasyonu {len(out) - eslesen_liste}")
+    if uzak:
+        print(f"{ag}: adla eşleşen, konumu 1 km'den fazla farklı ({len(uzak)}): " + "; ".join(t for _, t in sorted(uzak, reverse=True)[:5]))
+    if yok:
+        print(f"{ag}: listede olmayan EPDK kayıtları: " + "; ".join(f"{x['no']} {x.get('ad', '')}" for x in yok[:40]) + (" …" if len(yok) > 40 else ""))
+    yeni = [r["n"] for r in out if not r.get("e")]
+    if yeni and not konumsuz:
+        print(f"{ag}: EPDK'da karşılığı olmayan: " + "; ".join(yeni[:40]) + (" …" if len(yeni) > 40 else ""))
+    return yok
+
+
+def _rapor_haric(ag, haric):
+    if haric:
+        print(f"{ag}: haritada gösterilmeyen {len(haric)}: " + "; ".join(haric))
+
+
+_SOKET_SIRA = ["Type 2", "CCS", "CHAdeMO", "Type 1", "Schuko", "GB/T"]
+
+
+def _bitir(r):
+    r.pop("ad0", None)
+    if r.get("t"):
+        r["t"] = sorted(r["t"], key=lambda t: _SOKET_SIRA.index(t) if t in _SOKET_SIRA else 99)
+    return clean(r)
+
+
+# electroop OCPI 2.2 (Otopriz, Neva Şarj, EPSIS, Lumicle, Ecojet): ağların haritası electroop.io/chargestations/index?company=<ağ>
+# sayfası; sayfanın kullandığı herkese açık OCPI "locations" ucu. Her kayıt bir EVSE (şarj ünitesi); aynı istasyonun üniteleri ad
+# kökü (" - DC 2", "AC 22 kW 02 Kablolu", "-1" gibi ekler atılarak) ve konumla tek istasyonda toplanır. Koordinat alanları kayıtların
+# çoğunda doğru; enlem/boylamı yer değiştirmiş birkaç kayıt (Türkiye dışına düşen ya da ilinden uzak) takas edilir. Anlık durum
+# (evses[].status) yazılmaz; publish=false ve kaldırılmış (REMOVED) üniteler atlanır. Fiyat ucu (tariffs) yok: tarife tek
+# (site/tarifeler.json).
+ELECTROOP_URL = "https://{}.mapcontentpartners.service.electroop.io/2.2/locations"
+ELECTROOP_SAYFA = "https://electroop.io/chargestations/index?company={}"
+# ag anahtarı → (electroop şirket adı, haritadaki marka, EPDK/OSM/OCM'deki ağ (istasyon_birlestir.RESMI ile aynı), ad öneki)
+ELECTROOP = {"otopriz": ("otopriz", "Otopriz", r"\botopriz\b|\bdicle kok enerji", ""),
+             "neva": ("nevasarj", "Neva Şarj", r"\bneva\b", ""),
+             "epsis": ("epsis", "EPSIS", r"\bepsis\b|\bform elektrik insaat", ""),
+             "lumicle": ("lumicle", "Lumicle", r"\blumicle\b|\blumhouse enerji", r"lumicle"),
+             "ecojet": ("ecojet", "Ecojet", r"\becojet\b|\byeni surdurulebilir enerji", r"ecojet")}
+_OCPI_SOKET = {"IEC_62196_T2": "Type 2", "IEC_62196_T2_COMBO": "CCS", "CHADEMO": "CHAdeMO", "IEC_62196_T1": "Type 1",
+               "IEC_62196_T1_COMBO": "CCS", "DOMESTIC_F": "Schuko", "GBT_DC": "GB/T"}
+
+
+def _ocpi_kok(n):
+    """"Atlas Food, Elazığ Merkez - DC 2" → "Atlas Food, Elazığ Merkez"; "Mogan ANFA Önü AC 22 kW 02 Kablolu" → "Mogan ANFA Önü";
+    "LUMICLE KÜTAHYA MERKEZ 240 kW DC-1" → "LUMICLE KÜTAHYA MERKEZ"; "Tuna Panorama - E" → "Tuna Panorama"; "ECOJET ŞİŞLİ-2" → "ECOJET ŞİŞLİ"."""
+    s = " ".join(str(n or "").split())
+    s = re.sub(r"(?i)^(\(?sahada yok\)?|ar[ıi]zal[ıi])\s*", "", s)
+    s = re.sub(r"(?i)[\s_-]*\b(ac|dc)?[\s_-]*\d+([.,]\d+)?\s*kw\b.*$", "", s)
+    s = re.sub(r"(?i)[\s_]+-?\s*\d+\s*soket$", "", s)
+    for _ in range(3):
+        s = re.sub(r"(?i)[\s_–-]+(kablo(lu|suz)|(ac|dc)(?:[\s_-]*\d+)?|\d{1,2}|[A-Z])$", "", s).strip(" -_–")
+    return s or str(n or "")
+
+
+def _ocpi_cek(sirket):
+    """Tüm sayfalar (OCPI Link başlığı varsa izlenir, aralarında 0,3 sn). Dönüş: kayıt listesi."""
+    import time
+    url, tum = ELECTROOP_URL.format(sirket), []
+    for sayfa in range(30):
+        req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "application/json"})
+        with urllib.request.urlopen(req, timeout=90) as r:
+            j = json.loads(r.read().decode("utf-8", "replace"))
+            link = r.headers.get("Link") or ""
+        if j.get("status_code") not in (1000, None) or not isinstance(j.get("data"), list):
+            raise RuntimeError(f"OCPI yanıtı: {j.get('status_code')} {j.get('status_message')}")
+        tum += j["data"]
+        m = re.search(r'<([^>]+)>\s*;\s*rel="?next"?', link)
+        if not m:
+            break
+        url = m.group(1); time.sleep(0.3)
+    return tum
+
+
+def _electroop(ag):
+    import konum_denetim as kd
+    sirket, marka, rx, onek = ELECTROOP[ag]
+    liste = _ocpi_cek(sirket)
+    birim, haric, takas, disari, haric_unite = [], [], [], [], {}
+    for x in liste:
+        if x.get("publish") is False:
+            continue
+        evse = [e for e in x.get("evses") or [] if e.get("status") != "REMOVED"]
+        if not evse:
+            continue
+        try:
+            a, o = float(x["coordinates"]["latitude"]), float(x["coordinates"]["longitude"])
+        except (KeyError, TypeError, ValueError):
+            disari.append(x.get("name")); continue
+        il = kd.il_serbest(x.get("address")) or _il(x.get("city"))  # adresteki il şehir alanından önce ("…Sivrihisar/Eskişehir", şehir "Denizli")
+        if not _turkiyede(a, o) and _turkiyede(o, a):
+            a, o = o, a; takas.append(x.get("name"))
+        elif not _turkiyede(a, o):
+            disari.append(f"{x.get('name')} ({a}, {o})"); continue
+        neden = _haric(x.get("name"), grup=False)
+        if neden:
+            k = (_tr_ad(_ocpi_kok(x.get("name"))), neden)
+            haric_unite[k] = haric_unite.get(k, 0) + 1; continue
+        birim.append({"id": str(x.get("id")), "n": x.get("name") or "", "a": a, "o": o, "il": il,
+                      "adres": " ".join(str(x.get("address") or "").replace("\t", " ").split()), "evse": evse})
+    out = []
+    for g in _grupla(birim, _ocpi_kok):
+        adlar = [_ocpi_kok(b["n"]) for b in g]
+        neden = next((n for b in g for n in [_haric(b["n"], grup=True)] if n), None)
+        ad = _cok_gecen(adlar)
+        if neden:
+            haric.append(f"{_tr_ad(ad)} ({neden}, {len(g)} ünite)"); continue
+        if onek:
+            ad = re.sub(rf"(?i)^{onek}\s+|\s+{onek}$", "", ad).strip() or ad
+        if all(re.match(r"(?i)ar[ıi]zal[ıi]\b", b["n"]) for b in g):
+            r_pasif = True
+        else:
+            r_pasif = False
+        ad = _tr_ad(ad)
+        a, o = sum(b["a"] for b in g) / len(g), sum(b["o"] for b in g) / len(g)
+        r = {"i": ag + re.sub(r"\W", "", min(b["id"] for b in g)).lower(), "a": round(a, 6), "o": round(o, 6), "n": ad, "b": marka}
+        kw_ad = [float(v.replace(",", ".")) for b in g for v in re.findall(r"(?i)(\d+(?:[.,]\d+)?)\s*kw\b", b["n"])]
+        for b in g:
+            for e in b["evse"]:
+                for c in e.get("connectors") or []:
+                    dc = c.get("power_type") == "DC"
+                    _soket(r, "dc" if dc else "ac", 1, 0, _OCPI_SOKET.get(c.get("standard")))
+                    kw = (c.get("max_electric_power") or 0) / 1000 or ((c.get("max_voltage") or 0) * (c.get("max_amperage") or 0)
+                                                                      * (math.sqrt(3) if c.get("power_type") == "AC_3_PHASE" else 1) / 1000)
+                    if kw and kw <= 400:
+                        r["k"] = max(r.get("k", 0), round(kw))
+        if kw_ad:
+            r["k"] = round(max(kw_ad))
+        if r_pasif:
+            r["pasif"] = 1
+        il = next((b["il"] for b in g if b["il"]), None)
+        r["ad"] = _cv_adres(_cok_gecen([b["adres"] for b in g]).replace(", Türkiye", ""), il, None)
+        if il:
+            r["il"] = il
+        out.append(r)
+    haric = [f"{ad} ({n}, {k} ünite)" for (ad, n), k in sorted(haric_unite.items())] + haric
+    print(f"{ag}: OCPI {len(liste)} ünite → gösterilecek {len(birim)} → {len(out)} istasyon" + (f"; enlem/boylamı takas edilen {len(takas)}: {'; '.join(takas)}" if takas else "")
+          + (f"; Türkiye dışı/konumsuz {len(disari)}: {'; '.join(map(str, disari))}" if disari else ""))
+    _rapor_haric(ag, haric)
+    _epdk_eslestir(ag, out, rx, haric=(onek,) if onek else ())
+    return [_bitir(r) for r in out]
+
+
+def otopriz():
+    return _electroop("otopriz")
+
+
+def neva():
+    return _electroop("neva")
+
+
+def epsis():
+    return _electroop("epsis")
+
+
+def lumicle():
+    return _electroop("lumicle")
+
+
+def ecojet():
+    return _electroop("ecojet")
+
+
+# Şarjon: info.sarjon.com.tr/Stations sayfasının kullandığı herkese açık uç (konum, ad, il, soketler ve güçleri). Adres yok: il yazılır.
+SARJON_SAYFA = "https://info.sarjon.com.tr/Stations"
+SARJON_API = "https://info.sarjon.com.tr/api/public/stations"
+
+
+def sarjon():
+    liste = json.loads(get(SARJON_API))
+    if not isinstance(liste, list):
+        raise RuntimeError("yanıt liste değil")
+    out, haric = [], []
+    for s in liste:
+        ad = " ".join(str(s.get("name") or "").split())
+        ad = re.sub(r"(?i)\s+[sş]arj [iİI]stasyonu$", "", ad).strip() or ad
+        neden = _haric(ad)
+        if neden:
+            haric.append(f"{ad} ({neden})"); continue
+        a, o = s.get("latitude"), s.get("longitude")
+        if not _turkiyede(a, o):
+            haric.append(f"{ad} (konum Türkiye dışı/boş)"); continue
+        r = {"i": f"sarjon{int(s['locationId'])}", "a": round(a, 6), "o": round(o, 6), "n": ad, "b": "Şarjon"}
+        for k in s.get("sockets") or []:
+            dc = str(k.get("type")).upper() == "DC"
+            tur = {"TYPE2": "Type 2", "CCS": "CCS", "CCS2": "CCS", "CHADEMO": "CHAdeMO"}.get(str(k.get("connectorType")).upper())
+            _soket(r, "dc" if dc else "ac", 1, k.get("powerKw") if isinstance(k.get("powerKw"), (int, float)) else 0, tur)
+        if not r.get("c"):
+            haric.append(f"{ad} (soket yok)"); continue
+        il = _il(s.get("city"))
+        r["ad"] = il or _tr_ad(str(s.get("city") or "").strip())
+        if il:
+            r["il"] = il
+        out.append(r)
+    # Aynı ad ve konumla iki kez girilmiş istasyon (görüldü: "Bir Mekanik" bir kez İzmir, bir kez Kocaeli şehriyle; konum Kocaeli'de):
+    # en yeni kayıt (büyük locationId) tutulur
+    out.sort(key=lambda r: -int(r["i"][6:]))
+    tekil = []
+    for r in out:
+        es = next((x for x in tekil if _big_duz(x["n"]) == _big_duz(r["n"]) and _km(x["a"], x["o"], r["a"], r["o"]) <= 0.025), None)
+        if es:
+            haric.append(f"{r['n']} ({r['ad']}; {es['ad']} kaydının tekrarı)")
+        else:
+            tekil.append(r)
+    out = tekil
+    print(f"sarjon: listede {len(liste)} istasyon → {len(out)}")
+    _rapor_haric("sarjon", haric)
+    _epdk_eslestir("sarjon", out, r"\bsarjon\b", haric=("sarjon",))
+    return [_bitir(r) for r in out]
+
+
+# Solinved (Sol Şarj): solinvedcharge.com'daki harita, Doldur CPMS'in kiracı haritası (tenantCode=SOL). Veri sayfanın içindeki
+# chargePointsData dizisinde (konum, ad, adres, kullanım türü, üniteler: AC/DC, kW, soket). Yalnızca herkese açık (PublicUse) olanlar;
+# LimitedUse (sınırlı kullanım) ve ünitesi olmayan kayıtlar atlanır. Anlık durum (connectors[].lastStatus) yazılmaz.
+SOLINVED_SAYFA = "https://solinvedcharge.com/"
+SOLINVED_URL = "https://cpms-api.doldurapp.com/ChargePoint/GetChargePointLocationsMap?tenantCode=SOL"
+
+
+def _sol_adres(a):
+    """"… No:2 Yenimahalle / ANKARA YENİMAHALLE / ANKARA" → "… No:2 Yenimahalle / Ankara"."""
+    a = " ".join(str(a or "").split())
+    m = re.match(r"^(.*?\S)\s*/\s*([^/]+?)\s+[^/]+/\s*\2\s*$", a)
+    if m:
+        a = f"{m[1]} / {_tr_baslik(m[2])}"
+    return a
+
+
+def solinved():
+    page = get(SOLINVED_URL)
+    m = re.search(r"const\s+chargePointsData\s*=\s*'(.*?)';", page, re.S)
+    if not m:
+        raise RuntimeError("chargePointsData bulunamadı")
+    liste = json.loads(m.group(1))
+    out, haric = [], []
+    for n, s in enumerate(liste):
+        ad = " ".join(str(s.get("name") or "").split())
+        neden = ("sınırlı kullanım (LimitedUse)" if s.get("usageType") != "PublicUse" else None) or _haric(ad) \
+            or (None if s.get("chargeUnits") else "ünite yok")
+        if neden:
+            haric.append(f"{ad} ({neden})"); continue
+        a, o = s.get("lat"), s.get("lng")
+        if not _turkiyede(a, o):
+            haric.append(f"{ad} (konum Türkiye dışı/boş)"); continue
+        units = s.get("chargeUnits") or []
+        r = {"i": f"solinved{min(int(u['id']) for u in units)}", "a": round(a, 6), "o": round(o, 6), "n": ad, "b": "Solinved"}
+        for u in units:
+            dc = str(u.get("stationType")).upper() == "DC"
+            for c in u.get("connectors") or [{}]:
+                tur = {"type2": "Type 2", "ccs": "CCS", "ccs2": "CCS", "chademo": "CHAdeMO"}.get(str(c.get("socketType") or u.get("socketType") or "").lower())
+                _soket(r, "dc" if dc else "ac", 1, u.get("powerType") if isinstance(u.get("powerType"), (int, float)) else 0, tur)
+        adres = _sol_adres(s.get("address"))
+        il = _il(adres)
+        r["ad"] = _cv_adres(adres, il, None)
+        if il:
+            r["il"] = il
+        out.append(r)
+    print(f"solinved: haritada {len(liste)} lokasyon → {len(out)}")
+    _rapor_haric("solinved", haric)
+    _epdk_eslestir("solinved", out, r"\bsolinved\b", haric=("solinved",))
+    return [_bitir(r) for r in out]
+
+
+# D-Charge (Doğuş Şarj): dcharge.com.tr/istasyonlar sayfasının kullandığı uç (konum, ad, adres, AC/DC adetleri). Bayilerde markaya göre
+# ayrı girilmiş noktalar ("Arca Bursa - Audi", "… - Volkswagen") aynı yerdeyse tek istasyon. Mobil şarj araçları (sabit istasyon
+# değil) ve grubun kendi yerleşkeleri atlanır. Güç yok: EPDK kaydından tamamlanır.
+DCHARGE_SAYFA = "https://dcharge.com.tr/istasyonlar"
+DCHARGE_API = "https://dcharge.com.tr/istasyonlar/stations"
+# Doğuş grubunun kendi yerleşkeleri (genel müdürlük, eğitim binası, lojistik, filo sahası, holding): EPDK'da halka açık kaydı yok
+DCHARGE_ICI = r"\bgenel mudurluk\b|\begitim (binasi|merkezi)\b|\blojistik\b|\bholding\b|\bfilo\b|\byerleskesi\b"
+
+
+def dcharge():
+    liste = json.loads(get(DCHARGE_API))
+    if not isinstance(liste, list):
+        raise RuntimeError("yanıt liste değil")
+    birim, haric = [], []
+    for s in liste:
+        ad = " ".join(str(s.get("name") or "").split())
+        neden = ("mobil şarj aracı" if re.search(r"\bmobil sarj\b", _big_duz(ad + " " + str(s.get("address") or "")))
+                 else "şirket içi" if re.search(DCHARGE_ICI, _big_duz(ad)) else _haric(ad))
+        if neden:
+            haric.append(f"{ad} ({neden})"); continue
+        a, o = s.get("latitude"), s.get("longitude")
+        if not _turkiyede(a, o):
+            haric.append(f"{ad} (konum Türkiye dışı/boş)"); continue
+        birim.append({"id": str(s["id"]), "n": ad, "a": a, "o": o, "ac": int(s.get("totalAcCount") or 0), "dc": int(s.get("totalDcCount") or 0),
+                      "acv": bool(s.get("isAcSupported")), "dcv": bool(s.get("isDcSupported")),
+                      "adres": " ".join(str(s.get("address") or "").split())})
+    kok = lambda n: re.split(r"\s+[-–]\s+", n)[0]
+    out = []
+    for g in _grupla(birim, kok, yakin_m=40):
+        ad = _cok_gecen([kok(b["n"]) for b in g]) if len(g) > 1 else g[0]["n"]
+        r = {"i": "dcharge" + zlib.crc32(min(b["id"] for b in g).encode()).__format__("08x"), "n": ad, "b": "D-Charge",
+             "a": round(sum(b["a"] for b in g) / len(g), 6), "o": round(sum(b["o"] for b in g) / len(g), 6)}
+        for b in g:
+            _soket(r, "ac", b["ac"] or (1 if b["acv"] and not b["dc"] else 0))
+            _soket(r, "dc", b["dc"] or (1 if b["dcv"] and not b["ac"] else 0))
+        adres = re.sub(r"(?i)/t[uü]rkiye$", "", _cok_gecen([b["adres"] for b in g])).strip()
+        il = _il(adres)
+        r["ad"] = adres.replace("/", " / ") if adres else (il or "")
+        if il:
+            r["il"] = il
+        out.append(r)
+    print(f"dcharge: listede {len(liste)} nokta → {len(birim)} → {len(out)} istasyon (aynı yerdeki bayi noktaları birleştirildi)")
+    _rapor_haric("dcharge", haric)
+    _epdk_eslestir("dcharge", out, r"\bd-charge\b|\bd charge\b|\bdogus sarj", haric=("charge",))
+    return [_bitir(r) for r in out]
+
+
+# Aksa Şarj: aksasarj.com.tr/tr/istasyonlar sayfasındaki haritanın (raquun/harita.asp) içindeki locationsRawData (lokasyon, konum,
+# il/ilçe, üniteler: AC/DC ve soket sayısı). Güç yok: EPDK kaydından tamamlanır. hasAvailable (anlık) yazılmaz.
+AKSA_SAYFA = "https://aksasarj.com.tr/tr/istasyonlar"
+AKSA_URL = "https://aksasarj.com.tr/raquun/harita.asp?istasyon=0"
+
+
+def aksa():
+    page = get(AKSA_URL)
+    m = re.search(r"var\s+locationsRawData\s*=\s*", page)
+    if not m:
+        raise RuntimeError("locationsRawData bulunamadı")
+    j, _ = json.JSONDecoder().raw_decode(page[m.end():])
+    f, sf = j.get("fields") or [], j.get("stationFields") or []
+    if "lat" not in f or "connectorType" not in sf:
+        raise RuntimeError(f"beklenmeyen alanlar: {f} {sf}")
+    out, haric = [], []
+    for row in j.get("data") or []:
+        x = dict(zip(f, row))
+        ad = _tr_ad(x.get("locationName"))
+        neden = _haric(ad)
+        if neden:
+            haric.append(f"{ad} ({neden})"); continue
+        a, o = x.get("lat"), x.get("lng")
+        if not _turkiyede(a, o):
+            haric.append(f"{ad} (konum Türkiye dışı/boş)"); continue
+        r = {"i": f"aksa{int(x['locationId'])}", "a": round(a, 6), "o": round(o, 6), "n": ad, "b": "Aksa Şarj"}
+        for srow in x.get("stations") or []:
+            s = dict(zip(sf, srow))
+            if s.get("usageArea") is False:
+                continue
+            _soket(r, "dc" if s.get("connectorType") == 2 else "ac", int(s.get("connectorCount") or 1))
+        if not r.get("c"):
+            haric.append(f"{ad} (ünite yok)"); continue
+        il = _il(x.get("cityName"))
+        ilce = _tr_ad(x.get("countyName") or "")
+        r["ad"] = ", ".join(v for v in (ilce if ilce and ilce.lower() != "merkez" else None, il) if v)
+        if il:
+            r["il"] = il
+        out.append(r)
+    print(f"aksa: haritada {j.get('totalLocations')} lokasyon / {j.get('totalStations')} ünite (son güncelleme {j.get('lastUpdate')}) → {len(out)}")
+    _rapor_haric("aksa", haric)
+    _epdk_eslestir("aksa", out, r"\baksa sarj\b|\baksa musteri cozumleri", haric=("aksa",))
+    return [_bitir(r) for r in out]
+
+
+# En Yakıt: enyakit.com.tr/sarj-istasyonlari sayfasındaki haritanın kaynağı m.enyakit.com.tr/ea_Locations.aspx (sayfa içindeki
+# "var locations = [[new google.maps.LatLng(…), 'ad', '<html>' …]]"). HTML parçasından istasyon kodu, durum, adres, soket sayısı,
+# güç ve soket türü okunur; soket durumu (anlık) yazılmaz. Sayfada gömülü bir harita anahtarı var: OKUNMAZ, hiçbir yere yazılmaz.
+# Sunucu ara sıra 502 veriyor: en çok 3 deneme (aralarında 10 sn); olmazsa önceki dosya korunur. "Montaja Hazır" (kurulmamış)
+# atlanır, "Pasif" istasyon pasif olarak gösterilir. Aynı tesisteki numaralı üniteler ("Oksijen O68 İzmir Yönü 1/2") tek istasyon.
+ENYAKIT_SAYFA = "https://www.enyakit.com.tr/sarj-istasyonlari"
+ENYAKIT_URL = "https://m.enyakit.com.tr/ea_Locations.aspx"
+_EY_KAYIT = re.compile(r"\[new google\.maps\.LatLng\(\s*([-\d.]+)\s*,\s*([-\d.]+)\s*\)\s*,\s*'((?:[^'\\]|\\.)*)'\s*,\s*'((?:[^'\\]|\\.)*)'")
+
+
+def _ey_alan(h, etiket):
+    m = re.search(re.escape(etiket) + r"\s*:?\s*</b>\s*<b[^>]*>\s*(.*?)\s*</b>", h, re.S)
+    return html.unescape(re.sub(r"<[^>]+>", " ", m.group(1))).strip() if m else ""
+
+
+def enyakit():
+    import time
+    page = None
+    for deneme in range(3):
+        try:
+            page = get(ENYAKIT_URL); break
+        except Exception as e:  # noqa: BLE001
+            if deneme == 2:
+                raise
+            print(f"enyakit: deneme {deneme + 1} başarısız ({e}); 10 sn sonra yeniden", file=sys.stderr)
+            time.sleep(10)
+    i = page.find("var locations")
+    if i < 0:
+        raise RuntimeError("locations dizisi bulunamadı")
+    birim, haric = [], []
+    for la, lo, ad, h in _EY_KAYIT.findall(page[i:]):
+        ad = " ".join(html.unescape(ad.replace("\\'", "'")).split())
+        h = h.replace("\\'", "'")
+        kod = (re.search(r"<h6[^>]*>.*?-\s*(\d{4,6})\s*</h6>", h, re.S) or [None, ""])[1]
+        durum = _ey_alan(h, "Şarj İstasyonu Durumu")
+        neden = "kurulmamış (Montaja Hazır)" if _big_duz(durum) == "montaja hazir" else _haric(ad)
+        if neden:
+            haric.append(f"{ad} ({neden})"); continue
+        try:
+            a, o = float(la), float(lo)
+        except ValueError:
+            a = o = 0.0
+        if not _turkiyede(a, o):
+            haric.append(f"{ad} (konum Türkiye dışı/boş)"); continue
+        turler = re.findall(r"Soket Tipi:\s*</b>(?:</n>)?\s*<b[^>]*>\s*(.*?)\s*</b>", h)
+        try:
+            adet = int(_ey_alan(h, "Soket Sayısı") or len(turler) or 1)
+        except ValueError:
+            adet = len(turler) or 1
+        try:
+            kw = float(_ey_alan(h, "Şarj İstasyonu Gücü(kWh)").replace(",", ".") or 0)
+        except ValueError:
+            kw = 0
+        birim.append({"id": kod or str(zlib.crc32(ad.encode())), "n": ad, "a": a, "o": o, "adet": adet, "kw": kw, "turler": turler,
+                      "pasif": _big_duz(durum) == "pasif", "adres": " ".join(_ey_alan(h, "Şarj İstasyonu Adresi").split())})
+    if not birim:
+        raise RuntimeError("istasyon okunamadı")
+    kok = lambda n: re.sub(r"(?i)[\s-]+\d{1,2}$", "", n).strip()
+    out = []
+    for g in _grupla(birim, kok):
+        ad = _cok_gecen([kok(b["n"]) for b in g])
+        r = {"i": "enyakit" + min(b["id"] for b in g), "a": round(sum(b["a"] for b in g) / len(g), 6),
+             "o": round(sum(b["o"] for b in g) / len(g), 6), "n": ad, "b": "En Yakıt"}
+        for b in g:
+            ac = all(re.search(r"(?i)type ?2|tip ?2", t) for t in b["turler"]) and b["turler"]
+            tur = "Type 2" if ac else ("CHAdeMO" if any(re.search(r"(?i)chademo", t) for t in b["turler"]) else "CCS")
+            _soket(r, "ac" if ac else "dc", b["adet"], b["kw"] if 0 < b["kw"] <= 400 else 0, tur)
+        if all(b["pasif"] for b in g):
+            r["pasif"] = 1
+        adres = _cok_gecen([b["adres"] for b in g])
+        il = _il(adres)
+        r["ad"] = _cv_adres(adres, il, None)
+        if il:
+            r["il"] = il
+        out.append(r)
+    print(f"enyakit: haritada {len(birim) + len(haric)} ünite → {len(birim)} → {len(out)} istasyon; pasif {sum(1 for r in out if r.get('pasif'))}")
+    _rapor_haric("enyakit", haric)
+    _epdk_eslestir("enyakit", out, r"\ben ?yakit\b", haric=("yakit", "enyakit"))
+    return [_bitir(r) for r in out]
+
+
+# MKS Şarj (Maksem Elektro Şarj): mkssarj.com/sarj-istasyonlari sayfasındaki harita yazılımının işaretçi ucu (POST get_markers.php).
+# Yalnızca ad, konum, sokak adresi ve il okunur; telefon/e-posta/WhatsApp vb. alanlar OKUNMAZ (yanıttan hemen atılır). Soket/güç yok:
+# EPDK kaydından tamamlanır. Konut blokları (sokak adresinde "BLOK") atlanır.
+MKS_SAYFA = "https://mkssarj.com/sarj-istasyonlari"
+MKS_URL = "https://mkssarj.com/sarj-istasyonlari/viewer/ajax/get_markers.php"
+
+
+def mks():
+    body = urllib.parse.urlencode({"id_map": 1, "order_by": "priority"}).encode()
+    req = urllib.request.Request(MKS_URL, data=body, method="POST", headers={
+        "User-Agent": UA, "Accept": "application/json", "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        "X-Requested-With": "XMLHttpRequest", "Referer": MKS_SAYFA + "/"})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        j = json.loads(r.read().decode("utf-8", "replace"))
+    liste = [{k: x.get(k) for k in ("id", "lat", "lon", "name", "street", "city", "active")} for x in (j.get("markers") or [])]
+    if not liste:
+        raise RuntimeError("işaretçi yok")
+    birim, haric = [], []
+    for s in liste:
+        ad = " ".join(str(s.get("name") or "").split())
+        sokak = " ".join(str(s.get("street") or "").split())
+        neden = "yayında değil" if str(s.get("active")) != "1" else (_haric(ad) or ("konut/site" if re.search(r"\bblok\b", _big_duz(sokak)) else None))
+        if neden:
+            haric.append(f"{ad} ({neden})"); continue
+        try:
+            a, o = float(s.get("lat")), float(s.get("lon"))
+        except (TypeError, ValueError):
+            a = o = 0.0
+        if not _turkiyede(a, o):
+            haric.append(f"{ad} (konum Türkiye dışı/boş)"); continue
+        birim.append({"id": str(s["id"]), "n": ad, "a": a, "o": o, "sokak": sokak, "city": str(s.get("city") or "")})
+    kok = lambda n: re.sub(r"(?i)[\s_-]+(ac|dc|[a-z])$", "", n).strip()
+    out = []
+    for g in _grupla(birim, kok):
+        ad = _tr_ad(_cok_gecen([kok(b["n"]) for b in g]).replace("_", " "))
+        r = {"i": "mks" + str(min(int(b["id"]) for b in g)), "a": round(sum(b["a"] for b in g) / len(g), 6),
+             "o": round(sum(b["o"] for b in g) / len(g), 6), "n": ad, "b": "MKS Şarj"}
+        for b in g:
+            m = re.search(r"(?i)\b(ac|dc)$", b["n"])
+            if m:
+                _soket(r, m.group(1).lower(), 1)
+        il = _il(g[0]["city"], g[0]["sokak"])
+        sokak = _tr_ad(g[0]["sokak"]) if g[0]["sokak"] == g[0]["sokak"].upper() else g[0]["sokak"]
+        r["ad"] = _cv_adres(sokak, il, None)
+        if il:
+            r["il"] = il
+        out.append(r)
+    print(f"mks: haritada {len(liste)} işaretçi → {len(birim)} → {len(out)} istasyon")
+    _rapor_haric("mks", haric)
+    _epdk_eslestir("mks", out, r"\bmks-sarj\b|\bmks sarj\b|\bmaksem elektro", haric=("mks", "maksem"))
+    return [_bitir(r) for r in out]
+
+
+
+# Oncharge (Kalyon): oncharge.com.tr/sarj-istasyonlari sayfasının kullandığı uç (konum "enlem,boylam", ad, il/ilçe, adres, AC/DC,
+# ünite sayısı). Soket türü/güç yok: EPDK kaydından tamamlanır. Liste (213) EPDK'daki Oncharge kayıtlarından (245) az, ama aradaki fark
+# konut siteleri ve İstanbul Havalimanı'nın personel/hava tarafı/yer hizmetleri otoparkları (halka açık değil): RESMI olarak kullanılır.
+ONCHARGE_SAYFA = "https://oncharge.com.tr/sarj-istasyonlari"
+ONCHARGE_API = "https://oncharge.com.tr/Home/GetStations"
+ONCHARGE_EPDK = r"\boncharge\b|\bkalyon electrical"
+
+
+def oncharge():
+    j = json.loads(get(ONCHARGE_API))
+    liste = j.get("data") if isinstance(j, dict) else None
+    if not isinstance(liste, list):
+        raise RuntimeError("yanıtta 'data' listesi yok")
+    out, haric = [], []
+    for s in liste:
+        ad = " ".join(str(s.get("StationName") or "").split())
+        neden = "pasif" if s.get("Active") is False else _haric(ad)
+        if neden:
+            haric.append(f"{ad} ({neden})"); continue
+        try:
+            a, o = (float(v) for v in str(s.get("Coordinates") or "").split(",")[:2])
+        except ValueError:
+            a = o = 0.0
+        if not _turkiyede(a, o) and _turkiyede(o, a):
+            a, o = o, a
+        if not _turkiyede(a, o):
+            haric.append(f"{ad} (konum Türkiye dışı/boş)"); continue
+        r = {"i": "oncharge" + re.sub(r"\D", "", str(s.get("StationsId"))), "a": round(a, 6), "o": round(o, 6), "n": ad, "b": "Oncharge"}
+        tip = str(s.get("StationType") or "").upper()
+        n = int(s.get("Units") or 1)
+        if "DC" in tip and "AC" in tip:  # "4 soket · DC ve AC": dağılım verilmiyor; ac/dc yalnızca var/yok, toplam soket listeden
+            _soket(r, "dc", 1); _soket(r, "ac", 1); r["c"] = max(n, 2)
+        else:
+            _soket(r, "dc" if "DC" in tip else "ac", n)
+        il = _il(s.get("City"))
+        ilce = (s.get("District") or "").strip()
+        adres = " ".join(f"{s.get('Adress') or ''} {s.get('AdresDetail') or ''}".split()).strip(" .")
+        r["ad"] = ", ".join(v for v in (adres, ilce if ilce.lower() != "merkez" else None, il) if v)
+        if il:
+            r["il"] = il
+        out.append(r)
+    print(f"oncharge: listede {len(liste)} istasyon → {len(out)}")
+    _rapor_haric("oncharge", haric)
+    _epdk_eslestir("oncharge", out, ONCHARGE_EPDK, haric=("oncharge",))
+    return [_bitir(r) for r in out]
+
+
+# AOS Technology (Ayhan Teknoloji ve Otomasyon): aostechnology.com.tr/sarj-istasyonlarimiz sayfasındaki il tabloları (kod, ad, adres,
+# "Haritada aç" bağlantısındaki konum). Liste EPDK kaydındaki AOSTECHNOLOGY istasyonlarının yarısından azını içeriyor: istasyonların
+# yerine geçmez, EPDK kayıtlarını doğrular ve eşleşenin konumunu verir (istasyon_birlestir.py DOGRULA). Sitenin ayrı harita sayfası
+# (/haritalarimiz/) bot korumalı: KULLANILMAZ.
+AOS_SAYFA = "https://aostechnology.com.tr/sarj-istasyonlarimiz/"
+AOS_EPDK = r"\baostechnology\b|\bayhan teknoloji ve otomasyon"
+
+
+def _aos_metin(x):
+    x = re.sub(r'<span class="aos-v">.*?</span>\s*(<br\s*/?>)?', "", x, flags=re.S)
+    x = re.sub(r"<br\s*/?>", ", ", x)
+    return " ".join(html.unescape(re.sub(r"<[^>]+>", " ", x)).split()).replace(" ,", ",").strip(" ,")
+
+
+def aos():
+    page = get(AOS_SAYFA)
+    out, haric = [], []
+    satirlar = re.findall(r'<tr id="(AOS\d+)">(.*?)</tr>', page, re.S)
+    for kod, tr in satirlar:
+        td = re.findall(r"<td[^>]*>(.*?)</td>", tr, re.S)
+        if len(td) < 5:
+            continue
+        ad, adres = _aos_metin(td[1]), _aos_metin(td[2]).replace(", Türkiye", "")
+        m = re.search(r"query=([-\d.]+),([-\d.]+)", td[4])
+        neden = _haric(ad)
+        if neden:
+            haric.append(f"{kod} {ad} ({neden})"); continue
+        a, o = (float(m.group(1)), float(m.group(2))) if m else (0.0, 0.0)
+        if not _turkiyede(a, o):
+            haric.append(f"{kod} {ad} (konum Türkiye dışı/boş)"); continue
+        il = _il(adres)
+        r = {"i": "aos" + kod[3:], "a": round(a, 6), "o": round(o, 6), "n": ad, "b": "AOS Technology", "ad": adres}
+        if il:
+            r["il"] = il
+        out.append(r)
+    if not out:
+        raise RuntimeError("tablo okunamadı")
+    print(f"aos: listede {len(satirlar)} istasyon → {len(out)}")
+    _rapor_haric("aos", haric)
+    _epdk_eslestir("aos", out, AOS_EPDK, haric=("aos",), yakin_km=0.15)
+    return [_bitir(r) for r in out]
+
+
+# otoWATT (Aydem Plus): aydemplus.com.tr/otowatt-sarj-istasyonlari sayfasındaki il başlıkları altındaki kartlar (ad, adres; konum YOK,
+# yalnızca Google Haritalar bağlantısı). Liste istasyonların yerine geçmez ve konum vermez: yalnızca EPDK otoWATT kayıtlarını ad ve
+# adresle doğrular (rl; konum değişmez). "Tesise Özel Kullanım" kartları ve konut siteleri doğrulama listesine alınmaz.
+OTOWATT_SAYFA = "https://www.aydemplus.com.tr/otowatt-sarj-istasyonlari"
+OTOWATT_EPDK = r"\botowatt\b|\baydem plus enerji"
+
+
+def otowatt():
+    page = get(OTOWATT_SAYFA)
+    out, haric, il = [], [], None
+    for parca in re.split(r'(?=<h2 class="w-100")|(?=<div class="slide brandsItem">)', page):
+        h2 = re.match(r'<h2 class="w-100"[^>]*>(.*?)</h2>', parca)
+        if h2:
+            il = _il(re.sub(r"\s*Elektrikli Araç.*$", "", html.unescape(h2.group(1)).strip()))
+            continue
+        if not parca.startswith('<div class="slide brandsItem">'):
+            continue
+        ad = " ".join(html.unescape(re.sub(r"<[^>]+>", "", (re.search(r"<strong[^>]*>(.*?)</strong>", parca, re.S) or [None, ""])[1])).split())
+        adres = " ".join(html.unescape(re.sub(r"<[^>]+>", "", (re.search(r'<p class="mb-4"[^>]*>(.*?)</p>', parca, re.S) or [None, ""])[1])).split())
+        if not ad:
+            continue
+        neden = "tesise özel kullanım" if re.search(r"tesise ozel", _big_duz(parca)) else _haric(ad)
+        if neden:
+            haric.append(f"{ad} ({neden})"); continue
+        r = {"i": "otowatt%08x" % (zlib.crc32(_big_duz(ad + " " + adres).encode()) & 0xFFFFFFFF), "n": ad, "b": "otoWATT", "ad": adres,
+             "ad0": adres}
+        il_r = _il(adres) or il
+        if il_r:
+            r["il"] = il_r
+        out.append(r)
+    if not out:
+        raise RuntimeError("kart okunamadı")
+    print(f"otowatt: listede {len(out) + len(haric)} istasyon → {len(out)} (konum yok: yalnızca ad/adresle doğrulama)")
+    _rapor_haric("otowatt", haric)
+    _epdk_eslestir("otowatt", out, OTOWATT_EPDK, haric=("otowatt",), konumsuz=True)
+    return [_bitir(r) for r in out]
+
+
 SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            "zes": (zes, "https://zes.net/tr/sarj-istasyonlari", 500),
            "ovolt": (ovolt, "https://ovolt.com.tr/istasyon-haritasi", 50),
@@ -1037,7 +1823,8 @@ SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            "bigstation": (bigstation, BIG_SAYFA, 15),
            "cv": (cv, CV_SAYFA, 50),
            "acropol": (acropol, ACROPOL_SAYFA, 15),
-           "ksarj": (ksarj, KSARJ_SAYFA, 30)}
+           "ksarj": (ksarj, KSARJ_SAYFA, 30),
+           }
 
 
 def main():
