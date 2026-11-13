@@ -11,8 +11,8 @@ UYARI: gözden geçirilmesi iyi olan durumlar
   - "kontrol": true (resmi sayfası açılamamış) kampanyalar, 7 günden eski fiyat kontrolü, fiyatı olmayan ağlar
   - istasyon konum denetimi (tools/konum_denetim.py) haritadan istasyonların %1'inden fazlasını çıkarmış ya da
     %2'sinden fazlasının konumunu değiştirmiş: kaynak verisinde toplu bir bozulma olabilir
-  - elle güncellenen ağ kopyası (bot korumalı site, ör. data/aglar/5sarj.json) KOPYA_GUN günden eski: haritada o ağın listesi
-    gösterildiğinden kullanıcıdan yeni kopya istenmeli
+  - elle güncellenen ağ kopyası (ELLE_KOPYA: bot korumalı ya da iş akışına 403 veren kaynak, ör. data/aglar/5sarj.json,
+    data/aglar/eka.json) KOPYA_GUN günden eski: haritada o ağın listesi/konumları kullanıldığından kullanıcıdan yeni kopya istenmeli
 
 Girdiler: data/kampanyalar.json, site/tarifeler.json, data/epdk/konum_duzeltmeleri.json, site/istasyonlar.json
 """
@@ -28,7 +28,10 @@ KONUM_CIKAN = 0.01    # konum denetiminin haritadan çıkardığı kayıt / ista
 KONUM_DEGISEN = 0.02  # konumu değiştirilen kayıt oranı bunu aşarsa uyarı
 KOPYA_GUN = 60        # elle güncellenen ağ kopyası en fazla bu kadar gün eski olabilir (sonra uyarı)
 # Günlük iş akışının çekemediği (bot korumalı), kullanıcının tarayıcısından elle kopyalanan ağ listeleri: dosya → (ağ adı, ne istenmeli)
-ELLE_KOPYA = {"5sarj": ("5 Şarj", "5sarj.com/api/locations/map-pins kopyası (tools/5sarj_kopya.py ile dönüştürülür)")}
+# (tek liste: yeni kopya ağı buraya eklenir; site metni için istasyon_birlestir.py "not" alanına bakar)
+ELLE_KOPYA = {"5sarj": ("5 Şarj", "5sarj.com/api/locations/map-pins kopyası (tools/5sarj_kopya.py ile dönüştürülür)"),
+              "eka": ("EKA Enerji", "ekaenerji.mapcontentpartners.service.electroop.io/2.2/locations kopyası "
+                                    "(python3 tools/ag_istasyonlari.py eka --dosya <ocpi.json> ile dönüştürülür; electroop Actions'a 403 veriyor)")}
 
 hatalar, uyarilar = [], []
 hata, uyari = hatalar.append, uyarilar.append

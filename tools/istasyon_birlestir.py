@@ -95,6 +95,12 @@ EKSIK_HARIC_AD = {
 DOGRULA = {"ksarj": r"\bk-sarj\b|\bhunat enerji",
            "aos": r"\baostechnology\b|\bayhan teknoloji ve otomasyon",
            "otowatt": r"\botowatt\b|\baydem plus enerji",
+           # EKA Enerji: ekaenerjiteknoloji.com.tr haritası (electroop; Actions'a 403 → data/aglar/eka.json elle güncellenen kopya,
+           # ag_istasyonlari.py eka --dosya; eskiyince veri_kontrol.py uyarır). 13 Kasım 2026: 1537 ünite / 124 tesis, büyük çoğunluğu
+           # Emlak Konut/TOKİ konut projelerinin blok garajlarındaki cihazlar ve listede halka açık/özel ayrımı yok; EPDK'daki 40
+           # "EKA ENERJİ" kaydının 36'sı listede var. Liste haritaya eklenmez (özel garajlar halka açık gösterilmesin), EPDK kayıtları
+           # korunur, listede karşılığı olanın konumu EKA'nın koordinatıdır. EPDK marka "EKA ENERJİ" (işletmeci EKA ENERJİ VE TEKNOLOJİ).
+           "eka": r"\beka enerji",
            }
 RESMI_YAKIN_M = 300
 SECILI = pathlib.Path("data/secili_istasyonlar.json")  # yalnızca seçili istasyonlarda geçerli ağ kampanyaları
@@ -163,6 +169,12 @@ def main():
                     dogrula_kayit[e] = dict(r, ag=ag)
             dogrula_say[ag] = [len(d["istasyonlar"]), 0, 0, 0]  # resmi liste, işaretlenen EPDK kaydı, listede olmayan, konumu ağdan alınan
     covered = re.compile("|".join(RESMI[k] for k in kaynaklar)) if kaynaklar else None
+    # Elle güncellenen DOGRULA kopyalarının (EKA) tarihi de site için resmi_kaynaklar'a yazılır ("elle güncellenen kopya, son: …")
+    for ag in DOGRULA:
+        f = AGLAR / f"{ag}.json"
+        d = json.loads(f.read_text(encoding="utf-8")) if ag in dogrulanan and f.exists() else {}
+        if d.get("not"):
+            kaynaklar[ag] = {"sayfa": d.get("kaynak"), "cekildi": d.get("cekildi"), "sayi": len(d["istasyonlar"]), "dogrula": 1}
     is_covered = lambda *names: bool(covered and covered.search(fold(" ".join(x for x in names if x))))
 
     cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
@@ -455,7 +467,7 @@ def main():
         print(f"konum denetiminden geçmeyen ağ koordinatı (EPDK konumu korundu) ({len(denetim_dusen)}): " + "; ".join(denetim_dusen))
     print("seçili kampanya eşleşmeleri:", sk_hits)
     print("saatli tarife eşleşmeleri:", tz_hits)
-    ozet = ", ".join("%s %d" % (k, v["sayi"]) for k, v in kaynaklar.items())
+    ozet = ", ".join("%s %d%s" % (k, v["sayi"], " (yalnızca doğrulama)" if v.get("dogrula") else "") for k, v in kaynaklar.items())
     print(f"resmi ağ listeleri {len(resmi)} ({ozet}); EPDK {len(seen)} kayıt (özel {ozel} çıkarıldı), EPDK'dan gelen {sum(1 for r in recs if r.get('e'))}, eşleşen/eklenen OSM {stats.get('o')}, OCM {stats.get('c')}, Türkiye dışı {disari}, aynı adreste birleştirilen EPDK ünitesi {birlesen}, EPDK ile tamamlanan resmi ağ kaydı {tamam}, mükerrer sayılıp atılan OSM/OCM {mukerrer}, EPDK kaynağı {'açık servis (kesin koordinat)' if api else 'CSV + adres araması'}, toplam {len(recs)}, {len(txt)//1024} KB")
 
 
