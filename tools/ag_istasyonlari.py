@@ -1831,6 +1831,7 @@ SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            "ecojet": (ecojet, ELECTROOP_SAYFA.format("ecojet"), 3),
            "sarjon": (sarjon, SARJON_SAYFA, 40),
            "solinved": (solinved, SOLINVED_SAYFA, 15),
+           "dcharge": (dcharge, DCHARGE_SAYFA, 80),
            }
 
 

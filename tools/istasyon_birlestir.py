@@ -55,6 +55,7 @@ RESMI = {"trugo": r"trugo", "zes": r"\bzes\b", "ovolt": r"ovolt|sharz", "wat": r
          "ecojet": r"\becojet\b|\byeni surdurulebilir enerji",  # EPDK "ecojet" ve "ekojet"
          "sarjon": r"\bsarjon\b",  # EPDK "ŞARJON", OCM "Şarjon (TR)"
          "solinved": r"\bsolinved\b",
+         "dcharge": r"\bd-charge\b|\bd charge\b|\bdogus sarj",  # EPDK "D-Charge" (DOĞUŞ ŞARJ SİSTEMLERİ); OSM "D-Charge …"
          }
 # Bu ağların EPDK kayıtları yalnızca resmi listede RESMI_YAKIN_M içinde karşılığı varsa atlanır; karşılığı olmayanlar (listede konumu
 # girilmemiş cihazlar) EPDK kaydıyla gösterilmeye devam eder.
