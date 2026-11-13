@@ -45,7 +45,7 @@
   --y:#FFC800;--brand-y:#E0A100;
   --g:#047857;--gbg:#DDEFE6;--gline:#A8D5C0;--g-fill:#047857;--on-g:#fff;
   --r:#B91C1C;--rbg:#F6E4E4;--rline:#E6B9B9;
-  --amber-bg:#F4EACD;--amber-fg:#7C4A03;--amber-line:#E2CC8E;
+  --amber-bg:#F4EACD;--amber-fg:#7C4A03;--amber-line:#E2CC8E;--amber-dot:#B45309;
   --blue-bg:#DEE7F4;--blue-fg:#1E40AF;
   --ac:#2563EB;--dc:#EA580C;--acdc:#7C3AED;
   /* harita: denetimler sayfa yüzeyiyle (--card) aynı tondan yarı saydam cam, koyu simge; işaretçiler temadan bağımsız */
@@ -65,7 +65,7 @@
   --brand-y:#FFC800;
   --g:#34D399;--gbg:#0B2E24;--gline:#1C6B4E;--g-fill:#34D399;--on-g:#052E1C;
   --r:#F87171;--rbg:#3A1219;--rline:#7F1D1D;
-  --amber-bg:#3A2A06;--amber-fg:#FCD34D;--amber-line:#6B4E0B;
+  --amber-bg:#3A2A06;--amber-fg:#FCD34D;--amber-line:#6B4E0B;--amber-dot:#F59E0B;
   --blue-bg:#14254A;--blue-fg:#93C5FD;
   --glass:rgba(17,26,46,.88);--glass-h:rgba(17,26,46,.97);--glass-line:rgba(159,176,208,.22);--map-bg:#1B2438;
   --on-glass:#fff;--dot-ring:rgba(255,255,255,.22);
@@ -346,6 +346,10 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .nl .ni{flex:none;width:28px;display:grid;place-items:center;color:var(--mut)}.nl .ni svg{width:17px;height:17px}
 .nl[aria-expanded=true]{background:var(--card2)}
 .dnote{font-size:13px;font-weight:600;color:var(--mut);margin:4px 0 0}.dnote.bad{color:var(--r)}
+/* Anlık durum satırı (yalnızca BIG Station): renkli nokta + kısa sayılar; bilinmeyen / yükleniyor / hata soluk */
+.durum{font-size:13.5px;font-weight:700;line-height:20px;color:var(--txt);margin:6px 0 0;min-height:20px}
+.durum .nk{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--g);margin:0 7px 1px 0;vertical-align:middle}.durum .nk.dolu{background:var(--amber-dot)}
+.durum .sn{color:var(--mut);font-weight:600}.durum.sn{color:var(--mut);font-weight:600}
 .stn{display:block;width:100%;text-align:left;background:var(--card);color:var(--txt);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px}
 .stn .r1{display:flex;gap:8px;align-items:baseline}
 .stn .nm{font-weight:800;font-size:16px;line-height:1.25;flex:1;min-width:0;letter-spacing:-.2px}
@@ -1259,7 +1263,7 @@ function fromRec(r) {
   const t = { brand: r.b, operator: op, network: r.w, name: r.n, opening_hours: r.h, website: r.u };
   const b = brandOf(t), nm = r.n || "";
   return { id: r.i, lat: r.a, lon: r.o, brand: b.name, known: b.known || (!!r.e && !!b.name), epdk: r.q === "e", named: !!nm, name: nm || b.name || "Şarj istasyonu",
-    kw: r.k || null, types: r.t ? [...r.t] : [], hasAc: !!r.ac || (!r.ac && !r.dc && typeFromName(r.n).ac), hasDc: !!r.dc || (!r.ac && !r.dc && typeFromName(r.n).dc), tags: t, addr: r.ad || "", approx: r.q === "i" || r.q === "m", official: r.q === "r", pr: r.pr || null, tesis: r.tesis || "", pasif: !!r.pasif || !!r.bakim, prn: r.prn || "", sk: r.sk || [], tz: r.tz || [], camp: NETC[b.name] || [], count: r.c || null, d: 0, mode: null, price: null };
+    kw: r.k || null, types: r.t ? [...r.t] : [], hasAc: !!r.ac || (!r.ac && !r.dc && typeFromName(r.n).ac), hasDc: !!r.dc || (!r.ac && !r.dc && typeFromName(r.n).dc), tags: t, addr: r.ad || "", approx: r.q === "i" || r.q === "m", official: r.q === "r", pr: r.pr || null, tesis: r.tesis || "", pasif: !!r.pasif || !!r.bakim, prn: r.prn || "", cih: Array.isArray(r.cih) && r.cih.length ? r.cih : null, sk: r.sk || [], tz: r.tz || [], camp: NETC[b.name] || [], count: r.c || null, d: 0, mode: null, price: null };
 }
 async function overpass(lat, lon, rM) {
   const key = `wk.st2.${lat.toFixed(3)}.${lon.toFixed(3)}.${rM}`;
@@ -1362,6 +1366,7 @@ function mergeInto(m, s) {
   m.hasAc = m.hasAc || s.hasAc; m.hasDc = m.hasDc || s.hasDc;
   if (s.pr) m.pr = { ...s.pr, ...(m.pr || {}) };
   if (s.prn && !m.prn) m.prn = s.prn;
+  if (s.cih) m.cih = [...new Set([...(m.cih || []), ...s.cih])];
   if (s.sk && s.sk.length) m.sk = [...new Set([...(m.sk || []), ...s.sk])];
   if (s.tz && s.tz.length) m.tz = [...new Set([...(m.tz || []), ...s.tz])];
   if (m.pasif && !s.pasif) m.pasif = false;
@@ -1532,6 +1537,7 @@ function typeBadge(s) { return s.hasAc && s.hasDc ? "AC/DC" : s.hasDc ? "DC" : s
 function renderSheet() {
   closeTip();
   const h = $("sh-h"), b = $("sh-b"), s = M.sel && M.byId.get(M.sel);
+  if (DUR.id && DUR.id !== M.sel) durumBirak();
   if (s) { renderDetail(prep(s)); return; }
   const open = $("v-harita").dataset.s !== "peek";
   if (M.group) {
@@ -1673,6 +1679,7 @@ function renderDetail(s) {
   if (web) rows.push(["Web", `<a href="${esc(safeUrl(web))}" target="_blank" rel="noopener nofollow">Site ↗</a>`]);
   const alt = s.brand && s.named && s.name !== s.brand ? s.name : "";
   $("sh-b").innerHTML = `<div class="dn">${esc(pretty(s.brand) || s.name)}</div>${alt ? `<div class="alt">${esc(alt)}</div>` : ""}
+    ${s.cih ? durumHtml() : ""}
     ${s.pasif ? `<p class="dnote bad">Şu an pasif ya da bakımda görünüyor.</p>` : ""}
     ${s.approx ? `<p class="dnote">Konum yaklaşık.</p>` : ""}
     ${rows.length ? `<dl class="kv">${rows.map(([k, v, cls]) => `<dt>${k}</dt><dd${cls ? ` class="${cls}"` : ""}>${v}</dd>`).join("")}</dl>` : ""}
@@ -1683,8 +1690,38 @@ function renderDetail(s) {
       ${s.viaShell.length ? `<div class="lbl" style="margin-top:14px">Shell Recharge uygulamasıyla</div>${section(s.viaShell, false)}` : ""}` : ""}
     <details class="bkay"><summary>Bilgi kaynağı ›</summary>${srcTxt.map(x => `<p>${x}</p>`).join("")}
       <p>${/^bigstation/.test(s.id) ? "İstasyon bilgisi BIG Station sisteminden, üçüncü taraf bir hizmet aracılığıyla günde bir kez alınır." : s.official ? "İstasyon bilgisi ağın kendi resmi haritasından, günde bir kez güncellenir." : s.epdk ? "Konum ve soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir." : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
+      ${s.cih ? `<p>Anlık durum BIG Station sisteminden, üçüncü taraf bir hizmet aracılığıyla; 1 dakikaya kadar gecikebilir.</p>` : ""}
       ${s.net ? `<p>İndirimli fiyat yalnızca kampanyanın geçerli olduğu kesin bilinen istasyonlarda yazılır. Ağın kampanyaları birbiriyle birleşmez. Kart indirimi ağ indiriminin üzerine hesaplanır; kart kampanyası "başka indirimle birleşmez" diyorsa liste fiyatına.</p>` : ""}</details>`;
   $("sh-b").scrollTop = 0;
+  if (s.cih) durumIste(s);
+}
+/* Anlık durum (yalnızca BIG Station, cihaz kimliği "cih" olan istasyonlar): detay açılınca /api/durum/bigstation'a BİR istek.
+   Yoklama yok; detay yeniden çizilirse (liste yenilenmesi vb.) aynı sonuç kullanılır. Detay kapanır ya da başka istasyon seçilirse
+   bekleyen istek iptal edilir. Sunucu yanıtı 60 sn önbellekli; aynı detay kısa sürede yeniden açılırsa tarayıcı önbelleği yanıtlar. */
+const DUR = { id: null, ac: null, d: undefined };   // d: undefined = alınıyor, null = alınamadı, {cihazlar} = sonuç
+function durumBirak() { if (DUR.ac) DUR.ac.abort(); DUR.id = null; DUR.ac = null; DUR.d = undefined; }
+function durumHtml() {
+  const d = DUR.d;
+  if (d === undefined) return `<p class="durum sn" id="durum" aria-live="polite">Durum alınıyor…</p>`;
+  if (!d) return `<p class="durum sn" id="durum" aria-live="polite">Anlık durum alınamadı</p>`;
+  const v = Object.values(d.cihazlar || {}), bos = v.filter(x => x === "bos").length, sarj = v.filter(x => x === "sarj").length, bil = v.length - bos - sarj;
+  if (!bos && !sarj) return `<p class="durum sn" id="durum" aria-live="polite">Anlık durum bilinmiyor</p>`;
+  const sayi = [bos ? `${bos} boşta` : "", sarj ? `${sarj} şarj ediyor` : ""].filter(Boolean).join(" · ");
+  return `<p class="durum" id="durum" aria-live="polite"><span class="nk${bos ? "" : " dolu"}" aria-hidden="true"></span>Şimdi: ${sayi}${bil ? ` <span class="sn">· ${bil} cihazın durumu bilinmiyor</span>` : ""}</p>`;
+}
+function durumIste(s) {
+  if (DUR.id === s.id) return;   // bu detay için zaten istendi
+  durumBirak();
+  const ac = new AbortController(), id = s.id;
+  DUR.id = id; DUR.ac = ac;
+  fetch("/api/durum/bigstation?c=" + s.cih.slice(0, 20).map(encodeURIComponent).join(","), { signal: ac.signal })
+    .then(r => r.ok ? r.json() : null).catch(() => null)
+    .then(j => {
+      if (ac.signal.aborted || DUR.id !== id) return;
+      DUR.ac = null; DUR.d = j && j.ok && j.cihazlar ? j : null;
+      const el = $("durum");
+      if (el && M.sel === id) el.outerHTML = durumHtml();
+    });
 }
 // Bilgi kutusu: düğmenin hemen altında (yer yoksa üstünde) açılır; aynı düğme, dışarı dokunmak ya da Esc kapatır
 const TIP = { b: null };

@@ -706,7 +706,9 @@ def bigstation():
         kws = [x["kw"] for x in g if x["kw"]]
         r = {"i": "bigstation" + min((x["id"] for x in g), key=int), "a": round(a, 6), "o": round(o, 6), "n": ad, "b": "BIG Station",
              "ac": nac, "dc": ndc, "c": len(g), "k": max(kws) if kws else 0, "t": (["Type 2"] if nac else []) + (["CCS"] if ndc else []),
-             "ad": yer, "pr": pr}
+             "ad": yer, "pr": pr,
+             # cih: istasyondaki cihaz kimlikleri; site detay açılınca /api/durum/bigstation?c=… ile anlık boş/dolu durumunu sorar
+             "cih": sorted({x["id"] for x in g}, key=int)}
         if any(f"{ad}: " in x for x in fiyat_farkli):
             r["prn"] = "fiyat ünitelere göre değişiyor, en yükseği gösteriliyor"
         out.append(clean(r))
