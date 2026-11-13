@@ -1656,7 +1656,8 @@ function renderDetail(s) {
     rows.push(["Fiyat", s.net
       ? `<s>${fmtNum(s.price.v)}</s> <b class="deal">${fmtNum(s.net.v)} TL/kWh</b> ${tur}${tipBtn("ibtn", netCumle(s.net), s.net.c.link, s.net.c.kurum, IC.bilgi, "İndirim bilgisi")}`
       : `<b>${s.price.own ? priceStr(s.price) : fmtNum(s.price.v) + " TL/kWh"}</b> ${tur}`, "fy"]);
-    if (s.price.own) srcTxt.push(`Bu istasyonun fiyatı, ağın resmi sayfasından${s.prn ? " (" + esc(s.prn) + ")" : ""}.`);
+    const bsx = /^bigstation/.test(s.id);   // BIG Station verisi ağın sisteminden, üçüncü taraf bir hizmet aracılığıyla gelir
+    if (s.price.own) srcTxt.push(bsx ? "Bu istasyonun fiyatı BIG Station sisteminden." : `Bu istasyonun fiyatı, ağın resmi sayfasından${s.prn ? " (" + esc(s.prn) + ")" : ""}.`);
     else {
       srcTxt.push(s.price.range ? `Ağ konuma göre ${fmtNum(s.price.min)}–${fmtNum(s.price.max)} TL arası fiyat uyguluyor; bu istasyonun fiyatı bilinmediği için en yüksek fiyat gösteriliyor.` : "Ağın liste fiyatı.");
       if (s.price.tou) srcTxt.push("Bu istasyonda saate göre tarife var; şu an geçerli fiyat gösteriliyor.");
@@ -1681,7 +1682,7 @@ function renderDetail(s) {
     ${s.shellTrugo ? `<div class="shellbox">Shell Recharge uygulamasıyla da şarj edilebilir.</div>
       ${s.viaShell.length ? `<div class="lbl" style="margin-top:14px">Shell Recharge uygulamasıyla</div>${section(s.viaShell, false)}` : ""}` : ""}
     <details class="bkay"><summary>Bilgi kaynağı ›</summary>${srcTxt.map(x => `<p>${x}</p>`).join("")}
-      <p>${s.official ? "İstasyon bilgisi ağın kendi resmi haritasından, günde bir kez güncellenir." : s.epdk ? "Konum ve soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir." : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
+      <p>${/^bigstation/.test(s.id) ? "İstasyon bilgisi BIG Station sisteminden, üçüncü taraf bir hizmet aracılığıyla günde bir kez alınır." : s.official ? "İstasyon bilgisi ağın kendi resmi haritasından, günde bir kez güncellenir." : s.epdk ? "Konum ve soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir." : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
       ${s.net ? `<p>İndirimli fiyat yalnızca kampanyanın geçerli olduğu kesin bilinen istasyonlarda yazılır. Ağın kampanyaları birbiriyle birleşmez. Kart indirimi ağ indiriminin üzerine hesaplanır; kart kampanyası "başka indirimle birleşmez" diyorsa liste fiyatına.</p>` : ""}</details>`;
   $("sh-b").scrollTop = 0;
 }

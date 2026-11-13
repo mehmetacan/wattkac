@@ -28,7 +28,12 @@ OCM = pathlib.Path("data/ocm/istasyonlar_ocm.json")
 AGLAR = pathlib.Path("data/aglar")
 # Resmi listesi olan ağlar: bu ağlara ait EPDK/OSM kayıtları atlanır, ağın kendi listesi kullanılır
 RESMI = {"trugo": r"trugo", "zes": r"\bzes\b", "ovolt": r"ovolt|sharz", "wat": r"wat mobilite|watmobilite|\bwat\b", "astor": r"astor", "voltup": r"\bvolt ?up\b",
-         "rst": r"\brst\b ?(charge|sarj|teknoloji)"}  # EPDK "Rst ChargePoint" / "RST TEKNOLOJİ…", OSM "RST Şarj İstasyonu", OCM "RST Charge Point"
+         "rst": r"\brst\b ?(charge|sarj|teknoloji)",  # EPDK "Rst ChargePoint" / "RST TEKNOLOJİ…", OSM "RST Şarj İstasyonu", OCM "RST Charge Point"
+         "bigstation": r"windmark|\bbig ?station\b|\bbsx enerji|\bx ?sarj\b"}  # EPDK marka "windmark" / "BSX ENERJİ A.Ş."; OCM "Xşarj - …" (cihazların eski adı)
+# Bu ağların EPDK kayıtları yalnızca resmi listede RESMI_YAKIN_M içinde karşılığı varsa atlanır; karşılığı olmayanlar (listede konumu
+# girilmemiş cihazlar) EPDK kaydıyla gösterilmeye devam eder.
+EKSIK_TUT = {"bigstation"}
+RESMI_YAKIN_M = 300
 SECILI = pathlib.Path("data/secili_istasyonlar.json")  # yalnızca seçili istasyonlarda geçerli ağ kampanyaları
 SECILI_AG = {"otopriz": r"otopriz|dicle kok"}
 SAATLI = pathlib.Path("data/saatli_tarife.json")  # saate göre fiyatın (ör. gece tarifesi) yalnızca listedeki istasyonlarda geçerli olduğu ağlar
@@ -76,13 +81,13 @@ def epdk_kayitlari():
 
 def main():
     api = EPDK_API.exists()
-    resmi, kaynaklar = [], {}
+    resmi, kaynaklar, resmi_ag = [], {}, {}
     for f in sorted(AGLAR.glob("*.json")) if AGLAR.exists() else []:
         d = json.loads(f.read_text(encoding="utf-8"))
         if d.get("ag") in RESMI and d.get("istasyonlar"):
             kaynaklar[d["ag"]] = {"sayfa": d.get("kaynak"), "cekildi": d.get("cekildi"), "sayi": len(d["istasyonlar"])}
             for r in d["istasyonlar"]:
-                r = dict(r); r["q"] = "r"; resmi.append(r)
+                r = dict(r); r["q"] = "r"; resmi.append(r); resmi_ag.setdefault(d["ag"], []).append(r)
     covered = re.compile("|".join(RESMI[k] for k in kaynaklar)) if kaynaklar else None
     is_covered = lambda *names: bool(covered and covered.search(fold(" ".join(x for x in names if x))))
 
@@ -110,7 +115,7 @@ def main():
             opi[name] = len(ops); ops.append(name)
         return opi[name]
 
-    seen, recs, ozel, groups, birlesen = set(), [], 0, {}, 0
+    seen, recs, ozel, groups, birlesen, resmi_disi = set(), [], 0, {}, 0, []
     epdk_resmi = []  # resmi listesi olan ağların EPDK kayıtları: yalnızca o listedeki eksik güç/soket bilgisini tamamlamak için
     for no, ad, marka, isletmeci, adres, acik, konum, soketler in epdk:
         if no in seen:
@@ -125,7 +130,10 @@ def main():
                 konum_cikan += 1
                 continue  # makul konumu bulunamadı: yanlış yerde göstermektense gösterilmez
             konum, kalite = duzelt[no][:2], duzelt[no][2]
-        if is_covered(marka, isletmeci):
+        tut = next((k for k in EKSIK_TUT if k in kaynaklar and re.search(RESMI[k], fold(marka + " " + isletmeci))), None)
+        if tut and konum and not any(dist(konum[0], konum[1], r["a"], r["o"]) <= RESMI_YAKIN_M for r in resmi_ag[tut]):
+            resmi_disi.append(f"{tut}: {no} {ad}")  # resmi listede karşılığı yok: EPDK kaydı gösterilir
+        elif is_covered(marka, isletmeci):
             if konum:
                 x = {"a": konum[0], "o": konum[1], "b": marka}
                 soket_ekle(x, soketler)
@@ -311,6 +319,8 @@ def main():
     txt = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
     OUT.write_text(txt, encoding="utf-8")
     print(konum_denetim.ozet_satiri(rapor) + f" (EPDK'dan çıkarılan {konum_cikan}; ayrıntı: {konum_denetim.RAPOR})")
+    if resmi_disi:
+        print(f"resmi listede karşılığı olmayan, EPDK kaydıyla gösterilen ({len(resmi_disi)}): " + "; ".join(resmi_disi))
     print("seçili kampanya eşleşmeleri:", sk_hits)
     print("saatli tarife eşleşmeleri:", tz_hits)
     ozet = ", ".join("%s %d" % (k, v["sayi"]) for k, v in kaynaklar.items())
