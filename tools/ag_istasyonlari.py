@@ -1824,6 +1824,7 @@ SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            "cv": (cv, CV_SAYFA, 50),
            "acropol": (acropol, ACROPOL_SAYFA, 15),
            "ksarj": (ksarj, KSARJ_SAYFA, 30),
+           "otopriz": (otopriz, ELECTROOP_SAYFA.format("otopriz"), 250),
            }
 
 
