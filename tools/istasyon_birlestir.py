@@ -59,6 +59,7 @@ RESMI = {"trugo": r"trugo", "zes": r"\bzes\b", "ovolt": r"ovolt|sharz", "wat": r
          "aksa": r"\baksa sarj\b|\baksa musteri cozumleri|^aksa\b(?! dogalgaz)",  # EPDK "AKSA ŞARJ"; OSM operator "Aksa"
          "enyakit": r"\ben ?yakit\b",  # EPDK "EN YAKIT"; OSM "En Yakıt"; OCM "En Yakıt (TR)"
          "mks": r"\bmks-sarj\b|\bmks sarj\b|\bmaksem elektro",  # EPDK "MKS-ŞARJ" (MAKSEM ELEKTRO ŞARJ)
+         "oncharge": r"\boncharge\b|\bkalyon electrical",  # EPDK "oncharge" (KALYON ELECTRICAL VEHICLE); OCM "OnCharge (TR)"
          }
 # Bu ağların EPDK kayıtları yalnızca resmi listede RESMI_YAKIN_M içinde karşılığı varsa atlanır; karşılığı olmayanlar (listede konumu
 # girilmemiş cihazlar) EPDK kaydıyla gösterilmeye devam eder.
