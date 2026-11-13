@@ -58,15 +58,18 @@ RESMI = {"trugo": r"trugo", "zes": r"\bzes\b", "ovolt": r"ovolt|sharz", "wat": r
          "dcharge": r"\bd-charge\b|\bd charge\b|\bdogus sarj",  # EPDK "D-Charge" (DOĞUŞ ŞARJ SİSTEMLERİ); OSM "D-Charge …"
          "aksa": r"\baksa sarj\b|\baksa musteri cozumleri|^aksa\b(?! dogalgaz)",  # EPDK "AKSA ŞARJ"; OSM operator "Aksa"
          "enyakit": r"\ben ?yakit\b",  # EPDK "EN YAKIT"; OSM "En Yakıt"; OCM "En Yakıt (TR)"
+         "mks": r"\bmks-sarj\b|\bmks sarj\b|\bmaksem elektro",  # EPDK "MKS-ŞARJ" (MAKSEM ELEKTRO ŞARJ)
          }
 # Bu ağların EPDK kayıtları yalnızca resmi listede RESMI_YAKIN_M içinde karşılığı varsa atlanır; karşılığı olmayanlar (listede konumu
 # girilmemiş cihazlar) EPDK kaydıyla gösterilmeye devam eder.
 EKSIK_TUT = {"bigstation",
+             "mks",
              }
 # EKSIK_TUT ağlarında listede karşılığı olmayan EPDK kaydı bu desene (ad + adres) uyuyorsa yine gösterilmez: ağın listesinden konut
 # olduğu için ayıklanan kayıtlar EPDK üzerinden geri gelmesin (MKS: Batalgazi 5./6. Etap konut blokları, "… Evleri", "Emlak Konut Sitesi").
 # MKS'nin haritası EPDK'daki yeni kayıtların bir kısmını (Arapgir Belediyesi, Baykara Petrol, Gezsan Petrol Yazıhan…) henüz içermiyor.
 EKSIK_HARIC = {
+    "mks": r"\betap\b|\bsite(si)?\b|\bevleri\b|\bkonut|\bresid|\brezid|\bblok\b",
     }
 # Resmi listesi eksik ya da yalnızca ad + konumdan oluşan ağlar: liste istasyonların yerine geçmez, EPDK kayıtları gösterilmeye devam
 # eder. Listede karşılığı olan EPDK kaydı (eşleştirme ag_istasyonlari.py'de yapılır, EPDK numarası listede "e") "rl" ile işaretlenir ve
