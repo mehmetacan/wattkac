@@ -7,10 +7,16 @@ Dosya yoksa eski yönteme düşülür: CSV listesi + adresten bulunan yaklaşık
 
 Girdiler : data/epdk/epdk_sarj_istasyonlari.csv, data/epdk/konum_onbellek.json, data/osm/istasyonlar_osm.json
 Çıktı    : site/istasyonlar.json
+Konum denetimi: birleştirmeden önce her kaynaktaki her kayıt tools/konum_denetim.py ile denetlenir (Türkiye sınırı, adresteki
+il/ilçe ile tutarlılık, yer değiştirmiş enlem/boylam, tek basamak hatası, başka kaynaktaki aynı istasyon). Düzeltilen ve
+çıkarılan kayıtlar data/epdk/konum_duzeltmeleri.json'a yazılır.
 Kayıt alanları: i=kimlik, e=EPDK no, a/o=enlem/boylam, q=konum kalitesi (e EPDK kaydındaki resmi koordinat, p adresteki tesisin OSM konumu, r resmi ağ haritası, o OSM, c Open Charge Map, a adres, m mahalle, i ilçe),
                 n=ad, b=marka, p=işletmeci (isletmeciler tablosuna indeks ya da OSM'de metin), k=kW, t=soketler, ac/dc, c=adet, ad=adres, h=saat, u=web
 """
 import csv, json, math, pathlib, re, sys, datetime
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import konum_denetim  # noqa: E402
 
 EPDK = pathlib.Path("data/epdk/epdk_sarj_istasyonlari.csv")
 EPDK_API = pathlib.Path("data/epdk/epdk_api.json")  # EPDK'nın açık servisi: kesin koordinat ve soketler
@@ -32,28 +38,9 @@ fold = lambda s: s.translate(TR).lower().replace("ı", "i").replace("ş", "s").r
 key = lambda s: (re.sub(r"[^a-z0-9 ]", " ", fold(s)).split() or [""])[0]
 
 
-# Türkiye'nin kaba sınırı (boylam, enlem). Ege'deki Yunan adalarını ve Kıbrıs'ı dışarıda bırakacak şekilde çizildi.
-TR_POLY = [(26.35, 41.72), (26.6, 41.98), (27.0, 42.1), (28.05, 41.98), (28.15, 41.6), (29.1, 41.27), (31.0, 41.32), (32.5, 41.92),
-           (33.5, 42.08), (35.2, 42.12), (36.5, 41.45), (38.0, 41.15), (40.0, 41.12), (41.5, 41.58), (42.8, 41.62), (43.5, 41.15),
-           (44.85, 41.2), (44.85, 40.0), (44.6, 39.4), (44.45, 39.0), (44.85, 37.25), (44.3, 37.0), (42.3, 37.12), (42.2, 37.1), (41.2, 37.062), (40.0, 36.81),
-           (39.0, 36.68), (38.0, 36.83), (37.4, 36.62), (36.7, 36.6), (36.65, 36.2), (36.4, 35.78), (35.85, 35.78), (35.9, 36.3), (35.5, 36.58),
-           (34.6, 36.78), (33.9, 36.25), (32.8, 36.0), (32.0, 36.5), (30.6, 36.2), (30.4, 36.18), (29.66, 36.18), (29.38, 36.21), (29.1, 36.55),
-           (28.6, 36.75), (27.9, 36.62), (27.35, 36.66), (27.7, 36.8), (27.6, 36.98), (27.2, 37.0), (27.22, 37.15), (27.18, 37.35),
-           (27.2, 37.55), (27.15, 37.75), (26.75, 38.2), (26.25, 38.25), (26.22, 38.5), (26.45, 38.7), (26.75, 38.75), (26.65, 39.2),
-           (26.58, 39.36), (26.0, 39.45), (26.1, 39.9), (26.15, 40.05), (26.2, 40.3), (26.3, 40.6), (26.6, 40.62), (26.0, 40.72),
-           (26.3, 41.25), (26.55, 41.6)]
-TR_ISLANDS = [(25.6, 40.08, 26.02, 40.26), (25.95, 39.78, 26.1, 39.87)]  # Gökçeada, Bozcaada
-
-
 def in_turkey(lat, lon):
-    if any(x0 <= lon <= x1 and y0 <= lat <= y1 for x0, y0, x1, y1 in TR_ISLANDS):
-        return True
-    inside, n = False, len(TR_POLY)
-    for k in range(n):
-        x1, y1 = TR_POLY[k]; x2, y2 = TR_POLY[(k + 1) % n]
-        if (y1 > lat) != (y2 > lat) and lon < (x2 - x1) * (lat - y1) / (y2 - y1) + x1:
-            inside = not inside
-    return inside
+    """Türkiye içinde ya da kaba sınıra en fazla konum_denetim.KIYI_KM uzaklıkta (kıyı otelleri, marinalar)."""
+    return konum_denetim.in_turkey(lat, lon) or konum_denetim.sinira_km(lat, lon) <= konum_denetim.KIYI_KM
 
 
 def dist(a, b, c, d):
@@ -102,6 +89,20 @@ def main():
     poi = json.loads(POI.read_text(encoding="utf-8")) if POI.exists() else {}
     osm = json.loads(OSM.read_text(encoding="utf-8"))["istasyonlar"] if OSM.exists() else []
     ocm = json.loads(OCM.read_text(encoding="utf-8"))["istasyonlar"] if OCM.exists() else []
+    epdk = list(epdk_kayitlari())
+
+    # Konum denetimi: hatalı koordinatlar birleştirmeden önce düzeltilir ya da çıkarılır (mükerrer eşleşmesi de doğru konumla yapılır)
+    ilk = {}
+    for x in epdk:
+        if x[6] and x[0] not in ilk:
+            ilk[x[0]] = {"no": x[0], "ad": x[1], "marka": x[2], "adres": x[4], "a": x[6][0], "o": x[6][1]}
+    duzelt, sil, gecersiz, rapor = konum_denetim.denetle(list(ilk.values()), resmi, osm, ocm, poi, cache, key)
+    resmi = [r for r in resmi if r["i"] not in sil]
+    osm = [s for s in osm if s["i"] not in sil]
+    ocm = [s for s in ocm if s["i"] not in sil]
+    poi = {k: v for k, v in poi.items() if k not in gecersiz}
+    cache = {k: v for k, v in cache.items() if k not in gecersiz}
+    konum_cikan = 0
     ops, opi = [], {}
     def op(name):
         if name not in opi:
@@ -110,13 +111,19 @@ def main():
 
     seen, recs, ozel, groups, birlesen = set(), [], 0, {}, 0
     epdk_resmi = []  # resmi listesi olan ağların EPDK kayıtları: yalnızca o listedeki eksik güç/soket bilgisini tamamlamak için
-    for no, ad, marka, isletmeci, adres, acik, konum, soketler in epdk_kayitlari():
+    for no, ad, marka, isletmeci, adres, acik, konum, soketler in epdk:
         if no in seen:
             continue
         seen.add(no)
         if not acik:
             ozel += 1
             continue  # halka açık olmayan (özel) istasyonlar haritada gösterilmez
+        kalite = "e"
+        if konum and no in duzelt:
+            if duzelt[no] is None:
+                konum_cikan += 1
+                continue  # makul konumu bulunamadı: yanlış yerde göstermektense gösterilmez
+            konum, kalite = duzelt[no][:2], duzelt[no][2]
         if is_covered(marka, isletmeci):
             if konum:
                 x = {"a": konum[0], "o": konum[1], "b": marka}
@@ -125,7 +132,7 @@ def main():
             continue  # bu ağın resmi listesi var
         rec = {"i": "e" + re.sub(r"\D", "", no), "e": no, "n": ad, "b": marka, "p": op(isletmeci), "ad": adres}
         if konum:
-            rec["a"], rec["o"], rec["q"] = konum[0], konum[1], "e"
+            rec["a"], rec["o"], rec["q"] = konum[0], konum[1], kalite
         elif no in poi:
             rec["a"], rec["o"], rec["q"] = poi[no][0], poi[no][1], "p"
             rec["tesis"] = poi[no][2]
@@ -286,8 +293,9 @@ def main():
                 r.setdefault("tz", []).append(ag); hit += 1
         tz_hits[ag] = hit
     located = [r for r in recs if "a" in r]
-    # konumu bilinmeyen ve Türkiye dışı kayıtlar gösterilmez (EPDK koordinatı resmi olduğundan kaba sınır denetimine girmez: kıyı ilçeleri)
-    recs = [r for r in located if r.get("q") == "e" or in_turkey(r["a"], r["o"])]
+    # konumu bilinmeyen ve Türkiye dışı kayıtlar gösterilmez. Kayıtlar konum_denetim'den geçtiği için bu yalnızca güvenlik ağıdır;
+    # kıyı ilçelerindeki noktalar (Bodrum, Gazipaşa) kaba sınırın birkaç km dışında kalabildiğinden sınıra yakınlık da kabul edilir.
+    recs = [r for r in located if in_turkey(r["a"], r["o"])]
     disari = len(located) - len(recs)
     recs.sort(key=lambda r: (round(r["a"], 1), r["o"], r["i"]))
     cnt = {}
@@ -301,6 +309,7 @@ def main():
             "isletmeciler": ops, "istasyonlar": recs}
     txt = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
     OUT.write_text(txt, encoding="utf-8")
+    print(konum_denetim.ozet_satiri(rapor) + f" (EPDK'dan çıkarılan {konum_cikan}; ayrıntı: {konum_denetim.RAPOR})")
     print("seçili kampanya eşleşmeleri:", sk_hits)
     print("saatli tarife eşleşmeleri:", tz_hits)
     ozet = ", ".join("%s %d" % (k, v["sayi"]) for k, v in kaynaklar.items())

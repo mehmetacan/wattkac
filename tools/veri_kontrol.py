@@ -9,8 +9,10 @@ HATA (çıkış kodu 1): sitede yanlış bilgi gösterecek durumlar
   - günlük tarama 2 günden uzun süredir çalışmamış (son_kontrol eski)
 UYARI: gözden geçirilmesi iyi olan durumlar
   - "kontrol": true (resmi sayfası açılamamış) kampanyalar, 7 günden eski fiyat kontrolü, fiyatı olmayan ağlar
+  - istasyon konum denetimi (tools/konum_denetim.py) haritadan istasyonların %1'inden fazlasını çıkarmış ya da
+    %2'sinden fazlasının konumunu değiştirmiş: kaynak verisinde toplu bir bozulma olabilir
 
-Girdiler: data/kampanyalar.json, site/tarifeler.json
+Girdiler: data/kampanyalar.json, site/tarifeler.json, data/epdk/konum_duzeltmeleri.json, site/istasyonlar.json
 """
 import datetime, json, pathlib, re, sys
 
@@ -20,6 +22,8 @@ TARIH = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 ALL = "Tüm şarj istasyonları"
 TARAMA_GUN = 2   # günlük tarama en fazla bu kadar gün gecikebilir
 FIYAT_GUN = 7    # fiyatlar en fazla bu kadar gün kontrolsüz kalabilir
+KONUM_CIKAN = 0.01    # konum denetiminin haritadan çıkardığı kayıt / istasyon sayısı bu oranı aşarsa uyarı
+KONUM_DEGISEN = 0.02  # konumu değiştirilen kayıt oranı bunu aşarsa uyarı
 
 hatalar, uyarilar = [], []
 hata, uyari = hatalar.append, uyarilar.append
@@ -146,12 +150,31 @@ def tarifeler(bugun, guncellik, ag_adlari):
         uyari(f"fiyat {ag}: tarifeler.json'da kaydı yok")
 
 
+def konum_denetimi():
+    """İstasyon konum denetiminin raporu: çıkarılan ya da taşınan kayıt sayısı birden artarsa uyarır (hata değil)."""
+    rp, ip = KOK / "data/epdk/konum_duzeltmeleri.json", KOK / "site/istasyonlar.json"
+    if not rp.exists() or not ip.exists():
+        return
+    ozet = json.loads(rp.read_text(encoding="utf-8")).get("ozet", {})
+    sayi = json.loads(ip.read_text(encoding="utf-8")).get("sayi") or 0
+    d = ozet.get("duzeltme", {})
+    cikan = d.get("cikarildi", 0)
+    degisen = sum(v for k, v in d.items() if k not in ("cikarildi", "birakildi"))
+    if sayi and cikan > KONUM_CIKAN * sayi:
+        uyari(f"konum denetimi {cikan} istasyon kaydını haritadan çıkardı (istasyonların %{100 * cikan / sayi:.1f}'i); "
+              "data/epdk/konum_duzeltmeleri.json'a bakılmalı")
+    if sayi and degisen > KONUM_DEGISEN * sayi:
+        uyari(f"konum denetimi {degisen} istasyonun konumunu değiştirdi (%{100 * degisen / sayi:.1f}); "
+              "data/epdk/konum_duzeltmeleri.json'a bakılmalı")
+
+
 def main():
     guncellik = "--yapi" not in sys.argv
     bugun = bugun_tr()
     try:
         aglar = kampanyalar(bugun, guncellik)
         tarifeler(bugun, guncellik, aglar)
+        konum_denetimi()
     except (OSError, ValueError) as ex:
         hata(f"Dosya okunamadı: {ex}")
     for u in uyarilar:
