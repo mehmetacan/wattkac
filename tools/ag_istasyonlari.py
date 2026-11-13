@@ -1832,6 +1832,7 @@ SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            "sarjon": (sarjon, SARJON_SAYFA, 40),
            "solinved": (solinved, SOLINVED_SAYFA, 15),
            "dcharge": (dcharge, DCHARGE_SAYFA, 80),
+           "aksa": (aksa, AKSA_SAYFA, 60),
            }
 
 
