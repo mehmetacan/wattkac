@@ -7,14 +7,21 @@ Kaynaklar (her biri ağın kendi sitesindeki haritanın kullandığı adres):
   Ovolt/Sharz  https://mobil-api.ovolt.com.tr/api/App/stations/cards   (ovolt.com.tr/istasyon-haritasi)
   WAT Mobilite https://www.watmobilite.com/istasyon-haritasi           (sayfa içindeki istasyon kartları)
   Trugo        https://trugo.com.tr/individual/network                  (sayfanın kendi içindeki __NUXT_DATA__ istasyon listesi)
+  VoltUp       https://voltup.com.tr/#istasyonlar                       (istasyon fiyat listesi + ana sayfadaki harita işaretçileri)
+               Fiyat listesi (https://voltup.petroo.dev/price-list/true/true) bir Blazor Server sayfasıdır, düz HTTP ile
+               okunamaz; tools/voltup_fiyat.mjs onu tarayıcıyla bir kez açıp data/aglar/voltup_fiyat.json'a yazar. Burada
+               o dosya okunur, istasyonların konumu ve soketleri EPDK kaydından (data/epdk/epdk_api.json) ad eşleşmesiyle,
+               EPDK'da bulunamayanlar ana sayfadaki işaretçilerden alınır.
   (ASTOR Şarj'ın haritası map-api.echargo.com kullanıyor ama sunucudan yapılan istekleri reddediyor (HTTP 404);
    erişim kısıtını aşmaya çalışmıyoruz, ASTOR istasyonları EPDK + OSM'den gelir.)
 
 Kurallar: günde bir kez, her kaynağa tek istek; anahtar/oturum gerektiren kaynaklar KULLANILMAZ.
 Bir ağın çekimi başarısız olursa o ağın önceki dosyası korunur.
+Yalnızca bazı ağları çekmek için adlarını verin: python3 tools/ag_istasyonlari.py voltup
 Kayıt alanları istasyon_cek.py ile aynıdır (i, a, o, n, b, k, t, ac, dc, c, ad) + pr (soket fiyatları, varsa).
 """
 import html, json, pathlib, re, sys, urllib.request, datetime
+from html.parser import HTMLParser
 
 OUT = pathlib.Path("data/aglar")
 UA = "WattKac/1.0 (+https://wattkac.com; gunluk istasyon listesi)"
@@ -201,16 +208,148 @@ def trugo_prices(recs):
     print(f"trugo: 12 TL duyurusunda {len(names)} istasyon adı, eşleşen {hit} istasyon")
 
 
+# VoltUp: istasyon bazlı fiyat listesi (tools/voltup_fiyat.mjs) + konum/soket için EPDK kaydı ve sitedeki harita işaretçileri
+VOLTUP_FIYAT = OUT / "voltup_fiyat.json"
+EPDK_API = pathlib.Path("data/epdk/epdk_api.json")
+VOLTUP_ESKI_GUN = 14  # fiyat dosyası bundan eskiyse istasyon fiyatı yazılmaz (sitede tarifeler.json'daki aralık görünür)
+SOKET_AD = {"AC_TYPE2": "Type 2", "AC_TYPE1": "Type 1", "AC_SCHUKO": "Schuko", "DC_CCS": "CCS", "DC_CCS2": "CCS", "DC_CHADEMO": "CHAdeMO", "DC_GBT": "GB/T"}
+# Ad karşılaştırmasında atılan sözcükler ve tek başına eşleşme için yetmeyen genel sözcükler (ilk 5 harfleriyle)
+_AT = {"voltu", "volt", "up", "petro", "sarj", "istas", "ve"}
+_GENEL = {"otopa", "opet", "plaza", "hotel", "otel", "petro", "ofisi", "shell", "resto", "resta", "katli", "alani", "yani", "onu",
+          "karsi", "mahal", "park", "long", "mola", "antot", "hesap"}
+
+
+def _kokler(s):
+    """Ad → sözcük kökleri kümesi (Türkçe harfler sadeleştirilir, ilk 5 harf; "Petroo/VoltUp/Şarj İstasyonu" atılır)."""
+    s = re.sub(r"\bpetroo\b", " ", " ".join(_tok(s)))
+    return {w[:5] for w in s.split() if w[:5] not in _AT and not (len(w) == 1 and not w.isdigit())}
+
+
+def _ilce(adres):
+    """Fiyat listesindeki "… - İLÇE / İL" ya da EPDK'daki "… İlçe / İL" adresinden ilçe."""
+    m = re.search(r"(?:^|[\s-])([^\s/-]+)\s*/\s*[^/]+$", adres or "")
+    return " ".join(_tok(m.group(1))) if m else ""
+
+
+def _eslestir(adaylar, hedefler, ad, ilce):
+    """Ad benzerliğiyle birebir eşleştirme (en iyi eşleşme önce). Dönüş: {aday indeksi: hedef indeksi}.
+    Puan = ortak kök / kısa adın kök sayısı; ortak köklerden en az biri genel sözcük olmamalı. İlçeler biliniyor ve
+    farklıysa (fiyat listesinde ilçe bazen "Merkez" ya da komşu ilçe yazıyor) yalnızca tam eşleşme kabul edilir."""
+    puanlar = []
+    for i, a in enumerate(adaylar):
+        ka = _kokler(ad(a))
+        for j, h in enumerate(hedefler):
+            kh = _kokler(ad(h))
+            ortak = ka & kh
+            if not ortak or not (ortak - _GENEL) or not ka or not kh:
+                continue
+            p = len(ortak) / min(len(ka), len(kh)) - 0.01 * abs(len(ka) - len(kh))
+            ia, ih = ilce(a), ilce(h)
+            if ia and ih and ia != ih:
+                if len(ortak) < min(len(ka), len(kh)):
+                    continue
+            else:
+                p += 0.05
+            if p >= 0.6:
+                puanlar.append((p, i, j))
+    sonuc, kullanilan = {}, set()
+    for p, i, j in sorted(puanlar, key=lambda x: -x[0]):
+        if i not in sonuc and j not in kullanilan:
+            sonuc[i] = j; kullanilan.add(j)
+    return sonuc
+
+
+class _Isaretci(HTMLParser):
+    """voltup.com.tr ana sayfasındaki <div class="map-marker" data-lat data-lng data-mapinfo="Ad , Adres<br />">"""
+    def __init__(self):
+        super().__init__(); self.liste = []
+
+    def handle_starttag(self, tag, attrs):
+        at = dict(attrs)
+        if "map-marker" in (at.get("class") or "").split():
+            try:
+                a, o = float(at.get("data-lat")), float(at.get("data-lng"))
+            except (TypeError, ValueError):
+                return
+            bilgi = html.unescape(re.sub(r"<[^>]+>", " ", at.get("data-mapinfo") or ""))
+            ad, _, adres = bilgi.partition(" , ")
+            self.liste.append({"a": a, "o": o, "n": ad.strip(), "ad": re.sub(r"\s+", " ", adres).strip()})
+
+
+def voltup():
+    if not VOLTUP_FIYAT.exists():
+        raise RuntimeError(f"{VOLTUP_FIYAT} yok (önce node tools/voltup_fiyat.mjs)")
+    fj = json.loads(VOLTUP_FIYAT.read_text(encoding="utf-8"))
+    liste = fj.get("istasyonlar") or []
+    yas = (datetime.date.today() - datetime.date.fromisoformat(fj.get("cekildi") or "2000-01-01")).days
+    fiyat_yaz = yas <= VOLTUP_ESKI_GUN
+    if yas > 1:
+        print(f"voltup: fiyat listesi {yas} gün önce okunmuş" + ("" if fiyat_yaz else "; istasyon fiyatı yazılmıyor"), file=sys.stderr)
+    # EPDK kayıtları: kesin koordinat ve soketler (aynı istasyonun birden çok ünitesi tek kayıtta toplanır)
+    epdk = []
+    if EPDK_API.exists():
+        for x in json.loads(EPDK_API.read_text(encoding="utf-8")).get("istasyonlar", []):
+            if re.search(r"\bvolt ?up\b", " ".join(_tok(" ".join([x.get("marka", ""), x.get("isletmeci", "")])))) and ok_coord(x.get("a"), x.get("o")):
+                epdk.append(x)
+    # Sitedeki harita işaretçileri: EPDK'da karşılığı bulunamayan (yeni) istasyonların konumu için
+    try:
+        p = _Isaretci(); p.feed(get("https://voltup.com.tr/")); isaret = [m for m in p.liste if ok_coord(m["a"], m["o"])]
+    except Exception as e:  # noqa: BLE001
+        print("voltup: ana sayfadaki harita okunamadı:", e, file=sys.stderr); isaret = []
+    ad = lambda x: x.get("n") or x.get("ad") or ""
+    e_es = _eslestir(liste, epdk, lambda x: x.get("n") if "n" in x else x.get("ad"), lambda x: _ilce(x.get("adres") if "adres" in x else x.get("ad")))
+    kalan = [i for i in range(len(liste)) if i not in e_es]
+    m_es = _eslestir([liste[i] for i in kalan], isaret, ad, lambda x: _ilce(x.get("ad")) if " / " in (x.get("ad") or "") else "")
+    out, bulunamayan = [], []
+    for i, s in enumerate(liste):
+        r = {"b": "VoltUp", "n": s["n"], "ad": s.get("ad", "")}
+        if i in e_es:
+            x = epdk[e_es[i]]
+            r.update({"i": "voltup" + re.sub(r"\D", "", x["no"]), "a": round(x["a"], 6), "o": round(x["o"], 6)})
+            for tur, kw, n in x.get("s") or []:
+                tip = "dc" if tur.startswith("DC") else "ac"
+                r[tip] = r.get(tip, 0) + n; r["c"] = r.get("c", 0) + n
+                if kw and kw > r.get("k", 0):
+                    r["k"] = kw
+                t = SOKET_AD.get(tur) or tur.split("_", 1)[-1].title()
+                if t not in r.setdefault("t", []):
+                    r["t"].append(t)
+        elif kalan.index(i) in m_es:
+            m = isaret[m_es[kalan.index(i)]]
+            r.update({"i": "voltup-" + "-".join(sorted(_kokler(s["n"]))), "a": round(m["a"], 6), "o": round(m["o"], 6)})
+        else:
+            bulunamayan.append(s["n"]); continue
+        if not r.get("ac") and not r.get("dc"):  # soket bilgisi yoksa fiyatı yazılan akım türleri
+            r.update({"ac": int(s.get("ac") is not None), "dc": int(s.get("dc") is not None)})
+            r["t"] = (["Type 2"] if r["ac"] else []) + (["CCS"] if r["dc"] else [])
+        pr = {k: s[k] for k in ("ac", "dc") if isinstance(s.get(k), (int, float))}
+        if pr and fiyat_yaz:
+            r["pr"] = pr
+        out.append(clean(r))
+    eslesen_e = {epdk[j]["no"] for j in e_es.values()}
+    print(f"voltup: fiyat listesinde {len(liste)} istasyon; konumu EPDK'dan {len(e_es)}, sitedeki haritadan {len(m_es)}, bulunamayan {len(bulunamayan)}"
+          + (f" ({'; '.join(bulunamayan)})" if bulunamayan else ""))
+    disarda = [x["ad"] for x in epdk if x["no"] not in eslesen_e]
+    if disarda:
+        print(f"voltup: fiyat listesinde (aktif lokasyonlarda) olmayan EPDK kayıtları gösterilmiyor: {'; '.join(disarda)}")
+    return out
+
+
 SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            "zes": (zes, "https://zes.net/tr/sarj-istasyonlari", 500),
            "ovolt": (ovolt, "https://ovolt.com.tr/istasyon-haritasi", 50),
-           "wat": (wat, "https://www.watmobilite.com/istasyon-haritasi", 100)}
+           "wat": (wat, "https://www.watmobilite.com/istasyon-haritasi", 100),
+           "voltup": (voltup, "https://voltup.com.tr/#istasyonlar", 20)}
 
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
+    secilen = [a for a in sys.argv[1:] if a in SOURCES] or list(SOURCES)
+    if len(secilen) < len(sys.argv[1:]):
+        sys.exit("bilinmeyen ağ: " + ", ".join(a for a in sys.argv[1:] if a not in SOURCES) + " (seçenekler: " + ", ".join(SOURCES) + ")")
     failed = 0
-    for key, (fn, page, minimum) in SOURCES.items():
+    for key in secilen:
+        fn, page, minimum = SOURCES[key]
         try:
             recs = fn()
             if len(recs) < minimum:
@@ -224,7 +363,7 @@ def main():
         data = {"ag": key, "kaynak": page, "cekildi": datetime.date.today().isoformat(), "sayi": len(recs), "istasyonlar": recs}
         f.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
         print(f"{key}: {len(recs)} istasyon")
-    if failed == len(SOURCES):
+    if failed == len(secilen):
         sys.exit("Hiçbir ağdan veri alınamadı")
 
 
