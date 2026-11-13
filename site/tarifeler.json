@@ -950,6 +950,25 @@
     "Tesla Motors"
    ],
    "not": "Tesla Supercharger (250 kW): Tesla dışı araçlar 13,00 TL/kWh; Tesla araçlara %20 indirimli 10,40 TL/kWh. Kaynak Tesla uygulaması (kullanıcının ekran görüntüsü, 13 Kasım 2026); tesla.com otomatik erişime kapalı, fiyat elle güncellenir."
+  },
+  "AOS Technology": {
+   "ac": {
+    "min": 10.9,
+    "max": 10.9
+   },
+   "dc": {
+    "min": 14.9,
+    "max": 14.9
+   },
+   "kaynak": "https://aostechnology.com.tr/sarj-istasyonlarimiz/",
+   "kontrol": "2026-11-13",
+   "gecerlilik": null,
+   "adlar": [
+    "AOSTECHNOLOGY",
+    "AOS Technology",
+    "AOS Teknoloji"
+   ],
+   "not": "AC (22 kW) 10,90, DC (120 kW) 14,90 TL/kWh. Kaynak AOS uygulaması (kullanıcının ekran görüntüsü, 13 Kasım 2026); sitede fiyat yayımlanmıyor, fiyat elle güncellenir."
   }
  }
 }
