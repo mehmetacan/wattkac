@@ -7,6 +7,12 @@ Bu depo @wattkac Instagram sayfasının kampanya verisini, görsellerini ve payl
 - Derleme siteleri (sarjkampanya, sarjharitasi, sarjevi, hangikredi vb.) yalnızca kampanyayı fark etmek için kullanılır, kaynak olarak gösterilmez.
 - Resmi sayfa açılamadıysa teklife `"kontrol": true` eklenir. Panel bunu "RESMİ · KONTROL ET" olarak gösterir.
 
+## İstasyon verisi (13 Kasım 2026)
+- İstasyon listesi ve konumu için birinci kaynak şarj ağının kendi sitesi/uygulamasıdır; EPDK ikinci kaynaktır (güncel ve doğru olmayabiliyor). EPDK yalnızca ağın listesi olmayan ya da listesinde bulunmayan bilgiyi (soket, güç) tamamlamak için kullanılır.
+- Ağın güncel bir istasyon listesi varsa haritada o liste gösterilir (`tools/ag_istasyonlari.py` + `istasyon_birlestir.py` RESMI); konum ağın kendi koordinatıdır.
+- Ağın listesi eksik ya da eskiyse (ör. K-Şarj) EPDK kayıtları korunur, ama ağın listesinde karşılığı olan kayıtta konum ağın koordinatından alınır.
+- Bot korumalı sitelerde koruma aşılmaz (tarayıcı taklidi, curl_cffi vb. yok); veri kullanıcının tarayıcısından alınan kopyayla güncellenir.
+
 ## Post kuralı (7 Kasım 2026)
 - **Banka postu:** Kart kampanyası ve geçerli olduğu istasyonlar (`st` listesi) burada yazılır.
 - **Şarj ağı postu:** Yalnızca ağın **kendi** indirimi varsa yapılır (`own` boş değilse).
