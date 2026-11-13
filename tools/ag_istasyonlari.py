@@ -1836,6 +1836,7 @@ SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            "enyakit": (enyakit, ENYAKIT_SAYFA, 200),
            "mks": (mks, MKS_SAYFA, 10),
            "oncharge": (oncharge, ONCHARGE_SAYFA, 120),
+           "aos": (aos, AOS_SAYFA, 25),
            }
 
 

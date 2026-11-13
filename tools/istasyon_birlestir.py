@@ -82,6 +82,7 @@ EKSIK_HARIC = {
 # AOS Technology: aostechnology.com.tr'deki tabloda 51 istasyon, EPDK'da 124 AOSTECHNOLOGY kaydı (çoğu konut sitesi).
 # otoWATT: aydemplus.com.tr'deki listede konum yok: yalnızca ad/adresle "rl" (konum EPDK'dan kalır).
 DOGRULA = {"ksarj": r"\bk-sarj\b|\bhunat enerji",
+           "aos": r"\baostechnology\b|\bayhan teknoloji ve otomasyon",
            }
 RESMI_YAKIN_M = 300
 SECILI = pathlib.Path("data/secili_istasyonlar.json")  # yalnızca seçili istasyonlarda geçerli ağ kampanyaları
