@@ -745,6 +745,10 @@ const KNOWN_EXTRA = { "ZES": ["\\bzes\\b"], "Sharz.net": ["sharz"], "Tesla": ["t
   "Zeplin": ["zeplin"], "Otojet": ["otojet"], "Oncharge": ["oncharge"], "D-Charge": ["d-charge", "d charge"], "5 Şarj": ["\\b5 sarj"], "otoWATT": ["otowatt"],
   "Efish": ["efish"], "EPSIS": ["epsis"], "EKA Enerji": ["eka enerji"], "Magic Line": ["magic line"], "K-Şarj": ["\\bk-sarj\\b", "\\bk sarj\\b", "\\bhunat enerji"], "Neva Şarj": ["neva sarj"], "TOGG": ["\\btogg\\b"], "CV Charging": ["charging vehicles", "\\bcv charging\\b", "\\bcw enerji"],
   "Acropol Şarj": ["\\bacropol\\b", "\\bgreenleaf yenilenebilir"],
+  // Ağların kendi haritalarından gelen listeler (istasyonlar.json "b") ve EPDK yazımları (marka / işletmeci); "lumi" BLADECO ALÜMİNYUM'u yakalamasın
+  "Lumicle": ["\\blumicle\\b", "\\blumhouse enerji"], "Ecojet": ["\\becojet\\b", "\\bekojet\\b", "\\byeni surdurulebilir enerji"],
+  "Şarjon": ["\\bsarjon\\b"], "Solinved": ["\\bsolinved\\b"], "MKS Şarj": ["\\bmks-sarj\\b", "\\bmks sarj\\b", "\\bmaksem elektro"],
+  "AOS Technology": ["\\baostechnology\\b", "\\baos technology\\b"],
   "VoltUp": ["\\bvolt ?up\\b"], "RST Charge Point": ["\\brst\\b ?(charge|sarj|teknoloji)"],
   // Windmark markası BIG Station adını aldı (işletmeci BSX Enerji); EPDK kaydında marka hâlâ "windmark" yazıyor
   "BIG Station": ["\\bbig ?station\\b", "\\bwindmark\\b", "\\bbsx enerji"] };
@@ -1260,6 +1264,12 @@ async function loadStatic() {
   return STATIC;
 }
 // Akım türü verilmemişse istasyon adındaki "DC"/"AC" ifadesinden çıkar (EPDK/OCM adları: "Meydan, Zeytinburnu - DC")
+// İstasyon bilgisinin alındığı ağ sitesi ("Bilgi kaynağı"): resmi liste (RESMI) ya da EPDK kaydını doğrulayan liste (DOGRULA)
+const AG_SITE = { "Otopriz": "otopriz.com.tr", "Neva Şarj": "nevasarj.com", "EPSIS": "electroop.io", "Lumicle": "lumicle.com.tr", "Ecojet": "electroop.io",
+  "Şarjon": "sarjon.com.tr", "Solinved": "solinvedcharge.com", "D-Charge": "dcharge.com.tr", "Aksa Şarj": "aksasarj.com.tr", "En Yakıt": "enyakit.com.tr",
+  "MKS Şarj": "mkssarj.com", "Oncharge": "oncharge.com.tr", "AOS Technology": "aostechnology.com.tr", "otoWATT": "aydemplus.com.tr",
+  "K-Şarj": "ksarj.com", "5 Şarj": "5sarj.com" };
+const agSite = s => AG_SITE[s.brand] ? ` (${AG_SITE[s.brand]})` : "";
 // Elle güncellenen ağ kopyasının tarihi (istasyonlar.json → resmi_kaynaklar[ag].cekildi): ", son: 13 Kasım 2026"
 const kopyaTarih = ag => { const t = STATIC && STATIC.resmi_kaynaklar && STATIC.resmi_kaynaklar[ag] && STATIC.resmi_kaynaklar[ag].cekildi;
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(t || ""); return m ? `, son: ${+m[3]} ${AY[+m[2] - 1]} ${m[1]}` : ""; };
@@ -1696,7 +1706,7 @@ function renderDetail(s) {
     ${s.shellTrugo ? `<div class="shellbox">Shell Recharge uygulamasıyla da şarj edilebilir.</div>
       ${s.viaShell.length ? `<div class="lbl" style="margin-top:14px">Shell Recharge uygulamasıyla</div>${section(s.viaShell, false)}` : ""}` : ""}
     <details class="bkay"><summary>Bilgi kaynağı ›</summary>${srcTxt.map(x => `<p>${x}</p>`).join("")}
-      <p>${/^bigstation/.test(s.id) ? "İstasyon bilgisi BIG Station sisteminden, üçüncü taraf bir hizmet aracılığıyla günde bir kez alınır." : /^cv\d/.test(s.id) ? "İstasyon bilgisi CV Charging'in resmi istasyon listesinden (cv-charging.com), günde bir kez alınır." : /^acropol\d/.test(s.id) ? "İstasyon bilgisi Acropol Şarj'ın kendi haritasından (acropolsarj.com), günde bir kez alınır. Konut sitelerindeki cihazlar gösterilmez." : /^5sarj\d/.test(s.id) ? `İstasyon bilgisi 5 Şarj'ın kendi haritasından (5sarj.com) alınır; elle güncellenen kopya${kopyaTarih("5sarj")}. Soket gücü EPDK kaydından tamamlanır.` : s.official ? "İstasyon bilgisi ağın kendi resmi haritasından, günde bir kez güncellenir." : s.epdk ? `${s.rk ? `Soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir; konum ${s.brand === "K-Şarj" ? "K-Şarj'ın kendi haritasından (ksarj.com)" : "ağın kendi haritasından"}.` : "Konum ve soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir."}${s.rl ? ` İstasyon ${s.brand === "K-Şarj" ? "K-Şarj'ın kendi haritasında (ksarj.com)" : s.brand === "5 Şarj" ? "5 Şarj'ın kendi haritasında (5sarj.com)" : "ağın kendi haritasında"} da yer alıyor.` : ""}` : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
+      <p>${/^bigstation/.test(s.id) ? "İstasyon bilgisi BIG Station sisteminden, üçüncü taraf bir hizmet aracılığıyla günde bir kez alınır." : /^cv\d/.test(s.id) ? "İstasyon bilgisi CV Charging'in resmi istasyon listesinden (cv-charging.com), günde bir kez alınır." : /^acropol\d/.test(s.id) ? "İstasyon bilgisi Acropol Şarj'ın kendi haritasından (acropolsarj.com), günde bir kez alınır. Konut sitelerindeki cihazlar gösterilmez." : /^5sarj\d/.test(s.id) ? `İstasyon bilgisi 5 Şarj'ın kendi haritasından (5sarj.com) alınır; elle güncellenen kopya${kopyaTarih("5sarj")}. Soket gücü EPDK kaydından tamamlanır.` : s.official ? `İstasyon bilgisi ağın kendi resmi haritasından${agSite(s)}, günde bir kez güncellenir.` : s.epdk ? `${s.rk ? `Soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir; konum ağın kendi haritasından${agSite(s)}.` : "Konum ve soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir."}${s.rl ? ` İstasyon ağın kendi listesinde${s.rk ? "" : agSite(s)} de yer alıyor.` : ""}` : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
       ${durumAg(s) ? `<p>${DURUM_AG[durumAg(s)].kaynak}; 1 dakikaya kadar gecikebilir.</p>` : ""}
       ${s.net ? `<p>İndirimli fiyat yalnızca kampanyanın geçerli olduğu kesin bilinen istasyonlarda yazılır. Ağın kampanyaları birbiriyle birleşmez. Kart indirimi ağ indiriminin üzerine hesaplanır; kart kampanyası "başka indirimle birleşmez" diyorsa liste fiyatına.</p>` : ""}</details>`;
   $("sh-b").scrollTop = 0;

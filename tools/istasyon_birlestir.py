@@ -42,10 +42,36 @@ RESMI = {"trugo": r"trugo", "zes": r"\bzes\b", "ovolt": r"ovolt|sharz", "wat": r
          # data/aglar/5sarj.json elle güncellenir: tools/5sarj_kopya.py; eskiyince veri_kontrol.py uyarır). EPDK marka "5 şarj",
          # işletmeci "BORENCO ŞARJ TEKNOLOJİ YATIRIMLARI…". Listedeki "e" (EPDK numaraları; bir lokasyonda birden çok ünite olabilir)
          # yalnızca soket/güç tamamlamak için kullanılır.
-         "5sarj": r"\b5 sarj\b|\bborenco"}
+         "5sarj": r"\b5 sarj\b|\bborenco",
+         # Ağların kendi haritaları (tools/ag_istasyonlari.py; her birinin kaynağı orada). Desenler sözcük sınırıyla: "lumi" BLADECO
+         # ALÜMİNYUM'u, "aksa" Aksa Doğalgaz adlı istasyonları, "d-charge" Doğuş Dijital Enerji'nin (ayrı ağ) kayıtlarını yakalamasın.
+         # electroop OCPI: Otopriz (EPDK marka "Otopriz", işletmeci DİCLE KÖK ENERJİ; OCM "Otopriz (Türkiye)"), Neva Şarj (EPDK "NEVA ŞARJ";
+         # OSM "Neva Şarj"/"Neva"), EPSIS (işletmeci FORM ELEKTRİK İNŞAAT), Lumicle (EPDK "LUMİCLE", işletmeci LUMHOUSE ENERJİ; OCM
+         # "Lumicle (TR)"), Ecojet (işletmeci YENİ SÜRDÜRÜLEBİLİR ENERJİ)
+         "otopriz": r"\botopriz\b|\bdicle kok enerji",
+         "neva": r"\bneva\b",
+         "epsis": r"\bepsis\b|\bform elektrik insaat",
+         "lumicle": r"\blumicle\b|\blumhouse enerji",
+         "ecojet": r"\becojet\b|\byeni surdurulebilir enerji",  # EPDK "ecojet" ve "ekojet"
+         "sarjon": r"\bsarjon\b",  # EPDK "ŞARJON", OCM "Şarjon (TR)"
+         "solinved": r"\bsolinved\b",
+         "dcharge": r"\bd-charge\b|\bd charge\b|\bdogus sarj",  # EPDK "D-Charge" (DOĞUŞ ŞARJ SİSTEMLERİ); OSM "D-Charge …"
+         "aksa": r"\baksa sarj\b|\baksa musteri cozumleri|^aksa\b(?! dogalgaz)",  # EPDK "AKSA ŞARJ"; OSM operator "Aksa"
+         "enyakit": r"\ben ?yakit\b",  # EPDK "EN YAKIT"; OSM "En Yakıt"; OCM "En Yakıt (TR)"
+         "mks": r"\bmks-sarj\b|\bmks sarj\b|\bmaksem elektro",  # EPDK "MKS-ŞARJ" (MAKSEM ELEKTRO ŞARJ)
+         "oncharge": r"\boncharge\b|\bkalyon electrical",  # EPDK "oncharge" (KALYON ELECTRICAL VEHICLE); OCM "OnCharge (TR)"
+         }
 # Bu ağların EPDK kayıtları yalnızca resmi listede RESMI_YAKIN_M içinde karşılığı varsa atlanır; karşılığı olmayanlar (listede konumu
 # girilmemiş cihazlar) EPDK kaydıyla gösterilmeye devam eder.
-EKSIK_TUT = {"bigstation"}
+EKSIK_TUT = {"bigstation",
+             "mks",
+             }
+# EKSIK_TUT ağlarında listede karşılığı olmayan EPDK kaydı bu desene (ad + adres) uyuyorsa yine gösterilmez: ağın listesinden konut
+# olduğu için ayıklanan kayıtlar EPDK üzerinden geri gelmesin (MKS: Batalgazi 5./6. Etap konut blokları, "… Evleri", "Emlak Konut Sitesi").
+# MKS'nin haritası EPDK'daki yeni kayıtların bir kısmını (Arapgir Belediyesi, Baykara Petrol, Gezsan Petrol Yazıhan…) henüz içermiyor.
+EKSIK_HARIC = {
+    "mks": r"\betap\b|\bsite(si)?\b|\bevleri\b|\bkonut|\bresid|\brezid|\bblok\b",
+    }
 # Resmi listesi eksik ya da yalnızca ad + konumdan oluşan ağlar: liste istasyonların yerine geçmez, EPDK kayıtları gösterilmeye devam
 # eder. Listede karşılığı olan EPDK kaydı (eşleştirme ag_istasyonlari.py'de yapılır, EPDK numarası listede "e") "rl" ile işaretlenir ve
 # konumu ağın koordinatına çekilir ("rk"). Ağın koordinatı konum denetiminden (konum_denetim.py; adres olarak EPDK adresi) geçmezse ya
@@ -53,7 +79,12 @@ EKSIK_TUT = {"bigstation"}
 # konumu korunur ve raporlanır.
 # K-Şarj: ksarj.com'daki Google My Maps haritası EPDK "K-ŞARJ" (işletmeci HUNAT ENERJİ…) kayıtlarının yarısından azını içeriyor,
 # soket/güç/adres yok (konum 4 basamak ≈ 11 m). OSM ve OCM'de K-Şarj kaydı yok.
-DOGRULA = {"ksarj": r"\bk-sarj\b|\bhunat enerji"}
+# AOS Technology: aostechnology.com.tr'deki tabloda 51 istasyon, EPDK'da 124 AOSTECHNOLOGY kaydı (çoğu konut sitesi).
+# otoWATT: aydemplus.com.tr'deki listede konum yok: yalnızca ad/adresle "rl" (konum EPDK'dan kalır).
+DOGRULA = {"ksarj": r"\bk-sarj\b|\bhunat enerji",
+           "aos": r"\baostechnology\b|\bayhan teknoloji ve otomasyon",
+           "otowatt": r"\botowatt\b|\baydem plus enerji",
+           }
 RESMI_YAKIN_M = 300
 SECILI = pathlib.Path("data/secili_istasyonlar.json")  # yalnızca seçili istasyonlarda geçerli ağ kampanyaları
 SECILI_AG = {"otopriz": r"otopriz|dicle kok"}
@@ -136,13 +167,15 @@ def main():
             ilk[x[0]] = {"no": x[0], "ad": x[1], "marka": x[2], "adres": x[4], "a": x[6][0], "o": x[6][1]}
     # DOGRULA ağlarının koordinatları da denetlenir; ağın listesinde adres olmadığından eşleşen EPDK kaydının adresi (il/ilçe) kullanılır.
     # Aynı koordinat ağın listesinde farklı adlı birden çok istasyona aitse (resmi haritada kopyalama hatası) güvenilmez sayılır.
+    # Konumsuz listeler (otoWATT) yalnızca "rl" verir, konum değiştirmez.
     ayni_yer = {}
     yer = lambda r: (r["ag"], round(r["a"], 5), round(r["o"], 5))
     for r in dogrula_kayit.values():
-        ayni_yer.setdefault(yer(r), set()).add(fold(r.get("n") or ""))
-    guvenilmez = {no for no, r in dogrula_kayit.items() if len(ayni_yer[yer(r)]) > 1}
+        if "a" in r:
+            ayni_yer.setdefault(yer(r), set()).add(fold(r.get("n") or ""))
+    guvenilmez = {no for no, r in dogrula_kayit.items() if "a" in r and len(ayni_yer[yer(r)]) > 1}
     dogrula_denetim = [dict(r, i=r["i"] + "|" + no, ad=ilk[no]["adres"], b=ilk[no]["marka"] or r.get("b"))
-                       for no, r in sorted(dogrula_kayit.items()) if no in ilk and no not in guvenilmez]
+                       for no, r in sorted(dogrula_kayit.items()) if no in ilk and no not in guvenilmez and "a" in r]
     duzelt, sil, gecersiz, rapor = konum_denetim.denetle(list(ilk.values()), resmi + dogrula_denetim, osm, ocm, poi, cache, key)
     dogrula_konum = {r["i"].split("|", 1)[1]: (r["a"], r["o"]) for r in dogrula_denetim if r["i"] not in sil}  # EPDK no → ağın koordinatı
     guvenilmez_rapor = sorted("%s: %s (%s, %s) ↔ %s %s" % (dogrula_kayit[no]["ag"], dogrula_kayit[no]["n"], dogrula_kayit[no]["a"],
@@ -187,6 +220,8 @@ def main():
             konum, kalite = duzelt[no][:2], duzelt[no][2]
         tut = next((k for k in EKSIK_TUT if k in kaynaklar and re.search(RESMI[k], fold(marka + " " + isletmeci))), None)
         if tut and konum and not any(dist(konum[0], konum[1], r["a"], r["o"]) <= RESMI_YAKIN_M for r in resmi_ag[tut]):
+            if tut in EKSIK_HARIC and re.search(EKSIK_HARIC[tut], fold(ad + " " + adres)):
+                continue  # ağın listesinde konut olduğu için ayıklanan türden kayıt
             resmi_disi.append(f"{tut}: {no} {ad}")  # resmi listede karşılığı yok: EPDK kaydı gösterilir
         elif is_covered(marka, isletmeci):
             if konum:

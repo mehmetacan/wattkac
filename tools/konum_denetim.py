@@ -647,6 +647,8 @@ def main():
     for f in sorted(B.AGLAR.glob("*.json")):
         if ag(f) in B.DOGRULA:
             for r in oku(f):
+                if "a" not in r:
+                    continue  # konumsuz liste (ör. otoWATT): yalnızca ad/adresle doğrulama, konum vermez
                 for no in ([r["e"]] if isinstance(r.get("e"), str) else r.get("e") or []):
                     if no in adres:
                         resmi.append(dict(r, i=r["i"] + "|" + no, ad=adres[no]["adres"], b=adres[no]["marka"] or r.get("b")))
