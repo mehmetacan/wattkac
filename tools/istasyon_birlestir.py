@@ -42,7 +42,9 @@ EKSIK_TUT = {"bigstation"}
 # eder. Listede karşılığı olan EPDK kaydı (eşleştirme ag_istasyonlari.py'de yapılır, EPDK numarası listede "e") "rl" ile işaretlenir.
 # K-Şarj: ksarj.com'daki Google My Maps haritası EPDK "K-ŞARJ" (işletmeci HUNAT ENERJİ…) kayıtlarının yarısından azını içeriyor,
 # soket/güç/adres yok. OSM ve OCM'de K-Şarj kaydı yok.
-DOGRULA = {"ksarj": r"\bk-sarj\b|\bhunat enerji"}
+# 5 Şarj: 5sarj.com haritasının anlık kopyası (kullanıcının tarayıcısından; site bot korumalı, otomatik çekilmez; tools/5sarj_kopya.py).
+# EPDK marka "5 şarj", işletmeci "BORENCO ŞARJ TEKNOLOJİ YATIRIMLARI…". Bir lokasyonda birden çok EPDK ünitesi olabildiği için "e" liste.
+DOGRULA = {"ksarj": r"\bk-sarj\b|\bhunat enerji", "5sarj": r"\b5 sarj\b|\bborenco"}
 RESMI_YAKIN_M = 300
 SECILI = pathlib.Path("data/secili_istasyonlar.json")  # yalnızca seçili istasyonlarda geçerli ağ kampanyaları
 SECILI_AG = {"otopriz": r"otopriz|dicle kok"}
@@ -103,7 +105,7 @@ def main():
         f = AGLAR / f"{ag}.json"
         d = json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
         if d.get("istasyonlar"):
-            dogrulanan[ag] = {r["e"] for r in d["istasyonlar"] if r.get("e")}
+            dogrulanan[ag] = {e for r in d["istasyonlar"] for e in ([r["e"]] if isinstance(r.get("e"), str) else r.get("e") or [])}
             dogrula_say[ag] = [len(d["istasyonlar"]), 0, 0]  # resmi liste, işaretlenen EPDK kaydı, listede olmayan EPDK kaydı
     covered = re.compile("|".join(RESMI[k] for k in kaynaklar)) if kaynaklar else None
     is_covered = lambda *names: bool(covered and covered.search(fold(" ".join(x for x in names if x))))

@@ -61,6 +61,13 @@ ve her gün 09:10'da çalıştırır.
   listede karşılığı olan EPDK kaydı (eşleşme konumla 60 m, olmazsa adla; EPDK numarası listede `e`) `rl: 1` alır ve detayda
   "K-Şarj'ın kendi haritasında da yer alıyor" yazar. Listede olup EPDK'da olmayan nokta eklenmez, raporlanır. Fiyat tek tarife
   (`tarifeler.json`, ksarj.com/fiyatlandirma).
+- **5 Şarj** (işletmeci Borenco Şarj Teknoloji; EPDK markası "5 şarj"; `data/aglar/5sarj.json`): yalnızca **doğrulama** listesi ve
+  **anlık kopya**. 5sarj.com bot korumalı olduğu için iş akışı bu siteye istek atmaz (`ag_istasyonlari.py`'de yoktur); haritanın
+  kullandığı `5sarj.com/api/locations/map-pins` yanıtını kullanıcı kendi tarayıcısından kaydedip verir ve
+  `python3 tools/5sarj_kopya.py <map-pins.json> [YYYY-AA-GG]` ile dönüştürülür (ad, il/ilçe, adres, AC/DC soket sayısı; HPC DC
+  sayılır). Betik EPDK kayıtlarıyla eşleştirir (konumla 300 m, olmazsa adla) ve EPDK numaralarını `e` listesine yazar;
+  `istasyon_birlestir.py` `DOGRULA` ile EPDK kayıtları gösterilmeye devam eder, listede olanlar `rl: 1` alır ve detayda
+  "5 Şarj'ın kendi haritasında da yer alıyor" yazar. Listede olup EPDK'da olmayan nokta eklenmez. Kopya kendiliğinden güncellenmez.
 - **OpenStreetMap ve Open Charge Map**: yalnızca EPDK'da karşılığı olmayan istasyonlar eklenir; EPDK kayıtlarına saat/web bilgisi katar.
 
 EPDK servisinden hiç veri alınamadıysa eski yönteme (CSV listesi + adresten konum arama) düşülür.
