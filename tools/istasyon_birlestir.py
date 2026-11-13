@@ -83,6 +83,7 @@ EKSIK_HARIC = {
 # otoWATT: aydemplus.com.tr'deki listede konum yok: yalnızca ad/adresle "rl" (konum EPDK'dan kalır).
 DOGRULA = {"ksarj": r"\bk-sarj\b|\bhunat enerji",
            "aos": r"\baostechnology\b|\bayhan teknoloji ve otomasyon",
+           "otowatt": r"\botowatt\b|\baydem plus enerji",
            }
 RESMI_YAKIN_M = 300
 SECILI = pathlib.Path("data/secili_istasyonlar.json")  # yalnızca seçili istasyonlarda geçerli ağ kampanyaları

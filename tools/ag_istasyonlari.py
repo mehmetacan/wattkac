@@ -1837,6 +1837,7 @@ SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            "mks": (mks, MKS_SAYFA, 10),
            "oncharge": (oncharge, ONCHARGE_SAYFA, 120),
            "aos": (aos, AOS_SAYFA, 25),
+           "otowatt": (otowatt, OTOWATT_SAYFA, 25),
            }
 
 
