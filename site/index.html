@@ -346,7 +346,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .nl .ni{flex:none;width:28px;display:grid;place-items:center;color:var(--mut)}.nl .ni svg{width:17px;height:17px}
 .nl[aria-expanded=true]{background:var(--card2)}
 .dnote{font-size:13px;font-weight:600;color:var(--mut);margin:4px 0 0}.dnote.bad{color:var(--r)}
-/* Anlık durum satırı (yalnızca BIG Station): renkli nokta + kısa sayılar; bilinmeyen / yükleniyor / hata soluk */
+/* Anlık durum satırı (anlık durumu alınabilen ağlar): renkli nokta + kısa sayılar; bilinmeyen / yükleniyor / hata soluk */
 .durum{font-size:13.5px;font-weight:700;line-height:20px;color:var(--txt);margin:6px 0 0;min-height:20px}
 .durum .nk{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--g);margin:0 7px 1px 0;vertical-align:middle}.durum .nk.dolu{background:var(--amber-dot)}
 .durum .sn{color:var(--mut);font-weight:600}.durum.sn{color:var(--mut);font-weight:600}
@@ -1712,12 +1712,17 @@ function renderDetail(s) {
   $("sh-b").scrollTop = 0;
   if (durumAg(s)) durumIste(s, durumAg(s));
 }
-/* Anlık durum (BIG Station ve Acropol Şarj; kimlikleri "cih" olan istasyonlar): detay açılınca /api/durum/<ağ>'a BİR istek.
+/* Anlık durum (BIG Station, Acropol Şarj, Neva Şarj, EPSIS, Lumicle, Ecojet, Solinved; kimlikleri "cih" olan istasyonlar): detay açılınca /api/durum/<ağ>'a BİR istek.
    Yoklama yok; detay yeniden çizilirse (liste yenilenmesi vb.) aynı sonuç kullanılır. Detay kapanır ya da başka istasyon seçilirse
    bekleyen istek iptal edilir. Sunucu yanıtı 60 sn önbellekli; aynı detay kısa sürede yeniden açılırsa tarayıcı önbelleği yanıtlar. */
 const DURUM_AG = {
   bigstation: { birim: "cihazın", kaynak: "Anlık durum BIG Station sisteminden, üçüncü taraf bir hizmet aracılığıyla" },
-  acropol: { birim: "soketin", kaynak: "Anlık durum Acropol Şarj'ın kendi haritasından" } };
+  acropol: { birim: "soketin", kaynak: "Anlık durum Acropol Şarj'ın kendi haritasından" },
+  neva: { birim: "ünitenin", kaynak: "Anlık durum ağın kendi haritasından", enCok: 40 },
+  epsis: { birim: "ünitenin", kaynak: "Anlık durum ağın kendi haritasından", enCok: 40 },
+  lumicle: { birim: "ünitenin", kaynak: "Anlık durum ağın kendi haritasından", enCok: 40 },
+  ecojet: { birim: "ünitenin", kaynak: "Anlık durum ağın kendi haritasından", enCok: 40 },
+  solinved: { birim: "soketin", kaynak: "Anlık durum ağın kendi haritasından" } };
 const durumAg = s => s.cih ? Object.keys(DURUM_AG).find(k => s.id.startsWith(k)) || null : null;
 const DUR = { id: null, ac: null, d: undefined };   // d: undefined = alınıyor, null = alınamadı, {cihazlar} = sonuç
 function durumBirak() { if (DUR.ac) DUR.ac.abort(); DUR.id = null; DUR.ac = null; DUR.d = undefined; }
@@ -1735,7 +1740,7 @@ function durumIste(s, ag) {
   durumBirak();
   const ac = new AbortController(), id = s.id;
   DUR.id = id; DUR.ac = ac;
-  fetch(`/api/durum/${ag}?c=` + s.cih.slice(0, 20).map(encodeURIComponent).join(","), { signal: ac.signal })
+  fetch(`/api/durum/${ag}?c=` + s.cih.slice(0, DURUM_AG[ag].enCok || 20).map(encodeURIComponent).join(","), { signal: ac.signal })
     .then(r => r.ok ? r.json() : null).catch(() => null)
     .then(j => {
       if (ac.signal.aborted || DUR.id !== id) return;

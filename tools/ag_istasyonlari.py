@@ -1227,7 +1227,8 @@ def _bitir(r):
 # kökü (" - DC 2", "AC 22 kW 02 Kablolu", "-1" gibi ekler atılarak) ve konumla tek istasyonda toplanır. Koordinat alanları kayıtların
 # çoğunda doğru; enlem/boylamı yer değiştirmiş birkaç kayıt (Türkiye dışına düşen ya da ilinden uzak) takas edilir. Anlık durum
 # (evses[].status) yazılmaz; publish=false ve kaldırılmış (REMOVED) üniteler atlanır. Fiyat ucu (tariffs) yok: tarife tek
-# (site/tarifeler.json).
+# (site/tarifeler.json). ELECTROOP_CANLI ağlarında ünite (lokasyon) kimlikleri "cih"te tutulur: site detay açılınca
+# /api/durum/<ağ>?c=… ile anlık boş/şarjda durumunu sorar. Otopriz'de yok: listesi (1,2 MB) Worker'ın CPU sınırına sığmıyor.
 ELECTROOP_URL = "https://{}.mapcontentpartners.service.electroop.io/2.2/locations"
 ELECTROOP_SAYFA = "https://electroop.io/chargestations/index?company={}"
 # ag anahtarı → (electroop şirket adı, haritadaki marka, EPDK/OSM/OCM'deki ağ (istasyon_birlestir.RESMI ile aynı), ad öneki)
@@ -1236,6 +1237,7 @@ ELECTROOP = {"otopriz": ("otopriz", "Otopriz", r"\botopriz\b|\bdicle kok enerji"
              "epsis": ("epsis", "EPSIS", r"\bepsis\b|\bform elektrik insaat", ""),
              "lumicle": ("lumicle", "Lumicle", r"\blumicle\b|\blumhouse enerji", r"lumicle"),
              "ecojet": ("ecojet", "Ecojet", r"\becojet\b|\byeni surdurulebilir enerji", r"ecojet")}
+ELECTROOP_CANLI = {"neva", "epsis", "lumicle", "ecojet"}
 _OCPI_SOKET = {"IEC_62196_T2": "Type 2", "IEC_62196_T2_COMBO": "CCS", "CHADEMO": "CHAdeMO", "IEC_62196_T1": "Type 1",
                "IEC_62196_T1_COMBO": "CCS", "DOMESTIC_F": "Schuko", "GBT_DC": "GB/T"}
 
@@ -1327,6 +1329,8 @@ def _electroop(ag):
             r["k"] = round(max(kw_ad))
         if r_pasif:
             r["pasif"] = 1
+        if ag in ELECTROOP_CANLI:
+            r["cih"] = sorted({b["id"] for b in g if re.fullmatch(r"[A-Za-z0-9_-]{1,40}", b["id"])})
         il = next((b["il"] for b in g if b["il"]), None)
         r["ad"] = _cv_adres(_cok_gecen([b["adres"] for b in g]).replace(", Türkiye", ""), il, None)
         if il:
@@ -1410,7 +1414,8 @@ def sarjon():
 
 # Solinved (Sol Şarj): solinvedcharge.com'daki harita, Doldur CPMS'in kiracı haritası (tenantCode=SOL). Veri sayfanın içindeki
 # chargePointsData dizisinde (konum, ad, adres, kullanım türü, üniteler: AC/DC, kW, soket). Yalnızca herkese açık (PublicUse) olanlar;
-# LimitedUse (sınırlı kullanım) ve ünitesi olmayan kayıtlar atlanır. Anlık durum (connectors[].lastStatus) yazılmaz.
+# LimitedUse (sınırlı kullanım) ve ünitesi olmayan kayıtlar atlanır. Anlık durum (connectors[].lastStatus) yazılmaz; soket kimlikleri
+# "cih"te tutulur (site detay açılınca /api/durum/solinved?c=… ile anlık boş/şarjda durumunu sorar).
 SOLINVED_SAYFA = "https://solinvedcharge.com/"
 SOLINVED_URL = "https://cpms-api.doldurapp.com/ChargePoint/GetChargePointLocationsMap?tenantCode=SOL"
 
@@ -1442,6 +1447,7 @@ def solinved():
             haric.append(f"{ad} (konum Türkiye dışı/boş)"); continue
         units = s.get("chargeUnits") or []
         r = {"i": f"solinved{min(int(u['id']) for u in units)}", "a": round(a, 6), "o": round(o, 6), "n": ad, "b": "Solinved"}
+        cih = sorted({str(c["id"]) for u in units for c in u.get("connectors") or [] if isinstance(c.get("id"), int)}, key=int)
         for u in units:
             dc = str(u.get("stationType")).upper() == "DC"
             for c in u.get("connectors") or [{}]:
@@ -1452,6 +1458,8 @@ def solinved():
         r["ad"] = _cv_adres(adres, il, None)
         if il:
             r["il"] = il
+        if cih:
+            r["cih"] = cih
         out.append(r)
     print(f"solinved: haritada {len(liste)} lokasyon → {len(out)}")
     _rapor_haric("solinved", haric)
