@@ -170,10 +170,11 @@
    "media/2026-11-13/istasyon_zes/hikaye.jpg"
   ],
   "aciklama": "",
-  "durum": "bekliyor",
+  "durum": "paylasildi",
   "deneme": 0,
-  "ig_media_id": null,
-  "hata": null
+  "ig_media_id": "18127264168937095",
+  "hata": null,
+  "paylasim_zamani": "2026-11-14T17:30:05+00:00"
  },
  {
   "id": "istasyon_ovolt_post",
