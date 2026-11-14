@@ -17,6 +17,7 @@ Bu depo @wattkac Instagram sayfasının kampanya verisini, görsellerini ve payl
 - **Banka postu:** Kart kampanyası ve geçerli olduğu istasyonlar (`st` listesi) burada yazılır.
 - **Şarj ağı postu:** Yalnızca ağın **kendi** indirimi varsa yapılır (`own` boş değilse).
   - Banka kampanyaları istasyon postunda tekrar edilmez. Kendi indirimi olmayan ağ için post üretilmez; `render.py` bunları otomatik atlar.
+- **Uygulama postu:** Birçok ağda geçerli, bir şarj/ödeme uygulamasından (ör. Rotawatt) başlatılan şarjdaki kampanya (`uygulamalar`) için yapılır; yalnızca kart koşulu olmayan teklifler girer. `kart` alanı olan uygulama kampanyası o bankanın postunda yazılır, ayrı uygulama postu üretilmez (`render.py` otomatik ayırır).
 - **Birleşik fiyat:** Ağın kendi indirimi bir banka kampanyasıyla birleşebiliyorsa, istasyonun `birlesik` alanına banka kartıyla birlikte net fiyat yazılır.
   - Format: `{"baslik", "satirlar": [[kart, sonuç]], "not"}`.
   - Kesin kWh fiyatı resmi değilse "100 TL'lik şarjda net maliyet" örneği kullanılır.
@@ -33,6 +34,9 @@ Günlük tarama her çalıştığında, değişiklik olmasa bile:
   - Şarj ağının kendi kampanyasına (`own`) `"kisa"` yazılır: 1–3 kelimelik koşul etiketi, yüzde yazılmaz (ör. "Seçili istasyonlarda", "Doğum gününde", "Togg'a", "Vodafone Red"). Site istasyon detayında bunu fiyatla yan yana gösterir.
   - Şarj ağının kendi kampanyasına (`own`) `"herkese"` yazılır: o ağda şarj eden herkese kendiliğinden uygulanıyorsa `true`; kod, üyelik, abonelik, sigorta, yeni üye, doğum günü gibi bir koşul varsa `false` (araca özelse `arac` yazılır, `herkese` yazılmaz). Site yalnızca `herkese: true` olanları haritada yeşil rozet ve indirimli fiyat olarak gösterir.
   - Yalnızca belli günlerde geçerli indirimde (ör. "her ayın son günü") `bas` ve `bit` o günün tarihi olur; site başlangıcı gelmemiş indirimi haritada uygulamaz.
+  - Haftanın belli günlerinde tekrarlayan indirime (ör. "her salı") `"gunler": ["sali"]` yazılır (pazartesi, sali, carsamba, persembe, cuma, cumartesi, pazar); `bas`/`bit` kampanyanın süresidir. Site bugün listede olmayan günde indirimi haritada uygulamaz.
+  - Uygulama kampanyaları (birçok ağda geçerli, bir şarj/ödeme uygulamasıyla başlatılan şarj) `uygulamalar` altında tutulur; `st` geçerli ağlardır (haritadaki marka adı ya da `tarifeler.json` anahtarıyla). Bir bankanın kartıyla sınırlıysa `"kart": "<banka id>"` yazılır ve banka altında tekrar edilmez.
+  - `st`'ye yeni ağ adı yazılırken sitedeki eşleşme denetlenir (ad haritadaki markayla eşleşmezse kampanya o istasyonlarda görünmez); kısa ya da genel adlar için `site/index.html` → `ALIAS`'a sözcük sınırlı desen yazılır.
   - `eklendi` tarihi bildirimleri tetikler (aboneye yalnızca abonelikten sonra eklenen kampanya bildirilir); bu yüzden yalnızca gerçekten yeni kampanyada yazılır, mevcut kampanyanın metni düzeltilirken değiştirilmez.
 - **İzlenen kaynaklar:** `data/kaynaklar.json` okunur. `arastir` listesindeki konular her taramada resmi kaynakta aranır; doğrulanınca veriye işlenir ve listeden çıkarılır. `sosyal` listesindeki resmi hesaplar ve `kesif` listesindeki hesap/siteler son paylaşımları için kontrol edilir (açılamayan hesap raporda yazılır). Sosyal medyada görülen kampanya, kurumun resmi sayfasında doğrulanmadan eklenmez; resmi hesabın kendi duyurusu tek kaynaksa `"kontrol": true` ile eklenir ve bağlantı o gönderiye gider.
 - **Fiyatlar:** `site/tarifeler.json` içindeki her ağın `kaynak` sayfası açılır.
