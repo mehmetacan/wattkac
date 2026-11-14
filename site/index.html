@@ -699,7 +699,7 @@ a{color:var(--pri)}
     </ul>
     <ul class="guide" data-help="profil">
       <li><span class="gi"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#c-kart"/></svg></span></span><span><b>Kartların ve uygulamaların</b>Seçtiklerine göre kampanyalar ve harita sana göre süzülür.</span></li>
-      <li><span class="gi"><span class="gline"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#c-kilit"/></svg></span></span><span><b>Gizlilik</b>Hesap yok. Seçimlerin yalnızca bu cihazda saklanır.</span></li>
+      <li><span class="gi"><span class="gline"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#c-kilit"/></svg></span></span><span><b>Gizlilik</b>Hesap yok. Seçimlerin yalnızca bu cihazda saklanır. Bazı istasyonlarda anlık durum için tarayıcınız ağın altyapı sağlayıcısına (electroop) doğrudan bağlanır; bu bağlantıda IP adresiniz o sağlayıcıya iletilir. Kişisel bilgi gönderilmez.</span></li>
     </ul>
     <h3>Alt çubuk</h3>
     <ul class="guide">
@@ -1716,53 +1716,86 @@ function renderDetail(s) {
     ${s.shellTrugo ? `<div class="shellbox">Shell Recharge uygulamasıyla da şarj edilebilir.</div>
       ${s.viaShell.length ? `<div class="lbl" style="margin-top:14px">Shell Recharge uygulamasıyla</div>${section(s.viaShell, false)}` : ""}` : ""}
     <details class="bkay"><summary>Bilgi kaynağı ›</summary>${srcTxt.map(x => `<p>${x}</p>`).join("")}
-      <p>${/^bigstation/.test(s.id) ? "İstasyon bilgisi BIG Station sisteminden, üçüncü taraf bir hizmet aracılığıyla günde bir kez alınır." : /^cv\d/.test(s.id) ? "İstasyon bilgisi CV Charging'in resmi istasyon listesinden (cv-charging.com), günde bir kez alınır." : /^acropol\d/.test(s.id) ? "İstasyon bilgisi Acropol Şarj'ın kendi haritasından (acropolsarj.com), günde bir kez alınır. Konut sitelerindeki cihazlar gösterilmez." : /^5sarj\d/.test(s.id) ? `İstasyon bilgisi 5 Şarj'ın kendi haritasından (5sarj.com) alınır; elle güncellenen kopya${kopyaTarih("5sarj")}. Soket gücü EPDK kaydından tamamlanır.` : /^epsis/.test(s.id) && s.official ? "İstasyon ve anlık durum bilgisi EPSIS'in kendi haritasından (epsis.net); istasyon listesi günde bir kez güncellenir. Konut sitelerindeki cihazlar gösterilmez." : /^otopriz/.test(s.id) && s.official ?"İstasyon bilgisi Otopriz'in Open Charge Map'te paylaştığı açık veriden (CC-0), günde bir kez alınır." : s.official ? `İstasyon bilgisi ağın kendi resmi haritasından${agSite(s)}, günde bir kez güncellenir.` : s.epdk ? `${s.rk ? `Soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir; konum ağın kendi haritasından${agSite(s)}.` : "Konum ve soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir."}${s.rl ? ` İstasyon ağın kendi listesinde${s.rk ? "" : agSite(s)} de yer alıyor.` : ""}` : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
-      ${durumAg(s) ? `<p>${DURUM_AG[durumAg(s)].kaynak ? `${DURUM_AG[durumAg(s)].kaynak}; 1 dakikaya kadar gecikebilir.` : "Anlık durum 1 dakikaya kadar gecikebilir."}</p>` : ""}
+      <p>${/^bigstation/.test(s.id) ? "İstasyon bilgisi BIG Station sisteminden, üçüncü taraf bir hizmet aracılığıyla günde bir kez alınır." : /^cv\d/.test(s.id) ? "İstasyon bilgisi CV Charging'in resmi istasyon listesinden (cv-charging.com), günde bir kez alınır." : /^acropol\d/.test(s.id) ? "İstasyon bilgisi Acropol Şarj'ın kendi haritasından (acropolsarj.com), günde bir kez alınır. Konut sitelerindeki cihazlar gösterilmez." : /^5sarj\d/.test(s.id) ? `İstasyon bilgisi 5 Şarj'ın kendi haritasından (5sarj.com) alınır; elle güncellenen kopya${kopyaTarih("5sarj")}. Soket gücü EPDK kaydından tamamlanır.` : /^epsis/.test(s.id) && s.official ? "İstasyon bilgisi EPSIS'in kendi haritasından (epsis.net); istasyon listesi günde bir kez güncellenir. Konut sitelerindeki cihazlar gösterilmez." : /^otopriz/.test(s.id) && s.official ? "İstasyon ve anlık durum bilgisi Otopriz'in kendi haritasından (electroop). Konut sitelerindeki cihazlar gösterilmez." : s.official ? `İstasyon bilgisi ağın kendi resmi haritasından${agSite(s)}, günde bir kez güncellenir.` : s.epdk ? `${s.rk ? `Soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir; konum ağın kendi haritasından${agSite(s)}.` : "Konum ve soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir."}${s.rl ? ` İstasyon ağın kendi listesinde${s.rk ? "" : agSite(s)} de yer alıyor.` : ""}` : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
+      ${durumAg(s) ? `<p>${DURUM_AG[durumAg(s)].yol === "tarayici" ? "Anlık durum, tarayıcınızın doğrudan ağın altyapı sağlayıcısından (electroop) aldığı veridir; 1 dakikaya kadar gecikebilir." : DURUM_AG[durumAg(s)].kaynak ? `${DURUM_AG[durumAg(s)].kaynak}; 1 dakikaya kadar gecikebilir.` : "Anlık durum 1 dakikaya kadar gecikebilir."}</p>` : ""}
       ${s.net ? `<p>İndirimli fiyat yalnızca kampanyanın geçerli olduğu kesin bilinen istasyonlarda yazılır. Ağın kampanyaları birbiriyle birleşmez. Kart indirimi ağ indiriminin üzerine hesaplanır; kart kampanyası "başka indirimle birleşmez" diyorsa liste fiyatına.</p>` : ""}</details>`;
   $("sh-b").scrollTop = 0;
   if (durumAg(s)) durumIste(s, durumAg(s));
 }
-/* Anlık durum (BIG Station, Acropol Şarj, Neva Şarj, EPSIS, Lumicle, Ecojet, Solinved; kimlikleri "cih" olan istasyonlar): detay açılınca /api/durum/<ağ>'a BİR istek.
-   Yoklama yok; detay yeniden çizilirse (liste yenilenmesi vb.) aynı sonuç kullanılır. Detay kapanır ya da başka istasyon seçilirse
-   bekleyen istek iptal edilir. Sunucu yanıtı 60 sn önbellekli; aynı detay kısa sürede yeniden açılırsa tarayıcı önbelleği yanıtlar. */
-// Neva, Lumicle, Ecojet (electroop OCPI): kaynak Cloudflare'den gelen isteklere 403 veriyor (13 Kasım 2026);
-// worker'daki uç yerinde, ağ izin verirse buraya geri eklenir.
-// EPSIS: kaynak EPSIS'in kendi haritası (EPSIS'in izniyle, 14 Kasım 2026). Yanıt lokasyon başına soket sayıları verir
-// ({bos, dolu, toplam}); EPSIS'in verisi bayatsa (15 dk'dan eski) worker "bilinmiyor" döner. Kaynak metni "Bilgi kaynağı"nda.
+/* Anlık durum (kimlikleri "cih" olan istasyonlar): detay açılınca BİR istek. Yoklama yok; detay yeniden çizilirse (liste yenilenmesi
+   vb.) aynı sonuç kullanılır. Detay kapanır ya da başka istasyon seçilirse bekleyen istek iptal edilir.
+   - yol "sunucu" (BIG Station, Acropol Şarj, Solinved): /api/durum/<ağ>?c=… (Worker, 60 sn önbellekli).
+   - yol "tarayici" (electroop altyapılı ağlar: Otopriz, Neva Şarj, EPSIS, Lumicle, Ecojet, EKA Enerji): ziyaretçinin tarayıcısı ağın
+     listesini doğrudan https://<slug>.mapcontentpartners.service.electroop.io/2.2/locations'tan ister (OCPI 2.2, giriş yok; electroop
+     onayı, kullanıcı bildirdi, 14 Kasım 2026; data/kaynaklar.json izinler). Konum ve anlık durum aynı kaynaktan. 6 sn zaman aşımı;
+     yanıt hemen "lokasyon kimliği → EVSE durumları" haritasına indirgenir (ham veri tutulmaz) ve ağ başına 60 sn bellekte kalır:
+     aynı ağın başka istasyonu yeniden indirmez. EKA'nın istasyonları EPDK kaydından (kimliği "e…"): ağ markadan bulunur. */
 const DURUM_AG = {
-  epsis: { birim: "soketin", dolu: "dolu", kaynak: "" },
   bigstation: { birim: "cihazın", kaynak: "Anlık durum BIG Station sisteminden, üçüncü taraf bir hizmet aracılığıyla" },
   acropol: { birim: "soketin", kaynak: "Anlık durum Acropol Şarj'ın kendi haritasından" },
-  solinved: { birim: "soketin", kaynak: "Anlık durum ağın kendi haritasından" } };
-const durumAg = s => s.cih ? Object.keys(DURUM_AG).find(k => s.id.startsWith(k)) || null : null;
+  solinved: { birim: "soketin", kaynak: "Anlık durum ağın kendi haritasından" },
+  otopriz: { birim: "ünitenin", yol: "tarayici", slug: "otopriz" },
+  neva: { birim: "ünitenin", yol: "tarayici", slug: "nevasarj" },
+  epsis: { birim: "ünitenin", yol: "tarayici", slug: "epsis" },
+  lumicle: { birim: "ünitenin", yol: "tarayici", slug: "lumicle" },
+  ecojet: { birim: "ünitenin", yol: "tarayici", slug: "ecojet" },
+  eka: { birim: "ünitenin", yol: "tarayici", slug: "ekaenerji", marka: "EKA Enerji" } };
+const durumAg = s => s.cih ? Object.keys(DURUM_AG).find(k => DURUM_AG[k].marka ? s.brand === DURUM_AG[k].marka : s.id.startsWith(k)) || null : null;
 const DUR = { id: null, ac: null, d: undefined };   // d: undefined = alınıyor, null = alınamadı, {cihazlar} = sonuç
 function durumBirak() { if (DUR.ac) DUR.ac.abort(); DUR.id = null; DUR.ac = null; DUR.d = undefined; }
 function durumHtml(ag) {
   const d = DUR.d;
   if (d === undefined) return `<p class="durum sn" id="durum" aria-live="polite">Durum alınıyor…</p>`;
   if (!d) return `<p class="durum sn" id="durum" aria-live="polite">Anlık durum alınamadı</p>`;
-  let bos = 0, sarj = 0, bil = 0;   // değer "bos" | "sarj" | "bilinmiyor" ya da (EPSIS) lokasyonun soket sayıları {bos, dolu, toplam}
-  for (const x of Object.values(d.cihazlar || {})) {
-    if (x && typeof x === "object") { const b = +x.bos || 0, s = +x.dolu || 0; bos += b; sarj += s; bil += Math.max(0, (+x.toplam || 0) - b - s); }
-    else if (x === "bos") bos++; else if (x === "sarj") sarj++; else bil++;
-  }
+  let bos = 0, sarj = 0, bil = 0;   // değer "bos" | "sarj" | "bilinmiyor"
+  for (const x of Object.values(d.cihazlar || {})) { if (x === "bos") bos++; else if (x === "sarj") sarj++; else bil++; }
   if (!bos && !sarj) return `<p class="durum sn" id="durum" aria-live="polite">Anlık durum bilinmiyor</p>`;
   const sayi = [bos ? `${bos} boşta` : "", sarj ? `${sarj} ${DURUM_AG[ag].dolu || "şarj ediyor"}` : ""].filter(Boolean).join(" · ");
   return `<p class="durum" id="durum" aria-live="polite"><span class="nk${bos ? "" : " dolu"}" aria-hidden="true"></span>Şimdi: ${sayi}${bil ? ` <span class="sn">· ${bil} ${DURUM_AG[ag].birim} durumu bilinmiyor</span>` : ""}</p>`;
 }
+// electroop (OCPI 2.2): ağ → { t, h: Map(lokasyon kimliği → ["bos" | "sarj" | "bilinmiyor", …] (EVSE başına)) }
+const OCPI_ONB = new Map(), OCPI_ONB_MS = 60e3, OCPI_SURE_MS = 6e3;
+const OCPI_DURUM = { AVAILABLE: "bos", CHARGING: "sarj", BLOCKED: "sarj" };
+async function ocpiHarita(slug, signal) {
+  const h = OCPI_ONB.get(slug);
+  if (h && Date.now() - h.t < OCPI_ONB_MS) return h.h;
+  const r = await fetch(`https://${slug}.mapcontentpartners.service.electroop.io/2.2/locations`,
+    { signal, mode: "cors", credentials: "omit", referrerPolicy: "no-referrer", headers: { accept: "application/json" } });
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  let j = await r.json();
+  if (!j || !Array.isArray(j.data)) throw new Error("biçim");
+  const harita = new Map();
+  for (const x of j.data) {   // yalnızca id ve evses[].status okunur
+    if (!x || typeof x !== "object" || x.id == null || !Array.isArray(x.evses)) continue;
+    const d = x.evses.filter(e => e && e.status !== "REMOVED").map(e => OCPI_DURUM[e.status] || "bilinmiyor");
+    if (d.length) harita.set(String(x.id), d);
+  }
+  j = null;
+  OCPI_ONB.set(slug, { t: Date.now(), h: harita });
+  return harita;
+}
+async function durumTarayici(s, ag, signal) {
+  const h = await ocpiHarita(DURUM_AG[ag].slug, signal), cihazlar = [];
+  for (const id of s.cih) for (const v of h.get(String(id)) || []) cihazlar.push(v);
+  return { cihazlar };   // istasyonun lokasyonları listede yoksa "Anlık durum bilinmiyor"
+}
 function durumIste(s, ag) {
   if (DUR.id === s.id) return;   // bu detay için zaten istendi
   durumBirak();
-  const ac = new AbortController(), id = s.id;
+  const ac = new AbortController(), id = s.id, a = DURUM_AG[ag];
   DUR.id = id; DUR.ac = ac;
-  fetch(`/api/durum/${ag}?c=` + s.cih.slice(0, DURUM_AG[ag].enCok || 20).map(encodeURIComponent).join(","), { signal: ac.signal })
-    .then(r => r.ok ? r.json() : null).catch(() => null)
-    .then(j => {
-      if (ac.signal.aborted || DUR.id !== id) return;
-      DUR.ac = null; DUR.d = j && j.ok && j.cihazlar ? j : null;
-      const el = $("durum");
-      if (el && M.sel === id) el.outerHTML = durumHtml(ag);
-    });
+  let to = 0;
+  const is = a.yol === "tarayici"
+    ? (to = setTimeout(() => ac.abort(), OCPI_SURE_MS), durumTarayici(s, ag, ac.signal))
+    : fetch(`/api/durum/${ag}?c=` + s.cih.slice(0, a.enCok || 20).map(encodeURIComponent).join(","), { signal: ac.signal })
+        .then(r => r.ok ? r.json() : null).then(j => j && j.ok && j.cihazlar ? j : null);
+  is.catch(() => null).then(d => {
+    clearTimeout(to);
+    if (DUR.ac !== ac || DUR.id !== id) return;   // detay kapandı ya da başka istasyon seçildi (zaman aşımında iptal: d null)
+    DUR.ac = null; DUR.d = d || null;
+    const el = $("durum");
+    if (el && M.sel === id) el.outerHTML = durumHtml(ag);
+  });
 }
 // Bilgi kutusu: düğmenin hemen altında (yer yoksa üstünde) açılır; aynı düğme, dışarı dokunmak ya da Esc kapatır
 const TIP = { b: null };

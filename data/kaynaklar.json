@@ -104,7 +104,43 @@
    "kurum": "EPSIS",
    "tarih": "2026-11-14",
    "adres": "https://www.epsis.net/api/public/locations?lang=tr",
-   "not": "EPSIS telefonda izin verdi (14 Kasım 2026): 'siteden alabilirsiniz, kaynaklarımız açık'. robots.txt /api/ yasağı bu izinle aşılıyor; yalnızca /api/public/locations kullanılır. Kullanım: istasyon listesi günde 1 istek (tools/ag_istasyonlari.py epsis), anlık durum Worker'da 60 sn önbellekli (/api/durum/epsis). /api/public/locations/soon ve başka /api/ yolu kullanılmaz."
+   "not": "EPSIS telefonda izin verdi (14 Kasım 2026): 'siteden alabilirsiniz, kaynaklarımız açık'. robots.txt /api/ yasağı bu izinle aşılıyor; yalnızca /api/public/locations kullanılır. Kullanım: istasyon listesi günde 1 istek (tools/ag_istasyonlari.py epsis), anlık durum artık bu uçtan değil: ziyaretçinin tarayıcısından electroop'tan (aşağıdaki electroop kaydı; /api/durum/epsis sitede kullanılmıyor). /api/public/locations/soon ve başka /api/ yolu kullanılmaz."
+  },
+  {
+   "kurum": "electroop (Otopriz)",
+   "tarih": "2026-11-14",
+   "adres": "https://otopriz.mapcontentpartners.service.electroop.io/2.2/locations",
+   "not": "electroop onayı (kullanıcı bildirdi, 14 Kasım 2026): anlık durum ziyaretçinin tarayıcısından otopriz.mapcontentpartners.service.electroop.io/2.2/locations ucundan alınır. Yalnızca istasyon detayı açılınca, ağ başına 60 sn bellek içi önbellekle; ham veri tutulmaz. Konum ve anlık durum aynı kaynaktan."
+  },
+  {
+   "kurum": "electroop (Neva Şarj)",
+   "tarih": "2026-11-14",
+   "adres": "https://nevasarj.mapcontentpartners.service.electroop.io/2.2/locations",
+   "not": "electroop onayı (kullanıcı bildirdi, 14 Kasım 2026): anlık durum ziyaretçinin tarayıcısından nevasarj.mapcontentpartners.service.electroop.io/2.2/locations ucundan alınır. Yalnızca istasyon detayı açılınca, ağ başına 60 sn bellek içi önbellekle; ham veri tutulmaz. Konum ve anlık durum aynı kaynaktan."
+  },
+  {
+   "kurum": "electroop (EPSIS)",
+   "tarih": "2026-11-14",
+   "adres": "https://epsis.mapcontentpartners.service.electroop.io/2.2/locations",
+   "not": "electroop onayı (kullanıcı bildirdi, 14 Kasım 2026): anlık durum ziyaretçinin tarayıcısından epsis.mapcontentpartners.service.electroop.io/2.2/locations ucundan alınır. Yalnızca istasyon detayı açılınca, ağ başına 60 sn bellek içi önbellekle; ham veri tutulmaz. Konum ve anlık durum aynı kaynaktan."
+  },
+  {
+   "kurum": "electroop (Lumicle)",
+   "tarih": "2026-11-14",
+   "adres": "https://lumicle.mapcontentpartners.service.electroop.io/2.2/locations",
+   "not": "electroop onayı (kullanıcı bildirdi, 14 Kasım 2026): anlık durum ziyaretçinin tarayıcısından lumicle.mapcontentpartners.service.electroop.io/2.2/locations ucundan alınır. Yalnızca istasyon detayı açılınca, ağ başına 60 sn bellek içi önbellekle; ham veri tutulmaz. Konum ve anlık durum aynı kaynaktan."
+  },
+  {
+   "kurum": "electroop (Ecojet)",
+   "tarih": "2026-11-14",
+   "adres": "https://ecojet.mapcontentpartners.service.electroop.io/2.2/locations",
+   "not": "electroop onayı (kullanıcı bildirdi, 14 Kasım 2026): anlık durum ziyaretçinin tarayıcısından ecojet.mapcontentpartners.service.electroop.io/2.2/locations ucundan alınır. Yalnızca istasyon detayı açılınca, ağ başına 60 sn bellek içi önbellekle; ham veri tutulmaz. Konum ve anlık durum aynı kaynaktan."
+  },
+  {
+   "kurum": "electroop (EKA Enerji)",
+   "tarih": "2026-11-14",
+   "adres": "https://ekaenerji.mapcontentpartners.service.electroop.io/2.2/locations",
+   "not": "electroop onayı (kullanıcı bildirdi, 14 Kasım 2026): anlık durum ziyaretçinin tarayıcısından ekaenerji.mapcontentpartners.service.electroop.io/2.2/locations ucundan alınır. Yalnızca istasyon detayı açılınca, ağ başına 60 sn bellek içi önbellekle; ham veri tutulmaz. Konum ve anlık durum aynı kaynaktan."
   }
  ]
 }

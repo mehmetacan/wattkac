@@ -1,9 +1,9 @@
 {
-"guncelleme": "2026-11-13",
+"guncelleme": "2026-11-14",
 "ozet": {
 "denetlenen": {
 "e": 13259,
-"r": 6271,
+"r": 6410,
 "o": 753,
 "c": 2257
 },
@@ -623,12 +623,12 @@
 37.775043
 ],
 "yeni": [
-37.77498,
-30.51225
+37.774981,
+30.512252
 ],
 "kural": "kaynak",
 "neden": "il_uzak",
-"dayanak": "otoprizocm507282",
+"dayanak": "otopriz1032000301",
 "km": 680.8
 },
 {
@@ -659,12 +659,12 @@
 27.89977
 ],
 "yeni": [
-40.22025,
-28.86595
+40.220254,
+28.865951
 ],
 "kural": "kaynak",
 "neden": "il_uyumsuz",
-"dayanak": "otoprizocm507338",
+"dayanak": "otopriz1039000401",
 "km": 109.6
 },
 {
