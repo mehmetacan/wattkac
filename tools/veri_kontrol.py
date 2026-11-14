@@ -22,6 +22,7 @@ KOK = pathlib.Path(__file__).resolve().parent.parent
 DERLEME = ("sarjharitasi", "sarjevi", "hangikredi", "sarjkampanya", "arabamsarj", "e-aracsarj", "donanimhaber")
 TARIH = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 ALL = "Tüm şarj istasyonları"
+GUNLER = ("pazartesi", "sali", "carsamba", "persembe", "cuma", "cumartesi", "pazar")   # 'gunler' alanı: aksansız küçük harf
 TARAMA_GUN = 2   # günlük tarama en fazla bu kadar gün gecikebilir
 FIYAT_GUN = 7    # fiyatlar en fazla bu kadar gün kontrolsüz kalabilir
 KONUM_CIKAN = 0.01    # konum denetiminin haritadan çıkardığı kayıt / istasyon sayısı bu oranı aşarsa uyarı
@@ -78,6 +79,17 @@ def teklif_denetle(yer, o, bugun, banka):
         hata(f"{yer}: geçerli istasyon listesi (st) boş")
     if o.get("kontrol"):
         uyari(f"{yer}: resmi sayfası açılamamış (\"kontrol\": true); sitede 'Doğrulanıyor' etiketiyle görünür")
+    # isteğe bağlı: yalnızca haftanın belli günlerinde geçerli (sitede bugün listede değilse haritada uygulanmaz)
+    if "gunler" in o:
+        g = o.get("gunler")
+        if not isinstance(g, list) or not g or not all(isinstance(x, str) for x in g):
+            hata(f"{yer}: 'gunler' boş olmayan bir liste olmalı")
+        else:
+            yanlis = [x for x in g if x not in GUNLER]
+            if yanlis:
+                hata(f"{yer}: 'gunler' geçersiz gün içeriyor ({', '.join(yanlis)}); geçerli: {', '.join(GUNLER)}")
+            if len(set(g)) != len(g):
+                hata(f"{yer}: 'gunler' tekrar eden gün içeriyor")
 
 
 def kampanyalar(bugun, guncellik):
@@ -103,6 +115,32 @@ def kampanyalar(bugun, guncellik):
             for st in o.get("st", []):
                 if st != ALL:
                     st_banka.setdefault(st, set()).add(b.get("id"))
+    # Uygulama kampanyaları: birçok ağda (st), uygulama üzerinden başlatılan şarjda; banka teklifiyle aynı denetim.
+    # Bağlantı resmi sayfa ya da uygulama sahibinin resmi sosyal medya hesabı/gönderisi olabilir (instagram.com kabul).
+    banka_idler = {b.get("id") for b in d.get("bankalar", [])}
+    uygulamalar = d.get("uygulamalar", [])
+    if not isinstance(uygulamalar, list):
+        hata("kampanyalar.json: 'uygulamalar' liste olmalı")
+        uygulamalar = []
+    for u in uygulamalar:
+        yer = f"uygulama {u.get('id')}"
+        if u.get("id") in idler:
+            hata(f"{yer}: id tekrar ediyor")
+        idler.add(u.get("id"))
+        for alan in ("id", "name", "offers"):
+            if not u.get(alan):
+                hata(f"{yer}: '{alan}' boş")
+        for i, o in enumerate(u.get("offers", [])):
+            ty = f"{yer} #{i + 1} ({o.get('big')})"
+            teklif_denetle(ty, o, bugun, True)
+            k = o.get("kart")
+            if k is not None and k not in banka_idler:
+                hata(f"{ty}: 'kart' ({k!r}) bankalar listesindeki bir banka id'si değil")
+            if "kisa" in o and (not isinstance(o["kisa"], str) or not o["kisa"].strip()):
+                hata(f"{ty}: 'kisa' boş ya da metin değil")
+            for st in o.get("st", []):
+                if k and st != ALL:
+                    st_banka.setdefault(st, set()).add(k)
     for s in d.get("istasyonlar", []):
         yer = f"ağ {s.get('id')}"
         if s.get("id") in idler:

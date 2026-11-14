@@ -4,7 +4,7 @@
 Ana uygulama (site/index.html) JavaScript ile çizildiği için Google'ın içeriği okuması zor. Bu betik aynı veriden
 JavaScript gerektirmeyen düz HTML sayfalar yazar:
 
-  site/kampanyalar/index.html          güncel banka kartı ve şarj ağı kampanyaları
+  site/kampanyalar/index.html          güncel banka kartı, şarj ağı ve uygulama kampanyaları
   site/sarj-agi/<ag>/index.html        her ağ için fiyat (TL/kWh), istasyon sayısı, geçerli kampanyalar
   site/sitemap.xml, site/robots.txt
 
@@ -45,6 +45,8 @@ def tl(v):
 
 
 # Ağ adı → istasyon verisindeki marka adının sadeleştirilmiş başı
+GUN_AD = {"pazartesi": "pazartesi", "sali": "salı", "carsamba": "çarşamba", "persembe": "perşembe", "cuma": "cuma",
+          "cumartesi": "cumartesi", "pazar": "pazar"}
 AG_ANAHTAR = {"Eşarj": "esarj", "ASTOR Şarj": "astor", "Trugo": "trugo", "ZES": "zes", "Voltrun": "voltrun", "Otopriz": "otopriz",
               "Ovolt": "ovolt", "Shell Recharge": "shell", "WAT Mobilite": "wat", "Voltla": "voltla"}
 
@@ -117,13 +119,28 @@ def main():
         for o in b.get("offers", []):
             if aktif(o, bugun):
                 banka_teklif.append((b, o))
+    # Uygulama kampanyaları (birçok ağda, uygulamadan başlatılan şarjda; "kart" varsa o bankanın kartıyla)
+    uyg_teklif = [(u, o) for u in D.get("uygulamalar", []) for o in u.get("offers", []) if aktif(o, bugun)]
+    bankalar = {b["id"]: b["name"] for b in D["bankalar"]}
+
+    def uyg_alt(o, aglar_yaz=False):
+        gunler = [GUN_AD[g] for g in GUN_AD if g in (o.get("gunler") or [])]
+        parca = ["Uygulama kampanyası"]
+        if o.get("kart"):
+            parca.append(f"{bankalar.get(o['kart'], o['kart'])} kartıyla")
+        if gunler and len(gunler) < 7:
+            parca.append("Her " + " ve ".join(gunler))
+        if aglar_yaz:
+            parca.append("Geçerli ağlar: " + ", ".join(o.get("st", [])))
+        return " · ".join(parca)
     ag_kayit = {x["name"]: x for x in D["istasyonlar"]}
     aglar = sorted(set(AG_ANAHTAR) | set(ag_kayit), key=lambda a: -say.get(a, 0))
 
     def ag_kampanyalari(ag):
         own = [o for o in ag_kayit.get(ag, {}).get("own", []) if aktif(o, bugun)]
         bank = [(b, o) for b, o in banka_teklif if ag in o.get("st", []) or ALL in o.get("st", [])]
-        return own, bank
+        app = [(u, o) for u, o in uyg_teklif if ag in o.get("st", []) or ALL in o.get("st", [])]
+        return own, bank, app
 
     yazilan = []
 
@@ -148,9 +165,9 @@ def main():
     for ag in aglar:
         s = slug(ag)
         tar = T.get(ag) or {}
-        own, bank = ag_kampanyalari(ag)
+        own, bank, app = ag_kampanyalari(ag)
         n = say.get(ag, 0)
-        if not (tar.get("ac") or tar.get("dc") or own or bank):
+        if not (tar.get("ac") or tar.get("dc") or own or bank or app):
             continue
         satir = []
         for tur in ("ac", "dc"):
@@ -175,6 +192,9 @@ def main():
         if bank:
             kamp_html += f"<h2>{e(ag)} istasyonlarında geçerli kredi kartı kampanyaları</h2>" + "".join(
                 teklif_kart(b["name"], o, b.get("sub", "")) for b, o in bank)
+        if app:
+            kamp_html += f"<h2>{e(ag)} istasyonlarında geçerli uygulama kampanyaları</h2>" + "".join(
+                teklif_kart(u["name"], o, uyg_alt(o)) for u, o in app)
         if not kamp_html:
             kamp_html = f"<h2>Kampanyalar</h2><p>Şu an {e(ag)} için bildiğimiz geçerli bir kampanya yok.</p>"
         fiyat_ozet = ""
@@ -184,7 +204,7 @@ def main():
             fiyat_ozet = (f"AC {tl(tar['ac']['max'])}" + (", " + fiyat_ozet if fiyat_ozet else " TL/kWh"))
         baslik = f"{ag} şarj fiyatı ve kampanyaları ({donem}) · WattKaç"
         aciklama = (f"{ag} elektrikli araç şarj fiyatı" + (f": {fiyat_ozet}" if fiyat_ozet else "") +
-                    f". {ag} istasyonlarında geçerli {len(own) + len(bank)} kampanya" + (f", Türkiye'de {n} istasyon" if n else "") + ". Resmi kaynaklardan, her gün güncellenir.")
+                    f". {ag} istasyonlarında geçerli {len(own) + len(bank) + len(app)} kampanya" + (f", Türkiye'de {n} istasyon" if n else "") + ". Resmi kaynaklardan, her gün güncellenir.")
         govde = (f"<h1>{e(ag)} şarj fiyatı ve kampanyaları</h1><p class='lead'>{e(donem)} itibarıyla {e(ag)} istasyonlarında kWh fiyatı ve kredi kartıyla "
                  f"kazanabileceğin indirimler." + (f" Haritamızda {n} {e(ag)} istasyonu var." if n else "") + "</p>"
                  f'<a class="btn" href="/">Yakınımdaki istasyonları gör</a><a class="btn ikincil" href="/#g=kamp&amp;ag={e(ag)}">Kampanyaları uygulamada aç</a>'
@@ -195,7 +215,7 @@ def main():
             {"@type": "ListItem", "position": 3, "name": ag, "item": f"{ALAN}/sarj-agi/{s}/"}]}]
         yaz(f"/sarj-agi/{s}/", sayfa(f"/sarj-agi/{s}/", baslik, aciklama, govde, ld,
                                     [("WattKaç", "/"), ("Şarj ağları", "/sarj-agi/"), (ag, None)]))
-        ag_listesi.append((ag, s, n, fiyat_ozet, len(own) + len(bank)))
+        ag_listesi.append((ag, s, n, fiyat_ozet, len(own) + len(bank) + len(app)))
 
     # ---- Ağlar dizini
     li = "".join(f'<li><a href="/sarj-agi/{s}/">{e(a)}<small>{e(f) or "fiyat bilgisi yok"}{f" · {k} kampanya" if k else ""}</small></a></li>'
@@ -218,8 +238,12 @@ def main():
         own = [o for o in a.get("own", []) if aktif(o, bugun)]
         if own:
             kart.append(f"<h2>{e(a['name'])}</h2>" + "".join(teklif_kart(a["name"], o) for o in own))
+    for u in D.get("uygulamalar", []):
+        tek = [o for x, o in uyg_teklif if x is u]
+        if tek:
+            kart.append(f"<h2>{e(u['name'])} (uygulama)</h2>" + "".join(teklif_kart(u["name"], o, uyg_alt(o, True)) for o in tek))
     adet = sum(1 for b in D["bankalar"] for o in b.get("offers", []) if aktif(o, bugun)) + \
-        sum(1 for a in D["istasyonlar"] for o in a.get("own", []) if aktif(o, bugun))
+        sum(1 for a in D["istasyonlar"] for o in a.get("own", []) if aktif(o, bugun)) + len(uyg_teklif)
     yaz("/kampanyalar/", sayfa("/kampanyalar/", f"Elektrikli araç şarj kampanyaları ({donem}) · WattKaç",
                                f"{donem} geçerli {adet} elektrikli araç şarj kampanyası: kredi kartı bonus, iade ve indirimleri ile şarj ağlarının kendi kampanyaları. Resmi kaynaklardan, her gün güncellenir.",
                                f"<h1>Elektrikli araç şarj kampanyaları</h1><p class='lead'>{e(donem)} geçerli {adet} kampanya. Hangi kartla hangi şarj ağında ne kazanırsın? "
