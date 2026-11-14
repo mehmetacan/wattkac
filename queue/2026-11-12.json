@@ -253,10 +253,11 @@
    "media/2026-11-12/istasyon_otopriz/hikaye.jpg"
   ],
   "aciklama": "",
-  "durum": "bekliyor",
+  "durum": "paylasildi",
   "deneme": 0,
-  "ig_media_id": null,
-  "hata": null
+  "ig_media_id": "17986187681901826",
+  "hata": null,
+  "paylasim_zamani": "2026-11-14T11:00:05+00:00"
  },
  {
   "id": "istasyon_ovolt_post",
