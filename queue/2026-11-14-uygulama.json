@@ -1,0 +1,43 @@
+[
+ {
+  "id": "uygulama_rotawatt_post",
+  "grup": "2026-11-14-uygulama__uygulama_rotawatt",
+  "tip": "karusel",
+  "zaman": "2026-11-16T09:30:00+03:00",
+  "baslik": "Rotawatt",
+  "tur": "uygulama",
+  "kaynaklar": [
+   {
+    "ad": "Rotawatt: %20 indirim (Her salı)",
+    "url": "https://www.instagram.com/rotawatt/",
+    "tur": "kontrol",
+    "not": "Resmi sayfayı otomatik açamadım; tarih ve oranı linkten kontrol et."
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-14-uygulama/uygulama_rotawatt/1_kapak.jpg",
+   "media/2026-11-14-uygulama/uygulama_rotawatt/2_detay.jpg"
+  ],
+  "aciklama": "⚡ Rotawatt uygulamasıyla şarjda %20 indirim!\n\n✅ %20 indirim: Her salı Rotawatt uygulamasından başlatılan şarjda · anlaşmalı ağlarda\n📅 Her salı\n📍 Geçerli ağlar: Zeplin, Voltgo, Checkpoint, Mercury Şarj, MyCharge, Tripy, Acropol Şarj, As Plus Şarj, Bölgem Mobilite, Çelikler Enerji, Econ, EvSolt, Greendrive, i-Şarj, KES, Meis Charge, Mithra Pod, MyPower, Promaster, Royal Şarj, Solinved, Spectrum, Swapp, ŞarjPlus, Tam Şarj, TR Charge\n📝 Katılım: Rotawatt uygulamasından anlaşmalı markanın istasyonunda şarjı başlat, ödemeyi uygulamadan yap\n⏱ Son gün: 31 Aralık\n\nİndirim, şarjı Rotawatt uygulamasından başlatıp ödeyince geçerli. Kart kampanyaları banka postlarımızda.\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #rotawatt",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "uygulama_rotawatt_hikaye",
+  "grup": "2026-11-14-uygulama__uygulama_rotawatt",
+  "baslik": "Rotawatt",
+  "tur": "uygulama",
+  "tip": "hikaye",
+  "zaman": "2026-11-16T10:30:00+03:00",
+  "gorseller": [
+   "media/2026-11-14-uygulama/uygulama_rotawatt/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ }
+]

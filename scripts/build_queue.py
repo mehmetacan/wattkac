@@ -1,7 +1,7 @@
 """render.py çıktısından paylaşım kuyruğu (queue/<etiket>.json) üretir.
 
 Takvim: ilk gün 2 özet + 2 post, sonraki günler 3 post (09:30, 13:00, 19:30, İstanbul saati).
-Her banka/istasyon postundan 1 saat sonra aynı kurumun hikayesi paylaşılır.
+Her banka/istasyon/uygulama postundan 1 saat sonra aynı kurumun hikayesi paylaşılır.
 Bitiş tarihi geçmiş kampanyalar kuyruğa alınmaz.
 Kullanım: python scripts/build_queue.py --etiket 2026-11 --baslangic 2026-11-07
 """
@@ -19,10 +19,30 @@ def tag(s):
     return "#" + "".join(ch for ch in s.lower().replace(" ", "") if ch.isalnum())
 
 
+GUN_AD = {"pazartesi": "pazartesi", "sali": "salı", "carsamba": "çarşamba", "persembe": "perşembe", "cuma": "cuma",
+          "cumartesi": "cumartesi", "pazar": "pazar"}
+
+
+def gun_txt(o):
+    g = [GUN_AD[x] for x in GUN_AD if x in (o.get("gunler") or [])]
+    if not g or len(g) == 7:
+        return ""
+    return "Her " + (", ".join(g[:-1]) + " ve " + g[-1] if len(g) > 1 else g[0])
+
+
+def banka_teklifleri(d, b):
+    """render.py ile aynı: bankanın teklifleri + o bankanın kartıyla geçerli uygulama kampanyaları ("kart": banka id)."""
+    return [o for u in d.get("uygulamalar", []) for o in u.get("offers", []) if o.get("kart") == b["id"]] + list(b["offers"])
+
+
+def uygulama_teklifleri(u):
+    return [o for o in u.get("offers", []) if not o.get("kart")]
+
+
 def caption(item, d):
     if item["tur"] == "ozet":
         if item["id"] == "ozet_bankalar":
-            body = "\n".join(f"• {b['name']}: {' / '.join(o['big'] for o in b['offers'])}" for b in d["bankalar"])
+            body = "\n".join(f"• {b['name']}: {' / '.join(o['big'] for o in banka_teklifleri(d, b))}" for b in d["bankalar"])
             head = f"⚡ {d['donem']} şarj kampanyaları: hangi banka ne veriyor?"
         else:
             body = "\n".join(f"• {s['name']}: {s['cover']['big']} ({s['cover']['sub']})" for s in d["istasyonlar"])
@@ -31,12 +51,25 @@ def caption(item, d):
     if item["tur"] == "banka":
         b = item["_src"]
         lines = []
-        for o in b["offers"]:
+        for o in banka_teklifleri(d, b):
             st = ", ".join(o["st"])
             lines.append(f"✅ {o['big']}: {o['det']}\n📍 {st}\n📝 Katılım: {o['join']}\n⏱ Son gün: {o['son']}")
         return (f"⚡ {b['name']} ile şarjda {b['cover']['big']}!\n\n" + "\n\n".join(lines) +
                 f"\n\nKoşullar değişebilir; katılmadan önce bankanın resmi kanallarından kontrol edin."
                 f"\n\n{REKLAM_YOK}\n\n{HASHTAG} {tag(b['name'])}")
+    if item["tur"] == "uygulama":
+        u = item["_src"]
+        lines = []
+        for o in uygulama_teklifleri(u):
+            gt = gun_txt(o)
+            lines.append(f"✅ {o['big']}: {o['det']}" + (f"\n📅 {gt}" if gt else "") +
+                         f"\n📍 Geçerli ağlar: {', '.join(o['st'])}" + (f"\n📝 Katılım: {o['join']}" if o.get("join") else "") +
+                         f"\n⏱ Son gün: {o['son']}")
+        big = uygulama_teklifleri(u)[0]["big"]
+        return (f"⚡ {u['name']} uygulamasıyla şarjda {big}!\n\n" + "\n\n".join(lines) +
+                f"\n\nİndirim, şarjı {u['name']} uygulamasından başlatıp ödeyince geçerli. Kart kampanyaları banka postlarımızda."
+                f"\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin."
+                f"\n\n{REKLAM_YOK}\n\n{HASHTAG} {tag(u['name'])}")
     s = item["_src"]
     lines = [f"✅ {o['big']}: {o['det']} (son gün {o['son']})" for o in s["own"]]
     bl = s.get("birlesik")
@@ -66,11 +99,14 @@ def kaynaklar(item, d):
 
     src = item.get("_src")
     if item["tur"] == "banka":
-        for o in src["offers"]:
+        for o in banka_teklifleri(d, src):
             add(f"{src['name']}: {o['big']} ({', '.join(o['st'])})", o["link"], o)
+    elif item["tur"] == "uygulama":
+        for o in uygulama_teklifleri(src):
+            add(f"{src['name']}: {o['big']}" + (f" ({gun_txt(o)})" if gun_txt(o) else ""), o["link"], o)
     elif item["tur"] == "istasyon":
         for o in src["own"]:
-            add(f"{src['name']}: {o['big']}", o["link"])
+            add(f"{src['name']}: {o['big']}", o["link"], o)
         metin = " ".join(k for k, _ in (src.get("birlesik") or {}).get("satirlar", []))
         for b in d["bankalar"]:
             for o in b["offers"]:
@@ -107,18 +143,21 @@ def used_times(skip_path):
 def build(etiket, baslangic, sadece=None):
     d = json.load(open(os.path.join(ROOT, "data", "kampanyalar.json"), encoding="utf-8"))
     manifest = json.load(open(os.path.join(ROOT, "media", etiket, "manifest.json"), encoding="utf-8"))
-    src = {f"banka_{b['id']}": b for b in d["bankalar"]} | {f"istasyon_{s['id']}": s for s in d["istasyonlar"]}
+    src = ({f"banka_{b['id']}": b for b in d["bankalar"]} | {f"istasyon_{s['id']}": s for s in d["istasyonlar"]}
+           | {f"uygulama_{u['id']}": u for u in d.get("uygulamalar", [])})
     for m in manifest:
         m["_src"] = src.get(m["id"])
 
     ozet = [m for m in manifest if m["tur"] == "ozet"]
     banka = [m for m in manifest if m["tur"] == "banka"]
     ist = [m for m in manifest if m["tur"] == "istasyon"]
-    # Banka ve istasyonları sırayla karıştır (profil çeşitli görünsün)
+    uyg = [m for m in manifest if m["tur"] == "uygulama"]
+    # Banka, istasyon ve uygulama postlarını sırayla karıştır (profil çeşitli görünsün)
     karisik = []
-    for i in range(max(len(banka), len(ist))):
+    for i in range(max(len(banka), len(ist), len(uyg))):
         if i < len(banka): karisik.append(banka[i])
         if i < len(ist): karisik.append(ist[i])
+        if i < len(uyg): karisik.append(uyg[i])
     sira = ozet + karisik
 
     if sadece:

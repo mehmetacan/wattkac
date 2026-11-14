@@ -136,11 +136,15 @@ h1{font-size:clamp(22px,6vw,30px);line-height:1.15;font-weight:800;letter-spacin
 select{background:var(--ctl);color:var(--txt);border:1px solid var(--line2);border-radius:12px;padding:9px 10px;font:600 14px var(--font);min-height:40px}
 .bar select{margin-left:auto}
 .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:12px;padding-bottom:20px}
+.list .lh{grid-column:1/-1;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:var(--mut);margin:4px 0 -4px}
+.list .lh svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.list .lh.uy{color:var(--blue-fg)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px}
 .card.mine{border-color:var(--g);box-shadow:0 0 0 1px var(--g)}
 .ct{display:flex;align-items:center;gap:10px}
 .ico{flex:none;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--amber-bg);color:var(--amber-fg)}
 .ico.ag{background:var(--gbg);color:var(--g)}
+.ico.uygulama{background:var(--blue-bg);color:var(--blue-fg)}
 .ico svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .who{flex:1;min-width:0}
 .kurum{font-weight:800;font-size:16px;letter-spacing:-.2px;line-height:1.25}
@@ -149,6 +153,7 @@ select{background:var(--ctl);color:var(--txt);border:1px solid var(--line2);bord
 .who .alt{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bdg{flex:none;font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;white-space:nowrap}
 .bdg.new{background:var(--pri);color:var(--on-pri)}.bdg.wait{background:var(--amber-bg);color:var(--amber-fg);border:1px solid var(--amber-line)}.bdg.me{background:var(--gbg);color:var(--g);border:1px solid var(--gline)}
+.bdg.gun{background:var(--blue-bg);color:var(--blue-fg)}
 .big{font-size:26px;font-weight:800;color:var(--ink);letter-spacing:-.7px;line-height:1.15;margin-top:4px}
 .det{font-size:14px;font-weight:500;color:var(--txt2);line-height:1.4}
 .lbl{font-size:11px;font-weight:800;letter-spacing:.7px;color:var(--mut);text-transform:uppercase;margin-bottom:5px}
@@ -293,6 +298,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .pinb .pc.bk{background:#FFC800;color:#78350F}
 .pinb .pc svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 .pinb .pc.ag+.pc.bk{right:auto;left:-9px}
+.pinb .pc.uy{background:#4F46E5;color:#fff;top:auto;bottom:-3px;right:-11px}
 .pinb.sel{z-index:5}.pinb.sel .lb{border-color:var(--map-ink);box-shadow:0 0 0 2px var(--map-ink)}.pinb.sel::after{border-color:var(--map-ink)}
 .pinb.pasif{opacity:.55}
 .pinb.unk{padding-bottom:5px}.pinb.unk .lb{min-width:0;padding:0;width:14px;height:14px;border-radius:50%}.pinb.unk::after{width:7px;height:7px}
@@ -370,9 +376,11 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .tag svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .tag.ag{background:var(--gbg);color:var(--g);border:1px solid var(--gline)}
 .tag.bk{background:var(--amber-bg);color:var(--amber-fg);border:1px solid var(--amber-line)}
+.tag.uy{background:var(--blue-bg);color:var(--blue-fg)}
 .lbl.sec2{display:flex;align-items:center;gap:6px;margin:16px 0 6px}
 .lbl.sec2 svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.lbl.sec2.ag{color:var(--g)}.lbl.sec2.bk{color:var(--amber-fg)}
+.lbl.sec2.ag{color:var(--g)}.lbl.sec2.bk{color:var(--amber-fg)}.lbl.sec2.uy{color:var(--blue-fg)}
+.of .gn{color:var(--mut);font-weight:600}
 .of{padding:10px 0;border-top:1px solid var(--line)}.of:first-child{border-top:0;padding-top:4px}
 .of b{font-weight:800;font-size:15px}.of p{margin:3px 0!important}.of .how{color:var(--mut)}
 .of a{font-weight:800;font-size:13px;text-decoration:none}
@@ -511,6 +519,7 @@ a{color:var(--pri)}
   <symbol id="s-yuzde" viewBox="0 0 24 24" fill="currentColor"><circle cx="6.8" cy="6.8" r="3.3"/><circle cx="17.2" cy="17.2" r="3.3"/><path d="M18.4 5.6 5.6 18.4" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></symbol>
   <symbol id="s-kart" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M4.5 5h15A2.5 2.5 0 0 1 22 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 16.5v-9A2.5 2.5 0 0 1 4.5 5zM2 9h20v2.6H2zM5 14.4h5v2H5z"/></symbol>
   <symbol id="c-kart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6.5 15h4"/></symbol>
+  <symbol id="c-uyg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/><path d="M12.6 6.5 10 11h4l-2.6 4.5"/></symbol>
   <symbol id="c-yuzde" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/><path d="M18.5 5.5 5.5 18.5"/></symbol>
   <symbol id="c-filtre" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16l-6 7.5V19l-4 2v-8.5z"/></symbol>
   <symbol id="c-saat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
@@ -623,7 +632,10 @@ a{color:var(--pri)}
     <div class="sec">
       <h2>Kartlarım</h2>
       <div class="chips" id="p-banka"></div>
-      <h2>Şarj uygulamalarım</h2>
+      <h2>Kullandığım uygulamalar</h2>
+      <p class="note" style="margin:-4px 0 8px">Birçok ağda geçerli şarj / ödeme uygulamaları</p>
+      <div class="chips" id="p-uyg"></div>
+      <h2>Şarj ağlarım</h2>
       <div class="chips" id="p-ag"></div>
       <h2>Aracım</h2>
       <div class="chips" id="p-arac"></div>
@@ -677,6 +689,7 @@ a{color:var(--pri)}
       <li><span class="gi"><span class="pinb gpin " style="--bg-b:#E11D2E;--fg-b:#fff"><span class="lb">ZES</span></span></span><span><b>Şarj istasyonu</b>Üzerinde şarj ağının kısa adı yazar, rengi ağa göredir. Dokun: fiyat ve yol tarifi.</span></li>
       <li><span class="gi"><span class="pinb gpin own" style="--bg-b:#E11D2E;--fg-b:#fff"><span class="lb">ZES</span><i class="pc ag">%</i></span></span><span><b>Şarj ağının indirimi</b>Yeşil % rozeti: ağın kendi indirimi bu istasyonda geçerli.</span></li>
       <li><span class="gi"><span class="pinb gpin " style="--bg-b:#E11D2E;--fg-b:#fff"><span class="lb">ZES</span><i class="pc bk"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19"/></svg></i></span></span><span><b>Banka kartı kampanyası</b>Sarı kart rozeti: bu ağda geçerli kart kampanyası var.</span></li>
+      <li><span class="gi"><span class="pinb gpin " style="--bg-b:#E11D2E;--fg-b:#fff"><span class="lb">ZES</span><i class="pc uy"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#c-uyg"/></svg></i></span></span><span><b>Uygulama kampanyası</b>Mor telefon rozeti: bugün bu istasyonda bir şarj uygulamasıyla (ör. Rotawatt) indirim var.</span></li>
       <li><span class="gi"><span class="gline"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#c-bilgi"/></svg></span></span><span><b>İndirimli fiyat</b>Üstü çizili liste fiyatı, yanında indirimli fiyat. Bilgi simgesine dokun: indirimin koşulu.</span></li>
       <li><span class="gi"><span class="gnum">12</span></span><span><b>Birden çok istasyon</b>Dokun, harita yakınlaşsın.</span></li>
       <li><span class="gi"><span class="gbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#s-ac"/></svg></span></span><span><b>AC şarj</b>Normal hızda şarj (Type 2 fişi). Dokun, yalnızca AC istasyonlar kalsın.</span></li>
@@ -692,6 +705,8 @@ a{color:var(--pri)}
     <ul class="guide" data-help="kamp">
       <li><span class="gi"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#c-kart"/></svg></span></span><span><b>Banka kartı kampanyası</b>Belirtilen kartla ödeyince kazanırsın.</span></li>
       <li><span class="gi"><span class="ico ag"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#c-yuzde"/></svg></span></span><span><b>Şarj ağının kendi indirimi</b>O ağda şarj eden herkese ya da belirtilen gruba.</span></li>
+      <li><span class="gi"><span class="ico uygulama"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#c-uyg"/></svg></span></span><span><b>Uygulama kampanyası</b>Birçok ağda geçerli; şarjı o uygulamadan başlatınca kazanırsın.</span></li>
+      <li><span class="gi"><span class="bdg gun">Her salı</span></span><span><b>Belli günlerde</b>Yalnızca yazan günlerde geçerli; haritada da yalnızca o gün uygulanır.</span></li>
       <li><span class="gi"><span class="bdg new">Yeni</span></span><span><b>Yeni</b>Son 7 günde eklenen kampanya.</span></li>
       <li><span class="gi"><span class="bdg wait">?</span></span><span><b>Doğrulanıyor</b>Resmi sayfa otomatik açılamadı; ayrıntıyı resmi sayfadan teyit et.</span></li>
       <li><span class="gi"><span class="bdg me">Kartın</span></span><span><b>Kartın</b>Profilinde seçtiğin karta uyan kampanya.</span></li>
@@ -704,7 +719,7 @@ a{color:var(--pri)}
     <h3>Alt çubuk</h3>
     <ul class="guide">
       <li><span class="gi"><span class="gline"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#c-harita"/></svg></span></span><span><b>Harita</b>Yakınındaki şarj istasyonları ve fiyatları.</span></li>
-      <li><span class="gi"><span class="gline"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#c-etiket"/></svg></span></span><span><b>Kampanyalar</b>Banka kartı ve şarj ağı kampanyaları.</span></li>
+      <li><span class="gi"><span class="gline"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#c-etiket"/></svg></span></span><span><b>Kampanyalar</b>Banka kartı, şarj ağı ve uygulama kampanyaları.</span></li>
       <li><span class="gi"><span class="gline"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#c-kisi"/></svg></span></span><span><b>Profilim</b>Kartlarını ve şarj uygulamalarını seç.</span></li>
     </ul>
   </div>
@@ -741,7 +756,14 @@ const ALIAS = { "Eşarj": ["esarj", "enerjisa"], "ASTOR Şarj": ["astor"], "Shel
   // EPDK: marka "e-POwer", işletmeci "Petrol Ofisi A.Ş." → kampanyadaki "Petrol Ofisi e-POWER" ağı
   "Petrol Ofisi e-POWER": ["petrol ofisi", "\\be-power\\b"],
   // kampanyadaki "EPSIS Emobility" ağı = haritadaki EPSIS istasyonları
-  "EPSIS Emobility": ["\\bepsis\\b"] };
+  "EPSIS Emobility": ["\\bepsis\\b"],
+  // Rotawatt kampanyasındaki ağlar (EPDK marka / işletmeci yazımları). Kısa ya da genel adlar ("KES", "Royal", "Econ") yalnızca
+  // marka alanının tamamıyla ("^kes |" = marka alanı tam "KES") ya da işletmeci unvanıyla eşleşir; başka ağın adının içinde yakalanmaz.
+  "As Plus Şarj": ["\\bas ?plus\\b"], "i-Şarj": ["\\bi-sarj\\b", "\\bispirli sarj\\b"], "KES": ["^kes\\b( \\||$)", "\\bklr enerji\\b"],
+  "Royal Şarj": ["^royal\\b( \\||$)", "\\broyal sarj\\b", "\\bfederal elektrik\\b"], "Econ": ["\\benergy charging operator network\\b", "^econ\\b( \\||$)"],
+  "Spectrum": ["\\bspectrum girisimcilik\\b"], "Swapp": ["\\bswapp\\b"], "ŞarjPlus": ["\\bsarj ?plus\\b"], "Tam Şarj": ["\\btam ?sarj\\b"],
+  "TR Charge": ["\\btr charge\\b"], "Meis Charge": ["\\bmeis charge\\b"], "Mithra Pod": ["\\bmithra pod\\b"], "Promaster": ["\\bpromaster\\b"],
+  "MyPower": ["\\bmypower\\b"], "EvSolt": ["\\bevsolt\\b"], "Tripy": ["\\btripy\\b"], "Checkpoint": ["\\bcheckpoint\\b"] };
 // Kampanya verisinde olmasa da tanınan, yaygın markalar
 const KNOWN_EXTRA = { "ZES": ["\\bzes\\b"], "Sharz.net": ["sharz"], "Tesla": ["tesla"], "Beefull": ["beefull"], "Aksa Şarj": ["\\baksa\\b"], "Enyakıt": ["enyakit", "en yakit"],
   "Petrol Ofisi": ["petrol ofisi"], "Opet": ["\\bopet\\b"], "BP": ["\\bbp\\b"], "Aytemiz": ["aytemiz"], "Power Şarj": ["powersarj", "power sarj"],
@@ -772,8 +794,21 @@ const lsSet = (k, v) => { try { localStorage.setItem(k, v); return true; } catch
 const ssGet = k => { try { return sessionStorage.getItem(k); } catch { return null; } };
 const ssSet = (k, v) => { try { sessionStorage.setItem(k, v); } catch {} };
 
-let D = null, C = [], NETS = [], BANKS = [], NETC = {}, NET_RES = [], TAR = { aglar: {} };
-let P = { banka: [], ag: [], arac: "", il: "" };
+let D = null, C = [], NETS = [], BANKS = [], UYGS = [], NETC = {}, NET_RES = [], TAR = { aglar: {} };
+// uyg: profilde seçilen uygulama kampanyası sahipleri (kampanyalar.json → uygulamalar[].id: Rotawatt, Shell Recharge…)
+let P = { banka: [], ag: [], uyg: [], arac: "", il: "" };
+// Haftanın belli günlerinde geçerli kampanya ("gunler": ["sali"]): Türkiye saatine göre bugün listede değilse haritada uygulanmaz,
+// Kampanyalar sekmesinde "Her salı" etiketiyle görünür. Değerler aksansız küçük harf gün adlarıdır.
+const GUNLER = ["pazar", "pazartesi", "sali", "carsamba", "persembe", "cuma", "cumartesi"];
+const GUN_AD = { pazar: "pazar", pazartesi: "pazartesi", sali: "salı", carsamba: "çarşamba", persembe: "perşembe", cuma: "cuma", cumartesi: "cumartesi" };
+const bugunGun = () => GUNLER[new Date(todayIst() + "T00:00:00Z").getUTCDay()];
+const gunlu = c => Array.isArray(c.gunler) && c.gunler.length > 0 && c.gunler.length < 7;
+const gunOk = c => !gunlu(c) || c.gunler.includes(bugunGun());
+const gunTxt = c => { if (!gunlu(c)) return ""; const g = GUNLER.filter(x => c.gunler.includes(x)).map(x => GUN_AD[x]);
+  return "Her " + (g.length > 1 ? g.slice(0, -1).join(", ") + " ve " + g[g.length - 1] : g[0]); };
+const bankName = id => (D && D.bankalar.find(b => b.id === id) || {}).name || id;
+// Profilde seçilen şarj ağları + seçilen uygulamalardan adı bir şarj ağı olanlar (ör. Shell Recharge hem uygulama hem ağ)
+const agler = () => [...new Set([...P.ag, ...UYGS.filter(u => P.uyg.includes(u.id) && NETS.includes(u.name)).map(u => u.name)])];
 // Profildeki araç markaları ve iller. Kampanya verisinde "arac" (yalnızca şu marka araçlara) ve "iller" (yalnızca şu illerde) alanları bunlarla eşleşir.
 const ARACLAR = ["Togg", "Tesla", "BYD", "Renault", "Hyundai", "Kia", "MG", "Volvo", "BMW", "Mercedes-Benz", "Volkswagen", "Skoda", "Audi", "Peugeot", "Citroën", "Opel", "Fiat", "Ford", "Toyota", "Nissan", "Chery", "Mini", "Porsche", "Diğer"];
 const ILLER = ["Adana","Adıyaman","Afyonkarahisar","Ağrı","Aksaray","Amasya","Ankara","Antalya","Ardahan","Artvin","Aydın","Balıkesir","Bartın","Batman","Bayburt","Bilecik","Bingöl","Bitlis","Bolu","Burdur","Bursa","Çanakkale","Çankırı","Çorum","Denizli","Diyarbakır","Düzce","Edirne","Elazığ","Erzincan","Erzurum","Eskişehir","Gaziantep","Giresun","Gümüşhane","Hakkari","Hatay","Iğdır","Isparta","İstanbul","İzmir","Kahramanmaraş","Karabük","Karaman","Kars","Kastamonu","Kayseri","Kilis","Kırıkkale","Kırklareli","Kırşehir","Kocaeli","Konya","Kütahya","Malatya","Manisa","Mardin","Mersin","Muğla","Muş","Nevşehir","Niğde","Ordu","Osmaniye","Rize","Sakarya","Samsun","Şanlıurfa","Siirt","Sinop","Sivas","Şırnak","Tekirdağ","Tokat","Trabzon","Tunceli","Uşak","Van","Yalova","Yozgat","Zonguldak"];
@@ -785,6 +820,9 @@ function flatten(d) {
   const out = [];
   d.bankalar.forEach(b => b.offers.forEach(o => out.push({ kid: b.id, kurum: b.name, alt: b.sub, tip: "banka", ...o })));
   d.istasyonlar.forEach(s => s.own.forEach(o => out.push({ kid: s.id, kurum: s.name, alt: "Şarj ağının kendi kampanyası", tip: "ag", st: [s.name], join: o.kosul, ...o })));
+  // Uygulama kampanyası: birçok ağın istasyonunda (st), uygulama üzerinden başlatılan şarjda. "kart" varsa yalnızca o bankanın kartlarıyla.
+  (d.uygulamalar || []).forEach(u => (u.offers || []).forEach(o => out.push({ kid: u.id, kurum: u.name, tip: "uygulama", st: [], ...o,
+    alt: "Uygulama kampanyası" + (o.kart ? ` · ${(d.bankalar.find(b => b.id === o.kart) || {}).name || o.kart} kartıyla` : "") })));
   const today = todayIst();
   // Yalnızca kampanya sahibinin resmi sayfasına bağlanan kampanyalar gösterilir
   return out.filter(c => (!c.bit || c.bit >= today) && c.link && !DERLEME.some(h => c.link.includes(h))).map(c => ({ ...c, resmi: true }));
@@ -797,6 +835,7 @@ function daysText(c) {
 function buildIndexes() {
   NETS = D.istasyonlar.map(s => s.name);
   BANKS = D.bankalar.map(b => ({ id: b.id, name: b.name })).sort((a, b) => tr(a.name, b.name));
+  UYGS = (D.uygulamalar || []).map(u => ({ id: u.id, name: u.name })).sort((a, b) => tr(a.name, b.name));
   NETC = {};
   C.forEach(c => c.st.forEach(s => { if (s !== ALL) (NETC[s] = NETC[s] || []).push(c); }));
   const pat = p => p.includes("\\b") ? p : reEsc(p);
@@ -805,7 +844,8 @@ function buildIndexes() {
   NETS.forEach(n => add(n, ALIAS[n] || [fold(n)]));
   const names = new Set();
   C.forEach(c => c.st.forEach(s => { if (s !== ALL && !NETS.includes(s) && !/uygulama/i.test(s)) names.add(s); }));
-  names.forEach(n => add(n, ALIAS[n] || [fold(n)]));
+  // kampanyadaki ağ adı KNOWN_EXTRA'daki bir adla aynıysa (ör. "Acropol Şarj") onun kalıpları kullanılır
+  names.forEach(n => add(n, ALIAS[n] || KNOWN_EXTRA[n] || [fold(n)]));
   Object.entries(KNOWN_EXTRA).forEach(([n, p]) => { if (!NET_RES.some(([x]) => x === n)) add(n, p); });
 }
 
@@ -813,33 +853,51 @@ function buildIndexes() {
 function loadProfile() {
   try {
     const j = JSON.parse(lsGet(PKEY) || "null");
-    if (j && j.v === 1) P = { banka: sanitize(j.banka, BANKS.map(b => b.id)), ag: sanitize(j.ag, NETS), arac: one(j.arac, ARACLAR), il: one(j.il, ILLER) };
+    if (j && j.v === 1) P = normProfile({ banka: j.banka, ag: j.ag, uyg: j.uyg, arac: j.arac, il: j.il });
   } catch {}
 }
 const sanitize = (arr, allowed) => [...new Set((Array.isArray(arr) ? arr : []).filter(x => typeof x === "string" && allowed.includes(x)))];
-function saveProfile() { lsSet(PKEY, JSON.stringify({ v: 1, banka: P.banka, ag: P.ag, arac: P.arac, il: P.il })); }
-const profileEmpty = () => !P.banka.length && !P.ag.length;
+// Adı aynı zamanda bir uygulama olan ağ (Shell Recharge) Profilim'de "Kullandığım uygulamalar" altında tek seçenektir:
+// eski profillerdeki ağ seçimi uygulama seçimine taşınır (eşleşmede agler() onu yine ağ olarak sayar).
+const appNet = n => UYGS.find(u => u.name === n);
+function normProfile(j) {
+  const ag = sanitize(j.ag, NETS), uyg = sanitize(j.uyg, UYGS.map(u => u.id));
+  ag.filter(appNet).forEach(n => uyg.includes(appNet(n).id) || uyg.push(appNet(n).id));
+  return { banka: sanitize(j.banka, BANKS.map(b => b.id)), ag: ag.filter(n => !appNet(n)), uyg, arac: one(j.arac, ARACLAR), il: one(j.il, ILLER) };
+}
+function saveProfile() { lsSet(PKEY, JSON.stringify({ v: 1, banka: P.banka, ag: P.ag, uyg: P.uyg, arac: P.arac, il: P.il })); }
+const profileEmpty = () => !P.banka.length && !P.ag.length && !P.uyg.length;
 const useMine = () => S.bana ?? !profileEmpty();
+// Uygulama kampanyası profile uyuyor mu? Uygulama seçiliyse ya da geçerli olduğu ağlardan biri seçiliyse; uygulama / ağ hiç seçilmemişse
+// herkese (herkesin indirebildiği bir uygulama). "kart" koşullu kampanya, profilde başka bankanın kartları seçiliyse uymaz.
+function uygMine(c) {
+  if (c.kart && P.banka.length && !P.banka.includes(c.kart)) return false;
+  const ag = agler();
+  return P.uyg.includes(c.kid) || c.st.includes(ALL) || c.st.some(s => ag.includes(s)) || (!P.uyg.length && !P.ag.length);
+}
 function mine(c) {
   // Yalnızca belli marka araçlara ya da belli illere özel kampanya, profilde başka bir marka / il seçiliyse uymaz
   if (c.arac && c.arac.length && P.arac && !c.arac.includes(P.arac)) return false;
   if (c.iller && c.iller.length && P.il && !c.iller.includes(P.il)) return false;
   if (profileEmpty()) return true;
+  const ag = agler();
   if (c.tip === "banka") {
     if (P.banka.length && !P.banka.includes(c.kid)) return false;
-    if (P.ag.length && !(c.st.includes(ALL) || c.st.some(s => P.ag.includes(s)))) return false;
+    if (ag.length && !(c.st.includes(ALL) || c.st.some(s => ag.includes(s)))) return false;
     return true;
   }
-  return P.ag.length ? P.ag.includes(c.kurum) : true;
+  if (c.tip === "uygulama") return uygMine(c);
+  return ag.length ? ag.includes(c.kurum) : true;
 }
 function stationMine(net) {
   if (P.arac && (NETC[net] || []).some(c => c.arac && c.arac.includes(P.arac))) return true;   // aracına özel indirimi olan ağ
   if (profileEmpty()) return false;
-  if (P.ag.includes(net)) return true;
-  return (NETC[net] || []).some(c => c.tip === "banka" && P.banka.includes(c.kid));
+  if (agler().includes(net)) return true;
+  return (NETC[net] || []).some(c => (c.tip === "banka" && P.banka.includes(c.kid))
+    || (c.tip === "uygulama" && (P.uyg.includes(c.kid) || (c.kart && P.banka.includes(c.kart)))));
 }
 function encodeProfile() {
-  const bytes = new TextEncoder().encode(JSON.stringify({ b: P.banka, a: P.ag, r: P.arac, i: P.il }));
+  const bytes = new TextEncoder().encode(JSON.stringify({ b: P.banka, a: P.ag, u: P.uyg, r: P.arac, i: P.il }));
   let bin = ""; bytes.forEach(x => bin += String.fromCharCode(x));
   return "WK1." + btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
@@ -850,7 +908,7 @@ function decodeProfile(code) {
     const b64 = m[1].replace(/-/g, "+").replace(/_/g, "/");
     const bin = atob(b64 + "=".repeat((4 - b64.length % 4) % 4));
     const j = JSON.parse(new TextDecoder().decode(Uint8Array.from(bin, c => c.charCodeAt(0))));
-    return { banka: sanitize(j.b, BANKS.map(b => b.id)), ag: sanitize(j.a, NETS), arac: one(j.r, ARACLAR), il: one(j.i, ILLER) };
+    return normProfile({ banka: j.b, ag: j.a, uyg: j.u, arac: j.r, il: j.i });
   } catch { return null; }
 }
 function profileChanged() {
@@ -863,7 +921,8 @@ function renderProfile() {
     $(el).innerHTML = items.map(([v, label]) => `<button class="chip ${key === "ag" ? "ag" : ""}" aria-pressed="${P[key].includes(v)}" data-pk="${key}" data-v="${esc(v)}">${esc(label)}</button>`).join("");
   };
   group("p-banka", "banka", BANKS.map(b => [b.id, b.name]));
-  group("p-ag", "ag", [...NETS].sort(tr).map(n => [n, n]));
+  group("p-uyg", "uyg", UYGS.map(u => [u.id, u.name]));
+  group("p-ag", "ag", [...NETS].filter(n => !appNet(n)).sort(tr).map(n => [n, n]));
   $("p-arac").innerHTML = ARACLAR.map(a => `<button class="chip" aria-pressed="${P.arac === a}" data-arac="${esc(a)}">${esc(a)}</button>`).join("");
   $("p-il").innerHTML = `<option value="">İl seç</option>` + ILLER.map(i => `<option${P.il === i ? " selected" : ""}>${esc(i)}</option>`).join("");
   const n = profileEmpty() ? 0 : C.filter(mine).length;
@@ -898,7 +957,7 @@ function buildFilters() {
   C.forEach(c => c.st.forEach(s => s !== ALL && ags.add(s)));
   chipGroup("f-banka", "banka", BANKS.map(b => [b.id, b.name]));
   chipGroup("f-ag", "ag", [...ags].sort(tr).map(a => [a, a]), "ag");
-  chipGroup("f-tip", "tip", [["banka", "Banka kartı"], ["ag", "Şarj ağı"]]);
+  chipGroup("f-tip", "tip", [["banka", "Banka kartı"], ["ag", "Şarj ağı"], ...(C.some(c => c.tip === "uygulama") ? [["uygulama", "Uygulama"]] : [])]);
   const yok = (D.kampanyasiz_bankalar || []).map(x => x.split(" (")[0]);
   $("nocamp").textContent = yok.length ? `Bu dönem resmi sayfasında doğrulanmış şarj kampanyası olmayan: ${yok.join(", ")}.` : "";
 }
@@ -907,12 +966,15 @@ function renderQuick() {
     ? `<button class="chip setup" id="q-setup">+ Kartlarını seç</button>`
     : `<button class="chip" id="q-mine" aria-pressed="${useMine()}">Bana uyanlar</button>`)
     + `<button class="chip" data-k="tip" data-v="banka" aria-pressed="${S.tip.has("banka")}">${IC.banka}Banka kartı</button>`
-    + `<button class="chip ag" data-k="tip" data-v="ag" aria-pressed="${S.tip.has("ag")}">${IC.ag}Şarj ağı</button>`;
+    + `<button class="chip ag" data-k="tip" data-v="ag" aria-pressed="${S.tip.has("ag")}">${IC.ag}Şarj ağı</button>`
+    + (C.some(c => c.tip === "uygulama") ? `<button class="chip" data-k="tip" data-v="uygulama" aria-pressed="${S.tip.has("uygulama")}">${IC.uygulama}Uygulama</button>` : "");
 }
+// Kart koşullu uygulama kampanyası (ör. Shell Recharge + Garanti BBVA) banka filtresinde ve "Banka kartı" türünde de görünür
+const kartKid = c => c.tip === "banka" ? c.kid : c.kart || "";
 function match(c) {
-  if (S.banka.size && !(c.tip === "banka" && S.banka.has(c.kid))) return false;
+  if (S.banka.size && !S.banka.has(kartKid(c))) return false;
   if (S.ag.size && !(c.st.includes(ALL) || c.st.some(s => S.ag.has(s)))) return false;
-  if (S.tip.size && !S.tip.has(c.tip)) return false;
+  if (S.tip.size && !S.tip.has(c.tip) && !(c.kart && S.tip.has("banka"))) return false;
   if (useMine() && !mine(c)) return false;
   if (S.q) {
     const h = fold([c.kurum, c.alt, c.big, c.det, c.join, c.kosul, ...c.st].join(" "));
@@ -923,22 +985,24 @@ function match(c) {
 // Sayfa içi çizgisel simgeler (#spr içindeki c-* simgeleri). Kart = banka kartı kampanyası, % = şarj ağının kendi indirimi
 // (haritadaki hızlı filtreler ve işaretçi rozetleri de aynı iki biçimi kullanır).
 const svgUse = id => `<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#${id}"/></svg>`;
-const IC = { banka: svgUse("c-kart"), ag: svgUse("c-yuzde"), saat: svgUse("c-saat"), geri: svgUse("c-geri"), x: svgUse("c-x"), mesaj: svgUse("c-mesaj"), bilgi: svgUse("c-bilgi") };
+const IC = { banka: svgUse("c-kart"), ag: svgUse("c-yuzde"), uygulama: svgUse("c-uyg"), saat: svgUse("c-saat"), geri: svgUse("c-geri"), x: svgUse("c-x"), mesaj: svgUse("c-mesaj"), bilgi: svgUse("c-bilgi") };
 // Son 7 günde eklenen (ya da başlayan) kampanya "Yeni" etiketi alır
 const isNew = c => { const t = c.eklendi || c.bas; if (!t) return false; const d = -daysLeft(t); return d >= 0 && d <= 7; };
 function card(c) {
   const { dl, txt, son } = daysText(c);
-  const hit = s => S.ag.has(s) || P.ag.includes(s);
+  const ags = agler(), hit = s => S.ag.has(s) || ags.includes(s);
   const sts = [...c.st].sort((a, b) => hit(b) - hit(a)), MAXST = 3;
   const st = sts.slice(0, MAXST).map(s => `<span class="${s === ALL ? "all" : hit(s) ? "hit" : ""}">${esc(s)}</span>`).join("")
     + (sts.length > MAXST ? `<span class="rest">+${sts.length - MAXST}</span>` : "");
-  const my = c.tip === "banka" && P.banka.includes(c.kid);
+  const myKart = !!kartKid(c) && P.banka.includes(kartKid(c)), myUyg = c.tip === "uygulama" && P.uyg.includes(c.kid), my = myKart || myUyg;
+  const gt = gunTxt(c), bugun = gt && gunOk(c);
   const badges = (isNew(c) ? `<span class="bdg new">Yeni</span>` : "")
     + (c.kontrol ? `<span class="bdg wait" title="Resmi sayfa otomatik açılamadı">Doğrulanıyor</span>` : "")
-    + (my ? `<span class="bdg me">Kartın</span>` : "");
-  const how = c.tip === "banka" ? c.join : (c.join && c.join !== c.kosul ? c.join : "");
+    + (myKart ? `<span class="bdg me">Kartın</span>` : myUyg ? `<span class="bdg me">Uygulaman</span>` : "");
+  const how = c.tip !== "ag" ? c.join : (c.join && c.join !== c.kosul ? c.join : "");
+  const tipAd = { banka: "Banka kartı kampanyası", ag: "Şarj ağının kendi indirimi", uygulama: "Uygulama kampanyası: uygulamadan başlatılan şarjda" }[c.tip];
   return `<article class="card ${my ? "mine" : ""}">
-    <div class="ct"><span class="ico ${c.tip}" title="${c.tip === "banka" ? "Banka kartı kampanyası" : "Şarj ağının kendi indirimi"}">${IC[c.tip]}</span>
+    <div class="ct"><span class="ico ${c.tip}" title="${tipAd}">${IC[c.tip]}</span>
       <div class="who"><div class="kurum">${esc(c.kurum)}</div><div class="alt">${esc(c.alt)}</div></div>${badges}</div>
     <div class="big">${esc(c.big)}</div><div class="det">${esc(c.det)}</div>
     <div class="st" aria-label="Geçerli olduğu istasyonlar">${st}</div>
@@ -948,21 +1012,26 @@ function card(c) {
       ${sts.length > MAXST ? `<h4>Geçerli istasyonlar</h4><p>${esc(sts.join(", "))}</p>` : ""}
       ${c.kontrol ? `<h4>Doğrulanıyor</h4><p>Resmi sayfa otomatik açılamadı; tarih ve oranı resmi sayfadan teyit et.</p>` : ""}
     </details>
-    <div class="foot">${txt ? `<span class="days ${dl !== null && dl <= 3 ? "soon" : ""}" title="${esc(son)}">${IC.saat}${esc(txt)}</span>` : ""}
+    <div class="foot">${gt ? `<span class="bdg gun" title="${bugun ? "Bugün geçerli" : "Yalnızca bu günlerde geçerli; haritada o gün uygulanır"}">${esc(gt)}${bugun ? " · bugün" : ""}</span>` : ""}${txt ? `<span class="days ${dl !== null && dl <= 3 ? "soon" : ""}" title="${esc(son)}">${IC.saat}${esc(txt)}</span>` : ""}
       <a class="src" data-kk="${esc(c.kurum)}" href="${esc(safeUrl(c.link))}" target="_blank" rel="noopener nofollow">Resmi sayfa ↗</a></div>
   </article>`;
 }
 function render() {
   writeHash();
   // Seçili ağa özel kampanyalar, "tüm istasyonlar" kampanyalarından önce gelir
-  const sel = S.ag.size ? S.ag : new Set(P.ag);
+  const sel = S.ag.size ? S.ag : new Set(agler());
   const rel = c => (sel.size && c.st.some(s => sel.has(s))) ? 0 : 1;
   const list = C.filter(match).sort((a, b) => rel(a) - rel(b) || (S.sort === "kurum" ? tr(a.kurum, b.kurum)
     : (a.bit || "9").localeCompare(b.bit || "9") || tr(a.kurum, b.kurum)));
   $("count").innerHTML = list.length === C.length ? `${C.length} kampanya` : `${list.length} kampanya <span>/ ${C.length}</span>`;
   const n = S.banka.size + S.ag.size + S.tip.size;
   $("fcount").hidden = !n; $("fcount").textContent = n;
-  $("list").innerHTML = list.length ? list.map(card).join("") :
+  // Uygulama kampanyaları kendi başlığı altında, en üstte; diğerleri (banka kartı, şarj ağı) eski sırasıyla altta
+  const uy = list.filter(c => c.tip === "uygulama"), di = list.filter(c => c.tip !== "uygulama");
+  const lh = (cls, ic, t) => `<h2 class="lh ${cls}">${ic}${t}</h2>`;
+  $("list").innerHTML = list.length ? (uy.length && di.length
+    ? lh("uy", IC.uygulama, "Uygulama kampanyaları") + uy.map(card).join("") + lh("", IC.banka, "Banka kartı ve şarj ağı kampanyaları") + di.map(card).join("")
+    : (uy.length ? lh("uy", IC.uygulama, "Uygulama kampanyaları") : "") + list.map(card).join("")) :
     `<div class="empty">Bu seçime uyan kampanya yok.<br><button class="btn" id="reset">Filtreleri temizle</button></div>`;
   const r = $("reset"); if (r) r.onclick = resetAll;
   document.querySelectorAll("[data-k]").forEach(b => b.setAttribute("aria-pressed", S[b.dataset.k].has(b.dataset.v)));
@@ -982,14 +1051,16 @@ function closeSheets() { if (!$("ob").hidden) { lsSet("wk.kurulum", "1"); $("ob"
 // Hızlı kurulum: ilk girişte bir kez. Seçimler doğrudan profile yazılır (aynı düğmeler: data-pk / data-arac).
 const OB = { i: 0, adim: [
   ["Hangi kartların var?", "Kartına özel şarj kampanyalarını öne çıkaralım.", "banka"],
-  ["Hangi şarj uygulamalarını kullanıyorsun?", "Kullandığın ağların indirimlerini gösterelim.", "ag"],
+  ["Hangi şarj uygulamalarını kullanıyorsun?", "Birçok ağda geçen uygulamalar (Rotawatt gibi) ve tek bir ağın kendi uygulaması. Seçtiklerinin indirimlerini gösterelim.", "ag"],
   ["Aracın hangisi?", "Aracına özel indirimleri ve fiyatları gösterelim.", "arac"]] };
 function renderOb() {
   if ($("ob").hidden) return;
   const [t, alt, k] = OB.adim[OB.i], son = OB.i === OB.adim.length - 1;
   $("ob-t").textContent = t; $("ob-s").textContent = alt;
   $("ob-c").innerHTML = k === "arac" ? ARACLAR.map(a => `<button class="chip" aria-pressed="${P.arac === a}" data-arac="${esc(a)}">${esc(a)}</button>`).join("")
-    : (k === "banka" ? BANKS.map(b => [b.id, b.name]) : [...NETS].sort(tr).map(n => [n, n])).map(([v, l]) => `<button class="chip ${k === "ag" ? "ag" : ""}" aria-pressed="${P[k].includes(v)}" data-pk="${k}" data-v="${esc(v)}">${esc(l)}</button>`).join("");
+    // "ag" adımında önce birçok ağda geçen uygulamalar (P.uyg), sonra ağların kendi uygulamaları (P.ag)
+    : (k === "banka" ? BANKS.map(b => [b.id, b.name, k]) : [...UYGS.map(u => [u.id, u.name, "uyg"]), ...[...NETS].filter(n => !appNet(n)).sort(tr).map(n => [n, n, "ag"])])
+      .map(([v, l, pk]) => `<button class="chip ${pk === "ag" ? "ag" : ""}" aria-pressed="${P[pk].includes(v)}" data-pk="${pk}" data-v="${esc(v)}">${pk === "uyg" ? IC.uygulama : ""}${esc(l)}</button>`).join("");
   $("ob-d").innerHTML = OB.adim.map((_, i) => `<i class="${i === OB.i ? "on" : ""}"></i>`).join("");
   $("ob-next").textContent = son ? "Bitir" : "İleri";
 }
@@ -1177,11 +1248,16 @@ function campRate(c) {
 }
 // İstasyonda geçerli kampanyalar: ağa özel olanlar + her istasyonda geçerli kart kampanyaları.
 // Profilde kart seçiliyse yalnızca o kartların kampanyaları.
+// Her istasyonda geçerli (st: "Tüm şarj istasyonları") kart ve uygulama kampanyaları; haftalık gün koşulu bugün tutmayan hariç
+const generalOffers = () => C.filter(c => (c.tip === "banka" || c.tip === "uygulama") && c.st.includes(ALL) && !c.kontrol && gunOk(c));
+// Uygulama kampanyası istasyon fiyatında (sıralama / "uygulamayla ≈") hesaba katılır mı? Profilde uygulama seçiliyse yalnızca seçilenler;
+// "kart" koşullu olanlarda profilde kart seçiliyse yalnızca o kartlar (banka kampanyası kuralıyla aynı).
+const uygOk = c => profileEmpty() || (c.kart ? (P.banka.length ? P.banka.includes(c.kart) : true) : (P.uyg.length ? P.uyg.includes(c.kid) : true));
 function stationOffers(s) {
-  const own = s.camp || [], general = C.filter(c => c.tip === "banka" && c.st.includes(ALL) && !c.kontrol);
+  const own = s.camp || [], general = generalOffers();
   const all = [...own, ...general.filter(c => !own.includes(c))];
-  // ağın kendi kampanyası o ağda şarj eden herkese açıktır; kart kampanyaları profildeki kartlara göre süzülür
-  return profileEmpty() ? all : all.filter(c => c.tip === "ag" || (P.banka.length ? P.banka.includes(c.kid) : true));
+  // ağın kendi kampanyası o ağda şarj eden herkese açıktır; kart kampanyaları profildeki kartlara, uygulama kampanyaları seçilen uygulamalara göre süzülür
+  return profileEmpty() ? all : all.filter(c => c.tip === "ag" || (c.tip === "uygulama" ? uygOk(c) : (P.banka.length ? P.banka.includes(c.kid) : true)));
 }
 // Herkese değil yalnızca belli müşterilere ya da seçili istasyonlara uygulanan kampanyalar sıralamaya katılmaz
 const COND = /seçili|listedeki istasyon|sahiplerine|sahibi olan|yalnızca .*müşteri|müşterilerine|abonelerine|abonesi|üyelerine|çalışanlarına|öğrencilere|togg/i;
@@ -1209,9 +1285,9 @@ function bestDeal(s) {
   if (!s.price) return null;
   let best = null;
   for (const c of stationOffers(s)) {
-    if (c.tip !== "banka") continue;
+    if (c.tip !== "banka" && c.tip !== "uygulama") continue;
     const r = campRate(c); if (!r || bankCond(c) || (s.viaShell && s.viaShell.includes(c))) continue;
-    const k = cardPrice(s, c, r);
+    const k = c.tip === "uygulama" ? appPrice(s, c, r) : cardPrice(s, c, r);
     if (!best || k.v < best.v) best = { v: k.v, r, c, ek: k.ek };
   }
   return best;
@@ -1223,6 +1299,13 @@ function bestDeal(s) {
 const birlesmez = c => /birleş(mez|tirilemez|tirilmez)/i.test([c.det, c.kosul].join(" "));
 function cardPrice(s, c, r) {
   const ek = !!(s.net && !birlesmez(c));
+  return { v: (ek ? s.net.v : s.price.v) * (1 - r), ek };
+}
+// Uygulamayla ödenecek fiyat: uygulama kampanyasının ağın kendi indirimiyle birleştiği bilinmediği için LİSTE fiyatına uygulanır
+// (kampanya metni açıkça "birleşir" derse ağ indiriminin üzerine).
+const birlesir = c => /\bbirleşir\b|birlikte (de )?(kullanılabilir|geçerli)/i.test([c.det, c.kosul].join(" "));
+function appPrice(s, c, r) {
+  const ek = !!(s.net && birlesir(c));
   return { v: (ek ? s.net.v : s.price.v) * (1 - r), ek };
 }
 // Kart kampanyası yalnızca belli müşterilere mi (araç, abonelik vb.)? "seçili ağlarda" ifadesi ağ listesini (st) anlatır, koşul sayılmaz.
@@ -1238,11 +1321,14 @@ function enrich(s) {
   s.sk = s.sk || [];
   // Haritada yalnızca resmi sayfası doğrulanmış kampanyalar kullanılır ("kontrol": true olanlar Kampanyalar sekmesinde "Doğrulanıyor" etiketiyle durur)
   // Başlangıç tarihi gelmemiş kampanya haritada rozet ve indirimli fiyat olarak sayılmaz (Kampanyalar sekmesinde tarihiyle görünür)
-  s.camp = s.camp.filter(c => !c.kontrol && !(c.bas && c.bas > todayIst()) && (!seciliKamp(c) || s.sk.includes(kampKey(c))));
+  // Haftanın belli günlerinde geçerli kampanya ("gunler") yalnızca o gün (Türkiye saati) uygulanır; diğer günler detayda bilgi olarak durur (s.gunDisi)
+  const hazir = c => !c.kontrol && !(c.bas && c.bas > todayIst());
+  s.gunDisi = s.camp.filter(c => hazir(c) && !gunOk(c));
+  s.camp = s.camp.filter(c => hazir(c) && gunOk(c) && (!seciliKamp(c) || s.sk.includes(kampKey(c))));
   s.viaShell = [];
   if (/trugo/i.test(s.brand) && /shell/i.test(fold([s.name, s.addr].join(" ")))) {
     s.shellTrugo = true;
-    s.viaShell = (NETC["Shell Recharge"] || []).filter(c => !c.kontrol && !s.camp.includes(c));
+    s.viaShell = (NETC["Shell Recharge"] || []).filter(c => hazir(c) && gunOk(c) && !s.camp.includes(c));
     s.camp = [...s.camp, ...s.viaShell];
   }
 }
@@ -1506,7 +1592,11 @@ function shortName(b) {
 }
 // İstasyona özel doğrulanmış kampanyalar: ağın herkese açık kendi indirimi / banka kartı kampanyası.
 // Yalnızca belli müşterilere (ör. Togg, kasko sahipleri) özel ağ indirimleri ve Shell uygulaması üzerinden gelenler rozet almaz; detayda görünür.
-const campKinds = s => { const l = s.camp.filter(c => !(s.viaShell || []).includes(c)); return { ag: l.filter(c => c.tip === "ag" && !conditional(c) && akimOk(c, s)), bk: l.filter(c => c.tip === "banka") }; };
+// Uygulama kampanyası (bugün geçerli, doğrulanmış): kart koşullu olan (ör. Shell Recharge + Garanti) kart rozeti, kartsız olan uygulama rozeti alır.
+const campKinds = s => { const l = s.camp.filter(c => !(s.viaShell || []).includes(c));
+  return { ag: l.filter(c => c.tip === "ag" && !conditional(c) && akimOk(c, s)), bk: l.filter(c => c.tip === "banka" || (c.tip === "uygulama" && c.kart)),
+    uy: l.filter(c => c.tip === "uygulama" && !c.kart) }; };
+const PC_UYG = `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg>`;
 // Yalnızca DC'de (ya da AC'de) geçerli ağ indirimi, o akım türü olmayan istasyonda rozet almaz
 const akimOk = (c, s) => { const t = [c.big, c.det].join(" "), dc = /\bDC\b/.test(t), ac = /\bAC\b/.test(t); return dc === ac || (dc ? s.hasDc : s.hasAc); };
 const PC_CARD = `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19"/></svg>`;
@@ -1516,8 +1606,8 @@ function markerHtml(g) {
     const st = brandStyle(s0), k = campKinds(s0);
     const cls = `pinb ${k.ag.length ? "own" : ""} ${sel ? "sel" : ""} ${s0.pasif ? "pasif" : ""} ${st ? "" : "unk"}`;
     const style = st ? `style="--bg-b:${st[0]};--fg-b:${st[1]}"` : "";
-    const tip = esc(pretty(s0.brand) || s0.name) + (k.ag.length ? " · ağ indirimi" : "") + (k.bk.length ? " · kart kampanyası" : "");
-    return `<div class="mkw"><div class="${cls}" ${style} title="${tip}"><span class="lb">${st ? esc(shortName(s0.brand)) : ""}</span>${k.ag.length ? `<i class="pc ag">%</i>` : ""}${k.bk.length ? `<i class="pc bk">${PC_CARD}</i>` : ""}</div></div>`;
+    const tip = esc(pretty(s0.brand) || s0.name) + (k.ag.length ? " · ağ indirimi" : "") + (k.bk.length ? " · kart kampanyası" : "") + (k.uy.length ? " · uygulama kampanyası" : "");
+    return `<div class="mkw"><div class="${cls}" ${style} title="${tip}"><span class="lb">${st ? esc(shortName(s0.brand)) : ""}</span>${k.ag.length ? `<i class="pc ag">%</i>` : ""}${k.bk.length ? `<i class="pc bk">${PC_CARD}</i>` : ""}${k.uy.length ? `<i class="pc uy">${PC_UYG}</i>` : ""}</div></div>`;
   }
   const sw = [...new Set(g.items.map(s => (brandStyle(s) || ["#9CA3AF"])[0]))].slice(0, 4).map(c => `<i style="background:${c}"></i>`).join("");
   const n = g.items.length > 999 ? "999+" : g.items.length;
@@ -1575,8 +1665,10 @@ function renderSheet() {
   }
   h.innerHTML = `<span><b>${M.view.length}</b> istasyon · haritadaki alanda</span>${open ? "" : `<span class="tg" aria-hidden="true">↑</span>`}`;
   const hidden = M.f.tum ? 0 : M.cnt.unk || 0;
-  const srt = [["yakin", "En yakın"], ["ucuz", "En ucuz"], ...(P.banka.length ? [["kamp", "Kartımla en ucuz"]] : []), ["guc", "En güçlü"], ["pahali", "En pahalı"]];
-  if (M.sort === "kamp" && !P.banka.length) M.sort = "ucuz";
+  // "Kartımla en ucuz": profildeki kartlar ve uygulamalarla ödenecek fiyata göre (yalnızca uygulama seçiliyse "Uygulamamla en ucuz")
+  const kampOk = P.banka.length || P.uyg.length;
+  const srt = [["yakin", "En yakın"], ["ucuz", "En ucuz"], ...(kampOk ? [["kamp", P.banka.length ? "Kartımla en ucuz" : "Uygulamamla en ucuz"]] : []), ["guc", "En güçlü"], ["pahali", "En pahalı"]];
+  if (M.sort === "kamp" && !kampOk) M.sort = "ucuz";
   const sortbar = `<div class="sortbar" role="group" aria-label="Sırala">${srt.map(([v, l]) => `<button class="chip" data-ms="${v}" aria-pressed="${M.sort === v}">${l}</button>`).join("")}</div>`;
   let html = M.view.slice(0, M.shown).map(stationItem).join("");
   if (M.view.length > M.shown) html += `<button class="btn more" id="more">Daha fazla göster (${M.view.length - M.shown})</button>`;
@@ -1621,7 +1713,9 @@ function stationItem(s) {
     <div class="r1"><span class="nm">${brandStyle(s) ? `<span class="bdot" style="--bg-b:${brandStyle(s)[0]}"></span>` : ""}${esc(head)}</span><span class="ds">${fmtKm(s.d)}</span></div>
     ${sub ? `<div class="sub">${sub}</div>` : ""}
     <div class="r2">${tb || s.kw ? `<span class="pill ${tb ? (s.hasDc ? "dc" : "ac") : ""}">${[tb, s.kw ? Math.round(s.kw) + " kW" : ""].filter(Boolean).join(" · ")}</span>` : ""}${price}
-      ${kk.ag.length && !s.net ? `<span class="tag ag" title="Şarj ağının kendi indirimi" aria-label="Şarj ağı indirimi">${IC.ag}</span>` : ""}${useCard ? `<span class="tag bk" title="${esc(s.deal.c.kurum)} kartınla">${IC.banka}${esc(s.deal.c.kurum.split(" ")[0])}</span>` : kk.bk.length ? `<span class="tag bk" title="Bu ağda geçerli banka kartı kampanyası">${IC.banka}${kk.bk.length}</span>` : ""}</div>
+      ${kk.ag.length && !s.net ? `<span class="tag ag" title="Şarj ağının kendi indirimi" aria-label="Şarj ağı indirimi">${IC.ag}</span>` : ""}${useCard ? (s.deal.c.tip === "uygulama" && !s.deal.c.kart ? `<span class="tag uy" title="${esc(s.deal.c.kurum)} uygulamasıyla">${IC.uygulama}${esc(s.deal.c.kurum.split(" ")[0])}</span>`
+        : `<span class="tag bk" title="${esc(s.deal.c.tip === "uygulama" ? `${s.deal.c.kurum} uygulaması + ${bankName(s.deal.c.kart)} kartınla` : `${s.deal.c.kurum} kartınla`)}">${IC.banka}${esc((s.deal.c.tip === "uygulama" ? bankName(s.deal.c.kart) : s.deal.c.kurum).split(" ")[0])}</span>`)
+        : kk.bk.length ? `<span class="tag bk" title="Bu ağda geçerli banka kartı kampanyası">${IC.banka}${kk.bk.length}</span>` : ""}${!useCard && kk.uy.length ? `<span class="tag uy" title="Bugün bu ağda geçerli uygulama kampanyası">${IC.uygulama}${kk.uy.length}</span>` : ""}</div>
   </button>`;
 }
 // Kampanyanın kısa değeri: "%20 indirim" → "%20", "75 TL bonus" → "75 TL". Ayrıntı açıklamada kalır.
@@ -1650,7 +1744,7 @@ const ozelOlabilir = s => { const n = fold(s.name || ""); return OZEL_RE.test(n)
 function renderDetail(s) {
   $("sh-h").innerHTML = `<span class="back">${IC.geri}Listeye dön</span><span class="tg" style="color:var(--mut)">${fmtKm(s.d)}</span>`;
   const t = s.tags;
-  const general = C.filter(c => c.tip === "banka" && c.st.includes(ALL) && !c.kontrol);
+  const general = generalOffers();
   const pr = s.price && tarOf(s.brand);
   // Ağın diğer kendi kampanyaları: ağ kampanyaları birbiriyle birleşmez, bu yüzden her biri LİSTE fiyatına tek başına uygulanır.
   // Yalnızca DC'de (ya da AC'de) geçerli kampanya, istasyonda o akım türü yoksa gösterilmez; varsa o akımın fiyatıyla hesaplanır.
@@ -1676,10 +1770,34 @@ function renderDetail(s) {
     list.filter(c => c.tip === "banka").forEach(c => (groups.get(c.kid) || groups.set(c.kid, []).get(c.kid)).push(c));
     const rate = l => Math.max(0, ...l.map(c => campRate(c) || 0));
     const banks = [...groups.entries()].sort((a, b) => P.banka.includes(b[0]) - P.banka.includes(a[0]) || rate(b[1]) - rate(a[1]));
+    const apps = new Map();
+    list.filter(c => c.tip === "uygulama").forEach(c => (apps.get(c.kid) || apps.set(c.kid, []).get(c.kid)).push(c));
+    const appMy = l => l.some(c => P.uyg.includes(c.kid) || (c.kart && P.banka.includes(c.kart)));
+    const appList = [...apps.values()].sort((a, b) => appMy(b) - appMy(a) || rate(b) - rate(a));
     return (ag ? `<div class="lbl sec2 ag">${IC.ag}Şarj ağının indirimi</div><div class="nls">${ag}</div>` : "")
-      + (banks.length ? `<div class="lbl sec2 bk">${IC.banka}Banka kartıyla</div><div class="cmps">${banks.map(([kid, l]) => bankRow(l, P.banka.includes(kid), fiyatli)).join("")}</div>` : "");
+      + (banks.length ? `<div class="lbl sec2 bk">${IC.banka}Banka kartıyla</div><div class="cmps">${banks.map(([kid, l]) => bankRow(l, P.banka.includes(kid), fiyatli)).join("")}</div>` : "")
+      + (appList.length ? `<div class="lbl sec2 uy">${IC.uygulama}Uygulama ile</div><div class="cmps">${appList.map(l => appRow(l, fiyatli)).join("")}</div>` : "");
   };
-  const here = [...s.camp.filter(c => !s.viaShell.includes(c)), ...general.filter(c => !s.camp.includes(c))].filter(c => !c.kontrol);
+  // Uygulama kampanyası: uygulama başına tek satır. Bugün geçerliyse "uygulamayla ≈ X TL/kWh"; haftanın başka gününde geçerliyse
+  // (s.gunDisi) yalnızca bilgi: "Her salı · bugün geçerli değil", fiyat hesaplanmaz.
+  const appOffer = (c, fiyatli) => {
+    const bugun = gunOk(c), r = campRate(c), k = bugun && fiyatli && r && s.price ? appPrice(s, c, r) : null;
+    const kosul = [c.kart ? `${bankName(c.kart)} kartıyla` : "", gunTxt(c) ? `${gunTxt(c)}${bugun ? " · bugün geçerli" : " · bugün geçerli değil"}` : ""].filter(Boolean).join(" · ");
+    return `<div class="of"><b>${esc(kisaDeger(c))}</b> <span class="det">${esc(c.det)}</span>
+      ${kosul ? `<p class="gn">${esc(kosul)}</p>` : ""}
+      ${k ? `<div class="eff" title="${k.ek ? "Şarj ağının indirimli fiyatına uygulama indirimi uygulanarak" : "Liste fiyatına uygulama indirimi uygulanarak"}">Uygulamayla ≈ ${fmtNum(k.v)} TL/kWh</div>` : ""}
+      ${c.join ? `<p class="how">${esc(c.join)}</p>` : ""}
+      <p><a data-kk="${esc(c.kurum)}" href="${esc(safeUrl(c.link))}" target="_blank" rel="noopener nofollow">Resmi sayfa ↗</a></p></div>`;
+  };
+  const appRow = (l, fiyatli) => {
+    const best = [...l].sort((a, b) => gunOk(b) - gunOk(a) || (campRate(b) || 0) - (campRate(a) || 0))[0];
+    const myU = l.some(c => P.uyg.includes(c.kid)), myK = l.some(c => c.kart && P.banka.includes(c.kart));
+    const val = (gunOk(best) ? "" : gunTxt(best) + " ") + kisaDeger(best);
+    return `<details class="cmp ${myU || myK ? "mine" : ""}"><summary><span class="cn">${esc(l[0].kurum)}${myU ? ` <i>uygulaman</i>` : myK ? ` <i>kartın</i>` : ""}</span><span class="cr">${esc(val)}${l.length > 1 ? ` <small>+${l.length - 1}</small>` : ""}</span><span class="ch" aria-hidden="true">›</span></summary>
+      <div class="cb">${l.map(c => appOffer(c, fiyatli)).join("")}</div></details>`;
+  };
+  const here = [...s.camp.filter(c => !s.viaShell.includes(c)), ...general.filter(c => !s.camp.includes(c)),
+    ...(s.gunDisi || []).filter(c => c.tip === "uygulama")].filter(c => !c.kontrol);
   const rows = [];
   // Fiyat satırı kısa; nereden geldiği ve nasıl hesaplandığı alttaki "Bilgi kaynağı" bölümünde
   const srcTxt = [];
@@ -1718,7 +1836,8 @@ function renderDetail(s) {
     <details class="bkay"><summary>Bilgi kaynağı ›</summary>${srcTxt.map(x => `<p>${x}</p>`).join("")}
       <p>${/^bigstation/.test(s.id) ? "İstasyon bilgisi BIG Station sisteminden, üçüncü taraf bir hizmet aracılığıyla günde bir kez alınır." : /^cv\d/.test(s.id) ? "İstasyon bilgisi CV Charging'in resmi istasyon listesinden (cv-charging.com), günde bir kez alınır." : /^acropol\d/.test(s.id) ? "İstasyon bilgisi Acropol Şarj'ın kendi haritasından (acropolsarj.com), günde bir kez alınır. Konut sitelerindeki cihazlar gösterilmez." : /^5sarj\d/.test(s.id) ? `İstasyon bilgisi 5 Şarj'ın kendi haritasından (5sarj.com) alınır; elle güncellenen kopya${kopyaTarih("5sarj")}. Soket gücü EPDK kaydından tamamlanır.` : /^epsis/.test(s.id) && s.official ? "İstasyon bilgisi EPSIS'in kendi haritasından (epsis.net); istasyon listesi günde bir kez güncellenir. Konut sitelerindeki cihazlar gösterilmez." : /^otopriz/.test(s.id) && s.official ? "İstasyon ve anlık durum bilgisi Otopriz'in kendi haritasından (electroop). Konut sitelerindeki cihazlar gösterilmez." : s.official ? `İstasyon bilgisi ağın kendi resmi haritasından${agSite(s)}, günde bir kez güncellenir.` : s.epdk ? `${s.rk ? `Soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir; konum ağın kendi haritasından${agSite(s)}.` : "Konum ve soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir."}${s.rl ? ` İstasyon ağın kendi listesinde${s.rk ? "" : agSite(s)} de yer alıyor.` : ""}` : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
       ${durumAg(s) ? `<p>${DURUM_AG[durumAg(s)].yol === "tarayici" ? "Anlık durum, tarayıcınızın doğrudan ağın altyapı sağlayıcısından (electroop) aldığı veridir; 1 dakikaya kadar gecikebilir." : DURUM_AG[durumAg(s)].kaynak ? `${DURUM_AG[durumAg(s)].kaynak}; 1 dakikaya kadar gecikebilir.` : "Anlık durum 1 dakikaya kadar gecikebilir."}</p>` : ""}
-      ${s.net ? `<p>İndirimli fiyat yalnızca kampanyanın geçerli olduğu kesin bilinen istasyonlarda yazılır. Ağın kampanyaları birbiriyle birleşmez. Kart indirimi ağ indiriminin üzerine hesaplanır; kart kampanyası "başka indirimle birleşmez" diyorsa liste fiyatına.</p>` : ""}</details>`;
+      ${s.net ? `<p>İndirimli fiyat yalnızca kampanyanın geçerli olduğu kesin bilinen istasyonlarda yazılır. Ağın kampanyaları birbiriyle birleşmez. Kart indirimi ağ indiriminin üzerine hesaplanır; kart kampanyası "başka indirimle birleşmez" diyorsa liste fiyatına.</p>` : ""}
+      ${here.some(c => c.tip === "uygulama") ? `<p>Uygulama indirimi yalnızca şarj o uygulamadan başlatılınca geçerlidir; ağın kendi indirimiyle birleştiği bilinmediği için liste fiyatına uygulanır. Belli günlerde geçerli kampanya haritada yalnızca o gün hesaplanır.</p>` : ""}</details>`;
   $("sh-b").scrollTop = 0;
   if (durumAg(s)) durumIste(s, durumAg(s));
 }
@@ -1940,7 +2059,7 @@ function bindEvents() {
     if (!r) return pmsg("Bu kod geçerli görünmüyor.", true);
     P = r; $("p-in").value = ""; profileChanged(); pmsg("Seçimlerin yüklendi.");
   };
-  $("p-reset").onclick = () => { if (confirm("Seçtiğin kartlar ve uygulamalar silinsin mi?")) { P = { banka: [], ag: [], arac: "", il: "" }; S.bana = null; profileChanged(); pmsg("Seçimlerin silindi."); } };
+  $("p-reset").onclick = () => { if (confirm("Seçtiğin kartlar ve uygulamalar silinsin mi?")) { P = { banka: [], ag: [], uyg: [], arac: "", il: "" }; S.bana = null; profileChanged(); pmsg("Seçimlerin silindi."); } };
   addEventListener("hashchange", () => { readHash(); $("q").value = S.q; $("sort").value = S.sort; renderQuick(); render(); if (S.view !== currentView()) show(S.view); });
 }
 const currentView = () => ["kamp", "harita", "profil"].find(v => !$("v-" + v).hidden);
@@ -1990,7 +2109,8 @@ function maybeShowInstall() {
    Sunucu, profile uyan YENİ bir kampanya eklendiğinde bildirim gönderir: kampanya başına bir kez, kişi başına günde en fazla bir. */
 const PUSH_OK = "serviceWorker" in navigator && "PushManager" in window && "Notification" in window;
 const pushOn = () => lsGet("wk.bildirim") === "1";
-const pushBody = sub => JSON.stringify({ abonelik: sub.toJSON(), profil: { banka: P.banka, ag: P.ag, arac: P.arac, il: P.il } });
+// ag: seçilen ağlar + adı bir ağ olan seçili uygulamalar (Shell Recharge); uyg: seçilen uygulamalar (Worker → uyar())
+const pushBody = sub => JSON.stringify({ abonelik: sub.toJSON(), profil: { banka: P.banka, ag: agler(), uyg: P.uyg, arac: P.arac, il: P.il } });
 const pushPost = (yol, body) => fetch("/api/bildirim/" + yol, { method: "POST", headers: { "content-type": "application/json" }, body });
 async function pushSub() { try { return await (await navigator.serviceWorker.ready).pushManager.getSubscription(); } catch { return null; } }
 async function pushSync() { // profil değişince sunucudaki kayıt da güncellenir

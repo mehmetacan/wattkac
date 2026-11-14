@@ -165,7 +165,7 @@ async function panel(request, url, env) {
 }
 
 /* ---------- Bildirimler (web push) ----------
-   POST /api/bildirim/abone   {abonelik:{endpoint}, profil:{banka,ag,arac,il}}  → kayıt / güncelleme
+   POST /api/bildirim/abone   {abonelik:{endpoint}, profil:{banka,ag,uyg,arac,il}}  → kayıt / güncelleme (uyg: uygulama kampanyası sahipleri)
    POST /api/bildirim/cik     {endpoint}                                         → kaydı sil
    GET  /api/bildirim/anahtar                                                    → VAPID açık anahtarı
    POST /api/bildirim/icerik  {endpoint}                                         → son gönderilen bildirimin metni (service worker okur)
@@ -219,7 +219,7 @@ async function bildirim(request, url, env) {
   }
   if (yol === "abone") {
     const p = b.profil || {};
-    const profil = JSON.stringify({ banka: liste(p.banka, 30), ag: liste(p.ag, 40), arac: temiz(p.arac, 30), il: temiz(p.il, 30) });
+    const profil = JSON.stringify({ banka: liste(p.banka, 30), ag: liste(p.ag, 40), uyg: liste(p.uyg, 20), arac: temiz(p.arac, 30), il: temiz(p.il, 30) });
     const say = await env.DB.prepare("SELECT COUNT(*) AS n FROM abone").first();
     if (say && say.n >= ABONE_SINIRI) return json({ ok: false, hata: "dolu" }, 503);
     await env.DB.prepare("INSERT INTO abone (endpoint, profil, kayit) VALUES (?, ?, ?) ON CONFLICT (endpoint) DO UPDATE SET profil = excluded.profil")
@@ -236,15 +236,24 @@ async function kampanyalar(env) {
   const d = await r.json(), bugun = gunTR(), out = [];
   for (const b of d.bankalar || []) for (const o of b.offers || []) out.push({ ...o, kid: b.id, kurum: b.name, tip: "banka", st: o.st || [] });
   for (const s of d.istasyonlar || []) for (const o of s.own || []) out.push({ ...o, kid: s.id, kurum: s.name, tip: "ag", st: [s.name] });
+  // uygulama kampanyası: birçok ağda (st), uygulama üzerinden; "kart" varsa yalnızca o bankanın kartlarıyla
+  for (const u of d.uygulamalar || []) for (const o of u.offers || []) out.push({ ...o, kid: u.id, kurum: u.name, tip: "uygulama", st: o.st || [] });
   return out.filter(c => (!c.bit || c.bit >= bugun) && c.link && !c.kontrol)
     .map(c => ({ ...c, anahtar: temiz(`${c.kid}|${c.big}|${c.bas || ""}`, 120), tarih: c.eklendi || c.bas || "" }));
 }
-// Kampanya bu profile uyuyor mu? Yalnızca kişinin açıkça seçtiği kart / ağ / araçla ilgili kampanyalar bildirilir.
+// Kampanya bu profile uyuyor mu? Yalnızca kişinin açıkça seçtiği kart / ağ / uygulama / araçla ilgili kampanyalar bildirilir.
 function uyar(c, p) {
   const arac = Array.isArray(c.arac) && c.arac.length, iller = Array.isArray(c.iller) && c.iller.length;
   if (arac && !c.arac.includes(p.arac)) return false;
   if (iller && !c.iller.includes(p.il)) return false;
   if (c.tip === "banka") return p.banka.includes(c.kid) && (!p.ag.length || c.st.includes(ALL) || c.st.some(s => p.ag.includes(s)));
+  if (c.tip === "uygulama") {
+    // uygulamayı ya da kampanyanın geçerli olduğu ağlardan birini seçen; kart koşulluysa ayrıca o bankanın kartı seçili olmalı
+    // (kart seçili, uygulama/ağ seçilmemişse banka kampanyası gibi bildirilir)
+    const sec = p.uyg.includes(c.kid) || c.st.some(s => p.ag.includes(s));
+    if (c.kart) return p.banka.includes(c.kart) && (sec || (!p.ag.length && !p.uyg.length));
+    return sec || !!arac;
+  }
   return p.ag.includes(c.kurum) || !!arac;
 }
 async function vapidBaslik(v, endpoint) {
@@ -266,7 +275,7 @@ async function bildirimGonder(env, gonder = fetch) {
   const islemler = []; let giden = 0;
   for (const a of aboneler) {
     let p; try { p = JSON.parse(a.profil); } catch { p = null; }
-    p = { banka: [], ag: [], arac: "", il: "", ...(p || {}) };
+    p = { banka: [], ag: [], uyg: [], arac: "", il: "", ...(p || {}) };
     const eski = gitmis.get(a.id) || new Set();
     // abonelikten sonra eklenen, daha önce bildirilmemiş, profile uyan kampanyalardan en eskisi
     const c = C.filter(k => k.tarih && k.tarih >= a.kayit && !eski.has(k.anahtar) && uyar(k, p)).sort((x, y) => x.tarih.localeCompare(y.tarih))[0];

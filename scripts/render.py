@@ -1,5 +1,8 @@
 """data/kampanyalar.json dosyasından tüm Instagram görsellerini üretir.
 
+Post türleri: banka (kart kampanyaları + o kartla geçerli uygulama kampanyaları), şarj ağı (yalnızca ağın kendi indirimi),
+uygulama (birçok ağda geçerli, uygulamadan başlatılan şarjdaki kart koşulsuz kampanya; ör. Rotawatt).
+
 Çıktı: media/<etiket>/<post_id>/{1_kapak,2_detay}.jpg ve hikaye.jpg
 Kullanım: python scripts/render.py --etiket 2026-11
 Gereksinim: google-chrome (veya chromium) ve Pillow.
@@ -94,10 +97,35 @@ def brand(tag):
     return f'<div class="brand">{BOLT.format(s=46, c="#FFD400")}<span>Watt<b>Kaç</b></span><span class="tag">{esc(tag)}</span></div>'
 
 
+GUNLER = ["pazartesi", "sali", "carsamba", "persembe", "cuma", "cumartesi", "pazar"]
+GUN_AD = {"pazartesi": "pazartesi", "sali": "salı", "carsamba": "çarşamba", "persembe": "perşembe", "cuma": "cuma",
+          "cumartesi": "cumartesi", "pazar": "pazar"}
+
+
+def gun_txt(o):
+    """'gunler': ["sali"] → 'Her salı'; gün koşulu yoksa boş."""
+    g = [GUN_AD[x] for x in GUNLER if x in (o.get("gunler") or [])]
+    if not g or len(g) == 7:
+        return ""
+    return "Her " + (", ".join(g[:-1]) + " ve " + g[-1] if len(g) > 1 else g[0])
+
+
+def banka_teklifleri(d, b):
+    """Bankanın teklifleri + o bankanın kartıyla geçerli uygulama kampanyaları ("kart": banka id; ör. Shell Recharge + Garanti).
+    Kampanya veride tek kayıttır (uygulamalar altında); kart koşullu olduğu için postu banka postudur, uygulama postunda tekrar edilmez."""
+    app = [o for u in d.get("uygulamalar", []) for o in u.get("offers", []) if o.get("kart") == b["id"]]
+    return app + list(b["offers"])
+
+
+def uygulama_teklifleri(u):
+    """Uygulama postuna giren teklifler: kart koşulu olmayanlar (kartlılar ilgili banka postunda)."""
+    return [o for o in u.get("offers", []) if not o.get("kart")]
+
+
 def bank_html(b, d, story):
     W, H = (1080, 1920) if story else (1080, 1350)
     offers = ""
-    for o in b["offers"]:
+    for o in banka_teklifleri(d, b):
         lbl = "Geçerli istasyonlar" if o["st"] != [ALL] else "Nerede geçerli"
         offers += (f'<div class="of"><div class="ot"><div class="big">{esc(o["big"])}</div><div class="son">{esc(son_txt(o["son"], "Son: "))}</div></div>'
                    f'<div class="det">{esc(o["det"])}</div><div class="lbl">{lbl}</div><div class="chips">{chips(o["st"])}</div>'
@@ -105,6 +133,28 @@ def bank_html(b, d, story):
     return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{base_css(W, H, story)}</style></head><body><div class="wrap">'
             f'{brand("Banka · " + d["donem"])}<div class="h1">{esc(b["name"])}</div><div class="h2">{esc(b["sub"])}</div>'
             f'<div class="offers">{offers}</div><div class="spacer"></div>{foot(d)}</div></body></html>')
+
+
+def app_html(u, d, story):
+    """Uygulama postu: birçok ağda geçerli, uygulamadan başlatılan şarjdaki kampanya + geçerli ağlar + gün koşulu."""
+    W, H = (1080, 1920) if story else (1080, 1350)
+    offers = ""
+    for o in uygulama_teklifleri(u):
+        gt = gun_txt(o)
+        offers += (f'<div class="of"><div class="ot"><div class="big">{esc(o["big"])}</div><div class="son">{esc(son_txt(o["son"], "Son: "))}</div></div>'
+                   f'<div class="det">{esc(o["det"])}</div>'
+                   + (f'<div class="gun">{esc(gt)}</div>' if gt else "")
+                   + f'<div class="lbl">Geçerli şarj ağları ({len(o["st"])})</div><div class="chips">{chips(o["st"])}</div>'
+                   + (f'<div class="join">Katılım: <b>{esc(o["join"])}</b></div>' if o.get("join") else "") + '</div>')
+    css = base_css(W, H, story) + (".gun{margin-top:12px;display:inline-block;font-size:26px;font-weight:900;color:#0A1020;background:#22E3A0;"
+                                   "border-radius:12px;padding:6px 16px}")
+    if not story:
+        css += ".h1{margin-top:24px}.offers{margin-top:20px}.chip{font-size:19px;padding:3px 12px}.chips{gap:6px}"
+    return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{css}</style></head><body><div class="wrap">'
+            f'{brand("Uygulama · " + d["donem"])}<div class="h1">{esc(u["name"])}</div><div class="h2">{esc(u.get("sub", ""))}</div>'
+            f'<div class="offers">{offers}</div><div class="spacer"></div>'
+            f'<div class="note">İndirim, şarjı <b>{esc(u["name"])} uygulamasından</b> başlatıp ödeyince geçerli. Kart kampanyaları banka postlarımızda.</div>'
+            f'{foot(d)}</div></body></html>')
 
 
 def station_html(s, d, story):
@@ -165,7 +215,7 @@ def cover_html(name, big, sub, bottom_left, bottom_right, kind):
     bank = kind.endswith("bank")
     bg, fg, acc = ("#FFD400", "#0A1020", "#0A1020") if bank else ("#0A1020", "#F4F6FB", "#22E3A0")
     boxbg, boxfg = ("#0A1020", "#FFD400") if bank else ("#FFD400", "#0A1020")
-    pill = "BANKA" if bank else "ŞARJ AĞI"
+    pill = "BANKA" if bank else "UYGULAMA" if kind.endswith("app") else "ŞARJ AĞI"
     nm = NAME_BREAK.get(name, esc(name).replace("&lt;br&gt;", "<br>"))
     lines = nm.count("<br>") + 1
     fs = 188 if lines == 1 and len(name) <= 6 else (150 if lines == 1 else 158)
@@ -215,7 +265,7 @@ def render_all(d, etiket, sadece=None):
                         "Sabit post · Tümü burada", "Liste için kaydır →", "sum_bank"), f"{p}/1_kapak.jpg", 1080, 1350)
         yok = ", ".join(x.split(" (")[0] for x in d["kampanyasiz_bankalar"][:2])
         shot(list_html('Şarjda bu ay<br><b style="color:#FFD400">hangi banka?</b>', f'{len(banks)} bankanın {d["donem"]} şarj kampanyaları',
-                       [(b["name"], " / ".join(o["big"] for o in b["offers"])) for b in banks], d,
+                       [(b["name"], " / ".join(o["big"] for o in banka_teklifleri(d, b))) for b in banks], d,
                        f'<div class="foot" style="margin-top:14px;font-size:22px">Bu ay şarj kampanyası bulunamayan: {esc(yok)}.</div>'),
              f"{p}/2_liste.jpg", 1080, 1350)
         add("ozet_bankalar", "ozet", "Banka kampanyaları özeti", ["1_kapak.jpg", "2_liste.jpg"])
@@ -236,6 +286,19 @@ def render_all(d, etiket, sadece=None):
         shot(bank_html(b, d, False), f"{p}/2_detay.jpg", 1080, 1350)
         shot(bank_html(b, d, True), f"{p}/hikaye.jpg", 1080, 1920)
         add(pid, "banka", b["name"], ["1_kapak.jpg", "2_detay.jpg", "hikaye.jpg"])
+    # Uygulama postu: yalnızca kart koşulu olmayan uygulama kampanyası varsa (kartlı olanlar banka postunda)
+    for u in [u for u in d.get("uygulamalar", []) if uygulama_teklifleri(u)]:
+        pid = f"uygulama_{u['id']}"
+        if not want(pid):
+            continue
+        o0 = uygulama_teklifleri(u)[0]
+        c = u.get("cover") or {"big": o0["big"], "son": o0["son"],
+                               "sub": " · ".join(x for x in (gun_txt(o0), f"{len(o0['st'])} şarj ağında") if x)}
+        p = f"{out}/{pid}"
+        shot(cover_html(u["name"], c["big"], c["sub"], son_txt(c["son"], "Son gün: "), "Detay için kaydır →", "app"), f"{p}/1_kapak.jpg", 1080, 1350)
+        shot(app_html(u, d, False), f"{p}/2_detay.jpg", 1080, 1350)
+        shot(app_html(u, d, True), f"{p}/hikaye.jpg", 1080, 1920)
+        add(pid, "uygulama", u["name"], ["1_kapak.jpg", "2_detay.jpg", "hikaye.jpg"])
     for s in sts:
         pid = f"istasyon_{s['id']}"
         if not want(pid):
@@ -265,7 +328,7 @@ def render_all(d, etiket, sadece=None):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--etiket", required=True, help="ör. 2026-11 veya güncelleme için 2026-11-15")
-    ap.add_argument("--sadece", default="", help="virgülle post id'leri, ör. banka_garanti,istasyon_zes (boş = hepsi)")
+    ap.add_argument("--sadece", default="", help="virgülle post id'leri, ör. banka_garanti,istasyon_zes,uygulama_rotawatt (boş = hepsi)")
     a = ap.parse_args()
     data = json.load(open(os.path.join(ROOT, "data", "kampanyalar.json"), encoding="utf-8"))
     y, m, g = data["guncelleme"].split("-")
