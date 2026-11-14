@@ -27,14 +27,16 @@ Kaynaklar (her biri ağın kendi sitesindeki haritanın kullandığı adres):
                haritasının KML dışa aktarımı). Yalnızca ad + konum var ve liste EPDK kaydından çok daha az istasyon içeriyor:
                bu liste istasyonların yerine geçmez, yalnızca EPDK "K-ŞARJ" kayıtlarını doğrulamak için kullanılır
                (istasyon_birlestir.py DOGRULA). Her kayıtta eşleşen EPDK numarası "e"de tutulur.
-  Neva Şarj, Lumicle, Ecojet   https://<ağ>.mapcontentpartners.service.electroop.io/2.2/locations (electroop OCPI;
+  Otopriz, Neva Şarj, Lumicle, Ecojet   https://<ağ>.mapcontentpartners.service.electroop.io/2.2/locations (electroop OCPI;
                ağların haritası electroop.io/chargestations/index?company=<ağ>). Kayıtlar ünite (EVSE) düzeyinde: istasyonda toplanır.
+               electroop GitHub Actions sunucularına 403 veriyor (13 Kasım 2026): çekim başarısız olursa önceki dosya korunur;
+               electroop GitHub'ı engellerse liste elle yenilenir (--dosya, aşağıda; veri_kontrol.py ELLE_KOPYA 60 gün uyarısı).
+               Konum ve anlık durum aynı kaynaktan: site anlık durumu ziyaretçinin tarayıcısından aynı uçtan alır.
   EPSIS        https://www.epsis.net/api/public/locations?lang=tr      (www.epsis.net/lokasyonlar; tek istek, istasyon düzeyinde GeoJSON).
                EPSIS telefonda izin verdi (14 Kasım 2026): 'siteden alabilirsiniz, kaynaklarımız açık'. robots.txt /api/ yasağı bu
                izinle aşılıyor; yalnızca /api/public/locations kullanılır. Eski electroop kaynağı epsis_electroop()'ta, kullanılmıyor.
-  Otopriz      data/ocm/istasyonlar_ocm.json içindeki "v": "Otopriz" kayıtları: Otopriz'in Open Charge Map'te kendi veri
-               sağlayıcısıyla paylaştığı açık veri (CC-0; tools/ocm_cek.py çeker, bu yüzden iş akışında önce çalışır). Otopriz'in
-               electroop listesi Actions sunucularına 403 veriyor (13 Kasım 2026): kodu otopriz_electroop()'ta duruyor, kullanılmıyor.
+  (Otopriz'in Open Charge Map'teki verisinden üreten otopriz() SOURCES'ta değil: konum ve anlık durum aynı kaynaktan olsun diye
+   14 Kasım 2026'dan beri liste electroop'tan, otopriz_electroop().)
   Şarjon       https://info.sarjon.com.tr/api/public/stations          (info.sarjon.com.tr/Stations)
   Solinved     https://cpms-api.doldurapp.com/ChargePoint/GetChargePointLocationsMap?tenantCode=SOL (solinvedcharge.com haritası)
   D-Charge     https://dcharge.com.tr/istasyonlar/stations              (dcharge.com.tr/istasyonlar)
@@ -55,7 +57,7 @@ Kaynaklar (her biri ağın kendi sitesindeki haritanın kullandığı adres):
 Kurallar: günde bir kez, her kaynağa tek istek (BIG Station: 100'erlik sayfalar, aralarında 1 sn); anahtar/oturum gerektiren kaynaklar KULLANILMAZ.
 Bir ağın çekimi başarısız olursa o ağın önceki dosyası korunur.
 Yalnızca bazı ağları çekmek için adlarını verin: python3 tools/ag_istasyonlari.py voltup
-Elle güncellenen electroop kopyası (EKA Enerji; uca istek atılmaz): python3 tools/ag_istasyonlari.py eka --dosya <ocpi.json> [--tarih …]
+Elle güncellenen electroop kopyası (EKA Enerji; iş akışında 403 alan Otopriz/Neva/Lumicle/Ecojet de; uca istek atılmaz): python3 tools/ag_istasyonlari.py eka --dosya <ocpi.json> [--tarih …]
 Kayıt alanları istasyon_cek.py ile aynıdır (i, a, o, n, b, k, t, ac, dc, c, ad) + pr (soket fiyatları, varsa).
 """
 import html, json, math, pathlib, re, sys, urllib.parse, urllib.request, datetime, zlib
@@ -1237,8 +1239,9 @@ def _bitir(r):
 # kökü (" - DC 2", "AC 22 kW 02 Kablolu", "-1" gibi ekler atılarak) ve konumla tek istasyonda toplanır. Koordinat alanları kayıtların
 # çoğunda doğru; enlem/boylamı yer değiştirmiş birkaç kayıt (Türkiye dışına düşen ya da ilinden uzak) takas edilir. Anlık durum
 # (evses[].status) yazılmaz; publish=false ve kaldırılmış (REMOVED) üniteler atlanır. Fiyat ucu (tariffs) yok: tarife tek
-# (site/tarifeler.json). ELECTROOP_CANLI ağlarında ünite (lokasyon) kimlikleri "cih"te tutulur: site detay açılınca
-# /api/durum/<ağ>?c=… ile anlık boş/şarjda durumunu sorar. Otopriz'de yok: listesi (1,2 MB) Worker'ın CPU sınırına sığmıyor.
+# (site/tarifeler.json). ELECTROOP_CANLI ağlarında ünite (lokasyon) kimlikleri "cih"te tutulur: site detay açılınca anlık
+# boş/şarjda durumunu ziyaretçinin tarayıcısından doğrudan <ağ>.mapcontentpartners.service.electroop.io/2.2/locations ucundan sorar
+# (electroop onayı, kullanıcı bildirdi, 14 Kasım 2026; data/kaynaklar.json izinler). Konum ve anlık durum aynı uçtan.
 ELECTROOP_URL = "https://{}.mapcontentpartners.service.electroop.io/2.2/locations"
 ELECTROOP_SAYFA = "https://electroop.io/chargestations/index?company={}"
 # ag anahtarı → (electroop şirket adı, haritadaki marka, EPDK/OSM/OCM'deki ağ (istasyon_birlestir.RESMI ile aynı), ad öneki)
@@ -1250,7 +1253,11 @@ ELECTROOP = {"otopriz": ("otopriz", "Otopriz", r"\botopriz\b|\bdicle kok enerji"
              # EKA Enerji: ekaenerjiteknoloji.com.tr/sarj/istasyonlar haritayı electroop'tan gömüyor. electroop Actions/Cloudflare'e 403
              # verdiği için SOURCES'ta yok: ELLE_KOPYA (aşağıda) ile kullanıcının aldığı OCPI kopyasından üretilir.
              "eka": ("ekaenerji", "EKA Enerji", r"\beka enerji", r"eka")}
-ELECTROOP_CANLI = {"neva", "epsis", "lumicle", "ecojet"}
+ELECTROOP_CANLI = {"otopriz", "neva", "epsis", "lumicle", "ecojet", "eka"}
+# Günlük iş akışında electroop'tan çekilen ağlar: electroop GitHub Actions'a 403 veriyor; o zaman önceki dosya korunur ve liste elle
+# yenilenir (python3 tools/ag_istasyonlari.py <ağ> --dosya <ocpi.json>). Dosyaya bu not yazılır; eskime uyarısı veri_kontrol.py ELLE_KOPYA.
+ELECTROOP_GH = {"otopriz", "neva", "lumicle", "ecojet"}
+ELECTROOP_NOT = "electroop GitHub'ı engellerse liste elle yenilenir (python3 tools/ag_istasyonlari.py {} --dosya <ocpi.json>)"
 _OCPI_SOKET = {"IEC_62196_T2": "Type 2", "IEC_62196_T2_COMBO": "CCS", "CHADEMO": "CHAdeMO", "IEC_62196_T1": "Type 1",
                "IEC_62196_T1_COMBO": "CCS", "DOMESTIC_F": "Schuko", "GBT_DC": "GB/T"}
 
@@ -1361,11 +1368,14 @@ def _electroop(ag, liste=None):
 
 
 def otopriz_electroop():
-    """Otopriz'in electroop OCPI listesi. electroop GitHub Actions sunucularına 403 veriyor (13 Kasım 2026): SOURCES'ta kullanılmıyor,
-    yerine otopriz() (Open Charge Map'teki Otopriz verisi) geçti. İzin gelirse SOURCES'ta yeniden otopriz için kullanılabilir."""
+    """Otopriz'in electroop OCPI listesi (SOURCES "otopriz"; 14 Kasım 2026'dan beri yeniden). Konum ve anlık durum aynı kaynaktan:
+    "cih" = OCPI lokasyon kimlikleri, site anlık durumu tarayıcıdan aynı uçtan alır. electroop GitHub Actions'a 403 verirse önceki
+    dosya korunur ve liste elle yenilenir (ELECTROOP_GH)."""
     return _electroop("otopriz")
 
 
+# KULLANILMIYOR (SOURCES'ta değil, 14 Kasım 2026): konum ve anlık durum aynı kaynaktan olsun diye Otopriz'in listesi electroop'tan
+# (otopriz_electroop). Yedek olarak duruyor.
 # Otopriz: kendi istasyon verisini Open Charge Map'te "Otopriz" veri sağlayıcısıyla (lisans CC-0) paylaşıyor. tools/ocm_cek.py
 # OCM'yi günde bir kez çeker ve kaydın veri sağlayıcısını "v" alanına yazar; burada yalnızca "v": "Otopriz" kayıtları alınır (OCM
 # katkıcılarının Otopriz işletmecili kayıtları alınmaz). OCM kayıtları çoğunlukla ünite düzeyinde ("Kiza, Seyhan - DC-1", "- AC"):
@@ -1453,8 +1463,9 @@ def epsis_electroop():
 # 80 kW 2 soket), cx soket standardı bitleri (1 Type 2, 2 CCS2, 4 CHAdeMO, 8 GB/T, 16 Schuko), fm soket biçimi (1 priz, 2 kablolu),
 # ac erişim (p herkese açık, c müşterilere, diğer: site sakinlerine), r kısıtlı erişim, nw yeni, im görsel, l electroop OCPI lokasyon
 # kimlikleri. Tutulanlar: ad, konum, adres/il, soket sayısı/türü/gücü; anlık durum listeye yazılmaz. Kimlik electroop listesindeki
-# gibi "epsis" + en küçük OCPI lokasyon kimliği (önceki kayıtlarla aynı kalsın); "cih"te EPSIS lokasyon kimliği: site detay açılınca
-# /api/durum/epsis?c=… ile o lokasyonun boş/dolu soket sayısını sorar. meta.tariff (AC/DC TL/kWh) kayda "tarife" olarak yazılır ve
+# gibi "epsis" + en küçük OCPI lokasyon kimliği (önceki kayıtlarla aynı kalsın); "cih"te l alanındaki electroop OCPI lokasyon
+# kimlikleri: site detay açılınca anlık durumu ziyaretçinin tarayıcısından doğrudan electroop'tan sorar (electroop onayı, kullanıcı
+# bildirdi, 14 Kasım 2026; data/kaynaklar.json izinler). Liste kaynağı EPSIS'in kendi ucu olarak kalır. meta.tariff (AC/DC TL/kWh) kayda "tarife" olarak yazılır ve
 # site/tarifeler.json "EPSIS" ile karşılaştırılır (fark raporlanır; fiyat buradan değiştirilmez).
 EPSIS_URL = "https://www.epsis.net/api/public/locations?lang=tr"
 EPSIS_SAYFA = "https://www.epsis.net/lokasyonlar"
@@ -1523,7 +1534,8 @@ def epsis():
                 r["t"].append(t)
         if p.get("st") == "m":
             r["bakim"] = 1
-        r["cih"] = [lid]
+        if ocpi:  # electroop OCPI lokasyon (EVSE) kimlikleri: site detay açılınca anlık durumu tarayıcıdan electroop'tan sorar
+            r["cih"] = ocpi
         il = _il(p.get("c")) or kd.il_serbest(p.get("a"))
         r["ad"] = _cv_adres(" ".join(str(p.get("a") or "").split()), il, p.get("d") or None)
         if il:
@@ -2013,8 +2025,8 @@ SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            "cv": (cv, CV_SAYFA, 50),
            "acropol": (acropol, ACROPOL_SAYFA, 15),
            "ksarj": (ksarj, KSARJ_SAYFA, 30),
-           # Otopriz: electroop (otopriz_electroop) Actions sunucularına 403 veriyor; kaynak Otopriz'in OCM'deki açık verisi (CC-0)
-           "otopriz": (otopriz, OTOPRIZ_OCM_SAYFA, 250),
+           # Otopriz: ağın kendi haritası (electroop; konum ve anlık durum aynı kaynaktan). Actions'a 403 → önceki dosya, elle yenilenir
+           "otopriz": (otopriz_electroop, ELECTROOP_SAYFA.format("otopriz"), 250),
            "neva": (neva, ELECTROOP_SAYFA.format("nevasarj"), 30),
            # EPSIS: kendi haritasının ucu (EPSIS telefonda izin verdi, 14 Kasım 2026; electroop listesi epsis_electroop()'ta, kullanılmıyor)
            "epsis": (epsis, EPSIS_SAYFA, 50),
@@ -2032,8 +2044,9 @@ SOURCES = {"trugo": (trugo, "https://trugo.com.tr/individual/network", 500),
            }
 
 
-# Elle güncellenen electroop kopyaları: electroop GitHub Actions ve Cloudflare IP'lerine 403 veriyor; bu ağlar SOURCES'ta yok, listeleri
-# bir kez alınmış OCPI "locations" yanıtından üretilir (uca istek atılmaz):
+# Elle güncellenen electroop kopyaları: electroop GitHub Actions ve Cloudflare IP'lerine 403 veriyor; EKA SOURCES'ta yok, SOURCES'taki
+# electroop ağları (ELECTROOP_GH) iş akışında 403 alırsa aynı yolla yenilenir. Listeler bir kez alınmış OCPI "locations" yanıtından
+# üretilir (uca istek atılmaz):
 #   python3 tools/ag_istasyonlari.py eka --dosya <ocpi.json> [--tarih YYYY-AA-GG]
 # Kopyaların tek listesi ve 60 gün eskime uyarısı: tools/veri_kontrol.py ELLE_KOPYA. Haritadaki kullanımı istasyon_birlestir.py'de.
 ELLE_KOPYA_SAYFA = {"eka": "https://ekaenerjiteknoloji.com.tr/sarj/istasyonlar"}  # ağın kendi sitesi (haritayı electroop'tan gömer)
@@ -2048,7 +2061,8 @@ def elle_kopya(ag, dosya, tarih):
         sys.exit("OCPI yanıtında 'data' listesi yok")
     recs = sorted(_electroop(ag, liste), key=lambda r: r["i"])
     data = {"ag": ag, "kaynak": ELLE_KOPYA_SAYFA.get(ag) or ELECTROOP_SAYFA.format(ELECTROOP[ag][0]), "cekildi": tarih, "sayi": len(recs),
-            "not": "electroop haritasından alınan anlık kopya; otomatik güncellenmez", "istasyonlar": recs}
+            "not": ELECTROOP_NOT.format(ag) if ag in ELECTROOP_GH else "electroop haritasından alınan anlık kopya; otomatik güncellenmez",
+            "istasyonlar": recs}
     (OUT / f"{ag}.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     print(f"{ag}: {len(recs)} istasyon → {OUT / (ag + '.json')} (cekildi {tarih})")
 
@@ -2079,7 +2093,8 @@ def main():
             continue
         recs.sort(key=lambda r: r["i"])
         f = OUT / f"{key}.json"
-        data = {"ag": key, "kaynak": page, "cekildi": datetime.date.today().isoformat(), "sayi": len(recs), **EK.pop(key, {}), "istasyonlar": recs}
+        data = {"ag": key, "kaynak": page, "cekildi": datetime.date.today().isoformat(), "sayi": len(recs), **EK.pop(key, {}),
+                **({"not": ELECTROOP_NOT.format(key)} if key in ELECTROOP_GH else {}), "istasyonlar": recs}
         f.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
         print(f"{key}: {len(recs)} istasyon")
     if failed == len(secilen):

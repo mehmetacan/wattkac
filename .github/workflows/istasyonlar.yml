@@ -1,6 +1,6 @@
 name: İstasyon verisini güncelle
 
-# 1) OpenStreetMap'ten istasyonları çeker  1b) ZES/Ovolt/WAT/Trugo/VoltUp/RST/CV Charging/Acropol Şarj/Neva Şarj/EPSIS/Lumicle/Ecojet/Şarjon/Solinved/D-Charge/Aksa Şarj/En Yakıt/MKS Şarj/Oncharge'ın kendi haritalarından (VoltUp: istasyon fiyatlarıyla; K-Şarj ve AOS Technology'nin haritası EPDK kayıtlarını doğrulamak ve konumlarını almak, otoWATT'ın konumsuz listesi yalnızca doğrulamak için; 5 Şarj bot korumalı, data/aglar/5sarj.json elle güncellenen kopya; EKA Enerji'nin electroop haritası Actions'a 403 veriyor, data/aglar/eka.json elle güncellenen kopya, yalnızca EPDK kayıtlarını doğrulamak ve konumlarını almak için) ve BIG Station'ın sisteminden (istasyon fiyatlarıyla) çeker (Otopriz: Open Charge Map'te paylaştığı açık veri, CC-0)  2) EPDK'nın açık servisinden tüm halka açık istasyonları (kesin koordinat + soket) çeker
+# 1) OpenStreetMap'ten istasyonları çeker  1b) ZES/Ovolt/WAT/Trugo/VoltUp/RST/CV Charging/Acropol Şarj/Otopriz/Neva Şarj/EPSIS/Lumicle/Ecojet/Şarjon/Solinved/D-Charge/Aksa Şarj/En Yakıt/MKS Şarj/Oncharge'ın kendi haritalarından (VoltUp: istasyon fiyatlarıyla; K-Şarj ve AOS Technology'nin haritası EPDK kayıtlarını doğrulamak ve konumlarını almak, otoWATT'ın konumsuz listesi yalnızca doğrulamak için; 5 Şarj bot korumalı, data/aglar/5sarj.json elle güncellenen kopya; EKA Enerji'nin electroop haritası Actions'a 403 veriyor, data/aglar/eka.json elle güncellenen kopya, yalnızca EPDK kayıtlarını doğrulamak ve konumlarını almak için) ve BIG Station'ın sisteminden (istasyon fiyatlarıyla) çeker (Otopriz/Neva Şarj/Lumicle/Ecojet: electroop; electroop Actions'a 403 verirse önceki dosya korunur, liste elle yenilenir)  2) EPDK'nın açık servisinden tüm halka açık istasyonları (kesin koordinat + soket) çeker
 # 3) ikisini birleştirip site/istasyonlar.json üretir.
 on:
   schedule:
@@ -36,7 +36,6 @@ jobs:
           "$RUNNER_TEMP/pw/node_modules/.bin/playwright" install --with-deps chromium
           NODE_PATH="$RUNNER_TEMP/pw/node_modules" node tools/voltup_fiyat.mjs
         continue-on-error: true
-      # Otopriz'in listesi OCM'deki Otopriz verisinden (CC-0) alınır: OCM ağ listelerinden önce çekilir
       - name: Open Charge Map istasyonlarını çek
         env:
           OCM_API_KEY: ${{ secrets.OCM_API_KEY }}

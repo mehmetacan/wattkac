@@ -45,9 +45,8 @@ RESMI = {"trugo": r"trugo", "zes": r"\bzes\b", "ovolt": r"ovolt|sharz", "wat": r
          "5sarj": r"\b5 sarj\b|\bborenco",
          # Ağların kendi haritaları (tools/ag_istasyonlari.py; her birinin kaynağı orada). Desenler sözcük sınırıyla: "lumi" BLADECO
          # ALÜMİNYUM'u, "aksa" Aksa Doğalgaz adlı istasyonları, "d-charge" Doğuş Dijital Enerji'nin (ayrı ağ) kayıtlarını yakalamasın.
-         # Otopriz: Open Charge Map'teki "Otopriz" veri sağlayıcılı kayıtlar (CC-0; EPDK marka "Otopriz", işletmeci DİCLE KÖK ENERJİ;
-         # OCM işletmeci "Otopriz (Türkiye)": OCM'den gelen Otopriz kayıtları bu yüzden ayrıca eklenmez).
-         # electroop OCPI: Neva Şarj (EPDK "NEVA ŞARJ";
+         # electroop OCPI (konum ve anlık durum aynı kaynaktan; "cih" = OCPI lokasyon kimlikleri): Otopriz (EPDK marka "Otopriz",
+         # işletmeci DİCLE KÖK ENERJİ; OCM işletmeci "Otopriz (Türkiye)"), Neva Şarj (EPDK "NEVA ŞARJ";
          # OSM "Neva Şarj"/"Neva"), EPSIS (işletmeci FORM ELEKTRİK İNŞAAT), Lumicle (EPDK "LUMİCLE", işletmeci LUMHOUSE ENERJİ; OCM
          # "Lumicle (TR)"), Ecojet (işletmeci YENİ SÜRDÜRÜLEBİLİR ENERJİ)
          "otopriz": r"\botopriz\b|\bdicle kok enerji",
@@ -67,9 +66,6 @@ RESMI = {"trugo": r"trugo", "zes": r"\bzes\b", "ovolt": r"ovolt|sharz", "wat": r
 # girilmemiş cihazlar) EPDK kaydıyla gösterilmeye devam eder.
 EKSIK_TUT = {"bigstation",
              "mks",
-             # Otopriz: liste Otopriz'in Open Charge Map'te paylaştığı veri (CC-0). 13 Kasım 2026'da electroop listesindeki 399
-             # istasyonun 145'i (%36; çoğu eski istasyonlar: Saray Otopark, Vizyon Park, File Liv …) bu veride yok: EPDK'dan gösterilir.
-             "otopriz",
              }
 # EKSIK_TUT ağlarında listede karşılığı olmayan EPDK kaydı bu desene (ad + adres) uyuyorsa yine gösterilmez: ağın listesinden konut
 # olduğu için ayıklanan kayıtlar EPDK üzerinden geri gelmesin (MKS: Batalgazi 5./6. Etap konut blokları, "… Evleri", "Emlak Konut Sitesi").
@@ -78,11 +74,8 @@ EKSIK_HARIC = {
     "mks": r"\betap\b|\bsite(si)?\b|\bevleri\b|\bkonut|\bresid|\brezid|\bblok\b",
     }
 # Aynısı, yalnızca EPDK kaydının adına bakılır (adreste "Küme Evleri", "Sanayi Sitesi 11. Blok" gibi konut olmayan ifadeler geçebilir).
-# Otopriz: ağın listesindeki ayıklamayla aynı (ag_istasyonlari.YENI_HARIC: konut/site, test, sahada olmayan, depo).
-EKSIK_HARIC_AD = {
-    "otopriz": r"(?<!sanayi )\bsite(si|leri)?\b|\bkonut|\bresid|\brezid|\bblok\b|\bevleri\b|\bkonaklari\b|\bvilla|\bapartman|\blojman"
-               r"|\btest|\bdeneme\b|\bsahada yok\b|\bdepo\b",
-    }
+# (Otopriz 14 Kasım 2026'ya dek burada ve EKSIK_TUT'taydı; liste yeniden electroop'tan, saf RESMI.)
+EKSIK_HARIC_AD = {}
 # Resmi listesi eksik ya da yalnızca ad + konumdan oluşan ağlar: liste istasyonların yerine geçmez, EPDK kayıtları gösterilmeye devam
 # eder. Listede karşılığı olan EPDK kaydı (eşleştirme ag_istasyonlari.py'de yapılır, EPDK numarası listede "e") "rl" ile işaretlenir ve
 # konumu ağın koordinatına çekilir ("rk"). Ağın koordinatı konum denetiminden (konum_denetim.py; adres olarak EPDK adresi) geçmezse ya
@@ -260,6 +253,8 @@ def main():
             dogrula_say[dag][1 if no in dogrulanan[dag] else 2] += 1
             if no in dogrulanan[dag]:
                 rec["rl"] = 1  # ağın kendi haritasında da var
+                if dogrula_kayit[no].get("cih"):  # electroop lokasyon kimlikleri (EKA): site anlık durumu tarayıcıdan electroop'tan sorar
+                    rec["cih"] = list(dogrula_kayit[no]["cih"])
             if no in dogrula_konum:
                 rec["rk"] = 1  # konum ağın kendi haritasından
         if konum:
@@ -278,6 +273,8 @@ def main():
                 ana["rl"] = 1
             if rec.get("rk"):
                 ana["rk"] = 1
+            if rec.get("cih"):
+                ana["cih"] = sorted(set(ana.get("cih") or []) | set(rec["cih"]))
             if soketler:
                 soket_ekle(ana, soketler)
             else:
@@ -461,7 +458,7 @@ def main():
         if b:
             cnt[b.lower()] = cnt.get(b.lower(), 0) + 1
     data = {"guncelleme": datetime.date.today().isoformat(),
-            "kaynak": "EPDK Şarj İstasyonları kaydı, ağların resmi haritaları, © OpenStreetMap katkıda bulunanlar (ODbL), © Open Charge Map (CC BY 4.0), Otopriz açık verisi (CC-0, Open Charge Map üzerinden)",
+            "kaynak": "EPDK Şarj İstasyonları kaydı, ağların resmi haritaları, © OpenStreetMap katkıda bulunanlar (ODbL), © Open Charge Map (CC BY 4.0)",
             "sayi": len(recs), "resmi_kaynaklar": kaynaklar, "secili_aglar": sorted(secili.keys()),
             "isletmeciler": ops, "istasyonlar": recs}
     txt = json.dumps(data, ensure_ascii=False, separators=(",", ":"))

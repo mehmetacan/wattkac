@@ -68,6 +68,15 @@ ve her gün 09:10'da çalıştırır.
   sayılır). Betik EPDK kayıtlarıyla eşleştirir (konumla 300 m, olmazsa adla) ve EPDK numaralarını `e` listesine yazar;
   `istasyon_birlestir.py` `DOGRULA` ile EPDK kayıtları gösterilmeye devam eder, listede olanlar `rl: 1` alır ve detayda
   "5 Şarj'ın kendi haritasında da yer alıyor" yazar. Listede olup EPDK'da olmayan nokta eklenmez. Kopya kendiliğinden güncellenmez.
+- **electroop altyapılı ağlar** (Otopriz, Neva Şarj, Lumicle, Ecojet; EPSIS ve EKA Enerji yalnızca anlık durum için):
+  liste `https://<ağ>.mapcontentpartners.service.electroop.io/2.2/locations` (OCPI 2.2, giriş yok) ucundan alınır, `cih` OCPI
+  lokasyon kimlikleridir (EPSIS: epsis.net listesindeki `l` alanı; EKA: elle güncellenen kopyada eşleşen EPDK kaydına aktarılır).
+  Konum ve anlık durum aynı kaynaktan. electroop GitHub Actions'a 403 veriyor (13 Kasım 2026): iş akışı çekemezse önceki dosya
+  korunur; **electroop GitHub'ı engellerse liste elle yenilenir** (`python3 tools/ag_istasyonlari.py <ağ> --dosya <ocpi.json>`;
+  60 günden eskiyince `veri_kontrol.py` uyarır). **Anlık durum:** detay açılınca ziyaretçinin tarayıcısı ilgili ağın listesini
+  doğrudan electroop'tan ister (electroop onayı, kullanıcı bildirdi, 14 Kasım 2026; Worker aracı değil). 6 sn zaman aşımı, ağ başına
+  60 sn bellek içi önbellek (aynı ağın başka istasyonu yeniden indirmez); yanıt hemen lokasyon → EVSE durumu haritasına indirgenir,
+  ham veri tutulmaz. AVAILABLE → boşta; CHARGING, BLOCKED → şarj ediyor; diğerleri bilinmiyor (EVSE başına sayılır).
 - **OpenStreetMap ve Open Charge Map**: yalnızca EPDK'da karşılığı olmayan istasyonlar eklenir; EPDK kayıtlarına saat/web bilgisi katar.
 
 EPDK servisinden hiç veri alınamadıysa eski yönteme (CSV listesi + adresten konum arama) düşülür.

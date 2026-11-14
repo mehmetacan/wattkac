@@ -31,7 +31,13 @@ KOPYA_GUN = 60        # elle güncellenen ağ kopyası en fazla bu kadar gün es
 # (tek liste: yeni kopya ağı buraya eklenir; site metni için istasyon_birlestir.py "not" alanına bakar)
 ELLE_KOPYA = {"5sarj": ("5 Şarj", "5sarj.com/api/locations/map-pins kopyası (tools/5sarj_kopya.py ile dönüştürülür)"),
               "eka": ("EKA Enerji", "ekaenerji.mapcontentpartners.service.electroop.io/2.2/locations kopyası "
-                                    "(python3 tools/ag_istasyonlari.py eka --dosya <ocpi.json> ile dönüştürülür; electroop Actions'a 403 veriyor)")}
+                                    "(python3 tools/ag_istasyonlari.py eka --dosya <ocpi.json> ile dönüştürülür; electroop Actions'a 403 veriyor)"),
+              # Günlük iş akışı electroop'tan çekmeyi dener; electroop GitHub Actions'a 403 verirse önceki dosya korunur ve liste elle
+              # yenilenir (13 Kasım 2026'dan beri 403). İş akışı çekebildiği gün 'cekildi' kendiliğinden güncellenir.
+              **{ag: (ad, f"{sirket}.mapcontentpartners.service.electroop.io/2.2/locations kopyası (python3 tools/ag_istasyonlari.py {ag} "
+                          "--dosya <ocpi.json> ile dönüştürülür; electroop GitHub Actions'a 403 veriyor)")
+                 for ag, ad, sirket in (("otopriz", "Otopriz", "otopriz"), ("neva", "Neva Şarj", "nevasarj"),
+                                        ("lumicle", "Lumicle", "lumicle"), ("ecojet", "Ecojet", "ecojet"))}}
 
 hatalar, uyarilar = [], []
 hata, uyari = hatalar.append, uyarilar.append
