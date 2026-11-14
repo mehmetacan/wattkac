@@ -19,19 +19,6 @@
       },
       "offers": [
         {
-          "big": "%50 bonus",
-          "det": "Shell Recharge uygulamasıyla 500 TL+ şarjda",
-          "st": [
-            "Shell Recharge"
-          ],
-          "son": "30 Kasım",
-          "join": "BonusFlaş'tan katıl + Shell Recharge uygulamasına kayıt",
-          "link": "https://www.shell.com.tr/suruculer/shellden-avantajli-kampanyalar/shell-recharge-kullanicilarina-ozel-garanti-bbva-kredi-kartlari-ile-yaptiklari-sarjlamalarda-50-bonus-firsati.html",
-          "bas": "2026-10-23",
-          "bit": "2026-11-30",
-          "kosul": "Garanti BBVA kredi kartlarıyla, Shell Recharge uygulaması üzerinden 500 TL ve üzeri şarj; tek seferde veya farklı günlerde. Toplam bonus tavanı resmi sayfada belirtilmemiş."
-        },
-        {
           "big": "75 TL bonus",
           "det": "Tek seferde 350 TL+ şarjda · toplam 750 TL",
           "st": [
@@ -86,7 +73,7 @@
             "En Yakıt",
             "EFISH",
             "Porty Tech",
-            "Zeplin Enerji",
+            "Zeplin",
             "Tunçmatik",
             "Migen Enerji (Mig-Go)",
             "Wattarya",
@@ -147,7 +134,7 @@
           "st": [
             "Voltla uygulaması",
             "Powerşarj",
-            "Zeplin Enerji",
+            "Zeplin",
             "Tunçmatik",
             "Şarjon",
             "Voltgo",
@@ -373,6 +360,81 @@
           "bas": "2026-11-01",
           "bit": "2026-11-30",
           "kosul": "Bireysel, ek ve sanal kartlar (Miles&Smiles, Sağlam Kart, Özel Bankacılık World Elite dahil); katılım 50.000 müşteriyle sınırlı; diğer kampanyalarla birleşmez."
+        }
+      ]
+    }
+  ],
+  "uygulamalar": [
+    {
+      "id": "rotawatt",
+      "name": "Rotawatt",
+      "sub": "Ortak şarj ve ödeme uygulaması",
+      "offers": [
+        {
+          "big": "%20 indirim",
+          "kisa": "Her salı",
+          "det": "Her salı Rotawatt uygulamasından başlatılan şarjda · anlaşmalı ağlarda",
+          "st": [
+            "Zeplin",
+            "Voltgo",
+            "Checkpoint",
+            "Mercury Şarj",
+            "MyCharge",
+            "Tripy",
+            "Acropol Şarj",
+            "As Plus Şarj",
+            "Bölgem Mobilite",
+            "Çelikler Enerji",
+            "Econ",
+            "EvSolt",
+            "Greendrive",
+            "i-Şarj",
+            "KES",
+            "Meis Charge",
+            "Mithra Pod",
+            "MyPower",
+            "Promaster",
+            "Royal Şarj",
+            "Solinved",
+            "Spectrum",
+            "Swapp",
+            "ŞarjPlus",
+            "Tam Şarj",
+            "TR Charge"
+          ],
+          "gunler": [
+            "sali"
+          ],
+          "son": "31 Aralık",
+          "join": "Rotawatt uygulamasından anlaşmalı markanın istasyonunda şarjı başlat, ödemeyi uygulamadan yap",
+          "link": "https://www.instagram.com/rotawatt/",
+          "bas": "2026-11-11",
+          "bit": "2026-12-31",
+          "kosul": "Yalnızca salı günleri, Rotawatt uygulaması üzerinden anlaşmalı markaların istasyonlarında başlatılıp ödenen şarjlarda %20 indirim; 31 Aralık 2026'ya kadar. Kaynak: Rotawatt'ın resmi Instagram duyurusu (13 Kasım 2026); rotawatt.com'da kampanya sayfası yok. Dahil markalar Rotawatt'ın kampanya görselindeki listeden. Ağların kendi indirimleriyle birleşip birleşmediği belirtilmemiş.",
+          "kontrol": true,
+          "eklendi": "2026-11-14"
+        }
+      ]
+    },
+    {
+      "id": "shellrecharge",
+      "name": "Shell Recharge",
+      "sub": "Shell Recharge uygulaması",
+      "offers": [
+        {
+          "big": "%50 bonus",
+          "kisa": "Garanti kartıyla",
+          "det": "Shell Recharge uygulamasıyla 500 TL+ şarjda",
+          "st": [
+            "Shell Recharge"
+          ],
+          "kart": "garanti",
+          "son": "30 Kasım",
+          "join": "BonusFlaş'tan katıl + Shell Recharge uygulamasına kayıt",
+          "link": "https://www.shell.com.tr/suruculer/shellden-avantajli-kampanyalar/shell-recharge-kullanicilarina-ozel-garanti-bbva-kredi-kartlari-ile-yaptiklari-sarjlamalarda-50-bonus-firsati.html",
+          "bas": "2026-10-23",
+          "bit": "2026-11-30",
+          "kosul": "Garanti BBVA kredi kartlarıyla, Shell Recharge uygulaması üzerinden 500 TL ve üzeri şarj; tek seferde veya farklı günlerde. Toplam bonus tavanı resmi sayfada belirtilmemiş."
         }
       ]
     }
