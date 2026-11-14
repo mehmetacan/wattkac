@@ -1,7 +1,7 @@
 {
   "donem": "Kasım 2026",
-  "guncelleme": "2026-11-13",
-  "son_kontrol": "2026-11-13",
+  "guncelleme": "2026-11-14",
+  "son_kontrol": "2026-11-14",
   "genel_kartlar": "Paraf Doğal · QNB · ON",
   "kampanyasiz_bankalar": [
     "İş Bankası (Maximum)"
@@ -1360,12 +1360,28 @@
           ],
           "eklendi": "2026-11-13",
           "herkese": false
+        },
+        {
+          "big": "%15 indirim",
+          "kisa": "Seçili istasyonda",
+          "det": "Pendik Duru Park Konutları 2 istasyonunda · açılışa özel",
+          "son": "12 Aralık",
+          "link": "https://www.aksasarj.com.tr/tr/kampanyalar",
+          "bas": "2026-11-12",
+          "bit": "2026-12-12",
+          "join": "Aksa Şarj uygulamasında şarjdan önce veya şarj sırasında kampanyayı seç",
+          "kosul": "12.11.2026 – 12.12.2026 arasında yalnızca İstanbul Pendik'teki Aksa Şarj Duru Park Konutları 2 istasyonunda (1 adet 80 kW DC halka açık ünite) DC soket tarifesine %15 indirim. Yalnızca bireysel müşteriler; Aksa Şarj uygulamasında 'Kampanya Seç' ile seçilmesi gerekir. Diğer indirim ve kampanyalarla birleşmez.",
+          "iller": [
+            "İstanbul"
+          ],
+          "eklendi": "2026-11-14",
+          "herkese": false
         }
       ],
       "banks": [],
       "cover": {
         "big": "%15 indirim",
-        "sub": "Şanlıurfa Karaköprü Belediyesi istasyonu · açılışa özel",
+        "sub": "Şanlıurfa Karaköprü ve İstanbul Pendik Duru Park istasyonlarında · açılışa özel",
         "son": "26 Kasım"
       }
     }

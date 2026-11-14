@@ -1,0 +1,12 @@
+[
+ {
+  "id": "istasyon_aksa",
+  "tur": "istasyon",
+  "baslik": "Aksa Şarj",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ }
+]

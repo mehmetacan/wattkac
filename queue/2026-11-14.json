@@ -1,0 +1,42 @@
+[
+ {
+  "id": "istasyon_aksa_post",
+  "grup": "2026-11-14__istasyon_aksa",
+  "tip": "karusel",
+  "zaman": "2026-11-15T13:00:00+03:00",
+  "baslik": "Aksa Şarj",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "Aksa Şarj: %15 indirim",
+    "url": "https://www.aksasarj.com.tr/tr/kampanyalar",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-14/istasyon_aksa/1_kapak.jpg",
+   "media/2026-11-14/istasyon_aksa/2_detay.jpg"
+  ],
+  "aciklama": "⚡ Aksa Şarj: %15 indirim!\n\n✅ %15 indirim: Karaköprü Belediyesi istasyonunda · açılışa özel (son gün 26 Kasım)\n✅ %15 indirim: Pendik Duru Park Konutları 2 istasyonunda · açılışa özel (son gün 12 Aralık)\n\nKart kampanyalarının tamamı ve geçerli istasyonlar banka postlarımızda.\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #aksaşarj",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "istasyon_aksa_hikaye",
+  "grup": "2026-11-14__istasyon_aksa",
+  "baslik": "Aksa Şarj",
+  "tur": "istasyon",
+  "tip": "hikaye",
+  "zaman": "2026-11-15T14:00:00+03:00",
+  "gorseller": [
+   "media/2026-11-14/istasyon_aksa/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ }
+]

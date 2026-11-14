@@ -40,7 +40,7 @@
     "max": 14.98
    },
    "kaynak": "https://trugo.com.tr/price",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-14",
    "gecerlilik": null,
    "not": "AC tüm istasyonlarda 9,95; DC 14,98 TL/kWh. Duyurudaki seçili istasyonlarda DC 12 TL/kWh (https://trugo.com.tr/individual/news/secili-istasyonlarda-12-tl-kwh); istasyon bazlı fiyat haritada gösterilir."
   },
@@ -147,7 +147,7 @@
     "max": 16.49
    },
    "kaynak": "https://zes.net/tr/fiyatlandirma",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-14",
    "gecerlilik": null,
    "adlar": [
     "zes"
@@ -178,7 +178,7 @@
     "max": 13.5
    },
    "kaynak": "https://www.oncharge.com.tr/fiyatlar",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-14",
    "gecerlilik": "2026-10-30",
    "adlar": [
     "oncharge"
@@ -229,7 +229,7 @@
     "max": 12.0
    },
    "kaynak": "https://www.zeplinenerji.com",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-14",
    "gecerlilik": null,
    "adlar": [
     "ZEPLİN CAR rental"
@@ -278,7 +278,7 @@
     "max": 13.99
    },
    "kaynak": "https://www.aksasarj.com.tr/ucretler",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-14",
    "gecerlilik": "2026-08-07",
    "adlar": [
     "AKSA ŞARJ"
@@ -329,7 +329,7 @@
     "max": 13.9
    },
    "kaynak": "https://nevasarj.com/sayfalar/istasyonlarimiz/arac-sarj-ac-dc-kwh-fiyat-tarifeleri.html",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-14",
    "gecerlilik": "2026-02-17",
    "adlar": [
     "NEVA ŞARJ"
@@ -379,7 +379,7 @@
     "max": 12.5
    },
    "kaynak": "https://sarjmatik.com.tr/ChargingPrices/",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-14",
    "gecerlilik": null,
    "adlar": [
     "ŞarjMatik"
@@ -541,7 +541,7 @@
     "max": 13.49
    },
    "kaynak": "https://cv-charging.com/tr/arac-sarj-tarifeleri",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-14",
    "gecerlilik": null,
    "adlar": [
     "CV Şarj",
@@ -599,7 +599,7 @@
     "max": 13.99
    },
    "kaynak": "https://powersarj.com/fiyatlandirma/",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-14",
    "gecerlilik": null,
    "adlar": [
     "Powerşarj"
@@ -650,7 +650,7 @@
     "max": 13.0
    },
    "kaynak": "https://mycharge.com.tr/tarifeler/",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-14",
    "gecerlilik": "2026-11-01",
    "adlar": [
     "MyCharge"
@@ -699,7 +699,7 @@
     "max": 13.73
    },
    "kaynak": "https://gioev.com/fiyatlandirma",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-14",
    "gecerlilik": "2026-09-30",
    "adlar": [
     "GIOEV"
@@ -750,7 +750,7 @@
     "max": 12.9
    },
    "kaynak": "https://www.biogreen.com.tr/tr/ucretlendirme",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-14",
    "gecerlilik": null,
    "adlar": [
     "biogreen",
@@ -857,7 +857,7 @@
     "max": 15.99
    },
    "kaynak": "https://www.ronesanscharger.com/#tarifeler",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-14",
    "gecerlilik": null,
    "adlar": [
     "RÖNESANS CHARGER",
@@ -911,7 +911,7 @@
     "max": 12.99
    },
    "kaynak": "https://hizzlan.com/ucretlendirme-ve-tarifeler",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-14",
    "gecerlilik": null,
    "adlar": [
     "HIZZLAN Charge N'Drive",
@@ -963,8 +963,8 @@
     "max": 14.9
    },
    "kaynak": "https://aostechnology.com.tr/sarj-istasyonlarimiz/",
-   "kontrol": "2026-11-13",
-   "gecerlilik": null,
+   "kontrol": "2026-11-14",
+   "gecerlilik": "2026-04-18",
    "adlar": [
     "AOSTECHNOLOGY",
     "AOS Technology",
