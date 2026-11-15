@@ -1186,21 +1186,21 @@
   },
   "Tripy": {
    "ac": {
-    "min": 7.8,
-    "max": 7.8
+    "min": 9.5,
+    "max": 9.5
    },
    "dc": {
-    "min": 11.0,
-    "max": 11.0
+    "min": 12.99,
+    "max": 12.99
    },
    "kaynak": "https://tripy.mobi/sarj-istasyonlari/",
-   "kontrol": "2026-11-14",
+   "kontrol": "2026-11-15",
    "gecerlilik": null,
    "adlar": [
     "Tripy",
     "Tripy Charge"
    ],
-   "not": "AC Tip 2 7,8, DC CCS 11 TL/kWh. KDV belirtilmemiş."
+   "not": "AC 9,50, DC 12,99 TL/kWh: Rotawatt uygulamasındaki güncel fiyat (15 Kasım 2026). tripy.mobi'deki 7,8 / 11 eski."
   },
   "EKOS Mobility": {
    "ac": {
@@ -1365,20 +1365,50 @@
   "MyPower": {
    "ac": {
     "min": 11.5,
-    "max": 11.5
+    "max": 11.5,
+    "saatli_liste": "mypower",
+    "saatli": [
+     {
+      "bas": "07:00",
+      "bit": "16:59",
+      "etiket": "16:58",
+      "v": 9.99
+     },
+     {
+      "bas": "16:59",
+      "bit": "07:00",
+      "etiket": "06:59",
+      "v": 11.5
+     }
+    ]
    },
    "dc": {
     "min": 13.6,
-    "max": 13.6
+    "max": 13.6,
+    "saatli_liste": "mypower",
+    "saatli": [
+     {
+      "bas": "07:00",
+      "bit": "16:59",
+      "etiket": "16:58",
+      "v": 10.99
+     },
+     {
+      "bas": "16:59",
+      "bit": "07:00",
+      "etiket": "06:59",
+      "v": 13.6
+     }
+    ]
    },
    "kaynak": "https://www.mypower.net.tr/",
-   "kontrol": "2026-11-14",
+   "kontrol": "2026-11-15",
    "gecerlilik": "2026-04-15",
    "adlar": [
     "MYPOWER",
     "Mypower Şarj"
    ],
-   "not": "AC 11,50, DC 13,60 TL/kWh (15.04.2026), KDV dahil. Üniversitelerde DC 13,50, Kırklareli'nde AC/DC 9,27 ve kampanyalı istasyonlarda saatli indirim (uygulanmadı)."
+   "not": "AC 11,50, DC 13,60 TL/kWh (15.04.2026), KDV dahil. Listedeki 9 istasyonda saatli tarife (data/saatli_tarife.json → mypower): 07:00–16:58 AC 9,99 / DC 10,99, 16:59–06:59 AC 11,50 / DC 13,60 (Rotawatt uygulaması, 15 Kasım 2026)."
   },
   "Power Elektronik": {
    "ac": {
@@ -1853,6 +1883,254 @@
     "WATTREISE"
    ],
    "not": "AC Type 2 8,98–9,99–10,49, DC CCS 11,64–13,64 TL/kWh; istasyona göre (uygulamada görünür). KDV belirtilmemiş."
+  },
+  "Mithra Pod": {
+   "ac": {
+    "min": 10.99,
+    "max": 10.99
+   },
+   "dc": {
+    "min": 15.59,
+    "max": 15.59
+   },
+   "kaynak": "https://www.rotawatt.com/",
+   "kontrol": "2026-11-15",
+   "gecerlilik": null,
+   "adlar": [
+    "MITHRA POD",
+    "MithraPOD",
+    "Mithrapod"
+   ],
+   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+  },
+  "Royal Şarj": {
+   "ac": {
+    "min": 9.9,
+    "max": 9.9
+   },
+   "dc": {
+    "min": 13.75,
+    "max": 13.75
+   },
+   "kaynak": "https://www.rotawatt.com/",
+   "kontrol": "2026-11-15",
+   "gecerlilik": null,
+   "adlar": [
+    "ROYAL",
+    "Royal",
+    "Federal Elektrik"
+   ],
+   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+  },
+  "Solinved": {
+   "ac": {
+    "min": 9.99,
+    "max": 9.99
+   },
+   "dc": {
+    "min": 13.99,
+    "max": 13.99
+   },
+   "kaynak": "https://www.rotawatt.com/",
+   "kontrol": "2026-11-15",
+   "gecerlilik": null,
+   "adlar": [
+    "solinved",
+    "SOLINVED"
+   ],
+   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+  },
+  "ŞarjPlus": {
+   "ac": {
+    "min": 9.9,
+    "max": 9.9
+   },
+   "dc": {
+    "min": 12.9,
+    "max": 12.9
+   },
+   "kaynak": "https://www.rotawatt.com/",
+   "kontrol": "2026-11-15",
+   "gecerlilik": null,
+   "adlar": [
+    "ŞARJPLUS",
+    "Şarj Plus",
+    "SarjPlus"
+   ],
+   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+  },
+  "Evroad": {
+   "ac": {
+    "min": 8.9,
+    "max": 8.9
+   },
+   "dc": {
+    "min": 12.9,
+    "max": 12.9
+   },
+   "kaynak": "https://www.rotawatt.com/",
+   "kontrol": "2026-11-15",
+   "gecerlilik": null,
+   "adlar": [
+    "evroad",
+    "EVROAD"
+   ],
+   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+  },
+  "Çelikler Enerji": {
+   "ac": {
+    "min": 9.99,
+    "max": 9.99
+   },
+   "dc": {
+    "min": 12.79,
+    "max": 12.79
+   },
+   "kaynak": "https://www.rotawatt.com/",
+   "kontrol": "2026-11-15",
+   "gecerlilik": null,
+   "adlar": [
+    "ÇELİKLER ENERJİ",
+    "Çelikler"
+   ],
+   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+  },
+  "Meis Charge": {
+   "ac": {
+    "min": 9.5,
+    "max": 9.5
+   },
+   "dc": {
+    "min": 12.9,
+    "max": 12.9
+   },
+   "kaynak": "https://www.rotawatt.com/",
+   "kontrol": "2026-11-15",
+   "gecerlilik": null,
+   "adlar": [
+    "MEIS CHARGE",
+    "Meis"
+   ],
+   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+  },
+  "Promaster": {
+   "ac": {
+    "min": 8.5,
+    "max": 8.5
+   },
+   "dc": {
+    "min": 11.5,
+    "max": 11.5
+   },
+   "kaynak": "https://www.rotawatt.com/",
+   "kontrol": "2026-11-15",
+   "gecerlilik": null,
+   "adlar": [
+    "PROMASTER",
+    "Promaster Şarj"
+   ],
+   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+  },
+  "Econ": {
+   "ac": {
+    "min": 9.99,
+    "max": 9.99
+   },
+   "dc": {
+    "min": 12.49,
+    "max": 12.49
+   },
+   "kaynak": "https://www.rotawatt.com/",
+   "kontrol": "2026-11-15",
+   "gecerlilik": null,
+   "adlar": [
+    "ECON",
+    "Energy Charging Operator Network"
+   ],
+   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+  },
+  "EvSolt": {
+   "ac": {
+    "min": 8.99,
+    "max": 8.99
+   },
+   "dc": {
+    "min": 11.99,
+    "max": 11.99
+   },
+   "kaynak": "https://www.rotawatt.com/",
+   "kontrol": "2026-11-15",
+   "gecerlilik": null,
+   "adlar": [
+    "EVSolt",
+    "EVSOLT"
+   ],
+   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+  },
+  "Spectrum": {
+   "ac": {
+    "min": 9.89,
+    "max": 9.89
+   },
+   "dc": {
+    "min": 12.96,
+    "max": 12.96
+   },
+   "kaynak": "https://www.rotawatt.com/",
+   "kontrol": "2026-11-15",
+   "gecerlilik": null,
+   "adlar": [
+    "SPECTRUM"
+   ],
+   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+  },
+  "Swapp": {
+   "ac": {
+    "min": 8.0,
+    "max": 8.0
+   },
+   "dc": {
+    "min": 10.0,
+    "max": 10.0
+   },
+   "kaynak": "https://www.rotawatt.com/",
+   "kontrol": "2026-11-15",
+   "gecerlilik": null,
+   "adlar": [
+    "SWAPP",
+    "Swapp Şarjpark"
+   ],
+   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+  },
+  "Mercury Şarj": {
+   "ac": null,
+   "dc": {
+    "min": 13.49,
+    "max": 13.49
+   },
+   "kaynak": "https://www.rotawatt.com/",
+   "kontrol": "2026-11-15",
+   "gecerlilik": null,
+   "adlar": [
+    "MERCURY",
+    "Mercury"
+   ],
+   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+  },
+  "TR Charge": {
+   "ac": null,
+   "dc": {
+    "min": 13.5,
+    "max": 13.5
+   },
+   "kaynak": "https://www.rotawatt.com/",
+   "kontrol": "2026-11-15",
+   "gecerlilik": null,
+   "adlar": [
+    "TRCHARGE",
+    "TR CHARGE"
+   ],
+   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
   }
  }
 }
