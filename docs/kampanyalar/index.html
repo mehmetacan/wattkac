@@ -354,6 +354,9 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .cmp .cn{font-weight:800;font-size:14.5px;flex:1;min-width:0}
 .cmp .cn i.wait{color:var(--amber-fg);background:var(--amber-bg);border-color:var(--amber-line)}
 .cmp .cn i{font-style:normal;font-size:11px;font-weight:800;color:var(--g);background:var(--gbg);border:1px solid var(--gline);border-radius:6px;padding:0 5px;margin-left:4px}
+.cmp .cn i.app{color:var(--blue-fg);background:var(--blue-bg);border-color:transparent;display:inline-flex;align-items:center;gap:3px;white-space:nowrap}
+.cmp .cn i.app svg{width:11px;height:11px}
+.cmps.ek{margin-top:8px}
 .cmp .cr{font-weight:800;font-size:14px;color:var(--g);text-align:right;max-width:55%}
 .cmp .ch{color:var(--mut);font-size:20px;line-height:1;transition:transform .15s}
 .cmp[open] .ch{transform:rotate(90deg)}
@@ -1887,9 +1890,14 @@ function renderDetail(s0) {
     list.filter(c => c.tip === "uygulama").forEach(c => (apps.get(c.kid) || apps.set(c.kid, []).get(c.kid)).push(c));
     const appMy = l => l.some(c => P.uyg.includes(c.kid) || (c.kart && P.banka.includes(c.kart)));
     const appList = [...apps.values()].sort((a, b) => appMy(b) - appMy(a) || rate(b) - rate(a));
-    return (ag ? `<div class="lbl sec2 ag">${IC.ag}Şarj ağının indirimi</div><div class="nls">${ag}</div>` : "")
-      + (banks.length ? `<div class="lbl sec2 bk">${IC.banka}Banka kartıyla</div><div class="cmps">${banks.map(([kid, l]) => bankRow(l, P.banka.includes(kid), fiyatli)).join("")}</div>` : "")
-      + (appList.length ? `<div class="lbl sec2 uy">${IC.uygulama}Uygulama ile</div><div class="cmps">${appList.map(l => appRow(l, fiyatli)).join("")}</div>` : "");
+    // Ayrı "Uygulama ile" başlığı yok: kartlı uygulama kampanyası (ör. Shell Recharge + Garanti) banka kartları listesinin en üstünde,
+    // kartsız olanı (ör. Rotawatt salı %20) üstteki indirim bölümünde; ikisi de "<Uygulama> ile" etiketiyle uygulamaya özel olduğu belirtilir.
+    const appKartli = appList.filter(l => l.some(c => c.kart)), appKartsiz = appList.filter(l => !l.some(c => c.kart));
+    const ustBaslik = ag ? "Şarj ağının indirimi" : "Uygulamanın indirimi";
+    const ust = ag || appKartsiz.length ? `<div class="lbl sec2 ag">${IC.ag}${ustBaslik}</div>${ag ? `<div class="nls">${ag}</div>` : ""}`
+      + (appKartsiz.length ? `<div class="cmps${ag ? " ek" : ""}">${appKartsiz.map(l => appRow(l, fiyatli)).join("")}</div>` : "") : "";
+    const bankHtml = appKartli.map(l => appRow(l, fiyatli)).join("") + banks.map(([kid, l]) => bankRow(l, P.banka.includes(kid), fiyatli)).join("");
+    return ust + (bankHtml ? `<div class="lbl sec2 bk">${IC.banka}Banka kartıyla</div><div class="cmps">${bankHtml}</div>` : "");
   };
   // Uygulama kampanyası: uygulama başına tek satır. Bugün geçerliyse "uygulamayla ≈ X TL/kWh"; haftanın başka gününde geçerliyse
   // (s.gunDisi) yalnızca bilgi: "Her salı · bugün geçerli değil", fiyat hesaplanmaz.
@@ -1906,7 +1914,9 @@ function renderDetail(s0) {
     const best = [...l].sort((a, b) => gunOk(b) - gunOk(a) || (campRate(b) || 0) - (campRate(a) || 0))[0];
     const myU = l.some(c => P.uyg.includes(c.kid)), myK = l.some(c => c.kart && P.banka.includes(c.kart));
     const val = (gunOk(best) ? "" : gunTxt(best) + " ") + kisaDeger(best);
-    return `<details class="cmp ${myU || myK ? "mine" : ""}"><summary><span class="cn">${esc(l[0].kurum)}${myU ? ` <i>uygulaman</i>` : myK ? ` <i>kartın</i>` : ""}</span><span class="cr">${esc(val)}${l.length > 1 ? ` <small>+${l.length - 1}</small>` : ""}</span><span class="ch" aria-hidden="true">›</span></summary>
+    // Kartlı kampanyada satır adı bankadır (banka kartıyla listesinde durur); her durumda "<Uygulama> ile" etiketi uygulamaya özel olduğunu söyler
+    const kart = l.find(c => c.kart), ad = kart ? bankName(kart.kart) : l[0].kurum;
+    return `<details class="cmp ${myU || myK ? "mine" : ""}"><summary><span class="cn">${esc(ad)} <i class="app">${IC.uygulama}${kart ? esc(l[0].kurum) + " ile" : "uygulamaya özel"}</i>${myU ? ` <i>uygulaman</i>` : myK ? ` <i>kartın</i>` : ""}</span><span class="cr">${esc(val)}${l.length > 1 ? ` <small>+${l.length - 1}</small>` : ""}</span><span class="ch" aria-hidden="true">›</span></summary>
       <div class="cb">${l.map(c => appOffer(c, fiyatli)).join("")}</div></details>`;
   };
   const hereAll = [...s.camp.filter(c => !s.viaShell.includes(c)), ...general.filter(c => !s.camp.includes(c)),
