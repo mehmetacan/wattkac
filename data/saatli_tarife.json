@@ -107,5 +107,50 @@
     "ad": "Shell Körfezyolu"
    }
   ]
+ },
+ "mypower": {
+  "ag": "MyPower",
+  "baslik": "Gündüz tarifesi (07:00–16:58 arası AC 9,99 / DC 10,99 TL/kWh)",
+  "kaynak": "Rotawatt uygulaması, MyPower saat bazlı fiyatlar (kullanıcı uygulamadan aldı, 15 Kasım 2026)",
+  "eklendi": "2026-11-15",
+  "not": "Gece (16:59–06:59) AC 11,50 / DC 13,60.",
+  "istasyonlar": [
+   {
+    "il": "Bursa",
+    "ad": "Pera Balkan"
+   },
+   {
+    "il": "Konya",
+    "ad": "Kaysan Batıkent"
+   },
+   {
+    "il": "Balıkesir",
+    "ad": "Olft"
+   },
+   {
+    "il": "Bursa",
+    "ad": "Baylan Park"
+   },
+   {
+    "il": "Bursa",
+    "ad": "Kristal Park"
+   },
+   {
+    "il": "Tekirdağ",
+    "ad": "Demirkaya"
+   },
+   {
+    "il": "Sivas",
+    "ad": "4 Eylül"
+   },
+   {
+    "il": "Denizli",
+    "ad": "Şelale"
+   },
+   {
+    "il": "Bursa",
+    "ad": "Baylan Prestij"
+   }
+  ]
  }
 }

@@ -42,6 +42,7 @@ Günlük tarama her çalıştığında, değişiklik olmasa bile:
 - **Fiyatlar:** `site/tarifeler.json` içindeki her ağın `kaynak` sayfası açılır.
   - Fiyat okunabildiyse `ac`/`dc` (min–max, TL/kWh, KDV dahil) ve `kontrol` tarihi güncellenir; sayfa geçerlilik tarihi veriyorsa `gecerlilik` yazılır.
   - Sayfa açılamadıysa fiyata ve `kontrol` tarihine dokunulmaz; tahminle fiyat yazılmaz. Fiyat yalnızca ağın kendi sayfasından alınır.
+  - İstisna (15 Kasım 2026): Ağın kendi sitesinde fiyat yoksa, ağın anlaşmalı olduğu çok ağlı uygulamadaki (ör. Rotawatt) liste fiyatı kullanılabilir; bu uygulamalarda fiyatların ağın kendi tarifesiyle aynı olduğu doğrulandı. `not` alanına uygulamanın adı ve tarihi yazılır; ağın kendi sayfasında fiyat yayımlanırsa o esas alınır.
   - En az bir fiyat değiştiyse dosyanın üstündeki `guncelleme` bugüne çekilir.
   - `ac`/`dc` değeri `null` olan ağlar henüz doğrulanmamıştır: sayfa açılıp fiyat okunursa doldurulur. Yeni ağ eklerken anahtar, ağın sitede görünen adı olur; EPDK kaydındaki farklı yazımlar `adlar` listesine yazılır.
 - **Tarih alanları:** `data/kampanyalar.json` → `son_kontrol` her taramada bugün yapılır (site "Bugün kontrol edildi" yazar). `guncelleme` yalnızca kampanya verisi gerçekten değiştiğinde değişir.
