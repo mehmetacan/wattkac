@@ -281,6 +281,10 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .dhead{flex:none;display:flex;align-items:center;gap:8px;padding:0 12px 6px;touch-action:none}
 .dhb{flex:none;width:44px;height:44px;padding:0;border:1px solid var(--line);border-radius:var(--r-md);background:var(--ctl);color:var(--txt);display:grid;place-items:center}
 .dhb svg{width:22px;height:22px}
+.dtitle{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.dtx{min-width:0;flex:1}
+.dhb.fbk{color:var(--r);background:var(--rbg);border-color:var(--rline)}
+.dhb.fbk:hover{border-color:var(--r)}
 @media(hover:hover){.dhb:hover{background:var(--card2)}}
 .dhb:focus-visible{outline:2.5px solid var(--pri);outline-offset:2px;border-radius:var(--r-md)}
 .dhead .dds{margin-left:auto;font-size:13.5px;font-weight:700;color:var(--mut)}
@@ -1846,8 +1850,7 @@ function uygKampanyalari(s, x) {
 function renderDetail(s0) {
   $("sheet").classList.add("det"); $("sh-h").innerHTML = "";
   const dh = $("sh-dh"); dh.hidden = false;
-  dh.innerHTML = `<button class="dhb" data-dgeri="1" aria-label="Listeye dön" title="Listeye dön">${IC.geri}</button><span class="dds">${fmtKm(s0.d)}</span>`
-    + `<button class="dhb" data-fbs="${esc(s0.id)}" aria-label="Geri bildirim" title="Geri bildirim">${IC.mesaj}</button>`;
+  dh.innerHTML = `<button class="dhb" data-dgeri="1" aria-label="Listeye dön" title="Listeye dön">${IC.geri}</button><span class="dds">${fmtKm(s0.d)}</span>`;
   const t = s0.tags;
   const general = generalOffers();
   // Hangi uygulamayla? Ağın kendi uygulamasında bugünkü davranış; başka uygulamada ağın indirimi uygulanmaz (s.net yok) ve
@@ -1947,7 +1950,8 @@ function renderDetail(s0) {
   const web = /^https?:\/\//i.test(t.website || t["contact:website"] || "") ? (t.website || t["contact:website"]) : "";
   if (web) rows.push(["Web", `<a href="${esc(safeUrl(web))}" target="_blank" rel="noopener nofollow">Site ↗</a>`]);
   const alt = s.brand && s.named && s.name !== s.brand ? s.name : "";
-  $("sh-b").innerHTML = `<div class="dn">${esc(pretty(s.brand) || s.name)}</div>${alt ? `<div class="alt">${esc(alt)}</div>` : ""}${ozelOlabilir(s) ? `<div class="ozel">Halka açık olmayabilir · konut / site otoparkı</div>` : ""}
+  $("sh-b").innerHTML = `<div class="dtitle"><div class="dtx"><div class="dn">${esc(pretty(s.brand) || s.name)}</div>${alt ? `<div class="alt">${esc(alt)}</div>` : ""}${ozelOlabilir(s) ? `<div class="ozel">Halka açık olmayabilir · konut / site otoparkı</div>` : ""}</div>`
+    + `<button class="dhb fbk" data-fbs="${esc(s.id)}" aria-label="Hata bildir" title="Hata bildir">${IC.mesaj}</button></div>
     ${durumAg(s) ? durumHtml(durumAg(s)) : ""}
     ${s.pasif ? `<p class="dnote bad">Şu an pasif ya da bakımda görünüyor.</p>` : ""}
     ${s.approx ? `<p class="dnote">Konum yaklaşık.</p>` : ""}
