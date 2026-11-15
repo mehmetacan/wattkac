@@ -92,6 +92,58 @@ def teklif_denetle(yer, o, bugun, banka):
                 hata(f"{yer}: 'gunler' tekrar eden gün içeriyor")
 
 
+def fiyatlar_denetle(yer, o):
+    """İsteğe bağlı 'fiyatlar' (uygulama kampanyası; yalnızca render.py okur, site kullanmaz): kampanya sahibinin kendi
+    tablosundaki fiyatlar. {"kaynak", "tarih", "satirlar": [{"ag": <st'deki ad>, "ac": [liste, kampanya] | null, "dc": ...}]}.
+    'big' "%N indirim" ise kampanya fiyatı liste × (1 − N/100) olmalı (2 hane, ±0,01). Liste fiyatı tarifeler.json'dan
+    farklıysa uyarı (ağın fiyatı değişmiş olabilir; tablo yeniden alınmalı)."""
+    f = o.get("fiyatlar")
+    if not isinstance(f, dict) or not isinstance(f.get("satirlar"), list) or not f["satirlar"]:
+        hata(f"{yer}: 'fiyatlar' {{kaynak, tarih, satirlar: [...]}} biçiminde olmalı")
+        return
+    if not str(f.get("kaynak") or "").strip():
+        hata(f"{yer}: 'fiyatlar.kaynak' boş")
+    if not TARIH.match(str(f.get("tarih") or "")):
+        hata(f"{yer}: 'fiyatlar.tarih' YYYY-AA-GG biçiminde değil")
+    m = re.match(r"^%(\d+(?:[.,]\d+)?)\s*indirim", str(o.get("big") or ""))
+    oran = float(m.group(1).replace(",", ".")) / 100 if m else None
+    t = json.loads((KOK / "site/tarifeler.json").read_text(encoding="utf-8")).get("aglar") or {}
+    tarife = {ad_anahtari(a): x for k, x in t.items() for a in [k, *(x.get("adlar") or [])]}
+    st, gorulen = set(o.get("st") or []), set()
+    for r in f["satirlar"]:
+        ag = r.get("ag") if isinstance(r, dict) else None
+        if not ag:
+            hata(f"{yer}: 'fiyatlar' içinde 'ag' boş satır")
+            continue
+        if ag not in st:
+            hata(f"{yer}: 'fiyatlar' → {ag!r} teklifin st listesinde yok")
+        if ag in gorulen:
+            hata(f"{yer}: 'fiyatlar' → {ag!r} tekrar ediyor")
+        gorulen.add(ag)
+        if r.get("ac") is None and r.get("dc") is None:
+            hata(f"{yer}: 'fiyatlar' → {ag}: ac ve dc ikisi de boş")
+        for tur in ("ac", "dc"):
+            p = r.get(tur)
+            if p is None:
+                continue
+            if (not isinstance(p, list) or len(p) != 2 or not all(isinstance(v, (int, float)) for v in p)
+                    or not all(1 <= v <= 100 for v in p)):
+                hata(f"{yer}: 'fiyatlar' → {ag} {tur}: [liste, kampanya] iki makul sayı olmalı ({p})")
+                continue
+            liste, yeni = p
+            if yeni > liste:
+                hata(f"{yer}: 'fiyatlar' → {ag} {tur}: kampanya fiyatı ({yeni}) liste fiyatından ({liste}) yüksek")
+            if oran is not None and abs(liste * (1 - oran) - yeni) > 0.0101:
+                hata(f"{yer}: 'fiyatlar' → {ag} {tur}: {liste} × {1 - oran:.2f} = {liste * (1 - oran):.2f}, yazılan {yeni}")
+            x = (tarife.get(ad_anahtari(ag)) or {}).get(tur)
+            if isinstance(x, dict) and isinstance(x.get("min"), (int, float)) and not x["min"] <= liste <= x.get("max", x["min"]):
+                uyari(f"{yer}: 'fiyatlar' → {ag} {tur} liste fiyatı {liste}, tarifeler.json'da {x['min']}–{x.get('max')}; "
+                      "kampanya tablosu yeniden alınmalı")
+    eksik = sorted(st - gorulen - {ALL})
+    if eksik:
+        uyari(f"{yer}: 'fiyatlar' tablosunda olmayan ağlar: {', '.join(eksik)}")
+
+
 def kampanyalar(bugun, guncellik):
     d = json.loads((KOK / "data/kampanyalar.json").read_text(encoding="utf-8"))
     for alan in ("donem", "guncelleme", "bankalar", "istasyonlar"):
@@ -138,6 +190,8 @@ def kampanyalar(bugun, guncellik):
                 hata(f"{ty}: 'kart' ({k!r}) bankalar listesindeki bir banka id'si değil")
             if "kisa" in o and (not isinstance(o["kisa"], str) or not o["kisa"].strip()):
                 hata(f"{ty}: 'kisa' boş ya da metin değil")
+            if "fiyatlar" in o:
+                fiyatlar_denetle(ty, o)
             for st in o.get("st", []):
                 if k and st != ALL:
                     st_banka.setdefault(st, set()).add(k)
