@@ -217,10 +217,11 @@
    "media/2026-11-13/istasyon_ovolt/hikaye.jpg"
   ],
   "aciklama": "",
-  "durum": "bekliyor",
+  "durum": "paylasildi",
   "deneme": 0,
-  "ig_media_id": null,
-  "hata": null
+  "ig_media_id": "18094289381215408",
+  "hata": null,
+  "paylasim_zamani": "2026-11-15T07:30:05+00:00"
  },
  {
   "id": "istasyon_aksa_post",
