@@ -89,7 +89,7 @@ button{-webkit-tap-highlight-color:transparent;cursor:pointer}
 .top{position:fixed;top:0;left:0;right:0;height:var(--top);padding-top:var(--sat);z-index:1200;background:var(--bar);border-bottom:1px solid var(--line)}
 /* Uygulama hissi: seçim/vurgu yok, sayfa esnemesi yok, çentikli ekranlara uyum */
 html,body{overscroll-behavior:none}
-button,.top,.sheet .handle,.mbtn,.chip,.nav{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+button,.top,.sheet .handle,.dhead,.mbtn,.chip,.nav{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .install{position:absolute;left:10px;right:10px;bottom:calc(var(--sheet-h) + 70px);z-index:1150;background:var(--pop);color:var(--txt);border:1px solid var(--line);border-radius:16px;padding:12px 12px 12px 14px;display:flex;gap:10px;align-items:center;box-shadow:var(--sh-pop)}
 .install img{width:40px;height:40px;border-radius:10px;flex:none}
 .install p{flex:1;min-width:0;font-size:13px;line-height:1.35;margin:0}
@@ -277,6 +277,35 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .sh-h .tg{margin-left:auto;color:var(--pri);font-weight:800}
 .back{background:none;border:0;color:var(--pri);font:800 14px var(--font);padding:4px 0;display:inline-flex;align-items:center;gap:2px}
 .back svg{width:18px;height:18px;margin-left:-4px}
+/* İstasyon detayının başlık satırı (tutamağın altında, düğme içinde düğme olmasın diye ayrı): geri · mesafe · geri bildirim */
+.dhead{flex:none;display:flex;align-items:center;gap:8px;padding:0 12px 6px;touch-action:none}
+.dhb{flex:none;width:44px;height:44px;padding:0;border:1px solid var(--line);border-radius:var(--r-md);background:var(--ctl);color:var(--txt);display:grid;place-items:center}
+.dhb svg{width:22px;height:22px}
+.dtitle{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.dtx{min-width:0;flex:1}
+.dhb.fbk{color:var(--r);background:var(--rbg);border-color:var(--rline)}
+.dhb.fbk:hover{border-color:var(--r)}
+@media(hover:hover){.dhb:hover{background:var(--card2)}}
+.dhb:focus-visible{outline:2.5px solid var(--pri);outline-offset:2px;border-radius:var(--r-md)}
+.dhead .dds{margin-left:auto;font-size:13.5px;font-weight:700;color:var(--mut)}
+.sheet.det .handle{padding-bottom:4px}
+/* "Hangi uygulamayla?": tek seçimli, yatay kaydırılan çipler */
+.lbl.dsec{margin:16px 0 8px}
+.uygbas{display:flex;align-items:center;gap:4px}
+.ibtn{display:inline-grid;place-items:center;width:32px;height:32px;margin:-8px 0 -8px 4px;border:0;border-radius:50%;background:none;color:var(--mut);cursor:pointer;padding:0}
+.ibtn svg{width:16px;height:16px}
+.ibtn:hover,.ibtn[aria-expanded="true"]{color:var(--pri);background:var(--pri-soft)}
+.ibtn:focus-visible{outline:2px solid var(--pri);outline-offset:1px}
+.uygsec{display:flex;gap:8px;overflow-x:auto;margin:-5px -12px 0;padding:5px 12px 7px;scrollbar-width:none}
+.uygsec::-webkit-scrollbar{display:none}
+.uygsec .chip{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.uygsec .chip .bdot{margin:0}
+.uygsec .chip svg{width:16px;height:16px}
+.uygsec .chip small{font-size:11px;font-weight:800;letter-spacing:.3px;opacity:.8}
+.uygsec .chip[aria-disabled=true]{opacity:.45;cursor:not-allowed}
+.uygsec .chip[aria-disabled=true]:active{transform:none}
+.dnote.unot{margin:6px 0 0;font-weight:500}
+.dnote.unot a{font-weight:700;white-space:nowrap}
 .sh-b{flex:1;overflow-y:auto;padding:4px 12px 14px;-webkit-overflow-scrolling:touch}
 .mapview[data-s=peek] .sh-b{display:none}
 .mapview.dragging .sh-b{display:block}
@@ -334,7 +363,6 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .cmp .cb h4{font-size:11.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--mut);margin:12px 0 2px}
 .cmp .go{display:flex;justify-content:center;margin-top:12px;text-decoration:none;color:var(--ink)}
 .cmp.mine .cn{color:var(--g)}
-.shellbox{background:var(--amber-bg);color:var(--txt);border:1px solid var(--amber-line);border-radius:14px;padding:10px 12px;margin:10px 0;font-size:13.5px;font-weight:600}
 /* Fiyat satırı: üstü çizili liste fiyatı + yeşil indirimli fiyat + bilgi düğmesi (dokununca tek cümlelik açıklama) */
 .kv dd.fy{display:flex;align-items:center;flex-wrap:wrap;gap:2px 6px}
 .kv s,.stn s{color:var(--mut);font-weight:600}
@@ -398,8 +426,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .bkay{margin:12px 0 4px;font-size:12.5px;color:var(--mut)}
 .bkay summary{cursor:pointer;font-weight:700;list-style:none}.bkay summary::-webkit-details-marker{display:none}
 .bkay p{margin:6px 0 0;line-height:1.45}.bkay a{color:inherit}
-.dacts{display:flex;gap:8px;margin-bottom:6px}.dacts .primary{flex:1.4}.dacts .fbbtn{flex:1}
-.fbbtn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.dacts{display:flex;gap:8px;margin-bottom:6px}.dacts .primary{flex:1}
 .fb label{display:block;font-weight:700;font-size:14px;margin:14px 0 6px}
 .fb textarea,.fb input[type=text],.fb input[type=email]{width:100%;background:var(--card2);color:var(--txt);border:1px solid var(--line2);border-radius:12px;padding:12px;font:15px var(--font)}
 .fb textarea{min-height:130px;resize:vertical}
@@ -415,6 +442,8 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
   .mapview[data-s] {--sheet-h:0px}
   .mapview[data-s=peek] .sh-b{display:block}
   .handle .bar,.sh-h .tg{display:none}
+  .sheet.det .handle{display:none}
+  .sheet.det .dhead{padding-top:12px}
   .mtop{left:414px}
   .locbtn{bottom:14px}
   .mapmsg{left:414px;right:68px;bottom:14px}
@@ -429,8 +458,8 @@ h1{font-weight:800;letter-spacing:-.03em}
 a{color:var(--pri)}
 :focus-visible{outline:2.5px solid var(--pri);outline-offset:2px;border-radius:6px}
 /* dokunma geri bildirimi: yerleşimi kaydırmadan hafif küçülme */
-.btn,.chip,.mbtn,.nav button,.hbtn,.stn,.fbtn{transition:transform .12s ease,background-color .15s ease,border-color .15s ease,color .15s ease,box-shadow .15s ease}
-.btn:active,.chip:active,.mbtn:active,.fbtn:active,.hbtn:active{transform:scale(.96)}
+.btn,.chip,.mbtn,.dhb,.nav button,.hbtn,.stn,.fbtn{transition:transform .12s ease,background-color .15s ease,border-color .15s ease,color .15s ease,box-shadow .15s ease}
+.btn:active,.chip:active,.mbtn:active,.dhb:active,.fbtn:active,.hbtn:active{transform:scale(.96)}
 .stn:active{transform:scale(.99)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
 /* üst çubuk */
@@ -599,6 +628,7 @@ a{color:var(--pri)}
     </div>
     <div class="sheet" id="sheet">
       <button class="handle" id="handle" aria-label="Listeyi aç veya kapat"><span class="bar"></span><span class="sh-h" id="sh-h"></span></button>
+      <div class="dhead" id="sh-dh" hidden></div>
       <div class="sh-b" id="sh-b"></div>
     </div>
   </section>
@@ -1675,6 +1705,7 @@ function renderSheet() {
   closeTip();
   const h = $("sh-h"), b = $("sh-b"), s = M.sel && M.byId.get(M.sel);
   if (DUR.id && DUR.id !== M.sel) durumBirak();
+  $("sheet").classList.remove("det"); $("sh-dh").hidden = true;
   if (s) { renderDetail(prep(s)); return; }
   const open = $("v-harita").dataset.s !== "peek";
   if (M.group) {
@@ -1767,10 +1798,66 @@ const tipBtn = (cls, tip, link, kk, inner, label) => `<button class="${cls}" dat
 const OZEL_RE = /\bapartman|\bapt\b|\bsitesi\b|\bkonutlari\b|\bkonutlar\b|\bevleri\b|\brezidans|\bresidence\b|\blojman|\bvillalari\b|\bvillas?\b/;
 const ACIK_RE = /\bcarsi|\bpazar|\bmeydan|\bavm\b|\bis merkezi|\bplaza\b|\bbelediye|\bhotel\b|\botel\b|\bsanayi|\bsan\. sitesi|\bticaret merkezi|\bmall\b|\bstadyum|\bhastane/;
 const ozelOlabilir = s => { const n = fold(s.name || ""); return OZEL_RE.test(n) && !ACIK_RE.test(n); };
-function renderDetail(s) {
-  $("sh-h").innerHTML = `<span class="back">${IC.geri}Listeye dön</span><span class="tg" style="color:var(--mut)">${fmtKm(s.d)}</span>`;
-  const t = s.tags;
+/* ---------- Uygulamalar: istasyonda şarj başlatılabilen uygulamalar (site/uygulamalar.json) ----------
+   Her ağın kendi uygulaması örtüktür (veride yazılmaz) ve listede hep ilk sıradadır. Dosyada yalnızca başka ağlarda da şarj
+   başlatılabilen uygulamalar durur: ağın uygulaması + ortak kullanım (roaming) ortakları (ör. ZES ↔ WAT ↔ Beefull) ve
+   çok ağlı uygulamalar (Rotawatt, Voltla). Eşleşme haritadaki marka (s.brand) üzerinden; "akim" (ör. Eşarj → Trugo yalnızca DC)
+   ve "ad_desen" (ör. Shell Recharge → Trugo'nun Shell istasyonları) kısıtları uygulanır.
+   Şimdilik yalnızca istasyon detayında kullanılır; liste, harita rozetleri ve sıralama bundan etkilenmez. */
+let UYGV = { uygulamalar: [] };
+let DUYG = ssGet("wk.duyg") || "";   // detayda seçilen uygulama: oturum boyunca hatırlanır, geçerli olduğu istasyonda seçili gelir
+// Aynı ağ mı? Ad aynı ya da harf/boşluk farkı (tarKey) ya da tarifeler.json'da aynı kayıt ("adlar" yazımları)
+const agEsit = (a, b) => !!a && !!b && (a === b || tarKey(a) === tarKey(b) || (!!tarOf(a) && tarOf(a) === tarOf(b)));
+const DESEN = new Map();
+const desenOk = (d, s) => { if (!d) return true; if (!DESEN.has(d)) { let r = null; try { r = new RegExp(d); } catch {} DESEN.set(d, r); }
+  const r = DESEN.get(d); return !!r && r.test(fold([s.name, s.addr].join(" "))); };
+// → [{ app, tip: "kendi" | "ortak" | "coklu", akim: null | "ac" | "dc", ok }]; ok: false = bu istasyonda kullanılamaz (ör. yalnızca DC, istasyon AC)
+function uygulamalarOf(s) {
+  if (!s || !s.brand) return [];
+  const list = (UYGV && UYGV.uygulamalar) || [];
+  const own = list.find(a => a.tur !== "coklu" && agEsit(a.ag, s.brand));
+  const out = [{ app: own || { id: "ag:" + tarKey(s.brand), ad: pretty(s.brand), ag: s.brand, tur: "ag", ortuk: true }, tip: "kendi", akim: null, ok: true }];
+  for (const a of list) {
+    if (a === own) continue;
+    const m = (a.aglar || []).find(x => agEsit(x.ag, s.brand) && desenOk(x.ad_desen, s));
+    if (!m) continue;
+    const akim = m.akim === "ac" || m.akim === "dc" ? m.akim : null;
+    out.push({ app: a, tip: a.tur === "coklu" ? "coklu" : "ortak", akim, ok: !akim || (akim === "dc" ? !!s.hasDc : !!s.hasAc) });
+  }
+  return out;
+}
+// Varsayılan: bu oturumda seçilen uygulama (burada geçerliyse) → Profilim'deki uygulamalar / şarj ağlarından burada geçerli ilki → ağın kendi uygulaması
+function uygSecimi(list) {
+  const ok = list.filter(x => x.ok);
+  const prof = x => P.uyg.includes(x.app.id) || (!!x.app.ag && agler().some(n => agEsit(n, x.app.ag)));
+  return ok.find(x => x.app.id === DUYG) || ok.find(prof) || list[0];
+}
+// Başka bir uygulamayla (ortak kullanım ya da çok ağlı) ödenen şarjda geçerli kampanyalar: ödemeyi alan firma = uygulamanın şirketi.
+//  - ortak: uygulamanın ağının herkese açık kendi kampanyaları (koşullu, seçili istasyonlara ya da ağın kendi istasyonlarına özel olanlar hariç)
+//  - banka: her istasyonda geçerli olanlar + st'sinde uygulamanın ağı ya da "<uygulama> uygulaması" yazanlar
+//  - uygulama kampanyası: yalnızca bu uygulamanınkiler (ortakta st'de uygulamanın ağı da sayılır; çok ağlıda st bu istasyonun ağını içermeli).
+//    Haftanın başka gününde geçerli olanlar da (bilgi olarak, fiyatsız) listede kalır.
+const hazirK = c => !c.kontrol && !(c.bas && c.bas > todayIst());
+const yerKosul = c => /istasyon/i.test([c.kisa, c.big].join(" "));
+const stUygAd = (c, a) => c.st.some(x => /uygulama/i.test(x) && new RegExp("\\b" + reEsc(fold(a.ad)) + "\\b").test(fold(x)));
+function uygKampanyalari(s, x) {
+  const a = x.app, ag = x.tip === "ortak" ? a.ag : null;
+  return C.filter(c => hazirK(c) && (c.tip === "uygulama" || gunOk(c)) && (
+    c.tip === "ag" ? !!ag && agEsit(c.kurum, ag) && !conditional(c) && !seciliKamp(c) && !yerKosul(c)
+    : c.tip === "banka" ? c.st.includes(ALL) || (!!ag && c.st.some(n => agEsit(n, ag))) || stUygAd(c, a)
+    : c.kid === a.id && (c.st.includes(ALL) || c.st.some(n => agEsit(n, s.brand) || (!!ag && agEsit(n, ag))))));
+}
+function renderDetail(s0) {
+  $("sheet").classList.add("det"); $("sh-h").innerHTML = "";
+  const dh = $("sh-dh"); dh.hidden = false;
+  dh.innerHTML = `<button class="dhb" data-dgeri="1" aria-label="Listeye dön" title="Listeye dön">${IC.geri}</button><span class="dds">${fmtKm(s0.d)}</span>`;
+  const t = s0.tags;
   const general = generalOffers();
+  // Hangi uygulamayla? Ağın kendi uygulamasında bugünkü davranış; başka uygulamada ağın indirimi uygulanmaz (s.net yok) ve
+  // yalnızca DC'de geçerli uygulamada (Eşarj → Trugo) fiyat DC fiyatıdır. Fiyat her uygulamada istasyonun kendi fiyatı.
+  const uygs = uygulamalarOf(s0), secim = uygs.length ? uygSecimi(uygs) : null, kendi = !secim || secim.tip === "kendi";
+  const s = kendi ? s0 : { ...s0, net: null };
+  if (secim && secim.akim && s0.hasAc && s0.hasDc) { s.hasAc = secim.akim === "ac"; s.hasDc = secim.akim === "dc"; s.mode = secim.akim; s.price = stationPrice(s0, secim.akim); }
   const pr = s.price && tarOf(s.brand);
   // Ağın diğer kendi kampanyaları: ağ kampanyaları birbiriyle birleşmez, bu yüzden her biri LİSTE fiyatına tek başına uygulanır.
   // Yalnızca DC'de (ya da AC'de) geçerli kampanya, istasyonda o akım türü yoksa gösterilmez; varsa o akımın fiyatıyla hesaplanır.
@@ -1822,8 +1909,22 @@ function renderDetail(s) {
     return `<details class="cmp ${myU || myK ? "mine" : ""}"><summary><span class="cn">${esc(l[0].kurum)}${myU ? ` <i>uygulaman</i>` : myK ? ` <i>kartın</i>` : ""}</span><span class="cr">${esc(val)}${l.length > 1 ? ` <small>+${l.length - 1}</small>` : ""}</span><span class="ch" aria-hidden="true">›</span></summary>
       <div class="cb">${l.map(c => appOffer(c, fiyatli)).join("")}</div></details>`;
   };
-  const here = [...s.camp.filter(c => !s.viaShell.includes(c)), ...general.filter(c => !s.camp.includes(c)),
+  const hereAll = [...s.camp.filter(c => !s.viaShell.includes(c)), ...general.filter(c => !s.camp.includes(c)),
     ...(s.gunDisi || []).filter(c => c.tip === "uygulama")].filter(c => !c.kontrol);
+  // Ağın kendi uygulaması: bugünkü liste, yalnızca uygulama kampanyalarından bu uygulamanınkiler (seçici yoksa hepsi, eskisi gibi)
+  const here = uygs.length < 2 ? hereAll : kendi ? hereAll.filter(c => c.tip !== "uygulama" || c.kid === secim.app.id) : uygKampanyalari(s0, secim);
+  const uygDot = x => x.app.tur === "coklu" ? IC.uygulama
+    : `<span class="bdot" style="--bg-b:${(BRAND[x.app.ag] || (x.tip === "kendi" && brandStyle(s0)) || ["var(--ico)"])[0]}"></span>`;
+  const kampHtml = section(here, true);
+  const uygBilgi = "Bu istasyonda şarj başlatabileceğin uygulamalar. Kampanyalar ödemeyi alan uygulamaya göre listelenir; koşullarını uygulamada kontrol et."
+    + (kendi ? "" : " " + secim.app.ad + " uygulamasını mağazadan indirebilirsin.");
+  const uygLink = kendi ? "" : (secim.app.play || secim.app.app_store || "");
+  const secici = uygs.length < 2 ? "" : `<div class="lbl dsec uygbas"><span id="uygsec-l">Hangi uygulamayla?</span>${tipBtn("ibtn", uygBilgi, uygLink, "", IC.bilgi, "Uygulama seçimi hakkında bilgi").replace("<button ", '<button data-tll="Uygulamayı indir" ')}</div>
+    <div class="uygsec" role="group" aria-labelledby="uygsec-l">${uygs.map(x => `<button class="chip" data-dua="${esc(x.app.id)}" aria-pressed="${x === secim}"${x.ok ? ""
+      : ` aria-disabled="true" title="${esc(x.app.ad)} bu istasyonda yalnızca ${x.akim.toUpperCase()} soketlerde kullanılabilir"`}>${uygDot(x)}${esc(x.app.ad)}${x.akim ? ` <small>${x.akim.toUpperCase()}</small>` : ""}</button>`).join("")}</div>
+    ${secim.akim && s0.hasAc && s0.hasDc ? `<p class="dnote unot">${esc(secim.app.ad)} uygulamasıyla bu istasyonda yalnızca ${secim.akim.toUpperCase()} soketlerde şarj edilir; fiyat ${secim.akim.toUpperCase()} fiyatıdır.</p>` : ""}
+    ${uygs.filter(x => !x.ok).map(x => `<p class="dnote unot">${esc(x.app.ad)} uygulaması bu istasyonda kullanılamaz (yalnızca ${x.akim.toUpperCase()} soketlerde geçerli).</p>`).join("")}
+    ${kampHtml ? "" : `<p class="dnote unot">${esc(secim.app.ad)} uygulamasıyla bu istasyonda bilinen kampanya yok.</p>`}`;
   const rows = [];
   // Fiyat satırı kısa; nereden geldiği ve nasıl hesaplandığı alttaki "Bilgi kaynağı" bölümünde
   const srcTxt = [];
@@ -1849,23 +1950,22 @@ function renderDetail(s) {
   const web = /^https?:\/\//i.test(t.website || t["contact:website"] || "") ? (t.website || t["contact:website"]) : "";
   if (web) rows.push(["Web", `<a href="${esc(safeUrl(web))}" target="_blank" rel="noopener nofollow">Site ↗</a>`]);
   const alt = s.brand && s.named && s.name !== s.brand ? s.name : "";
-  $("sh-b").innerHTML = `<div class="dn">${esc(pretty(s.brand) || s.name)}</div>${alt ? `<div class="alt">${esc(alt)}</div>` : ""}${ozelOlabilir(s) ? `<div class="ozel">Halka açık olmayabilir · konut / site otoparkı</div>` : ""}
+  $("sh-b").innerHTML = `<div class="dtitle"><div class="dtx"><div class="dn">${esc(pretty(s.brand) || s.name)}</div>${alt ? `<div class="alt">${esc(alt)}</div>` : ""}${ozelOlabilir(s) ? `<div class="ozel">Halka açık olmayabilir · konut / site otoparkı</div>` : ""}</div>`
+    + `<button class="dhb fbk" data-fbs="${esc(s.id)}" aria-label="Hata bildir" title="Hata bildir">${IC.mesaj}</button></div>
     ${durumAg(s) ? durumHtml(durumAg(s)) : ""}
     ${s.pasif ? `<p class="dnote bad">Şu an pasif ya da bakımda görünüyor.</p>` : ""}
     ${s.approx ? `<p class="dnote">Konum yaklaşık.</p>` : ""}
     ${rows.length ? `<dl class="kv">${rows.map(([k, v, cls]) => `<dt>${k}</dt><dd${cls ? ` class="${cls}"` : ""}>${v}</dd>`).join("")}</dl>` : ""}
-    <div class="dacts"><a class="btn primary dir" href="https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lon}" target="_blank" rel="noopener">Yol tarifi al</a>
-      <button class="btn dir fbbtn" data-fbs="${esc(s.id)}">${IC.mesaj}Geri bildirim</button></div>
-    ${section(here, true)}
-    ${s.shellTrugo ? `<div class="shellbox">Shell Recharge uygulamasıyla da şarj edilebilir.</div>
-      ${s.viaShell.length ? `<div class="lbl" style="margin-top:14px">Shell Recharge uygulamasıyla</div>${section(s.viaShell, false)}` : ""}` : ""}
+    <div class="dacts"><a class="btn primary dir" href="https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lon}" target="_blank" rel="noopener">Yol tarifi al</a></div>
+    ${secici}${kampHtml}
     <details class="bkay"><summary>Bilgi kaynağı ›</summary>${srcTxt.map(x => `<p>${x}</p>`).join("")}
       <p>${/^bigstation/.test(s.id) ? "İstasyon bilgisi BIG Station sisteminden, üçüncü taraf bir hizmet aracılığıyla günde bir kez alınır." : /^cv\d/.test(s.id) ? "İstasyon bilgisi CV Charging'in resmi istasyon listesinden (cv-charging.com), günde bir kez alınır." : /^acropol\d/.test(s.id) ? "İstasyon bilgisi Acropol Şarj'ın kendi haritasından (acropolsarj.com), günde bir kez alınır. Konut sitelerindeki cihazlar gösterilmez." : /^5sarj\d/.test(s.id) ? `İstasyon bilgisi 5 Şarj'ın kendi haritasından (5sarj.com) alınır; elle güncellenen kopya${kopyaTarih("5sarj")}. Soket gücü EPDK kaydından tamamlanır.` : /^epsis/.test(s.id) && s.official ? "İstasyon bilgisi EPSIS'in kendi haritasından (epsis.net); istasyon listesi günde bir kez güncellenir. Konut sitelerindeki cihazlar gösterilmez." : /^otopriz/.test(s.id) && s.official ? "İstasyon ve anlık durum bilgisi Otopriz'in kendi haritasından (electroop). Konut sitelerindeki cihazlar gösterilmez." : s.official ? `İstasyon bilgisi ağın kendi resmi haritasından${agSite(s)}, günde bir kez güncellenir.` : s.epdk ? `${s.rk ? `Soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir; konum ağın kendi haritasından${agSite(s)}.` : "Konum ve soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir."}${s.rl ? ` İstasyon ağın kendi listesinde${s.rk ? "" : agSite(s)} de yer alıyor.` : ""}` : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
+      ${uygs.length > 1 ? `<p>Şarj başlatılabilen uygulamalar ağların ve uygulamaların resmi duyurularından. Ortak kullanımda fiyatı istasyonun işletmecisi belirler; her uygulamada istasyonun kendi fiyatı gösterilir.</p>` : ""}
       ${durumAg(s) ? `<p>${DURUM_AG[durumAg(s)].yol === "tarayici" ? "Anlık durum, tarayıcınızın doğrudan ağın altyapı sağlayıcısından (electroop) aldığı veridir; 1 dakikaya kadar gecikebilir." : DURUM_AG[durumAg(s)].kaynak ? `${DURUM_AG[durumAg(s)].kaynak}; 1 dakikaya kadar gecikebilir.` : "Anlık durum 1 dakikaya kadar gecikebilir."}</p>` : ""}
       ${s.net ? `<p>İndirimli fiyat yalnızca kampanyanın geçerli olduğu kesin bilinen istasyonlarda yazılır. Ağın kampanyaları birbiriyle birleşmez. Kart indirimi ağ indiriminin üzerine hesaplanır; kart kampanyası "başka indirimle birleşmez" diyorsa liste fiyatına.</p>` : ""}
       ${here.some(c => c.tip === "uygulama") ? `<p>Uygulama indirimi yalnızca şarj o uygulamadan başlatılınca geçerlidir; ağın kendi indirimiyle birleştiği bilinmediği için liste fiyatına uygulanır. Belli günlerde geçerli kampanya haritada yalnızca o gün hesaplanır.</p>` : ""}</details>`;
   $("sh-b").scrollTop = 0;
-  if (durumAg(s)) durumIste(s, durumAg(s));
+  if (durumAg(s0)) durumIste(s0, durumAg(s0));
 }
 /* Anlık durum (kimlikleri "cih" olan istasyonlar): detay açılınca BİR istek. Yoklama yok; detay yeniden çizilirse (liste yenilenmesi
    vb.) aynı sonuç kullanılır. Detay kapanır ya da başka istasyon seçilirse bekleyen istek iptal edilir.
@@ -1953,7 +2053,7 @@ function openTip(b) {
   if (TIP.b === b) return closeTip();
   closeTip();
   const el = $("tip"), d = b.dataset;
-  el.innerHTML = `<p>${esc(d.tip)}</p>${d.tl ? `<a data-kk="${esc(d.tk || "")}" href="${esc(d.tl)}" target="_blank" rel="noopener nofollow">Resmi sayfa ↗</a>` : ""}`;
+  el.innerHTML = `<p>${esc(d.tip)}</p>${d.tl ? `<a data-kk="${esc(d.tk || "")}" href="${esc(d.tl)}" target="_blank" rel="noopener nofollow">${esc(d.tll || "Resmi sayfa")} ↗</a>` : ""}`;
   el.hidden = false; b.setAttribute("aria-expanded", "true"); TIP.b = b;
   const r = b.getBoundingClientRect(), w = el.offsetWidth, h = el.offsetHeight;
   const x = Math.min(innerWidth - w - 12, Math.max(12, r.left + r.width / 2 - w / 2));
@@ -2014,6 +2114,15 @@ function bindEvents() {
     else if (d.sid) selectStation(d.sid);
     else if (d.go === "harita" && S.pushed) { S.pushed = false; history.back(); }
     else if (d.fbt) { FB.tur = FB.tur === d.fbt ? "" : d.fbt; drawFbTur(); }
+    else if (d.dgeri) { M.sel = null; renderSheet(); highlight(); const sb = $("sh-b").querySelector(".stn"); if (sb) sb.focus({ preventScroll: true }); }
+    else if (d.dua !== undefined) {   // istasyon detayı: "Hangi uygulamayla?" (tek seçim); kaydırma ve odak yerinde kalır
+      if (b.getAttribute("aria-disabled") === "true") return;
+      DUYG = d.dua; ssSet("wk.duyg", DUYG); an("filtre", "detay uygulama");
+      const sb = $("sh-b"), y = sb.scrollTop, x = (sb.querySelector(".uygsec") || {}).scrollLeft || 0;
+      renderSheet(); sb.scrollTop = y;
+      const row = sb.querySelector(".uygsec"); if (row) row.scrollLeft = x;
+      const nb = [...sb.querySelectorAll("[data-dua]")].find(e => e.dataset.dua === d.dua); if (nb) nb.focus({ preventScroll: true });
+    }
     else if (d.fbs) { const st = M.byId.get(d.fbs); FB.ctx = st ? [pretty(st.brand) || "", st.name, st.addr].filter(Boolean).join(" · ") : ""; FB.sid = st ? st.id : ""; FB.tur = FB.tur || "istasyon"; show("geri"); }
     else if (d.go) show(d.go);
   });
@@ -2040,12 +2149,14 @@ function bindEvents() {
     const mobile = () => !matchMedia("(min-width: 900px)").matches;
     const H = () => v.clientHeight;
     const stops = () => ({ peek: 64, half: H() * .46, full: H() * .8 });
-    hd.addEventListener("pointerdown", e => {
-      if (!mobile()) return;
+    // istasyon detayının başlık satırı (#sh-dh) da tutamak gibi sürüklenir; içindeki düğmelerden başlayan dokunuş düğmeye kalır
+    const down = e => {
+      if (!mobile() || (e.currentTarget !== hd && e.target.closest("button"))) return;
       drag = true; moved = false; y0 = last = e.clientY; lastT = performance.now(); vel = 0; h0 = sh.offsetHeight;
-      hd.setPointerCapture(e.pointerId);
-    });
-    hd.addEventListener("pointermove", e => {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    };
+    hd.addEventListener("pointerdown", down); $("sh-dh").addEventListener("pointerdown", down);
+    const move = e => {
       if (!drag) return;
       const dy = e.clientY - y0;
       if (!moved && Math.abs(dy) < 6) return;
@@ -2053,7 +2164,8 @@ function bindEvents() {
       const now = performance.now(); vel = (e.clientY - last) / Math.max(1, now - lastT); last = e.clientY; lastT = now;
       const st = stops(), h = Math.min(st.full, Math.max(st.peek, h0 - dy));
       v.style.setProperty("--sheet-h", h + "px");
-    });
+    };
+    hd.addEventListener("pointermove", move); $("sh-dh").addEventListener("pointermove", move);
     const end = () => {
       if (!drag) return; drag = false;
       if (!moved) return;
@@ -2066,7 +2178,7 @@ function bindEvents() {
       v.dataset.s = target; renderSheet();
       hd.dataset.dragged = "1"; setTimeout(() => delete hd.dataset.dragged, 50);
     };
-    hd.addEventListener("pointerup", end); hd.addEventListener("pointercancel", end);
+    for (const el of [hd, $("sh-dh")]) { el.addEventListener("pointerup", end); el.addEventListener("pointercancel", end); }
   })();
   $("handle").onclick = e => {
     e.stopPropagation();
@@ -2189,7 +2301,10 @@ async function init() {
     $("list").innerHTML = `<div class="err">Kampanyalar yüklenemedi (${esc(e.message)}). Lütfen sayfayı yenileyin.</div>`;
     $("upd").textContent = "Veri alınamadı"; return;
   }
+  // uygulamalar.json (istasyon detayındaki "Hangi uygulamayla?") tarifelerle birlikte istenir; alınamazsa seçici görünmez
+  const uygP = fetch("uygulamalar.json", { cache: "no-cache" }).then(r => r.ok ? r.json() : null).catch(() => null);
   try { const r = await fetch("tarifeler.json", { cache: "no-cache" }); if (r.ok) TAR = await r.json(); } catch {}
+  const uj = await uygP; if (uj && Array.isArray(uj.uygulamalar)) UYGV = uj;
   loadProfile(); buildFilters(); bindEvents();
   $("q").value = S.q; $("sort").value = S.sort;
   renderQuick(); renderProfile(); updateDot(); render();

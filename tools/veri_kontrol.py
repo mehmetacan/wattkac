@@ -14,7 +14,7 @@ UYARI: gözden geçirilmesi iyi olan durumlar
   - elle güncellenen ağ kopyası (ELLE_KOPYA: bot korumalı ya da iş akışına 403 veren kaynak, ör. data/aglar/5sarj.json,
     data/aglar/eka.json) KOPYA_GUN günden eski: haritada o ağın listesi/konumları kullanıldığından kullanıcıdan yeni kopya istenmeli
 
-Girdiler: data/kampanyalar.json, site/tarifeler.json, data/epdk/konum_duzeltmeleri.json, site/istasyonlar.json
+Girdiler: data/kampanyalar.json, site/tarifeler.json, site/uygulamalar.json, data/epdk/konum_duzeltmeleri.json, site/istasyonlar.json
 """
 import datetime, json, pathlib, re, sys
 
@@ -202,6 +202,85 @@ def tarifeler(bugun, guncellik, ag_adlari):
         uyari(f"fiyat {ag}: tarifeler.json'da kaydı yok")
 
 
+def ad_anahtari(s):
+    """Sitedeki tarKey(): Türkçe küçük harf, aksansız, yalnızca harf/rakam (ör. "Power Şarj" = "Powerşarj")."""
+    s = str(s or "").replace("I", "ı").replace("İ", "i").lower()
+    s = s.translate(str.maketrans("ışğüöç", "isguoc"))
+    return re.sub(r"[^a-z0-9]", "", s)
+
+
+def uygulamalar(ag_adlari):
+    """site/uygulamalar.json (istasyon detayındaki "Hangi uygulamayla?"): yapı denetimi + ağ adlarının eşleşmesi.
+    Ağ adı tarifeler.json'da (anahtar ya da 'adlar'), kampanya verisinde ya da haritadaki istasyon markalarında yoksa uyarı:
+    sitede o ağın istasyonlarında uygulama görünmez."""
+    p = KOK / "site/uygulamalar.json"
+    if not p.exists():
+        return
+    d = json.loads(p.read_text(encoding="utf-8"))
+    liste = d.get("uygulamalar")
+    if not isinstance(liste, list) or not liste:
+        hata("uygulamalar.json: 'uygulamalar' boş ya da liste değil")
+        return
+    t = json.loads((KOK / "site/tarifeler.json").read_text(encoding="utf-8")).get("aglar") or {}
+    bilinen = {ad_anahtari(a) for k, x in t.items() for a in [k, *(x.get("adlar") or [])]}
+    bilinen |= {ad_anahtari(a) for a in ag_adlari if a}
+    ip = KOK / "site/istasyonlar.json"
+    markalar = set()
+    if ip.exists():
+        markalar = {ad_anahtari(r.get("b")) for r in json.loads(ip.read_text(encoding="utf-8")).get("istasyonlar", []) if r.get("b")}
+    kamp = json.loads((KOK / "data/kampanyalar.json").read_text(encoding="utf-8"))
+    kamp_uyg = {ad_anahtari(u.get("name")): u.get("id") for u in kamp.get("uygulamalar", [])}
+    idler = set()
+    for u in liste:
+        yer = f"uygulamalar.json {u.get('id')}"
+        if not u.get("id") or not u.get("ad"):
+            hata(f"{yer}: 'id' ya da 'ad' boş")
+        if u.get("id") in idler:
+            hata(f"{yer}: id tekrar ediyor")
+        idler.add(u.get("id"))
+        if str(u.get("id", "")).startswith("ag:"):
+            hata(f"{yer}: 'ag:' ile başlayan id ağların örtük kendi uygulamasına ayrılmış")
+        tur = u.get("tur")
+        if tur not in ("ag", "coklu"):
+            hata(f"{yer}: 'tur' 'ag' ya da 'coklu' olmalı")
+        if tur == "ag" and not u.get("ag"):
+            hata(f"{yer}: ağın uygulaması ('tur': 'ag') için 'ag' (sahibi olan ağ) yazılmalı")
+        if tur == "coklu" and u.get("ag"):
+            hata(f"{yer}: çok ağlı uygulamada 'ag' null olmalı")
+        for alan in ("app_store", "play"):
+            v = u.get(alan) or ""
+            if v and not v.startswith("https://"):
+                hata(f"{yer}: '{alan}' https:// ile başlamalı")
+        for k in u.get("kaynak") or []:
+            if not str(k).startswith("https://") or any(h in k for h in DERLEME):
+                hata(f"{yer}: kaynak resmi bir https bağlantısı olmalı ({k})")
+        ki = kamp_uyg.get(ad_anahtari(u.get("ad")))
+        if ki and ki != u.get("id"):
+            hata(f"{yer}: kampanyalar.json'da bu uygulamanın id'si {ki!r}; kart/uygulama kampanyaları id ile eşleşir, aynı yazılmalı")
+        aglar = u.get("aglar")
+        if not isinstance(aglar, list) or not aglar:
+            hata(f"{yer}: 'aglar' boş")
+            continue
+        if tur == "ag" and not any(ad_anahtari(x.get("ag")) == ad_anahtari(u.get("ag")) for x in aglar):
+            uyari(f"{yer}: kendi ağı ({u.get('ag')}) 'aglar' listesinde yok")
+        for x in aglar:
+            ag = x.get("ag")
+            if not ag:
+                hata(f"{yer}: 'aglar' içinde 'ag' boş kayıt")
+                continue
+            if x.get("akim") not in (None, "ac", "dc"):
+                hata(f"{yer} → {ag}: 'akim' 'ac' ya da 'dc' olmalı")
+            if x.get("ad_desen") is not None:
+                try:
+                    re.compile(x["ad_desen"])
+                except re.error as ex:
+                    hata(f"{yer} → {ag}: 'ad_desen' geçersiz ({ex})")
+            k = ad_anahtari(ag)
+            if k not in bilinen and k not in markalar:
+                uyari(f"{yer} → {ag!r}: tarifeler.json'da, kampanya verisinde ya da haritadaki markalarda eşleşmiyor; "
+                      "sitede bu ağın istasyonlarında uygulama görünmeyebilir")
+
+
 def konum_denetimi():
     """İstasyon konum denetiminin raporu: çıkarılan ya da taşınan kayıt sayısı birden artarsa uyarır (hata değil)."""
     rp, ip = KOK / "data/epdk/konum_duzeltmeleri.json", KOK / "site/istasyonlar.json"
@@ -239,6 +318,7 @@ def main():
     try:
         aglar = kampanyalar(bugun, guncellik)
         tarifeler(bugun, guncellik, aglar)
+        uygulamalar(aglar)
         konum_denetimi()
         if guncellik:
             elle_kopyalar(bugun)

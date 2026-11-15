@@ -1,0 +1,71 @@
+{
+  "guncelleme": "2026-11-15",
+  "aciklama": "İstasyon detayındaki \"Hangi uygulamayla?\" seçicisi. Her ağın kendi uygulaması örtüktür (yazılmaz; ağ adı = uygulama adı). Burada yalnızca başka ağlarda da şarj başlatılabilen uygulamalar ve doğrulanmış eşleşmeler durur. 'ag': uygulamanın sahibi olan şarj ağı (çok ağlı uygulamada null); 'aglar[].ag': haritadaki marka adı ya da tarifeler.json anahtarı; 'akim': yalnızca bu akım türünde; 'ad_desen': yalnızca adı/adresi bu desene uyan istasyonlarda (aksansız küçük harf). Fiyat her uygulamada istasyonun kendi fiyatıdır.",
+  "uygulamalar": [
+    {
+      "id": "trugo", "ad": "Trugo", "ag": "Trugo", "tur": "ag",
+      "aglar": [{ "ag": "Trugo" }, { "ag": "Eşarj" }, { "ag": "Oncharge" }, { "ag": "Shell Recharge" }],
+      "app_store": "https://apps.apple.com/tr/app/id6443913003", "play": "",
+      "kaynak": ["https://trugo.com.tr/individual/news/trugo-ve-esarj-is-birligiyle-hizli-ve-kesintisiz-sarj-81-ilde-hizmetinizde",
+                 "https://trugo.com.tr/individual/news/trugo-ve-oncharge-is-birligiyle-sarj-agi-buyuyor"],
+      "not": "Shell Recharge istasyonları Trugo uygulamasında doğrudan görüldü (14 Kasım 2026)."
+    },
+    {
+      "id": "esarj", "ad": "Eşarj", "ag": "Eşarj", "tur": "ag",
+      "aglar": [{ "ag": "Eşarj" }, { "ag": "Trugo", "akim": "dc" }],
+      "app_store": "https://apps.apple.com/tr/app/id982709995", "play": "",
+      "kaynak": ["https://www.enerjisa.com.tr/en/about-enerjisa/media-centre/press-releases/esarj-and-trugo-roaming-partnership-serves-in-81-cities-"],
+      "not": "Trugo ile ortak kullanım yalnızca hızlı (DC) soketler için duyuruldu."
+    },
+    {
+      "id": "shellrecharge", "ad": "Shell Recharge", "ag": "Shell Recharge", "tur": "ag",
+      "aglar": [{ "ag": "Shell Recharge" }, { "ag": "Trugo", "ad_desen": "\\bshell\\b" }],
+      "app_store": "https://apps.apple.com/tr/app/id6451115578", "play": "",
+      "kaynak": [],
+      "not": "Shell akaryakıt istasyonlarındaki Trugo cihazları (Trugo–Shell iş birliği) Shell Recharge uygulamasıyla da kullanılabilir; kullanıcı uygulamada doğruladı (14 Kasım 2026)."
+    },
+    {
+      "id": "zes", "ad": "ZES", "ag": "ZES", "tur": "ag",
+      "aglar": [{ "ag": "ZES" }, { "ag": "WAT Mobilite" }, { "ag": "Beefull" }],
+      "app_store": "https://apps.apple.com/tr/app/id1401503272", "play": "",
+      "kaynak": ["https://zes.net/tr/sss", "https://www.watmobilite.com/haberler/wat-mobilite-ve-zesten-roaming-is-birligi",
+                 "https://beefull.com/blog/zes-ve-beefull-teknolojiden-roaming-is-birligi/"],
+      "not": "Ortak kullanım istasyonunda şarj yalnızca uygulamada istasyon detayından \"Şarj Başlat\" ile; fiyatı istasyon işletmecisi belirler (ZES SSS)."
+    },
+    {
+      "id": "wat", "ad": "WAT Mobilite", "ag": "WAT Mobilite", "tur": "ag",
+      "aglar": [{ "ag": "WAT Mobilite" }, { "ag": "ZES" }, { "ag": "Beefull" }],
+      "app_store": "https://apps.apple.com/tr/app/id6754679342", "play": "",
+      "kaynak": ["https://www.watmobilite.com/haberler/wat-mobilite-ve-zesten-roaming-is-birligi",
+                 "https://www.watmobilite.com/haberler/wat-mobilite-ve-beefull-teknoloji-roaming-anlasmasini-devreye-aldi"],
+      "not": ""
+    },
+    {
+      "id": "beefull", "ad": "Beefull", "ag": "Beefull", "tur": "ag",
+      "aglar": [{ "ag": "Beefull" }, { "ag": "ZES" }, { "ag": "WAT Mobilite" }],
+      "app_store": "https://apps.apple.com/tr/app/id1592420541", "play": "",
+      "kaynak": ["https://beefull.com/blog/zes-ve-beefull-teknolojiden-roaming-is-birligi/",
+                 "https://www.watmobilite.com/haberler/wat-mobilite-ve-beefull-teknoloji-roaming-anlasmasini-devreye-aldi"],
+      "not": ""
+    },
+    {
+      "id": "rotawatt", "ad": "Rotawatt", "ag": null, "tur": "coklu",
+      "aglar": [{ "ag": "Acropol Şarj" }, { "ag": "As Plus Şarj" }, { "ag": "Bölgem Mobilite" }, { "ag": "Checkpoint" }, { "ag": "Çelikler Enerji" },
+                { "ag": "Econ" }, { "ag": "EvSolt" }, { "ag": "Evroad" }, { "ag": "Geta Charge" }, { "ag": "Greendrive" }, { "ag": "i-Şarj" },
+                { "ag": "KES" }, { "ag": "Meis Charge" }, { "ag": "Mercury Şarj" }, { "ag": "Mithra Pod" }, { "ag": "MyCharge" }, { "ag": "MyPower" },
+                { "ag": "Promaster" }, { "ag": "Royal Şarj" }, { "ag": "Solargize" }, { "ag": "Solinved" }, { "ag": "Spectrum" }, { "ag": "Swapp" },
+                { "ag": "ŞarjPlus" }, { "ag": "Tam Şarj" }, { "ag": "TR Charge" }, { "ag": "Tripy" }, { "ag": "Voltgo" }, { "ag": "Zeplin" }],
+      "app_store": "https://apps.apple.com/tr/app/id6736650325", "play": "https://play.google.com/store/apps/details?id=com.arvento.rotawatt",
+      "kaynak": ["https://www.rotawatt.com/", "https://www.instagram.com/rotawatt/"],
+      "not": "Uygulamadaki anlaşmalı firma listesi (29 firma, 15 Kasım 2026). Liste fiyatı ağın kendi tarifesiyle aynı."
+    },
+    {
+      "id": "voltla", "ad": "Voltla", "ag": null, "tur": "coklu",
+      "aglar": [{ "ag": "Şarjon" }, { "ag": "Powerşarj" }, { "ag": "Doğuş Dijital Enerji" }],
+      "app_store": "https://apps.apple.com/tr/app/id6444761202", "play": "https://play.google.com/store/apps/details?id=com.voltla.app",
+      "kaynak": ["https://voltla.com.tr/haberler/voltla-sarjon-is-birligi",
+                 "https://voltla.com.tr/haberler/powersarj-ve-dogus-dijital-enerjiden-voltla-ile-guclu-is-birligi"],
+      "not": "Yalnızca şarj başlatma ve ödemenin Voltla üzerinden yapıldığı duyurulan ağlar."
+    }
+  ]
+}
