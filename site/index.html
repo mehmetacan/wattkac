@@ -287,6 +287,11 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .sheet.det .handle{padding-bottom:4px}
 /* "Hangi uygulamayla?": tek seçimli, yatay kaydırılan çipler */
 .lbl.dsec{margin:16px 0 8px}
+.uygbas{display:flex;align-items:center;gap:4px}
+.ibtn{display:inline-grid;place-items:center;width:32px;height:32px;margin:-8px 0 -8px 4px;border:0;border-radius:50%;background:none;color:var(--mut);cursor:pointer;padding:0}
+.ibtn svg{width:16px;height:16px}
+.ibtn:hover,.ibtn[aria-expanded="true"]{color:var(--pri);background:var(--pri-soft)}
+.ibtn:focus-visible{outline:2px solid var(--pri);outline-offset:1px}
 .uygsec{display:flex;gap:8px;overflow-x:auto;margin:-5px -12px 0;padding:5px 12px 7px;scrollbar-width:none}
 .uygsec::-webkit-scrollbar{display:none}
 .uygsec .chip{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
@@ -1907,15 +1912,15 @@ function renderDetail(s0) {
   const here = uygs.length < 2 ? hereAll : kendi ? hereAll.filter(c => c.tip !== "uygulama" || c.kid === secim.app.id) : uygKampanyalari(s0, secim);
   const uygDot = x => x.app.tur === "coklu" ? IC.uygulama
     : `<span class="bdot" style="--bg-b:${(BRAND[x.app.ag] || (x.tip === "kendi" && brandStyle(s0)) || ["var(--ico)"])[0]}"></span>`;
-  const magaza = a => [a.app_store ? `<a href="${esc(safeUrl(a.app_store))}" target="_blank" rel="noopener nofollow">App Store ↗</a>` : "",
-    a.play ? `<a href="${esc(safeUrl(a.play))}" target="_blank" rel="noopener nofollow">Google Play ↗</a>` : ""].filter(Boolean).join(" · ");
   const kampHtml = section(here, true);
-  const secici = uygs.length < 2 ? "" : `<div class="lbl dsec" id="uygsec-l">Hangi uygulamayla?</div>
+  const uygBilgi = "Bu istasyonda şarj başlatabileceğin uygulamalar. Kampanyalar ödemeyi alan uygulamaya göre listelenir; koşullarını uygulamada kontrol et."
+    + (kendi ? "" : " " + secim.app.ad + " uygulamasını mağazadan indirebilirsin.");
+  const uygLink = kendi ? "" : (secim.app.play || secim.app.app_store || "");
+  const secici = uygs.length < 2 ? "" : `<div class="lbl dsec uygbas"><span id="uygsec-l">Hangi uygulamayla?</span>${tipBtn("ibtn", uygBilgi, uygLink, "", IC.bilgi, "Uygulama seçimi hakkında bilgi").replace("<button ", '<button data-tll="Uygulamayı indir" ')}</div>
     <div class="uygsec" role="group" aria-labelledby="uygsec-l">${uygs.map(x => `<button class="chip" data-dua="${esc(x.app.id)}" aria-pressed="${x === secim}"${x.ok ? ""
       : ` aria-disabled="true" title="${esc(x.app.ad)} bu istasyonda yalnızca ${x.akim.toUpperCase()} soketlerde kullanılabilir"`}>${uygDot(x)}${esc(x.app.ad)}${x.akim ? ` <small>${x.akim.toUpperCase()}</small>` : ""}</button>`).join("")}</div>
     ${secim.akim && s0.hasAc && s0.hasDc ? `<p class="dnote unot">${esc(secim.app.ad)} uygulamasıyla bu istasyonda yalnızca ${secim.akim.toUpperCase()} soketlerde şarj edilir; fiyat ${secim.akim.toUpperCase()} fiyatıdır.</p>` : ""}
     ${uygs.filter(x => !x.ok).map(x => `<p class="dnote unot">${esc(x.app.ad)} uygulaması bu istasyonda kullanılamaz (yalnızca ${x.akim.toUpperCase()} soketlerde geçerli).</p>`).join("")}
-    ${kendi ? "" : `<p class="dnote unot">Kampanyalar ödemeyi alan uygulamaya göre listelenir; koşulları uygulamada kontrol et.${magaza(secim.app) ? ` ${magaza(secim.app)}` : ""}</p>`}
     ${kampHtml ? "" : `<p class="dnote unot">${esc(secim.app.ad)} uygulamasıyla bu istasyonda bilinen kampanya yok.</p>`}`;
   const rows = [];
   // Fiyat satırı kısa; nereden geldiği ve nasıl hesaplandığı alttaki "Bilgi kaynağı" bölümünde
@@ -2044,7 +2049,7 @@ function openTip(b) {
   if (TIP.b === b) return closeTip();
   closeTip();
   const el = $("tip"), d = b.dataset;
-  el.innerHTML = `<p>${esc(d.tip)}</p>${d.tl ? `<a data-kk="${esc(d.tk || "")}" href="${esc(d.tl)}" target="_blank" rel="noopener nofollow">Resmi sayfa ↗</a>` : ""}`;
+  el.innerHTML = `<p>${esc(d.tip)}</p>${d.tl ? `<a data-kk="${esc(d.tk || "")}" href="${esc(d.tl)}" target="_blank" rel="noopener nofollow">${esc(d.tll || "Resmi sayfa")} ↗</a>` : ""}`;
   el.hidden = false; b.setAttribute("aria-expanded", "true"); TIP.b = b;
   const r = b.getBoundingClientRect(), w = el.offsetWidth, h = el.offsetHeight;
   const x = Math.min(innerWidth - w - 12, Math.max(12, r.left + r.width / 2 - w / 2));
