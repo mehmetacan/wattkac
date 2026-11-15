@@ -13,6 +13,7 @@ SAATLER = [(9, 30), (13, 0), (19, 30)]
 ILK_GUN = [(9, 30), (10, 0), (13, 0), (19, 30)]
 REKLAM_YOK = "ℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz."
 HASHTAG = "#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac"
+HASHTAG_UYG = "#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #wattkac"  # uygulama postu: kart koşulu yok
 
 
 def tag(s):
@@ -39,6 +40,38 @@ def uygulama_teklifleri(u):
     return [o for o in u.get("offers", []) if not o.get("kart")]
 
 
+def tl(v):
+    return f"{v:.2f}".replace(".", ",")
+
+
+def kadar(son):
+    """render.py ile aynı: '31 Aralık' → "31 Aralık'a kadar"."""
+    if not son[:1].isdigit():
+        return son
+    return f"{son}'{'e' if son.split()[-1] in ('Eylül', 'Ekim') else 'a'} kadar"
+
+
+def uygulama_fiyat_caption(u, o):
+    """Teklifte 'fiyatlar' tablosu varsa (render.py fiyat tablolu düzen): en ucuz fiyatlar önde, kısa ve fiyat odaklı."""
+    f = o["fiyatlar"]
+    rows = f["satirlar"]
+    dc = sorted((r for r in rows if r.get("dc")), key=lambda r: (r["dc"][1], r["ag"]))[:5]
+    ac = sorted((r for r in rows if r.get("ac")), key=lambda r: (r["ac"][1], r["ag"]))[:3]
+    gt = gun_txt(o)
+    bas = f"⚡ {gt} {u['name']} uygulamasıyla şarjda {o['big']}!" if gt else f"⚡ {u['name']} uygulamasıyla şarjda {o['big']}!"
+    satir = [bas, "", f"🔋 {(gt.replace('Her ', '').capitalize() + ' günü') if gt else 'Kampanyada'} en ucuz DC (TL/kWh):"]
+    satir += [f"• {r['ag']}: {tl(r['dc'][0])} → {tl(r['dc'][1])}" for r in dc]
+    if ac:
+        satir.append("🔌 AC'de en ucuz: " + " · ".join(f"{r['ag']} {tl(r['ac'][1])}" for r in ac))
+    satir += ["", f"📅 {' · '.join(x for x in (gt, kadar(o['son'])) if x)}",
+              f"📲 {f.get('not') or o['det']}.",
+              f"📍 {len(o['st'])} ağ: {', '.join(o['st'])}",
+              "", f"👉 {len(rows)} ağın tüm fiyatları için kaydır. wattkac.com'da istasyon detayında “Hangi uygulamayla? → {u['name']}” seç.",
+              "", "Koşullar değişebilir; şarj etmeden önce uygulamadan kontrol edin.",
+              "", REKLAM_YOK, "", f"{HASHTAG_UYG} {tag(u['name'])} #şarjfiyatları"]
+    return "\n".join(satir)
+
+
 def caption(item, d):
     if item["tur"] == "ozet":
         if item["id"] == "ozet_bankalar":
@@ -59,6 +92,9 @@ def caption(item, d):
                 f"\n\n{REKLAM_YOK}\n\n{HASHTAG} {tag(b['name'])}")
     if item["tur"] == "uygulama":
         u = item["_src"]
+        o0 = uygulama_teklifleri(u)[0]
+        if o0.get("fiyatlar"):
+            return uygulama_fiyat_caption(u, o0)
         lines = []
         for o in uygulama_teklifleri(u):
             gt = gun_txt(o)
@@ -67,9 +103,9 @@ def caption(item, d):
                          f"\n⏱ Son gün: {o['son']}")
         big = uygulama_teklifleri(u)[0]["big"]
         return (f"⚡ {u['name']} uygulamasıyla şarjda {big}!\n\n" + "\n\n".join(lines) +
-                f"\n\nİndirim, şarjı {u['name']} uygulamasından başlatıp ödeyince geçerli. Kart kampanyaları banka postlarımızda."
+                f"\n\nİndirim, şarjı {u['name']} uygulamasından başlatıp ödeyince geçerli."
                 f"\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin."
-                f"\n\n{REKLAM_YOK}\n\n{HASHTAG} {tag(u['name'])}")
+                f"\n\n{REKLAM_YOK}\n\n{HASHTAG_UYG} {tag(u['name'])}")
     s = item["_src"]
     lines = [f"✅ {o['big']}: {o['det']} (son gün {o['son']})" for o in s["own"]]
     bl = s.get("birlesik")
@@ -103,7 +139,9 @@ def kaynaklar(item, d):
             add(f"{src['name']}: {o['big']} ({', '.join(o['st'])})", o["link"], o)
     elif item["tur"] == "uygulama":
         for o in uygulama_teklifleri(src):
-            add(f"{src['name']}: {o['big']}" + (f" ({gun_txt(o)})" if gun_txt(o) else ""), o["link"], o)
+            fy = o.get("fiyatlar")
+            add(f"{src['name']}: {o['big']}" + (f" ({gun_txt(o)})" if gun_txt(o) else "")
+                + (f" · fiyatlar: {fy['kaynak']}, {fy['tarih']}" if fy else ""), o["link"], o)
     elif item["tur"] == "istasyon":
         for o in src["own"]:
             add(f"{src['name']}: {o['big']}", o["link"], o)

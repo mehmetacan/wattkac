@@ -153,8 +153,188 @@ def app_html(u, d, story):
     return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{css}</style></head><body><div class="wrap">'
             f'{brand("Uygulama · " + d["donem"])}<div class="h1">{esc(u["name"])}</div><div class="h2">{esc(u.get("sub", ""))}</div>'
             f'<div class="offers">{offers}</div><div class="spacer"></div>'
-            f'<div class="note">İndirim, şarjı <b>{esc(u["name"])} uygulamasından</b> başlatıp ödeyince geçerli. Kart kampanyaları banka postlarımızda.</div>'
+            f'<div class="note">İndirim, şarjı <b>{esc(u["name"])} uygulamasından</b> başlatıp ödeyince geçerli.</div>'
             f'{foot(d)}</div></body></html>')
+
+
+# ------------------------------------------------------------------ uygulama postu: fiyat tablolu düzen
+# Teklifte "fiyatlar" varsa (kampanya sahibinin kendi tablosu: {"kaynak", "tarih", "not"?, "satirlar": [{"ag", "ac": [liste, kampanya] | null,
+# "dc": [...]}]}) post fiyat odaklı üretilir: kapak (en ucuz 3 DC), fiyat tablosu slaytları, katılım slaydı, hikâye (en ucuz 5 DC).
+TABLO_SATIR = 13  # slayt başına en fazla satır (1080×1350'de ~30px yazıyla okunaklı sığan)
+
+
+def tl(v):
+    return f"{v:.2f}".replace(".", ",")
+
+
+def kadar(son):
+    """'31 Aralık' → "31 Aralık'a kadar" (Eylül/Ekim → 'e)."""
+    if not son[:1].isdigit():
+        return son
+    return f"{son}'{'e' if son.split()[-1] in ('Eylül', 'Ekim') else 'a'} kadar"
+
+
+def fiyat_satirlari(o):
+    """Tablo satırları, DC kampanya fiyatına göre ucuzdan pahalıya (DC'si olmayan sona, AC'ye göre)."""
+    rows = list((o.get("fiyatlar") or {}).get("satirlar") or [])
+    return sorted(rows, key=lambda r: (r.get("dc") is None, (r.get("dc") or r.get("ac") or [0, 99])[1], r["ag"]))
+
+
+def bolumler(rows, n=TABLO_SATIR):
+    """Satırları en fazla n'lik, olabildiğince eşit slaytlara böler (25 → 13 + 12)."""
+    k = max(1, -(-len(rows) // n))
+    boy = -(-len(rows) // k)
+    return [rows[i:i + boy] for i in range(0, len(rows), boy)]
+
+
+def indirimli(big):
+    """'%20 indirim' → '%20 indirimli'; başka biçimde olduğu gibi."""
+    return big + "li" if big.endswith("indirim") else big
+
+
+def fiyat_hucre(p, cls):
+    if not p:
+        return f'<div class="pc {cls} yok">—</div>'
+    return f'<div class="pc {cls}"><s>{tl(p[0])}</s><span class="ok">→</span><b>{tl(p[1])}</b></div>'
+
+
+APP_CSS = """
+.top{display:flex;align-items:center;gap:12px;font-size:38px;font-weight:800}
+.top b{color:#FFD400}
+.pill{margin-left:auto;font-size:28px;font-weight:900;letter-spacing:3px;color:#0A1020;background:#22E3A0;border-radius:12px;padding:9px 20px}
+.app{font-size:44px;font-weight:800;color:#22E3A0;letter-spacing:-.5px}
+.gun{font-weight:900;letter-spacing:-7px;line-height:.9;text-transform:uppercase;color:#F4F6FB}
+.ind{align-self:flex-start;background:#FFD400;color:#0A1020;font-weight:900;letter-spacing:-2px;text-transform:uppercase;border-radius:24px}
+.vl{font-size:26px;font-weight:800;color:#8394B8;letter-spacing:2px;text-transform:uppercase}
+.vl span{text-transform:none;letter-spacing:1px}
+.vit{display:flex;flex-direction:column}
+.vr{display:flex;align-items:center;gap:22px;background:rgba(255,255,255,.05);border:2px solid #24304F;border-radius:26px}
+.vr .n{flex:1;font-weight:800;letter-spacing:-.5px;white-space:nowrap}
+.vr .ak{font-weight:800;color:#8394B8}
+.vr s{color:#7D8BA8;font-weight:700;text-decoration-thickness:3px}
+.vr b{color:#FFD400;font-weight:900;letter-spacing:-2px}
+.vr.ilk{border-color:#FFD400;background:rgba(255,212,0,.09)}
+.alt{display:flex;justify-content:space-between;align-items:center;font-weight:800}
+.alt span:last-child{color:#9FB0D0;font-weight:700}
+"""
+
+
+def app_cover_fiyat_html(u, o, d):
+    rows = [r for r in fiyat_satirlari(o) if r.get("dc")][:3]
+    gt = gun_txt(o) or o["big"]
+    vit = "".join(f'<div class="vr{" ilk" if i == 0 else ""}"><span class="n">{esc(r["ag"])}</span><span class="ak">DC</span>'
+                  f'<s>{tl(r["dc"][0])}</s><b>{tl(r["dc"][1])}</b></div>' for i, r in enumerate(rows))
+    css = base_css(1080, 1350, False) + APP_CSS + """
+.w{width:1080px;height:1350px;padding:76px 84px 74px;display:flex;flex-direction:column;
+ background:radial-gradient(900px 700px at 95% -5%, rgba(255,212,0,.20), transparent 60%),
+            radial-gradient(800px 700px at -10% 105%, rgba(34,227,160,.14), transparent 60%),#0A1020}
+.app{margin-top:58px}.gun{margin-top:6px;font-size:198px}
+.ind{margin-top:26px;font-size:80px;padding:14px 32px 18px}
+.vl{margin-top:58px}.vit{margin-top:18px;gap:18px}
+.vr{padding:22px 32px}.vr .n{font-size:46px}.vr .ak{font-size:26px}.vr s{font-size:36px}.vr b{font-size:72px}
+.alt{font-size:32px}"""
+    return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{css}</style></head><body><div class="w">'
+            f'<div class="top">{BOLT.format(s=42, c="#FFD400")}<span>Watt<b>Kaç</b></span><span class="pill">UYGULAMA</span></div>'
+            f'<div class="app">{esc(u["name"])} uygulamasıyla</div><div class="gun">{esc(gt)}</div>'
+            f'<div class="ind">{esc(o["big"])}</div>'
+            f'<div class="vl">En ucuz DC fiyatları · <span>TL/kWh</span></div><div class="vit">{vit}</div><div class="spacer"></div>'
+            f'<div class="alt"><span>{len(o["st"])} şarj ağında · {esc(kadar(o["son"]))}</span><span>Tüm fiyatlar →</span></div>'
+            f'</div></body></html>')
+
+
+def app_tablo_html(u, o, rows, bas, idx, tot, d):
+    gt = gun_txt(o)
+    f = o["fiyatlar"]
+    satir = "".join(f'<div class="tr"><span class="no">{bas + i}</span><span class="ag">{esc(r["ag"])}</span>'
+                    f'{fiyat_hucre(r.get("ac"), "ac")}{fiyat_hucre(r.get("dc"), "dc")}</div>' for i, r in enumerate(rows))
+    alt = f.get("not") or f"{u['name']} uygulamasından başlatılan şarjda"
+    css = base_css(1080, 1350, False) + """
+.wrap{padding:56px 52px 50px}
+.h1{margin-top:26px;font-size:62px;letter-spacing:-1.5px}.h1 span{color:#FFD400}
+.h2{margin-top:8px;font-size:28px}
+.th,.tr{display:grid;grid-template-columns:50px 1fr 262px 300px;align-items:center;column-gap:12px;padding:0 20px}
+.th{margin-top:22px;height:40px;font-size:22px;font-weight:800;color:#8394B8;letter-spacing:2px;text-transform:uppercase}
+.th span:nth-child(n+3){text-align:right}
+.tb{flex:none;border:2px solid #202C4A;border-radius:22px;overflow:hidden}
+.tr{height:68px}.tr:nth-child(odd){background:rgba(255,255,255,.05)}
+.no{font-size:24px;font-weight:800;color:#5E6C8C}
+.ag{font-size:31px;font-weight:800;white-space:nowrap;letter-spacing:-.3px}
+.pc{display:flex;align-items:baseline;justify-content:flex-end;gap:8px;white-space:nowrap}
+.pc s{font-size:27px;font-weight:600;color:#7D8BA8;text-decoration-thickness:2px}
+.pc .ok{font-size:22px;color:#5E6C8C}
+.pc b{font-size:34px;font-weight:900;letter-spacing:-.5px}
+.pc.ac b{color:#F4F6FB}.pc.dc b{color:#FFD400;font-size:36px}
+.pc.yok{font-size:30px;color:#5E6C8C;font-weight:700}
+.nt{margin-top:16px;font-size:24px;font-weight:700;color:#C9D4EA;line-height:1.3}.nt b{color:#22E3A0}
+.nt{white-space:nowrap}
+.foot{margin-top:6px;font-size:20px}"""
+    return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{css}</style></head><body><div class="wrap">'
+            f'{brand(u["name"] + f" · {idx}/{tot}")}'
+            f'<div class="h1">{esc((gt.replace("Her ", "") + " fiyatları").capitalize() if gt else "Kampanya fiyatları")} <span>(TL/kWh)</span></div>'
+            f'<div class="h2">{esc(indirimli(o["big"]))} · üstü çizili: liste fiyatı · DC\'ye göre sıralı</div>'
+            f'<div class="th"><span>#</span><span>Şarj ağı</span><span>AC</span><span>DC</span></div><div class="tb">{satir}</div>'
+            f'<div class="spacer"></div><div class="nt"><b>{esc(alt)}.</b></div>'
+            f'<div class="foot">Kaynak: {esc(f["kaynak"])} ({esc(tarih_txt(f["tarih"]))}) · Koşullar değişebilir · @wattkac</div>'
+            f'</div></body></html>')
+
+
+def app_katilim_html(u, o, d):
+    gt = gun_txt(o)
+    f = o["fiyatlar"]
+    adim = [(f"{u['name']} uygulamasını indir", "Üye ol; şarjı ve ödemeyi uygulamadan yapacaksın."),
+            ("Anlaşmalı istasyonda başlat", f"{len(o['st'])} şarj ağından birinin istasyonunda şarjı {u['name']} uygulamasından başlat."),
+            (f"{gt + ': ' if gt else ''}{o['big']}", (f.get("not") or o["det"]) + ".")]
+    kart = "".join(f'<div class="ad"><div class="nm">{i}</div><div><div class="at">{esc(a)}</div><div class="ax">{esc(b)}</div></div></div>'
+                   for i, (a, b) in enumerate(adim, 1))
+    css = base_css(1080, 1350, False) + """
+.h1{margin-top:44px;font-size:80px}
+.h2{margin-top:12px;font-size:32px}
+.ads{margin-top:40px;display:flex;flex-direction:column;gap:20px}
+.ad{display:flex;gap:28px;align-items:flex-start;background:rgba(255,255,255,.045);border:2px solid #202C4A;border-radius:26px;padding:28px 30px}
+.nm{flex:none;width:76px;height:76px;border-radius:50%;background:#FFD400;color:#0A1020;font-size:44px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.at{font-size:38px;font-weight:900;letter-spacing:-.5px;line-height:1.15}
+.ax{margin-top:8px;font-size:28px;font-weight:600;color:#C9D4EA;line-height:1.3}
+.ip{margin-top:28px;font-size:30px;font-weight:700;line-height:1.35;background:rgba(34,227,160,.08);border:2px solid rgba(34,227,160,.4);border-radius:24px;padding:24px 28px}
+.ip b{color:#22E3A0}.ip i{font-style:normal;color:#FFD400;font-weight:800}"""
+    return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{css}</style></head><body><div class="wrap">'
+            f'{brand(u["name"] + " · Katılım")}<div class="h1">Nasıl katılırım?</div>'
+            f'<div class="h2">{esc(" · ".join(x for x in (gt, str(len(o["st"])) + " şarj ağında", kadar(o["son"])) if x))}</div>'
+            f'<div class="ads">{kart}</div>'
+            f'<div class="ip"><b>wattkac.com</b>\'da istasyon detayında <i>“Hangi uygulamayla?” → {esc(u["name"])}</i> seç; '
+            f'o istasyonda {esc(u["name"])} ile fiyatı gör.</div>'
+            f'<div class="spacer"></div>{foot(d)}</div></body></html>')
+
+
+def app_hikaye_fiyat_html(u, o, d):
+    rows = [r for r in fiyat_satirlari(o) if r.get("dc")][:5]
+    gt = gun_txt(o) or o["big"]
+    vit = "".join(f'<div class="vr{" ilk" if i == 0 else ""}"><span class="n">{esc(r["ag"])}</span><span class="ak">DC</span>'
+                  f'<s>{tl(r["dc"][0])}</s><b>{tl(r["dc"][1])}</b></div>' for i, r in enumerate(rows))
+    css = base_css(1080, 1920, True) + APP_CSS + """
+.wrap{padding:200px 76px 250px}
+.app{margin-top:56px}.gun{margin-top:8px;font-size:188px}
+.ind{margin-top:26px;font-size:80px;padding:12px 32px 16px}
+.vl{margin-top:56px;font-size:28px}.vit{margin-top:16px;gap:14px}
+.vr{padding:16px 32px}.vr .n{font-size:48px}.vr .ak{font-size:28px}.vr s{font-size:38px}.vr b{font-size:74px}
+.son{margin-top:34px;align-self:flex-start;font-size:34px;font-weight:800;color:#F4F6FB;background:none;padding:0}
+.cta{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.cta span{font-size:34px;font-weight:700;color:#C9D4EA;line-height:1.25}
+.cta b{flex:none;font-size:40px;font-weight:900;color:#0A1020;background:#FFD400;border-radius:18px;padding:14px 26px}"""
+    return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{css}</style></head><body><div class="wrap">'
+            f'{brand("Uygulama · " + d["donem"])}'
+            f'<div class="app">{esc(u["name"])} uygulamasıyla</div><div class="gun">{esc(gt)}</div><div class="ind">{esc(o["big"])}</div>'
+            f'<div class="vl">En ucuz 5 DC fiyatı · <span>TL/kWh</span></div><div class="vit">{vit}</div>'
+            f'<div class="son">{len(o["st"])} şarj ağında · {esc(kadar(o["son"]))}</div><div class="spacer"></div>'
+            f'<div class="cta"><span>{len(o["st"])} ağın tüm fiyatları<br>gönderide</span><b>wattkac.com</b></div>'
+            f'</div></body></html>')
+
+
+def tarih_txt(iso):
+    y, m, g = iso.split("-")
+    return f"{int(g)} {AYLAR[int(m) - 1]} {y}"
+
+
+AYLAR = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"]
 
 
 def station_html(s, d, story):
@@ -295,6 +475,19 @@ def render_all(d, etiket, sadece=None):
         c = u.get("cover") or {"big": o0["big"], "son": o0["son"],
                                "sub": " · ".join(x for x in (gun_txt(o0), f"{len(o0['st'])} şarj ağında") if x)}
         p = f"{out}/{pid}"
+        if o0.get("fiyatlar"):  # fiyat tablolu düzen: kapak + tablo slaytları + katılım + hikâye
+            shot(app_cover_fiyat_html(u, o0, d), f"{p}/1_kapak.jpg", 1080, 1350)
+            files, parts, bas = ["1_kapak.jpg"], bolumler(fiyat_satirlari(o0)), 1
+            for i, part in enumerate(parts, 1):
+                fn = f"{i + 1}_fiyatlar{i}.jpg" if len(parts) > 1 else "2_fiyatlar.jpg"
+                shot(app_tablo_html(u, o0, part, bas, i, len(parts), d), f"{p}/{fn}", 1080, 1350)
+                files.append(fn)
+                bas += len(part)
+            fn = f"{len(files) + 1}_katilim.jpg"
+            shot(app_katilim_html(u, o0, d), f"{p}/{fn}", 1080, 1350)
+            shot(app_hikaye_fiyat_html(u, o0, d), f"{p}/hikaye.jpg", 1080, 1920)
+            add(pid, "uygulama", u["name"], files + [fn, "hikaye.jpg"])
+            continue
         shot(cover_html(u["name"], c["big"], c["sub"], son_txt(c["son"], "Son gün: "), "Detay için kaydır →", "app"), f"{p}/1_kapak.jpg", 1080, 1350)
         shot(app_html(u, d, False), f"{p}/2_detay.jpg", 1080, 1350)
         shot(app_html(u, d, True), f"{p}/hikaye.jpg", 1080, 1920)

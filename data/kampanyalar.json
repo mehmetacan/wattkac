@@ -410,7 +410,277 @@
           "bas": "2026-11-11",
           "bit": "2026-12-31",
           "kosul": "Yalnızca salı günleri, Rotawatt uygulaması üzerinden anlaşmalı markaların istasyonlarında başlatılıp ödenen şarjlarda %20 indirim; 31 Aralık 2026'ya kadar; indirim ödeme adımında otomatik uygulanır. Kaynak: Rotawatt uygulamasındaki kampanya sayfası (15 Kasım 2026, 25 marka) ve Rotawatt'ın resmi Instagram duyurusu. Ağların kendi indirimleriyle birleşip birleşmediği belirtilmemiş.",
-          "eklendi": "2026-11-14"
+          "eklendi": "2026-11-14",
+          "fiyatlar": {
+            "kaynak": "Rotawatt uygulaması → kampanya sayfası",
+            "tarih": "2026-11-15",
+            "not": "Rotawatt uygulamasından başlatılan şarjda, ödeme adımında otomatik uygulanır",
+            "satirlar": [
+              {
+                "ag": "Acropol Şarj",
+                "ac": null,
+                "dc": [
+                  13.88,
+                  11.1
+                ]
+              },
+              {
+                "ag": "As Plus Şarj",
+                "ac": [
+                  9.49,
+                  7.59
+                ],
+                "dc": [
+                  12.49,
+                  9.99
+                ]
+              },
+              {
+                "ag": "Bölgem Mobilite",
+                "ac": [
+                  9.59,
+                  7.67
+                ],
+                "dc": [
+                  12.39,
+                  9.91
+                ]
+              },
+              {
+                "ag": "Checkpoint",
+                "ac": [
+                  7.89,
+                  6.31
+                ],
+                "dc": [
+                  9.49,
+                  7.59
+                ]
+              },
+              {
+                "ag": "Çelikler Enerji",
+                "ac": [
+                  9.99,
+                  7.99
+                ],
+                "dc": [
+                  12.79,
+                  10.23
+                ]
+              },
+              {
+                "ag": "Econ",
+                "ac": [
+                  9.99,
+                  7.99
+                ],
+                "dc": [
+                  12.49,
+                  9.99
+                ]
+              },
+              {
+                "ag": "EvSolt",
+                "ac": [
+                  8.99,
+                  7.19
+                ],
+                "dc": [
+                  11.99,
+                  9.59
+                ]
+              },
+              {
+                "ag": "Greendrive",
+                "ac": [
+                  8.7,
+                  6.96
+                ],
+                "dc": [
+                  12.7,
+                  10.16
+                ]
+              },
+              {
+                "ag": "i-Şarj",
+                "ac": [
+                  9.98,
+                  7.98
+                ],
+                "dc": [
+                  13.49,
+                  10.79
+                ]
+              },
+              {
+                "ag": "KES",
+                "ac": [
+                  11.0,
+                  8.8
+                ],
+                "dc": [
+                  13.0,
+                  10.4
+                ]
+              },
+              {
+                "ag": "Meis Charge",
+                "ac": [
+                  9.5,
+                  7.6
+                ],
+                "dc": [
+                  12.9,
+                  10.32
+                ]
+              },
+              {
+                "ag": "Mercury Şarj",
+                "ac": null,
+                "dc": [
+                  13.49,
+                  10.79
+                ]
+              },
+              {
+                "ag": "Mithra Pod",
+                "ac": null,
+                "dc": [
+                  15.59,
+                  12.47
+                ]
+              },
+              {
+                "ag": "MyCharge",
+                "ac": [
+                  9.81,
+                  7.85
+                ],
+                "dc": [
+                  13.0,
+                  10.4
+                ]
+              },
+              {
+                "ag": "MyPower",
+                "ac": [
+                  11.5,
+                  9.2
+                ],
+                "dc": [
+                  13.6,
+                  10.88
+                ]
+              },
+              {
+                "ag": "Promaster",
+                "ac": [
+                  8.5,
+                  6.8
+                ],
+                "dc": [
+                  11.5,
+                  9.2
+                ]
+              },
+              {
+                "ag": "Royal Şarj",
+                "ac": [
+                  9.9,
+                  7.92
+                ],
+                "dc": [
+                  13.75,
+                  11.0
+                ]
+              },
+              {
+                "ag": "Spectrum",
+                "ac": [
+                  9.89,
+                  7.91
+                ],
+                "dc": [
+                  12.96,
+                  10.37
+                ]
+              },
+              {
+                "ag": "Swapp",
+                "ac": [
+                  8.0,
+                  6.4
+                ],
+                "dc": [
+                  10.0,
+                  8.0
+                ]
+              },
+              {
+                "ag": "ŞarjPlus",
+                "ac": [
+                  9.9,
+                  7.92
+                ],
+                "dc": [
+                  12.9,
+                  10.32
+                ]
+              },
+              {
+                "ag": "Tam Şarj",
+                "ac": [
+                  10.49,
+                  8.39
+                ],
+                "dc": [
+                  13.99,
+                  11.19
+                ]
+              },
+              {
+                "ag": "TR Charge",
+                "ac": null,
+                "dc": [
+                  13.5,
+                  10.8
+                ]
+              },
+              {
+                "ag": "Tripy",
+                "ac": [
+                  9.5,
+                  7.6
+                ],
+                "dc": [
+                  12.99,
+                  10.39
+                ]
+              },
+              {
+                "ag": "Voltgo",
+                "ac": [
+                  9.5,
+                  7.6
+                ],
+                "dc": [
+                  12.4,
+                  9.92
+                ]
+              },
+              {
+                "ag": "Zeplin",
+                "ac": [
+                  9.5,
+                  7.6
+                ],
+                "dc": [
+                  12.0,
+                  9.6
+                ]
+              }
+            ]
+          }
         }
       ]
     },
