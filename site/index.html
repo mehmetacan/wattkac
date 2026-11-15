@@ -1301,12 +1301,25 @@ const conditional = c => (c.arac && c.arac.length) ? !c.arac.includes(P.arac) : 
 // Yalnızca DC'de (ya da yalnızca AC'de) geçerli indirim, diğer akım türündeki fiyata uygulanmaz
 const modeOk = (c, s) => { const t = [c.big, c.det].join(" "), dc = /\bDC\b/.test(t), ac = /\bAC\b/.test(t); return dc === ac || (dc ? s.mode === "dc" : s.mode === "ac"); };
 // Ağın kendi indirimi: yalnızca indirimin geçerli olduğu kesin bilinen istasyonlarda (Togg'a özel vb. koşullular hariç)
+// Sabit kampanya fiyatı (ör. Astor "DC 10,90 TL/kWh" · "AC 8,99 TL/kWh"): akım türüne göre TL/kWh; yoksa null
+function sabitFiyat(c, mode) {
+  const t = [c.big, c.det].join(" · "), num = x => parseFloat(String(x).replace(",", "."));
+  const m = new RegExp("\\b" + (mode || "").toUpperCase() + "\\s*(\\d{1,2}[,.]\\d{1,2})\\s*TL\\s*/\\s*kWh", "i").exec(t);
+  if (mode && m) return num(m[1]);
+  const tek = /^\s*(\d{1,2}[,.]\d{1,2})\s*TL\s*\/\s*kWh/i.exec(String(c.big || ""));
+  return tek ? num(tek[1]) : null;
+}
 function netDiscount(s) {
   if (!s.price) return null;
   let best = null;
   for (const c of s.camp) {
     if (c.tip !== "ag") continue;
     const listed = seciliKamp(c) ? s.sk && s.sk.includes(kampKey(c)) : !conditional(c);
+    const sf = sabitFiyat(c, s.price.kind || s.mode);
+    if (sf && listed && sf < s.price.v && !(s.viaShell && s.viaShell.includes(c))) {
+      if (!best || sf < best.v) best = { v: sf, r: 1 - sf / s.price.v, c };
+      continue;
+    }
     const r = campRate(c); if (!r || !listed || !modeOk(c, s) || (s.viaShell && s.viaShell.includes(c))) continue;
     const v = s.price.v * (1 - r);
     if (!best || v < best.v) best = { v, r, c };
@@ -1866,7 +1879,8 @@ function renderDetail(s0) {
   // Yalnızca DC'de (ya da AC'de) geçerli kampanya, istasyonda o akım türü yoksa gösterilmez; varsa o akımın fiyatıyla hesaplanır.
   const netList = (list, fiyatli) => list.filter(c => akimOk(c, s)).map(c => {
     const r = campRate(c), base = !fiyatli ? null : modeOk(c, s) ? s.price : stationPrice(s, s.mode === "dc" ? "ac" : "dc");
-    const val = r && base ? `${fmtNum(base.v * (1 - r))} TL/kWh` : esc(c.big);
+    const sf = fiyatli && s.price ? sabitFiyat(c, s.price.kind || s.mode) : null;
+    const val = sf ? `${fmtNum(sf)} TL/kWh` : r && base ? `${fmtNum(base.v * (1 - r))} TL/kWh` : esc(c.big);
     return tipBtn("nl", c.det, c.link, c.kurum, `<span class="nk">${esc(kisaAd(c))}</span><span class="nv">${val}</span><span class="ni" aria-hidden="true">${IC.bilgi}</span>`);
   }).join("");
   // Banka kartı: banka başına tek satır, kısa değer (%20 / 75 TL); açınca kısa açıklama, kartlı fiyat ve resmi sayfa

@@ -18,17 +18,17 @@
   },
   "ASTOR Şarj": {
    "ac": {
-    "min": 8.99,
-    "max": 8.99
+    "min": 9.89,
+    "max": 9.89
    },
    "dc": {
-    "min": 10.9,
-    "max": 10.9
+    "min": 13.99,
+    "max": 13.99
    },
    "kaynak": "https://astorsarj.com.tr/",
-   "kontrol": "2026-11-07",
+   "kontrol": "2026-11-15",
    "gecerlilik": null,
-   "not": "Sitedeki birim fiyatlar; istasyon bazlı fiyat ASTOR'un resmi haritasından günlük alınır."
+   "not": "Liste fiyatı AC 9,89 / DC 13,99 TL/kWh (kullanıcı Astor uygulamasından bildirdi, 15 Kasım 2026). DİKKAT: astorsarj.com.tr 'Fiyatlandırma' bölümündeki AC 8,99 / DC 10,90, uygulamayı güncelleyenlere Kasım kampanyası fiyatıdır (kampanyalar.json → astor own); 30 Kasım'a kadar liste fiyatı olarak yazılmaz. Aralık'ta sayfa yeniden kontrol edilir."
   },
   "Trugo": {
    "ac": {
