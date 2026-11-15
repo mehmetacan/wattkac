@@ -2,10 +2,10 @@
 /* Depolama notu: başka alan adından "no-cors" ile alınan yanıtlar (opak yanıt) önbellekte saklanırsa tarayıcı her birini
    kota hesabında birkaç MB sayar. Eskiden harita karoları böyle saklandığı için uygulama telefonda GB'larca yer gösteriyordu.
    Artık harita karoları önbelleğe alınmaz (tarayıcının kendi HTTP önbelleği yeterli) ve kütüphaneler CORS ile, gerçek boyutlarıyla saklanır. */
-const SURUM = "wk-v42";
+const SURUM = "wk-v43";
 const KABUK = ["./", "./index.html", "./manifest.webmanifest", "./logo.png", "./icons/icon-192.png", "./icons/icon-512.png",
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js", "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"];
-const VERI = /\/(kampanyalar|istasyonlar|tarifeler)\.json$/;
+const VERI = /\/(kampanyalar|istasyonlar|tarifeler|uygulamalar)\.json$/;
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(SURUM).then(c => Promise.all(KABUK.map(u => c.add(new Request(u, { mode: u.startsWith("http") ? "cors" : "same-origin" })).catch(() => {})))).then(() => self.skipWaiting()));
