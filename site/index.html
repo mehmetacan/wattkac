@@ -1342,15 +1342,21 @@ function parseStation(el) {
     ...sk, tags: t, addr, camp: NETC[b.name] || [], count: parseInt(t.capacity, 10) || null, d: 0, mode: null, price: null };
 }
 // Günlük güncellenen istasyon dosyası (site/istasyonlar.json); yoksa canlı Overpass'a düşülür
+// Dosya büyük (~2,5 MB): zayıf bağlantıda indirme yarıda kalabilir. 3 kez denenir (2. ve 3. deneme önbelleği atlar);
+// yine olmazsa false döner, ama sonuç kalıcı sayılmaz: arka planda yeniden denenir (bkz. loadAll → statikYenidenDene).
 let STATIC = null;
 async function loadStatic() {
-  if (STATIC !== null) return STATIC;
-  try {
-    const r = await fetch("istasyonlar.json", { cache: "default" });
-    const j = r.ok ? await r.json() : null;
-    STATIC = j && Array.isArray(j.istasyonlar) && j.istasyonlar.length ? j : false;
-  } catch { STATIC = false; }
-  return STATIC;
+  if (STATIC) return STATIC;
+  for (let i = 0; i < 3; i++) {
+    try {
+      if (i) await new Promise(r => setTimeout(r, i * 1500));
+      const r = await fetch("istasyonlar.json", { cache: i ? "reload" : "default" });
+      const j = r.ok ? await r.json() : null;
+      if (j && Array.isArray(j.istasyonlar) && j.istasyonlar.length) return (STATIC = j);
+      M.statikHata = "HTTP " + r.status;
+    } catch (e) { M.statikHata = e.name || "hata"; }
+  }
+  return (STATIC = false);
 }
 // Akım türü verilmemişse istasyon adındaki "DC"/"AC" ifadesinden çıkar (EPDK/OCM adları: "Meydan, Zeytinburnu - DC")
 // İstasyon bilgisinin alındığı ağ sitesi ("Bilgi kaynağı"): resmi liste (RESMI) ya da EPDK kaydını doğrulayan liste (DOGRULA)
@@ -1415,7 +1421,7 @@ function openMap() {
     // updateWhenIdle:false → karolar kaydırma bitmeden, hareket sırasında yüklenir; keepBuffer → ekranın çevresindeki 4 sıra karo önceden hazır tutulur (beyaz alan görünmez)
     L.tileLayer(TILE, { maxZoom: 19, attribution: TILE_ATTR, updateWhenIdle: false, updateWhenZooming: false, updateInterval: 120, keepBuffer: 4 }).addTo(M.map);
     M.layer = L.layerGroup().addTo(M.map);
-    let t; M.map.on("moveend zoomend", () => { clearTimeout(t); t = setTimeout(() => { const c = M.map.getCenter(); M.center = { lat: c.lat, lon: c.lng }; M.shown = PAGE; refresh(); }, 120); });
+    let t; M.map.on("moveend zoomend", () => { clearTimeout(t); t = setTimeout(() => { const c = M.map.getCenter(); M.center = { lat: c.lat, lon: c.lng }; M.shown = PAGE; refresh(); canliBolgeKontrol(); }, 120); });
     M.map.on("click", () => { if ($("v-harita").dataset.s !== "peek") { M.sel = null; M.group = null; $("v-harita").dataset.s = "peek"; renderSheet(); renderMarkers(true); } });
     M.center = { lat: 41.01, lon: 28.97 };
     loadAll().then(() => locate(true));
@@ -1484,18 +1490,38 @@ function mergeInto(m, s) {
   if (!m.addr && s.addr) m.addr = s.addr;
   m.tags = { ...s.tags, ...m.tags };
 }
+// Günlük dosya alınamadıysa 20 sn arayla (en çok 6 kez) yeniden dener; gelince tüm Türkiye listesine geçer.
+let statikZaman = null;
+function statikYenidenDene(n = 0) {
+  clearTimeout(statikZaman);
+  if (n >= 6) return;
+  statikZaman = setTimeout(async () => {
+    STATIC = null;
+    if (await loadStatic()) { loadAll(); an("istasyon_verisi_duzeldi", String(n + 1)); } else statikYenidenDene(n + 1);
+  }, 20000);
+}
+// Canlı (yedek) moddayken harita son yüklenen bölgeden 25 km'den fazla uzaklaşırsa o çevre yeniden yüklenir
+let canliZaman = null;
+function canliBolgeKontrol() {
+  if (!M.canli || !M.center || dist(M.canli, M.center) < 25000) return;
+  clearTimeout(canliZaman);
+  canliZaman = setTimeout(() => { if (M.canli) loadAll(); }, 600);
+}
 async function loadAll() {
   setMsg("İstasyonlar yükleniyor…");
   try {
     const st = await loadStatic();
     let list;
-    if (st) list = st.istasyonlar.map(fromRec);
-    else { // günlük dosya yoksa: yalnız çevredeki istasyonları canlı OpenStreetMap'ten al
+    if (st) { list = st.istasyonlar.map(fromRec); M.canli = null; }
+    else { // günlük dosya alınamadıysa: geçici olarak çevredeki istasyonlar canlı OpenStreetMap'ten (harita kaydırıldıkça yeniden)
       const c = M.center; list = (await overpass(c.lat, c.lon, 50000)).map(parseStation).filter(Boolean);
+      M.canli = { lat: c.lat, lon: c.lon };
+      an("istasyon_verisi_hata", M.statikHata || "");
+      statikYenidenDene();
     }
     M.all = mergeAll(list.filter(s => !/^test\b/i.test(s.name))); M.all.forEach(enrich);
     M.byId = new Map(M.all.map(s => [s.id, s]));
-    setMsg(""); refresh();
+    setMsg(M.canli ? "Tüm istasyon listesi yüklenemedi; şimdilik çevrendeki istasyonlar gösteriliyor." : ""); refresh();
   } catch (e) {
     setMsg("İstasyon verisi alınamadı. Bağlantını kontrol edip tekrar dene." + (M.errs ? " (" + M.errs + ")" : ""), true, true);
   }

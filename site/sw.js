@@ -2,7 +2,7 @@
 /* Depolama notu: başka alan adından "no-cors" ile alınan yanıtlar (opak yanıt) önbellekte saklanırsa tarayıcı her birini
    kota hesabında birkaç MB sayar. Eskiden harita karoları böyle saklandığı için uygulama telefonda GB'larca yer gösteriyordu.
    Artık harita karoları önbelleğe alınmaz (tarayıcının kendi HTTP önbelleği yeterli) ve kütüphaneler CORS ile, gerçek boyutlarıyla saklanır. */
-const SURUM = "wk-v41";
+const SURUM = "wk-v42";
 const KABUK = ["./", "./index.html", "./manifest.webmanifest", "./logo.png", "./icons/icon-192.png", "./icons/icon-512.png",
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js", "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"];
 const VERI = /\/(kampanyalar|istasyonlar|tarifeler)\.json$/;
@@ -20,8 +20,11 @@ async function agOnce(req, ad) { // önce ağ, olmazsa önbellek (sayfa)
 }
 async function agOnceVeri(req) { // veri dosyaları: her zaman güncelini dene; bağlantı yoksa son kaydedileni ver
   const c = await caches.open(SURUM);
-  try { const r = await fetch(req); if (r.ok) c.put(req, r.clone()); return r; }
-  catch { return (await c.match(req, { ignoreSearch: true })) || Response.error(); }
+  try {
+    const r = await fetch(req);
+    if (r.ok) { c.put(req, r.clone()); return r; }
+    return (await c.match(req, { ignoreSearch: true })) || r;   // sunucu hata verdiyse son kaydedilen veri
+  } catch { return (await c.match(req, { ignoreSearch: true })) || Response.error(); }
 }
 async function onbellekOnce(req, ad) { // kütüphaneler, simgeler, yazı tipleri (opak yanıt asla saklanmaz)
   const c = await caches.open(ad), h = await c.match(req);
