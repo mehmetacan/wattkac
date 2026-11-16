@@ -535,6 +535,67 @@ a{color:var(--pri)}
 .leaflet-bar a,.leaflet-touch .leaflet-bar a{background:var(--glass);color:var(--on-glass);border-bottom:1px solid var(--glass-line);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 .leaflet-bar a:hover,.leaflet-bar a:focus{background:var(--glass-h);color:var(--on-glass)}
 .leaflet-bar a.leaflet-disabled{background:var(--glass);color:var(--mut)}
+/* Harita araması: üst sıradaki cam denetimlerle aynı biçimde alan. Odaklanınca telefonda akım düğmelerinin yerini alır;
+   sonuçlar alanın hemen altındaki listede (klavye açıkken de görünür), dokunulan istasyona gidilir ve detayı açılır. */
+.msearch{flex:1 1 auto;min-width:0;max-width:380px;height:46px;position:relative;display:flex;align-items:center;border-radius:var(--r-md);background:var(--glass);color:var(--on-glass);
+  -webkit-backdrop-filter:blur(10px) saturate(1.4);backdrop-filter:blur(10px) saturate(1.4);box-shadow:inset 0 0 0 1px var(--glass-line),var(--sh-ctl)}
+.msearch:focus-within{box-shadow:inset 0 0 0 2px var(--pri),var(--sh-ctl)}
+.msearch>svg{flex:none;width:20px;height:20px;margin:0 0 0 12px;color:var(--on-glass)}
+.msearch input{flex:1;min-width:0;height:100%;border:0;background:none;color:var(--on-glass);font:600 16px var(--font);padding:0 4px 0 8px;outline:none;-webkit-appearance:none;appearance:none}
+.msearch input::placeholder{color:var(--mut);opacity:1}
+.msearch input::-webkit-search-cancel-button{display:none}
+.msearch .mqx{flex:none;width:44px;height:44px;border:0;background:none;color:var(--mut);display:grid;place-items:center;border-radius:50%}
+.msearch .mqx svg{width:18px;height:18px}
+.msearch.on{background:var(--pri-soft);box-shadow:inset 0 0 0 1px var(--pri-line),var(--sh-ctl)}
+@media(max-width:899px){.mapview.srch .seg{display:none}}
+.mqr{top:64px;left:10px;right:10px;z-index:1160;max-height:calc(100% - 78px - var(--sheet-h));overflow-y:auto;background:var(--card);color:var(--txt);border:1px solid var(--line);border-radius:var(--r-md);box-shadow:var(--sh-pop);overscroll-behavior:contain}
+.mqh{display:flex;align-items:center;gap:8px;padding:8px 8px 8px 14px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--card);z-index:1}
+.mqh .n{flex:1;min-width:0;font-size:13.5px;font-weight:700;color:var(--mut)}.mqh .n b{color:var(--txt);font-weight:800}
+.mqh .btn{min-height:44px;padding:8px 14px;display:inline-flex;align-items:center;gap:6px;font-size:14px}
+.mqh .btn svg{width:18px;height:18px}
+.mqi{display:flex;align-items:center;gap:10px;width:100%;min-height:56px;padding:9px 14px;border:0;border-top:1px solid var(--line);background:none;color:var(--txt);text-align:left;font:inherit}
+.mqh+.mqi{border-top:0}
+.mqi:hover,.mqi:focus-visible{background:var(--card2)}
+.mqi .mt{flex:1;min-width:0}
+.mqi .t1{display:block;font-weight:800;font-size:15px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mqi .t2{display:block;font-size:12.5px;color:var(--mut);font-weight:500;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mqi mark{background:none;color:var(--pri-strong);font-weight:800}
+.mqi .ds{flex:none;font-size:13px;font-weight:700;color:var(--mut)}
+.mqe{padding:14px;font-size:14px;color:var(--mut);font-weight:600}
+.mqe .btn{margin-top:10px}
+.mqmore{padding:10px 14px 12px;font-size:13px;color:var(--mut);font-weight:600;border-top:1px solid var(--line)}
+/* Etkin harita filtresi (kampanya / arama): haritanın üstünde kaldırılabilir çip. Seçili denetim gibi --pri zemin. */
+.fchips{top:64px;left:10px;right:66px;display:flex;flex-direction:column;align-items:flex-start;gap:6px;pointer-events:none}
+.fchip{pointer-events:auto;max-width:100%;display:flex;align-items:center;min-height:44px;border-radius:var(--r-md);background:var(--pri);color:var(--on-pri);box-shadow:0 2px 10px var(--pri-sh)}
+.fchip .fl{flex:1;min-width:0;border:0;background:none;color:inherit;text-align:left;padding:6px 2px 6px 12px;font:700 13.5px/1.3 var(--font);display:flex;align-items:center;gap:7px;min-height:44px}
+.fchip .fl svg{flex:none;width:17px;height:17px}
+.fchip .ft{min-width:0}
+.fchip .ft b{font-weight:800}
+.fchip .ft span{display:block;font-size:12px;font-weight:600;opacity:.92;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fchip .fx{flex:none;width:44px;height:44px;border:0;background:none;color:inherit;display:grid;place-items:center;border-radius:var(--r-md)}
+.fchip .fx svg{width:18px;height:18px}
+.fchip button:focus-visible{outline:2.5px solid var(--on-pri);outline-offset:-4px}
+.mapview.srch .fchips,.mapview.srch .qf{display:none}
+/* Filtre penceresi: kampanya seçimi (tek seçim) */
+.kl{border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;background:var(--card)}
+.kr{display:flex;align-items:center;gap:10px;width:100%;min-height:56px;padding:9px 12px;border:0;border-top:1px solid var(--line);background:none;color:var(--txt);text-align:left;font:inherit}
+.kr:first-child{border-top:0}
+.kr .ico{width:32px;height:32px;border-radius:9px}.kr .ico svg{width:17px;height:17px}
+.kr .kt{flex:1;min-width:0}
+.kr .k1{display:block;font-weight:800;font-size:14.5px;line-height:1.3}
+.kr .k2{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;font-size:12.5px;color:var(--mut);font-weight:600;margin-top:2px}
+.kr .rd{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--line2);display:grid;place-items:center}
+.kr[aria-pressed=true]{background:var(--pri-soft)}
+.kr[aria-pressed=true] .rd{border-color:var(--pri)}
+.kr[aria-pressed=true] .rd::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--pri)}
+.kl+.btn{margin-top:8px;width:100%}
+/* Kampanya kartı: "Haritada gör" ve "Resmi sayfa" yan yana; ikisi de 44 px dokunma hedefi */
+.foot{flex-wrap:wrap}
+.foot .fa{flex:1 1 100%;display:flex;gap:8px}
+.foot .src{flex:1;min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:7px 14px;margin-left:0}
+.foot .src svg{width:17px;height:17px}
+.src.mapgo{border:1px solid var(--pri-line);background:var(--card);color:var(--pri-strong);font:700 13px var(--font)}
+@media(min-width:900px){.fchips{left:414px;right:66px}.mqr{left:414px;right:auto;width:min(460px,calc(100% - 424px))}}
 </style>
 </head>
 <body>
@@ -565,6 +626,7 @@ a{color:var(--pri)}
   <symbol id="c-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></symbol>
   <symbol id="c-bilgi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><path d="M12 7.6h.01"/></symbol>
   <symbol id="c-geri" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></symbol>
+  <symbol id="s-ara" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></symbol>
 </svg>
 <noscript><div class="wrap"><div class="err">Harita için JavaScript gerekiyor. Kampanyaları JavaScript olmadan görmek için: <a href="/kampanyalar/">Tüm kampanyalar</a> · <a href="/sarj-agi/">Şarj ağları ve fiyatlar</a></div></div></noscript>
 
@@ -619,8 +681,16 @@ a{color:var(--pri)}
     <div id="map" role="application" aria-label="Şarj istasyonları haritası"></div>
     <div class="ov mtop">
       <div class="seg" id="seg" role="group" aria-label="Akım türü"></div>
-      <button class="mbtn" id="mf-open" aria-haspopup="dialog" aria-label="Filtre: şarj ağına göre süz" title="Filtre"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#s-filtre"/></svg><i id="mf-n" hidden></i></button>
+      <div class="msearch" id="msearch" role="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#s-ara"/></svg>
+        <input id="mq" type="search" placeholder="İstasyon ara" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search"
+          aria-label="İstasyon ara: ad, şarj ağı, adres, il ya da ilçe" aria-controls="mqr" aria-expanded="false">
+        <button class="mqx" id="mqx" aria-label="Aramayı temizle" title="Aramayı temizle" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#c-x"/></svg></button>
+      </div>
+      <button class="mbtn" id="mf-open" aria-haspopup="dialog" aria-label="Filtre: kampanyaya ya da şarj ağına göre süz" title="Filtre"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#s-filtre"/></svg><i id="mf-n" hidden></i></button>
     </div>
+    <div class="ov mqr" id="mqr" role="region" aria-label="Arama sonuçları" hidden></div>
+    <div class="ov fchips" id="fchips" aria-live="polite"></div>
     <div class="ov qf" id="qf" role="group" aria-label="Hızlı filtreler"></div>
     <button class="mbtn ov locbtn" id="loc" aria-label="Konumuma git" title="Konumuma git"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#s-konum"/></svg></button>
     <div class="ov mapmsg" id="mapmsg" hidden></div>
@@ -728,7 +798,8 @@ a{color:var(--pri)}
       <li><span class="gi"><span class="gbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#s-ac"/></svg></span></span><span><b>AC şarj</b>Normal hızda şarj (Type 2 fişi). Dokun, yalnızca AC istasyonlar kalsın.</span></li>
       <li><span class="gi"><span class="gbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#s-dc"/></svg></span></span><span><b>DC hızlı şarj</b>Hızlı şarj, 120 kW altı (CCS fişi). Dokun, yalnızca bunlar kalsın.</span></li>
       <li><span class="gi"><span class="gbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#s-hpc"/></svg></span></span><span><b>Çok hızlı DC</b>120 kW ve üzeri istasyonlar (şimşekli fiş). AC, DC ve çok hızlı DC birlikte de seçilebilir.</span></li>
-      <li><span class="gi"><span class="gbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#s-filtre"/></svg></span></span><span><b>Filtre</b>Şarj ağına (markaya) göre süz.</span></li>
+      <li><span class="gi"><span class="gbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#s-ara"/></svg></span></span><span><b>İstasyon ara</b>Ad, şarj ağı, adres, il ya da ilçe yaz; sonuca dokun, harita oraya gitsin. «Haritada göster» yalnızca eşleşenleri bırakır.</span></li>
+      <li><span class="gi"><span class="gbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#s-filtre"/></svg></span></span><span><b>Filtre</b>Kampanyaya ya da şarj ağına (markaya) göre süz. Seçili kampanya haritanın üstünde çip olarak durur; ✕ ile kaldırılır.</span></li>
       <li><span class="gi"><span class="gbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#s-yildiz"/></svg></span></span><span><b>Bana uyan</b>Profilindeki kart ve uygulamalara uyan istasyonlar.</span></li>
       <li><span class="gi"><span class="gbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#s-yuzde"/></svg></span></span><span><b>Ağ indirimi</b>Şarj ağının kendi indirimi olan istasyonlar.</span></li>
       <li><span class="gi"><span class="gbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#s-kart"/></svg></span></span><span><b>Kart kampanyası</b>Banka kartı kampanyası geçerli olan istasyonlar.</span></li>
@@ -973,13 +1044,17 @@ function readHash() {
   S.q = p.get("q") || ""; S.sort = p.get("sirala") || "son";
   S.bana = p.get("bana") === "1" ? true : p.get("bana") === "0" ? false : null;
   S.view = ["kamp", "harita", "profil", "geri"].includes(p.get("g")) ? p.get("g") : "harita";
+  // Haritada kampanya filtresi: #g=harita&kamp=<kampanya kimliği> (paylaşılabilir; Instagram gönderilerinden bağlantı)
+  S.kamp = (p.get("kamp") || "").slice(0, 80);
 }
 function writeHash() {
   const p = new URLSearchParams();
   ["banka", "ag", "tip"].forEach(k => S[k].size && p.set(k, [...S[k]].join(",")));
   S.q && p.set("q", S.q); S.sort !== "son" && p.set("sirala", S.sort);
   S.bana !== null && p.set("bana", S.bana ? "1" : "0");
-  S.view !== "harita" && p.set("g", S.view);
+  const mk = S.view === "harita" && M.f.kamp;
+  (S.view !== "harita" || mk) && p.set("g", S.view);
+  mk && p.set("kamp", M.f.kamp);
   const h = p.toString(); history.replaceState(null, "", h ? "#" + h : location.pathname + location.search);
 }
 function chipGroup(el, key, items, cls = "") {
@@ -1046,7 +1121,7 @@ function card(c) {
       ${c.kontrol ? `<h4>Doğrulanıyor</h4><p>Resmi sayfa otomatik açılamadı; tarih ve oranı resmi sayfadan teyit et.</p>` : ""}
     </details>
     <div class="foot">${gt ? `<span class="bdg gun" title="${bugun ? "Bugün geçerli" : "Yalnızca bu günlerde geçerli; haritada o gün uygulanır"}">${esc(gt)}${bugun ? " · bugün" : ""}</span>` : ""}${txt ? `<span class="days ${dl !== null && dl <= 3 ? "soon" : ""}" title="${esc(son)}">${IC.saat}${esc(txt)}</span>` : ""}
-      <a class="src" data-kk="${esc(c.kurum)}" href="${esc(safeUrl(c.link))}" target="_blank" rel="noopener nofollow">Resmi sayfa ↗</a></div>
+      <span class="fa"><button class="src mapgo" data-kmap="${esc(c.kampId)}" aria-label="${esc(c.kurum)} kampanyasının geçerli olduğu istasyonları haritada gör">${svgUse("c-harita")}Haritada gör</button><a class="src" data-kk="${esc(c.kurum)}" href="${esc(safeUrl(c.link))}" target="_blank" rel="noopener nofollow">Resmi sayfa ↗</a></span></div>
   </article>`;
 }
 function render() {
@@ -1188,7 +1263,8 @@ async function sendFeedback(e) {
 
 /* ---------- Harita ---------- */
 const M = { map: null, layer: null, circle: null, meMark: null, me: null, center: null, radius: 5, sort: "yakin",
-  f: { akim: new Set(), kag: false, kbk: false, bana: false, tum: false, brands: new Set() },
+  // kamp: seçili kampanyanın kimliği (kampId); q: haritaya uygulanan arama metni ("Haritada göster")
+  f: { akim: new Set(), kag: false, kbk: false, bana: false, tum: false, brands: new Set(), kamp: "", q: "" },
   sel: null, markers: new Map(), all: [], byId: new Map(), filtered: null, view: [], shown: PAGE, sig: "", cnt: { all: 0, ac: 0, dc: 0 }, brands: [] };
 
 // Önce marka / işletmeci / ağ alanları, ancak bunlarda bilinen marka yoksa istasyon adı aranır: adı "VoltUp Kepez Hesapçıoğlu Opet"
@@ -1502,11 +1578,12 @@ function locate(first = false) {
     M.meMark = L.circleMarker([M.me.lat, M.me.lon], { radius: 7, color: "#fff", weight: 3, fillColor: "#2563EB", fillOpacity: 1, interactive: false }).addTo(M.map);
     M.map.setView([M.me.lat, M.me.lon], 13, { animate: false });
     if (first) an("konum", "izin verildi");
+    if (first && (M.f.kamp || M.f.q)) { refresh(); odak(false); }   // kampanya bağlantısıyla gelindiyse: konumda sonuç yoksa en yakınlara
   }, err => {
     $("loc").classList.remove("busy");
     if (first) an("konum", INAPP ? "uygulama içi (yok)" : err.code === 1 ? "izin verilmedi" : "alınamadı");
     locMsg();
-    if (first) refresh();
+    if (first) { refresh(); odak(false); }
   }, { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 });
 }
 // Aynı markanın 60 m içindeki kayıtlarını birleştir (ızgara ile hızlı)
@@ -1567,7 +1644,8 @@ async function loadAll() {
     }
     M.all = mergeAll(list.filter(s => !/^test\b/i.test(s.name))); M.all.forEach(enrich);
     M.byId = new Map(M.all.map(s => [s.id, s]));
-    setMsg(M.canli ? "Tüm istasyon listesi yüklenemedi; şimdilik çevrendeki istasyonlar gösteriliyor." : ""); refresh();
+    setMsg(M.canli ? "Tüm istasyon listesi yüklenemedi; şimdilik çevrendeki istasyonlar gösteriliyor." : M.kampYok ? "Bu kampanyanın süresi dolmuş ya da kampanya kaldırılmış." : ""); M.kampYok = false;
+    refresh(); odak(false);
   } catch (e) {
     setMsg("İstasyon verisi alınamadı. Bağlantını kontrol edip tekrar dene." + (M.errs ? " (" + M.errs + ")" : ""), true, true);
   }
@@ -1592,6 +1670,11 @@ function refresh() {
   if (M.f.kag) a = a.filter(s => campKinds(s).ag.length);   // şarj ağının herkese açık kendi indirimi
   if (M.f.kbk) a = a.filter(s => campKinds(s).bk.length);   // o ağda geçerli banka kartı kampanyası
   if (M.f.bana) a = a.filter(s => stationMine(s.brand));
+  // Kampanya filtresi: yalnızca seçili kampanyanın geçerli olduğu istasyonlar (bkz. kampSt)
+  const kc = kampSecili();
+  if (kc) a = a.filter(s => kampSt(kc, s));
+  M.pre = a;   // aramadan önceki küme: arama sonuçları buradan aranır
+  if (M.f.q) { const w = qWords(M.f.q); a = a.filter(s => qOk(s, w)); }
   M.filtered = a;
   // Liste = haritada görünen alan (liste çekmecesinin örttüğü şerit hariç: telefonda alttaki tutamak, geniş ekranda soldaki panel)
   const el = $("map"), wide = matchMedia("(min-width:900px)").matches;
@@ -1611,8 +1694,9 @@ function refresh() {
   const sorters = { yakin: (x, y) => x.d - y.d, ucuz: by(fv), pahali: by(fv, -1), guc: (x, y) => (y.kw || 0) - (x.kw || 0) || x.d - y.d, kamp: by(ev) };
   M.view = list.sort(sorters[M.sort]);
   if (M.sel && !M.filtered.some(s => s.id === M.sel)) M.sel = null;
-  renderMarkers(true); renderSeg(); renderSheet();
+  renderMarkers(true); renderSeg(); renderFchips(); renderSheet();
   if (!$("mfs").hidden) renderMapSheet();
+  if (!$("mqr").hidden) aramaSonuc();
 }
 function renderSeg() {
   // Haritanın üstündeki denetimler: hepsi aynı cam kare (.mbtn), içinde dolu simge; yazı yok, adları title/aria-label'da
@@ -1623,7 +1707,7 @@ function renderSeg() {
   $("qf").innerHTML = q('data-mf="bana"', M.f.bana, "Bana uyan istasyonlar (profilime göre süz)", "s-yildiz")
     + q('data-mf="kag"', M.f.kag, "Şarj ağı indirimi olan istasyonlar", "s-yuzde")
     + q('data-mf="kbk"', M.f.kbk, "Banka kartı kampanyası olan istasyonlar", "s-kart");
-  const n = M.f.brands.size + (M.f.tum ? 1 : 0);
+  const n = M.f.brands.size + (M.f.tum ? 1 : 0) + (M.f.kamp ? 1 : 0);
   $("mf-n").hidden = !n; $("mf-n").textContent = n; $("mf-open").classList.toggle("on", !!n);
 }
 // Ekranda birbirine yakın istasyonları tek rozette topla (açgözlü kümeleme; rozetler üst üste binmez)
@@ -1736,7 +1820,8 @@ function renderSheet() {
     h.innerHTML = `<b>Şarj istasyonları</b>`;
     b.innerHTML = `<p class="note">İstasyonlar yükleniyor…</p>`; return;
   }
-  h.innerHTML = `<span><b>${M.view.length}</b> istasyon · haritadaki alanda</span>${open ? "" : `<span class="tg" aria-hidden="true">↑</span>`}`;
+  const sz = M.f.kamp || M.f.q;   // kampanya / arama süzgecinde toplam sonuç da yazılır
+  h.innerHTML = `<span><b>${M.view.length}</b> istasyon · haritadaki alanda${sz ? ` · toplam ${M.filtered.length}` : ""}</span>${open ? "" : `<span class="tg" aria-hidden="true">↑</span>`}`;
   const hidden = M.f.tum ? 0 : M.cnt.unk || 0;
   // "Kartımla en ucuz": profildeki kartlar ve uygulamalarla ödenecek fiyata göre (yalnızca uygulama seçiliyse "Uygulamamla en ucuz")
   const kampOk = P.banka.length || P.uyg.length;
@@ -1745,7 +1830,9 @@ function renderSheet() {
   const sortbar = `<div class="sortbar" role="group" aria-label="Sırala">${srt.map(([v, l]) => `<button class="chip" data-ms="${v}" aria-pressed="${M.sort === v}">${l}</button>`).join("")}</div>`;
   let html = M.view.slice(0, M.shown).map(stationItem).join("");
   if (M.view.length > M.shown) html += `<button class="btn more" id="more">Daha fazla göster (${M.view.length - M.shown})</button>`;
-  if (!M.view.length) html = `<p class="note">Haritadaki alanda bu filtrelerle istasyon yok. Haritayı kaydır ya da uzaklaş.</p>`;
+  if (!M.view.length) html = `<p class="note">Haritadaki alanda bu filtrelerle istasyon yok. Haritayı kaydır ya da uzaklaş.</p>`
+    + (sz && M.filtered.length ? `<button class="btn more" data-modak="1">En yakın ${M.filtered.length === 1 ? "istasyona" : "istasyonlara"} git</button>` : "")
+    + (mFiltreVar() ? `<button class="btn more" data-mclear="1">Filtreleri temizle</button>` : "");
   if (hidden) html += `<button class="btn more" data-showunk="1">Tanımsız ${hidden} istasyonu da göster</button>`;
   b.innerHTML = sortbar + html + `<div class="credit">Veri: EPDK, ağların resmi haritaları, © OpenStreetMap, © Open Charge Map</div>`;
 }
@@ -2105,24 +2192,236 @@ function focusStation(s, z = Math.max(M.map.getZoom(), 15), deneme = 0) {
     if (g && g.items.length > 1 && z < 18 && deneme < 4) focusStation(s, z + 1, deneme + 1);
   }, deneme === 0 ? 650 : 350);
 }
+/* ---------- Harita: kampanya filtresi ----------
+   Kampanya kimliği (kampId): veride "id" varsa o; yoksa kurum kimliği + kampanyanın kısa adı (ağ kampanyasında "kisa", diğerlerinde "big"),
+   sadeleştirilmiş: "rotawatt-20-indirim", "otopriz-secili-istasyonlarda", "ziraat-20-jest-lira". Aynı ad iki kez geçerse ikincisine "-2".
+   Bağlantıda yalnızca kurum kimliği de yazılabilir (#kamp=rotawatt): kurumun tek kampanyası varsa o seçilir. */
+const slug = x => fold(x || "").replace(/[^a-z0-9]+/g, "-").replace(/^-+/, "").slice(0, 40).replace(/-+$/, "");
+function kampIdler() {
+  const n = new Map();
+  C.forEach(c => {
+    const b = c.id ? String(c.id) : `${c.kid}-${slug(c.tip === "ag" ? (c.kisa || c.big) : c.big)}`, k = (n.get(b) || 0) + 1;
+    n.set(b, k); c.kampId = k > 1 ? `${b}-${k}` : b;
+  });
+}
+function kampBul(id) {
+  if (!id) return null;
+  const c = C.find(x => x.kampId === id); if (c) return c;
+  const l = C.filter(x => x.kid === id); return l.length === 1 ? l[0] : null;
+}
+const kampSecili = () => kampBul(M.f.kamp);
+// Kampanyanın st'sindeki "<Uygulama> uygulaması" (ör. Akbank → "Voltla uygulaması"): o uygulamanın şarj başlatılabildiği ağlar (uygulamalar.json)
+const KUY = new Map();
+const kampUyg = c => { if (!KUY.has(c)) KUY.set(c, c.st.filter(x => /uygulama/i.test(x))
+  .map(x => ((UYGV && UYGV.uygulamalar) || []).find(a => a.ad && new RegExp("\\b" + reEsc(fold(a.ad)) + "\\b").test(fold(x)))).filter(Boolean)); return KUY.get(c); };
+// Ağın resmi "kampanyaya dahil istasyonlar" listesi var mı (istasyonlar.json → secili_aglar)?
+const kampListeli = c => seciliKamp(c) && !!STATIC && (STATIC.secili_aglar || []).includes(kampKey(c));
+// Kampanya bu istasyonda geçerli mi? Gün, başlangıç tarihi ve "kontrol" bakılmaz: filtre istasyonları her gün gösterir;
+// indirimli fiyat ve rozetler yine yalnızca geçerli olduğu gün ve doğrulanmışsa uygulanır (enrich).
+//  - "Tüm şarj istasyonları": her istasyon
+//  - st'deki ağlar (haritadaki marka); ağın kendi kampanyasında DC/AC koşulu ve resmi seçili istasyon listesi (s.sk) de uygulanır
+//  - Shell Recharge kampanyaları Shell akaryakıt istasyonlarındaki Trugo cihazlarında da (istasyon detayıyla aynı)
+//  - st'de "<X> uygulaması": o uygulamanın geçtiği ağlar
+function kampSt(c, s) {
+  if (c.st.includes(ALL)) return true;
+  if ((NETC[s.brand] || []).includes(c)) return c.tip !== "ag" || (akimOk(c, s) && (!kampListeli(c) || (s.sk || []).includes(kampKey(c))));
+  if (s.shellTrugo && c.tip !== "ag" && (NETC["Shell Recharge"] || []).includes(c)) return true;
+  const ua = kampUyg(c);
+  return !!ua.length && ua.some(a => (a.aglar || []).some(x => agEsit(x.ag, s.brand) && desenOk(x.ad_desen, s)));
+}
+// Kampanyanın kısa adı (çip ve listede): "Rotawatt %20", "Otopriz %30", "Ziraat Bankası %20"
+const kampAd = c => `${pretty(c.kurum)} ${kisaDeger(c)}`;
+// Çipte ve listede kampanyanın kısıtı: gün, başlangıç, doğrulanma, tüm istasyonlar, koşul
+function kampNot(c) {
+  const t = todayIst(), n = [];
+  if (gunlu(c)) n.push(`${gunTxt(c)} · bugün ${gunOk(c) ? "geçerli" : "geçerli değil"}`);
+  if (c.bas && c.bas > t) n.push(c.bit === c.bas ? `Yalnızca ${dateTr(c.bas)}` : `${dateTr(c.bas)} başlıyor`);
+  if (c.kontrol) n.push("Doğrulanıyor · indirim haritada uygulanmaz");
+  if (c.st.includes(ALL)) n.push("Tüm istasyonlarda geçerli");
+  if (c.arac && c.arac.length) n.push(`Yalnızca ${c.arac.join(" / ")} araçlara`);
+  if (c.tip === "uygulama" && c.kart) n.push(`${pretty(c.kurum)} uygulaması + ${bankName(c.kart)} kartı`);
+  else if (c.tip === "ag" && c.kisa && !gunlu(c) && !(c.arac && c.arac.length)) n.push(c.kisa);
+  if (seciliKamp(c) && !kampListeli(c)) n.push("Resmi istasyon listesi yok · ağın tüm istasyonları");
+  return n;
+}
+// Kampanya başına istasyon sayısı (diğer filtreler hariç; tanımsız istasyonlar "Tanımsızları da göster" seçimine göre). M.all değişince yeniden.
+const KSAY = { all: null, tum: null, m: new Map() };
+function kampSay(c) {
+  if (KSAY.all !== M.all || KSAY.tum !== M.f.tum) { KSAY.all = M.all; KSAY.tum = M.f.tum; KSAY.m = new Map(); }
+  if (!KSAY.m.has(c)) { let n = 0; for (const s of M.all) if ((M.f.tum || s.known) && kampSt(c, s)) n++; KSAY.m.set(c, n); }
+  return KSAY.m.get(c);
+}
+const TIPAD = { uygulama: "Uygulama", ag: "Şarj ağı", banka: "Banka kartı" };
+const fmtAdet = n => n.toLocaleString("tr-TR");
+// Kampanyayı seç / kaldır (filtre penceresi, bağlantı). odakla: sonuç haritadaki alanda yoksa en yakınlara / tümüne yaklaş.
+function kampUygula(id, odakla = true) {
+  const c = kampBul(id);
+  M.f.kamp = c ? c.kampId : ""; M.shown = PAGE;
+  if (c) an("filtre", "kampanya: " + c.kurum);
+  if (!M.map) { writeHash(); return; }
+  M.sel = null; M.group = null;
+  refresh(); writeHash();
+  if (c && odakla) odak(false);
+}
+// Kampanyalar sekmesindeki "Haritada gör": harita sekmesine geçer, filtre etkin olur; geri tuşu Kampanyalar'a döner
+function kampHaritada(id) {
+  const c = kampBul(id); if (!c) return;
+  M.f.brands.clear(); M.f.q = ""; $("mq").value = ""; $("mqx").hidden = true; aramaKapat();
+  M.f.kamp = c.kampId; M.shown = PAGE; M.sel = null; M.group = null;
+  an("filtre", "haritada gör: " + c.kurum);
+  try { history.pushState(null, "", "#g=harita&kamp=" + encodeURIComponent(c.kampId)); } catch {}
+  S.pushed = false; show("harita");
+  // harita gizliyken boyutu ölçülemez: görünür olunca yenile ve sonuçlara yaklaş (istasyonlar henüz yükleniyorsa loadAll yapar)
+  if (M.map && M.all.length) setTimeout(() => { M.map.invalidateSize(); refresh(); odak(false); }, 60);
+}
+// Süzülmüş istasyonlar haritadaki alanda yoksa (ya da 3'ten azsa): hepsinin sınırına; çok geniş bir alana yayılıyorsa konuma (yoksa harita
+// ortasına) en yakın istasyonlara yaklaşılır. zorla: alanda sonuç olsa da yaklaş (arama "Haritada göster", "En yakın istasyonlara git")
+function odak(zorla) {
+  if (!M.map || !(M.f.kamp || M.f.q) || !M.filtered || !M.filtered.length || (!zorla && M.view.length >= Math.min(3, M.filtered.length))) return;
+  const ref = M.me || M.center, wide = matchMedia("(min-width:900px)").matches;
+  const box = l => l.reduce((b, s) => [Math.min(b[0], s.lat), Math.min(b[1], s.lon), Math.max(b[2], s.lat), Math.max(b[3], s.lon)], [90, 180, -90, -180]);
+  let pts = M.filtered, b = box(pts);
+  if (ref && dist({ lat: b[0], lon: b[1] }, { lat: b[2], lon: b[3] }) > 150000) {
+    // en yakın 10; ama en yakınınkinin iki katından (en az +25 km) uzaktakiler alınmaz: uzak bir şehir yüzünden harita fazla uzaklaşmasın
+    const l = M.filtered.map(s => [dist(ref, s), s]).sort((x, y) => x[0] - y[0]), lim = Math.max(2 * l[0][0], l[0][0] + 25000);
+    pts = l.filter((x, i) => i < 10 && x[0] <= lim).map(x => x[1]);
+    b = box(M.me && dist(M.me, pts[0]) < 40000 ? [...pts, M.me] : pts);
+  }
+  const sheet = wide ? 0 : Math.min($("sheet").offsetHeight, $("map").clientHeight * .5);
+  M.map.fitBounds([[b[0], b[1]], [b[2], b[3]]], { paddingTopLeft: [wide ? 434 : 24, 130], paddingBottomRight: [70, sheet + 24], maxZoom: 15, animate: false });
+  refresh();
+}
+// Etkin kampanya / arama filtresi çipleri (haritanın üstünde): metne dokunmak filtre penceresini (aramada arama alanını) açar, ✕ kaldırır
+function renderFchips() {
+  const c = kampSecili(), out = [];
+  if (c) {
+    const n = kampNot(c).slice(0, 2).join(" · ");
+    out.push(`<div class="fchip"><button class="fl" data-fo="1" aria-label="Kampanya filtresi: ${esc(kampAd(c))}, ${M.filtered.length} istasyon${n ? ". " + esc(n) : ""}. Filtreleri aç">${IC[c.tip]}<span class="ft"><b>${esc(kampAd(c))}</b> · ${fmtAdet(M.filtered.length)} istasyon${n ? `<span>${esc(n)}</span>` : ""}</span></button>`
+      + `<button class="fx" data-fx="kamp" aria-label="Kampanya filtresini kaldır" title="Kaldır">${IC.x}</button></div>`);
+  }
+  if (M.f.q) out.push(`<div class="fchip"><button class="fl" data-fq="1" aria-label="Arama: ${esc(M.f.q)}, ${M.filtered.length} istasyon. Aramayı düzenle">${svgUse("s-ara")}<span class="ft"><b>“${esc(M.f.q)}”</b> · ${fmtAdet(M.filtered.length)} istasyon</span></button>`
+    + `<button class="fx" data-fx="q" aria-label="Aramayı kaldır" title="Kaldır">${IC.x}</button></div>`);
+  $("fchips").innerHTML = out.join("");
+  $("msearch").classList.toggle("on", !!M.f.q);
+}
+const mFiltreVar = () => !!(M.f.akim.size || M.f.kag || M.f.kbk || M.f.bana || M.f.tum || M.f.brands.size || M.f.kamp || M.f.q);
+// "Filtreleri temizle" / "Temizle": akım, hızlı filtreler, marka, tanımsızlar, kampanya ve arama birlikte sıfırlanır
+function mTemizle() {
+  M.f = { akim: new Set(), kag: false, kbk: false, bana: false, tum: false, brands: new Set(), kamp: "", q: "" };
+  $("mq").value = ""; $("mqx").hidden = true; aramaKapat();
+  M.shown = PAGE; renderMap(); writeHash();
+}
+
+/* ---------- Harita: isimle arama ----------
+   Yazdıkça (150 ms gecikmeli) istasyon adı, şarj ağı, işletmeci ve adres (il / ilçe dahil) içinde aranır; Türkçe harf ve aksan duyarsız (fold),
+   her sözcük geçmeli. Arama diğer filtrelerin (kampanya, akım, marka…) bıraktığı istasyonlarda yapılır. Sonuçlar arama alanının altındaki
+   listede (en çok 40; adında geçenler önce, sonra yakınlık); harita yazarken değişmez. Sonuca dokunmak oraya gider ve detayı açar.
+   "Haritada göster" (ya da Enter) aramayı harita filtresine çevirir: harita ve alttaki liste yalnızca eşleşenleri gösterir, üstte çip çıkar. */
+const hay = s => s.hay || (s.hay = fold([pretty(s.brand), s.name, s.addr, s.tags && s.tags.operator, s.tesis].filter(Boolean).join(" · ")));
+const qWords = q => fold(q).split(/\s+/).filter(Boolean);
+const qOk = (s, w) => { const h = hay(s); return w.every(x => h.includes(x)); };
+// Eşleşen ilk sözcüğü vurgula (fold harf sayısını korur: aynı konumdaki özgün harfler işaretlenir)
+function isaretle(txt, w) {
+  const f = fold(txt);
+  if (f.length === txt.length) for (const x of w) { const i = f.indexOf(x); if (i >= 0) return esc(txt.slice(0, i)) + "<mark>" + esc(txt.slice(i, i + x.length)) + "</mark>" + esc(txt.slice(i + x.length)); }
+  return esc(txt);
+}
+function aramaSonuc() {
+  const el = $("mqr"), q = $("mq").value.trim(), w = qWords(q);
+  if (!w.length || !M.pre) { el.hidden = true; $("mq").setAttribute("aria-expanded", "false"); return; }
+  const ref = M.me || M.center, MAX = 40;
+  const bul = l => l.filter(s => qOk(s, w));
+  const hits = bul(M.pre);
+  const adda = s => { const a = fold([pretty(s.brand), s.name].join(" ")); return w.every(x => a.includes(x)) ? 0 : 1; };
+  const sirali = hits.map(s => [adda(s), ref ? dist(ref, s) : 0, s]).sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  let html;
+  if (hits.length) {
+    html = `<div class="mqh"><span class="n" role="status"><b>${fmtAdet(hits.length)}</b> sonuç</span><button class="btn primary" data-mqa="1">${svgUse("c-harita")}Haritada göster</button></div>`
+      + sirali.slice(0, MAX).map(([, d, s]) => {
+        const t1 = pretty(s.brand) || s.name, t2 = [s.named && s.name !== s.brand ? s.name : "", s.addr].filter(Boolean).join(" · ");
+        return `<button class="mqi" data-msr="${esc(s.id)}">${brandStyle(s) ? `<span class="bdot" style="--bg-b:${brandStyle(s)[0]}"></span>` : ""}<span class="mt"><span class="t1">${isaretle(t1, w)}</span>${t2 ? `<span class="t2">${isaretle(t2, w)}</span>` : ""}</span>${ref ? `<span class="ds">${fmtKm(d)}</span>` : ""}</button>`;
+      }).join("")
+      + (hits.length > MAX ? `<div class="mqmore">+${fmtAdet(hits.length - MAX)} sonuç daha · hepsi için «Haritada göster»</div>` : "");
+  } else {
+    // Filtreler yüzünden gizlenen eşleşmeler varsa söylenir
+    const gizli = mFiltreVar() ? bul(M.all.filter(s => s.known || M.f.tum)).length : 0;
+    html = `<div class="mqe" role="status">“${esc(q)}” için istasyon bulunamadı.${gizli ? `<br>Filtreler yüzünden ${fmtAdet(gizli)} sonuç gizli.<br><button class="btn" data-mclear="1">Filtreleri temizle</button>` : ""}</div>`;
+  }
+  el.innerHTML = html; el.hidden = false; $("mq").setAttribute("aria-expanded", "true");
+}
+function aramaKapat() { $("mqr").hidden = true; $("mq").setAttribute("aria-expanded", "false"); if (document.activeElement !== $("mq")) $("v-harita").classList.remove("srch"); }
+function aramaUygula() {
+  const q = $("mq").value.trim();
+  M.f.q = q; if (q) an("filtre", "arama haritada");
+  $("mq").blur(); aramaKapat();
+  M.sel = null; M.group = null; M.shown = PAGE; refresh();
+  if (q && M.filtered.length) odak(true);
+}
+function aramaSec(id) {
+  const s = M.byId.get(id); if (!s) return;
+  an("filtre", "arama sonucu");
+  if (M.f.q && !M.filtered.includes(s)) { M.f.q = ""; refresh(); }   // haritaya uygulanmış başka bir aramanın dışındaysa o arama kalkar
+  $("mq").blur(); aramaKapat();
+  M.group = null; selectStation(id, true);
+}
 function renderMapSheet() {
   const chip = (attr, label, on, cls = "") => `<button class="chip ${cls}" ${attr} aria-pressed="${on}">${esc(label)}</button>`;
   const br = M.brands.map(([b, n]) => chip(`data-mb="${esc(b)}"`, `${b} · ${n}`, M.f.brands.has(b))).join("");
-  $("mfs-b").innerHTML = (br ? `<h3>Marka</h3><div class="chips">${br}</div>` : "")
+  // Kampanya: tek seçim. Uygulama → şarj ağı → banka kartı; aynı türde kuruma göre. İlk 6 ve seçili olan görünür, gerisi "Tüm kampanyalar" ile.
+  const ord = { uygulama: 0, ag: 1, banka: 2 }, sel = kampSecili();
+  const kl = [...C].sort((a, b) => ord[a.tip] - ord[b.tip] || tr(a.kurum, b.kurum));
+  const ILK = 6, gor = M.kAc ? kl : kl.filter((c, i) => i < ILK || c === sel);
+  const row = c => {
+    const n = c.st.includes(ALL) ? "Tüm istasyonlar" : `${fmtAdet(kampSay(c))} istasyon`, g = gunTxt(c);
+    return `<button class="kr" data-mk="${esc(c.kampId)}" aria-pressed="${c === sel}"><span class="ico ${c.tip}" aria-hidden="true">${IC[c.tip]}</span>`
+      + `<span class="kt"><span class="k1">${esc(kampAd(c))}</span><span class="k2">${esc(TIPAD[c.tip])}${g ? ` · ${esc(g)}` : ""}${c.tip === "ag" && c.kisa ? ` · ${esc(c.kisa)}` : ""} · ${n}${c.kontrol ? ` <span class="bdg wait">Doğrulanıyor</span>` : ""}</span></span><span class="rd" aria-hidden="true"></span></button>`;
+  };
+  $("mfs-b").innerHTML = `<h3 id="mfs-kh">Kampanya</h3><div class="kl" role="group" aria-labelledby="mfs-kh">${gor.map(row).join("")}</div>`
+    + (kl.length > gor.length ? `<button class="btn" data-mkac="1" aria-expanded="false">Tüm kampanyalar (${kl.length})</button>` : "")
+    + (sel && sel.st.includes(ALL) ? `<p class="note">Bu kampanya tüm istasyonlarda geçerli; harita kampanyaya göre daralmaz.</p>` : sel ? `<p class="note">Kampanyanın geçerli olduğu istasyonlar her gün gösterilir; indirimli fiyat yalnızca geçerli olduğu gün ve doğrulanmışsa uygulanır.</p>` : "")
+    + (br ? `<h3>Marka</h3><div class="chips">${br}</div>` : "")
     + `<label class="chk"><input type="checkbox" id="m-tum" ${M.f.tum ? "checked" : ""}><span>Tanımsız istasyonları da göster</span></label>`
     + `<p class="note">Markası bilinmeyen ya da tanınmayan istasyonlar varsayılan olarak gizlenir.</p>`;
-  $("mfs-ok").textContent = `${M.view.length} istasyonu göster`;
+  $("mfs-ok").textContent = M.f.kamp || M.f.q ? `${fmtAdet(M.filtered.length)} istasyonu göster` : `${M.view.length} istasyonu göster`;
 }
 
 /* ---------- Olaylar ---------- */
 function bindEvents() {
   let t; $("q").oninput = e => { clearTimeout(t); t = setTimeout(() => { S.q = e.target.value.trim(); render(); }, 150); };
   $("sort").onchange = e => { S.sort = e.target.value; render(); };
+  // Harita araması: yazdıkça sonuç listesi; Enter = haritada göster; ↓ ilk sonuca; Esc kapatır
+  let mt;
+  const mq = $("mq");
+  mq.addEventListener("input", () => { $("mqx").hidden = !mq.value; clearTimeout(mt); mt = setTimeout(aramaSonuc, 150); });
+  mq.addEventListener("focus", () => { $("v-harita").classList.add("srch"); if (mq.value.trim()) aramaSonuc(); });
+  mq.addEventListener("blur", () => setTimeout(() => { if ($("mqr").hidden && document.activeElement !== mq) $("v-harita").classList.remove("srch"); }, 0));
+  mq.addEventListener("keydown", e => {
+    if (e.key === "Enter") { e.preventDefault(); clearTimeout(mt); aramaUygula(); }
+    else if (e.key === "ArrowDown") { const f = $("mqr").querySelector(".mqi"); if (f) { e.preventDefault(); f.focus(); } }
+  });
+  $("mqr").addEventListener("keydown", e => {
+    const l = [...$("mqr").querySelectorAll(".mqi")], i = l.indexOf(document.activeElement);
+    if (i < 0 || (e.key !== "ArrowDown" && e.key !== "ArrowUp")) return;
+    e.preventDefault(); (e.key === "ArrowDown" ? l[i + 1] : i ? l[i - 1] : mq)?.focus();
+  });
   document.addEventListener("click", e => {
     if (TIP.b && !e.target.closest("#tip") && !e.target.closest("[data-tip]")) closeTip();
+    if (!$("mqr").hidden && !e.target.closest("#mqr") && !e.target.closest("#msearch")) aramaKapat();
     const b = e.target.closest("button"); if (!b) return;
     const d = b.dataset;
     if (d.tip !== undefined) openTip(b);
+    else if (d.kmap) kampHaritada(d.kmap);
+    else if (d.mk) { kampUygula(M.f.kamp === d.mk ? "" : d.mk); }
+    else if (d.mkac) { M.kAc = true; renderMapSheet(); const r = $("mfs-b").querySelectorAll(".kr")[6]; if (r) r.focus(); }
+    else if (d.fx === "kamp") { kampUygula(""); $("mf-open").focus(); }
+    else if (d.fx === "q") { M.f.q = ""; $("mq").value = ""; $("mqx").hidden = true; M.shown = PAGE; refresh(); $("mq").focus(); }
+    else if (d.fo) openMapFilters(true);
+    else if (d.fq) $("mq").focus();
+    else if (d.mclear) { mTemizle(); if (b.closest("#mqr")) { $("mq").focus(); } }
+    else if (d.modak) { odak(true); }
+    else if (d.mqa) aramaUygula();
+    else if (d.msr) aramaSec(d.msr);
+    else if (b.id === "mqx") { $("mq").value = ""; $("mqx").hidden = true; if (M.f.q) { M.f.q = ""; refresh(); } aramaKapat(); $("mq").focus(); }
     else if (d.k) { const set = S[d.k]; set.has(d.v) ? set.delete(d.v) : set.add(d.v); render(); }
     else if (b.id === "q-mine") { S.bana = !useMine(); render(); }
     else if (b.id === "q-setup") show("profil");
@@ -2160,11 +2459,14 @@ function bindEvents() {
   $("help").onclick = openGuide;
   $("ob-x").onclick = $("ob-skip").onclick = () => closeSheets();
   $("ob-next").onclick = () => { if (OB.i < OB.adim.length - 1) { OB.i++; renderOb(); $("ob").querySelector(".fs-b").scrollTop = 0; } else { an("filtre", "kurulum bitti"); closeSheets(); } };
-  document.addEventListener("keydown", e => { if (e.key === "Escape") { if (TIP.b) closeTip(true); else closeSheets(); } });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") {
+    if (TIP.b) closeTip(true);
+    else if (!$("mqr").hidden || document.activeElement === $("mq")) { const f = $("mqr").contains(document.activeElement); aramaKapat(); if (f) $("mq").focus(); else { $("mq").blur(); $("v-harita").classList.remove("srch"); } }
+    else closeSheets(); } });
   $("sh-b").addEventListener("scroll", () => closeTip(), { passive: true });
   addEventListener("resize", () => closeTip());
   $("fs-clear").onclick = () => { S.banka.clear(); S.ag.clear(); S.tip.clear(); render(); };
-  $("mfs-clear").onclick = () => { M.f = { akim: new Set(), kag: false, kbk: false, bana: false, tum: false, brands: new Set() }; M.shown = PAGE; renderMap(); };
+  $("mfs-clear").onclick = mTemizle;
   $("loc").onclick = () => locate(false);
   // Alt pencere: tutamaktan yukarı/aşağı sürükleyerek aç-kapat (en yakın konuma oturur); dokunmak da bir sonraki konuma geçirir
   (() => {
@@ -2222,7 +2524,11 @@ function bindEvents() {
     P = r; $("p-in").value = ""; profileChanged(); pmsg("Seçimlerin yüklendi.");
   };
   $("p-reset").onclick = () => { if (confirm("Seçtiğin kartlar ve uygulamalar silinsin mi?")) { P = { banka: [], ag: [], uyg: [], arac: "", il: "" }; S.bana = null; profileChanged(); pmsg("Seçimlerin silindi."); } };
-  addEventListener("hashchange", () => { readHash(); $("q").value = S.q; $("sort").value = S.sort; renderQuick(); render(); if (S.view !== currentView()) show(S.view); });
+  addEventListener("hashchange", () => {
+    readHash(); $("q").value = S.q; $("sort").value = S.sort; renderQuick(); render(); if (S.view !== currentView()) show(S.view);
+    // bağlantıdaki kampanya filtresi (geri / ileri, elle yazılan adres); haritaya kampanyasız dönülürse filtre kalkar
+    if (S.kamp ? kampBul(S.kamp) !== kampSecili() : S.view === "harita" && M.f.kamp) kampUygula(S.kamp);
+  });
 }
 const currentView = () => ["kamp", "harita", "profil"].find(v => !$("v-" + v).hidden);
 function pmsg(t, bad = false) { const m = $("pmsg"); m.textContent = t; m.className = bad ? "bad" : ""; }
@@ -2315,7 +2621,8 @@ async function init() {
     const r = await fetch("kampanyalar.json", { cache: "no-cache" });
     if (!r.ok) throw new Error(r.status);
     D = await r.json();
-    C = flatten(D); buildIndexes();
+    C = flatten(D); buildIndexes(); kampIdler();
+    if (S.kamp) { const c = kampBul(S.kamp); M.f.kamp = c ? c.kampId : ""; M.kampYok = !c; }
     // son_kontrol: günlük taramanın en son çalıştığı gün (değişiklik olmasa da güncellenir); guncelleme: verinin en son değiştiği gün
     const sk = D.son_kontrol || D.guncelleme, fark = -daysLeft(sk), [, m, g] = sk.split("-");
     $("upd").textContent = fark <= 0 ? "Bugün kontrol edildi" : fark === 1 ? "Dün kontrol edildi" : `Son kontrol: ${+g} ${AY[+m - 1]}`;
