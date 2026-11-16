@@ -1,7 +1,7 @@
 {
   "donem": "Kasım 2026",
-  "guncelleme": "2026-11-15",
-  "son_kontrol": "2026-11-15",
+  "guncelleme": "2026-11-16",
+  "son_kontrol": "2026-11-16",
   "genel_kartlar": "Paraf Doğal · QNB · ON",
   "kampanyasiz_bankalar": [
     "İş Bankası (Maximum)"
@@ -1624,6 +1624,21 @@
       "name": "WAT Mobilite",
       "own": [
         {
+          "big": "Her salı %10 indirim",
+          "kisa": "Her salı",
+          "det": "Salı günleri tüm AC ve DC tarifelerde · kod gerekmez, otomatik",
+          "son": "29 Aralık",
+          "link": "https://www.watmobilite.com/kampanyalar/watla-avantaji-katla-sali-mode-on",
+          "bas": "2026-11-17",
+          "bit": "2026-12-29",
+          "gunler": [
+            "sali"
+          ],
+          "kosul": "17 Kasım–29 Aralık 2026 arasındaki salı günleri 00.00–23.59; yalnızca WAT Mobilite'nin kendi şarj ünitelerinde, WAT Mobilite Şarj uygulamasına kayıtlı bireysel kullanıcılar ve uygulamaya kayıtlı kredi kartıyla ödenen şarjlarda. Salı başlayan şarj ertesi güne uzasa da indirimli. Roaming istasyonları, kurumsal ve filo hesapları hariç; başka kampanya veya indirimle birleşmez.",
+          "herkese": true,
+          "eklendi": "2026-11-16"
+        },
+        {
           "big": "Ford'a %4 indirim",
           "kisa": "Ford'a",
           "arac": [
@@ -1649,9 +1664,9 @@
         ]
       ],
       "cover": {
-        "big": "Ford'a %4",
-        "sub": "WAT istasyonlarında AC ve DC · + Yapı Kredi Worldpuan",
-        "son": "31 Aralık"
+        "big": "Her salı %10",
+        "sub": "WAT istasyonlarında AC ve DC · Ford'a ayrıca %4",
+        "son": "29 Aralık"
       }
     },
     {

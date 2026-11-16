@@ -1,0 +1,47 @@
+[
+ {
+  "id": "istasyon_wat_post",
+  "grup": "2026-11-16__istasyon_wat",
+  "tip": "karusel",
+  "zaman": "2026-11-17T09:30:00+03:00",
+  "baslik": "WAT Mobilite",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "WAT Mobilite: Her salı %10 indirim",
+    "url": "https://www.watmobilite.com/kampanyalar/watla-avantaji-katla-sali-mode-on",
+    "tur": "resmi"
+   },
+   {
+    "ad": "WAT Mobilite: Ford'a %4 indirim",
+    "url": "https://www.watmobilite.com/kampanyalar/ford-kullanicilarina-ozel-4-indirim",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-16/istasyon_wat/1_kapak.jpg",
+   "media/2026-11-16/istasyon_wat/2_detay.jpg"
+  ],
+  "aciklama": "⚡ WAT Mobilite: Her salı %10!\n\n✅ Her salı %10 indirim: Salı günleri tüm AC ve DC tarifelerde · kod gerekmez, otomatik (son gün 29 Aralık)\n✅ Ford'a %4 indirim: AC ve DC tarifelerin tamamında · alt/üst sınır yok (son gün 31 Aralık)\n\nKart kampanyalarının tamamı ve geçerli istasyonlar banka postlarımızda.\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #watmobilite",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "istasyon_wat_hikaye",
+  "grup": "2026-11-16__istasyon_wat",
+  "baslik": "WAT Mobilite",
+  "tur": "istasyon",
+  "tip": "hikaye",
+  "zaman": "2026-11-17T10:30:00+03:00",
+  "gorseller": [
+   "media/2026-11-16/istasyon_wat/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ }
+]
