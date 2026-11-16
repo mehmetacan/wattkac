@@ -100,6 +100,7 @@ SECILI = pathlib.Path("data/secili_istasyonlar.json")  # yalnızca seçili istas
 SECILI_AG = {"otopriz": r"otopriz|dicle kok"}
 SAATLI = pathlib.Path("data/saatli_tarife.json")  # saate göre fiyatın (ör. gece tarifesi) yalnızca listedeki istasyonlarda geçerli olduğu ağlar
 SAATLI_AG = {"shell": r"\bshell\b", "mypower": r"\bmy ?power\b"}
+KAPALI = pathlib.Path("data/kapali_istasyonlar.json")  # kapandığı doğrulanan ama kaynakta hâlâ görünen istasyonlar
 SITE_TARIFE = pathlib.Path("data/site_tarifesi.json")  # konut sitelerine özel indirimli fiyat (ad deseniyle)
 OUT = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else "site/istasyonlar.json")
 TR = str.maketrans({"İ": "i", "I": "ı", "Ş": "ş", "Ğ": "ğ", "Ü": "ü", "Ö": "ö", "Ç": "ç"})
@@ -451,6 +452,17 @@ def main():
     # kıyı ilçelerindeki noktalar (Bodrum, Gazipaşa) kaba sınırın birkaç km dışında kalabildiğinden sınıra yakınlık da kabul edilir.
     recs = [r for r in located if in_turkey(r["a"], r["o"])]
     disari = len(located) - len(recs)
+    kapali = json.loads(KAPALI.read_text(encoding="utf-8")).get("istasyonlar", []) if KAPALI.exists() else []
+    def kapandi(r):
+        for k in kapali:
+            if r.get("i") == k.get("i"):
+                return True
+            if "a" in k and fold(r.get("b") or "") == fold(k.get("b") or "") and dist(r["a"], r["o"], k["a"], k["o"]) < 60:
+                return True
+        return False
+    once = len(recs); recs = [r for r in recs if not kapandi(r)]
+    if once != len(recs):
+        print(f"Kapandığı doğrulanan {once - len(recs)} istasyon çıkarıldı ({KAPALI})")
     recs.sort(key=lambda r: (round(r["a"], 1), r["o"], r["i"]))
     cnt = {}
     for r in recs:

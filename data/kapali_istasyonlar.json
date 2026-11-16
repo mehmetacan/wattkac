@@ -1,0 +1,8 @@
+{
+  "_aciklama": "Kapandığı doğrulanan ama ağın sitesinde/EPDK'da hâlâ görünen istasyonlar. istasyon_birlestir.py bunları (aynı id ya da ~60 m içindeki aynı markalı kayıt) haritadan çıkarır. Ağın kendi listesinden düşünce kayıt buradan silinebilir.",
+  "istasyonlar": [
+    {"i": "wat4163234", "a": 40.80392, "o": 29.37907, "b": "WAT Mobilite", "n": "Bizim Toptan Gebze",
+     "neden": "Bizim Toptan Gebze şubesi kalıcı olarak kapandı; WAT uygulamasında yok, yalnızca watmobilite.com haritasında duruyor (güncellenmemiş).",
+     "kaynak": "Kullanıcı geri bildirimi + WAT Mobilite uygulaması + Google Haritalar 'Kalıcı olarak kapalı'", "tarih": "2026-11-16"}
+  ]
+}
