@@ -53,6 +53,7 @@ h2{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;c
 .fb .meta{color:var(--mut);font-size:12px;display:flex;flex-wrap:wrap;gap:4px 10px}
 .tag{display:inline-block;border-radius:6px;padding:1px 7px;font-size:11.5px;font-weight:800}
 .tag.yeni{background:var(--abg);color:var(--amb)}.tag.okundu{background:var(--line);color:var(--mut)}.tag.cozuldu{background:var(--gbg);color:var(--g)}
+.fb a.konum{display:inline-block;margin-top:4px;padding:4px 9px;font-size:12.5px;color:var(--txt,inherit);text-decoration:none}
 .fb .act{display:flex;gap:6px;margin-top:6px}.fb .act .btn{padding:4px 9px;font-size:12.5px}
 .login{max-width:360px;margin:12vh auto 0}
 .login input{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px;margin:10px 0}
@@ -196,6 +197,24 @@ function render(d) {
 async function load() {
   try { const d = await api("ozet?gun=" + ST.gun); showApp(); render(d); loadFb(); } catch (e) { if (e.message !== "giriş") $("kpis").innerHTML = `<div class="card err">Veri alınamadı (${esc(e.message)}).</div>`; }
 }
+/* Geri bildirimdeki istasyon: "Ağ · Ad · Adres [id] @enlem,boylam". Koordinat yoksa (eski kayıtlar) istasyonlar.json'dan id ile bulunur. */
+let IST = null;
+async function istKonumlari() {
+  if (IST) return IST;
+  try { const d = await (await fetch("/istasyonlar.json")).json(); IST = new Map((d.istasyonlar || []).map(r => [r.i, r.a + "," + r.o])); } catch { IST = new Map(); }
+  return IST;
+}
+function istSatiri(t) {
+  const ll = (t.match(/@(-?\d+\.\d+,-?\d+\.\d+)\s*$/) || [])[1], id = (t.match(/\[([^\]]+)\]/) || [])[1] || "";
+  const yazi = t.replace(/\s*@-?\d+\.\d+,-?\d+\.\d+\s*$/, "");
+  return `<div class="meta">📍 ${esc(yazi)}</div><div class="meta"><a class="btn konum" target="_blank" rel="noopener" data-ll="${esc(ll || "")}" data-sid="${esc(id)}" href="${ll ? "https://www.google.com/maps/search/?api=1&query=" + ll : "#"}"${ll || id ? "" : " hidden"}>🗺️ Konumu göster</a></div>`;
+}
+async function konumDoldur() {
+  const bos = [...document.querySelectorAll("a.konum")].filter(a => !a.dataset.ll && a.dataset.sid);
+  if (!bos.length) return;
+  const m = await istKonumlari();
+  for (const a of bos) { const ll = m.get(a.dataset.sid); if (ll) a.href = "https://www.google.com/maps/search/?api=1&query=" + ll; else { a.textContent = "Konum bulunamadı (istasyon listeden çıkmış)"; a.removeAttribute("href"); } }
+}
 async function loadFb() {
   try {
     const { liste } = await api("geri-bildirim?durum=" + ST.f);
@@ -204,9 +223,10 @@ async function loadFb() {
         <span>${esc(new Date(f.zaman).toLocaleString("tr-TR", { dateStyle: "medium", timeStyle: "short", timeZone: "Europe/Istanbul" }))}</span>
         ${f.iletisim ? `<span>✉️ ${esc(f.iletisim)}</span>` : ""}</div>
       <div class="m">${esc(f.mesaj)}</div>
-      ${f.istasyon ? `<div class="meta">📍 ${esc(f.istasyon)}</div>` : ""}
+      ${f.istasyon ? istSatiri(f.istasyon) : ""}
       <div class="act">${f.durum !== "okundu" ? `<button class="btn" data-d="okundu">Okundu</button>` : ""}${f.durum !== "cozuldu" ? `<button class="btn" data-d="cozuldu">Çözüldü</button>` : ""}<button class="btn" data-d="cop">Sil</button></div></li>`).join("")
       : `<li class="empty">${ST.f === "acik" ? "Açık geri bildirim yok." : "Henüz geri bildirim yok."}</li>`;
+    konumDoldur();
   } catch {}
 }
 $("fb").onclick = async e => {

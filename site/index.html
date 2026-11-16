@@ -1251,11 +1251,11 @@ async function sendFeedback(e) {
   btn.disabled = true; msg.className = "fbmsg"; msg.textContent = "Gönderiliyor…";
   try {
     const r = await fetch("/api/geri-bildirim", { method: "POST", headers: { "content-type": "application/json" },
-      body: JSON.stringify({ tur: FB.tur || "diger", mesaj: m, iletisim: $("fb-c").value.trim(), istasyon: FB.ctx ? FB.ctx + (FB.sid ? " [" + FB.sid + "]" : "") : "", sayfa: location.pathname, web: $("fb-w").value, sure: Date.now() - FB.t0 }) });
+      body: JSON.stringify({ tur: FB.tur || "diger", mesaj: m, iletisim: $("fb-c").value.trim(), istasyon: FB.ctx ? FB.ctx + (FB.sid ? " [" + FB.sid + "]" : "") + (FB.ll ? " @" + FB.ll : "") : "", sayfa: location.pathname, web: $("fb-w").value, sure: Date.now() - FB.t0 }) });
     const j = await r.json().catch(() => ({}));
     if (!r.ok || !j.ok) throw new Error(j.hata || r.status);
     msg.className = "fbmsg ok"; msg.textContent = "Teşekkürler, aldık!"; an("geri_bildirim", FB.tur || "diger");
-    $("fb-m").value = ""; FB.ctx = ""; FB.tur = ""; drawFbTur(); $("fb-ctx").hidden = true;
+    $("fb-m").value = ""; FB.ctx = ""; FB.ll = ""; FB.tur = ""; drawFbTur(); $("fb-ctx").hidden = true;
   } catch {
     msg.className = "fbmsg err"; msg.textContent = "Gönderilemedi. Biraz sonra tekrar dene.";
   } finally { btn.disabled = false; }
@@ -2446,7 +2446,7 @@ function bindEvents() {
       const row = sb.querySelector(".uygsec"); if (row) row.scrollLeft = x;
       const nb = [...sb.querySelectorAll("[data-dua]")].find(e => e.dataset.dua === d.dua); if (nb) nb.focus({ preventScroll: true });
     }
-    else if (d.fbs) { const st = M.byId.get(d.fbs); FB.ctx = st ? [pretty(st.brand) || "", st.name, st.addr].filter(Boolean).join(" · ") : ""; FB.sid = st ? st.id : ""; FB.tur = FB.tur || "istasyon"; show("geri"); }
+    else if (d.fbs) { const st = M.byId.get(d.fbs); FB.ctx = st ? [pretty(st.brand) || "", st.name, st.addr].filter(Boolean).join(" · ") : ""; FB.sid = st ? st.id : ""; FB.ll = st ? st.lat.toFixed(5) + "," + st.lon.toFixed(5) : ""; FB.tur = FB.tur || "istasyon"; show("geri"); }
     else if (d.go) show(d.go);
   });
   $("p-il").onchange = e => { P.il = one(e.target.value, ILLER); profileChanged(); };
