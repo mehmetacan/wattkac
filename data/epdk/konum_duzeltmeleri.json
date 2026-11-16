@@ -1,9 +1,9 @@
 {
-"guncelleme": "2026-11-15",
+"guncelleme": "2026-11-16",
 "ozet": {
 "denetlenen": {
-"e": 13259,
-"r": 6414,
+"e": 13264,
+"r": 6418,
 "o": 753,
 "c": 2257
 },
@@ -29,14 +29,14 @@
 "duzeltme": {
 "yer_degistirme": 19,
 "basamak": 4,
-"kaynak": 18,
+"kaynak": 19,
 "adres": 2,
 "ilce_merkezi": 5,
 "cikarildi": 10,
 "birakildi": 6
 },
 "korunan": {
-"ilce_uyumsuz": 119,
+"ilce_uyumsuz": 118,
 "il_uyumsuz": 5,
 "ad_yeri": 1,
 "diger_kaynak_il": 80
@@ -702,6 +702,24 @@
 "neden": "turkiye_disi",
 "dayanak": "trugo9559",
 "km": 45.3
+},
+{
+"id": "ŞRJ/24308",
+"kaynak": "e",
+"ad": "KMBB Enerji Çınaraltı",
+"il": "Kahramanmaraş",
+"eski": [
+37.3559,
+36.563
+],
+"yeni": [
+37.599934,
+36.934176
+],
+"kural": "kaynak",
+"neden": "ilce_uyumsuz",
+"dayanak": "trugo9593",
+"km": 42.5
 },
 {
 "id": "ŞRJ/4270",
