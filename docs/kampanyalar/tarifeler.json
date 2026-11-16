@@ -40,7 +40,7 @@
     "max": 14.98
    },
    "kaynak": "https://trugo.com.tr/price",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-16",
    "gecerlilik": null,
    "not": "AC tüm istasyonlarda 9,95; DC 14,98 TL/kWh. Duyurudaki seçili istasyonlarda DC 12 TL/kWh (https://trugo.com.tr/individual/news/secili-istasyonlarda-12-tl-kwh); istasyon bazlı fiyat haritada gösterilir."
   },
@@ -68,7 +68,7 @@
     "max": 13.9
    },
    "kaynak": "https://otopriz.com.tr/uyelik-ve-tarifeler",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-16",
    "gecerlilik": "2026-01-20",
    "not": "KDV dahil. İstasyon bazlı güncel fiyat Otopriz uygulamasında."
   },
@@ -82,7 +82,7 @@
     "max": 11.87
    },
    "kaynak": "https://ovolt.com.tr/tarifeler",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-16",
    "gecerlilik": null,
    "not": "Sayfa geçerlilik tarihi vermiyor; DC fiyat lokasyona göre değişiyor."
   },
@@ -125,7 +125,7 @@
     "max": 14.49
    },
    "kaynak": "https://www.watmobilite.com/cozumler/kamusal-alanlar#guncel-fiyat-ve-tarifeler",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-16",
    "gecerlilik": "2026-10-08",
    "not": "Fiyat lokasyona göre değişiyor; güncel tarife mobil uygulamada. Sayfanın tarih bilgileri tutarsız olabilir."
   },
@@ -147,7 +147,7 @@
     "max": 16.49
    },
    "kaynak": "https://zes.net/tr/fiyatlandirma",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-16",
    "gecerlilik": null,
    "adlar": [
     "zes"
@@ -261,7 +261,7 @@
     "max": 13.99
    },
    "kaynak": "https://beefull.com/tarifeler/elektrikli-arac-tarifesi/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-16",
    "gecerlilik": null,
    "adlar": [
     "beefull"
@@ -1121,7 +1121,7 @@
     "max": 11.99
    },
    "kaynak": "https://www.petrolofisi.com.tr/urun-ve-hizmetler/e-power",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-16",
    "gecerlilik": null,
    "adlar": [
     "Petrol Ofisi e-POWER",
