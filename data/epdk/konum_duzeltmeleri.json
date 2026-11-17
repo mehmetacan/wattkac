@@ -1,16 +1,16 @@
 {
-"guncelleme": "2026-11-16",
+"guncelleme": "2026-11-17",
 "ozet": {
 "denetlenen": {
-"e": 13264,
-"r": 6418,
-"o": 753,
+"e": 13272,
+"r": 6420,
+"o": 754,
 "c": 2257
 },
 "isaretlenen": {
 "e": {
 "ilce_uyumsuz": 132,
-"il_uyumsuz": 13,
+"il_uyumsuz": 14,
 "il_uzak": 28,
 "turkiye_disi": 2
 },
@@ -27,7 +27,7 @@
 }
 },
 "duzeltme": {
-"yer_degistirme": 19,
+"yer_degistirme": 20,
 "basamak": 4,
 "kaynak": 19,
 "adres": 2,
@@ -1081,6 +1081,23 @@
 "kural": "yer_degistirme",
 "neden": "il_uzak",
 "km": 245.2
+},
+{
+"id": "ŞRJ/24187",
+"kaynak": "e",
+"ad": "Naz Konutları",
+"il": "Kahramanmaraş",
+"eski": [
+36.877674,
+37.588657
+],
+"yeni": [
+37.588657,
+36.877674
+],
+"kural": "yer_degistirme",
+"neden": "il_uyumsuz",
+"km": 101.1
 },
 {
 "id": "ŞRJ/7403",
