@@ -1,6 +1,6 @@
 {
  "_not": "Şarj ağlarının kendi resmi sayfalarında doğrulanan liste fiyatları (TL/kWh). Fiyatlar konuma göre aralık olarak yayınlanıyor: min-max. 'kontrol' sayfanın okunduğu tarih, 'gecerlilik' sayfanın kendi belirttiği tarih (yoksa null). Doğrulanamayan ağlarda ac/dc null kalır ve haritada 'Fiyat yok' görünür. Kampanya indirimleri bu fiyatlara dahil değildir.",
- "guncelleme": "2026-11-15",
+ "guncelleme": "2026-11-17",
  "aglar": {
   "Eşarj": {
    "ac": {
@@ -40,7 +40,7 @@
     "max": 14.98
    },
    "kaynak": "https://trugo.com.tr/price",
-   "kontrol": "2026-11-16",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "not": "AC tüm istasyonlarda 9,95; DC 14,98 TL/kWh. Duyurudaki seçili istasyonlarda DC 12 TL/kWh (https://trugo.com.tr/individual/news/secili-istasyonlarda-12-tl-kwh); istasyon bazlı fiyat haritada gösterilir."
   },
@@ -68,7 +68,7 @@
     "max": 13.9
    },
    "kaynak": "https://otopriz.com.tr/uyelik-ve-tarifeler",
-   "kontrol": "2026-11-16",
+   "kontrol": "2026-11-17",
    "gecerlilik": "2026-01-20",
    "not": "KDV dahil. İstasyon bazlı güncel fiyat Otopriz uygulamasında."
   },
@@ -82,7 +82,7 @@
     "max": 11.87
    },
    "kaynak": "https://ovolt.com.tr/tarifeler",
-   "kontrol": "2026-11-16",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "not": "Sayfa geçerlilik tarihi vermiyor; DC fiyat lokasyona göre değişiyor."
   },
@@ -125,7 +125,7 @@
     "max": 14.49
    },
    "kaynak": "https://www.watmobilite.com/cozumler/kamusal-alanlar#guncel-fiyat-ve-tarifeler",
-   "kontrol": "2026-11-16",
+   "kontrol": "2026-11-17",
    "gecerlilik": "2026-10-08",
    "not": "Fiyat lokasyona göre değişiyor; güncel tarife mobil uygulamada. Sayfanın tarih bilgileri tutarsız olabilir."
   },
@@ -147,7 +147,7 @@
     "max": 16.49
    },
    "kaynak": "https://zes.net/tr/fiyatlandirma",
-   "kontrol": "2026-11-16",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "zes"
@@ -178,7 +178,7 @@
     "max": 13.5
    },
    "kaynak": "https://www.oncharge.com.tr/fiyatlar",
-   "kontrol": "2026-11-14",
+   "kontrol": "2026-11-17",
    "gecerlilik": "2026-10-30",
    "adlar": [
     "oncharge"
@@ -212,7 +212,7 @@
     "max": 14.9
    },
    "kaynak": "https://dcharge.com.tr/tarifeler",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "D-Charge"
@@ -229,7 +229,7 @@
     "max": 12.0
    },
    "kaynak": "https://www.zeplinenerji.com",
-   "kontrol": "2026-11-14",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "ZEPLİN CAR rental"
@@ -261,7 +261,7 @@
     "max": 13.99
    },
    "kaynak": "https://beefull.com/tarifeler/elektrikli-arac-tarifesi/",
-   "kontrol": "2026-11-16",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "beefull"
@@ -278,7 +278,7 @@
     "max": 13.99
    },
    "kaynak": "https://www.aksasarj.com.tr/ucretler",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": "2026-08-07",
    "adlar": [
     "AKSA ŞARJ"
@@ -295,7 +295,7 @@
     "max": 13.99
    },
    "kaynak": "https://mkssarj.com/tarife",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": "2026-04-11",
    "adlar": [
     "MKS-ŞARJ"
@@ -312,7 +312,7 @@
     "max": 12.5
    },
    "kaynak": "https://www.mig-go.com",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-17",
    "gecerlilik": "2026-02-19",
    "adlar": [
     "MİGGO"
@@ -329,7 +329,7 @@
     "max": 13.9
    },
    "kaynak": "https://nevasarj.com/sayfalar/istasyonlarimiz/arac-sarj-ac-dc-kwh-fiyat-tarifeleri.html",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": "2026-02-17",
    "adlar": [
     "NEVA ŞARJ"
@@ -346,7 +346,7 @@
     "max": 13.9
    },
    "kaynak": "https://www.varr.com.tr",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "varr TM"
@@ -362,7 +362,7 @@
     "max": 13.49
    },
    "kaynak": "https://www.isarj.com/tarifeler/",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "i-şarj"
@@ -379,7 +379,7 @@
     "max": 12.5
    },
    "kaynak": "https://sarjmatik.com.tr/ChargingPrices/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "ŞarjMatik"
@@ -396,7 +396,7 @@
     "max": 13.99
    },
    "kaynak": "https://sarjon.com.tr/fiyatlar/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "ŞARJON"
@@ -413,7 +413,7 @@
     "max": 13.4
    },
    "kaynak": "https://www.adze.com/tr/fiyat-tarifesi",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "ADZE"
@@ -430,7 +430,7 @@
     "max": 13.49
    },
    "kaynak": "https://lumicle.com.tr/istasyonlar/",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "LUMİCLE"
@@ -447,7 +447,7 @@
     "max": 13.49
    },
    "kaynak": "https://torasarj.com/fiyatlar/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "TORA",
@@ -466,7 +466,7 @@
     "max": 15.99
    },
    "kaynak": "https://www.efish.com.tr/tr/fiyatlandirma/",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-17",
    "gecerlilik": "2026-10-21",
    "adlar": [
     "efish"
@@ -501,7 +501,7 @@
     "max": 13.99
    },
    "kaynak": "https://rstchargepoint.com/#fiyatlar",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "Rst ChargePoint",
@@ -541,7 +541,7 @@
     "max": 13.49
    },
    "kaynak": "https://cv-charging.com/tr/arac-sarj-tarifeleri",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "CV Şarj",
@@ -581,7 +581,7 @@
     "max": 11.65
    },
    "kaynak": "https://ksarj.com/fiyatlandirma/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "K-ŞARJ",
@@ -599,7 +599,7 @@
     "max": 13.99
    },
    "kaynak": "https://powersarj.com/fiyatlandirma/",
-   "kontrol": "2026-11-14",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "Powerşarj"
@@ -616,7 +616,7 @@
     "max": 12.48
    },
    "kaynak": "https://onizsarj.com/tr/fiyat-tarifesi",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": "2026-01-14",
    "adlar": [
     "önizşarj"
@@ -633,7 +633,7 @@
     "max": 13.45
    },
    "kaynak": "https://wattarya.com/tarifeler",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "Wattarya"
@@ -650,7 +650,7 @@
     "max": 13.0
    },
    "kaynak": "https://mycharge.com.tr/tarifeler/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": "2026-11-01",
    "adlar": [
     "MyCharge"
@@ -667,7 +667,7 @@
     "max": 14.99
    },
    "kaynak": "https://sarjtak.com/fiyat-tarifesi",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "ŞARJTAK"
@@ -699,7 +699,7 @@
     "max": 13.73
    },
    "kaynak": "https://gioev.com/fiyatlandirma",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": "2026-09-30",
    "adlar": [
     "GIOEV"
@@ -716,7 +716,7 @@
     "max": 12.75
    },
    "kaynak": "https://sarjstart.com/Fiyatlandirma",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "ŞARJSTART"
@@ -732,7 +732,7 @@
     "max": 12.9
    },
    "kaynak": "https://usarj.com.tr/fiyat-tarifesi",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "U-ŞARJ",
@@ -750,7 +750,7 @@
     "max": 12.9
    },
    "kaynak": "https://www.biogreen.com.tr/tr/ucretlendirme",
-   "kontrol": "2026-11-14",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "biogreen",
@@ -768,7 +768,7 @@
     "max": 12.9
    },
    "kaynak": "https://www.gotedygo.com/fiyatarifeleri",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "gotedygo",
@@ -787,7 +787,7 @@
     "max": 12.49
    },
    "kaynak": "https://asplussarj.com/fiyatlar",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "ASPLUS",
@@ -796,7 +796,7 @@
   },
   "Şarjstop": {
    "ac": {
-    "min": 8.29,
+    "min": 9.99,
     "max": 9.99
    },
    "dc": {
@@ -804,14 +804,14 @@
     "max": 12.99
    },
    "kaynak": "https://sarjstop.com.tr/tarifeler",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": "2026-06-13",
    "adlar": [
     "ŞS ŞARJSTOP Güvenli Şarj Nok",
     "ŞS ŞARJSTOP Güvenli Şarj Noktası",
     "ŞARJSTOP"
    ],
-   "not": "KDV dahil. AC cihaz gücüne göre 8,29 / 9,99."
+   "not": "KDV dahil. AC (Tip-2, 3,6–22 kW) 9,99, DC (CCS2, 24 kW+) 12,99 TL/kWh; 13.06.2026'dan itibaren. Önceki 8,29 AC kademesi resmi sayfada artık yok (17 Kasım 2026)."
   },
   "Solargize": {
    "ac": {
@@ -823,8 +823,8 @@
     "max": 11.99
    },
    "kaynak": "https://solargize.com.tr/fiyatlar",
-   "kontrol": "2026-11-13",
-   "gecerlilik": null,
+   "kontrol": "2026-11-17",
+   "gecerlilik": "2025-11-15",
    "adlar": [
     "Solargize"
    ]
@@ -839,7 +839,7 @@
     "max": 13.0
    },
    "kaynak": "https://kessarj.com/fiyat-ve-tarifeler",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "KES",
@@ -857,7 +857,7 @@
     "max": 15.99
    },
    "kaynak": "https://www.ronesanscharger.com/#tarifeler",
-   "kontrol": "2026-11-14",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "RÖNESANS CHARGER",
@@ -875,7 +875,7 @@
     "max": 9.49
    },
    "kaynak": "https://checkpointsarj.com.tr/fiyatlandirma",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": "2026-03-01",
    "adlar": [
     "CheckPoint"
@@ -892,7 +892,7 @@
     "max": 12.9
    },
    "kaynak": "https://sepascharge.com/sarj-ucretleri",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": "2026-05-08",
    "adlar": [
     "Sepaş Akıllı Çözümler Anonim",
@@ -911,7 +911,7 @@
     "max": 12.99
    },
    "kaynak": "https://hizzlan.com/ucretlendirme-ve-tarifeler",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "HIZZLAN Charge N'Drive",
@@ -982,7 +982,7 @@
     "max": 12.8
    },
    "kaynak": "https://ekaenerjiteknoloji.com.tr/sarj/fiyat",
-   "kontrol": "2026-11-13",
+   "kontrol": "2026-11-17",
    "gecerlilik": "2026-08-27",
    "adlar": [
     "EKA Enerji",
@@ -1022,7 +1022,7 @@
     "max": 13.39
    },
    "kaynak": "https://toger.co/pricing",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "TOGER",
@@ -1042,7 +1042,7 @@
     "max": 12.49
    },
    "kaynak": "https://sarj.360enerji.com.tr/tarifeler/",
-   "kontrol": "2026-11-14",
+   "kontrol": "2026-11-17",
    "gecerlilik": "2026-09-23",
    "adlar": [
     "360° ENERJİ",
@@ -1062,7 +1062,7 @@
     "max": 12.4
    },
    "kaynak": "https://voltgo.com.tr/voltgo-tarife/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "Voltgo",
@@ -1081,7 +1081,7 @@
     "max": 12.5
    },
    "kaynak": "https://www.epsis.net/elektrikli-arac-sarj-tarifeleri",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": "2026-03-04",
    "adlar": [
     "EPSIS Emobility",
@@ -1121,7 +1121,7 @@
     "max": 11.99
    },
    "kaynak": "https://www.petrolofisi.com.tr/urun-ve-hizmetler/e-power",
-   "kontrol": "2026-11-16",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "Petrol Ofisi e-POWER",
@@ -1140,7 +1140,7 @@
     "max": 16.49
    },
    "kaynak": "https://solarsarj.org/fiyatlar/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "solarşarj",
@@ -1176,7 +1176,7 @@
     "max": 10.0
    },
    "kaynak": "https://cnssolarsarj.com/tarife.php",
-   "kontrol": "2026-11-14",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "CNS Solar ŞARJ",
@@ -1194,7 +1194,7 @@
     "max": 12.99
    },
    "kaynak": "https://tripy.mobi/sarj-istasyonlari/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "Tripy",
@@ -1212,7 +1212,7 @@
     "max": 14.99
    },
    "kaynak": "https://ekosmobility.com/fiyatlandirma/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "EKOS",
@@ -1249,7 +1249,7 @@
     "max": 14.98
    },
    "kaynak": "https://www.fixcharge.io/fiyatlar",
-   "kontrol": "2026-11-14",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "fixcharge",
@@ -1267,7 +1267,7 @@
     "max": 12.7
    },
    "kaynak": "https://greendrive.com.tr/tarifeler",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "Greendrive"
@@ -1284,7 +1284,7 @@
     "max": 12.99
    },
    "kaynak": "https://enhsarj.com/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "CLIXOLAR",
@@ -1302,7 +1302,7 @@
     "max": 15.99
    },
    "kaynak": "https://e4sarj.com.tr/#tarifeler-ve-ucretler",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "E4 ŞARJ"
@@ -1319,7 +1319,7 @@
     "max": 10.99
    },
    "kaynak": "https://avrupasarj.com/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "AVRUPA ŞARJ"
@@ -1336,7 +1336,7 @@
     "max": 12.99
    },
    "kaynak": "https://geldol.com/tarifelerimiz/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": "2026-03-18",
    "adlar": [
     "GEL DOL",
@@ -1354,7 +1354,7 @@
     "max": 12.95
    },
    "kaynak": "https://arconasarj.com/tarife",
-   "kontrol": "2026-11-14",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "AARCONA",
@@ -1402,7 +1402,7 @@
     ]
    },
    "kaynak": "https://www.mypower.net.tr/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": "2026-04-15",
    "adlar": [
     "MYPOWER",
@@ -1438,7 +1438,7 @@
     "max": 11.8
    },
    "kaynak": "https://turksarj.com.tr/ucretlendirme/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "TÜRKŞARJ"
@@ -1455,7 +1455,7 @@
     "max": 12.39
    },
    "kaynak": "https://www.bolgem.com.tr/fiyat-tarifesi/",
-   "kontrol": "2026-11-14",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "BÖLGEM mobilite"
@@ -1472,7 +1472,7 @@
     "max": 14.49
    },
    "kaynak": "https://ekosarj.com/sarj-agi-tarifeleri/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": "2026-05-24",
    "adlar": [
     "ekoşarj en ekonomik, en ekol",
@@ -1491,7 +1491,7 @@
     "max": 11.0
    },
    "kaynak": "https://www.electrise.com.tr/",
-   "kontrol": "2026-11-14",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "Electrise"
@@ -1508,7 +1508,7 @@
     "max": 13.99
    },
    "kaynak": "https://dogusdijitalenerji.com/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "Doğuş Dijital Enerji",
@@ -1526,7 +1526,7 @@
     "max": 12.5
    },
    "kaynak": "https://minusenergy.net/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "MINUS ENERGY"
@@ -1543,7 +1543,7 @@
     "max": 12.49
    },
    "kaynak": "https://verdepuntoenerji.com/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "ar armaksis ar verdepunto",
@@ -1561,7 +1561,7 @@
     "max": 11.9
    },
    "kaynak": "https://www.ecoboxsarj.com/tarifeler",
-   "kontrol": "2026-11-14",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "ECOBOX"
@@ -1612,7 +1612,7 @@
     "max": 14.98
    },
    "kaynak": "https://pilstop.com/fiyatlandirma/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "PİLSTOP"
@@ -1629,7 +1629,7 @@
     "max": 10.95
    },
    "kaynak": "https://3asarj.com/uyelik-ve-tarifeler/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "3a",
@@ -1664,7 +1664,7 @@
     "max": 13.5
    },
    "kaynak": "https://www.enerturk.com/sarj/uyelik-tarifeler/",
-   "kontrol": "2026-11-14",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "RHG Enertürk",
@@ -1683,7 +1683,7 @@
     "max": 14.99
    },
    "kaynak": "https://www.arsimaenerji.com/tarifeler.html",
-   "kontrol": "2026-11-14",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "ARSİMA"
@@ -1700,7 +1700,7 @@
     "max": 11.0
    },
    "kaynak": "https://karkinenerji.com.tr/guncel-sarj-fiyatlari/",
-   "kontrol": "2026-11-14",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "ACROBAT",
@@ -1718,7 +1718,7 @@
     "max": 13.99
    },
    "kaynak": "https://tam-sarj.com/tarifeler/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "TAMŞARJ",
@@ -1754,7 +1754,7 @@
     "max": 12.9
    },
    "kaynak": "https://sarjed.com/tarifeler",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "şarjed Park",
@@ -1790,7 +1790,7 @@
     "max": 12.89
    },
    "kaynak": "https://vilampo.com/tr/price",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "vilampo"
@@ -1807,7 +1807,7 @@
     "max": 15.95
    },
    "kaynak": "https://obisarj.com/tarifeler/",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "Obişarj"
@@ -1824,7 +1824,7 @@
     "max": 11.9
    },
    "kaynak": "https://www.qopuzenergy.com/tarifeler",
-   "kontrol": "2026-11-14",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "Qopuz Energy proton neutron",
@@ -1860,7 +1860,7 @@
     "max": 14.98
    },
    "kaynak": "https://kofteciyusufsarj.com/fiyat",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "KÖFTECİ YUSUF"
@@ -1877,7 +1877,7 @@
     "max": 13.64
    },
    "kaynak": "https://wattreise.com/tr/fiyatlar",
-   "kontrol": "2026-11-15",
+   "kontrol": "2026-11-17",
    "gecerlilik": null,
    "adlar": [
     "WATTREISE"
