@@ -1,7 +1,7 @@
 {
   "donem": "Kasım 2026",
-  "guncelleme": "2026-11-16",
-  "son_kontrol": "2026-11-16",
+  "guncelleme": "2026-11-17",
+  "son_kontrol": "2026-11-17",
   "genel_kartlar": "Paraf Doğal · QNB · ON",
   "kampanyasiz_bankalar": [
     "İş Bankası (Maximum)"
@@ -859,18 +859,6 @@
           "herkese": false
         },
         {
-          "big": "%10 indirim",
-          "kisa": "Anadolu Sigorta kasko",
-          "det": "Anadolu Sigorta kaskolulara · ayda 1, Sigortam Cepte kodu",
-          "son": "31 Aralık",
-          "link": "https://zes.net/tr/kampanyalar/anadolusigorta",
-          "bas": "2026-01-20",
-          "bit": "2026-12-31",
-          "kosul": "Anadolu Sigorta'da aktif kasko poliçesi olan bireysel müşteriler (kurumsal hariç). Kod Sigortam Cepte > Kampanyalar'dan katılıp Profil > Kuponlarım'dan alınır, ayda bir kez, tek kullanımlık; Zes uygulamasında Profil > Kampanyalar > Kampanya Kodu Ekle ile tanımlanır, misafir kullanıcı hariç. Zes'in halka açık AC, DC ve HPC istasyonları. Taksitli/kredili ödemeyle kullanılamaz; diğer kampanya, çek ve puanlarla birleşmez.",
-          "eklendi": "2026-11-11",
-          "herkese": false
-        },
-        {
           "big": "%15 indirim",
           "kisa": "TAV Passport",
           "det": "TAV Passport müşterilerine · ayda 1, TAV Passport kodu",
@@ -940,7 +928,7 @@
       ],
       "cover": {
         "big": "%15 indirim",
-        "sub": "Vodafone Red, TAV Passport, Vodafone Pay ve Anadolu Sigorta kaskoya özel · ON kartla 100 TL'lik şarj 68 TL",
+        "sub": "Vodafone Red, TAV Passport ve Vodafone Pay'e özel · ON kartla 100 TL'lik şarj 68 TL",
         "son": "31 Aralık"
       },
       "birlesik": {
