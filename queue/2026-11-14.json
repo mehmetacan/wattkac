@@ -35,9 +35,10 @@
    "media/2026-11-14/istasyon_aksa/hikaye.jpg"
   ],
   "aciklama": "",
-  "durum": "bekliyor",
+  "durum": "paylasildi",
   "deneme": 0,
-  "ig_media_id": null,
-  "hata": null
+  "ig_media_id": "18116024846041102",
+  "hata": null,
+  "paylasim_zamani": "2026-11-18T08:25:05+00:00"
  }
 ]
