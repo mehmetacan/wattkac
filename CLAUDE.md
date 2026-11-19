@@ -49,6 +49,9 @@ Günlük tarama her çalıştığında, değişiklik olmasa bile:
 - **Denetim:** Commit'ten önce `python3 tools/veri_kontrol.py` çalıştırılır; hata varsa düzeltilmeden push edilmez. Aynı denetim GitHub Actions'ta her gün 09:10'da çalışır ve tarama 2 günden fazla aksarsa kırmızı olur.
 - `docs/kampanyalar/` elle kopyalanmaz; `pages-kopya.yml` iş akışı main'e her push'ta kendisi eşitler.
 
+## Görsel tema (19 Kasım 2026)
+- Instagram gönderileri, hikâyeler ve videolar açık (beyaz/açık gri) temayla hazırlanır; koyu lacivert tema kullanılmaz. Örnek: geri bildirim teşekkür videosu (açık zemin, koyu lacivert yazı kartları, sarı ve turkuaz marka renkleri, Plus Jakarta Sans).
+
 ## Açıklama metni
 - Her gönderi ve Reels açıklamasında hashtag'lerden önce şu satır bulunur: "ℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz."
 
