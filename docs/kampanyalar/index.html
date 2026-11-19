@@ -127,6 +127,7 @@ h1{font-size:clamp(22px,6vw,30px);line-height:1.15;font-weight:800;letter-spacin
 .quick{display:flex;gap:8px;overflow-x:auto;margin:12px -14px 0;padding:0 14px 4px;scrollbar-width:none}
 .quick::-webkit-scrollbar{display:none}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
+.field.mbq{margin:0 0 10px;padding:10px 12px;font-size:16px}
 .chip{flex:none;border:1px solid var(--line2);background:var(--ctl);color:var(--txt);border-radius:999px;padding:9px 14px;min-height:40px;font:600 14px var(--font)}
 .chip.setup{border-style:dashed}
 .chip svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;margin-right:6px}
@@ -576,19 +577,28 @@ a{color:var(--pri)}
 .fchip .fx svg{width:18px;height:18px}
 .fchip button:focus-visible{outline:2.5px solid var(--on-pri);outline-offset:-4px}
 .mapview.srch .fchips,.mapview.srch .qf{display:none}
-/* Filtre penceresi: kampanya seçimi (tek seçim) */
-.kl{border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;background:var(--card)}
-.kr{display:flex;align-items:center;gap:10px;width:100%;min-height:56px;padding:9px 12px;border:0;border-top:1px solid var(--line);background:none;color:var(--txt);text-align:left;font:inherit}
-.kr:first-child{border-top:0}
-.kr .ico{width:32px;height:32px;border-radius:9px}.kr .ico svg{width:17px;height:17px}
-.kr .kt{flex:1;min-width:0}
-.kr .k1{display:block;font-weight:800;font-size:14.5px;line-height:1.3}
-.kr .k2{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;font-size:12.5px;color:var(--mut);font-weight:600;margin-top:2px}
-.kr .rd{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--line2);display:grid;place-items:center}
-.kr[aria-pressed=true]{background:var(--pri-soft)}
-.kr[aria-pressed=true] .rd{border-color:var(--pri)}
-.kr[aria-pressed=true] .rd::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--pri)}
-.kl+.btn{margin-top:8px;width:100%}
+/* Filtre penceresi: akım türü, göster, uygulama ve marka çipleri (ana ekrandaki #seg / #qf düğmeleriyle aynı durum) */
+.fs-b .chips .chip{display:inline-flex;align-items:center;gap:7px}
+.fs-b .chips .chip svg{width:18px;height:18px;margin:0;fill:currentColor;stroke:none}
+.fs-b .chip small{font-size:12px;font-weight:700;opacity:.75}
+.fs-b .chip .fxs{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4}
+.fs-b h3 small{font-weight:600;letter-spacing:0;text-transform:none;font-size:12.5px;margin-left:4px}
+.fs-b h3+.note{margin:-4px 0 8px}
+/* Arama sonuçları: yerler (il / ilçe) ve istasyonlar ayrı başlıkla */
+.mqs{padding:10px 14px 4px;font-size:11.5px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:var(--mut)}
+.mqi.yer{min-height:50px}
+.mqi .yi{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--pri-soft);color:var(--pri-strong)}
+.mqi .yi svg{width:17px;height:17px}
+.mqi .t3{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;margin-top:4px}
+.mqi .ag{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--txt);max-width:100%}
+.mqi .ag .bdot{margin:0;width:10px;height:10px}
+.mqi .pill{font-size:11px;padding:1px 6px}
+.mqi .pr{font-size:12px;font-weight:700;color:var(--txt)}
+.mqi .pr.deal{color:var(--g)}
+.mqi.stn2{align-items:flex-start}
+.mqi.stn2 .ds{margin-top:2px}
+.mqall{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;min-height:48px;border:0;border-top:1px solid var(--line);background:none;color:var(--pri-strong);font:700 14px var(--font)}
+.mqall svg{width:18px;height:18px}
 /* Kampanya kartı: "Haritada gör" ve "Resmi sayfa" yan yana; ikisi de 44 px dokunma hedefi */
 .foot{flex-wrap:wrap}
 .foot .fa{flex:1 1 100%;display:flex;gap:8px}
@@ -617,7 +627,8 @@ a{color:var(--pri)}
   <symbol id="c-filtre" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16l-6 7.5V19l-4 2v-8.5z"/></symbol>
   <symbol id="c-saat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
   <symbol id="c-harita" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6.5V20l6-2.5 6 2.5 6-2.5V4l-6 2.5z"/><path d="M9 4v13.5M15 6.5V20"/></symbol>
-  <symbol id="c-etiket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><path d="M7.5 7.5h.01"/></symbol>
+  <symbol id="c-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+  <symbol id="c-etiket"viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><path d="M7.5 7.5h.01"/></symbol>
   <symbol id="c-kisi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></symbol>
   <symbol id="c-yardim" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.4 9.3a2.7 2.7 0 1 1 4 2.4c-.8.5-1.4 1-1.4 2"/><path d="M12 16.8h.01"/></symbol>
   <symbol id="c-zil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10 20a2 2 0 0 0 4 0"/></symbol>
@@ -683,11 +694,11 @@ a{color:var(--pri)}
       <div class="seg" id="seg" role="group" aria-label="Akım türü"></div>
       <div class="msearch" id="msearch" role="search">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#s-ara"/></svg>
-        <input id="mq" type="search" placeholder="İstasyon ara" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search"
-          aria-label="İstasyon ara: ad, şarj ağı, adres, il ya da ilçe" aria-controls="mqr" aria-expanded="false">
+        <input id="mq" type="search" placeholder="İstasyon, il veya ilçe ara" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search"
+          aria-label="Ara: istasyon adı, şarj ağı, adres, il ya da ilçe" aria-controls="mqr" aria-expanded="false">
         <button class="mqx" id="mqx" aria-label="Aramayı temizle" title="Aramayı temizle" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#c-x"/></svg></button>
       </div>
-      <button class="mbtn" id="mf-open" aria-haspopup="dialog" aria-label="Filtre: kampanyaya ya da şarj ağına göre süz" title="Filtre"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#s-filtre"/></svg><i id="mf-n" hidden></i></button>
+      <button class="mbtn" id="mf-open" aria-haspopup="dialog" aria-label="Filtreler: akım türü, uygulama, marka" title="Filtreler"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#s-filtre"/></svg><i id="mf-n" hidden></i></button>
     </div>
     <div class="ov mqr" id="mqr" role="region" aria-label="Arama sonuçları" hidden></div>
     <div class="ov fchips" id="fchips" aria-live="polite"></div>
@@ -1264,7 +1275,7 @@ async function sendFeedback(e) {
 /* ---------- Harita ---------- */
 const M = { map: null, layer: null, circle: null, meMark: null, me: null, center: null, radius: 5, sort: "yakin",
   // kamp: seçili kampanyanın kimliği (kampId); q: haritaya uygulanan arama metni ("Haritada göster")
-  f: { akim: new Set(), kag: false, kbk: false, bana: false, tum: false, brands: new Set(), kamp: "", q: "" },
+  f: { akim: new Set(), kag: false, kbk: false, bana: false, tum: false, brands: new Set(), uyg: "", kamp: "", q: "" },
   sel: null, markers: new Map(), all: [], byId: new Map(), filtered: null, view: [], shown: PAGE, sig: "", cnt: { all: 0, ac: 0, dc: 0 }, brands: [] };
 
 // Önce marka / işletmeci / ağ alanları, ancak bunlarda bilinen marka yoksa istasyon adı aranır: adı "VoltUp Kepez Hesapçıoğlu Opet"
@@ -1670,6 +1681,7 @@ function refresh() {
   if (M.f.kag) a = a.filter(s => campKinds(s).ag.length);   // şarj ağının herkese açık kendi indirimi
   if (M.f.kbk) a = a.filter(s => campKinds(s).bk.length);   // o ağda geçerli banka kartı kampanyası
   if (M.f.bana) a = a.filter(s => stationMine(s.brand));
+  if (M.f.uyg) a = a.filter(s => istUyg(s, M.f.uyg));   // seçili uygulamayla şarj başlatılabilen istasyonlar
   // Kampanya filtresi: yalnızca seçili kampanyanın geçerli olduğu istasyonlar (bkz. kampSt)
   const kc = kampSecili();
   if (kc) a = a.filter(s => kampSt(kc, s));
@@ -1707,7 +1719,8 @@ function renderSeg() {
   $("qf").innerHTML = q('data-mf="bana"', M.f.bana, "Bana uyan istasyonlar (profilime göre süz)", "s-yildiz")
     + q('data-mf="kag"', M.f.kag, "Şarj ağı indirimi olan istasyonlar", "s-yuzde")
     + q('data-mf="kbk"', M.f.kbk, "Banka kartı kampanyası olan istasyonlar", "s-kart");
-  const n = M.f.brands.size + (M.f.tum ? 1 : 0) + (M.f.kamp ? 1 : 0);
+  // Sayaç: filtre penceresindeki tüm seçimler (akım ve "Göster" düğmeleri ana ekranda da görünür; ikisi aynı durumu gösterir)
+  const n = mFiltreSay();
   $("mf-n").hidden = !n; $("mf-n").textContent = n; $("mf-open").classList.toggle("on", !!n);
 }
 // Ekranda birbirine yakın istasyonları tek rozette topla (açgözlü kümeleme; rozetler üst üste binmez)
@@ -1906,7 +1919,7 @@ const ozelOlabilir = s => { const n = fold(s.name || ""); return OZEL_RE.test(n)
    başlatılabilen uygulamalar durur: ağın uygulaması + ortak kullanım (roaming) ortakları (ör. ZES ↔ WAT ↔ Beefull) ve
    çok ağlı uygulamalar (Rotawatt, Voltla). Eşleşme haritadaki marka (s.brand) üzerinden; "akim" (ör. Eşarj → Trugo yalnızca DC)
    ve "ad_desen" (ör. Shell Recharge → Trugo'nun Shell istasyonları) kısıtları uygulanır.
-   Şimdilik yalnızca istasyon detayında kullanılır; liste, harita rozetleri ve sıralama bundan etkilenmez. */
+   İstasyon detayında ("Hangi uygulamayla?") ve harita filtresinde ("Uygulama") kullanılır; fiyat, rozet ve sıralama bundan etkilenmez. */
 let UYGV = { uygulamalar: [] };
 let DUYG = ssGet("wk.duyg") || "";   // detayda seçilen uygulama: oturum boyunca hatırlanır, geçerli olduğu istasyonda seçili gelir
 // Aynı ağ mı? Ad aynı ya da harf/boşluk farkı (tarKey) ya da tarifeler.json'da aynı kayıt ("adlar" yazımları)
@@ -1928,6 +1941,21 @@ function uygulamalarOf(s) {
     out.push({ app: a, tip: a.tur === "coklu" ? "coklu" : "ortak", akim, ok: !akim || (akim === "dc" ? !!s.hasDc : !!s.hasAc) });
   }
   return out;
+}
+// Harita filtresi "Uygulama": istasyonda bu uygulamayla şarj başlatılabiliyor mu (ağın kendi uygulaması, ortak kullanım ya da çok ağlı).
+// Sonuç istasyonda saklanır (uygulamalar.json yeniden yüklenirse yenilenir).
+const uygIdleri = s => { if (s._uyV !== UYGV) { s._uyV = UYGV; s._uy = new Set(uygulamalarOf(s).filter(x => x.ok && !x.app.ortuk).map(x => x.app.id)); } return s._uy; };
+const istUyg = (s, id) => uygIdleri(s).has(id);
+const uygBul = id => ((UYGV && UYGV.uygulamalar) || []).find(a => a.id === id) || null;
+// Uygulama başına istasyon sayısı (diğer filtreler hariç; tanımsızlar "Tanımsızları da göster" seçimine göre). M.all değişince yeniden.
+const USAY = { all: null, tum: null, v: null, m: null };
+function uygSay() {
+  if (USAY.all !== M.all || USAY.tum !== M.f.tum || USAY.v !== UYGV) {
+    const m = new Map();
+    for (const s of M.all) if (M.f.tum || s.known) for (const id of uygIdleri(s)) m.set(id, (m.get(id) || 0) + 1);
+    Object.assign(USAY, { all: M.all, tum: M.f.tum, v: UYGV, m });
+  }
+  return USAY.m;
 }
 // Varsayılan: bu oturumda seçilen uygulama (burada geçerliyse) → Profilim'deki uygulamalar / şarj ağlarından burada geçerli ilki → ağın kendi uygulaması
 function uygSecimi(list) {
@@ -2244,14 +2272,6 @@ function kampNot(c) {
   if (seciliKamp(c) && !kampListeli(c)) n.push("Resmi istasyon listesi yok · ağın tüm istasyonları");
   return n;
 }
-// Kampanya başına istasyon sayısı (diğer filtreler hariç; tanımsız istasyonlar "Tanımsızları da göster" seçimine göre). M.all değişince yeniden.
-const KSAY = { all: null, tum: null, m: new Map() };
-function kampSay(c) {
-  if (KSAY.all !== M.all || KSAY.tum !== M.f.tum) { KSAY.all = M.all; KSAY.tum = M.f.tum; KSAY.m = new Map(); }
-  if (!KSAY.m.has(c)) { let n = 0; for (const s of M.all) if ((M.f.tum || s.known) && kampSt(c, s)) n++; KSAY.m.set(c, n); }
-  return KSAY.m.get(c);
-}
-const TIPAD = { uygulama: "Uygulama", ag: "Şarj ağı", banka: "Banka kartı" };
 const fmtAdet = n => n.toLocaleString("tr-TR");
 // Kampanyayı seç / kaldır (filtre penceresi, bağlantı). odakla: sonuç haritadaki alanda yoksa en yakınlara / tümüne yaklaş.
 function kampUygula(id, odakla = true) {
@@ -2277,7 +2297,7 @@ function kampHaritada(id) {
 // Süzülmüş istasyonlar haritadaki alanda yoksa (ya da 3'ten azsa): hepsinin sınırına; çok geniş bir alana yayılıyorsa konuma (yoksa harita
 // ortasına) en yakın istasyonlara yaklaşılır. zorla: alanda sonuç olsa da yaklaş (arama "Haritada göster", "En yakın istasyonlara git")
 function odak(zorla) {
-  if (!M.map || !(M.f.kamp || M.f.q) || !M.filtered || !M.filtered.length || (!zorla && M.view.length >= Math.min(3, M.filtered.length))) return;
+  if (!M.map || !(M.f.kamp || M.f.q || M.f.uyg) || !M.filtered || !M.filtered.length || (!zorla && M.view.length >= Math.min(3, M.filtered.length))) return;
   const ref = M.me || M.center, wide = matchMedia("(min-width:900px)").matches;
   const box = l => l.reduce((b, s) => [Math.min(b[0], s.lat), Math.min(b[1], s.lon), Math.max(b[2], s.lat), Math.max(b[3], s.lon)], [90, 180, -90, -180]);
   let pts = M.filtered, b = box(pts);
@@ -2299,24 +2319,31 @@ function renderFchips() {
     out.push(`<div class="fchip"><button class="fl" data-fo="1" aria-label="Kampanya filtresi: ${esc(kampAd(c))}, ${M.filtered.length} istasyon${n ? ". " + esc(n) : ""}. Filtreleri aç">${IC[c.tip]}<span class="ft"><b>${esc(kampAd(c))}</b> · ${fmtAdet(M.filtered.length)} istasyon${n ? `<span>${esc(n)}</span>` : ""}</span></button>`
       + `<button class="fx" data-fx="kamp" aria-label="Kampanya filtresini kaldır" title="Kaldır">${IC.x}</button></div>`);
   }
+  const ua = M.f.uyg && uygBul(M.f.uyg);
+  if (ua) out.push(`<div class="fchip"><button class="fl" data-fo="1" aria-label="Uygulama filtresi: ${esc(ua.ad)}, ${M.filtered.length} istasyon. Filtreleri aç">${IC.uygulama}<span class="ft"><b>${esc(ua.ad)}</b> ile şarj · ${fmtAdet(M.filtered.length)} istasyon</span></button>`
+    + `<button class="fx" data-fx="uyg" aria-label="Uygulama filtresini kaldır" title="Kaldır">${IC.x}</button></div>`);
   if (M.f.q) out.push(`<div class="fchip"><button class="fl" data-fq="1" aria-label="Arama: ${esc(M.f.q)}, ${M.filtered.length} istasyon. Aramayı düzenle">${svgUse("s-ara")}<span class="ft"><b>“${esc(M.f.q)}”</b> · ${fmtAdet(M.filtered.length)} istasyon</span></button>`
     + `<button class="fx" data-fx="q" aria-label="Aramayı kaldır" title="Kaldır">${IC.x}</button></div>`);
   $("fchips").innerHTML = out.join("");
   $("msearch").classList.toggle("on", !!M.f.q);
 }
-const mFiltreVar = () => !!(M.f.akim.size || M.f.kag || M.f.kbk || M.f.bana || M.f.tum || M.f.brands.size || M.f.kamp || M.f.q);
-// "Filtreleri temizle" / "Temizle": akım, hızlı filtreler, marka, tanımsızlar, kampanya ve arama birlikte sıfırlanır
+const mFiltreSay = () => M.f.akim.size + M.f.kag + M.f.kbk + M.f.bana + M.f.tum + !!M.f.uyg + M.f.brands.size + !!M.f.kamp;
+const mFiltreVar = () => !!(mFiltreSay() || M.f.q);
+// "Filtreleri temizle" / "Temizle": akım, hızlı filtreler, uygulama, marka, tanımsızlar, kampanya ve arama birlikte sıfırlanır
 function mTemizle() {
-  M.f = { akim: new Set(), kag: false, kbk: false, bana: false, tum: false, brands: new Set(), kamp: "", q: "" };
+  M.f = { akim: new Set(), kag: false, kbk: false, bana: false, tum: false, brands: new Set(), uyg: "", kamp: "", q: "" };
   $("mq").value = ""; $("mqx").hidden = true; aramaKapat();
   M.shown = PAGE; renderMap(); writeHash();
 }
 
-/* ---------- Harita: isimle arama ----------
-   Yazdıkça (150 ms gecikmeli) istasyon adı, şarj ağı, işletmeci ve adres (il / ilçe dahil) içinde aranır; Türkçe harf ve aksan duyarsız (fold),
-   her sözcük geçmeli. Arama diğer filtrelerin (kampanya, akım, marka…) bıraktığı istasyonlarda yapılır. Sonuçlar arama alanının altındaki
-   listede (en çok 40; adında geçenler önce, sonra yakınlık); harita yazarken değişmez. Sonuca dokunmak oraya gider ve detayı açar.
-   "Haritada göster" (ya da Enter) aramayı harita filtresine çevirir: harita ve alttaki liste yalnızca eşleşenleri gösterir, üstte çip çıkar. */
+/* ---------- Harita: arama (yerler + istasyonlar) ----------
+   Tek kutu, iki tür sonuç. Türkçe harf ve aksan duyarsız (fold: "cankaya" → Çankaya).
+   - Yerler: il ve ilçeler (site/yerler.json: OpenStreetMap sınırları, tools/yerler_uret.py; ilk odakta yüklenir). Adın bir sözcüğü yazılanla
+     başlamalı (öteki sözcükler il adında da olabilir: "istanbul kadıköy"). Seçilince harita bölgenin sınırına sığar.
+   - İstasyonlar: istasyon adı, şarj ağı, işletmeci ve adres (il / ilçe dahil) içinde; her sözcük geçmeli. Arama diğer filtrelerin (kampanya,
+     akım, uygulama, marka…) bıraktığı istasyonlarda yapılır. Adında geçenler önce, sonra yakınlık; en çok 20 satır.
+   "Tümünü haritada göster" (ya da Enter) aramayı harita filtresine çevirir: harita ve alttaki liste yalnızca eşleşenleri gösterir, üstte çip çıkar.
+   Enter, yazılan bir il / ilçenin adıyla tam eşleşiyorsa oraya gider. */
 const hay = s => s.hay || (s.hay = fold([pretty(s.brand), s.name, s.addr, s.tags && s.tags.operator, s.tesis].filter(Boolean).join(" · ")));
 const qWords = q => fold(q).split(/\s+/).filter(Boolean);
 const qOk = (s, w) => { const h = hay(s); return w.every(x => h.includes(x)); };
@@ -2326,32 +2353,84 @@ function isaretle(txt, w) {
   if (f.length === txt.length) for (const x of w) { const i = f.indexOf(x); if (i >= 0) return esc(txt.slice(0, i)) + "<mark>" + esc(txt.slice(i, i + x.length)) + "</mark>" + esc(txt.slice(i + x.length)); }
   return esc(txt);
 }
+const YER = { l: null, p: null, son: [] };
+function yerYukle() {
+  if (YER.l || YER.p) return;
+  YER.p = fetch("yerler.json").then(r => r.ok ? r.json() : Promise.reject(r.status)).then(j => {
+    const sz = x => fold(x).split(/[\s-]+/).filter(Boolean);
+    const l = j.iller.map(r => ({ ad: r[0], il: "", b: r.slice(3, 7) }))
+      .concat(j.ilceler.map(r => ({ ad: r[0], il: j.iller[r[1]][0], b: r.slice(4, 8) })));
+    l.forEach(y => { y.f = sz(y.ad); y.fi = sz(y.il); y.tam = fold(y.ad); });
+    YER.l = l;
+    if (!$("mqr").hidden || document.activeElement === $("mq")) aramaSonuc();
+  }).catch(() => { YER.p = null; });   // alınamazsa yalnızca istasyonlar aranır; sonraki odakta yeniden denenir
+}
+// Sınır kutusundaki istasyon sayısı: yalnızca sıralama için (ör. "kadı" → önce Kadıköy)
+const yerSay = y => y.n ?? (y.n = M.all.reduce((n, s) => n + (s.lat >= y.b[0] && s.lat <= y.b[2] && s.lon >= y.b[1] && s.lon <= y.b[3]), 0));
+function yerBul(w) {
+  if (!YER.l || !w.length || w.join("").length < 2) return [];
+  const bas = (l, x) => l.some(t => t.startsWith(x)), q = w.join(" "), out = [];
+  for (const y of YER.l) {
+    if (!w.some(x => bas(y.f, x)) || !w.every(x => bas(y.f, x) || bas(y.fi, x))) continue;
+    out.push([y.tam === q ? 0 : 1, y.il ? 1 : 0, y]);
+  }
+  return out.sort((a, b) => a[0] - b[0] || (a[0] ? yerSay(b[2]) - yerSay(a[2]) : a[1] - b[1])).slice(0, 5).map(x => x[2]);
+}
+function yerSec(i) {
+  const y = YER.son[i]; if (!y || !M.map) return;
+  an("filtre", "yer ara");
+  $("mq").value = ""; $("mqx").hidden = true; $("mq").blur(); aramaKapat(); $("v-harita").classList.remove("srch");
+  M.sel = null; M.group = null; M.shown = PAGE;
+  if (M.f.q) M.f.q = "";
+  const wide = matchMedia("(min-width:900px)").matches, sheet = wide ? 0 : Math.min($("sheet").offsetHeight, $("map").clientHeight * .5);
+  M.map.fitBounds([[y.b[0], y.b[1]], [y.b[2], y.b[3]]], { paddingTopLeft: [wide ? 434 : 16, 72], paddingBottomRight: [16, sheet + 16], maxZoom: 15 });
+  refresh();
+}
+// Kısa adres: "… Anamur / MERSİN" → "Anamur, Mersin"; OSM adresinde son iki parça
+const basHarf = x => x.toLocaleLowerCase("tr").replace(/(^|[\s(.-])(\p{L})/gu, (m, a, c) => a + c.toLocaleUpperCase("tr"));
+// (Adresi olmayan istasyona ilçe, yerler.json'daki sınır kutularından tahmin edilmez: denemede ~%17 yanlış ilçe çıktı.)
+function kisaAdres(s) {
+  const a = String(s.addr || "").trim(); if (!a) return "";
+  const m = /([^\s/,]+)\s*\/\s*([^/,]+?)\s*$/.exec(a);
+  return m ? basHarf(m[1]) + ", " + basHarf(m[2]) : a.split(/\s*,\s*/).filter(Boolean).slice(-2).join(", ");
+}
 function aramaSonuc() {
   const el = $("mqr"), q = $("mq").value.trim(), w = qWords(q);
   if (!w.length || !M.pre) { el.hidden = true; $("mq").setAttribute("aria-expanded", "false"); return; }
-  const ref = M.me || M.center, MAX = 40;
+  const ref = M.me || M.center, MAX = 20;
+  const yerler = YER.son = yerBul(w);
   const bul = l => l.filter(s => qOk(s, w));
   const hits = bul(M.pre);
   const adda = s => { const a = fold([pretty(s.brand), s.name].join(" ")); return w.every(x => a.includes(x)) ? 0 : 1; };
   const sirali = hits.map(s => [adda(s), ref ? dist(ref, s) : 0, s]).sort((a, b) => a[0] - b[0] || a[1] - b[1]);
-  let html;
+  let html = "";
+  if (yerler.length) html += `<div class="mqs">Yerler</div>` + yerler.map((y, i) =>
+    `<button class="mqi yer" data-yer="${i}" aria-label="${esc(y.il ? `${y.ad}, ${y.il}` : `${y.ad} ili`)}: haritada bu bölgeye git"><span class="yi" aria-hidden="true">${svgUse("c-pin")}</span>`
+    + `<span class="mt"><span class="t1">${isaretle(y.ad, w)}${y.il ? `<span class="t2" style="display:inline">, ${esc(y.il)}</span>` : ""}</span><span class="t2">${y.il ? "İlçe" : "İl"}</span></span></button>`).join("");
   if (hits.length) {
-    html = `<div class="mqh"><span class="n" role="status"><b>${fmtAdet(hits.length)}</b> sonuç</span><button class="btn primary" data-mqa="1">${svgUse("c-harita")}Haritada göster</button></div>`
-      + sirali.slice(0, MAX).map(([, d, s]) => {
-        const t1 = pretty(s.brand) || s.name, t2 = [s.named && s.name !== s.brand ? s.name : "", s.addr].filter(Boolean).join(" · ");
-        return `<button class="mqi" data-msr="${esc(s.id)}">${brandStyle(s) ? `<span class="bdot" style="--bg-b:${brandStyle(s)[0]}"></span>` : ""}<span class="mt"><span class="t1">${isaretle(t1, w)}</span>${t2 ? `<span class="t2">${isaretle(t2, w)}</span>` : ""}</span>${ref ? `<span class="ds">${fmtKm(d)}</span>` : ""}</button>`;
+    html += `<div class="mqs" role="status">İstasyonlar · ${fmtAdet(hits.length)}</div>`
+      + sirali.slice(0, MAX).map(([adsiz, d, s]) => {
+        prep(s);
+        // adında eşleşmediyse (adreste bulunduysa) adresin tamamı, yoksa kısa adres (ilçe, il)
+        const ag = pretty(s.brand) || "", ad = s.named && s.name ? s.name : ag || s.name, adr = adsiz && s.addr ? s.addr : kisaAdres(s), tb = typeBadge(s), bs = brandStyle(s);
+        const fiyat = s.final !== null && s.final !== undefined ? `<span class="pr${s.net ? " deal" : ""}">${fmtNum(s.final)} TL/kWh</span>` : "";
+        return `<button class="mqi stn2" data-msr="${esc(s.id)}"><span class="mt"><span class="t1">${isaretle(ad, w)}</span>`
+          + `<span class="t3">${ag && fold(ag) !== fold(ad) ? `<span class="ag">${bs ? `<span class="bdot" style="--bg-b:${bs[0]}"></span>` : ""}${isaretle(ag, w)}</span>` : ""}`
+          + `${tb ? `<span class="pill ${s.hasDc ? "dc" : "ac"}">${tb}${s.kw ? " · " + Math.round(s.kw) + " kW" : ""}</span>` : ""}${fiyat}</span>`
+          + `${adr ? `<span class="t2">${isaretle(adr, w)}</span>` : ""}</span>${ref ? `<span class="ds">${fmtKm(d)}</span>` : ""}</button>`;
       }).join("")
-      + (hits.length > MAX ? `<div class="mqmore">+${fmtAdet(hits.length - MAX)} sonuç daha · hepsi için «Haritada göster»</div>` : "");
+      + `<button class="mqall" data-mqa="1">${svgUse("c-harita")}${hits.length > MAX ? `Tümünü haritada göster (${fmtAdet(hits.length)})` : "Haritada göster"}</button>`;
   } else {
     // Filtreler yüzünden gizlenen eşleşmeler varsa söylenir
     const gizli = mFiltreVar() ? bul(M.all.filter(s => s.known || M.f.tum)).length : 0;
-    html = `<div class="mqe" role="status">“${esc(q)}” için istasyon bulunamadı.${gizli ? `<br>Filtreler yüzünden ${fmtAdet(gizli)} sonuç gizli.<br><button class="btn" data-mclear="1">Filtreleri temizle</button>` : ""}</div>`;
+    html += `<div class="mqe" role="status">“${esc(q)}” için istasyon bulunamadı.${gizli ? `<br>Filtreler yüzünden ${fmtAdet(gizli)} sonuç gizli.<br><button class="btn" data-mclear="1">Filtreleri temizle</button>` : ""}</div>`;
   }
   el.innerHTML = html; el.hidden = false; $("mq").setAttribute("aria-expanded", "true");
 }
 function aramaKapat() { $("mqr").hidden = true; $("mq").setAttribute("aria-expanded", "false"); if (document.activeElement !== $("mq")) $("v-harita").classList.remove("srch"); }
 function aramaUygula() {
-  const q = $("mq").value.trim();
+  const q = $("mq").value.trim(), w = qWords(q), y = yerBul(w);
+  if (y.length && y[0].tam === w.join(" ")) { YER.son = y; return yerSec(0); }   // il / ilçe adı yazılıp Enter: oraya git
   M.f.q = q; if (q) an("filtre", "arama haritada");
   $("mq").blur(); aramaKapat();
   M.sel = null; M.group = null; M.shown = PAGE; refresh();
@@ -2364,25 +2443,53 @@ function aramaSec(id) {
   $("mq").blur(); aramaKapat();
   M.group = null; selectStation(id, true);
 }
+/* Harita filtreleri penceresi: tüm filtreler tek yerde. Akım türü ve "Göster" ana ekrandaki düğmelerle (#seg, #qf) aynı durumu
+   kullanır (aynı data-akim / data-mf); birinde seçilen ötekinde de seçili görünür. Kampanya bağlantıyla (#kamp=…) ya da kampanya
+   sayfasındaki "Haritada gör" ile gelir; burada yalnızca seçiliyse görünür ve kaldırılabilir. */
+// Filtre penceresinde marka araması: yazılana göre marka çiplerini süzer (seçimler korunur; seçili marka her zaman görünür).
+function markaSuz() {
+  const c = $("mfs-mc"); if (!c) return;
+  const q = fold((M.mbq || "").trim()); let n = 0;
+  for (const b of c.querySelectorAll("[data-mb]")) { const g = !q || fold(b.dataset.mb).includes(q) || b.getAttribute("aria-pressed") === "true"; b.hidden = !g; g && n++; }
+  $("mfs-mn").hidden = !q || n > 0;
+}
 function renderMapSheet() {
-  const chip = (attr, label, on, cls = "") => `<button class="chip ${cls}" ${attr} aria-pressed="${on}">${esc(label)}</button>`;
-  const br = M.brands.map(([b, n]) => chip(`data-mb="${esc(b)}"`, `${b} · ${n}`, M.f.brands.has(b))).join("");
-  // Kampanya: tek seçim. Uygulama → şarj ağı → banka kartı; aynı türde kuruma göre. İlk 6 ve seçili olan görünür, gerisi "Tüm kampanyalar" ile.
-  const ord = { uygulama: 0, ag: 1, banka: 2 }, sel = kampSecili();
-  const kl = [...C].sort((a, b) => ord[a.tip] - ord[b.tip] || tr(a.kurum, b.kurum));
-  const ILK = 6, gor = M.kAc ? kl : kl.filter((c, i) => i < ILK || c === sel);
-  const row = c => {
-    const n = c.st.includes(ALL) ? "Tüm istasyonlar" : `${fmtAdet(kampSay(c))} istasyon`, g = gunTxt(c);
-    return `<button class="kr" data-mk="${esc(c.kampId)}" aria-pressed="${c === sel}"><span class="ico ${c.tip}" aria-hidden="true">${IC[c.tip]}</span>`
-      + `<span class="kt"><span class="k1">${esc(kampAd(c))}</span><span class="k2">${esc(TIPAD[c.tip])}${g ? ` · ${esc(g)}` : ""}${c.tip === "ag" && c.kisa ? ` · ${esc(c.kisa)}` : ""} · ${n}${c.kontrol ? ` <span class="bdg wait">Doğrulanıyor</span>` : ""}</span></span><span class="rd" aria-hidden="true"></span></button>`;
-  };
-  $("mfs-b").innerHTML = `<h3 id="mfs-kh">Kampanya</h3><div class="kl" role="group" aria-labelledby="mfs-kh">${gor.map(row).join("")}</div>`
-    + (kl.length > gor.length ? `<button class="btn" data-mkac="1" aria-expanded="false">Tüm kampanyalar (${kl.length})</button>` : "")
-    + (sel && sel.st.includes(ALL) ? `<p class="note">Bu kampanya tüm istasyonlarda geçerli; harita kampanyaya göre daralmaz.</p>` : sel ? `<p class="note">Kampanyanın geçerli olduğu istasyonlar her gün gösterilir; indirimli fiyat yalnızca geçerli olduğu gün ve doğrulanmışsa uygulanır.</p>` : "")
-    + (br ? `<h3>Marka</h3><div class="chips">${br}</div>` : "")
+  const chip = (attr, label, on, ic = "", n = null, t = "") => `<button class="chip" ${attr} aria-pressed="${!!on}"${t ? ` title="${esc(t)}"` : ""}>${ic}${esc(label)}${n !== null ? ` <small>${fmtAdet(n)}</small>` : ""}</button>`;
+  const sel = kampSecili();
+  const kamp = sel ? `<h3>Kampanya</h3><div class="chips">${chip(`data-mk="${esc(sel.kampId)}" aria-label="Kampanya filtresi: ${esc(kampAd(sel))}. Kaldır"`, kampAd(sel), true, "", null)}</div>`
+    + `<p class="note">${sel.st.includes(ALL) ? "Bu kampanya tüm istasyonlarda geçerli; harita kampanyaya göre daralmaz." : "Kampanyanın geçerli olduğu istasyonlar gösteriliyor. Kaldırmak için dokun."}</p>` : "";
+  const ak = M.f.akim;
+  const akim = chip('data-akim="ac"', "AC", ak.has("ac"), svgUse("s-ac"), null, "AC: normal şarj")
+    + chip('data-akim="dc"', "DC", ak.has("dc"), svgUse("s-dc"), null, "DC: hızlı şarj (120 kW altı)")
+    + chip('data-akim="hpc"', "DC 120 kW+", ak.has("hpc"), svgUse("s-hpc"), null, "Çok hızlı DC: 120 kW ve üzeri");
+  const goster = chip('data-mf="bana"', "Bana uyan", M.f.bana, svgUse("s-yildiz"), null, "Profilindeki kart ve uygulamalara uyan istasyonlar")
+    + chip('data-mf="kag"', "Ağ indirimi", M.f.kag, svgUse("s-yuzde"), null, "Şarj ağının kendi indirimi olan istasyonlar")
+    + chip('data-mf="kbk"', "Kart kampanyası", M.f.kbk, svgUse("s-kart"), null, "Banka kartı kampanyası olan istasyonlar");
+  // Uygulama: önce çok ağlı uygulamalar (Rotawatt, Voltla), sonra ortak kullanımlı ağ uygulamaları; istasyon sayısına göre. Hiç istasyonu olmayan
+  // yazılmaz. Aynı ağlarda geçen uygulamalar (ZES / WAT Mobilite / Beefull: karşılıklı ortak kullanım) tek çipte birleşir.
+  const us = uygSay(), grp = new Map();
+  for (const a of (UYGV && UYGV.uygulamalar) || []) {
+    if (!us.get(a.id) && a.id !== M.f.uyg) continue;
+    const k = (a.aglar || []).map(x => [x.ag, x.akim || "", x.ad_desen || ""].join("~")).sort().join("|") || a.id;
+    grp.has(k) ? grp.get(k).push(a) : grp.set(k, [a]);
+  }
+  const ul = [...grp.values()].sort((a, b) => (b[0].tur === "coklu") - (a[0].tur === "coklu") || (us.get(b[0].id) || 0) - (us.get(a[0].id) || 0));
+  const uyg = ul.map(g => chip(`data-muy="${esc(g[0].id)}"`, g.map(a => a.ad).join(" / "), g.some(a => a.id === M.f.uyg), "", us.get(g[0].id) || 0,
+    (g[0].aglar || []).map(x => x.ag).filter((x, i, l) => l.indexOf(x) === i).join(", "))).join("");
+  const br = M.brands.map(([b, n]) => chip(`data-mb="${esc(b)}"`, b, M.f.brands.has(b), "", n)).join("");
+  $("mfs-b").innerHTML = kamp
+    + `<h3 id="mfs-ah">Akım türü</h3><div class="chips" role="group" aria-labelledby="mfs-ah">${akim}</div>`
+    + `<p class="note">Haritanın üstündeki düğmelerle aynı. Hiçbiri seçili değilse hepsi görünür.</p>`
+    + `<h3 id="mfs-gh">Göster</h3><div class="chips" role="group" aria-labelledby="mfs-gh">${goster}</div>`
+    + (uyg ? `<h3 id="mfs-uh">Uygulama <small>Hangi uygulamayla şarj edebilirim?</small></h3><div class="chips" role="group" aria-labelledby="mfs-uh">${uyg}</div>`
+      + `<p class="note">Seçtiğin uygulamayla şarj başlatılabilen istasyonlar kalır. Rotawatt ve Voltla birçok ağda geçer; ağ uygulamaları kendi ağında ve ortak kullanım anlaşması olan ağlarda.</p>` : "")
+    + (br ? `<h3 id="mfs-mh">Marka <small>haritadaki alanda</small></h3>`
+      + `<input class="field mbq" id="mfs-mq" type="search" placeholder="Marka ara (ör. ZES, Eşarj)" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Marka ara" value="${esc(M.mbq || "")}">`
+      + `<div class="chips" id="mfs-mc" role="group" aria-labelledby="mfs-mh">${br}</div><p class="note" id="mfs-mn" hidden>Haritadaki alanda bu adla marka yok. Haritayı uzaklaştırıp tekrar dene.</p>` : "")
     + `<label class="chk"><input type="checkbox" id="m-tum" ${M.f.tum ? "checked" : ""}><span>Tanımsız istasyonları da göster</span></label>`
     + `<p class="note">Markası bilinmeyen ya da tanınmayan istasyonlar varsayılan olarak gizlenir.</p>`;
-  $("mfs-ok").textContent = M.f.kamp || M.f.q ? `${fmtAdet(M.filtered.length)} istasyonu göster` : `${M.view.length} istasyonu göster`;
+  markaSuz();
+  $("mfs-ok").textContent = M.f.kamp || M.f.q || M.f.uyg ? `${fmtAdet(M.filtered.length)} istasyonu göster` : `${fmtAdet(M.view.length)} istasyonu göster`;
 }
 
 /* ---------- Olaylar ---------- */
@@ -2392,15 +2499,16 @@ function bindEvents() {
   // Harita araması: yazdıkça sonuç listesi; Enter = haritada göster; ↓ ilk sonuca; Esc kapatır
   let mt;
   const mq = $("mq");
+  document.addEventListener("input", e => { if (e.target.id === "mfs-mq") { M.mbq = e.target.value; markaSuz(); } });
   mq.addEventListener("input", () => { $("mqx").hidden = !mq.value; clearTimeout(mt); mt = setTimeout(aramaSonuc, 150); });
-  mq.addEventListener("focus", () => { $("v-harita").classList.add("srch"); if (mq.value.trim()) aramaSonuc(); });
+  mq.addEventListener("focus", () => { $("v-harita").classList.add("srch"); yerYukle(); if (mq.value.trim()) aramaSonuc(); });
   mq.addEventListener("blur", () => setTimeout(() => { if ($("mqr").hidden && document.activeElement !== mq) $("v-harita").classList.remove("srch"); }, 0));
   mq.addEventListener("keydown", e => {
     if (e.key === "Enter") { e.preventDefault(); clearTimeout(mt); aramaUygula(); }
-    else if (e.key === "ArrowDown") { const f = $("mqr").querySelector(".mqi"); if (f) { e.preventDefault(); f.focus(); } }
+    else if (e.key === "ArrowDown") { const f = $("mqr").querySelector(".mqi,.mqall"); if (f) { e.preventDefault(); f.focus(); } }
   });
   $("mqr").addEventListener("keydown", e => {
-    const l = [...$("mqr").querySelectorAll(".mqi")], i = l.indexOf(document.activeElement);
+    const l = [...$("mqr").querySelectorAll(".mqi,.mqall")], i = l.indexOf(document.activeElement);
     if (i < 0 || (e.key !== "ArrowDown" && e.key !== "ArrowUp")) return;
     e.preventDefault(); (e.key === "ArrowDown" ? l[i + 1] : i ? l[i - 1] : mq)?.focus();
   });
@@ -2412,7 +2520,9 @@ function bindEvents() {
     if (d.tip !== undefined) openTip(b);
     else if (d.kmap) kampHaritada(d.kmap);
     else if (d.mk) { kampUygula(M.f.kamp === d.mk ? "" : d.mk); }
-    else if (d.mkac) { M.kAc = true; renderMapSheet(); const r = $("mfs-b").querySelectorAll(".kr")[6]; if (r) r.focus(); }
+    else if (d.muy !== undefined) { const id = M.f.uyg === d.muy ? "" : d.muy; if (id) an("filtre", "uygulama: " + id); M.f.uyg = id; M.shown = PAGE; M.sel = null; refresh(); if (id) odak(false); }
+    else if (d.fx === "uyg") { M.f.uyg = ""; M.shown = PAGE; refresh(); $("mf-open").focus(); }
+    else if (d.yer !== undefined) yerSec(+d.yer);
     else if (d.fx === "kamp") { kampUygula(""); $("mf-open").focus(); }
     else if (d.fx === "q") { M.f.q = ""; $("mq").value = ""; $("mqx").hidden = true; M.shown = PAGE; refresh(); $("mq").focus(); }
     else if (d.fo) openMapFilters(true);
@@ -2428,7 +2538,7 @@ function bindEvents() {
     else if (d.arac) { P.arac = P.arac === d.arac ? "" : d.arac; profileChanged(); }
     else if (d.pk) { const a = P[d.pk]; a.includes(d.v) ? a.splice(a.indexOf(d.v), 1) : a.push(d.v); profileChanged(); }
     else if (d.akim !== undefined) { an("filtre", "akım: " + d.akim); M.f.akim.has(d.akim) ? M.f.akim.delete(d.akim) : M.f.akim.add(d.akim); M.shown = PAGE; renderMap(); }
-    else if (d.mf === "bana" && profileEmpty() && !P.arac) show("profil");   // önce kart / uygulama seçilmeli
+    else if (d.mf === "bana" && profileEmpty() && !P.arac) { closeSheets(); show("profil"); }   // önce kart / uygulama seçilmeli
     else if (d.mf) { an("filtre", d.mf); M.f[d.mf] = !M.f[d.mf]; M.shown = PAGE; renderMap(); }
     else if (d.mb) { an("filtre", "marka"); const s = M.f.brands; s.has(d.mb) ? s.delete(d.mb) : s.add(d.mb); M.shown = PAGE; renderMap(); }
     else if (d.ms) { an("siralama", d.ms); M.sort = d.ms; if ($("v-harita").dataset.s === "peek") $("v-harita").dataset.s = "half"; refresh(); $("sh-b").scrollTop = 0; }
