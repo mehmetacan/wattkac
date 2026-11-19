@@ -511,7 +511,7 @@ const DURUM_AGLAR = {
   lumicle: ocpiAg("lumicle"),
   ecojet: ocpiAg("ecojet"),
   solinved: { anahtar: "https://wattkac.com/__durum/solinved", cek: solCek },
-  epdk: { anahtar: "https://wattkac.com/__durum/epdk", cek: epdkCek, kimlik: epdkKimlik },
+  // epdk: sarjtr.epdk.gov.tr Cloudflare Worker IP'lerini engelliyor (HTTP 418); durum tarayıcıdan çekiliyor (site/index.html → epdkTarayici)
 };
 async function durumCek(ag, getir) {
   const ac = new AbortController(), zam = setTimeout(() => ac.abort(), DURUM_SURE_MS);
