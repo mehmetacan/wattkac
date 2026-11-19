@@ -127,6 +127,7 @@ h1{font-size:clamp(22px,6vw,30px);line-height:1.15;font-weight:800;letter-spacin
 .quick{display:flex;gap:8px;overflow-x:auto;margin:12px -14px 0;padding:0 14px 4px;scrollbar-width:none}
 .quick::-webkit-scrollbar{display:none}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
+.field.mbq{margin:0 0 10px;padding:10px 12px;font-size:16px}
 .chip{flex:none;border:1px solid var(--line2);background:var(--ctl);color:var(--txt);border-radius:999px;padding:9px 14px;min-height:40px;font:600 14px var(--font)}
 .chip.setup{border-style:dashed}
 .chip svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;margin-right:6px}
@@ -2445,6 +2446,13 @@ function aramaSec(id) {
 /* Harita filtreleri penceresi: tüm filtreler tek yerde. Akım türü ve "Göster" ana ekrandaki düğmelerle (#seg, #qf) aynı durumu
    kullanır (aynı data-akim / data-mf); birinde seçilen ötekinde de seçili görünür. Kampanya bağlantıyla (#kamp=…) ya da kampanya
    sayfasındaki "Haritada gör" ile gelir; burada yalnızca seçiliyse görünür ve kaldırılabilir. */
+// Filtre penceresinde marka araması: yazılana göre marka çiplerini süzer (seçimler korunur; seçili marka her zaman görünür).
+function markaSuz() {
+  const c = $("mfs-mc"); if (!c) return;
+  const q = fold((M.mbq || "").trim()); let n = 0;
+  for (const b of c.querySelectorAll("[data-mb]")) { const g = !q || fold(b.dataset.mb).includes(q) || b.getAttribute("aria-pressed") === "true"; b.hidden = !g; g && n++; }
+  $("mfs-mn").hidden = !q || n > 0;
+}
 function renderMapSheet() {
   const chip = (attr, label, on, ic = "", n = null, t = "") => `<button class="chip" ${attr} aria-pressed="${!!on}"${t ? ` title="${esc(t)}"` : ""}>${ic}${esc(label)}${n !== null ? ` <small>${fmtAdet(n)}</small>` : ""}</button>`;
   const sel = kampSecili();
@@ -2475,9 +2483,12 @@ function renderMapSheet() {
     + `<h3 id="mfs-gh">Göster</h3><div class="chips" role="group" aria-labelledby="mfs-gh">${goster}</div>`
     + (uyg ? `<h3 id="mfs-uh">Uygulama <small>Hangi uygulamayla şarj edebilirim?</small></h3><div class="chips" role="group" aria-labelledby="mfs-uh">${uyg}</div>`
       + `<p class="note">Seçtiğin uygulamayla şarj başlatılabilen istasyonlar kalır. Rotawatt ve Voltla birçok ağda geçer; ağ uygulamaları kendi ağında ve ortak kullanım anlaşması olan ağlarda.</p>` : "")
-    + (br ? `<h3 id="mfs-mh">Marka <small>haritadaki alanda</small></h3><div class="chips" role="group" aria-labelledby="mfs-mh">${br}</div>` : "")
+    + (br ? `<h3 id="mfs-mh">Marka <small>haritadaki alanda</small></h3>`
+      + `<input class="field mbq" id="mfs-mq" type="search" placeholder="Marka ara (ör. ZES, Eşarj)" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Marka ara" value="${esc(M.mbq || "")}">`
+      + `<div class="chips" id="mfs-mc" role="group" aria-labelledby="mfs-mh">${br}</div><p class="note" id="mfs-mn" hidden>Haritadaki alanda bu adla marka yok. Haritayı uzaklaştırıp tekrar dene.</p>` : "")
     + `<label class="chk"><input type="checkbox" id="m-tum" ${M.f.tum ? "checked" : ""}><span>Tanımsız istasyonları da göster</span></label>`
     + `<p class="note">Markası bilinmeyen ya da tanınmayan istasyonlar varsayılan olarak gizlenir.</p>`;
+  markaSuz();
   $("mfs-ok").textContent = M.f.kamp || M.f.q || M.f.uyg ? `${fmtAdet(M.filtered.length)} istasyonu göster` : `${fmtAdet(M.view.length)} istasyonu göster`;
 }
 
@@ -2488,6 +2499,7 @@ function bindEvents() {
   // Harita araması: yazdıkça sonuç listesi; Enter = haritada göster; ↓ ilk sonuca; Esc kapatır
   let mt;
   const mq = $("mq");
+  document.addEventListener("input", e => { if (e.target.id === "mfs-mq") { M.mbq = e.target.value; markaSuz(); } });
   mq.addEventListener("input", () => { $("mqx").hidden = !mq.value; clearTimeout(mt); mt = setTimeout(aramaSonuc, 150); });
   mq.addEventListener("focus", () => { $("v-harita").classList.add("srch"); yerYukle(); if (mq.value.trim()) aramaSonuc(); });
   mq.addEventListener("blur", () => setTimeout(() => { if ($("mqr").hidden && document.activeElement !== mq) $("v-harita").classList.remove("srch"); }, 0));
