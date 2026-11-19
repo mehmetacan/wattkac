@@ -1589,7 +1589,7 @@ function fromRec(r) {
   const t = { brand: r.b, operator: op, network: r.w, name: r.n, opening_hours: r.h, website: r.u };
   const b = brandOf(t), nm = r.n || "";
   return { id: r.i, lat: r.a, lon: r.o, brand: b.name, known: b.known || (!!r.e && !!b.name), epdk: r.q === "e", named: !!nm, name: nm || b.name || "Şarj istasyonu",
-    kw: r.k || null, types: r.t ? [...r.t] : [], hasAc: !!r.ac || (!r.ac && !r.dc && typeFromName(r.n).ac), hasDc: !!r.dc || (!r.ac && !r.dc && typeFromName(r.n).dc), tags: t, addr: r.ad || "", approx: r.q === "i" || r.q === "m", official: r.q === "r", rl: !!r.rl, rk: !!r.rk, pr: r.pr || null, tesis: r.tesis || "", pasif: !!r.pasif || !!r.bakim, prn: r.prn || "", cih: Array.isArray(r.cih) && r.cih.length ? r.cih : null, sk: r.sk || [], tz: r.tz || [], camp: NETC[b.name] || [], count: r.c || null, d: 0, mode: null, price: null };
+    kw: r.k || null, types: r.t ? [...r.t] : [], hasAc: !!r.ac || (!r.ac && !r.dc && typeFromName(r.n).ac), hasDc: !!r.dc || (!r.ac && !r.dc && typeFromName(r.n).dc), tags: t, addr: r.ad || "", approx: r.q === "i" || r.q === "m", official: r.q === "r", rl: !!r.rl, rk: !!r.rk, pr: r.pr || null, tesis: r.tesis || "", pasif: !!r.pasif || !!r.bakim, prn: r.prn || "", cih: Array.isArray(r.cih) && r.cih.length ? r.cih : null, sk: r.sk || [], tz: r.tz || [], camp: NETC[b.name] || [], count: r.c || null, eid: r.eid || null, d: 0, mode: null, price: null };
 }
 async function overpass(lat, lon, rM) {
   const key = `wk.st2.${lat.toFixed(3)}.${lon.toFixed(3)}.${rM}`;
@@ -1694,6 +1694,7 @@ function mergeInto(m, s) {
   if (s.pr) m.pr = { ...s.pr, ...(m.pr || {}) };
   if (s.prn && !m.prn) m.prn = s.prn;
   if (s.cih) m.cih = [...new Set([...(m.cih || []), ...s.cih])];
+  if (s.eid && !m.eid) m.eid = s.eid;
   if (s.sk && s.sk.length) m.sk = [...new Set([...(m.sk || []), ...s.sk])];
   if (s.tz && s.tz.length) m.tz = [...new Set([...(m.tz || []), ...s.tz])];
   if (m.pasif && !s.pasif) m.pasif = false;
@@ -2193,7 +2194,7 @@ function renderDetail(s0) {
   $("sh-b").scrollTop = 0;
   if (durumAg(s0)) durumIste(s0, durumAg(s0));
 }
-/* Anlık durum (kimlikleri "cih" olan istasyonlar): detay açılınca BİR istek. Yoklama yok; detay yeniden çizilirse (liste yenilenmesi
+/* Anlık durum (kimlikleri "cih" olan istasyonlar veya EPDK "eid" olan istasyonlar): detay açılınca BİR istek. Yoklama yok; detay yeniden çizilirse (liste yenilenmesi
    vb.) aynı sonuç kullanılır. Detay kapanır ya da başka istasyon seçilirse bekleyen istek iptal edilir.
    - yol "sunucu" (BIG Station, Acropol Şarj, Solinved): /api/durum/<ağ>?c=… (Worker, 60 sn önbellekli).
    - yol "tarayici" (electroop altyapılı ağlar: Otopriz, Neva Şarj, EPSIS, Lumicle, Ecojet, EKA Enerji): ziyaretçinin tarayıcısı ağın
@@ -2210,14 +2211,16 @@ const DURUM_AG = {
   epsis: { birim: "ünitenin", yol: "tarayici", slug: "epsis" },
   lumicle: { birim: "ünitenin", yol: "tarayici", slug: "lumicle" },
   ecojet: { birim: "ünitenin", yol: "tarayici", slug: "ecojet" },
-  eka: { birim: "ünitenin", yol: "tarayici", slug: "ekaenerji", marka: "EKA Enerji" } };
-const durumAg = s => s.cih ? Object.keys(DURUM_AG).find(k => DURUM_AG[k].marka ? s.brand === DURUM_AG[k].marka : s.id.startsWith(k)) || null : null;
+  eka: { birim: "ünitenin", yol: "tarayici", slug: "ekaenerji", marka: "EKA Enerji" },
+  epdk: { birim: "istasyonun", kaynak: "Anlık durum EPDK Şarj@TR verisinden" } };
+const durumAg = s => { if (s.cih) { const k = Object.keys(DURUM_AG).find(k => k !== "epdk" && (DURUM_AG[k].marka ? s.brand === DURUM_AG[k].marka : s.id.startsWith(k))); if (k) return k; } return s.eid ? "epdk" : null; };
 const DUR = { id: null, ac: null, d: undefined };   // d: undefined = alınıyor, null = alınamadı, {cihazlar} = sonuç
 function durumBirak() { if (DUR.ac) DUR.ac.abort(); DUR.id = null; DUR.ac = null; DUR.d = undefined; }
 function durumHtml(ag) {
   const d = DUR.d;
   if (d === undefined) return `<p class="durum sn" id="durum" aria-live="polite">Durum alınıyor…</p>`;
   if (!d) return `<p class="durum sn" id="durum" aria-live="polite">Anlık durum alınamadı</p>`;
+  if (ag === "epdk") { const v = Object.values(d.cihazlar || {})[0]; if (!v) return `<p class="durum sn" id="durum" aria-live="polite">Anlık durum bilinmiyor</p>`; const mu = v === "bos"; return `<p class="durum" id="durum" aria-live="polite"><span class="nk${mu ? "" : " dolu"}" aria-hidden="true"></span>${mu ? "Müsait" : "Dolu / Şarjda"}</p>`; }
   let bos = 0, sarj = 0, bil = 0;   // değer "bos" | "sarj" | "bilinmiyor"
   for (const x of Object.values(d.cihazlar || {})) { if (x === "bos") bos++; else if (x === "sarj") sarj++; else bil++; }
   if (!bos && !sarj) return `<p class="durum sn" id="durum" aria-live="polite">Anlık durum bilinmiyor</p>`;
@@ -2258,7 +2261,7 @@ function durumIste(s, ag) {
   let to = 0;
   const is = a.yol === "tarayici"
     ? (to = setTimeout(() => ac.abort(), OCPI_SURE_MS), durumTarayici(s, ag, ac.signal))
-    : fetch(`/api/durum/${ag}?c=` + s.cih.slice(0, a.enCok || 20).map(encodeURIComponent).join(","), { signal: ac.signal })
+    : fetch(`/api/durum/${ag}?c=` + (ag === "epdk" ? encodeURIComponent(s.eid) : s.cih.slice(0, a.enCok || 20).map(encodeURIComponent).join(",")), { signal: ac.signal })
         .then(r => r.ok ? r.json() : null).then(j => j && j.ok && j.cihazlar ? j : null);
   is.catch(() => null).then(d => {
     clearTimeout(to);
