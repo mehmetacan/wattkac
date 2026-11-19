@@ -14,6 +14,7 @@
 //   GET  /api/durum/acropol?c=59,60   → Acropol Şarj soketlerinin anlık boş / şarjda durumu (aynı bölüm)
 //   GET  /api/durum/<ağ>?c=…          → neva, lumicle, ecojet (electroop OCPI) ve solinved için aynısı (aynı bölüm)
 //   GET  /api/durum/epsis?c=183,97    → EPSIS lokasyonlarının boş / dolu / toplam soket sayısı (aynı bölüm)
+//   GET  /api/durum/epdk?c=14574290   → EPDK Şarj@TR istasyonunun müsait / dolu durumu (aynı bölüm)
 const ANA = "wattkac.com";
 const YONLENDIR = new Set(["www.wattkac.com", "wattkac.xyz", "www.wattkac.xyz"]);
 const TURLER = new Set(["hata", "istasyon", "fiyat", "kampanya", "oneri", "diger"]);
@@ -357,6 +358,12 @@ const SOL_URL = "https://cpms-api.doldurapp.com/ChargePoint/GetChargePointLocati
 // aşılıyor; yalnızca /api/public/locations kullanılır.
 const EPSIS_URL = "https://www.epsis.net/api/public/locations?lang=tr";
 const EPSIS_TAZE_DK = 15;
+// EPDK Şarj@TR: sarjtr.epdk.gov.tr/sarjet/api/stations (tüm istasyonlar, ~2,4 MB, tek istek).
+// İstasyon id'leri 8 haneli (14xxxxxx), soket id'leri 6 haneli — text scan ile ayrılır.
+// available: istasyonun müsait olup olmadığı (true/false). Yalnızca id ve available okunur.
+const EPDK_SARJTR_URL = "https://sarjtr.epdk.gov.tr/sarjet/api/stations";
+const EPDK_SARJTR_BASLIK = { "user-agent": "Dart/3.4 (dart:io)", accept: "application/json" };
+const EPDK_KALIP = /"id":(14\d{6})\b|"available":(true|false)/g;
 
 // BIG Station: tek cihaz kaydı → durum (yalnızca status ve liveStatus okunur)
 function cihazDurumu(x) {
@@ -477,6 +484,22 @@ function epsisTaze(guncel, simdi = Date.now()) {
   const t = typeof guncel === "string" ? Date.parse(guncel) : NaN;
   return Number.isFinite(t) && simdi - t <= EPSIS_TAZE_DK * 60000 && t - simdi <= 120000;
 }
+// EPDK Şarj@TR: metin taranır (EPDK_KALIP); istasyon id (14xxxxxx) → available. Ham metin yalnızca bu blokta yaşar.
+const epdkKimlik = id => /^\d{8,}$/.test(id);
+async function epdkCek(getir, signal) {
+  const r = await getir(EPDK_SARJTR_URL, { headers: EPDK_SARJTR_BASLIK, signal });
+  if (!r.ok) throw new Error("durum " + r.status);
+  let t = await r.text();
+  const harita = Object.create(null), kalip = new RegExp(EPDK_KALIP);
+  let son = null;
+  for (let m; (m = kalip.exec(t));) {
+    if (m[1] !== undefined) son = m[1];
+    else if (son !== null) { harita[son] = m[2] === "true" ? "bos" : "sarj"; son = null; }
+  }
+  t = null;
+  if (!Object.keys(harita).length) throw new Error("durum boş");
+  return harita;
+}
 const ocpiAg = sirket => ({ anahtar: `https://wattkac.com/__durum/${sirket}`, cek: (g, s) => ocpiCek(sirket, g, s), kimlik: ocpiKimlik, enCok: 40 });
 // İzinli ağlar. kimlik: kimlik biçimi (yoksa 1–9 haneli sayı), enCok: istek başına en çok kimlik (yoksa DURUM_EN_COK)
 const DURUM_AGLAR = {
@@ -488,6 +511,7 @@ const DURUM_AGLAR = {
   lumicle: ocpiAg("lumicle"),
   ecojet: ocpiAg("ecojet"),
   solinved: { anahtar: "https://wattkac.com/__durum/solinved", cek: solCek },
+  epdk: { anahtar: "https://wattkac.com/__durum/epdk", cek: epdkCek, kimlik: epdkKimlik },
 };
 async function durumCek(ag, getir) {
   const ac = new AbortController(), zam = setTimeout(() => ac.abort(), DURUM_SURE_MS);
