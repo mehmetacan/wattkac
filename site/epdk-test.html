@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>EPDK erişim testi</title>
+<style>
+:root{--bg:#EEF2F6;--card:#F8FAFC;--txt:#0F172A;--mut:#475569;--ok:#047857;--err:#B91C1C}
+body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.5 system-ui,-apple-system,sans-serif;padding:16px}
+main{max-width:560px;margin:auto}
+h1{font-size:20px;margin:4px 0 12px}
+.c{background:var(--card);border:1px solid #D5DCE6;border-radius:14px;padding:14px 16px;margin:10px 0}
+.ok{color:var(--ok);font-weight:700}.err{color:var(--err);font-weight:700}
+pre{white-space:pre-wrap;word-break:break-all;font-size:12px;color:var(--mut);margin:6px 0 0}
+button{font:600 15px system-ui;border:0;border-radius:12px;background:#0F172A;color:#fff;padding:10px 16px}
+</style>
+</head>
+<body>
+<main>
+<h1>EPDK Şarj@TR erişim testi</h1>
+<p>Bu sayfa, EPDK'nın istasyon servisinin <b>senin tarayıcından</b> açılıp açılmadığını dener. Hiçbir veri kaydedilmez; sonuç yalnızca bu ekranda görünür.</p>
+<button id="b">Testi başlat</button>
+<div id="o"></div>
+</main>
+<script>
+const U = "https://sarjtr.epdk.gov.tr/sarjet/api/stations";
+const o = document.getElementById("o");
+const kart = (baslik, icerik, ok) => { const d = document.createElement("div"); d.className = "c"; d.innerHTML = `<div class="${ok ? "ok" : "err"}">${baslik}</div><pre></pre>`; d.querySelector("pre").textContent = icerik; o.append(d); };
+document.getElementById("b").onclick = async () => {
+  o.innerHTML = ""; const t0 = performance.now();
+  try {
+    const r = await fetch(U, { credentials: "omit", headers: { Accept: "application/json" } });
+    const metin = await r.text(), sure = Math.round(performance.now() - t0);
+    if (!r.ok) { kart(`Servis yanıt verdi ama hata döndü: HTTP ${r.status}`, metin.slice(0, 400), false); return; }
+    let d; try { d = JSON.parse(metin); } catch { kart("Yanıt JSON değil", metin.slice(0, 400), false); return; }
+    const l = Array.isArray(d) ? d : (d.stations || d.data || []);
+    const musait = l.filter(s => s.available === true).length, degil = l.filter(s => s.available === false).length;
+    kart("Erişim var ✓", `Süre: ${sure} ms · Boyut: ${(metin.length / 1048576).toFixed(2)} MB\nİstasyon: ${l.length} · müsait: ${musait} · müsait değil: ${degil} · alan yok: ${l.length - musait - degil}\nAlanlar: ${Object.keys(l[0] || {}).join(", ")}`, true);
+    kart("Örnek kayıtlar", JSON.stringify(l.slice(0, 3), null, 1).slice(0, 1500), true);
+  } catch (e) {
+    kart("Tarayıcı isteği engelledi (büyük olasılıkla CORS izni yok)", String(e && e.message || e), false);
+  }
+};
+</script>
+</body>
+</html>
