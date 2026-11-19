@@ -51,36 +51,38 @@ def base_css(W, H, story):
     pt, pb, px = (215, 250, 80) if story else (64, 60, 68)
     return f"""
 *{{box-sizing:border-box;margin:0;padding:0}}
-html,body{{width:{W}px;height:{H}px;background:#0A1020;font-family:'Inter',sans-serif;color:#F4F6FB;overflow:hidden}}
+html,body{{width:{W}px;height:{H}px;background:#EEF2F6;font-family:'Inter',sans-serif;color:#0F172A;overflow:hidden}}
 .wrap{{width:{W}px;height:{H}px;padding:{pt}px {px}px {pb}px;display:flex;flex-direction:column;
- background:radial-gradient(900px 700px at 90% -5%, rgba(255,212,0,.18), transparent 60%),
-            radial-gradient(800px 700px at -10% 105%, rgba(34,227,160,.13), transparent 60%),#0A1020}}
+ background:radial-gradient(900px 700px at 90% -5%, rgba(255,212,0,.24), transparent 60%),
+            radial-gradient(800px 700px at -10% 105%, rgba(56,160,190,.20), transparent 60%),#EEF2F6}}
 .brand{{display:flex;align-items:center;gap:12px;font-weight:800;font-size:40px;letter-spacing:-.5px}}
-.brand b{{color:#FFD400}}
-.tag{{margin-left:auto;font-size:24px;font-weight:600;color:#9FB0D0;border:2px solid #263353;border-radius:999px;padding:7px 20px}}
+.logo{{display:inline-flex;align-items:center;gap:10px;background:#0F172A;color:#FFFFFF;border-radius:14px;padding:3px 18px 3px 10px;box-shadow:0 8px 22px rgba(15,23,42,.16)}}
+.logo b{{color:#FFD400}}
+.hl{{display:inline-block;margin-top:14px;background:#FFD400;color:#0F172A;border-radius:16px;padding:4px 18px 10px;line-height:1}}
+.tag{{margin-left:auto;font-size:24px;font-weight:600;color:#475569;background:rgba(255,255,255,.6);border:2px solid #C7D0DC;border-radius:999px;padding:7px 20px}}
 .h1{{margin-top:{60 if story else 34}px;font-size:{86 if story else 76}px;font-weight:900;letter-spacing:-2px;line-height:1}}
-.h2{{margin-top:10px;font-size:30px;color:#22E3A0;font-weight:700}}
+.h2{{margin-top:10px;font-size:30px;color:#047857;font-weight:700}}
 .offers{{margin-top:{40 if story else 26}px;display:flex;flex-direction:column;gap:{22 if story else 16}px}}
-.of{{background:rgba(255,255,255,.045);border:2px solid #202C4A;border-radius:24px;padding:{26 if story else 20}px 28px}}
+.of{{background:#FBFCFD;border:2px solid #D5DCE6;border-left:8px solid #FFD400;border-radius:24px;padding:{26 if story else 20}px 28px;box-shadow:0 10px 28px rgba(15,23,42,.07)}}
 .ot{{display:flex;justify-content:space-between;align-items:baseline;gap:16px}}
-.big{{font-size:{54 if story else 46}px;font-weight:900;color:#FFD400;letter-spacing:-1px;line-height:1.05}}
-.son{{flex:none;font-size:22px;font-weight:800;color:#0A1020;background:#FFD400;border-radius:12px;padding:6px 14px}}
+.big{{font-size:{54 if story else 46}px;font-weight:900;color:#0F172A;letter-spacing:-1px;line-height:1.05}}
+.son{{flex:none;font-size:22px;font-weight:800;color:#0F172A;background:#FFD400;border-radius:12px;padding:6px 14px}}
 .det{{margin-top:8px;font-size:{30 if story else 27}px;font-weight:600;line-height:1.3}}
-.lbl{{margin-top:14px;font-size:20px;font-weight:700;color:#8394B8;letter-spacing:1px;text-transform:uppercase}}
+.lbl{{margin-top:14px;font-size:20px;font-weight:700;color:#475569;letter-spacing:1px;text-transform:uppercase}}
 .chips{{margin-top:8px;display:flex;flex-wrap:wrap;gap:8px}}
-.chip{{font-size:{24 if story else 22}px;font-weight:700;color:#DDE6F7;background:#16213D;border:2px solid #2A3961;border-radius:999px;padding:5px 15px}}
-.chip.all{{color:#0A1020;background:#22E3A0;border-color:#22E3A0}}
-.join{{margin-top:12px;font-size:{23 if story else 21}px;color:#9FB0D0;font-weight:500}}
-.join b{{color:#F4F6FB}}
+.chip{{font-size:{24 if story else 22}px;font-weight:700;color:#0F172A;background:#ECEFF4;border:2px solid #D5DCE6;border-radius:999px;padding:5px 15px}}
+.chip.all{{color:#0F172A;background:#22E3A0;border-color:#22E3A0}}
+.join{{margin-top:12px;font-size:{23 if story else 21}px;color:#475569;font-weight:500}}
+.join b{{color:#0F172A}}
 .spacer{{flex:1;min-height:20px}}
-.note{{font-size:24px;color:#C9D4EA;font-weight:600;line-height:1.35;background:rgba(34,227,160,.08);border:2px solid rgba(34,227,160,.35);border-radius:20px;padding:16px 22px}}
-.note b{{color:#22E3A0}}
-.foot{{margin-top:16px;font-size:21px;color:#8394B8;line-height:1.4}}
-.foot b{{color:#C9D4EA}}
-.empty{{font-size:30px;color:#9FB0D0;font-weight:600}}
-.row{{display:flex;justify-content:space-between;align-items:center;gap:16px;background:rgba(255,255,255,.045);border:2px solid #202C4A;border-radius:20px;padding:{18 if story else 15}px 24px}}
+.note{{font-size:24px;color:#334155;font-weight:600;line-height:1.35;background:#DDEFE6;border:2px solid #A8D5C0;border-radius:20px;padding:16px 22px}}
+.note b{{color:#047857}}
+.foot{{margin-top:16px;font-size:21px;color:#475569;line-height:1.4}}
+.foot b{{color:#1E293B}}
+.empty{{font-size:30px;color:#475569;font-weight:600}}
+.row{{display:flex;justify-content:space-between;align-items:center;gap:16px;background:#FBFCFD;border:2px solid #D5DCE6;border-radius:20px;padding:{18 if story else 15}px 24px;box-shadow:0 6px 18px rgba(15,23,42,.05)}}
 .rk{{font-size:{30 if story else 27}px;font-weight:800}}
-.rv{{font-size:{27 if story else 24}px;font-weight:700;color:#FFD400;text-align:right}}
+.rv{{font-size:{27 if story else 24}px;font-weight:800;color:#0F172A;background:#FFD400;border-radius:10px;padding:1px 12px;text-align:right}}
 """
 
 
@@ -94,7 +96,8 @@ def chips(st):
 
 
 def brand(tag):
-    return f'<div class="brand">{BOLT.format(s=46, c="#FFD400")}<span>Watt<b>Kaç</b></span><span class="tag">{esc(tag)}</span></div>'
+    return (f'<div class="brand"><span class="logo">{BOLT.format(s=42, c="#FFD400")}<span>Watt<b>Kaç</b></span></span>'
+            f'<span class="tag">{esc(tag)}</span></div>')
 
 
 GUNLER = ["pazartesi", "sali", "carsamba", "persembe", "cuma", "cumartesi", "pazar"]
@@ -146,7 +149,7 @@ def app_html(u, d, story):
                    + (f'<div class="gun">{esc(gt)}</div>' if gt else "")
                    + f'<div class="lbl">Geçerli şarj ağları ({len(o["st"])})</div><div class="chips">{chips(o["st"])}</div>'
                    + (f'<div class="join">Katılım: <b>{esc(o["join"])}</b></div>' if o.get("join") else "") + '</div>')
-    css = base_css(W, H, story) + (".gun{margin-top:12px;display:inline-block;font-size:26px;font-weight:900;color:#0A1020;background:#22E3A0;"
+    css = base_css(W, H, story) + (".of{border-left-color:#22E3A0}.gun{margin-top:12px;display:inline-block;font-size:26px;font-weight:900;color:#0F172A;background:#22E3A0;"
                                    "border-radius:12px;padding:6px 16px}")
     if not story:
         css += ".h1{margin-top:24px}.offers{margin-top:20px}.chip{font-size:19px;padding:3px 12px}.chips{gap:6px}"
@@ -200,22 +203,22 @@ def fiyat_hucre(p, cls):
 
 APP_CSS = """
 .top{display:flex;align-items:center;gap:12px;font-size:38px;font-weight:800}
-.top b{color:#FFD400}
-.pill{margin-left:auto;font-size:28px;font-weight:900;letter-spacing:3px;color:#0A1020;background:#22E3A0;border-radius:12px;padding:9px 20px}
-.app{font-size:44px;font-weight:800;color:#22E3A0;letter-spacing:-.5px}
-.gun{font-weight:900;letter-spacing:-7px;line-height:.9;text-transform:uppercase;color:#F4F6FB}
-.ind{align-self:flex-start;background:#FFD400;color:#0A1020;font-weight:900;letter-spacing:-2px;text-transform:uppercase;border-radius:24px}
-.vl{font-size:26px;font-weight:800;color:#8394B8;letter-spacing:2px;text-transform:uppercase}
+.pill{margin-left:auto;font-size:28px;font-weight:900;letter-spacing:3px;color:#0F172A;background:#22E3A0;border-radius:12px;padding:9px 20px}
+.app{font-size:44px;font-weight:800;color:#047857;letter-spacing:-.5px}
+.gun{font-weight:900;letter-spacing:-7px;line-height:.9;text-transform:uppercase;color:#0F172A}
+.ind{align-self:flex-start;background:#FFD400;color:#0F172A;box-shadow:0 10px 26px rgba(224,161,0,.25);font-weight:900;letter-spacing:-2px;text-transform:uppercase;border-radius:24px}
+.vl{font-size:26px;font-weight:800;color:#475569;letter-spacing:2px;text-transform:uppercase}
 .vl span{text-transform:none;letter-spacing:1px}
 .vit{display:flex;flex-direction:column}
-.vr{display:flex;align-items:center;gap:22px;background:rgba(255,255,255,.05);border:2px solid #24304F;border-radius:26px}
+.vr{display:flex;align-items:center;gap:22px;background:#FBFCFD;border:2px solid #D5DCE6;border-radius:26px;box-shadow:0 8px 22px rgba(15,23,42,.06)}
 .vr .n{flex:1;font-weight:800;letter-spacing:-.5px;white-space:nowrap}
-.vr .ak{font-weight:800;color:#8394B8}
-.vr s{color:#7D8BA8;font-weight:700;text-decoration-thickness:3px}
-.vr b{color:#FFD400;font-weight:900;letter-spacing:-2px}
-.vr.ilk{border-color:#FFD400;background:rgba(255,212,0,.09)}
+.vr .ak{font-weight:800;color:#475569}
+.vr s{color:#64748B;font-weight:700;text-decoration-thickness:3px}
+.vr b{color:#047857;font-weight:900;letter-spacing:-2px}
+.vr.ilk{border:3px solid #FFD400;background:#FFF6C7}
+.vr.ilk s{color:#475569}
 .alt{display:flex;justify-content:space-between;align-items:center;font-weight:800}
-.alt span:last-child{color:#9FB0D0;font-weight:700}
+.alt span:last-child{color:#475569;font-weight:700}
 """
 
 
@@ -226,15 +229,15 @@ def app_cover_fiyat_html(u, o, d):
                   f'<s>{tl(r["dc"][0])}</s><b>{tl(r["dc"][1])}</b></div>' for i, r in enumerate(rows))
     css = base_css(1080, 1350, False) + APP_CSS + """
 .w{width:1080px;height:1350px;padding:76px 84px 74px;display:flex;flex-direction:column;
- background:radial-gradient(900px 700px at 95% -5%, rgba(255,212,0,.20), transparent 60%),
-            radial-gradient(800px 700px at -10% 105%, rgba(34,227,160,.14), transparent 60%),#0A1020}
+ background:radial-gradient(900px 700px at 95% -5%, rgba(255,212,0,.26), transparent 60%),
+            radial-gradient(800px 700px at -10% 105%, rgba(56,160,190,.20), transparent 60%),#EEF2F6}
 .app{margin-top:58px}.gun{margin-top:6px;font-size:198px}
 .ind{margin-top:26px;font-size:80px;padding:14px 32px 18px}
 .vl{margin-top:58px}.vit{margin-top:18px;gap:18px}
 .vr{padding:22px 32px}.vr .n{font-size:46px}.vr .ak{font-size:26px}.vr s{font-size:36px}.vr b{font-size:72px}
 .alt{font-size:32px}"""
     return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{css}</style></head><body><div class="w">'
-            f'<div class="top">{BOLT.format(s=42, c="#FFD400")}<span>Watt<b>Kaç</b></span><span class="pill">UYGULAMA</span></div>'
+            f'<div class="top"><span class="logo">{BOLT.format(s=40, c="#FFD400")}<span>Watt<b>Kaç</b></span></span><span class="pill">UYGULAMA</span></div>'
             f'<div class="app">{esc(u["name"])} uygulamasıyla</div><div class="gun">{esc(gt)}</div>'
             f'<div class="ind">{esc(o["big"])}</div>'
             f'<div class="vl">En ucuz DC fiyatları · <span>TL/kWh</span></div><div class="vit">{vit}</div><div class="spacer"></div>'
@@ -250,22 +253,22 @@ def app_tablo_html(u, o, rows, bas, idx, tot, d):
     alt = f.get("not") or f"{u['name']} uygulamasından başlatılan şarjda"
     css = base_css(1080, 1350, False) + """
 .wrap{padding:56px 52px 50px}
-.h1{margin-top:26px;font-size:62px;letter-spacing:-1.5px}.h1 span{color:#FFD400}
+.h1{margin-top:26px;font-size:62px;letter-spacing:-1.5px}.h1 span{color:#0E7490}
 .h2{margin-top:8px;font-size:28px}
 .th,.tr{display:grid;grid-template-columns:50px 1fr 262px 300px;align-items:center;column-gap:12px;padding:0 20px}
-.th{margin-top:22px;height:40px;font-size:22px;font-weight:800;color:#8394B8;letter-spacing:2px;text-transform:uppercase}
+.th{margin-top:22px;height:40px;font-size:22px;font-weight:800;color:#475569;letter-spacing:2px;text-transform:uppercase}
 .th span:nth-child(n+3){text-align:right}
-.tb{flex:none;border:2px solid #202C4A;border-radius:22px;overflow:hidden}
-.tr{height:68px}.tr:nth-child(odd){background:rgba(255,255,255,.05)}
-.no{font-size:24px;font-weight:800;color:#5E6C8C}
+.tb{flex:none;background:#FBFCFD;border:2px solid #D5DCE6;border-radius:22px;overflow:hidden;box-shadow:0 10px 28px rgba(15,23,42,.07)}
+.tr{height:68px}.tr:nth-child(odd){background:#F1F4F8}
+.no{font-size:24px;font-weight:800;color:#64748B}
 .ag{font-size:31px;font-weight:800;white-space:nowrap;letter-spacing:-.3px}
 .pc{display:flex;align-items:baseline;justify-content:flex-end;gap:8px;white-space:nowrap}
-.pc s{font-size:27px;font-weight:600;color:#7D8BA8;text-decoration-thickness:2px}
-.pc .ok{font-size:22px;color:#5E6C8C}
+.pc s{font-size:27px;font-weight:600;color:#64748B;text-decoration-thickness:2px}
+.pc .ok{font-size:22px;color:#64748B}
 .pc b{font-size:34px;font-weight:900;letter-spacing:-.5px}
-.pc.ac b{color:#F4F6FB}.pc.dc b{color:#FFD400;font-size:36px}
-.pc.yok{font-size:30px;color:#5E6C8C;font-weight:700}
-.nt{margin-top:16px;font-size:24px;font-weight:700;color:#C9D4EA;line-height:1.3}.nt b{color:#22E3A0}
+.pc.ac b{color:#0F172A}.pc.dc b{color:#047857;font-size:36px}
+.pc.yok{font-size:30px;color:#64748B;font-weight:700}
+.nt{margin-top:16px;font-size:24px;font-weight:700;color:#334155;line-height:1.3}.nt b{color:#047857}
 .nt{white-space:nowrap}
 .foot{margin-top:6px;font-size:20px}"""
     return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{css}</style></head><body><div class="wrap">'
@@ -290,12 +293,12 @@ def app_katilim_html(u, o, d):
 .h1{margin-top:44px;font-size:80px}
 .h2{margin-top:12px;font-size:32px}
 .ads{margin-top:40px;display:flex;flex-direction:column;gap:20px}
-.ad{display:flex;gap:28px;align-items:flex-start;background:rgba(255,255,255,.045);border:2px solid #202C4A;border-radius:26px;padding:28px 30px}
-.nm{flex:none;width:76px;height:76px;border-radius:50%;background:#FFD400;color:#0A1020;font-size:44px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.ad{display:flex;gap:28px;align-items:flex-start;background:#FBFCFD;border:2px solid #D5DCE6;border-radius:26px;padding:28px 30px;box-shadow:0 10px 28px rgba(15,23,42,.07)}
+.nm{flex:none;width:76px;height:76px;border-radius:50%;background:#FFD400;color:#0F172A;font-size:44px;font-weight:900;display:flex;align-items:center;justify-content:center}
 .at{font-size:38px;font-weight:900;letter-spacing:-.5px;line-height:1.15}
-.ax{margin-top:8px;font-size:28px;font-weight:600;color:#C9D4EA;line-height:1.3}
-.ip{margin-top:28px;font-size:30px;font-weight:700;line-height:1.35;background:rgba(34,227,160,.08);border:2px solid rgba(34,227,160,.4);border-radius:24px;padding:24px 28px}
-.ip b{color:#22E3A0}.ip i{font-style:normal;color:#FFD400;font-weight:800}"""
+.ax{margin-top:8px;font-size:28px;font-weight:600;color:#334155;line-height:1.3}
+.ip{margin-top:28px;font-size:30px;font-weight:700;color:#334155;line-height:1.35;background:#DDEFE6;border:2px solid #A8D5C0;border-radius:24px;padding:24px 28px}
+.ip b{color:#047857}.ip i{font-style:normal;color:#0F172A;font-weight:800;background:linear-gradient(transparent 58%,#FFE15C 58%);-webkit-box-decoration-break:clone;box-decoration-break:clone}"""
     return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{css}</style></head><body><div class="wrap">'
             f'{brand(u["name"] + " · Katılım")}<div class="h1">Nasıl katılırım?</div>'
             f'<div class="h2">{esc(" · ".join(x for x in (gt, str(len(o["st"])) + " şarj ağında", kadar(o["son"])) if x))}</div>'
@@ -316,10 +319,10 @@ def app_hikaye_fiyat_html(u, o, d):
 .ind{margin-top:26px;font-size:80px;padding:12px 32px 16px}
 .vl{margin-top:56px;font-size:28px}.vit{margin-top:16px;gap:14px}
 .vr{padding:16px 32px}.vr .n{font-size:48px}.vr .ak{font-size:28px}.vr s{font-size:38px}.vr b{font-size:74px}
-.son{margin-top:34px;align-self:flex-start;font-size:34px;font-weight:800;color:#F4F6FB;background:none;padding:0}
+.son{margin-top:34px;align-self:flex-start;font-size:34px;font-weight:800;color:#0F172A;background:none;padding:0}
 .cta{display:flex;justify-content:space-between;align-items:center;gap:20px}
-.cta span{font-size:34px;font-weight:700;color:#C9D4EA;line-height:1.25}
-.cta b{flex:none;font-size:40px;font-weight:900;color:#0A1020;background:#FFD400;border-radius:18px;padding:14px 26px}"""
+.cta span{font-size:34px;font-weight:700;color:#334155;line-height:1.25}
+.cta b{flex:none;font-size:40px;font-weight:900;color:#0F172A;background:#FFD400;border-radius:18px;padding:14px 26px}"""
     return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{css}</style></head><body><div class="wrap">'
             f'{brand("Uygulama · " + d["donem"])}'
             f'<div class="app">{esc(u["name"])} uygulamasıyla</div><div class="gun">{esc(gt)}</div><div class="ind">{esc(o["big"])}</div>'
@@ -350,7 +353,7 @@ def station_html(s, d, story):
               f'<div class="offers" style="margin-top:10px;gap:12px">{rows}</div>'
               f'<div class="foot" style="margin-top:12px">{esc(bl.get("not", ""))}</div>')
     # 5+ kampanyalı ağda kartlar sığsın diye sıkı düzen
-    css = base_css(W, H, story)
+    css = base_css(W, H, story) + ".of{border-left-color:#22E3A0}"  # ağın kendi indirimi: yeşil şerit (banka: sarı)
     if len(s["own"]) >= 5:
         css += (f".offers{{gap:{14 if story else 10}px}}.of{{padding:{18 if story else 12}px 24px;border-radius:20px}}"
                 f".big{{font-size:{44 if story else 34}px}}.son{{font-size:20px;padding:4px 12px}}"
@@ -374,9 +377,9 @@ def stlist_html(s, d, part, idx, tot):
     css = base_css(1080, 1350, False) + """
 .cols{margin-top:22px;column-count:2;column-gap:34px;column-fill:auto;height:950px;overflow:hidden}
 .ib{break-inside:avoid;margin-bottom:10px}
-.il{font-size:23px;font-weight:900;color:#FFD400;letter-spacing:.3px;border-bottom:2px solid #202C4A;padding-bottom:2px;margin-bottom:4px}
-.ys{font-size:19px;line-height:1.27;color:#9FB0D0;font-weight:500}
-.ys b{color:#F4F6FB;font-weight:700}"""
+.il{font-size:23px;font-weight:900;color:#0F172A;letter-spacing:.3px;border-bottom:3px solid #FFD400;padding-bottom:2px;margin-bottom:4px}
+.ys{font-size:19px;line-height:1.27;color:#475569;font-weight:500}
+.ys b{color:#0F172A;font-weight:700}"""
     return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{css}</style></head><body><div class="wrap">'
             f'{brand(f"İstasyon listesi {idx}/{tot}")}<div class="h1" style="font-size:64px">{esc(s["name"])} · {esc(s["own"][0]["big"])}</div>'
             f'<div class="h2">Kampanyalı istasyonlar ({n} istasyon) · {esc(son_txt(s["own"][0]["son"], "Son gün: "))}</div>'
@@ -393,29 +396,34 @@ def list_html(title_html, sub, rows, d, extra=""):
 # ------------------------------------------------------------------ ızgara kapağı
 def cover_html(name, big, sub, bottom_left, bottom_right, kind):
     bank = kind.endswith("bank")
-    bg, fg, acc = ("#FFD400", "#0A1020", "#0A1020") if bank else ("#0A1020", "#F4F6FB", "#22E3A0")
-    boxbg, boxfg = ("#0A1020", "#FFD400") if bank else ("#FFD400", "#0A1020")
+    # Açık tema: banka kapağı sarı zemin + lacivert kutu; şarj ağı / uygulama / özet kapağı açık gri zemin + sarı kutu
+    bg, fg = ("#FFD400", "#0F172A") if bank else ("#EEF2F6", "#0F172A")
+    pillbg, pillfg = ("#0F172A", "#FFD400") if bank else ("#22E3A0", "#0F172A")
+    boxbg, boxfg = ("#0F172A", "#FFD400") if bank else ("#FFD400", "#0F172A")
     pill = "BANKA" if bank else "UYGULAMA" if kind.endswith("app") else "ŞARJ AĞI"
     nm = NAME_BREAK.get(name, esc(name).replace("&lt;br&gt;", "<br>"))
     lines = nm.count("<br>") + 1
     fs = 188 if lines == 1 and len(name) <= 6 else (150 if lines == 1 else 158)
     if kind.startswith("sum"):
         fs = 132
-    glow = "" if bank else "background-image:radial-gradient(800px 700px at 95% 0%, rgba(34,227,160,.16), transparent 60%);"
+    glow = "" if bank else ("background-image:radial-gradient(900px 760px at 95% -5%, rgba(255,212,0,.26), transparent 60%),"
+                            "radial-gradient(800px 700px at -10% 105%, rgba(56,160,190,.22), transparent 60%);")
     return f"""<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>
 *{{box-sizing:border-box;margin:0;padding:0}}
 html,body{{width:1080px;height:1350px;overflow:hidden;font-family:'Inter',sans-serif}}
 .w{{width:1080px;height:1350px;background:{bg};{glow}color:{fg};padding:78px 96px 80px;display:flex;flex-direction:column}}
 .top{{display:flex;align-items:center;gap:12px;font-size:38px;font-weight:800}}
-.pill{{margin-left:auto;font-size:30px;font-weight:900;letter-spacing:3px;color:{bg};background:{acc};border-radius:12px;padding:10px 22px}}
+.logo{{display:inline-flex;align-items:center;gap:10px;background:#0F172A;color:#FFFFFF;border-radius:14px;padding:3px 18px 3px 10px}}
+.logo b{{color:#FFD400}}
+.pill{{margin-left:auto;font-size:30px;font-weight:900;letter-spacing:3px;color:{pillfg};background:{pillbg};border-radius:12px;padding:10px 22px}}
 .sp{{flex:1}}
 .name{{font-size:{fs}px;font-weight:900;letter-spacing:-6px;line-height:.95}}
-.box{{margin-top:44px;align-self:flex-start;background:{boxbg};color:{boxfg};font-size:96px;font-weight:900;letter-spacing:-3px;line-height:1.02;border-radius:28px;padding:22px 34px 26px;max-width:888px}}
-.sub{{margin-top:30px;font-size:40px;font-weight:700;opacity:.85}}
+.box{{margin-top:44px;align-self:flex-start;background:{boxbg};color:{boxfg};font-size:96px;font-weight:900;letter-spacing:-3px;line-height:1.02;border-radius:28px;padding:22px 34px 26px;max-width:888px;box-shadow:0 14px 34px rgba(15,23,42,.14)}}
+.sub{{margin-top:30px;font-size:40px;font-weight:700;color:#334155}}
 .bot{{display:flex;justify-content:space-between;align-items:center;font-size:36px;font-weight:800}}
-.bot span:last-child{{opacity:.7;font-weight:700}}
+.bot span:last-child{{color:#334155;font-weight:700}}
 </style></head><body><div class="w">
-<div class="top">{BOLT.format(s=42, c=("#0A1020" if bank else "#FFD400"))}<span>WattKaç</span><span class="pill">{pill}</span></div>
+<div class="top"><span class="logo">{BOLT.format(s=40, c="#FFD400")}<span>Watt<b>Kaç</b></span></span><span class="pill">{pill}</span></div>
 <div class="sp"></div><div class="name">{nm}</div><div class="box">{esc(big)}</div><div class="sub">{esc(sub)}</div><div class="sp"></div>
 <div class="bot"><span>{esc(bottom_left)}</span><span>{esc(bottom_right)}</span></div></div></body></html>"""
 
@@ -444,7 +452,7 @@ def render_all(d, etiket, sadece=None):
         shot(cover_html("Banka<br>kampanyaları", f'{len(banks)} banka · {d["donem"].split()[0]}', " · ".join(b["name"].replace(" Bankası", "") for b in banks),
                         "Sabit post · Tümü burada", "Liste için kaydır →", "sum_bank"), f"{p}/1_kapak.jpg", 1080, 1350)
         yok = ", ".join(x.split(" (")[0] for x in d["kampanyasiz_bankalar"][:2])
-        shot(list_html('Şarjda bu ay<br><b style="color:#FFD400">hangi banka?</b>', f'{len(banks)} bankanın {d["donem"]} şarj kampanyaları',
+        shot(list_html('Şarjda bu ay<br><b class="hl">hangi banka?</b>', f'{len(banks)} bankanın {d["donem"]} şarj kampanyaları',
                        [(b["name"], " / ".join(o["big"] for o in banka_teklifleri(d, b))) for b in banks], d,
                        f'<div class="foot" style="margin-top:14px;font-size:22px">Bu ay şarj kampanyası bulunamayan: {esc(yok)}.</div>'),
              f"{p}/2_liste.jpg", 1080, 1350)
@@ -453,7 +461,7 @@ def render_all(d, etiket, sadece=None):
         p = f"{out}/ozet_istasyonlar"
         shot(cover_html("Şarj ağı<br>kampanyaları", f'{len(sts)} ağ · {d["donem"].split()[0]}', " · ".join(s["name"] for s in sts),
                         "Sabit post · Tümü burada", "Liste için kaydır →", "sum_station"), f"{p}/1_kapak.jpg", 1080, 1350)
-        shot(list_html('Şarj ağlarında<br><b style="color:#FFD400">bu ay ne var?</b>', "Ağların kendi indirimleri",
+        shot(list_html('Şarj ağlarında<br><b class="hl">bu ay ne var?</b>', "Ağların kendi indirimleri",
                        [(s["name"], s["own"][0]["big"]) for s in sts], d),
              f"{p}/2_liste.jpg", 1080, 1350)
         add("ozet_istasyonlar", "ozet", "Şarj ağı kampanyaları özeti", ["1_kapak.jpg", "2_liste.jpg"])
