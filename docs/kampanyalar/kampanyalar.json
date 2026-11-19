@@ -1,7 +1,7 @@
 {
   "donem": "Kasım 2026",
-  "guncelleme": "2026-11-17",
-  "son_kontrol": "2026-11-17",
+  "guncelleme": "2026-11-19",
+  "son_kontrol": "2026-11-19",
   "genel_kartlar": "Paraf Doğal · QNB · ON",
   "kampanyasiz_bankalar": [
     "İş Bankası (Maximum)"
@@ -187,7 +187,8 @@
           "link": "https://www.paraf.com.tr/tr/kampanyalar/akaryakit/elektrikli-arac-sarj-istasyonu-harcamalariniza-450-tl-parafpara1.html",
           "bas": "2026-11-01",
           "bit": "2026-11-30",
-          "kosul": "Paraf, Parafly, sanal ve ek kartlar; aynı gün aynı iş yerinde yalnızca ilk 350 TL+ harcama; Paraf Genç/GençİZ, banka ve ticari kartlar, Halkcard, ParafPara ile ödemeler hariç."
+          "kosul": "Paraf, Parafly, sanal ve ek kartlar; aynı gün aynı iş yerinde yalnızca ilk 350 TL+ harcama; Paraf Genç/GençİZ, banka ve ticari kartlar, Halkcard, ParafPara ile ödemeler hariç.",
+          "kontrol": true
         }
       ]
     },
@@ -213,7 +214,8 @@
           "link": "https://www.qnbcard.com.tr/kampanyalar/elektrikli-arac-sarj-istasyonlarinda-500-tlye-varan-parapuan-kazanin-43443",
           "bas": "2026-10-15",
           "bit": "2026-11-30",
-          "kosul": "QNB bireysel kredi kartları (Xtra, GO, Trendyol, First vb.); Miles&Smiles, Fix, Ticari, GSPara, Fenerpara hariç; günde aynı işyerinde 1 ödül; ParaPuan 31.12.2026'ya kadar"
+          "kosul": "QNB bireysel kredi kartları (Xtra, GO, Trendyol, First vb.); Miles&Smiles, Fix, Ticari, GSPara, Fenerpara hariç; günde aynı işyerinde 1 ödül; ParaPuan 31.12.2026'ya kadar",
+          "kontrol": true
         },
         {
           "big": "125 mil",
@@ -252,7 +254,8 @@
           "link": "https://on.com.tr/on-kredi-karti-elektrikli-arac-sarj-kampanyasi",
           "bas": "2026-11-01",
           "bit": "2026-11-30",
-          "kosul": "Fiziki ve sanal ON Kredi Kartı; cüzdan yükleme/ödemeleri hariç; iade 5 iş gününde"
+          "kosul": "Fiziki ve sanal ON Kredi Kartı; cüzdan yükleme/ödemeleri hariç; iade 5 iş gününde",
+          "kontrol": true
         }
       ]
     },
@@ -283,7 +286,8 @@
           "link": "https://www.vakifkart.com.tr/kampanyalar/elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41122",
           "bas": "2026-11-01",
           "bit": "2026-11-30",
-          "kosul": "İndirim 3 Aralık'ta ekstreye yansır; 5.000 TL+ işlemler, ticari kart, Bankomat, Recycle Card, mobil temassız ödeme hariç; Express Card katılım bedeli 9,99 TL."
+          "kosul": "İndirim 3 Aralık'ta ekstreye yansır; 5.000 TL+ işlemler, ticari kart, Bankomat, Recycle Card, mobil temassız ödeme hariç; Express Card katılım bedeli 9,99 TL.",
+          "kontrol": true
         },
         {
           "big": "%20 indirim",
@@ -307,7 +311,8 @@
           "link": "https://www.vakifkart.com.tr/kampanyalar/recycle-card-ile-elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41128",
           "bas": "2026-11-01",
           "bit": "2026-11-30",
-          "kosul": "Yalnızca Recycle Card (ek ve sanal dahil); 5.000 TL+ işlemler ve mobil temassız ödeme hariç; indirim 3 Aralık'ta ekstreye yansır."
+          "kosul": "Yalnızca Recycle Card (ek ve sanal dahil); 5.000 TL+ işlemler ve mobil temassız ödeme hariç; indirim 3 Aralık'ta ekstreye yansır.",
+          "kontrol": true
         }
       ]
     },
@@ -359,7 +364,8 @@
           "link": "https://www.kuveytturk.com.tr/kampanyalar/kendim-icin/kart-kampanyalari/elektrikli-arac-sarjiniza-ozel-750-tlye-varan-indirim",
           "bas": "2026-11-01",
           "bit": "2026-11-30",
-          "kosul": "Bireysel, ek ve sanal kartlar (Miles&Smiles, Sağlam Kart, Özel Bankacılık World Elite dahil); katılım 50.000 müşteriyle sınırlı; diğer kampanyalarla birleşmez."
+          "kosul": "Bireysel, ek ve sanal kartlar (Miles&Smiles, Sağlam Kart, Özel Bankacılık World Elite dahil); katılım 50.000 müşteriyle sınırlı; diğer kampanyalarla birleşmez.",
+          "kontrol": true
         }
       ]
     }
