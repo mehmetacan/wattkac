@@ -1741,6 +1741,19 @@
           "bit": "2026-11-30",
           "kosul": "Seçili En Yakıt istasyonlarında geçerli; uygulamadan başlatılan şarjlarda otomatik uygulanır. Kampanya dahil istasyonlar: Kuzey Marmara Otoyolu (Bi Mola Çiftalan, Fenertepe, Işıklar, Odayeri, Çekmeköy 1-2, Poyrazköy Güney/Kuzey, Reşadiye, Ömerli — İstanbul), Ankara (Rota İncek AVM, Podium AVM, Mamak Beykoz Petrol), Denizli (Rindera), Aydın (Yalçınlar Cam Söke), Muğla (Keller Williams Bodrum), Antalya (Fame Beach Hotel Kemer, Kaia Coracesium Alanya), Amasya (Ens Park Merzifon), Yozgat (Sorgun Safa Termal Hotel), Adana (Taşpınar Pozantı), Rize (Timya Outlet AVM), Erzurum (Polat Palandöken Hotel), Diyarbakır (Akcan Otomotiv Volvo), Şanlıurfa (Park Hayat Güney/Kuzey), Gaziantep (Teymur Continental Hotel).",
           "eklendi": "2026-11-20"
+        },
+        {
+          "big": "200 kWh'ye 15 Starbucks yıldızı",
+          "kisa": "Starbucks yıldızı",
+          "herkese": false,
+          "kontrol": true,
+          "det": "En Yakıt'ta 200 kWh şarjı tamamlayana 15 Starbucks yıldızı",
+          "son": "30 Nisan",
+          "link": "https://www.instagram.com/en_yakit/",
+          "bas": "2026-11-01",
+          "bit": "2027-04-30",
+          "kosul": "\"Şarj Ettikçe Yıldız Kazan\": 1 Kasım 2026 – 30 Nisan 2027 arasında En Yakıt'ta 200 kWh şarjı tamamlayana 15 Starbucks yıldızı. Kaynak En Yakıt'ın duyuru görseli; katılım ve yıldız tanımlama koşulları resmi sayfada doğrulanamadı.",
+          "eklendi": "2026-11-20"
         }
       ]
     }
