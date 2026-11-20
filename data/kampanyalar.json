@@ -1,6 +1,6 @@
 {
   "donem": "Kasım 2026",
-  "guncelleme": "2026-11-19",
+  "guncelleme": "2026-11-20",
   "son_kontrol": "2026-11-20",
   "genel_kartlar": "Paraf Doğal · QNB · ON",
   "kampanyasiz_bankalar": [
@@ -1718,6 +1718,24 @@
         "sub": "Şanlıurfa Karaköprü ve İstanbul Pendik Duru Park istasyonlarında · açılışa özel",
         "son": "26 Kasım"
       }
+    },
+    {
+      "id": "enyakit",
+      "name": "Enyakıt",
+      "own": [
+        {
+          "big": "DC 10,90 TL/kWh",
+          "kisa": "Seçili istasyonlarda",
+          "herkese": true,
+          "det": "Seçili En Yakıt noktalarında DC şarj 10,90 TL/kWh (liste fiyatı 14,90 TL/kWh)",
+          "son": "30 Kasım",
+          "link": "https://www.instagram.com/p/Df7rKDtxSmT/",
+          "bas": "2026-11-20",
+          "bit": "2026-11-30",
+          "kosul": "Seçili En Yakıt istasyonlarında geçerli; uygulamadan başlatılan şarjlarda otomatik uygulanır. Kampanya dahil istasyonlar: Kuzey Marmara Otoyolu (Bi Mola Çiftalan, Fenertepe, Işıklar, Odayeri, Çekmeköy 1-2, Poyrazköy Güney/Kuzey, Reşadiye, Ömerli — İstanbul), Ankara (Rota İncek AVM, Podium AVM, Mamak Beykoz Petrol), Denizli (Rindera), Aydın (Yalçınlar Cam Söke), Muğla (Keller Williams Bodrum), Antalya (Fame Beach Hotel Kemer, Kaia Coracesium Alanya), Amasya (Ens Park Merzifon), Yozgat (Sorgun Safa Termal Hotel), Adana (Taşpınar Pozantı), Rize (Timya Outlet AVM), Erzurum (Polat Palandöken Hotel), Diyarbakır (Akcan Otomotiv Volvo), Şanlıurfa (Park Hayat Güney/Kuzey), Gaziantep (Teymur Continental Hotel).",
+          "eklendi": "2026-11-20"
+        }
+      ]
     }
   ]
 }
