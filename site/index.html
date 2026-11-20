@@ -2188,7 +2188,7 @@ function renderDetail(s0) {
     <details class="bkay"><summary>Bilgi kaynağı ›</summary>${srcTxt.map(x => `<p>${x}</p>`).join("")}
       <p>${/^bigstation/.test(s.id) ? "İstasyon bilgisi BIG Station sisteminden, üçüncü taraf bir hizmet aracılığıyla günde bir kez alınır." : /^cv\d/.test(s.id) ? "İstasyon bilgisi CV Charging'in resmi istasyon listesinden (cv-charging.com), günde bir kez alınır." : /^acropol\d/.test(s.id) ? "İstasyon bilgisi Acropol Şarj'ın kendi haritasından (acropolsarj.com), günde bir kez alınır. Konut sitelerindeki cihazlar gösterilmez." : /^5sarj\d/.test(s.id) ? `İstasyon bilgisi 5 Şarj'ın kendi haritasından (5sarj.com) alınır; elle güncellenen kopya${kopyaTarih("5sarj")}. Soket gücü EPDK kaydından tamamlanır.` : /^epsis/.test(s.id) && s.official ? "İstasyon bilgisi EPSIS'in kendi haritasından (epsis.net); istasyon listesi günde bir kez güncellenir. Konut sitelerindeki cihazlar gösterilmez." : /^otopriz/.test(s.id) && s.official ? "İstasyon ve anlık durum bilgisi Otopriz'in kendi haritasından (electroop). Konut sitelerindeki cihazlar gösterilmez." : s.official ? `İstasyon bilgisi ağın kendi resmi haritasından${agSite(s)}, günde bir kez güncellenir.` : s.epdk ? `${s.rk ? `Soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir; konum ağın kendi haritasından${agSite(s)}.` : "Konum ve soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir."}${s.rl ? ` İstasyon ağın kendi listesinde${s.rk ? "" : agSite(s)} de yer alıyor.` : ""}` : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
       ${uygs.length > 1 ? `<p>Şarj başlatılabilen uygulamalar ağların ve uygulamaların resmi duyurularından. Ortak kullanımda fiyatı istasyonun işletmecisi belirler; her uygulamada istasyonun kendi fiyatı gösterilir.</p>` : ""}
-      ${durumAg(s) ? `<p>${durumAg(s) === "epdk" ? "Anlık durum, tarayıcınızın doğrudan EPDK Şarj@TR'den aldığı veridir; birkaç dakika gecikebilir." : DURUM_AG[durumAg(s)].yol === "tarayici" ? "Anlık durum, tarayıcınızın doğrudan ağın altyapı sağlayıcısından (electroop) aldığı veridir; 1 dakikaya kadar gecikebilir." : DURUM_AG[durumAg(s)].kaynak ? `${DURUM_AG[durumAg(s)].kaynak}; 1 dakikaya kadar gecikebilir.` : "Anlık durum 1 dakikaya kadar gecikebilir."}</p>` : ""}
+      ${durumAg(s) ? `<p>${durumAg(s) === "epdk" ? "Anlık durum EPDK Şarj@TR verisinden alınır; birkaç dakika gecikebilir." : DURUM_AG[durumAg(s)].yol === "tarayici" ? "Anlık durum, tarayıcınızın doğrudan ağın altyapı sağlayıcısından (electroop) aldığı veridir; 1 dakikaya kadar gecikebilir." : DURUM_AG[durumAg(s)].kaynak ? `${DURUM_AG[durumAg(s)].kaynak}; 1 dakikaya kadar gecikebilir.` : "Anlık durum 1 dakikaya kadar gecikebilir."}</p>` : ""}
       ${s.net ? `<p>İndirimli fiyat yalnızca kampanyanın geçerli olduğu kesin bilinen istasyonlarda yazılır. Ağın kampanyaları birbiriyle birleşmez. Kart indirimi ağ indiriminin üzerine hesaplanır; kart kampanyası "başka indirimle birleşmez" diyorsa liste fiyatına.</p>` : ""}
       ${here.some(c => c.tip === "uygulama") ? `<p>Uygulama indirimi yalnızca şarj o uygulamadan başlatılınca geçerlidir; ağın kendi indirimiyle birleştiği bilinmediği için liste fiyatına uygulanır. Belli günlerde geçerli kampanya haritada yalnızca o gün hesaplanır.</p>` : ""}</details>`;
   $("sh-b").scrollTop = 0;
@@ -2253,29 +2253,13 @@ async function durumTarayici(s, ag, signal) {
   for (const id of s.cih) for (const v of h.get(String(id)) || []) cihazlar.push(v);
   return { cihazlar };   // istasyonun lokasyonları listede yoksa "Anlık durum bilinmiyor"
 }
-// EPDK Şarj@TR tarayıcı: tüm istasyonlar tek istekle çekilir, 60 sn önbellek. Yanıt ~2,4 MB; metin regex ile taranır (JSON.parse yok).
-const EPDK_ONB = { t: 0, h: null }, EPDK_ONB_MS = 60e3;
-const EPDK_ID_RE = /"id":(14\d{6})\b|"available":(true|false)/g;
-async function epdkHarita(signal) {
-  if (EPDK_ONB.h && Date.now() - EPDK_ONB.t < EPDK_ONB_MS) return EPDK_ONB.h;
-  const r = await fetch("https://sarjtr.epdk.gov.tr/sarjet/api/stations",
-    { signal, mode: "cors", credentials: "omit", referrerPolicy: "no-referrer", headers: { accept: "application/json" } });
-  if (!r.ok) throw new Error("HTTP " + r.status);
-  let t = await r.text();
-  const h = Object.create(null), re = new RegExp(EPDK_ID_RE);
-  let son = null;
-  for (let m; (m = re.exec(t));) {
-    if (m[1] !== undefined) son = m[1];
-    else if (son !== null) { h[son] = m[2] === "true" ? "bos" : "sarj"; son = null; }
-  }
-  t = null;
-  EPDK_ONB.t = Date.now(); EPDK_ONB.h = h;
-  return h;
-}
+// EPDK anlık durum: api.wattkac.com üzerinden tek istasyon sorgusu (hafif, CORS açık).
+const EPDK_API = "https://api.wattkac.com";
 async function epdkTarayici(s, signal) {
-  const h = await epdkHarita(signal);
-  const v = h[String(s.eid)];
-  return v ? { cihazlar: { [s.eid]: v } } : { cihazlar: {} };
+  const r = await fetch(`${EPDK_API}/api/station/${s.eid}/availability`, { signal, credentials: "omit" });
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  const j = await r.json();
+  return { cihazlar: { [s.eid]: j.available ? "bos" : "sarj" } };
 }
 function durumIste(s, ag) {
   if (DUR.id === s.id) return;   // bu detay için zaten istendi
