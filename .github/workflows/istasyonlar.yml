@@ -62,6 +62,13 @@ jobs:
       - name: Birleştir
         if: always()
         run: python3 tools/istasyon_birlestir.py site/istasyonlar.json
+      # Birleştirme dosyayı baştan ürettiği için anlık durum kimlikleri (eid) her gün yeniden yazılır
+      - name: EPDK anlık durum kimliklerini eşleştir
+        if: always()
+        env:
+          EPDK_API_KEY: ${{ secrets.EPDK_API_KEY }}
+        run: python3 -u tools/epdk_durum_esle.py
+        continue-on-error: true
       - name: GitHub Pages kopyasını güncelle
         if: always()
         run: |

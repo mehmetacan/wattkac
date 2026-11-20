@@ -1,42 +1,62 @@
 #!/usr/bin/env python3
 """EPDK Şarj@TR sayısal kimliklerini istasyonlar.json'a ekler.
 
-sarjtr.epdk.gov.tr/sarjet/api/stations adresindeki istasyonları
-koordinat eşleşmesiyle (100 m) istasyonlar.json'daki kayıtlarla
-eşleştirir ve eşleşen kayda "eid" (EPDK sayısal kimliği) yazar.
-Site bu kimliği /api/durum/epdk?c=<eid> ile canlı müsaitlik
-sorgulamak için kullanır.
+Şarj@TR istasyonlarını koordinat eşleşmesiyle (100 m) istasyonlar.json'daki
+kayıtlarla eşleştirir ve eşleşen kayda "eid" yazar. Site bu kimliği
+/api/durum/epdk?c=<eid> ile canlı müsaitlik sorgulamak için kullanır.
 
-sarjtr erişilemezse dosyaya dokunmaz.
+Kaynak sırası: api.wattkac.com (EPDK_API_KEY varsa) → sarjtr → son başarılı
+konum listesinin kopyası (data/epdk/sarjtr_konum.json). Birleştirme her gün
+dosyayı baştan ürettiği için bu betik birleştirmeden sonra çalışmalı.
 """
 
 import json
 import math
 import pathlib
 import sys
-from http.client import HTTPSConnection
+import os
 from urllib.request import Request, urlopen
 
 SARJTR = "https://sarjtr.epdk.gov.tr/sarjet/api/stations"
 UA = "Dart/3.4 (dart:io)"
-IST_YOLU = pathlib.Path(__file__).resolve().parent.parent / "site" / "istasyonlar.json"
+KOK = pathlib.Path(__file__).resolve().parent.parent
+IST_YOLU = KOK / "site" / "istasyonlar.json"
+KOPYA = KOK / "data" / "epdk" / "sarjtr_konum.json"
+API = "https://api.wattkac.com/api/stations"
 HUCRE = 0.001  # ~111 m
 ESIK_M = 100   # metre
 
 
-def cek():
-    """sarjtr'den istasyonları çek. id, lat, lng döner."""
-    req = Request(SARJTR, headers={"User-Agent": UA, "Accept": "application/json"})
-    with urlopen(req, timeout=60) as resp:
+def indir(url, basliklar):
+    with urlopen(Request(url, headers={"Accept": "application/json", **basliklar}), timeout=90) as resp:
         veri = json.loads(resp.read())
-    sonuc = []
-    for s in veri:
-        sid = s.get("id")
-        lat = s.get("lat", 0)
-        lng = s.get("lng", 0)
-        if sid and lat and lng:
-            sonuc.append((sid, lat, lng))
+    sonuc = [(s["id"], s["lat"], s["lng"]) for s in veri if s.get("id") and s.get("lat") and s.get("lng")]
+    if len(sonuc) < 1000:
+        raise ValueError(f"yalnızca {len(sonuc)} istasyon")
     return sonuc
+
+
+def cek():
+    """(id, lat, lng) listesi; çekilemezse son kopya."""
+    kaynaklar = []
+    if os.environ.get("EPDK_API_KEY"):
+        kaynaklar.append(("api.wattkac.com", API, {"X-API-Key": os.environ["EPDK_API_KEY"], "User-Agent": "wattkac-eslestir/1.0"}))
+    kaynaklar.append(("sarjtr", SARJTR, {"User-Agent": UA}))
+    for ad, url, basliklar in kaynaklar:
+        try:
+            sonuc = indir(url, basliklar)
+        except Exception as e:
+            print(f"UYARI: {ad} okunamadı ({type(e).__name__})")
+            continue
+        print(f"{ad}: {len(sonuc)} istasyon")
+        KOPYA.parent.mkdir(parents=True, exist_ok=True)
+        KOPYA.write_text(json.dumps(sorted(sonuc), separators=(",", ":")) + "\n", encoding="utf-8")
+        return sonuc
+    if KOPYA.exists():
+        sonuc = [tuple(x) for x in json.loads(KOPYA.read_text(encoding="utf-8"))]
+        print(f"Son kopya kullanılıyor: {len(sonuc)} istasyon")
+        return sonuc
+    return None
 
 
 def izgara_olustur(liste):
@@ -64,13 +84,10 @@ def en_yakin(lat, lng, grid):
 
 
 def main():
-    # sarjtr'den çek
-    try:
-        sarjtr = cek()
-    except Exception as e:
-        print(f"UYARI: sarjtr erişilemedi ({e}), dosya değiştirilmedi.")
+    sarjtr = cek()
+    if not sarjtr:
+        print("UYARI: Şarj@TR konumları alınamadı, dosya değiştirilmedi.")
         return
-    print(f"sarjtr: {len(sarjtr)} istasyon")
 
     grid = izgara_olustur(sarjtr)
 
