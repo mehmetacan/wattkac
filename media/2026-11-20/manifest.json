@@ -1,0 +1,12 @@
+[
+ {
+  "id": "istasyon_enyakit",
+  "tur": "istasyon",
+  "baslik": "Enyakıt",
+  "dosyalar": [
+   "1_kapak.jpg",
+   "2_detay.jpg",
+   "hikaye.jpg"
+  ]
+ }
+]
