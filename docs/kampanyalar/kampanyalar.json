@@ -1732,8 +1732,7 @@
         {
           "big": "DC 10,90 TL/kWh",
           "kisa": "Seçili istasyonlarda",
-          "herkese": false,
-          "kontrol": true,
+          "herkese": true,
           "det": "Seçili En Yakıt noktalarında DC şarj 10,90 TL/kWh (liste fiyatı 14,90 TL/kWh)",
           "son": "30 Kasım",
           "link": "https://www.instagram.com/p/Df7rKDtxSmT/",
