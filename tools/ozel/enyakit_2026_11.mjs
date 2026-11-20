@@ -167,6 +167,19 @@ const starbucks = (W, H, hikaye) => `<div class="ust" style="top:${64 + (hikaye 
     <div style="font-size:27px;color:#5B6680;margin-top:30px;line-height:1.45">10,90 TL/kWh indirimi 20–30 Kasım'da seçili ${SAYI} istasyonda; yıldız kampanyası Nisan sonuna kadar sürüyor. Katılım ve yıldız tanımlama koşulları için En Yakıt'ın resmi duyurusuna bakın.</div>
   </div>${hikaye ? "" : ALT}`;
 
+if (process.argv.includes("--kartlar")) {
+  await cek(1080, 1920, `<div class="ust" style="top:150px">${WK}<img class="ey" src="${logo}"></div>
+    <div style="position:absolute;left:80px;right:80px;top:420px">
+      <span class="chip" style="font-size:32px;padding:10px 26px">20–30 Kasım</span>
+      <div style="font-size:84px;font-weight:800;line-height:1.08;letter-spacing:-2.5px;margin-top:36px">En Yakıt'ta <span class="sari" style="padding:0 18px 6px">10,90 TL/kWh</span> olan istasyonlar nerede?</div>
+      <div style="font-size:40px;font-weight:600;color:#5B6680;margin-top:44px;line-height:1.4">wattkac.com haritasında<br>3 adımda bul</div></div>
+    <div class="harita" id="h" style="left:0;right:0;top:1180px;height:560px;opacity:.9"></div>`, "giris.jpg", kapakHazir);
+  await cek(1080, 1920, `<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 90px">
+      ${FINCAN(240)}<div style="font-size:80px;font-weight:800;line-height:1.1;letter-spacing:-2px;margin-top:44px">Bu fiyatların üstüne<br>bir sıcak kahve içelim</div>
+      <div style="font-size:38px;font-weight:600;color:#5B6680;margin-top:40px;line-height:1.45">En Yakıt'ta 200 kWh şarja<br><b style="color:#00704A">15 Starbucks yıldızı</b><br>1 Kasım – 30 Nisan</div>
+      <div style="margin-top:80px;transform:scale(1.35)">${WK}</div><div style="font-size:34px;font-weight:700;margin-top:26px;color:#0F1B3D">wattkac.com</div></div>`, "son.jpg");
+  await tarayici.close(); process.exit(0);
+}
 await cek(1080, 1350, kapak(1080, 1350, false), "1_kapak.jpg", kapakHazir);
 for (const b of [1, 2, 3]) await cek(1080, 1350, bolgeSayfa(b), `${b + 1}_bolge${b}.jpg`, bolgeHazir);
 await cek(1080, 1350, starbucks(1080, 1350, false), "5_starbucks.jpg");
