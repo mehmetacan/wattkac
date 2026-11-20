@@ -19,10 +19,10 @@
       "media/2026-11-20/istasyon_enyakit/2_detay.jpg"
     ],
     "aciklama": "⚡ Enyakıt: DC 10,90 TL/kWh!\n\n✅ DC 10,90 TL/kWh: Seçili En Yakıt noktalarında DC şarj 10,90 TL/kWh (liste fiyatı 14,90 TL/kWh) (son gün 30 Kasım)\n\n📍 Geçerli istasyonlar:\n• İstanbul (Kuzey Marmara Otoyolu): Bi Mola Çiftalan, Fenertepe, Işıklar, Odayeri, Çekmeköy 1-2, Poyrazköy Güney/Kuzey, Reşadiye, Ömerli\n• Ankara: Rota İncek AVM, Podium AVM, Mamak Beykoz Petrol\n• Denizli: Rindera · Aydın: Yalçınlar Cam Söke · Muğla: Keller Williams Bodrum\n• Antalya: Fame Beach Hotel Kemer, Kaia Coracesium Alanya\n• Amasya: Ens Park Merzifon · Yozgat: Sorgun Safa Termal Hotel · Adana: Taşpınar Pozantı\n• Rize: Timya Outlet AVM · Erzurum: Polat Palandöken Hotel · Diyarbakır: Akcan Otomotiv Volvo\n• Şanlıurfa: Park Hayat Güney/Kuzey · Gaziantep: Teymur Continental Hotel\n\nİndirim, En Yakıt uygulamasından başlatılan şarjda otomatik uygulanır.\n\nKart kampanyalarının tamamı ve geçerli istasyonlar banka postlarımızda.\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac #enyakıt",
-    "durum": "bekliyor",
+    "durum": "iptal",
     "deneme": 0,
     "ig_media_id": null,
-    "hata": null
+    "hata": "Yerine haritalı karusel + Starbucks + Reels (queue/2026-11-20-enyakit.json)"
   },
   {
     "id": "istasyon_enyakit_hikaye",
@@ -35,9 +35,9 @@
       "media/2026-11-20/istasyon_enyakit/hikaye.jpg"
     ],
     "aciklama": "",
-    "durum": "bekliyor",
+    "durum": "iptal",
     "deneme": 0,
     "ig_media_id": null,
-    "hata": null
+    "hata": "Yerine haritalı karusel + Starbucks + Reels (queue/2026-11-20-enyakit.json)"
   }
 ]

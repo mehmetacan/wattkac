@@ -56,8 +56,8 @@ html,body{{width:{W}px;height:{H}px;background:#EEF2F6;font-family:'Inter',sans-
  background:radial-gradient(900px 700px at 90% -5%, rgba(255,212,0,.24), transparent 60%),
             radial-gradient(800px 700px at -10% 105%, rgba(56,160,190,.20), transparent 60%),#EEF2F6}}
 .brand{{display:flex;align-items:center;gap:12px;font-weight:800;font-size:40px;letter-spacing:-.5px}}
-.logo{{display:inline-flex;align-items:center;gap:10px;background:#0F172A;color:#FFFFFF;border-radius:14px;padding:3px 18px 3px 10px;box-shadow:0 8px 22px rgba(15,23,42,.16)}}
-.logo b{{color:#FFD400}}
+.logo{{display:inline-flex;align-items:center;gap:8px;color:#0F172A;font-weight:900}}
+.logo b{{color:#E5A800}}
 .hl{{display:inline-block;margin-top:14px;background:#FFD400;color:#0F172A;border-radius:16px;padding:4px 18px 10px;line-height:1}}
 .tag{{margin-left:auto;font-size:24px;font-weight:600;color:#475569;background:rgba(255,255,255,.6);border:2px solid #C7D0DC;border-radius:999px;padding:7px 20px}}
 .h1{{margin-top:{60 if story else 34}px;font-size:{86 if story else 76}px;font-weight:900;letter-spacing:-2px;line-height:1}}
@@ -96,7 +96,7 @@ def chips(st):
 
 
 def brand(tag):
-    return (f'<div class="brand"><span class="logo">{BOLT.format(s=42, c="#FFD400")}<span>Watt<b>Kaç</b></span></span>'
+    return (f'<div class="brand"><span class="logo">{BOLT.format(s=42, c="#E5A800")}<span>Watt<b>Kaç</b></span></span>'
             f'<span class="tag">{esc(tag)}</span></div>')
 
 
@@ -237,7 +237,7 @@ def app_cover_fiyat_html(u, o, d):
 .vr{padding:22px 32px}.vr .n{font-size:46px}.vr .ak{font-size:26px}.vr s{font-size:36px}.vr b{font-size:72px}
 .alt{font-size:32px}"""
     return (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{css}</style></head><body><div class="w">'
-            f'<div class="top"><span class="logo">{BOLT.format(s=40, c="#FFD400")}<span>Watt<b>Kaç</b></span></span><span class="pill">UYGULAMA</span></div>'
+            f'<div class="top"><span class="logo">{BOLT.format(s=40, c="#E5A800")}<span>Watt<b>Kaç</b></span></span><span class="pill">UYGULAMA</span></div>'
             f'<div class="app">{esc(u["name"])} uygulamasıyla</div><div class="gun">{esc(gt)}</div>'
             f'<div class="ind">{esc(o["big"])}</div>'
             f'<div class="vl">En ucuz DC fiyatları · <span>TL/kWh</span></div><div class="vit">{vit}</div><div class="spacer"></div>'
@@ -413,8 +413,8 @@ def cover_html(name, big, sub, bottom_left, bottom_right, kind):
 html,body{{width:1080px;height:1350px;overflow:hidden;font-family:'Inter',sans-serif}}
 .w{{width:1080px;height:1350px;background:{bg};{glow}color:{fg};padding:78px 96px 80px;display:flex;flex-direction:column}}
 .top{{display:flex;align-items:center;gap:12px;font-size:38px;font-weight:800}}
-.logo{{display:inline-flex;align-items:center;gap:10px;background:#0F172A;color:#FFFFFF;border-radius:14px;padding:3px 18px 3px 10px}}
-.logo b{{color:#FFD400}}
+.logo{{display:inline-flex;align-items:center;gap:8px;color:#0F172A;font-weight:900}}
+.logo b{{color:#E5A800}}
 .pill{{margin-left:auto;font-size:30px;font-weight:900;letter-spacing:3px;color:{pillfg};background:{pillbg};border-radius:12px;padding:10px 22px}}
 .sp{{flex:1}}
 .name{{font-size:{fs}px;font-weight:900;letter-spacing:-6px;line-height:.95}}
@@ -423,7 +423,7 @@ html,body{{width:1080px;height:1350px;overflow:hidden;font-family:'Inter',sans-s
 .bot{{display:flex;justify-content:space-between;align-items:center;font-size:36px;font-weight:800}}
 .bot span:last-child{{color:#334155;font-weight:700}}
 </style></head><body><div class="w">
-<div class="top"><span class="logo">{BOLT.format(s=40, c="#FFD400")}<span>Watt<b>Kaç</b></span></span><span class="pill">{pill}</span></div>
+<div class="top"><span class="logo">{BOLT.format(s=40, c="#E5A800")}<span>Watt<b>Kaç</b></span></span><span class="pill">{pill}</span></div>
 <div class="sp"></div><div class="name">{nm}</div><div class="box">{esc(big)}</div><div class="sub">{esc(sub)}</div><div class="sp"></div>
 <div class="bot"><span>{esc(bottom_left)}</span><span>{esc(bottom_right)}</span></div></div></body></html>"""
 
