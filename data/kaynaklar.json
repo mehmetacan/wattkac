@@ -141,6 +141,54 @@
    "tarih": "2026-11-14",
    "adres": "https://ekaenerji.mapcontentpartners.service.electroop.io/2.2/locations",
    "not": "electroop onayı (kullanıcı bildirdi, 14 Kasım 2026): anlık durum ziyaretçinin tarayıcısından ekaenerji.mapcontentpartners.service.electroop.io/2.2/locations ucundan alınır. Yalnızca istasyon detayı açılınca, ağ başına 60 sn bellek içi önbellekle; ham veri tutulmaz. Konum ve anlık durum aynı kaynaktan."
+  },
+  {
+   "kurum": "Eşarj",
+   "tarih": "2026-11-20",
+   "adres": "https://esarj.com/fiyatlandirma",
+   "not": "Telefonla görüşülerek Mehmet Bey'den izin alındı (kullanıcı bildirdi, 20 Kasım 2026): fiyat sayfası robots.txt yasağına rağmen okunabilir. Kullanım: günlük fiyat kontrolünde yalnızca bu adres. Not: tarama aracı robots.txt'yi kendi düzeyinde uyguladığı için sayfa, ağ robots.txt'ye 'User-agent: Claude-User / Allow: <yol>' satırı ekleyene kadar oturumdan açılamaz; o zamana kadar fiyat kullanıcının tarayıcısından alınan kopyayla güncellenir."
+  },
+  {
+   "kurum": "Otojet",
+   "tarih": "2026-11-20",
+   "adres": "https://www.oto-jet.com.tr/fiyatlarimiz",
+   "not": "Telefonla görüşülerek Mehmet Bey'den izin alındı (kullanıcı bildirdi, 20 Kasım 2026): fiyat sayfası robots.txt yasağına rağmen okunabilir. Kullanım: günlük fiyat kontrolünde yalnızca bu adres. Not: tarama aracı robots.txt'yi kendi düzeyinde uyguladığı için sayfa, ağ robots.txt'ye 'User-agent: Claude-User / Allow: <yol>' satırı ekleyene kadar oturumdan açılamaz; o zamana kadar fiyat kullanıcının tarayıcısından alınan kopyayla güncellenir."
+  },
+  {
+   "kurum": "Şarjon",
+   "tarih": "2026-11-20",
+   "adres": "https://sarjon.com.tr/fiyatlar/",
+   "not": "Telefonla görüşülerek Mehmet Bey'den izin alındı (kullanıcı bildirdi, 20 Kasım 2026): fiyat sayfası robots.txt yasağına rağmen okunabilir. Kullanım: günlük fiyat kontrolünde yalnızca bu adres. Not: tarama aracı robots.txt'yi kendi düzeyinde uyguladığı için sayfa, ağ robots.txt'ye 'User-agent: Claude-User / Allow: <yol>' satırı ekleyene kadar oturumdan açılamaz; o zamana kadar fiyat kullanıcının tarayıcısından alınan kopyayla güncellenir."
+  },
+  {
+   "kurum": "Lumicle",
+   "tarih": "2026-11-20",
+   "adres": "https://lumicle.com.tr/istasyonlar/",
+   "not": "Telefonla görüşülerek Mehmet Bey'den izin alındı (kullanıcı bildirdi, 20 Kasım 2026): fiyat sayfası robots.txt yasağına rağmen okunabilir. Kullanım: günlük fiyat kontrolünde yalnızca bu adres. Not: tarama aracı robots.txt'yi kendi düzeyinde uyguladığı için sayfa, ağ robots.txt'ye 'User-agent: Claude-User / Allow: <yol>' satırı ekleyene kadar oturumdan açılamaz; o zamana kadar fiyat kullanıcının tarayıcısından alınan kopyayla güncellenir."
+  },
+  {
+   "kurum": "RST Charge Point",
+   "tarih": "2026-11-20",
+   "adres": "https://rstchargepoint.com/#fiyatlar",
+   "not": "Telefonla görüşülerek Mehmet Bey'den izin alındı (kullanıcı bildirdi, 20 Kasım 2026): fiyat sayfası robots.txt yasağına rağmen okunabilir. Kullanım: günlük fiyat kontrolünde yalnızca bu adres. Not: tarama aracı robots.txt'yi kendi düzeyinde uyguladığı için sayfa, ağ robots.txt'ye 'User-agent: Claude-User / Allow: <yol>' satırı ekleyene kadar oturumdan açılamaz; o zamana kadar fiyat kullanıcının tarayıcısından alınan kopyayla güncellenir."
+  },
+  {
+   "kurum": "Acropol Şarj",
+   "tarih": "2026-11-20",
+   "adres": "https://acropolsarj.com/",
+   "not": "Telefonla görüşülerek Mehmet Bey'den izin alındı (kullanıcı bildirdi, 20 Kasım 2026): fiyat sayfası robots.txt yasağına rağmen okunabilir. Kullanım: günlük fiyat kontrolünde yalnızca bu adres. Not: tarama aracı robots.txt'yi kendi düzeyinde uyguladığı için sayfa, ağ robots.txt'ye 'User-agent: Claude-User / Allow: <yol>' satırı ekleyene kadar oturumdan açılamaz; o zamana kadar fiyat kullanıcının tarayıcısından alınan kopyayla güncellenir."
+  },
+  {
+   "kurum": "Electrise",
+   "tarih": "2026-11-20",
+   "adres": "https://www.electrise.com.tr/",
+   "not": "Telefonla görüşülerek Mehmet Bey'den izin alındı (kullanıcı bildirdi, 20 Kasım 2026): fiyat sayfası robots.txt yasağına rağmen okunabilir. Kullanım: günlük fiyat kontrolünde yalnızca bu adres. Not: tarama aracı robots.txt'yi kendi düzeyinde uyguladığı için sayfa, ağ robots.txt'ye 'User-agent: Claude-User / Allow: <yol>' satırı ekleyene kadar oturumdan açılamaz; o zamana kadar fiyat kullanıcının tarayıcısından alınan kopyayla güncellenir."
+  },
+  {
+   "kurum": "PowerPay",
+   "tarih": "2026-11-20",
+   "adres": "https://www.powerpay.com.tr/",
+   "not": "Telefonla görüşülerek Mehmet Bey'den izin alındı (kullanıcı bildirdi, 20 Kasım 2026): fiyat sayfası robots.txt yasağına rağmen okunabilir. Kullanım: günlük fiyat kontrolünde yalnızca bu adres. Not: tarama aracı robots.txt'yi kendi düzeyinde uyguladığı için sayfa, ağ robots.txt'ye 'User-agent: Claude-User / Allow: <yol>' satırı ekleyene kadar oturumdan açılamaz; o zamana kadar fiyat kullanıcının tarayıcısından alınan kopyayla güncellenir."
   }
  ]
 }
