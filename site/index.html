@@ -1829,15 +1829,15 @@ function groupStations(list) {
   out.forEach(g => { g.lat = g.la / g.items.length; g.lon = g.lo / g.items.length; if (g.items.length === 1) { g.lat = g.items[0].lat; g.lon = g.items[0].lon; } });
   return out;
 }
-// İşaretçinin üzerindeki kısa ad: en çok 6 harf, hepsi aynı yazı tipi ve boyutta. Yaygın ağlar elle kısaltılır (anahtar: adın sadeleştirilmiş hâli),
-// diğerlerinde kural: "plus" → "+", "şarj / charge / enerji" gibi genel sözcükler atılır, ilk sözcük alınır, 6 harfi geçerse kesilir.
+// İşaretçinin üzerindeki kısa ad: en çok 7 harf (harf atılmaz, uzun ad "Ecocon." gibi noktayla kısalır), hepsi aynı yazı tipi ve boyutta. Yaygın ağlar elle kısaltılır (anahtar: adın sadeleştirilmiş hâli),
+// diğerlerinde kural: "plus" → "+", "şarj / charge / enerji" gibi genel sözcükler atılır, ilk sözcük alınır, 7 harfi geçerse 6 harf + nokta.
 const SHORT = { shellrecharge: "Shell", shell: "Shell", watmobilite: "WAT", astorsarj: "Astor", astor: "Astor", sharznet: "Sharz", aksasarj: "Aksa", petrolofisi: "PO", petrolofisiepower: "PO",
   powersarj: "Power", tuncmatik: "Tunç", dcharge: "D-Chg", oncharge: "OnChg", cvsarj: "CV", cvcharging: "CV", zeplin: "Zeplin", zeplinenerji: "Zeplin", nevasarj: "Neva", ekaenerji: "EKA", magicline: "Magic",
-  dogusdijitalenerji: "Doğuş", togg: "Togg", enyakit: "Enyakt", otopriz: "Otoprz", voltrun: "Voltrn", beefull: "Beeful", otowatt: "otoWat", "5sarj": "5Şarj", ksarj: "K-Şarj", aostechnology: "AOS",
-  mkssarj: "MKS", greenscience: "Green", sarjmatik: "ŞMatik", isarj: "i-Şarj", acropol: "Acro", acropolsarj: "Acro", lumicle: "Lumi", epower: "ePower", onizsarj: "Öniz", solarsarj: "Solar", mycharge: "MyChg",
+  dogusdijitalenerji: "Doğuş", togg: "Togg", enyakit: "Enyakıt", otopriz: "Otopriz", voltrun: "Voltrun", beefull: "Beefull", otowatt: "otoWATT", "5sarj": "5Şarj", ksarj: "K-Şarj", aostechnology: "AOS",
+  mkssarj: "MKS", greenscience: "Green", sarjmatik: "ŞMatik", isarj: "i-Şarj", acropol: "Acropol", acropolsarj: "Acropol", lumicle: "Lumicle", epower: "ePower", onizsarj: "Öniz", solarsarj: "Solar", mycharge: "MyChg",
   rstchargepoint: "RST", hizzlanchargendrive: "Hızz", getacharge: "GetChg", fixcharge: "FixChg", checkpoint: "ChkPt", tuvturk: "TÜV", qcquiksarj: "Quik", plugdrive: "P&D", biogreen: "BioGr",
-  monokonelektrik: "Mono", fastgo: "FastGo", bp: "BP", opet: "Opet", aytemiz: "Aytmz", zes: "ZES", trugo: "Trugo", esarj: "Eşarj", ovolt: "Ovolt", otojet: "Otojet", tesla: "Tesla", varr: "Varr",
-  voltla: "Voltla", voltup: "VoltUp", efish: "Efish", epsis: "Epsis", "360enerji": "360°", sarjtak: "ŞTak", gioev: "GioEV", e4sarj: "E4", bcharge: "B-Chg", qcharge: "Q-Chg", gsmcharge: "GSM", evccharge: "EVC", usarj: "U-Şarj", onlife: "onLife", tora: "Tora", adze: "Adze", ekos: "Ekos", kes: "KES" };
+  monokonelektrik: "Mono", fastgo: "FastGo", bp: "BP", opet: "Opet", aytemiz: "Aytemiz", zes: "ZES", trugo: "Trugo", esarj: "Eşarj", ovolt: "Ovolt", otojet: "Otojet", tesla: "Tesla", varr: "Varr",
+  voltla: "Voltla", voltup: "VoltUp", efish: "Efish", epsis: "Epsis", "360enerji": "360°", sarjtak: "Şarjtak", gioev: "GioEV", e4sarj: "E4", bcharge: "B-Chg", qcharge: "Q-Chg", gsmcharge: "GSM", evccharge: "EVC", usarj: "U-Şarj", onlife: "onLife", tora: "Tora", adze: "Adze", ekos: "Ekos", kes: "KES" };
 const SHORTC = new Map();
 const GENEL = /^(şarj|sarj|charge|charging|enerji|energy|elektrik|mobilite|tm|car|rental|solar|akıllı|ve)$/i;
 function shortName(b) {
@@ -1847,8 +1847,10 @@ function shortName(b) {
     const w = b.replace(/plus/gi, "+").replace(/[^\p{L}\p{N}+&°\- ]/gu, " ").trim().split(/\s+/).filter(Boolean);
     n = w.find(x => !GENEL.test(x)) || w[0] || b;
     // TAMAMI BÜYÜK uzun ad ya da tamamı küçük ad baş harfi büyük yazılır; 4 harfe kadar kısaltmalar (ADZE, KES) olduğu gibi kalır
-    if ((n === n.toLocaleUpperCase("tr") && [...n].length > 4) || n === n.toLocaleLowerCase("tr")) n = n.charAt(0).toLocaleUpperCase("tr") + n.slice(1).toLocaleLowerCase("tr");
-    n = [...n].slice(0, 6).join("");
+    // Türkçe harf yoksa (EPSIS, MINUS) küçültmede I → i olur, ı değil
+    const dil = /[İıŞşĞğÇçÖöÜü]/.test(n) ? "tr" : "en";
+    if ((n === n.toLocaleUpperCase(dil) && [...n].length > 4) || n === n.toLocaleLowerCase(dil)) n = n.charAt(0).toLocaleUpperCase(dil) + n.slice(1).toLocaleLowerCase(dil);
+    if ([...n].length > 7) n = [...n].slice(0, 6).join("") + ".";
   }
   SHORTC.set(b, n); return n;
 }
