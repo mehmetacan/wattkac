@@ -22,13 +22,21 @@ const DURAK = [ // batıdan doğuya
   await p.goto("https://wattkac.com/#g=harita", { waitUntil: "networkidle" });
   await p.waitForFunction(() => typeof M !== "undefined" && M.all && M.all.length > 1000);
   await p.evaluate(() => { M.map.setView([39.2, 34.9], 6, { animate: false }); });
-  await p.addStyleTag({ content: `#ders{position:fixed;left:14px;right:14px;top:118px;z-index:99999;background:rgba(15,27,61,.94);color:#fff;border-radius:16px;
-    padding:12px 16px;font:700 16px/1.35 system-ui,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:opacity .25s;pointer-events:none}
-    #ders b{color:#FFD400}#ders .n{display:inline-flex;width:24px;height:24px;border-radius:50%;background:#FFD400;color:#0F1B3D;align-items:center;justify-content:center;margin-right:8px;font-size:14px}
-    #dokun{position:fixed;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:rgba(255,212,0,.55);border:3px solid #FFD400;z-index:99999;pointer-events:none;opacity:0;transition:opacity .2s}` });
+  await p.addStyleTag({ content: `@import url('https://fonts.googleapis.com/css2?family=Anton&display=block');
+    #ders{position:fixed;left:0;right:0;top:118px;z-index:99999;background:linear-gradient(90deg,rgba(18,5,31,.93),rgba(59,20,102,.9));color:#fff;
+    padding:12px 18px 14px;font:800 17px/1.3 'Plus Jakarta Sans',system-ui,sans-serif;border-top:3px solid #FF2D95;border-bottom:3px solid #FF2D95;
+    box-shadow:0 8px 24px rgba(18,5,31,.35);transition:opacity .25s;pointer-events:none}
+    #ders b{color:#FFD24A}#ders .g{display:inline-block;font:400 18px/1 Anton,Impact,sans-serif;letter-spacing:1.5px;background:#FF2D95;color:#fff;padding:5px 12px 6px;transform:skewX(-10deg);box-shadow:3px 3px 0 #12051F;margin:0 10px 6px 0}
+    #ders .y{display:block;font:400 25px/1.1 Anton,Impact,sans-serif;letter-spacing:.5px;text-transform:uppercase}
+    #bitti{position:fixed;inset:0;z-index:99998;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(18,5,31,.55);opacity:0;transition:opacity .35s;pointer-events:none}
+    #bitti .bb{width:100%;text-align:center;background:linear-gradient(90deg,transparent,rgba(18,5,31,.92) 15%,rgba(18,5,31,.92) 85%,transparent);padding:20px 0 24px}
+    #bitti .t{padding:10px 0 2px;font:400 50px/1.2 Anton,Impact,sans-serif;letter-spacing:1px;text-transform:uppercase;background:linear-gradient(180deg,#FFF3A8,#FFD24A 45%,#FF8A3D);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 0 #12051F)}
+    #bitti .s{font:800 19px/1.3 'Plus Jakarta Sans',system-ui,sans-serif;color:#fff;margin-top:10px}#bitti .s b{color:#5EF0FF}
+    #dokun{position:fixed;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:rgba(255,45,149,.45);border:3px solid #FF2D95;box-shadow:0 0 18px #FF2D95;z-index:99999;pointer-events:none;opacity:0;transition:opacity .2s}` });
   await p.evaluate(() => { const d = document.createElement("div"); d.id = "ders"; d.style.opacity = 0; document.body.append(d);
+    const e = document.createElement("div"); e.id = "bitti"; e.lang = "tr"; e.innerHTML = '<div class="bb"><div class="t">Görev tamamlandı</div><div class="s">27 istasyonda <b>10,90 TL/kWh</b> · 20–30 Kasım</div></div>'; document.body.append(e);
     const t = document.createElement("div"); t.id = "dokun"; document.body.append(t); });
-  const ders = (html, ust = 118) => p.evaluate(([h, u]) => { const d = document.getElementById("ders"); d.innerHTML = h; d.style.top = u + "px"; d.style.opacity = h ? 1 : 0; }, [html, ust]);
+  const ders = (html, ust = 118) => p.evaluate(([h, u]) => { const d = document.getElementById("ders"); d.lang = "tr"; d.innerHTML = h; d.style.top = u + "px"; d.style.opacity = h ? 1 : 0; }, [html, ust]);
   const dokun = async (sel) => { const el = p.locator(sel).first(); await el.scrollIntoViewIfNeeded(); const k = await el.boundingBox();
     await p.evaluate(([x, y]) => { const t = document.getElementById("dokun"); t.style.left = x + "px"; t.style.top = y + "px"; t.style.opacity = 1; }, [k.x + k.width / 2, k.y + k.height / 2]);
     await bekle(650); await el.click(); await p.evaluate(() => document.getElementById("dokun").style.opacity = 0); };
@@ -47,37 +55,39 @@ const DURAK = [ // batıdan doğuya
     document.body.append(x); let i = 0; (function f() { x.style.background = i++ % 2 ? "rgba(0,0,0,.01)" : "rgba(0,0,0,.02)"; requestAnimationFrame(f); })(); });
 
   await bekle(600);
-  await ders(`<span class="n">1</span>wattkac.com'da <b>Kampanyalar</b> sekmesine geç`);
+  await ders(`<span class="g">GÖREV 1</span><span class="y">Kampanyalar sekmesine geç</span>`);
   await bekle(1500);
   await dokun('button[data-go="kamp"]');
   await bekle(700);
-  await ders(`<span class="n">2</span>En Yakıt kampanyasında <b>Haritada gör</b>'e dokun`);
+  await ders(`<span class="g">GÖREV 2</span><span class="y">En Yakıt'ta “Haritada gör”e dokun</span>`);
   await p.evaluate(() => { const k = document.querySelector('[data-kmap="enyakit-secili-istasyonlarda"]').closest("article, .card, li, div.kamp") || document.querySelector('[data-kmap="enyakit-secili-istasyonlarda"]').parentElement.parentElement;
     k.scrollIntoView({ behavior: "smooth", block: "center" }); k.style.transition = "box-shadow .4s"; setTimeout(() => k.style.boxShadow = "0 0 0 4px #FFD400, 0 12px 30px rgba(0,0,0,.15)", 900); });
   await bekle(2600);
   await dokun('[data-kmap="enyakit-secili-istasyonlarda"]');
   await bekle(400);
-  await ders(`<span class="n">3</span>Haritada yalnızca <b>10,90 TL/kWh</b> olan 26 istasyon kalır`, 168);
+  await ders(`<span class="g">GÖREV 3</span><span class="y">27 istasyon haritada</span><b>10,90 TL/kWh</b> olan noktalar kalır`, 168);
   await p.evaluate(() => M.map.flyToBounds(L.latLngBounds(M.filtered.map(s => [s.lat, s.lon])).pad(.08), { duration: 1 }));
   await bekle(2800);
-  await ders(`Batıdan doğuya kampanyalı noktalar`, 168);
+  await ders(`<span class="y">Batıdan doğuya 27 istasyon</span>`, 168);
   for (const [la, lo, z] of DURAK) {
     await p.evaluate(([la, lo, z]) => new Promise(r => { M.map.once("moveend", () => setTimeout(r, 50)); M.map.flyTo([la, lo], z, { duration: 1 }); }), [la, lo, z]);
     await bekle(lo === 32.86 ? 500 : 1100);
     if (process.env.DEBUG) { await p.screenshot({ path: path.join(cikti, `durak_${lo}.jpg`), scale: "css" }); console.log(lo, await p.evaluate(() => [M.view.length, document.querySelectorAll(".leaflet-marker-icon").length, M.map.getZoom()].join(" "))); }
     if (lo === 32.86) { // Ankara'da bir istasyonu aç
-      await ders(`<span class="n">4</span>İstasyona dokun: <b>indirimli fiyat</b> ve anlık durum`, 168);
+      await ders(`<span class="g">GÖREV 4</span><span class="y">İstasyona dokun</span><b>İndirimli fiyat</b> ve anlık durum`, 168);
       const id = await p.evaluate(() => M.filtered.find(s => /Podium/.test(s.name)).id);
       await p.evaluate(id => selectStation(id), id);
       await bekle(4200);
       await p.evaluate(() => { M.sel = null; M.group = null; document.getElementById("v-harita").dataset.s = "peek"; renderSheet(); renderMarkers(true); });
-      await ders(`Batıdan doğuya kampanyalı noktalar`, 168);
+      await ders(`<span class="y">Batıdan doğuya 27 istasyon</span>`, 168);
       await bekle(500);
     }
   }
-  await ders(`20–30 Kasım · <b>26 noktada 10,90 TL/kWh</b>`, 168);
+  await ders("", 168);
   await p.evaluate(() => new Promise(r => { M.map.once("moveend", () => setTimeout(r, 50)); M.map.flyToBounds(L.latLngBounds(M.filtered.map(s => [s.lat, s.lon])).pad(.08), { duration: 1.2 }); }));
-  await bekle(2800);
+  await bekle(900);
+  await p.evaluate(() => document.getElementById("bitti").style.opacity = 1);
+  await bekle(2600);
   await cdp.send("Page.stopScreencast");
   await bekle(300);
   await b.close();
