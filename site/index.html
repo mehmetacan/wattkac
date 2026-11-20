@@ -2212,7 +2212,7 @@ const DURUM_AG = {
   lumicle: { birim: "ünitenin", yol: "tarayici", slug: "lumicle" },
   ecojet: { birim: "ünitenin", yol: "tarayici", slug: "ecojet" },
   eka: { birim: "ünitenin", yol: "tarayici", slug: "ekaenerji", marka: "EKA Enerji" },
-  epdk: { birim: "istasyonun", yol: "tarayici", sure: 10e3 } };
+  epdk: { birim: "istasyonun", yol: "sunucu", enCok: 1 } };
 const durumAg = s => { if (s.cih) { const k = Object.keys(DURUM_AG).find(k => k !== "epdk" && (DURUM_AG[k].marka ? s.brand === DURUM_AG[k].marka : s.id.startsWith(k))); if (k) return k; } return s.eid ? "epdk" : null; };
 const DUR = { id: null, ac: null, d: undefined };   // d: undefined = alınıyor, null = alınamadı, {cihazlar} = sonuç
 function durumBirak() { if (DUR.ac) DUR.ac.abort(); DUR.id = null; DUR.ac = null; DUR.d = undefined; }
@@ -2253,14 +2253,6 @@ async function durumTarayici(s, ag, signal) {
   for (const id of s.cih) for (const v of h.get(String(id)) || []) cihazlar.push(v);
   return { cihazlar };   // istasyonun lokasyonları listede yoksa "Anlık durum bilinmiyor"
 }
-// EPDK anlık durum: api.wattkac.com üzerinden tek istasyon sorgusu (hafif, CORS açık).
-const EPDK_API = "https://api.wattkac.com";
-async function epdkTarayici(s, signal) {
-  const r = await fetch(`${EPDK_API}/api/station/${s.eid}/availability`, { signal, credentials: "omit" });
-  if (!r.ok) throw new Error("HTTP " + r.status);
-  const j = await r.json();
-  return { cihazlar: { [s.eid]: j.available ? "bos" : "sarj" } };
-}
 function durumIste(s, ag) {
   if (DUR.id === s.id) return;   // bu detay için zaten istendi
   durumBirak();
@@ -2268,8 +2260,8 @@ function durumIste(s, ag) {
   DUR.id = id; DUR.ac = ac;
   let to = 0;
   const is = a.yol === "tarayici"
-    ? (to = setTimeout(() => ac.abort(), a.sure || OCPI_SURE_MS), ag === "epdk" ? epdkTarayici(s, ac.signal) : durumTarayici(s, ag, ac.signal))
-    : fetch(`/api/durum/${ag}?c=` + s.cih.slice(0, a.enCok || 20).map(encodeURIComponent).join(","), { signal: ac.signal })
+    ? (to = setTimeout(() => ac.abort(), OCPI_SURE_MS), durumTarayici(s, ag, ac.signal))
+    : fetch(`/api/durum/${ag}?c=` + (ag === "epdk" ? [s.eid] : s.cih).slice(0, a.enCok || 20).map(encodeURIComponent).join(","), { signal: ac.signal })
         .then(r => r.ok ? r.json() : null).then(j => j && j.ok && j.cihazlar ? j : null);
   is.catch(() => null).then(d => {
     clearTimeout(to);

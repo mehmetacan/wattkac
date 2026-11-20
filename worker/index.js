@@ -358,12 +358,8 @@ const SOL_URL = "https://cpms-api.doldurapp.com/ChargePoint/GetChargePointLocati
 // aşılıyor; yalnızca /api/public/locations kullanılır.
 const EPSIS_URL = "https://www.epsis.net/api/public/locations?lang=tr";
 const EPSIS_TAZE_DK = 15;
-// EPDK Şarj@TR: sarjtr.epdk.gov.tr/sarjet/api/stations (tüm istasyonlar, ~2,4 MB, tek istek).
-// İstasyon id'leri 8 haneli (14xxxxxx), soket id'leri 6 haneli — text scan ile ayrılır.
-// available: istasyonun müsait olup olmadığı (true/false). Yalnızca id ve available okunur.
-const EPDK_SARJTR_URL = "https://sarjtr.epdk.gov.tr/sarjet/api/stations";
-const EPDK_SARJTR_BASLIK = { "user-agent": "Dart/3.4 (dart:io)", accept: "application/json" };
-const EPDK_KALIP = /"id":(14\d{6})\b|"available":(true|false)/g;
+// EPDK Şarj@TR anlık durumu api.wattkac.com'dan (sarjtr Worker IP'lerini engelliyor); anahtar Worker secret'ı EPDK_API_KEY
+const EPDK_API = "https://api.wattkac.com";
 
 // BIG Station: tek cihaz kaydı → durum (yalnızca status ve liveStatus okunur)
 function cihazDurumu(x) {
@@ -484,21 +480,26 @@ function epsisTaze(guncel, simdi = Date.now()) {
   const t = typeof guncel === "string" ? Date.parse(guncel) : NaN;
   return Number.isFinite(t) && simdi - t <= EPSIS_TAZE_DK * 60000 && t - simdi <= 120000;
 }
-// EPDK Şarj@TR: metin taranır (EPDK_KALIP); istasyon id (14xxxxxx) → available. Ham metin yalnızca bu blokta yaşar.
-const epdkKimlik = id => /^\d{8,}$/.test(id);
-async function epdkCek(getir, signal) {
-  const r = await getir(EPDK_SARJTR_URL, { headers: EPDK_SARJTR_BASLIK, signal });
-  if (!r.ok) throw new Error("durum " + r.status);
-  let t = await r.text();
-  const harita = Object.create(null), kalip = new RegExp(EPDK_KALIP);
-  let son = null;
-  for (let m; (m = kalip.exec(t));) {
-    if (m[1] !== undefined) son = m[1];
-    else if (son !== null) { harita[son] = m[2] === "true" ? "bos" : "sarj"; son = null; }
-  }
-  t = null;
-  if (!Object.keys(harita).length) throw new Error("durum boş");
-  return harita;
+// Tek istasyon: /api/durum/epdk?c=14621635 → {ok, zaman, cihazlar: {"14621635": "bos" | "sarj"}}; 60 sn önbellek
+async function epdkIstek(request, url, env, ctx) {
+  if (request.method !== "GET") return json({ ok: false }, 405);
+  const id = String(url.searchParams.get("c") || "");
+  if (!/^\d{6,10}$/.test(id)) return json({ ok: false, hata: "c" }, 400);
+  if (!env.EPDK_API_KEY) return json({ ok: false, neden: "anahtar yok" }, 503);
+  const onb = typeof caches !== "undefined" && caches.default, anahtar = `https://wattkac.com/__durum/epdk/${id}`;
+  if (onb) { const h = await onb.match(anahtar).catch(() => null); if (h) return h; }
+  const ac = new AbortController(), zam = setTimeout(() => ac.abort(), DURUM_SURE_MS);
+  let r;
+  try { r = await fetch(`${EPDK_API}/api/station/${id}/availability`, { headers: { "X-API-Key": env.EPDK_API_KEY }, signal: ac.signal }); }
+  catch { return json({ ok: false, neden: "erişilemedi" }, 503); }
+  finally { clearTimeout(zam); }
+  if (r.status === 404) return json({ ok: true, zaman: new Date().toISOString(), cihazlar: { [id]: "bilinmiyor" } }, 200, { "cache-control": "public, max-age=60" });
+  if (!r.ok) return json({ ok: false, neden: "durum " + r.status }, 503);
+  const j = await r.json().catch(() => null);
+  if (!j || typeof j.available !== "boolean") return json({ ok: false, neden: "biçim" }, 503);
+  const yanit = json({ ok: true, zaman: new Date().toISOString(), cihazlar: { [id]: j.available ? "bos" : "sarj" } }, 200, { "cache-control": "public, max-age=60" });
+  if (onb) ctx.waitUntil(onb.put(anahtar, yanit.clone()).catch(() => {}));
+  return yanit;
 }
 const ocpiAg = sirket => ({ anahtar: `https://wattkac.com/__durum/${sirket}`, cek: (g, s) => ocpiCek(sirket, g, s), kimlik: ocpiKimlik, enCok: 40 });
 // İzinli ağlar. kimlik: kimlik biçimi (yoksa 1–9 haneli sayı), enCok: istek başına en çok kimlik (yoksa DURUM_EN_COK)
@@ -511,7 +512,6 @@ const DURUM_AGLAR = {
   lumicle: ocpiAg("lumicle"),
   ecojet: ocpiAg("ecojet"),
   solinved: { anahtar: "https://wattkac.com/__durum/solinved", cek: solCek },
-  // epdk: sarjtr.epdk.gov.tr Cloudflare Worker IP'lerini engelliyor (HTTP 418); durum tarayıcıdan çekiliyor (site/index.html → epdkTarayici)
 };
 async function durumCek(ag, getir) {
   const ac = new AbortController(), zam = setTimeout(() => ac.abort(), DURUM_SURE_MS);
@@ -571,6 +571,9 @@ export default {
       url.hostname = ANA;
       url.port = "";
       return Response.redirect(url.toString(), 301);
+    }
+    if (url.pathname === "/api/durum/epdk") {
+      try { return await epdkIstek(request, url, env, ctx); } catch { return json({ ok: false }, 503); }
     }
     const durumAg = /^\/api\/durum\/([a-z]{1,20})$/.exec(url.pathname);
     if (durumAg && Object.prototype.hasOwnProperty.call(DURUM_AGLAR, durumAg[1])) {   // veritabanı gerektirmez
