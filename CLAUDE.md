@@ -6,6 +6,7 @@ Bu depo @wattkac Instagram sayfasının kampanya verisini, görsellerini ve payl
 - Kampanya bilgisi yalnızca kampanya sahibinin kendi sitesi, uygulaması veya resmi sosyal medya hesabından alınır.
 - Derleme siteleri (sarjkampanya, sarjharitasi, sarjevi, hangikredi vb.) yalnızca kampanyayı fark etmek için kullanılır, kaynak olarak gösterilmez.
 - Resmi sayfa açılamadıysa teklife `"kontrol": true` eklenir. Panel bunu "RESMİ · KONTROL ET" olarak gösterir.
+- İstisna (20 Kasım 2026, kullanıcı kararı): En Yakıt'ın 20–30 Kasım "seçili istasyonlarda DC 10,90 TL/kWh" kampanyası ağın resmi Instagram duyurusuyla doğrulanmış sayılır; tarama bu kayda `kontrol` eklemez. İstasyon listesi `data/secili_istasyonlar.json` → `enyakit` (elle girildi).
 
 ## İstasyon verisi (13 Kasım 2026)
 - İstasyon listesi ve konumu için birinci kaynak şarj ağının kendi sitesi/uygulamasıdır; EPDK ikinci kaynaktır (güncel ve doğru olmayabiliyor). EPDK yalnızca ağın listesi olmayan ya da listesinde bulunmayan bilgiyi (soket, güç) tamamlamak için kullanılır.

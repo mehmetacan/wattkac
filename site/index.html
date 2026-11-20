@@ -1020,7 +1020,7 @@ function buildIndexes() {
   const pat = p => p.includes("\\b") ? p : reEsc(p);
   const add = (name, pats) => NET_RES.push([name, new RegExp(pats.map(pat).join("|"))]);
   NET_RES = [];
-  NETS.forEach(n => add(n, ALIAS[n] || [fold(n)]));
+  NETS.forEach(n => add(n, ALIAS[n] || KNOWN_EXTRA[n] || [fold(n)]));
   const names = new Set();
   C.forEach(c => c.st.forEach(s => { if (s !== ALL && !NETS.includes(s) && !/uygulama/i.test(s)) names.add(s); }));
   // kampanyadaki ağ adı KNOWN_EXTRA'daki bir adla aynıysa (ör. "Acropol Şarj") onun kalıpları kullanılır

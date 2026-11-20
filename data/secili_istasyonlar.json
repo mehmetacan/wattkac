@@ -372,5 +372,145 @@
    }
   ],
   "cekildi": "2026-11-20"
+ },
+ "enyakit": {
+  "ag": "Enyakıt",
+  "kaynak": "https://www.instagram.com/p/Df7rKDtxSmT/",
+  "baslik": "Seçili istasyonlarda DC 10,90 TL/kWh",
+  "bitis": "30 Kasım 2026",
+  "not": "Liste En Yakıt'ın resmi Instagram duyurusundaki görsellerden elle girildi (Çekmeköy 1-2 tek kayıt); secili_istasyonlar.py bu anahtara dokunmaz.",
+  "cekildi": "2026-11-20",
+  "istasyonlar": [
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Bi Mola Çiftalan"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Bi Mola Fenertepe"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Bi Mola Işıklar"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Bi Mola Odayeri"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Bi Mola Çekmeköy"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Bi Mola Poyrazköy(Güney)"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Bi Mola Poyrazköy(Kuzey)"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Bi Mola Reşadiye"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Bi Mola Ömerli"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Rota İncek Avm"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Podium AVM"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Mamak Beykoz Petrol"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Rindera İş Ve Yaşam Merkezi"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Yalçınlar Cam Söke"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Keller Williams Bodrum"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Fame Beach Hotel Kemer"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Kaia Coracesium Otel"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Ens Park Merzifon"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Sorgun Safa Termal Hotel"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Taşpınar Dinlenme Tesisi Pozantı"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Timya Outlet AVM"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Polat Palandöken Hotel"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Akcan Otomotiv Volvo"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Park Hayat(Güney) Ş.Urfa Yönü"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Park Hayat(Kuzey) G.Antep Yönü"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Teymur Continental Hotel"
+   }
+  ]
  }
 }
