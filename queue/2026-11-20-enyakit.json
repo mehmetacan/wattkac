@@ -1,101 +1,102 @@
 [
-  {
-    "id": "enyakit_kasim_post",
-    "grup": "2026-11-20-enyakit__enyakit",
-    "tip": "karusel",
-    "zaman": "2026-11-21T09:30:00+03:00",
-    "baslik": "En Yakıt · 10,90 TL/kWh + Starbucks",
-    "tur": "istasyon",
-    "kaynaklar": [
-      {
-        "ad": "En Yakıt: 20–30 Kasım seçili istasyonlarda 10,90 TL/kWh",
-        "url": "https://www.instagram.com/p/Df7rKDtxSmT/",
-        "tur": "kontrol",
-        "not": "Ağın resmi Instagram duyurusu; resmi site açılamadı. Tarih ve istasyon listesini linkten kontrol et."
-      },
-      {
-        "ad": "En Yakıt: Şarj Ettikçe Yıldız Kazan (Starbucks)",
-        "url": "https://www.instagram.com/en_yakit/",
-        "tur": "kontrol",
-        "not": "Kaynak En Yakıt'ın duyuru görseli (kullanıcıdan); gönderinin kendisini bulup tarih ve koşulları kontrol et."
-      }
-    ],
-    "gorseller": [
-      "media/2026-11-20-enyakit/1_kapak.jpg",
-      "media/2026-11-20-enyakit/2_bolge1.jpg",
-      "media/2026-11-20-enyakit/3_bolge2.jpg",
-      "media/2026-11-20-enyakit/4_bolge3.jpg",
-      "media/2026-11-20-enyakit/5_starbucks.jpg"
-    ],
-    "aciklama": "⚡ En Yakıt'ta DC şarj 10,90 TL/kWh! (20–30 Kasım)\n\nSeçili 27 En Yakıt istasyonunda DC şarj 14,90 yerine 10,90 TL/kWh. İndirim En Yakıt uygulamasından başlatılan şarjda otomatik uygulanır.\n\n📍 Geçerli 27 istasyon (konumlar görsellerde haritada):\n• İstanbul / Kuzey Marmara Otoyolu: Bi Mola Çiftalan, Fenertepe, Işıklar, Odayeri, Çekmeköy 1-2, Poyrazköy Güney ve Kuzey, Reşadiye, Ömerli\n• Ankara: Rota İncek AVM, Podium AVM, Mamak Beykoz Petrol\n• Muğla: Keller Williams Bodrum · Aydın: Yalçınlar Cam Söke · Denizli: Rindera İş ve Yaşam Merkezi\n• Antalya: Fame Beach Hotel Kemer, Kaia Coracesium Otel Alanya\n• Adana: Taşpınar Dinlenme Tesisi Pozantı · Yozgat: Sorgun Safa Termal Hotel · Amasya: Ens Park Merzifon\n• Gaziantep: Teymur Continental Hotel · Şanlıurfa: Park Hayat Güney ve Kuzey (Karaköprü)\n• Diyarbakır: Akcan Otomotiv Volvo · Rize: Timya Outlet AVM · Erzurum: Polat Palandöken Hotel\n\n🗺️ Haritada görmek için: wattkac.com → Kampanyalar → En Yakıt → Haritada gör\n\n☕ Bu keyfin üzerine bir kahve iyi gider: 1 Kasım 2026 – 30 Nisan 2027 arasında En Yakıt'ta 200 kWh şarjı tamamlayana 15 Starbucks yıldızı.\n\nHangi istasyon yoluna yakın? Yorumlara yaz 👇 Kaydet, yola çıkmadan bak 🔖\n\nKoşullar değişebilir; şarjdan önce En Yakıt uygulamasından kontrol edin.\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #wattkac #enyakıt #starbucks",
-    "durum": "bekliyor",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null
-  },
-  {
-    "id": "enyakit_kasim_hikaye",
-    "grup": "2026-11-20-enyakit__enyakit",
-    "tip": "hikaye",
-    "zaman": "2026-11-21T10:30:00+03:00",
-    "baslik": "En Yakıt · 10,90 TL/kWh + Starbucks",
-    "tur": "istasyon",
-    "kaynaklar": null,
-    "gorseller": [
-      "media/2026-11-20-enyakit/hikaye.jpg"
-    ],
-    "aciklama": "",
-    "durum": "bekliyor",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null
-  },
-  {
-    "id": "enyakit_kasim_hikaye_kahve",
-    "grup": "2026-11-20-enyakit__enyakit_kahve",
-    "tip": "hikaye",
-    "zaman": "2026-11-21T10:32:00+03:00",
-    "baslik": "En Yakıt · 10,90 TL/kWh + Starbucks",
-    "tur": "istasyon",
-    "kaynaklar": null,
-    "gorseller": [
-      "media/2026-11-20-enyakit/hikaye_starbucks.jpg"
-    ],
-    "aciklama": "",
-    "durum": "bekliyor",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null
-  },
-  {
-    "id": "enyakit_kasim_reels",
-    "grup": "2026-11-20-enyakit__enyakit_reels",
-    "tip": "reels",
-    "zaman": "2026-11-21T19:30:00+03:00",
-    "baslik": "Reels · En Yakıt 10,90 TL/kWh istasyonları wattkac.com'da",
-    "tur": "reels",
-    "kaynaklar": [
-      {
-        "ad": "En Yakıt: 20–30 Kasım seçili istasyonlarda 10,90 TL/kWh",
-        "url": "https://www.instagram.com/p/Df7rKDtxSmT/",
-        "tur": "kontrol",
-        "not": "Ağın resmi Instagram duyurusu; resmi site açılamadı. Tarih ve istasyon listesini linkten kontrol et."
-      },
-      {
-        "ad": "En Yakıt: Şarj Ettikçe Yıldız Kazan (Starbucks)",
-        "url": "https://www.instagram.com/en_yakit/",
-        "tur": "kontrol",
-        "not": "Kaynak En Yakıt'ın duyuru görseli (kullanıcıdan); gönderinin kendisini bulup tarih ve koşulları kontrol et."
-      }
-    ],
-    "gorseller": [
-      "docs/reels/2026-11-20_enyakit.mp4"
-    ],
-    "aciklama": "⚡ En Yakıt'ta 10,90 TL/kWh olan istasyonlar nerede? wattkac.com'da 3 adımda bul 👇 🌴\n\n1️⃣ wattkac.com'u aç, Kampanyalar sekmesine geç\n2️⃣ En Yakıt kampanyasında \"Haritada gör\"e dokun\n3️⃣ Haritada yalnızca kampanyalı 27 istasyon kalır; istasyona dokununca indirimli fiyatı ve anlık durumu gör\n\n📅 20–30 Kasım · seçili En Yakıt istasyonlarında DC şarj 14,90 yerine 10,90 TL/kWh, uygulamadan başlatılan şarjda otomatik.\n\n☕ Bu fiyatların üstüne bir sıcak kahve içelim: En Yakıt'ta 200 kWh şarja 15 Starbucks yıldızı (1 Kasım – 30 Nisan).\n\nKaydet, yola çıkmadan bak 🔖 Takip et 👉 @wattkac\n\nKoşullar değişebilir; şarjdan önce En Yakıt uygulamasından kontrol edin.\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #wattkac #enyakıt #starbucks",
-    "durum": "bekliyor",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null,
-    "kapak_ms": 1200
-  }
+ {
+  "id": "enyakit_kasim_post",
+  "grup": "2026-11-20-enyakit__enyakit",
+  "tip": "karusel",
+  "zaman": "2026-11-21T09:30:00+03:00",
+  "baslik": "En Yakıt · 10,90 TL/kWh + Starbucks",
+  "tur": "istasyon",
+  "kaynaklar": [
+   {
+    "ad": "En Yakıt: 20–30 Kasım seçili istasyonlarda 10,90 TL/kWh",
+    "url": "https://www.instagram.com/p/Df7rKDtxSmT/",
+    "tur": "kontrol",
+    "not": "Ağın resmi Instagram duyurusu; resmi site açılamadı. Tarih ve istasyon listesini linkten kontrol et."
+   },
+   {
+    "ad": "En Yakıt: Şarj Ettikçe Yıldız Kazan (Starbucks)",
+    "url": "https://www.instagram.com/en_yakit/",
+    "tur": "kontrol",
+    "not": "Kaynak En Yakıt'ın duyuru görseli (kullanıcıdan); gönderinin kendisini bulup tarih ve koşulları kontrol et."
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-20-enyakit/1_kapak.jpg",
+   "media/2026-11-20-enyakit/2_bolge1.jpg",
+   "media/2026-11-20-enyakit/3_bolge2.jpg",
+   "media/2026-11-20-enyakit/4_bolge3.jpg",
+   "media/2026-11-20-enyakit/5_starbucks.jpg"
+  ],
+  "aciklama": "⚡ En Yakıt'ta DC şarj 10,90 TL/kWh! (20–30 Kasım)\n\nSeçili 27 En Yakıt istasyonunda DC şarj 14,90 yerine 10,90 TL/kWh. İndirim En Yakıt uygulamasından başlatılan şarjda otomatik uygulanır.\n\n📍 Geçerli 27 istasyon (konumlar görsellerde haritada):\n• İstanbul / Kuzey Marmara Otoyolu: Bi Mola Çiftalan, Fenertepe, Işıklar, Odayeri, Çekmeköy 1-2, Poyrazköy Güney ve Kuzey, Reşadiye, Ömerli\n• Ankara: Rota İncek AVM, Podium AVM, Mamak Beykoz Petrol\n• Muğla: Keller Williams Bodrum · Aydın: Yalçınlar Cam Söke · Denizli: Rindera İş ve Yaşam Merkezi\n• Antalya: Fame Beach Hotel Kemer, Kaia Coracesium Otel Alanya\n• Adana: Taşpınar Dinlenme Tesisi Pozantı · Yozgat: Sorgun Safa Termal Hotel · Amasya: Ens Park Merzifon\n• Gaziantep: Teymur Continental Hotel · Şanlıurfa: Park Hayat Güney ve Kuzey (Karaköprü)\n• Diyarbakır: Akcan Otomotiv Volvo · Rize: Timya Outlet AVM · Erzurum: Polat Palandöken Hotel\n\n🗺️ Haritada görmek için: wattkac.com → Kampanyalar → En Yakıt → Haritada gör\n\n☕ Bu keyfin üzerine bir kahve iyi gider: 1 Kasım 2026 – 30 Nisan 2027 arasında En Yakıt'ta 200 kWh şarjı tamamlayana 15 Starbucks yıldızı.\n\nHangi istasyon yoluna yakın? Yorumlara yaz 👇 Kaydet, yola çıkmadan bak 🔖\n\nKoşullar değişebilir; şarjdan önce En Yakıt uygulamasından kontrol edin.\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #wattkac #enyakıt #starbucks",
+  "durum": "paylasildi",
+  "deneme": 0,
+  "ig_media_id": "18108349706629531",
+  "hata": null,
+  "paylasim_zamani": "2026-11-21T06:30:05+00:00"
+ },
+ {
+  "id": "enyakit_kasim_hikaye",
+  "grup": "2026-11-20-enyakit__enyakit",
+  "tip": "hikaye",
+  "zaman": "2026-11-21T10:30:00+03:00",
+  "baslik": "En Yakıt · 10,90 TL/kWh + Starbucks",
+  "tur": "istasyon",
+  "kaynaklar": null,
+  "gorseller": [
+   "media/2026-11-20-enyakit/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "enyakit_kasim_hikaye_kahve",
+  "grup": "2026-11-20-enyakit__enyakit_kahve",
+  "tip": "hikaye",
+  "zaman": "2026-11-21T10:32:00+03:00",
+  "baslik": "En Yakıt · 10,90 TL/kWh + Starbucks",
+  "tur": "istasyon",
+  "kaynaklar": null,
+  "gorseller": [
+   "media/2026-11-20-enyakit/hikaye_starbucks.jpg"
+  ],
+  "aciklama": "",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "enyakit_kasim_reels",
+  "grup": "2026-11-20-enyakit__enyakit_reels",
+  "tip": "reels",
+  "zaman": "2026-11-21T19:30:00+03:00",
+  "baslik": "Reels · En Yakıt 10,90 TL/kWh istasyonları wattkac.com'da",
+  "tur": "reels",
+  "kaynaklar": [
+   {
+    "ad": "En Yakıt: 20–30 Kasım seçili istasyonlarda 10,90 TL/kWh",
+    "url": "https://www.instagram.com/p/Df7rKDtxSmT/",
+    "tur": "kontrol",
+    "not": "Ağın resmi Instagram duyurusu; resmi site açılamadı. Tarih ve istasyon listesini linkten kontrol et."
+   },
+   {
+    "ad": "En Yakıt: Şarj Ettikçe Yıldız Kazan (Starbucks)",
+    "url": "https://www.instagram.com/en_yakit/",
+    "tur": "kontrol",
+    "not": "Kaynak En Yakıt'ın duyuru görseli (kullanıcıdan); gönderinin kendisini bulup tarih ve koşulları kontrol et."
+   }
+  ],
+  "gorseller": [
+   "docs/reels/2026-11-20_enyakit.mp4"
+  ],
+  "aciklama": "⚡ En Yakıt'ta 10,90 TL/kWh olan istasyonlar nerede? wattkac.com'da 3 adımda bul 👇 🌴\n\n1️⃣ wattkac.com'u aç, Kampanyalar sekmesine geç\n2️⃣ En Yakıt kampanyasında \"Haritada gör\"e dokun\n3️⃣ Haritada yalnızca kampanyalı 27 istasyon kalır; istasyona dokununca indirimli fiyatı ve anlık durumu gör\n\n📅 20–30 Kasım · seçili En Yakıt istasyonlarında DC şarj 14,90 yerine 10,90 TL/kWh, uygulamadan başlatılan şarjda otomatik.\n\n☕ Bu fiyatların üstüne bir sıcak kahve içelim: En Yakıt'ta 200 kWh şarja 15 Starbucks yıldızı (1 Kasım – 30 Nisan).\n\nKaydet, yola çıkmadan bak 🔖 Takip et 👉 @wattkac\n\nKoşullar değişebilir; şarjdan önce En Yakıt uygulamasından kontrol edin.\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #wattkac #enyakıt #starbucks",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null,
+  "kapak_ms": 1200
+ }
 ]
