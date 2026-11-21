@@ -46,10 +46,11 @@
    "media/2026-11-20-enyakit/hikaye.jpg"
   ],
   "aciklama": "",
-  "durum": "bekliyor",
+  "durum": "paylasildi",
   "deneme": 0,
-  "ig_media_id": null,
-  "hata": null
+  "ig_media_id": "18469796392136708",
+  "hata": null,
+  "paylasim_zamani": "2026-11-21T07:30:05+00:00"
  },
  {
   "id": "enyakit_kasim_hikaye_kahve",
