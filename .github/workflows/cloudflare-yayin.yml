@@ -10,6 +10,8 @@ on:
       - "site/**"
       - "data/kampanyalar.json"
       - "wrangler.jsonc"
+      - "tools/seo_sayfalar.py"
+      - "data/secili_istasyonlar.json"
       - "worker/**"
       - ".github/workflows/cloudflare-yayin.yml"
   workflow_run:
