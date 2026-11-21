@@ -1,220 +1,221 @@
 [
-  {
-    "id": "sabit_banka_post",
-    "grup": "2026-11-21-sabit__banka",
-    "tip": "karusel",
-    "tur": "ozet",
-    "zaman": "2026-11-22T12:00:00+03:00",
-    "baslik": "Sabitlenecek · Banka kartı şarj kampanyaları",
-    "kaynaklar": [
-      {
-        "ad": "Garanti BBVA: 75 TL bonus",
-        "url": "https://www.bonus.com.tr/kampanyalar/ovolt-akaryakit-bonus-kampanyalari",
-        "tur": "resmi"
-      },
-      {
-        "ad": "Garanti BBVA: 100 TL bonus",
-        "url": "https://www.bonus.com.tr/kampanyalar/varr-sarj-istasyonlari-kampanya",
-        "tur": "resmi"
-      },
-      {
-        "ad": "Ziraat Bankası: %20 Jest Lira",
-        "url": "https://www.bankkart.com.tr/kampanyalar/akaryakit/elektrikli-sarj-istasyonlarinda-750-tl-jest-lira",
-        "tur": "resmi"
-      },
-      {
-        "ad": "Yapı Kredi: 435 TL Worldpuan",
-        "url": "https://www.worldcard.com.tr/kampanyalar/worldun-35-yilina-ozel-wat-mobilitede-400-tl-ve-uzeri-harcamaya-435-tlye-varan-worldpuan",
-        "tur": "resmi"
-      },
-      {
-        "ad": "Akbank: %20 indirim",
-        "url": "https://www.axess.com.tr/axess/kampanyalar/axesse-ozel-voltlada-20-indirim",
-        "tur": "resmi"
-      },
-      {
-        "ad": "Halkbank: %10 indirim",
-        "url": "https://www.paraf.com.tr/tr/parafi-taniyin/elektrikli-arac-sarj-istasyonu-indirimi.html",
-        "tur": "resmi"
-      },
-      {
-        "ad": "Halkbank: 75 TL ParafPara",
-        "url": "https://www.paraf.com.tr/tr/kampanyalar/akaryakit/elektrikli-arac-sarj-istasyonu-harcamalariniza-450-tl-parafpara1.html",
-        "tur": "resmi"
-      },
-      {
-        "ad": "QNB: 50 TL ParaPuan",
-        "url": "https://www.qnbcard.com.tr/kampanyalar/elektrikli-arac-sarj-istasyonlarinda-500-tlye-varan-parapuan-kazanin-43443",
-        "tur": "resmi"
-      },
-      {
-        "ad": "QNB: 125 mil",
-        "url": "https://milesandsmilesqnb.com.tr/kampanyalar/elektrikli-arac-sarj-istasyonlarinda-1250ye-varan-mil-2044",
-        "tur": "resmi"
-      },
-      {
-        "ad": "ON Dijital: %20 iade",
-        "url": "https://on.com.tr/on-kredi-karti-elektrikli-arac-sarj-kampanyasi",
-        "tur": "kontrol",
-        "not": "Resmi sayfa otomatik açılamadı; linkten kontrol et."
-      },
-      {
-        "ad": "VakıfBank: %20 indirim",
-        "url": "https://www.vakifkart.com.tr/kampanyalar/elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41122",
-        "tur": "resmi"
-      },
-      {
-        "ad": "VakıfBank: %20 indirim",
-        "url": "https://www.vakifkart.com.tr/kampanyalar/recycle-card-ile-elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41128",
-        "tur": "resmi"
-      },
-      {
-        "ad": "DenizBank: %10 indirim",
-        "url": "https://www.denizkartim.com/kampanyalar/elektrikli-arac-sarj-istasyonlarinda-500-tlye-varan-indirim",
-        "tur": "resmi"
-      },
-      {
-        "ad": "Kuveyt Türk: %10 indirim",
-        "url": "https://www.kuveytturk.com.tr/kampanyalar/kendim-icin/kart-kampanyalari/elektrikli-arac-sarjiniza-ozel-750-tlye-varan-indirim",
-        "tur": "resmi"
-      },
-      {
-        "ad": "Garanti BBVA · Shell Recharge: %50 bonus",
-        "url": "https://www.shell.com.tr/suruculer/shellden-avantajli-kampanyalar/shell-recharge-kullanicilarina-ozel-garanti-bbva-kredi-kartlari-ile-yaptiklari-sarjlamalarda-50-bonus-firsati.html",
-        "tur": "resmi"
-      }
-    ],
-    "gorseller": [
-      "media/2026-11-21-sabit/banka.jpg"
-    ],
-    "aciklama": "💳 Banka kartıyla şarj kampanyaları · Kasım 2026\n\nHangi kartla hangi şarj ağında ne kazanırsın? Güncel liste 👇\n\n• Garanti BBVA: 75 TL bonus Ovolt · 100 TL bonus Varr · %50 bonus Shell Recharge uygulaması (30 Kasım)\n• Ziraat Bankası: %20 Jest Lira, 20 şarj ağında (30 Kasım)\n• VakıfBank: %20 indirim, kredi kartıyla 6 ağda · Recycle Card ile 12 ağda (30 Kasım)\n• Akbank: %20 indirim, Voltla uygulamasıyla 10 ağda (22 Kasım)\n• Yapı Kredi: 435 TL Worldpuan, WAT Mobilite (30 Kasım)\n• QNB: 50 TL ParaPuan · Miles&Smiles QNB ile 125 mil, tüm istasyonlarda (30 Kasım)\n• Halkbank: 75 TL ParafPara, tüm istasyonlarda (30 Kasım) · Paraf Doğal ile %10 indirim (süresiz)\n• DenizBank: %10 indirim, tüm istasyonlarda (30 Kasım)\n• Kuveyt Türk: %10 indirim, tüm istasyonlarda (30 Kasım)\n• ON Dijital: %20 iade, tüm istasyonlarda (30 Kasım; resmi sayfada doğrulanıyor)\n\n📍 Her kampanyanın koşulları ve geçerli istasyonları: wattkac.com/kampanyalar (profildeki bağlantı)\n\nKartın hangisi? Yorumlara yaz 👇 Kaydet, şarjdan önce bak 🔖\n\nKoşullar değişebilir; katılmadan önce resmi sayfadan kontrol edin.\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#şarjkampanyası #elektrikliaraç #elektriklioto #şarj #kredikartı #garantibbva #ziraatbankası #vakıfbank #akbank #yapıkredi #qnb #halkbank #wattkac",
-    "durum": "bekliyor",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null
-  },
-  {
-    "id": "sabit_sarj_post",
-    "grup": "2026-11-21-sabit__sarj",
-    "tip": "karusel",
-    "tur": "ozet",
-    "zaman": "2026-11-22T18:00:00+03:00",
-    "baslik": "Sabitlenecek · Şarj ağı kampanyaları",
-    "kaynaklar": [
-      {
-        "ad": "Eşarj: %10 Eşarj Puan",
-        "url": "https://www.allianz.com.tr/tr_TR/faaliyetlerimiz/kampanyalar/elektrikli-arac-sarj-kampanyasi.html",
-        "tur": "resmi"
-      },
-      {
-        "ad": "ASTOR Şarj: DC 10,90 TL/kWh",
-        "url": "https://www.instagram.com/astorsarj/",
-        "tur": "resmi"
-      },
-      {
-        "ad": "Trugo: Togg'a %20 indirim",
-        "url": "https://trugo.com.tr/individual/news/togg-sahiplerine-ozel-trugo-dc-sarj-istasyonlarinda-percent20-indirim",
-        "tur": "resmi"
-      },
-      {
-        "ad": "ZES: %15 indirim",
-        "url": "https://zes.net/tr/kampanyalar/vodafonered",
-        "tur": "resmi"
-      },
-      {
-        "ad": "ZES: %15 indirim",
-        "url": "https://zes.net/tr/kampanyalar/tavkampanyasi",
-        "tur": "resmi"
-      },
-      {
-        "ad": "ZES: %15 nakit iade",
-        "url": "https://zes.net/tr/kampanyalar/vodafonepay",
-        "tur": "resmi"
-      },
-      {
-        "ad": "ZES: 1.250 TL şarj desteği",
-        "url": "https://zes.net/tr/kampanyalar/pirelli",
-        "tur": "resmi"
-      },
-      {
-        "ad": "ZES: 30 kWh şarj hediyesi",
-        "url": "https://zes.net/tr/kampanyalar/metrokampanyasi",
-        "tur": "resmi"
-      },
-      {
-        "ad": "Otopriz: %30 indirim",
-        "url": "https://otopriz.com.tr/kampanyalar/indirimli-istasyonlar/kampanya-detaylari",
-        "tur": "resmi"
-      },
-      {
-        "ad": "Otopriz: DC'de %30 indirim",
-        "url": "https://otopriz.com.tr/kampanyalar/otopriz-gunu-kampanyasi/kampanya-detaylari",
-        "tur": "resmi"
-      },
-      {
-        "ad": "Otopriz: DC'de %10 indirim",
-        "url": "https://otopriz.com.tr/kampanyalar/favori-istasyon-kampanyasi/kampanya-detaylari",
-        "tur": "resmi"
-      },
-      {
-        "ad": "Otopriz: Doğum gününde %20",
-        "url": "https://otopriz.com.tr/kampanyalar/dogum-gunu-kampanyasi/kampanya-detay",
-        "tur": "resmi"
-      },
-      {
-        "ad": "Ovolt: %12 indirim",
-        "url": "https://ovolt.com.tr/duyurular/1/15",
-        "tur": "resmi"
-      },
-      {
-        "ad": "Ovolt: 50 TL VoltPuan",
-        "url": "https://ovolt.com.tr/duyurular/1/8",
-        "tur": "resmi"
-      },
-      {
-        "ad": "WAT Mobilite: Her salı %10 indirim",
-        "url": "https://www.watmobilite.com/kampanyalar/watla-avantaji-katla-sali-mode-on",
-        "tur": "resmi"
-      },
-      {
-        "ad": "WAT Mobilite: Ford'a %4 indirim",
-        "url": "https://www.watmobilite.com/kampanyalar/ford-kullanicilarina-ozel-4-indirim",
-        "tur": "resmi"
-      },
-      {
-        "ad": "Aksa Şarj: %15 indirim",
-        "url": "https://www.aksasarj.com.tr/tr/kampanyalar",
-        "tur": "resmi"
-      },
-      {
-        "ad": "Aksa Şarj: %15 indirim",
-        "url": "https://www.aksasarj.com.tr/tr/kampanyalar",
-        "tur": "resmi"
-      },
-      {
-        "ad": "Enyakıt: DC 10,90 TL/kWh",
-        "url": "https://www.instagram.com/p/Df7rKDtxSmT/",
-        "tur": "resmi"
-      },
-      {
-        "ad": "Enyakıt: 200 kWh'ye 15 Starbucks yıldızı",
-        "url": "https://www.instagram.com/en_yakit/",
-        "tur": "kontrol",
-        "not": "Resmi sayfa otomatik açılamadı; linkten kontrol et."
-      },
-      {
-        "ad": "Rotawatt: %20 indirim",
-        "url": "https://www.instagram.com/rotawatt/",
-        "tur": "resmi"
-      }
-    ],
-    "gorseller": [
-      "media/2026-11-21-sabit/sarj.jpg"
-    ],
-    "aciklama": "⚡ Şarj ağlarının kendi kampanyaları · Kasım 2026\n\nKart şartı olmadan, ağların ve şarj uygulamalarının indirimleri 👇\n\n• ZES: %15 Vodafone Red · %15 TAV Passport · %15 iade Vodafone Pay · 30 kWh Metro alışverişine · 1.250 TL Pirelli lastik alana (Aralık sonu)\n• Otopriz: seçili 73 istasyonda %30 (30 Kasım) · ayın son günü DC %30 · favori istasyonda DC %10 · doğum gününde %20\n• En Yakıt: seçili 27 istasyonda DC 10,90 TL/kWh (30 Kasım) · 200 kWh'ye 15 Starbucks yıldızı (30 Nisan; resmi sayfada doğrulanıyor)\n• ASTOR Şarj: güncel uygulamada DC 10,90 · AC 8,99 TL/kWh (30 Kasım)\n• WAT Mobilite: her salı %10 (29 Aralık) · Ford sahiplerine %4\n• Ovolt: dahil istasyonlarda %12 (22 Kasım) · yeni üyeye 50 TL VoltPuan\n• Trugo: Togg sahiplerine DC'de %20 (30 Kasım)\n• Eşarj: Allianz EV kasko sahiplerine %10 Eşarj Puan (31 Aralık)\n• Aksa Şarj: Karaköprü ve Pendik Duru Park istasyonlarında %15\n• Rotawatt: uygulamayla 25 ağda %20 (31 Aralık)\n\n🗺️ Hangi istasyonda geçerli? wattkac.com haritasında kampanyalı istasyonları gör (profildeki bağlantı)\n\nSen hangi ağda şarj ediyorsun? Yorumlara yaz 👇 Kaydet 🔖\n\nKoşullar değişebilir; katılmadan önce resmi sayfadan kontrol edin.\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#şarjkampanyası #elektrikliaraç #elektriklioto #şarjistasyonu #zes #otopriz #enyakıt #astorşarj #watmobilite #ovolt #trugo #eşarj #wattkac",
-    "durum": "bekliyor",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null
-  }
+ {
+  "id": "sabit_banka_post",
+  "grup": "2026-11-21-sabit__banka",
+  "tip": "karusel",
+  "tur": "ozet",
+  "zaman": "2026-11-22T12:00:00+03:00",
+  "baslik": "Sabitlenecek · Banka kartı şarj kampanyaları",
+  "kaynaklar": [
+   {
+    "ad": "Garanti BBVA: 75 TL bonus",
+    "url": "https://www.bonus.com.tr/kampanyalar/ovolt-akaryakit-bonus-kampanyalari",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Garanti BBVA: 100 TL bonus",
+    "url": "https://www.bonus.com.tr/kampanyalar/varr-sarj-istasyonlari-kampanya",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Ziraat Bankası: %20 Jest Lira",
+    "url": "https://www.bankkart.com.tr/kampanyalar/akaryakit/elektrikli-sarj-istasyonlarinda-750-tl-jest-lira",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Yapı Kredi: 435 TL Worldpuan",
+    "url": "https://www.worldcard.com.tr/kampanyalar/worldun-35-yilina-ozel-wat-mobilitede-400-tl-ve-uzeri-harcamaya-435-tlye-varan-worldpuan",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Akbank: %20 indirim",
+    "url": "https://www.axess.com.tr/axess/kampanyalar/axesse-ozel-voltlada-20-indirim",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Halkbank: %10 indirim",
+    "url": "https://www.paraf.com.tr/tr/parafi-taniyin/elektrikli-arac-sarj-istasyonu-indirimi.html",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Halkbank: 75 TL ParafPara",
+    "url": "https://www.paraf.com.tr/tr/kampanyalar/akaryakit/elektrikli-arac-sarj-istasyonu-harcamalariniza-450-tl-parafpara1.html",
+    "tur": "resmi"
+   },
+   {
+    "ad": "QNB: 50 TL ParaPuan",
+    "url": "https://www.qnbcard.com.tr/kampanyalar/elektrikli-arac-sarj-istasyonlarinda-500-tlye-varan-parapuan-kazanin-43443",
+    "tur": "resmi"
+   },
+   {
+    "ad": "QNB: 125 mil",
+    "url": "https://milesandsmilesqnb.com.tr/kampanyalar/elektrikli-arac-sarj-istasyonlarinda-1250ye-varan-mil-2044",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ON Dijital: %20 iade",
+    "url": "https://on.com.tr/on-kredi-karti-elektrikli-arac-sarj-kampanyasi",
+    "tur": "kontrol",
+    "not": "Resmi sayfa otomatik açılamadı; linkten kontrol et."
+   },
+   {
+    "ad": "VakıfBank: %20 indirim",
+    "url": "https://www.vakifkart.com.tr/kampanyalar/elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41122",
+    "tur": "resmi"
+   },
+   {
+    "ad": "VakıfBank: %20 indirim",
+    "url": "https://www.vakifkart.com.tr/kampanyalar/recycle-card-ile-elektrikli-sarj-istasyonlarindan-harcamalariniza-20-indirim-41128",
+    "tur": "resmi"
+   },
+   {
+    "ad": "DenizBank: %10 indirim",
+    "url": "https://www.denizkartim.com/kampanyalar/elektrikli-arac-sarj-istasyonlarinda-500-tlye-varan-indirim",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Kuveyt Türk: %10 indirim",
+    "url": "https://www.kuveytturk.com.tr/kampanyalar/kendim-icin/kart-kampanyalari/elektrikli-arac-sarjiniza-ozel-750-tlye-varan-indirim",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Garanti BBVA · Shell Recharge: %50 bonus",
+    "url": "https://www.shell.com.tr/suruculer/shellden-avantajli-kampanyalar/shell-recharge-kullanicilarina-ozel-garanti-bbva-kredi-kartlari-ile-yaptiklari-sarjlamalarda-50-bonus-firsati.html",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-21-sabit/banka.jpg"
+  ],
+  "aciklama": "💳 Banka kartıyla şarj kampanyaları · Kasım 2026\n\nHangi kartla hangi şarj ağında ne kazanırsın? Güncel liste 👇\n\n• Garanti BBVA: 75 TL bonus Ovolt · 100 TL bonus Varr · %50 bonus Shell Recharge uygulaması (30 Kasım)\n• Ziraat Bankası: %20 Jest Lira, 20 şarj ağında (30 Kasım)\n• VakıfBank: %20 indirim, kredi kartıyla 6 ağda · Recycle Card ile 12 ağda (30 Kasım)\n• Akbank: %20 indirim, Voltla uygulamasıyla 10 ağda (22 Kasım)\n• Yapı Kredi: 435 TL Worldpuan, WAT Mobilite (30 Kasım)\n• QNB: 50 TL ParaPuan · Miles&Smiles QNB ile 125 mil, tüm istasyonlarda (30 Kasım)\n• Halkbank: 75 TL ParafPara, tüm istasyonlarda (30 Kasım) · Paraf Doğal ile %10 indirim (süresiz)\n• DenizBank: %10 indirim, tüm istasyonlarda (30 Kasım)\n• Kuveyt Türk: %10 indirim, tüm istasyonlarda (30 Kasım)\n• ON Dijital: %20 iade, tüm istasyonlarda (30 Kasım; resmi sayfada doğrulanıyor)\n\n📍 Her kampanyanın koşulları ve geçerli istasyonları: wattkac.com/kampanyalar (profildeki bağlantı)\n\nKartın hangisi? Yorumlara yaz 👇 Kaydet, şarjdan önce bak 🔖\n\nKoşullar değişebilir; katılmadan önce resmi sayfadan kontrol edin.\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#şarjkampanyası #elektrikliaraç #elektriklioto #şarj #kredikartı #garantibbva #ziraatbankası #vakıfbank #akbank #yapıkredi #qnb #halkbank #wattkac",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "sabit_sarj_post",
+  "grup": "2026-11-21-sabit__sarj",
+  "tip": "karusel",
+  "tur": "ozet",
+  "zaman": "2026-11-22T18:00:00+03:00",
+  "baslik": "Sabitlenecek · Şarj ağı kampanyaları",
+  "kaynaklar": [
+   {
+    "ad": "Eşarj: %10 Eşarj Puan",
+    "url": "https://www.allianz.com.tr/tr_TR/faaliyetlerimiz/kampanyalar/elektrikli-arac-sarj-kampanyasi.html",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ASTOR Şarj: DC 10,90 TL/kWh",
+    "url": "https://www.instagram.com/astorsarj/",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Trugo: Togg'a %20 indirim",
+    "url": "https://trugo.com.tr/individual/news/togg-sahiplerine-ozel-trugo-dc-sarj-istasyonlarinda-percent20-indirim",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ZES: %15 indirim",
+    "url": "https://zes.net/tr/kampanyalar/vodafonered",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ZES: %15 indirim",
+    "url": "https://zes.net/tr/kampanyalar/tavkampanyasi",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ZES: %15 nakit iade",
+    "url": "https://zes.net/tr/kampanyalar/vodafonepay",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ZES: 1.250 TL şarj desteği",
+    "url": "https://zes.net/tr/kampanyalar/pirelli",
+    "tur": "resmi"
+   },
+   {
+    "ad": "ZES: 30 kWh şarj hediyesi",
+    "url": "https://zes.net/tr/kampanyalar/metrokampanyasi",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Otopriz: %30 indirim",
+    "url": "https://otopriz.com.tr/kampanyalar/indirimli-istasyonlar/kampanya-detaylari",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Otopriz: DC'de %30 indirim",
+    "url": "https://otopriz.com.tr/kampanyalar/otopriz-gunu-kampanyasi/kampanya-detaylari",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Otopriz: DC'de %10 indirim",
+    "url": "https://otopriz.com.tr/kampanyalar/favori-istasyon-kampanyasi/kampanya-detaylari",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Otopriz: Doğum gününde %20",
+    "url": "https://otopriz.com.tr/kampanyalar/dogum-gunu-kampanyasi/kampanya-detay",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Ovolt: %12 indirim",
+    "url": "https://ovolt.com.tr/duyurular/1/15",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Ovolt: 50 TL VoltPuan",
+    "url": "https://ovolt.com.tr/duyurular/1/8",
+    "tur": "resmi"
+   },
+   {
+    "ad": "WAT Mobilite: Her salı %10 indirim",
+    "url": "https://www.watmobilite.com/kampanyalar/watla-avantaji-katla-sali-mode-on",
+    "tur": "resmi"
+   },
+   {
+    "ad": "WAT Mobilite: Ford'a %4 indirim",
+    "url": "https://www.watmobilite.com/kampanyalar/ford-kullanicilarina-ozel-4-indirim",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Aksa Şarj: %15 indirim",
+    "url": "https://www.aksasarj.com.tr/tr/kampanyalar",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Aksa Şarj: %15 indirim",
+    "url": "https://www.aksasarj.com.tr/tr/kampanyalar",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Enyakıt: DC 10,90 TL/kWh",
+    "url": "https://www.instagram.com/p/Df7rKDtxSmT/",
+    "tur": "resmi"
+   },
+   {
+    "ad": "Enyakıt: 200 kWh'ye 15 Starbucks yıldızı",
+    "url": "https://www.instagram.com/en_yakit/",
+    "tur": "kontrol",
+    "not": "Resmi sayfa otomatik açılamadı; linkten kontrol et."
+   },
+   {
+    "ad": "Rotawatt: %20 indirim",
+    "url": "https://www.instagram.com/rotawatt/",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-21-sabit/sarj.jpg"
+  ],
+  "aciklama": "⚡ Şarj ağlarının kendi kampanyaları · Kasım 2026\n\nKart şartı olmadan, ağların ve şarj uygulamalarının indirimleri 👇\n\n• ZES: %15 Vodafone Red · %15 TAV Passport · %15 iade Vodafone Pay · 30 kWh Metro alışverişine · 1.250 TL Pirelli lastik alana (Aralık sonu)\n• Otopriz: seçili 73 istasyonda %30 (30 Kasım) · ayın son günü DC %30 · favori istasyonda DC %10 · doğum gününde %20\n• En Yakıt: seçili 27 istasyonda DC 10,90 TL/kWh (30 Kasım) · 200 kWh'ye 15 Starbucks yıldızı (30 Nisan; resmi sayfada doğrulanıyor)\n• ASTOR Şarj: güncel uygulamada DC 10,90 · AC 8,99 TL/kWh (30 Kasım)\n• WAT Mobilite: her salı %10 (29 Aralık) · Ford sahiplerine %4\n• Ovolt: dahil istasyonlarda %12 (22 Kasım) · yeni üyeye 50 TL VoltPuan\n• Trugo: Togg sahiplerine DC'de %20 (30 Kasım)\n• Eşarj: Allianz EV kasko sahiplerine %10 Eşarj Puan (31 Aralık)\n• Aksa Şarj: Karaköprü ve Pendik Duru Park istasyonlarında %15\n• Rotawatt: uygulamayla 25 ağda %20 (31 Aralık)\n\n🗺️ Hangi istasyonda geçerli? wattkac.com haritasında kampanyalı istasyonları gör (profildeki bağlantı)\n\nSen hangi ağda şarj ediyorsun? Yorumlara yaz 👇 Kaydet 🔖\n\nKoşullar değişebilir; katılmadan önce resmi sayfadan kontrol edin.\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#şarjkampanyası #elektrikliaraç #elektriklioto #şarjistasyonu #zes #otopriz #enyakıt #astorşarj #watmobilite #ovolt #trugo #eşarj #wattkac",
+  "durum": "paylasildi",
+  "deneme": 0,
+  "ig_media_id": "17900903061682667",
+  "hata": null,
+  "paylasim_zamani": "2026-11-21T09:00:05+00:00"
+ }
 ]
