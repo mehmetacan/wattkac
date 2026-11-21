@@ -50,14 +50,14 @@ h1{font-size:54px;font-weight:800;letter-spacing:-1.5px;line-height:1.05;margin-
 h1 span{background:#FFD400;border-radius:12px;padding:0 12px}
 .alt{font-size:22px;color:#5B6680;font-weight:600;margin-top:12px}
 .liste{margin-top:24px;border-top:2px solid #EEF1F6}
-.sat{display:flex;align-items:center;gap:22px;padding:12px 0;border-bottom:2px solid #EEF1F6}
+.sat{display:flex;align-items:center;gap:22px;padding:9px 0;border-bottom:2px solid #EEF1F6}
 .lg{flex:none;width:176px;height:58px;display:flex;align-items:center;justify-content:center}
 .lg img{max-width:176px;max-height:58px;object-fit:contain}
 .lg.simge{flex-direction:column;height:auto;gap:4px}.lg.simge img{max-height:46px}.lg.simge small{font-size:17px;font-weight:800;color:#0F1B3D}
 .lg.yazi{font-size:24px;font-weight:800;letter-spacing:-.3px;text-align:center;line-height:1.1;color:#0F1B3D}
 .tk{flex:1;min-width:0}
-.tk div{display:flex;justify-content:space-between;align-items:baseline;gap:14px;font-size:21px;line-height:1.38;color:#334155}
-.tk b{color:#0F1B3D;font-weight:800}
+.tk div{display:flex;justify-content:space-between;align-items:baseline;gap:14px;font-size:21px;line-height:1.34;color:#334155}
+.tk b{color:#0F1B3D;font-weight:800;font-size:25px;letter-spacing:-.3px;padding:0 4px;margin:0 -2px;border-radius:4px;background:linear-gradient(transparent 52%,#FFE066 52%,#FFE066 92%,transparent 92%)}
 .tk i{flex:none;font-style:normal;font-size:16px;font-weight:700;color:#0E7490;background:#E6F4F7;border-radius:8px;padding:2px 9px}
 .tk i.yakin{color:#B42318;background:#FDECEA}
 .alt2{position:absolute;left:56px;right:56px;bottom:40px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
