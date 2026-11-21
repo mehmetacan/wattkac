@@ -150,6 +150,40 @@ def main():
         p.write_text(icerik, encoding="utf-8")
         yazilan.append(yol)
 
+    # ---- Kampanya listesi (site/index.html → flatten + kampIdler ile aynı sıra ve kimlik: banka → ağ → uygulama)
+    DERLEME = ("sarjharitasi", "sarjevi", "hangikredi", "sarjkampanya", "arabamsarj", "donanimhaber")
+    jsslug = lambda x: re.sub(r"[^a-z0-9]+", "-", fold(x)).lstrip("-")[:40].rstrip("-")
+    kamp = []
+    for tip, liste, alan in (("banka", D["bankalar"], "offers"), ("ag", D["istasyonlar"], "own"), ("uygulama", D.get("uygulamalar", []), "offers")):
+        for k in liste:
+            for o in k.get(alan, []):
+                if aktif(o, bugun) and o.get("link") and not any(h in o["link"] for h in DERLEME):
+                    kamp.append({"tip": tip, "k": k, "o": o})
+    n_id, n_url, sayfa_url = collections.Counter(), collections.Counter(), {}
+    for c in kamp:
+        o, k = c["o"], c["k"]
+        b = o.get("id") or f"{k['id']}-{jsslug(o.get('kisa') or o['big'] if c['tip'] == 'ag' else o['big'])}"
+        n_id[b] += 1
+        c["kampId"] = b if n_id[b] == 1 else f"{b}-{n_id[b]}"
+        st = [] if c["tip"] == "ag" else [x for x in o.get("st", []) if x != ALL]
+        c["aglar"] = st
+        # Başlıktaki kurum: kart koşullu uygulama kampanyasında banka ("Garanti BBVA Shell Recharge"), diğerlerinde kampanya sahibi
+        c["kurum"] = bankalar.get(o["kart"], o["kart"]) if c["tip"] == "uygulama" and o.get("kart") else k["name"]
+        if c["tip"] == "ag":   # ağın kendi kampanyasında koşul etiketi aranan ifadedir ("ZES Vodafone Red"); genel etiketler başlığa girmez
+            kisa = o.get("kisa") or ""
+            genel = re.match(r"(seçili|her |ayın|favori|doğum|güncel|dahil)", kisa, re.I)
+            c["ag_bas"] = "" if genel or slug(kisa) in slug(o["big"]) else kisa
+        elif c["tip"] == "uygulama" and o.get("kart"):
+            c["ag_bas"] = k["name"]
+        else:
+            c["ag_bas"] = " ".join(st) if st and len(st) <= 2 and ALL not in o.get("st", []) else ""
+        c["kok"] = slug(" ".join(x for x in (c["kurum"], c["ag_bas"], o["big"]) if x))[:80].strip("-")
+        n_url[c["kok"]] += 1
+    for c in kamp:   # aynı adı taşıyanlar açıklamanın ilk sözcükleriyle ayrılır (VakıfBank kredi kartı / Recycle Card)
+        u = c["kok"] if n_url[c["kok"]] == 1 else f"{c['kok']}-{slug(' '.join((c['o'].get('det') or '').split()[:3]))}"[:100].strip("-")
+        c["url"] = f"/kampanya/{u}/"
+        sayfa_url[id(c["o"])] = c["url"]
+
     def teklif_kart(baslik, o, alt=""):
         tarihler = f"Son gün: {e(o.get('son'))}" if o.get("son") else ""
         dogrulama = ' <span class="mut">(doğrulanıyor: resmi sayfadan teyit edin)</span>' if o.get("kontrol") else ""
@@ -157,6 +191,7 @@ def main():
                 f'<div>{e(o.get("det"))}</div>{f"<div class=mut>{e(alt)}</div>" if alt else ""}'
                 f'<div class="mut">{tarihler}{" · " if tarihler and o.get("join") else ""}{e(o.get("join"))}</div>'
                 + (f'<div class="mut" style="margin-top:4px">{e(o.get("kosul"))}</div>' if o.get("kosul") else "")
+                + (f'<a href="{sayfa_url[id(o)]}">Ayrıntılar ve istasyonlar</a> · ' if id(o) in sayfa_url else "")
                 + (f'<a href="{e(o["link"])}" rel="nofollow noopener" target="_blank">Resmi kampanya sayfası ↗</a>' if o.get("link") else "")
                 + "</div>")
 
@@ -226,6 +261,67 @@ def main():
                             f"Haritamızda toplam {toplam:,} istasyon var.</p>".replace(",", ".") + f'<ul class="ag">{li}</ul>',
                             None, [("WattKaç", "/"), ("Şarj ağları", None)]))
 
+    # ---- Kampanya sayfaları: her geçerli kampanyaya bir sayfa ("Garanti BBVA Shell Recharge kampanyası" gibi aramalar için)
+    secili = json.loads(pathlib.Path("data/secili_istasyonlar.json").read_text(encoding="utf-8")) if pathlib.Path("data/secili_istasyonlar.json").exists() else {}
+    son_kontrol = D.get("son_kontrol") or guncel
+    kadar = lambda s: s if not s[:1].isdigit() else f"{s}'{'e' if s.split()[-1] in ('Eylül', 'Ekim') else 'a'} kadar"
+    llms = []
+    for c in kamp:
+        o, k, tip, url = c["o"], c["k"], c["tip"], c["url"]
+        kurum, ag_bas = c["kurum"], c["ag_bas"]
+        tum = ALL in o.get("st", [])
+        if tip == "ag":
+            nerede = f"{kurum} istasyonlarında" + (" (seçili istasyonlar)" if re.search("seçili", (o.get("kisa") or "") + (o.get("det") or ""), re.I) else "")
+        elif tum:
+            nerede = "tüm şarj istasyonlarında"
+        else:
+            nerede = ", ".join(c["aglar"]) + " istasyonlarında" if c["aglar"] else ""
+        kart_kos = f"{bankalar.get(o['kart'], o['kart'])} kartıyla, {k['name']} uygulamasından başlatılan şarjda; " if tip == "uygulama" and o.get("kart") else ""
+        baslik_kok = f"{kurum}{' ' + ag_bas if ag_bas else ''} şarj kampanyası"
+        son = o.get("son") or ""
+        baslik = f"{baslik_kok}: {o['big']}" + (f" ({kadar(son)})" if son and son != 'Süreli değil' else "") + " · WattKaç"
+        gecerlilik = (f"{tarih(o['bas'])} – {tarih(o['bit'])}" if o.get("bas") and o.get("bit") else f"{tarih(o['bit'])} tarihine kadar" if o.get("bit") else "Süresi belirtilmemiş")
+        gun = [GUN_AD[g] for g in GUN_AD if g in (o.get("gunler") or [])]
+        gun_txt = ("Her " + " ve ".join(gun)) if gun and len(gun) < 7 else ""
+        kisaca = (f"{kurum}{' ' + ag_bas if ag_bas else ''} kampanyası: {o['big']}{f" ({o['det']})" if o.get('det') else ''}. {kart_kos}{nerede[:1].upper() + nerede[1:] if nerede else ''} geçerli"
+                  + (f", {gun_txt.lower()}" if gun_txt else "") + (f"; son gün {son}" if son and son != "Süreli değil" else "") + ".")
+        katil = o.get("join") or (o.get("kosul") if tip == "ag" else "") or ""
+        st_list = []
+        if tip == "ag" and k["id"] in secili:
+            st_list = [f"{x['ad']}" + (f" ({x['ilce']}/{x['il']})" if x.get("il") else "") for x in secili[k["id"]].get("istasyonlar", [])]
+        satir = [("Kampanya", o["big"]), ("Kurum", kurum + (" (şarj ağının kendi kampanyası)" if tip == "ag" else f" · {k['name']} uygulaması" if tip == "uygulama" and kurum != k["name"] else " (uygulama kampanyası)" if tip == "uygulama" else "")),
+                 ("Nerede geçerli", (kart_kos + nerede) or "—"), ("Geçerlilik", gecerlilik + (f" · {gun_txt}" if gun_txt else "")),
+                 ("Katılım", katil or "Resmi sayfadaki koşullara bakın"), ("Son kontrol", tarih(son_kontrol))]
+        tablo = "<table>" + "".join(f"<tr><th>{e(a)}</th><td>{e(b)}</td></tr>" for a, b in satir) + "</table>"
+        dogrulama = ('<p class="mut" style="margin-top:8px">Bu kampanyanın resmi sayfası otomatik açılamadı; tarih ve oranı resmi kaynaktan teyit edin.</p>' if o.get("kontrol") else "")
+        ilgili = [x for x in kamp if x is not c and (x["k"] is k or (c["aglar"] and set(c["aglar"]) & set(x["aglar"])) or (tip == "ag" and kurum in x["aglar"]))][:6]
+        ilgili_html = ("<h2>İlgili kampanyalar</h2><ul>" + "".join(f'<li><a href="{x["url"]}">{e(x["kurum"])}{" " + e(x["ag_bas"]) if x["ag_bas"] else ""}: {e(x["o"]["big"])}</a></li>' for x in ilgili) + "</ul>") if ilgili else ""
+        govde = (f"<h1>{e(baslik_kok)}: {e(o['big'])}</h1><p class='lead'><b>Kısaca:</b> {e(kisaca)}</p>"
+                 f'<a class="btn" href="/#g=harita&amp;kamp={e(c["kampId"])}">Geçerli istasyonları haritada gör</a>'
+                 f'<a class="btn ikincil" href="{e(o["link"])}" rel="nofollow noopener" target="_blank">Resmi kampanya sayfası ↗</a>'
+                 f"<h2>Kampanya bilgileri</h2>{tablo}{dogrulama}"
+                 + (f"<h2>Koşullar</h2><p>{e(o['kosul'])}</p>" if o.get("kosul") and o.get("kosul") != katil else "")
+                 + (f"<h2>Kampanyalı istasyonlar ({len(st_list)})</h2><ul>" + "".join(f"<li>{e(x)}</li>" for x in st_list) + "</ul>" if st_list else "")
+                 + ilgili_html
+                 + f'<p class="mut" style="margin-top:14px">Bilgiler {e(kurum)} resmi kaynağından derlendi · son kontrol {tarih(son_kontrol)}. Kampanya bitince bu sayfa kaldırılır.</p>')
+        sss = [(f"{baslik_kok} ne zaman bitiyor?", f"{gecerlilik}." + (f" {gun_txt} geçerli." if gun_txt else "")),
+               (f"{baslik_kok} nedir?", kisaca)]
+        if katil:
+            sss.append((f"{baslik_kok}na nasıl katılırım?", katil))
+        if st_list:
+            sss.append((f"{baslik_kok} hangi istasyonlarda geçerli?", ", ".join(st_list)))
+        elif nerede:
+            sss.append((f"{baslik_kok} hangi istasyonlarda geçerli?", (kart_kos + nerede)[:1].upper() + (kart_kos + nerede)[1:] + "."))
+        ld = [{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+                  {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in sss]},
+              {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+                  {"@type": "ListItem", "position": 1, "name": "WattKaç", "item": ALAN + "/"},
+                  {"@type": "ListItem", "position": 2, "name": "Kampanyalar", "item": ALAN + "/kampanyalar/"},
+                  {"@type": "ListItem", "position": 3, "name": baslik_kok, "item": ALAN + url}]}]
+        aciklama = kisaca[:155].rsplit(" ", 1)[0] + "…" if len(kisaca) > 158 else kisaca
+        yaz(url, sayfa(url, baslik, aciklama, govde, ld, [("WattKaç", "/"), ("Kampanyalar", "/kampanyalar/"), (kurum, None)]))
+        llms.append(f"- [{baslik_kok}: {o['big']}]({ALAN}{url}): {kisaca}")
+
     # ---- Kampanyalar sayfası
     kart = []
     for b in D["bankalar"]:
@@ -256,6 +352,14 @@ def main():
     urls = ["/"] + yazilan
     sm = "".join(f"<url><loc>{ALAN}{u}</loc><lastmod>{guncel}</lastmod><changefreq>daily</changefreq><priority>{'1.0' if u == '/' else '0.8' if u in ('/kampanyalar/', '/sarj-agi/') else '0.6'}</priority></url>" for u in urls)
     (SITE / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{sm}</urlset>', encoding="utf-8")
+    # Yapay zekâ aramaları (Gemini, ChatGPT, Perplexity) için düz metin özet: https://llmstxt.org
+    (SITE / "llms.txt").write_text(
+        "# WattKaç\n\n> Türkiye'de elektrikli araç şarj kampanyaları (kredi kartı bonus/iade, şarj ağlarının kendi indirimleri, uygulama kampanyaları), "
+        f"şarj ağlarının kWh fiyatları ve {str(f'{toplam:,}').replace(',', '.')} istasyonluk harita. " "Bilgiler bankaların ve şarj ağlarının resmi sayfalarından derlenir, her gün kontrol edilir. "
+        "Reklam veya iş birliği değildir. Instagram: https://www.instagram.com/wattkac/\n\n"
+        + f"Son kontrol: {tarih(son_kontrol)}\n\n## Sayfalar\n\n- [Tüm şarj kampanyaları]({ALAN}/kampanyalar/): güncel kampanyaların listesi\n"
+        f"- [Şarj ağları ve kWh fiyatları]({ALAN}/sarj-agi/): ağ başına AC/DC fiyat ve kampanyalar\n- [Harita]({ALAN}/): istasyonlar, fiyatlar, anlık durum\n\n"
+        "## Güncel kampanyalar\n\n" + "\n".join(llms) + "\n", encoding="utf-8")
     (SITE / "robots.txt").write_text(f"User-agent: *\nAllow: /\nDisallow: /panel\nDisallow: /api/\n\nSitemap: {ALAN}/sitemap.xml\n", encoding="utf-8")
     print(f"SEO: {len(yazilan)} statik sayfa, sitemap {len(urls)} adres")
 
