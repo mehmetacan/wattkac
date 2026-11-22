@@ -1,7 +1,7 @@
 {
   "donem": "Kasım 2026",
   "guncelleme": "2026-11-20",
-  "son_kontrol": "2026-11-21",
+  "son_kontrol": "2026-11-22",
   "genel_kartlar": "Paraf Doğal · QNB · ON",
   "kampanyasiz_bankalar": [
     "İş Bankası (Maximum)"
@@ -252,8 +252,7 @@
           "link": "https://on.com.tr/on-kredi-karti-elektrikli-arac-sarj-kampanyasi",
           "bas": "2026-11-01",
           "bit": "2026-11-30",
-          "kosul": "Fiziki ve sanal ON Kredi Kartı; cüzdan yükleme/ödemeleri hariç; iade 5 iş gününde",
-          "kontrol": true
+          "kosul": "Fiziki ve sanal ON Kredi Kartı; cüzdan yükleme/ödemeleri hariç; iade 5 iş gününde"
         }
       ]
     },
