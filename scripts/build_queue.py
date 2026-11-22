@@ -13,6 +13,7 @@ SAATLER = [(9, 30), (13, 0), (19, 30)]
 ILK_GUN = [(9, 30), (10, 0), (13, 0), (19, 30)]
 REKLAM_YOK = "ℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz."
 HASHTAG = "#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #kredikartı #wattkac"
+SITE = "🔎 Tüm şarj kampanyaları ve geçerli istasyonlar: wattkac.com/kampanyalar"
 HASHTAG_UYG = "#elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #wattkac"  # uygulama postu: kart koşulu yok
 
 
@@ -58,7 +59,7 @@ def uygulama_fiyat_caption(u, o):
     dc = sorted((r for r in rows if r.get("dc")), key=lambda r: (r["dc"][1], r["ag"]))[:5]
     ac = sorted((r for r in rows if r.get("ac")), key=lambda r: (r["ac"][1], r["ag"]))[:3]
     gt = gun_txt(o)
-    bas = f"⚡ {gt} {u['name']} uygulamasıyla şarjda {o['big']}!" if gt else f"⚡ {u['name']} uygulamasıyla şarjda {o['big']}!"
+    bas = f"⚡ {u['name']} şarj kampanyası ve fiyatları: {gt + ' ' if gt else ''}uygulamayla şarjda {o['big']}!"
     satir = [bas, "", f"🔋 {(gt.replace('Her ', '').capitalize() + ' günü') if gt else 'Kampanyada'} en ucuz DC (TL/kWh):"]
     satir += [f"• {r['ag']}: {tl(r['dc'][0])} → {tl(r['dc'][1])}" for r in dc]
     if ac:
@@ -68,7 +69,7 @@ def uygulama_fiyat_caption(u, o):
               f"📍 {len(o['st'])} ağ: {', '.join(o['st'])}",
               "", f"👉 {len(rows)} ağın tüm fiyatları için kaydır. wattkac.com'da istasyon detayında “Hangi uygulamayla? → {u['name']}” seç.",
               "", "Koşullar değişebilir; şarj etmeden önce uygulamadan kontrol edin.",
-              "", REKLAM_YOK, "", f"{HASHTAG_UYG} {tag(u['name'])} #şarjfiyatları"]
+              "", SITE, "", REKLAM_YOK, "", f"{HASHTAG_UYG} {tag(u['name'])} #şarjfiyatları"]
     return "\n".join(satir)
 
 
@@ -76,20 +77,20 @@ def caption(item, d):
     if item["tur"] == "ozet":
         if item["id"] == "ozet_bankalar":
             body = "\n".join(f"• {b['name']}: {' / '.join(o['big'] for o in banka_teklifleri(d, b))}" for b in d["bankalar"])
-            head = f"⚡ {d['donem']} şarj kampanyaları: hangi banka ne veriyor?"
+            head = f"⚡ Banka kartıyla şarj kampanyaları ({d['donem']}): hangi banka ne veriyor?"
         else:
             body = "\n".join(f"• {s['name']}: {s['cover']['big']} ({s['cover']['sub']})" for s in d["istasyonlar"])
-            head = f"⚡ {d['donem']}: şarj ağlarında hangi kampanyalar var?"
-        return f"{head}\n\n{body}\n\nHer kurumun detayı ayrı postta. Kaydedin, şarj etmeden önce bakın.\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n{REKLAM_YOK}\n\n{HASHTAG}"
+            head = f"⚡ Şarj ağı kampanyaları ({d['donem']}): hangi ağda ne indirim var?"
+        return f"{head}\n\n{body}\n\nHer kurumun detayı ayrı postta. Kaydedin, şarj etmeden önce bakın.\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n{SITE}\n\n{REKLAM_YOK}\n\n{HASHTAG}"
     if item["tur"] == "banka":
         b = item["_src"]
         lines = []
         for o in banka_teklifleri(d, b):
             st = ", ".join(o["st"])
             lines.append(f"✅ {o['big']}: {o['det']}\n📍 {st}\n📝 Katılım: {o['join']}\n⏱ Son gün: {o['son']}")
-        return (f"⚡ {b['name']} ile şarjda {b['cover']['big']}!\n\n" + "\n\n".join(lines) +
+        return (f"⚡ {b['name']} şarj kampanyası ({d['donem']}): {b['cover']['big']}!\n\n" + "\n\n".join(lines) +
                 f"\n\nKoşullar değişebilir; katılmadan önce bankanın resmi kanallarından kontrol edin."
-                f"\n\n{REKLAM_YOK}\n\n{HASHTAG} {tag(b['name'])}")
+                f"\n\n{SITE}\n\n{REKLAM_YOK}\n\n{HASHTAG} {tag(b['name'])}")
     if item["tur"] == "uygulama":
         u = item["_src"]
         o0 = uygulama_teklifleri(u)[0]
@@ -102,10 +103,10 @@ def caption(item, d):
                          f"\n📍 Geçerli ağlar: {', '.join(o['st'])}" + (f"\n📝 Katılım: {o['join']}" if o.get("join") else "") +
                          f"\n⏱ Son gün: {o['son']}")
         big = uygulama_teklifleri(u)[0]["big"]
-        return (f"⚡ {u['name']} uygulamasıyla şarjda {big}!\n\n" + "\n\n".join(lines) +
+        return (f"⚡ {u['name']} şarj kampanyası ({d['donem']}): uygulamayla şarjda {big}!\n\n" + "\n\n".join(lines) +
                 f"\n\nİndirim, şarjı {u['name']} uygulamasından başlatıp ödeyince geçerli."
                 f"\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin."
-                f"\n\n{REKLAM_YOK}\n\n{HASHTAG_UYG} {tag(u['name'])}")
+                f"\n\n{SITE}\n\n{REKLAM_YOK}\n\n{HASHTAG_UYG} {tag(u['name'])}")
     s = item["_src"]
     lines = [f"✅ {o['big']}: {o['det']} (son gün {o['son']})" for o in s["own"]]
     bl = s.get("birlesik")
@@ -114,8 +115,14 @@ def caption(item, d):
         lines += [f"• {k}: {v}" for k, v in bl["satirlar"]]
         lines.append(bl.get("not", ""))
     lines.append("\nKart kampanyalarının tamamı ve geçerli istasyonlar banka postlarımızda.")
-    return (f"⚡ {s['name']}: {s['cover']['big']}!\n\n" + "\n".join(lines) +
-            f"\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n{REKLAM_YOK}\n\n{HASHTAG} {tag(s['name'])}")
+    return (f"⚡ {s['name']} şarj kampanyası ({d['donem']}): {s['cover']['big']}!\n\n" + "\n".join(lines) +
+            f"\n\nKoşullar değişebilir; katılmadan önce resmi kanallardan kontrol edin.\n\n{SITE}\n\n{REKLAM_YOK}\n\n{HASHTAG} {tag(s['name'])}")
+
+
+def alt_metin(aciklama, baslik, n):
+    """Instagram alternatif metni (görme engelliler ve arama motorları): kapakta açıklamanın ilk satırı, diğerlerinde sayfa adı."""
+    ilk = aciklama.split("\n", 1)[0].lstrip("⚡💳 ").strip()
+    return [f"WattKaç: {ilk}"] + [f"{baslik} şarj kampanyası ayrıntıları, {i + 2}. görsel" for i in range(n - 1)]
 
 
 def resmi_mi(url):
@@ -222,10 +229,12 @@ def build(etiket, baslangic, sadece=None):
             continue
         base = f"media/{etiket}/{item['id']}"
         grup = f"{etiket}__{item['id']}"
+        ac = caption(item, d)
+        gorseller = [f"{base}/{f}" for f in item["dosyalar"] if f != "hikaye.jpg"]
         queue.append({"id": f"{item['id']}_post", "grup": grup, "tip": "karusel", "zaman": t.isoformat(),
                       "baslik": item["baslik"], "tur": item["tur"], "kaynaklar": kaynaklar(item, d),
-                      "gorseller": [f"{base}/{f}" for f in item["dosyalar"] if f != "hikaye.jpg"],
-                      "aciklama": caption(item, d), "durum": "bekliyor", "deneme": 0, "ig_media_id": None, "hata": None})
+                      "gorseller": gorseller, "alt": alt_metin(ac, item["baslik"], len(gorseller)),
+                      "aciklama": ac, "durum": "bekliyor", "deneme": 0, "ig_media_id": None, "hata": None})
         if "hikaye.jpg" in item["dosyalar"]:
             queue.append({"id": f"{item['id']}_hikaye", "grup": grup, "baslik": item["baslik"], "tur": item["tur"], "tip": "hikaye", "zaman": (t + dt.timedelta(hours=1)).isoformat(),
                           "gorseller": [f"{base}/hikaye.jpg"], "aciklama": "", "durum": "bekliyor", "deneme": 0,

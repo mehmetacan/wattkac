@@ -69,6 +69,16 @@ def wait_ready(cid, tries=20, every=3):
     raise RuntimeError("Medya zamanında hazırlanmadı")
 
 
+def gorsel(uid, alt_text, **p):
+    """Görsel kapsayıcısı; alternatif metin (alt_text) Instagram'da reddedilirse onsuz yeniden denenir, paylaşım aksamaz."""
+    if alt_text:
+        try:
+            return api("POST", f"{uid}/media", alt_text=alt_text[:1000], **p)["id"]
+        except RuntimeError as e:
+            log(f"  alt metin kabul edilmedi, onsuz deneniyor: {e}")
+    return api("POST", f"{uid}/media", **p)["id"]
+
+
 def publish(item, uid):
     urls = [public_url(p) for p in item["gorseller"]]
     if DRY:
@@ -79,14 +89,15 @@ def publish(item, uid):
                 share_to_feed="true", thumb_offset=str(item.get("kapak_ms", 0)))["id"]
         wait_ready(c, tries=120, every=5)  # video işleme birkaç dakika sürebilir
         return api("POST", f"{uid}/media_publish", creation_id=c)["id"]
+    alt = dict(enumerate(item.get("alt") or []))
     if item["tip"] == "hikaye":
         c = api("POST", f"{uid}/media", image_url=urls[0], media_type="STORIES")["id"]
     elif len(urls) == 1:
-        c = api("POST", f"{uid}/media", image_url=urls[0], caption=item["aciklama"])["id"]
+        c = gorsel(uid, alt.get(0), image_url=urls[0], caption=item["aciklama"])
     else:
         kids = []
-        for u in urls:
-            k = api("POST", f"{uid}/media", image_url=u, is_carousel_item="true")["id"]
+        for i, u in enumerate(urls):
+            k = gorsel(uid, alt.get(i), image_url=u, is_carousel_item="true")
             wait_ready(k)
             kids.append(k)
         c = api("POST", f"{uid}/media", media_type="CAROUSEL", children=",".join(kids), caption=item["aciklama"])["id"]
