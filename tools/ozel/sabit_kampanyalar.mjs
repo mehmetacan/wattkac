@@ -30,8 +30,8 @@ const BANKA = [
 const SARJ = [
   ["zes", "ZES", [["<b>%15</b> Vodafone Red · <b>%15</b> TAV Passport", "31 Ara"], ["<b>%15 iade</b> Vodafone Pay · <b>30 kWh</b> Metro alışverişine", "31 Ara"], ["<b>1.250 TL</b> şarj desteği · Pirelli lastik alana", "30 Ara"]]],
   ["otopriz", "Otopriz", [["<b>%30</b> · seçili 73 istasyonda (AC ve DC)", "30 Kas"], ["<b>DC %30</b> · ayın son günü", "30 Kas"], ["<b>DC %10</b> favori istasyonda · <b>%20</b> doğum gününde", "süresiz"]]],
-  ["enyakit", "En Yakıt", [["<b>DC 10,90 TL/kWh</b> · seçili 27 istasyonda", "30 Kas"], ["<b>200 kWh'ye 15 Starbucks yıldızı</b>*", "30 Nis"]]],
-  ["astor", "ASTOR Şarj", [["<b>DC 10,90 · AC 8,99 TL/kWh</b> · güncel uygulamada", "30 Kas"]]],
+  ["enyakit", "En Yakıt", [["DC <s>14,90</s> <b>10,90 TL/kWh</b> · seçili 27 istasyonda", "30 Kas"], ["<b>200 kWh'ye 15 Starbucks yıldızı</b>*", "30 Nis"]]],
+  ["astor", "ASTOR Şarj", [["DC <s>13,99</s> <b>10,90</b> · AC <s>9,89</s> <b>8,99 TL/kWh</b> · uygulamada", "30 Kas"]]],
   ["wat", "WAT Mobilite", [["<b>Her salı %10</b> · AC ve DC", "29 Ara"], ["<b>%4</b> · Ford sahiplerine", "31 Ara"]]],
   ["ovolt", "Ovolt", [["<b>%12 indirim</b> · dahil istasyonlarda", "22 Kas"], ["<b>50 TL VoltPuan</b> · yeni üyeye", "31 Ara"]]],
   ["trugo", "Trugo", [["<b>%20 indirim</b> · Togg sahiplerine, DC", "30 Kas"]]],
@@ -58,6 +58,7 @@ h1 span{background:#FFD400;border-radius:12px;padding:0 12px}
 .tk{flex:1;min-width:0}
 .tk div{display:flex;justify-content:space-between;align-items:baseline;gap:14px;font-size:21px;line-height:1.34;color:#334155}
 .tk b{color:#0F1B3D;font-weight:800;font-size:25px;letter-spacing:-.3px;padding:0 4px;margin:0 -2px;border-radius:4px;background:linear-gradient(transparent 52%,#FFE066 52%,#FFE066 92%,transparent 92%)}
+.tk s{color:#94A3B8;font-weight:600}
 .tk i{flex:none;font-style:normal;font-size:16px;font-weight:700;color:#0E7490;background:#E6F4F7;border-radius:8px;padding:2px 9px}
 .tk i.yakin{color:#B42318;background:#FDECEA}
 .alt2{position:absolute;left:56px;right:56px;bottom:40px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
