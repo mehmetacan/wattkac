@@ -1122,6 +1122,8 @@ function readHash() {
   S.view = ["kamp", "harita", "profil", "geri"].includes(p.get("g")) ? p.get("g") : "harita";
   // Haritada kampanya filtresi: #g=harita&kamp=<kampanya kimliği> (paylaşılabilir; Instagram gönderilerinden bağlantı)
   S.kamp = (p.get("kamp") || "").slice(0, 80);
+  // Tek istasyon: #g=harita&ist=<istasyon kimliği> (geri bildirim panelinden "WattKaç haritasında aç")
+  S.ist = (p.get("ist") || "").slice(0, 120);
 }
 function writeHash() {
   const p = new URLSearchParams();
@@ -1746,6 +1748,7 @@ async function loadAll() {
     M.byId = new Map(M.all.map(s => [s.id, s]));
     setMsg(M.canli ? "Tüm istasyon listesi yüklenemedi; şimdilik çevrendeki istasyonlar gösteriliyor." : M.kampYok ? "Bu kampanyanın süresi dolmuş ya da kampanya kaldırılmış." : ""); M.kampYok = false;
     refresh(); odak(false);
+    if (S.ist && M.byId.has(S.ist)) selectStation(S.ist);
   } catch (e) {
     setMsg("İstasyon verisi alınamadı. Bağlantını kontrol edip tekrar dene." + (M.errs ? " (" + M.errs + ")" : ""), true, true);
   }
@@ -2786,6 +2789,7 @@ function bindEvents() {
     readHash(); $("q").value = S.q; $("sort").value = S.sort; renderQuick(); render(); if (S.view !== currentView()) show(S.view);
     // bağlantıdaki kampanya filtresi (geri / ileri, elle yazılan adres); haritaya kampanyasız dönülürse filtre kalkar
     if (S.kamp ? kampBul(S.kamp) !== kampSecili() : S.view === "harita" && M.f.kamp) kampUygula(S.kamp);
+    if (S.ist && M.byId && M.byId.has(S.ist) && M.sel !== S.ist) selectStation(S.ist);
   });
 }
 const currentView = () => ["kamp", "harita", "profil"].find(v => !$("v-" + v).hidden);
