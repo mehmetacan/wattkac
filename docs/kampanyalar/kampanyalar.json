@@ -1,10 +1,11 @@
 {
   "donem": "Kasım 2026",
-  "guncelleme": "2026-11-20",
-  "son_kontrol": "2026-11-22",
+  "guncelleme": "2026-11-23",
+  "son_kontrol": "2026-11-23",
   "genel_kartlar": "Paraf Doğal · QNB · ON",
   "kampanyasiz_bankalar": [
-    "İş Bankası (Maximum)"
+    "İş Bankası (Maximum)",
+    "Akbank (Axess · Wings · Free)"
   ],
   "bankalar": [
     {
@@ -114,41 +115,6 @@
           "bas": "2026-10-15",
           "bit": "2026-11-30",
           "kosul": "Yapı Kredi bireysel kredi kartı ve TLcard; VakıfBank/Albaraka/Anadolubank Worldcard, Business, Eko hariç; Yapı Kredi POS; puan 7 Aralık'ta yüklenir"
-        }
-      ]
-    },
-    {
-      "id": "akbank",
-      "name": "Akbank",
-      "sub": "Axess · Wings · Free",
-      "tur": "Kredi kartı",
-      "cover": {
-        "big": "%20 indirim",
-        "sub": "Voltla ile 9 şarj ağında",
-        "son": "22 Kasım"
-      },
-      "offers": [
-        {
-          "big": "%20 indirim",
-          "det": "Voltla üzerinden şarj ödemelerinde · toplam 500 TL",
-          "st": [
-            "Voltla uygulaması",
-            "Powerşarj",
-            "Zeplin",
-            "Tunçmatik",
-            "Şarjon",
-            "Voltgo",
-            "Solargize",
-            "Doğuş Dijital Enerji",
-            "D-Rect",
-            "Obişarj"
-          ],
-          "son": "22 Kasım",
-          "join": "VOLTLA yazıp 4566'ya SMS veya Juzdan'dan Hemen Katıl",
-          "link": "https://www.axess.com.tr/axess/kampanyalar/axesse-ozel-voltlada-20-indirim",
-          "bas": "2026-11-06",
-          "bit": "2026-11-22",
-          "kosul": "Axess, Free, Wings bireysel ve ticari, ek ve sanal kartlar; Akbank Kart ve Bank'O Card Axess hariç; indirim 2 iş gününde ekstreye"
         }
       ]
     },
@@ -1534,19 +1500,6 @@
       "name": "Ovolt",
       "own": [
         {
-          "big": "%12 indirim",
-          "kisa": "Dahil istasyonlarda",
-          "det": "Kampanyaya dahil Ovolt istasyonlarında · 12–22 Kasım",
-          "son": "22 Kasım",
-          "link": "https://ovolt.com.tr/duyurular/1/15",
-          "bas": "2026-11-12",
-          "bit": "2026-11-22",
-          "kosul": "Her ayın 12'sine özel %12 indirim Kasım'da 12 Kasım 00.00 – 22 Kasım 23.59 arasında geçerli. Yalnızca Ovolt kampanyasına dahil şarj istasyonlarında (liste duyuruda yok); Ovolt mobil uygulamasında kayıtlı ve aktif kullanıcı hesabı gerekir. Teknik, bağlantı veya ödeme kaynaklı tamamlanamayan şarjlar kapsam dışı; nakde çevrilemez, devredilemez; Ovolt aksini belirtmedikçe diğer indirim, kupon ve kampanyalarla birleşmez.",
-          "eklendi": "2026-11-11",
-          "herkese": false,
-          "join": "Ovolt uygulamasında kayıtlı ve aktif hesap"
-        },
-        {
           "big": "50 TL VoltPuan",
           "kisa": "Yeni üyeye",
           "det": "Ovolt uygulamasına ilk kez üye olanlara · tek şarjda kullanılır",
@@ -1571,9 +1524,9 @@
         ]
       ],
       "cover": {
-        "big": "%12 indirim",
-        "sub": "12–22 Kasım · kampanyaya dahil Ovolt istasyonlarında",
-        "son": "22 Kasım"
+        "big": "50 TL VoltPuan",
+        "sub": "Ovolt uygulamasına ilk kez üye olanlara",
+        "son": "31 Aralık"
       }
     },
     {
@@ -1656,22 +1609,6 @@
         "big": "Her salı %10",
         "sub": "WAT istasyonlarında AC ve DC · Ford'a ayrıca %4",
         "son": "29 Aralık"
-      }
-    },
-    {
-      "id": "voltla",
-      "name": "Voltla",
-      "own": [],
-      "banks": [
-        [
-          "Akbank Axess · Wings · Free",
-          "%20 indirim, toplam 500 TL"
-        ]
-      ],
-      "cover": {
-        "big": "%20 indirim",
-        "sub": "Akbank Axess · Wings · Free ile",
-        "son": "22 Kasım"
       }
     },
     {
