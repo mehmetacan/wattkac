@@ -1,16 +1,16 @@
 {
-"guncelleme": "2026-11-22",
+"guncelleme": "2026-11-23",
 "ozet": {
 "denetlenen": {
-"e": 13285,
-"r": 6426,
-"o": 753,
+"e": 13290,
+"r": 6416,
+"o": 771,
 "c": 2257
 },
 "isaretlenen": {
 "e": {
 "ilce_uyumsuz": 131,
-"il_uyumsuz": 14,
+"il_uyumsuz": 15,
 "il_uzak": 28,
 "turkiye_disi": 2
 },
@@ -27,7 +27,7 @@
 }
 },
 "duzeltme": {
-"yer_degistirme": 20,
+"yer_degistirme": 21,
 "basamak": 4,
 "kaynak": 19,
 "adres": 2,
@@ -45,7 +45,7 @@
 "gecersiz_yardimci": 13,
 "ilce": {
 "toplam": 756,
-"guvenilir": 471
+"guvenilir": 472
 },
 "esikler": {
 "kiyi_km": 7.0,
@@ -1094,6 +1094,23 @@
 "yeni": [
 37.588657,
 36.877674
+],
+"kural": "yer_degistirme",
+"neden": "il_uyumsuz",
+"km": 101.1
+},
+{
+"id": "ŞRJ/24392",
+"kaynak": "e",
+"ad": "LC Waikiki Tekerek",
+"il": "Kahramanmaraş",
+"eski": [
+36.8712,
+37.5826
+],
+"yeni": [
+37.5826,
+36.8712
 ],
 "kural": "yer_degistirme",
 "neden": "il_uyumsuz",
