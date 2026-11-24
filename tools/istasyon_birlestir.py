@@ -97,7 +97,7 @@ DOGRULA = {"ksarj": r"\bk-sarj\b|\bhunat enerji",
            }
 RESMI_YAKIN_M = 300
 SECILI = pathlib.Path("data/secili_istasyonlar.json")  # yalnızca seçili istasyonlarda geçerli ağ kampanyaları
-SECILI_AG = {"otopriz": r"otopriz|dicle kok", "enyakit": r"en ?yakit"}
+SECILI_AG = {"otopriz": r"otopriz|dicle kok", "enyakit": r"en ?yakit", "otowatt": r"\botowatt\b|\baydem plus enerji"}
 SAATLI = pathlib.Path("data/saatli_tarife.json")  # saate göre fiyatın (ör. gece tarifesi) yalnızca listedeki istasyonlarda geçerli olduğu ağlar
 SAATLI_AG = {"shell": r"\bshell\b", "mypower": r"\bmy ?power\b"}
 KAPALI = pathlib.Path("data/kapali_istasyonlar.json")  # kapandığı doğrulanan ama kaynakta hâlâ görünen istasyonlar

@@ -5,6 +5,7 @@ istasyonlara "sk" (seçili kampanya) etiketini koyar; sitede kampanya yalnızca 
 
 Kaynaklar:
   otopriz  https://otopriz.com.tr/kampanyalar/indirimli-istasyonlar/kampanya-detaylari  (Seçili istasyonlarda %30)
+  otowatt  https://www.otowatt.com.tr/haber/secili-otowatt-istasyonlarinda-25-indirim-firsati  (Seçili istasyonlarda %25)
 Okunamazsa önceki dosya korunur.
 """
 import html, json, pathlib, re, sys, urllib.request, datetime
@@ -46,7 +47,21 @@ def otopriz():
             "bitis": " ".join(bitis.groups()) if bitis else "", "istasyonlar": out}
 
 
-SOURCES = {"otopriz": (otopriz, 20)}
+def otowatt():
+    url = "https://www.otowatt.com.tr/haber/secili-otowatt-istasyonlarinda-25-indirim-firsati"
+    lines = text_lines(get(url))
+    try:
+        a = next(i for i, x in enumerate(lines) if x.startswith("Kampanyaya Dahil Lokasyonlar"))
+    except StopIteration:
+        raise RuntimeError("lokasyon listesi bulunamadı")
+    metin = " / ".join(x for x in lines[a + 1:a + 4] if " / " in x)   # lokasyonlar tek paragrafta " / " ile ayrılır
+    out = [{"il": "", "ilce": "", "ad": x.strip()} for x in metin.split(" / ") if x.strip()]
+    bitis = re.search(r"(\d{1,2}) (Ocak|Şubat|Mart|Nisan|Mayıs|Haziran|Temmuz|Ağustos|Eylül|Ekim|Kasım|Aralık) (\d{4}) saat 23", " ".join(lines))
+    return {"ag": "otoWATT", "kaynak": url, "baslik": "Seçili istasyonlarda %25 indirim",
+            "bitis": " ".join(bitis.groups()) if bitis else "", "istasyonlar": out}
+
+
+SOURCES = {"otopriz": (otopriz, 20), "otowatt": (otowatt, 20)}
 
 
 def main():

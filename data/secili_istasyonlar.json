@@ -512,5 +512,239 @@
     "ad": "Teymur Continental Hotel"
    }
   ]
+ },
+ "otowatt": {
+  "ag": "otoWATT",
+  "kaynak": "https://www.otowatt.com.tr/haber/secili-otowatt-istasyonlarinda-25-indirim-firsati",
+  "baslik": "Seçili istasyonlarda %25 indirim",
+  "bitis": "24 Aralık 2026",
+  "istasyonlar": [
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Akdeniz Park AVM"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Aksu Piliç DC"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Ankara Tenis Kulübü"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Başkent Üniversitesi Hastanesi Kışla"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Başkent Üniversitesi Hastanesi Konya"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Başkent Üniversitesi Hastanesi Seyhan"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Bereketler Sergi Merkezi"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "BigChefs Fethiye"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Bodrum Belediye A.Ş. Merkez Ofis"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "BYD Volt"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Container Park"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Çardaklı Petrol Ofisi"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Çöllü Plaza"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "D.E.Ü. Hastanesi Halka Açık Otopark"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Denizli 80.Yıl Öğretmenevi"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Ender Dinlenme Tesisleri"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Er-Der Petrol Ofisi"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Golftaş Unique"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Hyundai Turkuaz"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "İçkale Grup"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Kasaba Outlet AVM"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Kurtuluş Otoparkı"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Kuşadası Küçük Sanayi Sitesi"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Lara Park Sitesi DC"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Lukoil Saruhanlı"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Marlen Hotel Bayraklı"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Marlen Hotel Denizli"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Mars Station Otomatik Oto Yıkama Tesisi"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Mirarda Park Evleri DC"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Muğla Life AVM"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Nk Hotel"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Otonomi"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Öztaş Country Sitesi"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Palmin Otel"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Pamukkale Tenis Kulübü"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Pekdemir Çiftliği Deliktaş Mağazası"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Pekdemir Kayhan Opet"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Pekdemir Turgutlu AVM DC"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Soma Bel. Değirmen Kafe Çakıllı Otopark"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Soma Bel. Gündüz Beder Kültür Merkezi"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Tarihi Sarıoğlu Lokantası 1953"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Turgutreis Yaşam Merkezi"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Türkan Saylan Çağdaş Yaşam Merkezi"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Yücelen Otel"
+   },
+   {
+    "il": "",
+    "ilce": "",
+    "ad": "Zafer Otoparkı"
+   }
+  ],
+  "cekildi": "2026-11-24"
  }
 }
