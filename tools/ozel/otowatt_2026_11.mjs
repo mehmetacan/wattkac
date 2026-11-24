@@ -68,6 +68,18 @@ async function cek(W, H, govde, dosya) {
   await p.screenshot({ path: path.join(dir, dosya), type: "jpeg", quality: 93 });
   await p.close();
 }
+if (process.argv.includes("--video-kart")) {   // Reels giriş ve kapanış kartları (1080×1920)
+  const vk = (govde) => `<div class="s" style="width:1080px;height:1920px;padding-top:150px">${UST}${govde}</div>`;
+  await cek(1080, 1920, vk(`<div style="margin-top:300px"><span class="chip" style="font-size:34px;padding:12px 30px">25 Kasım – 24 Aralık</span></div>
+    <div style="font-size:92px;font-weight:800;letter-spacing:-3px;line-height:1.05;margin-top:40px">otoWATT'ta <span class="vur" style="padding:0 18px 6px">%25 indirimli</span> ${toplam} istasyon nerede?</div>
+    <div style="font-size:44px;font-weight:700;color:#5B6680;margin-top:50px;line-height:1.35">wattkac.com haritasında<br><b style="color:#0E7490">3 adımda bul</b></div>`), "video_giris.jpg");
+  await cek(1080, 1920, vk(`<div style="margin-top:330px;text-align:center">
+    <div style="font-size:40px;font-weight:800;color:#0E7490">otoWATT · 25 Kasım – 24 Aralık</div>
+    <div style="font-size:120px;font-weight:800;letter-spacing:-4px;line-height:1.02;margin-top:30px">${toplam} istasyonda<br><span class="vur" style="padding:0 24px 8px">%25 indirim</span></div>
+    <div style="margin:60px auto 0;display:inline-block;background:#F4F7FB;border:2px solid #E3E8F0;border-radius:28px;padding:26px 40px;font-size:40px;font-weight:700;color:#334155">DC <s style="color:#94A3B8">13,99</s> → <b style="color:#047857;font-size:52px">10,49 TL/kWh</b></div>
+    <div style="font-size:40px;font-weight:700;color:#5B6680;margin-top:70px;line-height:1.4">Kampanyalı istasyonları haritada gör<br><b style="color:#0F1B3D;font-size:56px">wattkac.com</b></div></div>`), "video_son.jpg");
+  await b.close(); process.exit(0);
+}
 await cek(1080, 1350, kapak(false), "1_kapak.jpg");
 await cek(1080, 1350, sayfaIl(s1, 1), "2_liste.jpg");
 await cek(1080, 1350, sayfaIl(s2, 2), "3_liste.jpg");
