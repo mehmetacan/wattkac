@@ -1,10 +1,9 @@
 {
   "donem": "Kasım 2026",
-  "guncelleme": "2026-11-23",
+  "guncelleme": "2026-11-24",
   "son_kontrol": "2026-11-24",
   "genel_kartlar": "Paraf Doğal · QNB · ON",
   "kampanyasiz_bankalar": [
-    "İş Bankası (Maximum)",
     "Akbank (Axess · Wings · Free)"
   ],
   "bankalar": [
@@ -328,6 +327,53 @@
           "kosul": "Bireysel, ek ve sanal kartlar (Miles&Smiles, Sağlam Kart, Özel Bankacılık World Elite dahil); katılım 50.000 müşteriyle sınırlı; diğer kampanyalarla birleşmez."
         }
       ]
+    },
+    {
+      "id": "isbank",
+      "name": "İş Bankası",
+      "sub": "Maximum kredi kartları · Bankamatik Kartları",
+      "tur": "Kredi kartı",
+      "cover": {
+        "big": "500 TL'ye varan MaxiPuan",
+        "sub": "%20 · 300 TL ve üzeri şarj harcamasına",
+        "son": "30 Kasım"
+      },
+      "offers": [
+        {
+          "big": "%20 MaxiPuan",
+          "det": "300 TL–3.000 TL altı her şarj ödemesinde · işlem başına en fazla 100 TL, toplam 500 TL",
+          "st": [
+            "360 Enerji",
+            "5 Şarj",
+            "ASTOR Şarj",
+            "Beefull",
+            "Enyakıt",
+            "EPSIS Emobility",
+            "Eşarj",
+            "G-charge",
+            "Oncharge",
+            "RHG Enertürk",
+            "Tesla",
+            "Trugo",
+            "Uşarj",
+            "VEC",
+            "Voltla",
+            "Voltrun",
+            "WAT Mobilite",
+            "ZES",
+            "WattReise",
+            "Ovolt",
+            "Zeplin"
+          ],
+          "son": "30 Kasım",
+          "join": "İşCep / Maximum Mobil › Kampanyalar › Hemen Katıl",
+          "link": "https://www.maximum.com.tr/kampanyalar/elektrikli-sarj-istasyonlari-harcamalariniza-maxipuan-kampanyasi",
+          "bas": "2026-10-20",
+          "bit": "2026-11-30",
+          "kosul": "İş Bankası bireysel kredi kartları ve Bankamatik Kartları; ticari kredi kartları, aidatsız kartlar, Nays ve MaxiPara hariç. Kampanyaya katılım gerekir; alışverişten önce veya sonra İşCep / Maximum Mobil üzerinden katılınabilir. Yalnızca kampanyaya dahil listeli şarj firmalarında, 300 TL ve üzeri ve 3.000 TL altı her şarj harcamasının %20'si kadar MaxiPuan kazanılır; işlem başına en fazla 100 TL, kampanya süresince toplam en fazla 500 TL. Zeplin işlemleri yalnızca 1–30 Kasım 2026 arasında geçerlidir. Ek kartlarla puan kazanılır; katılım asıl kart sahibi tarafından yapılmalıdır. MaxiPuan'lar kampanya bitiminden sonra 10 iş günü içinde yüklenir ve 31 Ocak 2027'ye kadar kullanılabilir.",
+          "eklendi": "2026-11-24"
+        }
+      ]
     }
   ],
   "uygulamalar": [
@@ -481,11 +527,11 @@
               {
                 "ag": "KES",
                 "ac": [
-                  11.0,
+                  11,
                   8.8
                 ],
                 "dc": [
-                  13.0,
+                  13,
                   10.4
                 ]
               },
@@ -523,7 +569,7 @@
                   7.85
                 ],
                 "dc": [
-                  13.0,
+                  13,
                   10.4
                 ]
               },
@@ -557,7 +603,7 @@
                 ],
                 "dc": [
                   13.75,
-                  11.0
+                  11
                 ]
               },
               {
@@ -574,12 +620,12 @@
               {
                 "ag": "Swapp",
                 "ac": [
-                  8.0,
+                  8,
                   6.4
                 ],
                 "dc": [
-                  10.0,
-                  8.0
+                  10,
+                  8
                 ]
               },
               {
@@ -641,7 +687,7 @@
                   7.6
                 ],
                 "dc": [
-                  12.0,
+                  12,
                   9.6
                 ]
               }
@@ -880,6 +926,19 @@
           ],
           "eklendi": "2026-11-13",
           "herkese": false
+        },
+        {
+          "big": "%10 indirim",
+          "kisa": "Kasko sahiplerine",
+          "det": "Aktif Anadolu Sigorta kasko poliçesi olanlara · ayda 1 kodla, tek şarj",
+          "herkese": false,
+          "son": "31 Aralık",
+          "link": "https://zes.net/tr/kampanyalar/anadolusigorta",
+          "bas": "2026-01-20",
+          "bit": "2026-12-31",
+          "join": "Sigortam Cepte'den aylık kod al; ZES uygulaması › Profil › Kampanyalar › Kampanya Kodu Ekle",
+          "kosul": "Anadolu Sigorta'da yürürlükte aktif kasko poliçesi bulunan bireysel müşterilere, Sigortam Cepte üzerinden ayda 1 kez alınabilen tek kullanımlık %10 indirim kodu verilir. Kod ZES mobil uygulamasına tanımlanır ve ZES'in işlettiği halka açık AC, DC ve HPC şarj istasyonlarında tek bir şarj işleminde geçerlidir. Kurumsal ve misafir kullanıcılar hariçtir; diğer kampanyalar ve hediye çekleriyle birleştirilemez. Kampanyadan yararlanmak için gerekli pazarlama ve iletişim izinleri bulunmalıdır.",
+          "eklendi": "2026-11-24"
         }
       ],
       "banks": [
