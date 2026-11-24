@@ -1738,6 +1738,30 @@
           "eklendi": "2026-11-20"
         }
       ]
+    },
+    {
+      "id": "otowatt",
+      "name": "otoWATT",
+      "own": [
+        {
+          "big": "%25 indirim",
+          "kisa": "Seçili istasyonlarda",
+          "herkese": true,
+          "det": "45 seçili istasyonda · indirimli fiyat şarjdan önce gösterilir, otomatik",
+          "son": "24 Aralık",
+          "link": "https://www.otowatt.com.tr/haber/secili-otowatt-istasyonlarinda-25-indirim-firsati",
+          "bas": "2026-11-25",
+          "bit": "2026-12-24",
+          "kosul": "25 Kasım 2026 00.00 – 24 Aralık 2026 23.59 arasında yalnızca listedeki 45 lokasyonda, o lokasyonda indirimden hemen önce geçerli birim fiyat üzerinden %25 indirim. Diğer lokasyon/saat bazlı indirimler, sadakat programları ve kampanyalarla birleşmez; birden fazla avantaj varsa kullanıcı lehine olan tek fiyat uygulanır. İstasyon listesi: data/secili_istasyonlar.json → otowatt.",
+          "eklendi": "2026-11-24"
+        }
+      ],
+      "banks": [],
+      "cover": {
+        "big": "%25 indirim",
+        "sub": "45 seçili otoWATT istasyonunda · 25 Kasım – 24 Aralık",
+        "son": "24 Aralık"
+      }
     }
   ]
 }
