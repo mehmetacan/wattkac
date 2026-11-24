@@ -1,2175 +1,2175 @@
 {
- "_not": "Şarj ağlarının kendi resmi sayfalarında doğrulanan liste fiyatları (TL/kWh). Fiyatlar konuma göre aralık olarak yayınlanıyor: min-max. 'kontrol' sayfanın okunduğu tarih, 'gecerlilik' sayfanın kendi belirttiği tarih (yoksa null). Doğrulanamayan ağlarda ac/dc null kalır ve haritada 'Fiyat yok' görünür. Kampanya indirimleri bu fiyatlara dahil değildir.",
- "guncelleme": "2026-11-23",
- "aglar": {
-  "Eşarj": {
-   "ac": {
-    "min": 9.9,
-    "max": 9.9
-   },
-   "dc": {
-    "min": 9.9,
-    "max": 14.9
-   },
-   "kaynak": "https://esarj.com/fiyatlandirma",
-   "kontrol": "2026-11-07",
-   "gecerlilik": null,
-   "not": "KDV dahil. DC fiyatı lokasyona göre değişiyor; güncel fiyat Eşarj uygulamasında."
-  },
-  "ASTOR Şarj": {
-   "ac": {
-    "min": 9.89,
-    "max": 9.89
-   },
-   "dc": {
-    "min": 13.99,
-    "max": 13.99
-   },
-   "kaynak": "https://astorsarj.com.tr/",
-   "kontrol": "2026-11-15",
-   "gecerlilik": null,
-   "not": "Liste fiyatı AC 9,89 / DC 13,99 TL/kWh (kullanıcı Astor uygulamasından bildirdi, 15 Kasım 2026). DİKKAT: astorsarj.com.tr 'Fiyatlandırma' bölümündeki AC 8,99 / DC 10,90, uygulamayı güncelleyenlere Kasım kampanyası fiyatıdır (kampanyalar.json → astor own); 30 Kasım'a kadar liste fiyatı olarak yazılmaz. Aralık'ta sayfa yeniden kontrol edilir."
-  },
-  "Trugo": {
-   "ac": {
-    "min": 9.95,
-    "max": 9.95
-   },
-   "dc": {
-    "min": 12.0,
-    "max": 14.98
-   },
-   "kaynak": "https://trugo.com.tr/price",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "not": "AC tüm istasyonlarda 9,95; DC 14,98 TL/kWh. Duyurudaki seçili istasyonlarda DC 12 TL/kWh (https://trugo.com.tr/individual/news/secili-istasyonlarda-12-tl-kwh); istasyon bazlı fiyat haritada gösterilir."
-  },
-  "Voltrun": {
-   "ac": {
-    "min": 10.9,
-    "max": 10.9
-   },
-   "dc": {
-    "min": 13.9,
-    "max": 13.9
-   },
-   "kaynak": "https://www.voltrun.com/voltrun-uyelik-tarife/",
-   "kontrol": "2026-11-12",
-   "gecerlilik": null,
-   "not": "Tüm istasyonlarda tek fiyat. Kaynak: Voltrun mobil uygulaması (12 Kasım 2026'da site sahibi kontrol etti). Resmi tarife sayfası bot doğrulaması istediği için otomatik okunamıyor; sayfa açılırsa günlük tarama oradan doğrular."
-  },
-  "Otopriz": {
-   "ac": {
-    "min": 7.92,
-    "max": 9.9
-   },
-   "dc": {
-    "min": 9.73,
-    "max": 13.9
-   },
-   "kaynak": "https://otopriz.com.tr/uyelik-ve-tarifeler",
-   "kontrol": "2026-11-20",
-   "gecerlilik": "2026-01-20",
-   "not": "KDV dahil. İstasyon bazlı güncel fiyat Otopriz uygulamasında."
-  },
-  "Ovolt": {
-   "ac": {
-    "min": 9.99,
-    "max": 9.99
-   },
-   "dc": {
-    "min": 10.49,
-    "max": 14.49
-   },
-   "kaynak": "https://ovolt.com.tr/tarifeler",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "not": "Sayfa geçerlilik tarihi vermiyor; DC fiyat lokasyona göre değişiyor."
-  },
-  "Shell Recharge": {
-   "ac": {
-    "min": 12.99,
-    "max": 12.99
-   },
-   "dc": {
-    "min": 16.99,
-    "max": 16.99,
-    "saatli_liste": "shell",
-    "saatli": [
-     {
-      "bas": "22:00",
-      "bit": "05:00",
-      "etiket": "04:59",
-      "v": 13.99
-     },
-     {
-      "bas": "05:00",
-      "bit": "22:00",
-      "etiket": "21:59",
-      "v": 16.99
-     }
-    ]
-   },
-   "kaynak": "https://www.shell.com.tr/suruculer/shell-recharge-turkiye/fiyat-tarifesi.html",
-   "kontrol": "2026-11-09",
-   "gecerlilik": null,
-   "not": "Shell Recharge uygulamasındaki tarife (kullanıcı bildirimi, 9 Kasım 2026; resmi web sayfası fiyat yayınlamıyor). AC 12,99; DC 16,99 TL/kWh. Gece tarifesi (22:00–04:59 arası DC 13,99) yalnızca Shell'in duyurduğu 20 istasyonda geçerli (data/saatli_tarife.json)."
-  },
-  "WAT Mobilite": {
-   "ac": {
-    "min": 9.99,
-    "max": 10.99
-   },
-   "dc": {
-    "min": 11.99,
-    "max": 14.49
-   },
-   "kaynak": "https://www.watmobilite.com/cozumler/kamusal-alanlar#guncel-fiyat-ve-tarifeler",
-   "kontrol": "2026-11-20",
-   "gecerlilik": "2026-10-08",
-   "not": "Fiyat lokasyona göre değişiyor; güncel tarife mobil uygulamada. Sayfanın tarih bilgileri tutarsız olabilir."
-  },
-  "Voltla": {
-   "ac": null,
-   "dc": null,
-   "kaynak": "https://voltla.com.tr/",
-   "kontrol": null,
-   "gecerlilik": null,
-   "not": "Sitede fiyat yok."
-  },
-  "ZES": {
-   "ac": {
-    "min": 10.99,
-    "max": 10.99
-   },
-   "dc": {
-    "min": 12.99,
-    "max": 16.49
-   },
-   "kaynak": "https://zes.net/tr/fiyatlandirma",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "zes"
-   ],
-   "not": "DC-1 ve DC-2 tek aralık; fiyat lokasyona göre değişir."
-  },
-  "Enyakıt": {
-   "ac": null,
-   "dc": {
-    "min": 14.9,
-    "max": 14.9
-   },
-   "kaynak": "https://www.enyakit.com.tr/ucretlendirme",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "EN YAKIT"
-   ],
-   "not": "Ağ yalnızca DC istasyonlardan oluşuyor; AC fiyatı yok."
-  },
-  "Oncharge": {
-   "ac": {
-    "min": 9.99,
-    "max": 9.99
-   },
-   "dc": {
-    "min": 13.5,
-    "max": 13.5
-   },
-   "kaynak": "https://www.oncharge.com.tr/fiyatlar",
-   "kontrol": "2026-11-20",
-   "gecerlilik": "2026-10-30",
-   "adlar": [
-    "oncharge"
-   ],
-   "not": "KDV dahil. AC ≤22 kW, DC 40–320 kW."
-  },
-  "Otojet": {
-   "ac": {
-    "min": 10.99,
-    "max": 10.99
-   },
-   "dc": {
-    "min": 15.49,
-    "max": 15.49
-   },
-   "kaynak": "https://www.oto-jet.com.tr/fiyatlarimiz",
-   "kontrol": "2026-11-12",
-   "gecerlilik": null,
-   "adlar": [
-    "Otojet"
-   ],
-   "not": "KDV dahil, tüm istasyonlarda tek fiyat. Seçili istasyonlarda şarj bittikten sonra araç bekletilirse işgaliye bedeli: AC'de 30. dakikadan sonra 3 TL/dk, DC'de 15. dakikadan sonra 5 TL/dk."
-  },
-  "D-Charge": {
-   "ac": {
-    "min": 10.9,
-    "max": 10.9
-   },
-   "dc": {
-    "min": 14.9,
-    "max": 14.9
-   },
-   "kaynak": "https://dcharge.com.tr/tarifeler",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "D-Charge"
-   ],
-   "not": "KDV dahil."
-  },
-  "Zeplin": {
-   "ac": {
-    "min": 9.5,
-    "max": 9.5
-   },
-   "dc": {
-    "min": 12.0,
-    "max": 12.0
-   },
-   "kaynak": "https://www.zeplinenerji.com",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "ZEPLİN CAR rental"
-   ]
-  },
-  "Tunçmatik": {
-   "ac": {
-    "min": 10.99,
-    "max": 10.99
-   },
-   "dc": {
-    "min": 15.49,
-    "max": 15.49
-   },
-   "kaynak": "https://tuncmatikcharge.com/fiyatlar/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "tunçmatik"
-   ]
-  },
-  "Beefull": {
-   "ac": {
-    "min": 9.9,
-    "max": 9.9
-   },
-   "dc": {
-    "min": 13.99,
-    "max": 13.99
-   },
-   "kaynak": "https://beefull.com/tarifeler/elektrikli-arac-tarifesi/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "beefull"
-   ],
-   "not": "KDV dahil."
-  },
-  "Aksa Şarj": {
-   "ac": {
-    "min": 9.9,
-    "max": 10.9
-   },
-   "dc": {
-    "min": 11.99,
-    "max": 13.99
-   },
-   "kaynak": "https://www.aksasarj.com.tr/ucretler",
-   "kontrol": "2026-11-20",
-   "gecerlilik": "2026-08-07",
-   "adlar": [
-    "AKSA ŞARJ"
-   ],
-   "not": "KDV dahil."
-  },
-  "MKS Şarj": {
-   "ac": {
-    "min": 9.49,
-    "max": 9.49
-   },
-   "dc": {
-    "min": 13.99,
-    "max": 13.99
-   },
-   "kaynak": "https://mkssarj.com/tarife",
-   "kontrol": "2026-11-20",
-   "gecerlilik": "2026-04-11",
-   "adlar": [
-    "MKS-ŞARJ"
-   ],
-   "not": "DC ≥50 kW."
-  },
-  "Miggo": {
-   "ac": {
-    "min": 9.5,
-    "max": 9.5
-   },
-   "dc": {
-    "min": 12.5,
-    "max": 12.5
-   },
-   "kaynak": "https://www.mig-go.com",
-   "kontrol": "2026-11-20",
-   "gecerlilik": "2026-02-19",
-   "adlar": [
-    "MİGGO"
-   ],
-   "not": "AC ≤22 kW, DC ≤180 kW."
-  },
-  "Neva Şarj": {
-   "ac": {
-    "min": 9.9,
-    "max": 9.9
-   },
-   "dc": {
-    "min": 13.9,
-    "max": 13.9
-   },
-   "kaynak": "https://nevasarj.com/sayfalar/istasyonlarimiz/arac-sarj-ac-dc-kwh-fiyat-tarifeleri.html",
-   "kontrol": "2026-11-20",
-   "gecerlilik": "2026-02-17",
-   "adlar": [
-    "NEVA ŞARJ"
-   ],
-   "not": "AC ≤22 kW, DC ≤240 kW."
-  },
-  "Varr": {
-   "ac": {
-    "min": 9.9,
-    "max": 9.9
-   },
-   "dc": {
-    "min": 13.9,
-    "max": 13.9
-   },
-   "kaynak": "https://www.varr.com.tr",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "varr TM"
-   ]
-  },
-  "i-Şarj": {
-   "ac": {
-    "min": 9.98,
-    "max": 9.98
-   },
-   "dc": {
-    "min": 13.49,
-    "max": 13.49
-   },
-   "kaynak": "https://www.isarj.com/tarifeler/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "i-şarj"
-   ],
-   "not": "KDV dahil üyeliksiz liste fiyatı; üyelere avantajlı fiyat uygulamada."
-  },
-  "ŞarjMatik": {
-   "ac": {
-    "min": 9.99,
-    "max": 9.99
-   },
-   "dc": {
-    "min": 12.5,
-    "max": 12.5
-   },
-   "kaynak": "https://sarjmatik.com.tr/ChargingPrices/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "ŞarjMatik"
-   ],
-   "not": "AC 22 kW, DC 60–90 kW."
-  },
-  "Şarjon": {
-   "ac": {
-    "min": 10.99,
-    "max": 10.99
-   },
-   "dc": {
-    "min": 11.99,
-    "max": 13.99
-   },
-   "kaynak": "https://sarjon.com.tr/fiyatlar/",
-   "kontrol": "2026-11-17",
-   "gecerlilik": null,
-   "adlar": [
-    "ŞARJON"
-   ],
-   "not": "DC-1 / DC-2 farklı fiyat; sadakat sözleşmesiyle özel fiyat var."
-  },
-  "ADZE": {
-   "ac": {
-    "min": 9.4,
-    "max": 9.4
-   },
-   "dc": {
-    "min": 13.4,
-    "max": 13.4
-   },
-   "kaynak": "https://www.adze.com/tr/fiyat-tarifesi",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "ADZE"
-   ],
-   "not": "KDV dahil. AC 11–22 kW, DC 40–350 kW."
-  },
-  "Lumicle": {
-   "ac": {
-    "min": 9.99,
-    "max": 9.99
-   },
-   "dc": {
-    "min": 13.49,
-    "max": 13.49
-   },
-   "kaynak": "https://lumicle.com.tr/istasyonlar/",
-   "kontrol": "2026-11-17",
-   "gecerlilik": null,
-   "adlar": [
-    "LUMİCLE"
-   ],
-   "not": "Fiyat lumicle.com.tr/istasyonlar sayfasından; sayfada KDV ve geçerlilik tarihi belirtilmiyor."
-  },
-  "Tora": {
-   "ac": {
-    "min": 9.99,
-    "max": 9.99
-   },
-   "dc": {
-    "min": 13.49,
-    "max": 13.49
-   },
-   "kaynak": "https://torasarj.com/fiyatlar/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "TORA",
-    "ToraŞarj (TR)",
-    "Tora Şarj"
-   ],
-   "not": "KDV dahil."
-  },
-  "Efish": {
-   "ac": {
-    "min": 10.99,
-    "max": 10.99
-   },
-   "dc": {
-    "min": 15.99,
-    "max": 15.99
-   },
-   "kaynak": "https://www.efish.com.tr/tr/fiyatlandirma/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": "2026-10-21",
-   "adlar": [
-    "efish"
-   ]
-  },
-  "VoltUp": {
-   "ac": {
-    "min": 9.49,
-    "max": 9.49
-   },
-   "dc": {
-    "min": 12.49,
-    "max": 12.49
-   },
-   "kaynak": "https://voltup.com.tr/#istasyonlar",
-   "kontrol": "2026-11-13",
-   "gecerlilik": null,
-   "adlar": [
-    "VOLTUP",
-    "VoltUp",
-    "Volt Up"
-   ],
-   "not": "Fiyat istasyona göre değişebiliyor; VoltUp'ın kendi sitesindeki istasyon bazlı fiyat listesinden (Şarj Tarifeleri) alınır; haritada her istasyonun kendi fiyatı gösterilir, bu aralık yalnızca listede fiyatı bulunmayan istasyon için kullanılır."
-  },
-  "RST Charge Point": {
-   "ac": {
-    "min": 5.9,
-    "max": 5.9
-   },
-   "dc": {
-    "min": 13.99,
-    "max": 13.99
-   },
-   "kaynak": "https://rstchargepoint.com/#fiyatlar",
-   "kontrol": "2026-11-17",
-   "gecerlilik": null,
-   "adlar": [
-    "Rst ChargePoint",
-    "RST ChargePoint",
-    "RST"
-   ],
-   "not": "KDV dahil, tüm istasyonlarda tek fiyat. AC 22 kW'a kadar, DC 120 kW'a kadar şarj için."
-  },
-  "BIG Station": {
-   "ac": {
-    "min": 8.9,
-    "max": 11
-   },
-   "dc": {
-    "min": 12.5,
-    "max": 12.5
-   },
-   "kaynak": "https://bsx-reverse.ee-w.workers.dev/app",
-   "kontrol": "2026-11-13",
-   "gecerlilik": null,
-   "adlar": [
-    "windmark",
-    "Windmark",
-    "BIG Station",
-    "BigStation",
-    "BSX Enerji"
-   ],
-   "not": "Fiyat istasyona göre değişiyor; istasyon bazlı fiyat BIG Station sisteminden günlük alınır (eski adı Windmark)."
-  },
-  "CV Charging": {
-   "ac": {
-    "min": 9.99,
-    "max": 9.99
-   },
-   "dc": {
-    "min": 13.49,
-    "max": 13.49
-   },
-   "kaynak": "https://cv-charging.com/tr/arac-sarj-tarifeleri",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "CV Şarj",
-    "CV Charging Vehicles",
-    "Charging Vehicles",
-    "CHARGING VEHICLES CV",
-    "CW Enerji"
-   ],
-   "not": "KDV dahil, tüm istasyonlarda tek fiyat: AC (22 kW) 9,99, DC (60–240 kW) 13,49 TL/kWh (ağın tarife sayfası: cv-charging.com/tr/arac-sarj-tarifeleri). İşgaliye ve blokaj bedeli ayrıca yansıtılabilir."
-  },
-  "Acropol Şarj": {
-   "ac": {
-    "min": 11.21,
-    "max": 11.21
-   },
-   "dc": {
-    "min": 13.88,
-    "max": 13.88
-   },
-   "kaynak": "https://acropolsarj.com/",
-   "kontrol": "2026-11-13",
-   "gecerlilik": null,
-   "adlar": [
-    "ACROPOL",
-    "Acropol EV Şarj Sistemleri",
-    "Greenleaf Yenilenebilir Enerji"
-   ],
-   "not": "KDV dahil (ana sayfadaki AC-DC şarj tarifeleri tablosu): AC 22 kW ve altı 11,21; DC 100 kW altı ve üstü 13,88 TL/kWh. Sayfaya göre tarife ve işgaliye istasyon konumu ve soket tipine göre farklılık gösterebilir; ağın haritasında istasyon bazlı fiyat yok."
-  },
-  "K-Şarj": {
-   "ac": {
-    "min": 9.15,
-    "max": 9.15
-   },
-   "dc": {
-    "min": 11.65,
-    "max": 11.65
-   },
-   "kaynak": "https://ksarj.com/fiyatlandirma/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "K-ŞARJ",
-    "Hunat Enerji"
-   ],
-   "not": "Tüm istasyonlarda tek fiyat (ağın fiyatlandırma sayfası): AC soket 9,15, DC soket 11,65 TL/kWh; güç kademesine göre ayrı fiyat yok. Sayfa KDV'yi ayrıca belirtmiyor (tüketiciye gösterilen fiyat). İstasyon bazlı fiyat yok."
-  },
-  "Powerşarj": {
-   "ac": {
-    "min": 11.19,
-    "max": 11.19
-   },
-   "dc": {
-    "min": 13.99,
-    "max": 13.99
-   },
-   "kaynak": "https://powersarj.com/fiyatlandirma/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "Powerşarj"
-   ],
-   "not": "AC 3,4–22 kW, DC 30–320 kW."
-  },
-  "önizşarj": {
-   "ac": {
-    "min": 9.28,
-    "max": 9.28
-   },
-   "dc": {
-    "min": 12.48,
-    "max": 12.48
-   },
-   "kaynak": "https://onizsarj.com/tr/fiyat-tarifesi",
-   "kontrol": "2026-11-20",
-   "gecerlilik": "2026-01-14",
-   "adlar": [
-    "önizşarj"
-   ],
-   "not": "KDV dahil."
-  },
-  "Wattarya": {
-   "ac": {
-    "min": 9.95,
-    "max": 9.95
-   },
-   "dc": {
-    "min": 13.45,
-    "max": 13.45
-   },
-   "kaynak": "https://wattarya.com/tarifeler",
-   "kontrol": "2026-11-19",
-   "gecerlilik": null,
-   "adlar": [
-    "Wattarya"
-   ],
-   "not": "KDV dahil. AC 22 kW'a kadar, DC 240 kW'a kadar; konut tipi özel tarifeler dahil değil."
-  },
-  "MyCharge": {
-   "ac": {
-    "min": 9.81,
-    "max": 9.81
-   },
-   "dc": {
-    "min": 13.0,
-    "max": 13.0
-   },
-   "kaynak": "https://mycharge.com.tr/tarifeler/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": "2026-11-01",
-   "adlar": [
-    "MyCharge"
-   ],
-   "not": "Sayfada 01.11.2026 güncel fiyatlandırma; üyelere avantajlı fiyat uygulanabiliyor, bu liste fiyatı."
-  },
-  "Şarjtak": {
-   "ac": {
-    "min": 10.99,
-    "max": 10.99
-   },
-   "dc": {
-    "min": 14.99,
-    "max": 14.99
-   },
-   "kaynak": "https://sarjtak.com/fiyat-tarifesi",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "ŞARJTAK"
-   ],
-   "not": "KDV dahil. Sadakat sözleşmesiyle farklı fiyat olabilir."
-  },
-  "Geta Charge": {
-   "ac": {
-    "min": 9.9,
-    "max": 9.9
-   },
-   "dc": {
-    "min": 13.9,
-    "max": 13.9
-   },
-   "kaynak": "https://getacharge.com.tr/fiyatlar/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "getacharge",
-    "GETA CHARGE"
-   ],
-   "not": "Proşarj markası."
-  },
-  "GIOEV": {
-   "ac": null,
-   "dc": {
-    "min": 11.99,
-    "max": 13.73
-   },
-   "kaynak": "https://gioev.com/fiyatlandirma",
-   "kontrol": "2026-11-20",
-   "gecerlilik": "2026-09-30",
-   "adlar": [
-    "GIOEV"
-   ],
-   "not": "DC standart tarife 13,73; seçili istasyonlarda kampanyalı 11,99 ve 12,99. AC fiyatı sayfada okunamadı."
-  },
-  "Şarj Start": {
-   "ac": {
-    "min": 9.5,
-    "max": 9.5
-   },
-   "dc": {
-    "min": 12.75,
-    "max": 12.75
-   },
-   "kaynak": "https://sarjstart.com/Fiyatlandirma",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "ŞARJSTART"
-   ]
-  },
-  "Uşarj": {
-   "ac": {
-    "min": 9.9,
-    "max": 9.95
-   },
-   "dc": {
-    "min": 12.9,
-    "max": 12.9
-   },
-   "kaynak": "https://usarj.com.tr/fiyat-tarifesi",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "U-ŞARJ",
-    "Uşarj Enerji"
-   ],
-   "not": "Lokasyon bazlı tarife listesinden min–max; DC yalnızca bazı lokasyonlarda."
-  },
-  "Biogreen": {
-   "ac": {
-    "min": 9.99,
-    "max": 9.99
-   },
-   "dc": {
-    "min": 12.9,
-    "max": 12.9
-   },
-   "kaynak": "https://www.biogreen.com.tr/tr/ucretlendirme",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "biogreen",
-    "BIOGREEN"
-   ],
-   "not": "KDV dahil."
-  },
-  "Tedy": {
-   "ac": {
-    "min": 9.9,
-    "max": 9.9
-   },
-   "dc": {
-    "min": 9.9,
-    "max": 12.9
-   },
-   "kaynak": "https://www.gotedygo.com/fiyatarifeleri",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "gotedygo",
-    "T.E.D.Y.",
-    "Tedy Enerji"
-   ],
-   "not": "DC genel 12,90; sayfada listelenen 3 istasyonda 9,90."
-  },
-  "As Plus Şarj": {
-   "ac": {
-    "min": 9.49,
-    "max": 9.49
-   },
-   "dc": {
-    "min": 12.49,
-    "max": 12.49
-   },
-   "kaynak": "https://asplussarj.com/fiyatlar",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "ASPLUS",
-    "AS PLUS"
-   ]
-  },
-  "Şarjstop": {
-   "ac": {
-    "min": 9.99,
-    "max": 9.99
-   },
-   "dc": {
-    "min": 12.99,
-    "max": 12.99
-   },
-   "kaynak": "https://sarjstop.com.tr/tarifeler",
-   "kontrol": "2026-11-20",
-   "gecerlilik": "2026-06-13",
-   "adlar": [
-    "ŞS ŞARJSTOP Güvenli Şarj Nok",
-    "ŞS ŞARJSTOP Güvenli Şarj Noktası",
-    "ŞARJSTOP"
-   ],
-   "not": "KDV dahil. AC (Tip-2, 3,6–22 kW) 9,99, DC (CCS2, 24 kW+) 12,99 TL/kWh; 13.06.2026'dan itibaren. Önceki 8,29 AC kademesi resmi sayfada artık yok (17 Kasım 2026)."
-  },
-  "Solargize": {
-   "ac": {
-    "min": 9.99,
-    "max": 9.99
-   },
-   "dc": {
-    "min": 11.99,
-    "max": 11.99
-   },
-   "kaynak": "https://solargize.com.tr/fiyatlar",
-   "kontrol": "2026-11-20",
-   "gecerlilik": "2025-11-15",
-   "adlar": [
-    "Solargize"
-   ]
-  },
-  "KES": {
-   "ac": {
-    "min": 11.0,
-    "max": 11.0
-   },
-   "dc": {
-    "min": 13.0,
-    "max": 13.0
-   },
-   "kaynak": "https://kessarj.com/fiyat-ve-tarifeler",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "KES",
-    "KES Şarj"
-   ],
-   "not": "KDV dahil."
-  },
-  "Rönesans Charger": {
-   "ac": {
-    "min": 10.99,
-    "max": 10.99
-   },
-   "dc": {
-    "min": 15.99,
-    "max": 15.99
-   },
-   "kaynak": "https://www.ronesanscharger.com/#tarifeler",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "RÖNESANS CHARGER",
-    "RönesansChargeR"
-   ],
-   "not": "AC Type-2 22 kW'a kadar, DC CCS; istasyon soket tipine göre değişebilir."
-  },
-  "Checkpoint": {
-   "ac": {
-    "min": 7.89,
-    "max": 7.89
-   },
-   "dc": {
-    "min": 9.49,
-    "max": 9.49
-   },
-   "kaynak": "https://checkpointsarj.com.tr/fiyatlandirma",
-   "kontrol": "2026-11-20",
-   "gecerlilik": "2026-03-01",
-   "adlar": [
-    "CheckPoint"
-   ],
-   "not": "KDV dahil, tüm istasyonlarda geçerli. AC 11–22 kW, DC 120–240 kW."
-  },
-  "sepascharge": {
-   "ac": {
-    "min": 9.9,
-    "max": 9.9
-   },
-   "dc": {
-    "min": 12.9,
-    "max": 12.9
-   },
-   "kaynak": "https://sepascharge.com/sarj-ucretleri",
-   "kontrol": "2026-11-20",
-   "gecerlilik": "2026-05-08",
-   "adlar": [
-    "Sepaş Akıllı Çözümler Anonim",
-    "Sepaş Akıllı Çözümler Anonim Şirketi",
-    "Sepaş"
-   ],
-   "not": "KDV dahil. AC 22 kW ve altı, DC 80–200 kW; belirli lokasyonlarda kampanyalı 11,35 (07.10–31.12.2026)."
-  },
-  "HIZZLAN": {
-   "ac": {
-    "min": 9.99,
-    "max": 9.99
-   },
-   "dc": {
-    "min": 12.99,
-    "max": 12.99
-   },
-   "kaynak": "https://hizzlan.com/ucretlendirme-ve-tarifeler",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "HIZZLAN Charge N'Drive",
-    "HIZZLAN Charge N’Drive"
-   ]
-  },
-  "5 Şarj": {
-   "ac": {
-    "min": 8.99,
-    "max": 8.99
-   },
-   "dc": {
-    "min": 15.9,
-    "max": 15.9
-   },
-   "kaynak": "https://5sarj.com/tr/fiyatlandirma",
-   "kontrol": "2026-11-13",
-   "gecerlilik": null,
-   "adlar": [
-    "5 Şarj",
-    "5Şarj",
-    "Beş Şarj"
-   ],
-   "not": "AC ≤22 kW 8,99, DC 150 kW 15,9 TL/kWh. Sayfaya göre fiyat lokasyona/sokete göre değişebilir; kullanıcı 5 istasyonu uygulamada kontrol etti, aynı. Sayfa bot korumalı: günlük tarama açamaz, fiyat elle (sayfanın ekran görüntüsüyle) güncellenir."
-  },
-  "Tesla": {
-   "ac": null,
-   "dc": {
-    "min": 10.4,
-    "max": 13.0
-   },
-   "kaynak": "https://www.tesla.com/tr_TR/supercharger",
-   "kontrol": "2026-11-13",
-   "gecerlilik": null,
-   "adlar": [
-    "Tesla",
-    "Tesla Supercharger",
-    "Tesla Motors"
-   ],
-   "not": "Tesla Supercharger (250 kW): Tesla dışı araçlar 13,00 TL/kWh; Tesla araçlara %20 indirimli 10,40 TL/kWh. Kaynak Tesla uygulaması (kullanıcının ekran görüntüsü, 13 Kasım 2026); tesla.com otomatik erişime kapalı, fiyat elle güncellenir."
-  },
-  "AOS Technology": {
-   "ac": {
-    "min": 10.9,
-    "max": 10.9
-   },
-   "dc": {
-    "min": 14.9,
-    "max": 14.9
-   },
-   "kaynak": "https://aostechnology.com.tr/sarj-istasyonlarimiz/",
-   "kontrol": "2026-11-19",
-   "gecerlilik": "2026-04-18",
-   "adlar": [
-    "AOSTECHNOLOGY",
-    "AOS Technology",
-    "AOS Teknoloji"
-   ],
-   "not": "AC (22 kW) 10,90, DC (120 kW) 14,90 TL/kWh. Kaynak AOS uygulaması (kullanıcının ekran görüntüsü, 13 Kasım 2026); sitede fiyat yayımlanmıyor, fiyat elle güncellenir."
-  },
-  "EKA Enerji": {
-   "ac": {
-    "min": 9.7,
-    "max": 9.7
-   },
-   "dc": {
-    "min": 12.8,
-    "max": 12.8
-   },
-   "kaynak": "https://ekaenerjiteknoloji.com.tr/sarj/fiyat",
-   "kontrol": "2026-11-19",
-   "gecerlilik": "2026-08-27",
-   "adlar": [
-    "EKA Enerji",
-    "EKA Enerji Teknoloji",
-    "Eka Enerji Teknoloji",
-    "ekaenerji"
-   ],
-   "not": "AC (7,4–22 kW) 9,70, DC (60–720 kW) 12,80 TL/kWh, KDV dahil."
-  },
-  "otoWATT": {
-   "ac": {
-    "min": 10.99,
-    "max": 10.99
-   },
-   "dc": {
-    "min": 13.99,
-    "max": 13.99
-   },
-   "kaynak": "https://www.aydemplus.com.tr/otowatt-tarifelerimiz",
-   "kontrol": "2026-11-20",
-   "gecerlilik": "2026-04-15",
-   "adlar": [
-    "otoWATT",
-    "OTOWATT",
-    "Aydem Plus",
-    "otoWATT (Aydem Plus)"
-   ],
-   "not": "Genel tarife AC 10,99, DC 13,99 TL/kWh. Konut sitelerinde lokasyon bazlı indirimli site tarifesi AC 9,49, DC 11,99 (data/site_tarifesi.json; istasyon adından tanınan sitelerde istasyon fiyatı olarak gösterilir)."
-  },
-  "Toger": {
-   "ac": {
-    "min": 9.9,
-    "max": 9.9
-   },
-   "dc": {
-    "min": 13.39,
-    "max": 13.39
-   },
-   "kaynak": "https://toger.co/pricing",
-   "kontrol": "2026-11-19",
-   "gecerlilik": null,
-   "adlar": [
-    "TOGER",
-    "Toger (TR)",
-    "Toger.co",
-    "Toger Şarj"
-   ],
-   "not": "KDV dahil. Şarj bittikten 15 dk sonra 5 TL/dk işgaliye (en çok 450 TL)."
-  },
-  "360 Enerji": {
-   "ac": {
-    "min": 9.49,
-    "max": 9.49
-   },
-   "dc": {
-    "min": 12.49,
-    "max": 12.49
-   },
-   "kaynak": "https://sarj.360enerji.com.tr/tarifeler/",
-   "kontrol": "2026-11-17",
-   "gecerlilik": "2026-09-23",
-   "adlar": [
-    "360° ENERJİ",
-    "360 ENERJİ",
-    "360° Enerji",
-    "360 Enerji Şarj"
-   ],
-   "not": "AC-1 (3,7–22 kW) 9,49, DC (60–180 kW) 12,49 TL/kWh. Düşük güçlü bazı lokasyonlarda AC-2 8,99 (lokasyona özel, uygulanmadı). İşgaliye: şarjdan 15 dk sonra her 15 dk için 50 TL."
-  },
-  "Voltgo": {
-   "ac": {
-    "min": 9.5,
-    "max": 9.5
-   },
-   "dc": {
-    "min": 12.4,
-    "max": 12.4
-   },
-   "kaynak": "https://voltgo.com.tr/voltgo-tarife/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "Voltgo",
-    "VOLTGO",
-    "Voltgo Şarj"
-   ],
-   "not": "AC Tip 2 9,5, DC CCS2 12,4 TL/kWh. Sayfada KDV durumu belirtilmiyor."
-  },
-  "EPSIS": {
-   "ac": {
-    "min": 9.9,
-    "max": 9.9
-   },
-   "dc": {
-    "min": 12.5,
-    "max": 12.5
-   },
-   "kaynak": "https://www.epsis.net/elektrikli-arac-sarj-tarifeleri",
-   "kontrol": "2026-11-20",
-   "gecerlilik": "2026-03-04",
-   "adlar": [
-    "EPSIS Emobility",
-    "EPSIS",
-    "Epsis"
-   ],
-   "not": "AC (22 kW, Type 2) 9,90, DC (30–480 kW, CCS2) 12,50 TL/kWh, vergiler dahil, 81 ilde aynı fiyat."
-  },
-  "Fast-Go": {
-   "ac": {
-    "min": 9.49,
-    "max": 9.49
-   },
-   "dc": {
-    "min": 12.49,
-    "max": 12.49
-   },
-   "kaynak": "https://fast-go.com.tr/fiyatlandirma/",
-   "kontrol": "2026-11-14",
-   "gecerlilik": null,
-   "adlar": [
-    "Fast-Go",
-    "FastGo",
-    "Fast Go",
-    "FAST-GO",
-    "Fastgo DC Şarj"
-   ],
-   "not": "AC (22 kW'a kadar) 9,49, DC (30–180 kW) 12,49 TL/kWh. Kaynak: fiyat sayfasının ekran görüntüsü, kullanıcı uygulamadan doğruladı (14 Kasım 2026). Sitenin SSL sertifikası süresi dolmuş; günlük kontrol açamaz, fiyat elle güncellenir."
-  },
-  "Petrol Ofisi e-POwer": {
-   "ac": {
-    "min": 8.99,
-    "max": 8.99
-   },
-   "dc": {
-    "min": 11.99,
-    "max": 11.99
-   },
-   "kaynak": "https://www.petrolofisi.com.tr/urun-ve-hizmetler/e-power",
-   "kontrol": "2026-11-19",
-   "gecerlilik": null,
-   "adlar": [
-    "Petrol Ofisi e-POWER",
-    "e-POwer",
-    "Petrol Ofisi e-POwer"
-   ],
-   "not": "AC Tip 2 8,99, DC CCS 11,99 TL/kWh, KDV dahil. Sayfanın İngilizce sürümünde eski fiyat (8,49/10,99) duruyor; Türkçe sayfa esas alındı."
-  },
-  "Solarşarj": {
-   "ac": {
-    "min": 9.69,
-    "max": 12.99
-   },
-   "dc": {
-    "min": 13.89,
-    "max": 16.49
-   },
-   "kaynak": "https://solarsarj.org/fiyatlar/",
-   "kontrol": "2026-11-19",
-   "gecerlilik": null,
-   "adlar": [
-    "solarşarj",
-    "Solarsarj"
-   ],
-   "not": "AC-01 9,69, AC-02 10,89, AC-03 12,99; DC CCS-01 13,89, CCS-02 16,49 TL/kWh. Fiyat lokasyon bazlı (uygulamada istasyon detayında). KDV belirtilmemiş. İstasyon listesi EPDK'daki solarşarj kayıtlarıyla aynı (Villa Aşina, Le Chic vb.)."
-  },
-  "Plug&Drive": {
-   "ac": {
-    "min": 9.99,
-    "max": 9.99
-   },
-   "dc": {
-    "min": 12.99,
-    "max": 12.99
-   },
-   "kaynak": "https://pgdenerji.com/fiyatlandirma",
-   "kontrol": "2026-11-14",
-   "gecerlilik": null,
-   "adlar": [
-    "Plug&drive",
-    "PGD Enerji"
-   ],
-   "not": "PGD Enerji (Plug&drive) AC 9,99, DC 12,99 TL/kWh, KDV dahil. Fiyatlar lokasyon bazlı değişebilir (uygulamada görünür)."
-  },
-  "CNS Solar Şarj": {
-   "ac": {
-    "min": 9.15,
-    "max": 9.15
-   },
-   "dc": {
-    "min": 10.0,
-    "max": 10.0
-   },
-   "kaynak": "https://cnssolarsarj.com/tarife.php",
-   "kontrol": "2026-11-19",
-   "gecerlilik": null,
-   "adlar": [
-    "CNS Solar ŞARJ",
-    "CNS Solar"
-   ],
-   "not": "AC 9,15, DC 10 TL/kWh. KDV belirtilmemiş."
-  },
-  "Tripy": {
-   "ac": {
-    "min": 9.5,
-    "max": 9.5
-   },
-   "dc": {
-    "min": 12.99,
-    "max": 12.99
-   },
-   "kaynak": "https://tripy.mobi/sarj-istasyonlari/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "Tripy",
-    "Tripy Charge"
-   ],
-   "not": "AC 9,50, DC 12,99 TL/kWh: Rotawatt uygulamasındaki güncel fiyat (15 Kasım 2026). tripy.mobi'deki 7,8 / 11 eski."
-  },
-  "EKOS Mobility": {
-   "ac": {
-    "min": 9.99,
-    "max": 9.99
-   },
-   "dc": {
-    "min": 14.99,
-    "max": 14.99
-   },
-   "kaynak": "https://ekosmobility.com/fiyatlandirma/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "EKOS",
-    "EKOS Mobilite"
-   ],
-   "not": "AC 9,99, DC 14,99 TL/kWh, KDV dahil."
-  },
-  "Q Charge": {
-   "ac": {
-    "min": 9.95,
-    "max": 9.95
-   },
-   "dc": {
-    "min": 13.78,
-    "max": 15.36
-   },
-   "kaynak": "https://qcharge.io/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "Q Charge",
-    "QCharge",
-    "META Mobilite"
-   ],
-   "not": "META Mobilite Enerji. qcharge.io 'Hizmet Tarifesi' (EPDK azami hizmet bedelleri): AC tüm soketler 9,95; DC 150 kW ve altı 13,78, 150 kW üstü 15,36 TL/kWh, KDV dahil (20.11.2026)."
-  },
-  "Fix Charge": {
-   "ac": {
-    "min": 9.98,
-    "max": 9.98
-   },
-   "dc": {
-    "min": 14.98,
-    "max": 14.98
-   },
-   "kaynak": "https://www.fixcharge.io/fiyatlar",
-   "kontrol": "2026-11-19",
-   "gecerlilik": null,
-   "adlar": [
-    "fixcharge",
-    "Fix Charge"
-   ],
-   "not": "Beyttürk Enerji. AC 22 kW 9,98, DC 14,98 TL/kWh, tüm lokasyonlarda. KDV belirtilmemiş. İşgaliye: 20 dk tolerans sonrası 100 TL + 5 TL/dk."
-  },
-  "Greendrive": {
-   "ac": {
-    "min": 8.7,
-    "max": 8.7
-   },
-   "dc": {
-    "min": 12.7,
-    "max": 12.7
-   },
-   "kaynak": "https://greendrive.com.tr/tarifeler",
-   "kontrol": "2026-11-19",
-   "gecerlilik": null,
-   "adlar": [
-    "Greendrive"
-   ],
-   "not": "Akköprülü Otomotiv. AC 8,70, DC 12,70 TL/kWh, KDV dahil."
-  },
-  "ENH Şarj": {
-   "ac": {
-    "min": 9.49,
-    "max": 9.49
-   },
-   "dc": {
-    "min": 12.99,
-    "max": 12.99
-   },
-   "kaynak": "https://enhsarj.com/",
-   "kontrol": "2026-11-19",
-   "gecerlilik": null,
-   "adlar": [
-    "CLIXOLAR",
-    "ENH Şarj"
-   ],
-   "not": "EPDK'da marka CLIXOLAR, işletmeci ENH Şarj A.Ş.; fiyat işletmecinin kendi sitesinden: tüm AC 9,49, tüm DC 12,99 TL/kWh. KDV belirtilmemiş."
-  },
-  "E4 Şarj": {
-   "ac": {
-    "min": 9.99,
-    "max": 10.99
-   },
-   "dc": {
-    "min": 13.99,
-    "max": 15.99
-   },
-   "kaynak": "https://e4sarj.com.tr/#tarifeler-ve-ucretler",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "E4 ŞARJ"
-   ],
-   "not": "TT Ventures. AC 9,99–10,99, DC 13,99–15,99 TL/kWh, KDV dahil; lokasyon bazlı."
-  },
-  "Avrupa Şarj": {
-   "ac": {
-    "min": 8.99,
-    "max": 8.99
-   },
-   "dc": {
-    "min": 10.99,
-    "max": 10.99
-   },
-   "kaynak": "https://avrupasarj.com/",
-   "kontrol": "2026-11-17",
-   "gecerlilik": null,
-   "adlar": [
-    "AVRUPA ŞARJ"
-   ],
-   "not": "AC 8,99, DC 10,99 TL/kWh, KDV dahil."
-  },
-  "GelDol": {
-   "ac": {
-    "min": 9.99,
-    "max": 9.99
-   },
-   "dc": {
-    "min": 12.99,
-    "max": 12.99
-   },
-   "kaynak": "https://geldol.com/tarifelerimiz/",
-   "kontrol": "2026-11-19",
-   "gecerlilik": "2026-03-18",
-   "adlar": [
-    "GEL DOL",
-    "Gel Dol"
-   ],
-   "not": "AC 9,99, DC 12,99 TL/kWh, KDV dahil. AC fiyatı bazı lokasyonlarda sözleşmeye göre farklı olabilir."
-  },
-  "Arcona": {
-   "ac": {
-    "min": 9.9,
-    "max": 9.9
-   },
-   "dc": {
-    "min": 12.95,
-    "max": 12.95
-   },
-   "kaynak": "https://arconasarj.com/tarife",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "AARCONA",
-    "ARCONA"
-   ],
-   "not": "Halka açık AC 22 9,90, tüm DC 12,95 TL/kWh, KDV dahil. Konut özel noktalarda ayrı tarife (uygulanmadı). İşgaliye şarjdan 10 dk sonra 3 TL/dk."
-  },
-  "MyPower": {
-   "ac": {
-    "min": 11.5,
-    "max": 11.5,
-    "saatli_liste": "mypower",
-    "saatli": [
-     {
-      "bas": "07:00",
-      "bit": "16:59",
-      "etiket": "16:58",
-      "v": 9.99
-     },
-     {
-      "bas": "16:59",
-      "bit": "07:00",
-      "etiket": "06:59",
-      "v": 11.5
-     }
-    ]
-   },
-   "dc": {
-    "min": 13.6,
-    "max": 13.6,
-    "saatli_liste": "mypower",
-    "saatli": [
-     {
-      "bas": "07:00",
-      "bit": "16:59",
-      "etiket": "16:58",
-      "v": 10.99
-     },
-     {
-      "bas": "16:59",
-      "bit": "07:00",
-      "etiket": "06:59",
-      "v": 13.6
-     }
-    ]
-   },
-   "kaynak": "https://www.mypower.net.tr/",
-   "kontrol": "2026-11-19",
-   "gecerlilik": "2026-04-15",
-   "adlar": [
-    "MYPOWER",
-    "Mypower Şarj"
-   ],
-   "not": "AC 11,50, DC 13,60 TL/kWh (15.04.2026), KDV dahil. Listedeki 9 istasyonda saatli tarife (data/saatli_tarife.json → mypower): 07:00–16:58 AC 9,99 / DC 10,99, 16:59–06:59 AC 11,50 / DC 13,60 (Rotawatt uygulaması, 15 Kasım 2026)."
-  },
-  "Power Elektronik": {
-   "ac": {
-    "min": 9.75,
-    "max": 9.75
-   },
-   "dc": {
-    "min": 10.6,
-    "max": 13.6
-   },
-   "kaynak": "https://powerelektronik.com.tr/arac-sarj-fiyat-tarifeleri",
-   "kontrol": "2026-11-14",
-   "gecerlilik": null,
-   "adlar": [
-    "POWER ELEKTRONİK SANAYİ VE T",
-    "POWER ELEKTRONİK"
-   ],
-   "not": "Fiyatlar sayfadaki görselde, lokasyon bazlı: AC genel 9,75 (Avrupa Konutları 9, Adapark 9,7); DC 10,6–13,6 (Avrupa Konutları 10 uygulanmadı). Sayfada tarih ve KDV bilgisi yok."
-  },
-  "Türkşarj": {
-   "ac": {
-    "min": 9.4,
-    "max": 9.4
-   },
-   "dc": {
-    "min": 11.8,
-    "max": 11.8
-   },
-   "kaynak": "https://turksarj.com.tr/ucretlendirme/",
-   "kontrol": "2026-11-19",
-   "gecerlilik": null,
-   "adlar": [
-    "TÜRKŞARJ"
-   ],
-   "not": "AC 22 kW'a kadar 9,4, DC 60 kW ve üzeri 11,8 TL/kWh, KDV dahil."
-  },
-  "Bölgem Mobilite": {
-   "ac": {
-    "min": 9.59,
-    "max": 9.59
-   },
-   "dc": {
-    "min": 12.39,
-    "max": 12.39
-   },
-   "kaynak": "https://www.bolgem.com.tr/fiyat-tarifesi/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "BÖLGEM mobilite"
-   ],
-   "not": "AC 9,59, DC 12,39 TL/kWh. Lokasyon/saate göre indirim ve sadakat tarifeleri olabilir. KDV belirtilmemiş."
-  },
-  "Ekoşarj": {
-   "ac": {
-    "min": 10.49,
-    "max": 10.49
-   },
-   "dc": {
-    "min": 14.49,
-    "max": 14.49
-   },
-   "kaynak": "https://ekosarj.com/sarj-agi-tarifeleri/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": "2026-05-24",
-   "adlar": [
-    "ekoşarj en ekonomik, en ekol",
-    "ekoşarj en ekonomik, en ekolojik şekil",
-    "EKOŞARJ"
-   ],
-   "not": "HES Group. AC 10,49, DC 14,49 TL/kWh, KDV dahil (24.05.2026)."
-  },
-  "Electrise": {
-   "ac": {
-    "min": 8.5,
-    "max": 8.5
-   },
-   "dc": {
-    "min": 11.0,
-    "max": 11.0
-   },
-   "kaynak": "https://www.electrise.com.tr/",
-   "kontrol": "2026-11-17",
-   "gecerlilik": null,
-   "adlar": [
-    "Electrise"
-   ],
-   "not": "AC 8,5, DC 11 TL/kWh, KDV dahil."
-  },
-  "Doğuş Dijital Enerji": {
-   "ac": {
-    "min": 11.19,
-    "max": 11.19
-   },
-   "dc": {
-    "min": 13.99,
-    "max": 13.99
-   },
-   "kaynak": "https://dogusdijitalenerji.com/",
-   "kontrol": "2026-11-19",
-   "gecerlilik": null,
-   "adlar": [
-    "Doğuş Dijital Enerji",
-    "dgdoğuşgıda"
-   ],
-   "not": "AC 11,19, DC (30–320 kW) 13,99 TL/kWh. KDV belirtilmemiş."
-  },
-  "Minus Energy": {
-   "ac": {
-    "min": 8.5,
-    "max": 9.2
-   },
-   "dc": {
-    "min": 9.9,
-    "max": 12.5
-   },
-   "kaynak": "https://minusenergy.net/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "MINUS ENERGY"
-   ],
-   "not": "AC-1 9,2, AC-2 8,5, DC-1 12,5, DC-2 9,9 TL/kWh, vergiler dahil; kademelerin hangi istasyonda geçerli olduğu sayfada yazmıyor (uygulamada görünür)."
-  },
-  "Verdepunto": {
-   "ac": {
-    "min": 9.49,
-    "max": 9.49
-   },
-   "dc": {
-    "min": 12.49,
-    "max": 12.49
-   },
-   "kaynak": "https://verdepuntoenerji.com/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "ar armaksis ar verdepunto",
-    "Verdepunto Enerji"
-   ],
-   "not": "AC 22 kW 9,49, DC 50 kW ve üstü 12,49 TL/kWh. Sayfada tarih ve KDV bilgisi yok."
-  },
-  "Ecobox": {
-   "ac": {
-    "min": 9.29,
-    "max": 9.29
-   },
-   "dc": {
-    "min": 11.9,
-    "max": 11.9
-   },
-   "kaynak": "https://www.ecoboxsarj.com/tarifeler",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "ECOBOX"
-   ],
-   "not": "Atay Güç ve Enerji. AC 22 kW 9,29, DC (60–380 kW) 11,90 TL/kWh, KDV dahil. İşgaliye 2 TL/dk."
-  },
-  "EVC Charge": {
-   "ac": {
-    "min": 9.79,
-    "max": 9.79
-   },
-   "dc": {
-    "min": 13.79,
-    "max": 13.79
-   },
-   "kaynak": "https://evccharge.com/",
-   "kontrol": "2026-11-14",
-   "gecerlilik": null,
-   "adlar": [
-    "EVC CHARGE"
-   ],
-   "not": "AC 11–22 kW 9,79, tüm DC 13,79 TL/kWh. KDV belirtilmemiş. İşgaliye bedeli 27.07.2026'dan itibaren."
-  },
-  "Bladeco": {
-   "ac": {
-    "min": 8.98,
-    "max": 8.98
-   },
-   "dc": {
-    "min": 11.98,
-    "max": 11.98
-   },
-   "kaynak": "https://www.bladeco.com.tr/tarifeler/",
-   "kontrol": "2026-11-14",
-   "gecerlilik": "2026-04-09",
-   "adlar": [
-    "BLADECO"
-   ],
-   "not": "AC 8,98, DC 11,98 TL/kWh (sayfadaki AC/DC seçicisi; 9 Nisan 2026 tarihli). KDV belirtilmemiş."
-  },
-  "Pilstop": {
-   "ac": {
-    "min": 9.95,
-    "max": 9.95
-   },
-   "dc": {
-    "min": 14.98,
-    "max": 14.98
-   },
-   "kaynak": "https://pilstop.com/fiyatlandirma/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "PİLSTOP"
-   ],
-   "not": "AC 9,95, DC 14,98 TL/kWh, KDV dahil."
-  },
-  "3a Şarj": {
-   "ac": {
-    "min": 7.95,
-    "max": 7.95
-   },
-   "dc": {
-    "min": 10.95,
-    "max": 10.95
-   },
-   "kaynak": "https://3asarj.com/uyelik-ve-tarifeler/",
-   "kontrol": "2026-11-19",
-   "gecerlilik": null,
-   "adlar": [
-    "3a",
-    "3A Şarj"
-   ],
-   "not": "MAS Sınai ve Ticari Yatırımlar. AC 22 kW'a kadar 7,95, DC 30–360 kW 10,95 TL/kWh (sayfada 'Üyelere Özel'; üyelik uygulamadan ücretsiz). KDV belirtilmemiş."
-  },
-  "Aktif Şarj": {
-   "ac": {
-    "min": 9.8,
-    "max": 9.8
-   },
-   "dc": {
-    "min": 12.9,
-    "max": 12.9
-   },
-   "kaynak": "https://aktifsarj.com/",
-   "kontrol": "2026-11-14",
-   "gecerlilik": "2026-10-08",
-   "adlar": [
-    "AKTİF ŞARJ"
-   ],
-   "not": "AC Tip 2 9,80, DC (CHAdeMO/CCS) 12,90 TL/kWh, 08.10.2026'dan itibaren. KDV belirtilmemiş."
-  },
-  "RHG Enertürk": {
-   "ac": {
-    "min": 10.99,
-    "max": 10.99
-   },
-   "dc": {
-    "min": 13.5,
-    "max": 13.5
-   },
-   "kaynak": "https://www.enerturk.com/sarj/uyelik-tarifeler/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "RHG Enertürk",
-    "enertürk rhg enerji",
-    "ENERTÜRK RHG"
-   ],
-   "not": "AC-1 10,99, DC 13,50 TL/kWh, KDV dahil. AC-2 8,25 tesislerle yapılan anlaşmaya göre (uygulanmadı)."
-  },
-  "Arsima": {
-   "ac": {
-    "min": 13.99,
-    "max": 13.99
-   },
-   "dc": {
-    "min": 14.99,
-    "max": 14.99
-   },
-   "kaynak": "https://www.arsimaenerji.com/tarifeler.html",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "ARSİMA"
-   ],
-   "not": "AC 13,99, DC 14,99 TL/kWh. KDV belirtilmemiş."
-  },
-  "Karkin Enerji": {
-   "ac": {
-    "min": 9.0,
-    "max": 9.0
-   },
-   "dc": {
-    "min": 11.0,
-    "max": 11.0
-   },
-   "kaynak": "https://karkinenerji.com.tr/guncel-sarj-fiyatlari/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "ACROBAT",
-    "Karkin Enerji"
-   ],
-   "not": "EPDK'da marka ACROBAT, işletmeci Karkın Enerji; fiyat işletmecinin kendi sitesinden: AC 9, DC 11 TL/kWh. Sayfada tarih ve KDV bilgisi yok."
-  },
-  "Tam Şarj": {
-   "ac": {
-    "min": 10.49,
-    "max": 10.49
-   },
-   "dc": {
-    "min": 13.99,
-    "max": 13.99
-   },
-   "kaynak": "https://tam-sarj.com/tarifeler/",
-   "kontrol": "2026-11-19",
-   "gecerlilik": null,
-   "adlar": [
-    "TAMŞARJ",
-    "Tam Şarj"
-   ],
-   "not": "Tekno Metal. AC Tip 2 10,49, DC CCS 13,99 TL/kWh (sayfada birim 'TL/kw' yazıyor). Lokasyon bazlı değişebilir. KDV belirtilmemiş."
-  },
-  "GezCar": {
-   "ac": {
-    "min": 9.99,
-    "max": 9.99
-   },
-   "dc": {
-    "min": 11.5,
-    "max": 11.5
-   },
-   "kaynak": "https://gezcarenerji.com/fiyatlarimiz",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "GezCar",
-    "GEZCAR"
-   ],
-   "not": "AC Tip 2 9,99, DC CCS 11,50 TL/kWh, KDV dahil. İşgaliye 3 TL/dk."
-  },
-  "Şarjed": {
-   "ac": {
-    "min": 9.99,
-    "max": 9.99
-   },
-   "dc": {
-    "min": 12.9,
-    "max": 12.9
-   },
-   "kaynak": "https://sarjed.com/tarifeler",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "şarjed Park",
-    "Şarjed"
-   ],
-   "not": "AC 9,99, DC 12,90 TL/kWh, KDV dahil."
-  },
-  "PowerPay": {
-   "ac": {
-    "min": 9.9,
-    "max": 9.9
-   },
-   "dc": {
-    "min": 12.9,
-    "max": 12.9
-   },
-   "kaynak": "https://www.powerpay.com.tr/",
-   "kontrol": "2026-11-14",
-   "gecerlilik": null,
-   "adlar": [
-    "powerpay by metropolcard",
-    "PowerPay"
-   ],
-   "not": "Metropol Şarj. Standart tarife AC 9,90, DC 12,90 TL/kWh. Er-Der HUB'daki DC indirimi (10,50, 31 Ekim'e kadar) uygulanmadı. KDV belirtilmemiş."
-  },
-  "Vilampo": {
-   "ac": {
-    "min": 10.39,
-    "max": 10.39
-   },
-   "dc": {
-    "min": 12.89,
-    "max": 12.89
-   },
-   "kaynak": "https://vilampo.com/tr/price",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "vilampo"
-   ],
-   "not": "Vitalen Enerji. AC 7–22 kW 10,39, DC 60–180 kW 12,89 TL/kWh, KDV dahil."
-  },
-  "Obişarj": {
-   "ac": {
-    "min": 10.99,
-    "max": 10.99
-   },
-   "dc": {
-    "min": 15.95,
-    "max": 15.95
-   },
-   "kaynak": "https://obisarj.com/tarifeler/",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "Obişarj"
-   ],
-   "not": "AC 10,99, DC 15,95 TL/kWh, KDV dahil."
-  },
-  "Qopuz Energy": {
-   "ac": {
-    "min": 9.76,
-    "max": 9.76
-   },
-   "dc": {
-    "min": 11.9,
-    "max": 11.9
-   },
-   "kaynak": "https://www.qopuzenergy.com/tarifeler",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "Qopuz Energy proton neutron",
-    "Qopuz Energy"
-   ],
-   "not": "AC 9,76, DC 11,90 TL/kWh, KDV dahil. Anlaşmalı konut/işyeri üyelerine farklı fiyat (uygulanmadı)."
-  },
-  "Porty": {
-   "ac": {
-    "min": 8.4,
-    "max": 8.4
-   },
-   "dc": {
-    "min": 8.75,
-    "max": 9.9
-   },
-   "kaynak": "https://porty.tech/tr/porty-nedir/elektrikli-arac-sarj-istasyonu",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "porty",
-    "Porty4Car"
-   ],
-   "not": "AC 8,40; DC 60 kW'a kadar 8,75, 60 kW ve üstü 9,90 TL/kWh. Sayfada tarih ve KDV bilgisi yok."
-  },
-  "Köfteci Yusuf Şarj": {
-   "ac": {
-    "min": 9.95,
-    "max": 9.95
-   },
-   "dc": {
-    "min": 14.98,
-    "max": 14.98
-   },
-   "kaynak": "https://kofteciyusufsarj.com/fiyat",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "KÖFTECİ YUSUF"
-   ],
-   "not": "AC 9,95, DC 14,98 TL/kWh. KDV belirtilmemiş."
-  },
-  "WattReise": {
-   "ac": {
-    "min": 8.98,
-    "max": 10.49
-   },
-   "dc": {
-    "min": 11.64,
-    "max": 13.64
-   },
-   "kaynak": "https://wattreise.com/tr/fiyatlar",
-   "kontrol": "2026-11-19",
-   "gecerlilik": null,
-   "adlar": [
-    "WATTREISE"
-   ],
-   "not": "AC Type 2 8,98–9,99–10,49, DC CCS 11,64–13,64 TL/kWh; istasyona göre (uygulamada görünür). KDV belirtilmemiş."
-  },
-  "Mithra Pod": {
-   "ac": {
-    "min": 10.99,
-    "max": 10.99
-   },
-   "dc": {
-    "min": 15.59,
-    "max": 15.59
-   },
-   "kaynak": "https://www.rotawatt.com/",
-   "kontrol": "2026-11-15",
-   "gecerlilik": null,
-   "adlar": [
-    "MITHRA POD",
-    "MithraPOD",
-    "Mithrapod"
-   ],
-   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
-  },
-  "Royal Şarj": {
-   "ac": {
-    "min": 9.9,
-    "max": 9.9
-   },
-   "dc": {
-    "min": 13.75,
-    "max": 13.75
-   },
-   "kaynak": "https://www.rotawatt.com/",
-   "kontrol": "2026-11-15",
-   "gecerlilik": null,
-   "adlar": [
-    "ROYAL",
-    "Royal",
-    "Federal Elektrik"
-   ],
-   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
-  },
-  "Solinved": {
-   "ac": {
-    "min": 9.99,
-    "max": 9.99
-   },
-   "dc": {
-    "min": 13.99,
-    "max": 13.99
-   },
-   "kaynak": "https://www.rotawatt.com/",
-   "kontrol": "2026-11-15",
-   "gecerlilik": null,
-   "adlar": [
-    "solinved",
-    "SOLINVED"
-   ],
-   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
-  },
-  "ŞarjPlus": {
-   "ac": {
-    "min": 9.9,
-    "max": 9.9
-   },
-   "dc": {
-    "min": 12.9,
-    "max": 12.9
-   },
-   "kaynak": "https://www.rotawatt.com/",
-   "kontrol": "2026-11-15",
-   "gecerlilik": null,
-   "adlar": [
-    "ŞARJPLUS",
-    "Şarj Plus",
-    "SarjPlus"
-   ],
-   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
-  },
-  "Evroad": {
-   "ac": {
-    "min": 8.9,
-    "max": 8.9
-   },
-   "dc": {
-    "min": 12.9,
-    "max": 12.9
-   },
-   "kaynak": "https://www.rotawatt.com/",
-   "kontrol": "2026-11-15",
-   "gecerlilik": null,
-   "adlar": [
-    "evroad",
-    "EVROAD"
-   ],
-   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
-  },
-  "Çelikler Enerji": {
-   "ac": {
-    "min": 9.99,
-    "max": 9.99
-   },
-   "dc": {
-    "min": 12.79,
-    "max": 12.79
-   },
-   "kaynak": "https://www.rotawatt.com/",
-   "kontrol": "2026-11-15",
-   "gecerlilik": null,
-   "adlar": [
-    "ÇELİKLER ENERJİ",
-    "Çelikler"
-   ],
-   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
-  },
-  "Meis Charge": {
-   "ac": {
-    "min": 9.5,
-    "max": 9.5
-   },
-   "dc": {
-    "min": 12.9,
-    "max": 12.9
-   },
-   "kaynak": "https://www.rotawatt.com/",
-   "kontrol": "2026-11-15",
-   "gecerlilik": null,
-   "adlar": [
-    "MEIS CHARGE",
-    "Meis"
-   ],
-   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
-  },
-  "Promaster": {
-   "ac": {
-    "min": 8.5,
-    "max": 8.5
-   },
-   "dc": {
-    "min": 11.5,
-    "max": 11.5
-   },
-   "kaynak": "https://www.rotawatt.com/",
-   "kontrol": "2026-11-15",
-   "gecerlilik": null,
-   "adlar": [
-    "PROMASTER",
-    "Promaster Şarj"
-   ],
-   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
-  },
-  "Econ": {
-   "ac": {
-    "min": 9.99,
-    "max": 9.99
-   },
-   "dc": {
-    "min": 12.49,
-    "max": 12.49
-   },
-   "kaynak": "https://www.rotawatt.com/",
-   "kontrol": "2026-11-15",
-   "gecerlilik": null,
-   "adlar": [
-    "ECON",
-    "Energy Charging Operator Network"
-   ],
-   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
-  },
-  "EvSolt": {
-   "ac": {
-    "min": 8.99,
-    "max": 8.99
-   },
-   "dc": {
-    "min": 11.99,
-    "max": 11.99
-   },
-   "kaynak": "https://www.rotawatt.com/",
-   "kontrol": "2026-11-15",
-   "gecerlilik": null,
-   "adlar": [
-    "EVSolt",
-    "EVSOLT"
-   ],
-   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
-  },
-  "Spectrum": {
-   "ac": {
-    "min": 9.89,
-    "max": 9.89
-   },
-   "dc": {
-    "min": 12.96,
-    "max": 12.96
-   },
-   "kaynak": "https://www.rotawatt.com/",
-   "kontrol": "2026-11-15",
-   "gecerlilik": null,
-   "adlar": [
-    "SPECTRUM"
-   ],
-   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
-  },
-  "Swapp": {
-   "ac": {
-    "min": 8.0,
-    "max": 8.0
-   },
-   "dc": {
-    "min": 10.0,
-    "max": 10.0
-   },
-   "kaynak": "https://www.rotawatt.com/",
-   "kontrol": "2026-11-15",
-   "gecerlilik": null,
-   "adlar": [
-    "SWAPP",
-    "Swapp Şarjpark"
-   ],
-   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
-  },
-  "Mercury Şarj": {
-   "ac": null,
-   "dc": {
-    "min": 13.49,
-    "max": 13.49
-   },
-   "kaynak": "https://www.rotawatt.com/",
-   "kontrol": "2026-11-15",
-   "gecerlilik": null,
-   "adlar": [
-    "MERCURY",
-    "Mercury"
-   ],
-   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
-  },
-  "TR Charge": {
-   "ac": null,
-   "dc": {
-    "min": 13.5,
-    "max": 13.5
-   },
-   "kaynak": "https://www.rotawatt.com/",
-   "kontrol": "2026-11-15",
-   "gecerlilik": null,
-   "adlar": [
-    "TRCHARGE",
-    "TR CHARGE"
-   ],
-   "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
-  },
-  "GREEN SCIENCE": {
-   "ac": {
-    "min": 8.9,
-    "max": 8.9
-   },
-   "dc": {
-    "min": 11.9,
-    "max": 11.9
-   },
-   "kaynak": "https://www.zeyenerji.com.tr/tarifeler.html",
-   "kontrol": "2026-11-23",
-   "gecerlilik": null,
-   "adlar": [
-    "GREEN SCIENCE",
-    "Green Science",
-    "Zey Enerji",
-    "ZEY ENERJİ"
-   ],
-   "not": "KDV dahil (ağın kendi tarifeler sayfası; Green Science markası Zey Enerji'nin). AC 8,90, DC 11,90 TL/kWh."
-  },
-  "Pirim": {
-   "ac": {
-    "min": 9.49,
-    "max": 9.49
-   },
-   "dc": {
-    "min": 12.49,
-    "max": 12.49
-   },
-   "kaynak": "https://raw.githubusercontent.com/AlperKonan/prizy-data/main/prices.json",
-   "kontrol": "2026-11-20",
-   "gecerlilik": null,
-   "adlar": [
-    "PİRİM GIDA VE MEŞRUBAT SAN. ve TİC. LTD. ŞTİ.",
-    "Pirim",
-    "PİRİM GIDA VE MEŞRUBAT SAN."
-   ],
-   "not": "Ağın kendi sitesinde fiyat bulunamadı; fiyat üçüncü taraf derleme prizy-data'dan (GitHub, 16 Kasım 2026) alındı, resmi sayfada doğrulanmadı. Resmi fiyat bulunursa o esas alınır."
+  "_not": "Şarj ağlarının kendi resmi sayfalarında doğrulanan liste fiyatları (TL/kWh). Fiyatlar konuma göre aralık olarak yayınlanıyor: min-max. 'kontrol' sayfanın okunduğu tarih, 'gecerlilik' sayfanın kendi belirttiği tarih (yoksa null). Doğrulanamayan ağlarda ac/dc null kalır ve haritada 'Fiyat yok' görünür. Kampanya indirimleri bu fiyatlara dahil değildir.",
+  "guncelleme": "2026-11-23",
+  "aglar": {
+    "Eşarj": {
+      "ac": {
+        "min": 9.9,
+        "max": 9.9
+      },
+      "dc": {
+        "min": 9.9,
+        "max": 14.9
+      },
+      "kaynak": "https://esarj.com/fiyatlandirma",
+      "kontrol": "2026-11-07",
+      "gecerlilik": null,
+      "not": "KDV dahil. DC fiyatı lokasyona göre değişiyor; güncel fiyat Eşarj uygulamasında."
+    },
+    "ASTOR Şarj": {
+      "ac": {
+        "min": 9.89,
+        "max": 9.89
+      },
+      "dc": {
+        "min": 13.99,
+        "max": 13.99
+      },
+      "kaynak": "https://astorsarj.com.tr/",
+      "kontrol": "2026-11-15",
+      "gecerlilik": null,
+      "not": "Liste fiyatı AC 9,89 / DC 13,99 TL/kWh (kullanıcı Astor uygulamasından bildirdi, 15 Kasım 2026). DİKKAT: astorsarj.com.tr 'Fiyatlandırma' bölümündeki AC 8,99 / DC 10,90, uygulamayı güncelleyenlere Kasım kampanyası fiyatıdır (kampanyalar.json → astor own); 30 Kasım'a kadar liste fiyatı olarak yazılmaz. Aralık'ta sayfa yeniden kontrol edilir."
+    },
+    "Trugo": {
+      "ac": {
+        "min": 9.95,
+        "max": 9.95
+      },
+      "dc": {
+        "min": 12,
+        "max": 14.98
+      },
+      "kaynak": "https://trugo.com.tr/price",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "not": "AC tüm istasyonlarda 9,95; DC 14,98 TL/kWh. Duyurudaki seçili istasyonlarda DC 12 TL/kWh (https://trugo.com.tr/individual/news/secili-istasyonlarda-12-tl-kwh); istasyon bazlı fiyat haritada gösterilir."
+    },
+    "Voltrun": {
+      "ac": {
+        "min": 10.9,
+        "max": 10.9
+      },
+      "dc": {
+        "min": 13.9,
+        "max": 13.9
+      },
+      "kaynak": "https://www.voltrun.com/voltrun-uyelik-tarife/",
+      "kontrol": "2026-11-12",
+      "gecerlilik": null,
+      "not": "Tüm istasyonlarda tek fiyat. Kaynak: Voltrun mobil uygulaması (12 Kasım 2026'da site sahibi kontrol etti). Resmi tarife sayfası bot doğrulaması istediği için otomatik okunamıyor; sayfa açılırsa günlük tarama oradan doğrular."
+    },
+    "Otopriz": {
+      "ac": {
+        "min": 7.92,
+        "max": 9.9
+      },
+      "dc": {
+        "min": 9.73,
+        "max": 13.9
+      },
+      "kaynak": "https://otopriz.com.tr/uyelik-ve-tarifeler",
+      "kontrol": "2026-11-20",
+      "gecerlilik": "2026-01-20",
+      "not": "KDV dahil. İstasyon bazlı güncel fiyat Otopriz uygulamasında."
+    },
+    "Ovolt": {
+      "ac": {
+        "min": 9.99,
+        "max": 9.99
+      },
+      "dc": {
+        "min": 10.49,
+        "max": 14.49
+      },
+      "kaynak": "https://ovolt.com.tr/tarifeler",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "not": "Sayfa geçerlilik tarihi vermiyor; DC fiyat lokasyona göre değişiyor."
+    },
+    "Shell Recharge": {
+      "ac": {
+        "min": 12.99,
+        "max": 12.99
+      },
+      "dc": {
+        "min": 16.99,
+        "max": 16.99,
+        "saatli_liste": "shell",
+        "saatli": [
+          {
+            "bas": "22:00",
+            "bit": "05:00",
+            "etiket": "04:59",
+            "v": 13.99
+          },
+          {
+            "bas": "05:00",
+            "bit": "22:00",
+            "etiket": "21:59",
+            "v": 16.99
+          }
+        ]
+      },
+      "kaynak": "https://www.shell.com.tr/suruculer/shell-recharge-turkiye/fiyat-tarifesi.html",
+      "kontrol": "2026-11-09",
+      "gecerlilik": null,
+      "not": "Shell Recharge uygulamasındaki tarife (kullanıcı bildirimi, 9 Kasım 2026; resmi web sayfası fiyat yayınlamıyor). AC 12,99; DC 16,99 TL/kWh. Gece tarifesi (22:00–04:59 arası DC 13,99) yalnızca Shell'in duyurduğu 20 istasyonda geçerli (data/saatli_tarife.json)."
+    },
+    "WAT Mobilite": {
+      "ac": {
+        "min": 9.99,
+        "max": 10.99
+      },
+      "dc": {
+        "min": 11.99,
+        "max": 14.49
+      },
+      "kaynak": "https://www.watmobilite.com/cozumler/kamusal-alanlar#guncel-fiyat-ve-tarifeler",
+      "kontrol": "2026-11-24",
+      "gecerlilik": "2026-10-08",
+      "not": "Fiyat lokasyona göre değişiyor; güncel tarife mobil uygulamada. Sayfanın tarih bilgileri tutarsız olabilir."
+    },
+    "Voltla": {
+      "ac": null,
+      "dc": null,
+      "kaynak": "https://voltla.com.tr/",
+      "kontrol": null,
+      "gecerlilik": null,
+      "not": "Sitede fiyat yok."
+    },
+    "ZES": {
+      "ac": {
+        "min": 10.99,
+        "max": 10.99
+      },
+      "dc": {
+        "min": 12.99,
+        "max": 16.49
+      },
+      "kaynak": "https://zes.net/tr/fiyatlandirma",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "zes"
+      ],
+      "not": "DC-1 ve DC-2 tek aralık; fiyat lokasyona göre değişir."
+    },
+    "Enyakıt": {
+      "ac": null,
+      "dc": {
+        "min": 14.9,
+        "max": 14.9
+      },
+      "kaynak": "https://www.enyakit.com.tr/ucretlendirme",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "EN YAKIT"
+      ],
+      "not": "Ağ yalnızca DC istasyonlardan oluşuyor; AC fiyatı yok."
+    },
+    "Oncharge": {
+      "ac": {
+        "min": 9.99,
+        "max": 9.99
+      },
+      "dc": {
+        "min": 13.5,
+        "max": 13.5
+      },
+      "kaynak": "https://www.oncharge.com.tr/fiyatlar",
+      "kontrol": "2026-11-24",
+      "gecerlilik": "2026-10-30",
+      "adlar": [
+        "oncharge"
+      ],
+      "not": "KDV dahil. AC ≤22 kW, DC 40–320 kW."
+    },
+    "Otojet": {
+      "ac": {
+        "min": 10.99,
+        "max": 10.99
+      },
+      "dc": {
+        "min": 15.49,
+        "max": 15.49
+      },
+      "kaynak": "https://www.oto-jet.com.tr/fiyatlarimiz",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "Otojet"
+      ],
+      "not": "KDV dahil, tüm istasyonlarda tek fiyat. Seçili istasyonlarda şarj bittikten sonra araç bekletilirse işgaliye bedeli: AC'de 30. dakikadan sonra 3 TL/dk, DC'de 15. dakikadan sonra 5 TL/dk."
+    },
+    "D-Charge": {
+      "ac": {
+        "min": 10.9,
+        "max": 10.9
+      },
+      "dc": {
+        "min": 14.9,
+        "max": 14.9
+      },
+      "kaynak": "https://dcharge.com.tr/tarifeler",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "D-Charge"
+      ],
+      "not": "KDV dahil."
+    },
+    "Zeplin": {
+      "ac": {
+        "min": 9.5,
+        "max": 9.5
+      },
+      "dc": {
+        "min": 12,
+        "max": 12
+      },
+      "kaynak": "https://www.zeplinenerji.com",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "ZEPLİN CAR rental"
+      ]
+    },
+    "Tunçmatik": {
+      "ac": {
+        "min": 10.99,
+        "max": 10.99
+      },
+      "dc": {
+        "min": 15.49,
+        "max": 15.49
+      },
+      "kaynak": "https://tuncmatikcharge.com/fiyatlar/",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "tunçmatik"
+      ]
+    },
+    "Beefull": {
+      "ac": {
+        "min": 9.9,
+        "max": 9.9
+      },
+      "dc": {
+        "min": 13.99,
+        "max": 13.99
+      },
+      "kaynak": "https://beefull.com/tarifeler/elektrikli-arac-tarifesi/",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "beefull"
+      ],
+      "not": "KDV dahil."
+    },
+    "Aksa Şarj": {
+      "ac": {
+        "min": 9.9,
+        "max": 10.9
+      },
+      "dc": {
+        "min": 11.99,
+        "max": 13.99
+      },
+      "kaynak": "https://www.aksasarj.com.tr/ucretler",
+      "kontrol": "2026-11-24",
+      "gecerlilik": "2026-08-07",
+      "adlar": [
+        "AKSA ŞARJ"
+      ],
+      "not": "KDV dahil."
+    },
+    "MKS Şarj": {
+      "ac": {
+        "min": 9.49,
+        "max": 9.49
+      },
+      "dc": {
+        "min": 13.99,
+        "max": 13.99
+      },
+      "kaynak": "https://mkssarj.com/tarife",
+      "kontrol": "2026-11-24",
+      "gecerlilik": "2026-04-11",
+      "adlar": [
+        "MKS-ŞARJ"
+      ],
+      "not": "DC ≥50 kW."
+    },
+    "Miggo": {
+      "ac": {
+        "min": 9.5,
+        "max": 9.5
+      },
+      "dc": {
+        "min": 12.5,
+        "max": 12.5
+      },
+      "kaynak": "https://www.mig-go.com",
+      "kontrol": "2026-11-24",
+      "gecerlilik": "2026-02-19",
+      "adlar": [
+        "MİGGO"
+      ],
+      "not": "AC ≤22 kW, DC ≤180 kW."
+    },
+    "Neva Şarj": {
+      "ac": {
+        "min": 9.9,
+        "max": 9.9
+      },
+      "dc": {
+        "min": 13.9,
+        "max": 13.9
+      },
+      "kaynak": "https://nevasarj.com/sayfalar/istasyonlarimiz/arac-sarj-ac-dc-kwh-fiyat-tarifeleri.html",
+      "kontrol": "2026-11-24",
+      "gecerlilik": "2026-02-17",
+      "adlar": [
+        "NEVA ŞARJ"
+      ],
+      "not": "AC ≤22 kW, DC ≤240 kW."
+    },
+    "Varr": {
+      "ac": {
+        "min": 9.9,
+        "max": 9.9
+      },
+      "dc": {
+        "min": 13.9,
+        "max": 13.9
+      },
+      "kaynak": "https://www.varr.com.tr",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "varr TM"
+      ]
+    },
+    "i-Şarj": {
+      "ac": {
+        "min": 9.98,
+        "max": 9.98
+      },
+      "dc": {
+        "min": 13.49,
+        "max": 13.49
+      },
+      "kaynak": "https://www.isarj.com/tarifeler/",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "i-şarj"
+      ],
+      "not": "KDV dahil üyeliksiz liste fiyatı; üyelere avantajlı fiyat uygulamada."
+    },
+    "ŞarjMatik": {
+      "ac": {
+        "min": 9.99,
+        "max": 9.99
+      },
+      "dc": {
+        "min": 12.5,
+        "max": 12.5
+      },
+      "kaynak": "https://sarjmatik.com.tr/ChargingPrices/",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "ŞarjMatik"
+      ],
+      "not": "AC 22 kW, DC 60–90 kW."
+    },
+    "Şarjon": {
+      "ac": {
+        "min": 10.99,
+        "max": 10.99
+      },
+      "dc": {
+        "min": 11.99,
+        "max": 13.99
+      },
+      "kaynak": "https://sarjon.com.tr/fiyatlar/",
+      "kontrol": "2026-11-17",
+      "gecerlilik": null,
+      "adlar": [
+        "ŞARJON"
+      ],
+      "not": "DC-1 / DC-2 farklı fiyat; sadakat sözleşmesiyle özel fiyat var."
+    },
+    "ADZE": {
+      "ac": {
+        "min": 9.4,
+        "max": 9.4
+      },
+      "dc": {
+        "min": 13.4,
+        "max": 13.4
+      },
+      "kaynak": "https://www.adze.com/tr/fiyat-tarifesi",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "ADZE"
+      ],
+      "not": "KDV dahil. AC 11–22 kW, DC 40–350 kW."
+    },
+    "Lumicle": {
+      "ac": {
+        "min": 9.99,
+        "max": 9.99
+      },
+      "dc": {
+        "min": 13.49,
+        "max": 13.49
+      },
+      "kaynak": "https://lumicle.com.tr/istasyonlar/",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "LUMİCLE"
+      ],
+      "not": "Fiyat lumicle.com.tr/istasyonlar sayfasından; sayfada KDV ve geçerlilik tarihi belirtilmiyor."
+    },
+    "Tora": {
+      "ac": {
+        "min": 9.99,
+        "max": 9.99
+      },
+      "dc": {
+        "min": 13.49,
+        "max": 13.49
+      },
+      "kaynak": "https://torasarj.com/fiyatlar/",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "TORA",
+        "ToraŞarj (TR)",
+        "Tora Şarj"
+      ],
+      "not": "KDV dahil."
+    },
+    "Efish": {
+      "ac": {
+        "min": 10.99,
+        "max": 10.99
+      },
+      "dc": {
+        "min": 15.99,
+        "max": 15.99
+      },
+      "kaynak": "https://www.efish.com.tr/tr/fiyatlandirma/",
+      "kontrol": "2026-11-24",
+      "gecerlilik": "2026-10-21",
+      "adlar": [
+        "efish"
+      ]
+    },
+    "VoltUp": {
+      "ac": {
+        "min": 9.49,
+        "max": 9.49
+      },
+      "dc": {
+        "min": 12.49,
+        "max": 12.49
+      },
+      "kaynak": "https://voltup.com.tr/#istasyonlar",
+      "kontrol": "2026-11-13",
+      "gecerlilik": null,
+      "adlar": [
+        "VOLTUP",
+        "VoltUp",
+        "Volt Up"
+      ],
+      "not": "Fiyat istasyona göre değişebiliyor; VoltUp'ın kendi sitesindeki istasyon bazlı fiyat listesinden (Şarj Tarifeleri) alınır; haritada her istasyonun kendi fiyatı gösterilir, bu aralık yalnızca listede fiyatı bulunmayan istasyon için kullanılır."
+    },
+    "RST Charge Point": {
+      "ac": {
+        "min": 5.9,
+        "max": 5.9
+      },
+      "dc": {
+        "min": 13.99,
+        "max": 13.99
+      },
+      "kaynak": "https://rstchargepoint.com/#fiyatlar",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "Rst ChargePoint",
+        "RST ChargePoint",
+        "RST"
+      ],
+      "not": "KDV dahil, tüm istasyonlarda tek fiyat. AC 22 kW'a kadar, DC 120 kW'a kadar şarj için."
+    },
+    "BIG Station": {
+      "ac": {
+        "min": 8.9,
+        "max": 11
+      },
+      "dc": {
+        "min": 12.5,
+        "max": 12.5
+      },
+      "kaynak": "https://bsx-reverse.ee-w.workers.dev/app",
+      "kontrol": "2026-11-13",
+      "gecerlilik": null,
+      "adlar": [
+        "windmark",
+        "Windmark",
+        "BIG Station",
+        "BigStation",
+        "BSX Enerji"
+      ],
+      "not": "Fiyat istasyona göre değişiyor; istasyon bazlı fiyat BIG Station sisteminden günlük alınır (eski adı Windmark)."
+    },
+    "CV Charging": {
+      "ac": {
+        "min": 9.99,
+        "max": 9.99
+      },
+      "dc": {
+        "min": 13.49,
+        "max": 13.49
+      },
+      "kaynak": "https://cv-charging.com/tr/arac-sarj-tarifeleri",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "CV Şarj",
+        "CV Charging Vehicles",
+        "Charging Vehicles",
+        "CHARGING VEHICLES CV",
+        "CW Enerji"
+      ],
+      "not": "KDV dahil, tüm istasyonlarda tek fiyat: AC (22 kW) 9,99, DC (60–240 kW) 13,49 TL/kWh (ağın tarife sayfası: cv-charging.com/tr/arac-sarj-tarifeleri). İşgaliye ve blokaj bedeli ayrıca yansıtılabilir."
+    },
+    "Acropol Şarj": {
+      "ac": {
+        "min": 11.21,
+        "max": 11.21
+      },
+      "dc": {
+        "min": 13.88,
+        "max": 13.88
+      },
+      "kaynak": "https://acropolsarj.com/",
+      "kontrol": "2026-11-13",
+      "gecerlilik": null,
+      "adlar": [
+        "ACROPOL",
+        "Acropol EV Şarj Sistemleri",
+        "Greenleaf Yenilenebilir Enerji"
+      ],
+      "not": "KDV dahil (ana sayfadaki AC-DC şarj tarifeleri tablosu): AC 22 kW ve altı 11,21; DC 100 kW altı ve üstü 13,88 TL/kWh. Sayfaya göre tarife ve işgaliye istasyon konumu ve soket tipine göre farklılık gösterebilir; ağın haritasında istasyon bazlı fiyat yok."
+    },
+    "K-Şarj": {
+      "ac": {
+        "min": 9.15,
+        "max": 9.15
+      },
+      "dc": {
+        "min": 11.65,
+        "max": 11.65
+      },
+      "kaynak": "https://ksarj.com/fiyatlandirma/",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "K-ŞARJ",
+        "Hunat Enerji"
+      ],
+      "not": "Tüm istasyonlarda tek fiyat (ağın fiyatlandırma sayfası): AC soket 9,15, DC soket 11,65 TL/kWh; güç kademesine göre ayrı fiyat yok. Sayfa KDV'yi ayrıca belirtmiyor (tüketiciye gösterilen fiyat). İstasyon bazlı fiyat yok."
+    },
+    "Powerşarj": {
+      "ac": {
+        "min": 11.19,
+        "max": 11.19
+      },
+      "dc": {
+        "min": 13.99,
+        "max": 13.99
+      },
+      "kaynak": "https://powersarj.com/fiyatlandirma/",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "Powerşarj"
+      ],
+      "not": "AC 3,4–22 kW, DC 30–320 kW."
+    },
+    "önizşarj": {
+      "ac": {
+        "min": 9.28,
+        "max": 9.28
+      },
+      "dc": {
+        "min": 12.48,
+        "max": 12.48
+      },
+      "kaynak": "https://onizsarj.com/tr/fiyat-tarifesi",
+      "kontrol": "2026-11-20",
+      "gecerlilik": "2026-01-14",
+      "adlar": [
+        "önizşarj"
+      ],
+      "not": "KDV dahil."
+    },
+    "Wattarya": {
+      "ac": {
+        "min": 9.95,
+        "max": 9.95
+      },
+      "dc": {
+        "min": 13.45,
+        "max": 13.45
+      },
+      "kaynak": "https://wattarya.com/tarifeler",
+      "kontrol": "2026-11-19",
+      "gecerlilik": null,
+      "adlar": [
+        "Wattarya"
+      ],
+      "not": "KDV dahil. AC 22 kW'a kadar, DC 240 kW'a kadar; konut tipi özel tarifeler dahil değil."
+    },
+    "MyCharge": {
+      "ac": {
+        "min": 9.81,
+        "max": 9.81
+      },
+      "dc": {
+        "min": 13,
+        "max": 13
+      },
+      "kaynak": "https://mycharge.com.tr/tarifeler/",
+      "kontrol": "2026-11-24",
+      "gecerlilik": "2026-11-01",
+      "adlar": [
+        "MyCharge"
+      ],
+      "not": "Sayfada 01.11.2026 güncel fiyatlandırma; üyelere avantajlı fiyat uygulanabiliyor, bu liste fiyatı."
+    },
+    "Şarjtak": {
+      "ac": {
+        "min": 10.99,
+        "max": 10.99
+      },
+      "dc": {
+        "min": 14.99,
+        "max": 14.99
+      },
+      "kaynak": "https://sarjtak.com/fiyat-tarifesi",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "ŞARJTAK"
+      ],
+      "not": "KDV dahil. Sadakat sözleşmesiyle farklı fiyat olabilir."
+    },
+    "Geta Charge": {
+      "ac": {
+        "min": 9.9,
+        "max": 9.9
+      },
+      "dc": {
+        "min": 13.9,
+        "max": 13.9
+      },
+      "kaynak": "https://getacharge.com.tr/fiyatlar/",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "getacharge",
+        "GETA CHARGE"
+      ],
+      "not": "Proşarj markası."
+    },
+    "GIOEV": {
+      "ac": null,
+      "dc": {
+        "min": 11.99,
+        "max": 13.73
+      },
+      "kaynak": "https://gioev.com/fiyatlandirma",
+      "kontrol": "2026-11-20",
+      "gecerlilik": "2026-09-30",
+      "adlar": [
+        "GIOEV"
+      ],
+      "not": "DC standart tarife 13,73; seçili istasyonlarda kampanyalı 11,99 ve 12,99. AC fiyatı sayfada okunamadı."
+    },
+    "Şarj Start": {
+      "ac": {
+        "min": 9.5,
+        "max": 9.5
+      },
+      "dc": {
+        "min": 12.75,
+        "max": 12.75
+      },
+      "kaynak": "https://sarjstart.com/Fiyatlandirma",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "ŞARJSTART"
+      ]
+    },
+    "Uşarj": {
+      "ac": {
+        "min": 9.9,
+        "max": 9.95
+      },
+      "dc": {
+        "min": 12.9,
+        "max": 12.9
+      },
+      "kaynak": "https://usarj.com.tr/fiyat-tarifesi",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "U-ŞARJ",
+        "Uşarj Enerji"
+      ],
+      "not": "Lokasyon bazlı tarife listesinden min–max; DC yalnızca bazı lokasyonlarda."
+    },
+    "Biogreen": {
+      "ac": {
+        "min": 9.99,
+        "max": 9.99
+      },
+      "dc": {
+        "min": 12.9,
+        "max": 12.9
+      },
+      "kaynak": "https://www.biogreen.com.tr/tr/ucretlendirme",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "biogreen",
+        "BIOGREEN"
+      ],
+      "not": "KDV dahil."
+    },
+    "Tedy": {
+      "ac": {
+        "min": 9.9,
+        "max": 9.9
+      },
+      "dc": {
+        "min": 9.9,
+        "max": 12.9
+      },
+      "kaynak": "https://www.gotedygo.com/fiyatarifeleri",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "gotedygo",
+        "T.E.D.Y.",
+        "Tedy Enerji"
+      ],
+      "not": "DC genel 12,90; sayfada listelenen 3 istasyonda 9,90."
+    },
+    "As Plus Şarj": {
+      "ac": {
+        "min": 9.49,
+        "max": 9.49
+      },
+      "dc": {
+        "min": 12.49,
+        "max": 12.49
+      },
+      "kaynak": "https://asplussarj.com/fiyatlar",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "ASPLUS",
+        "AS PLUS"
+      ]
+    },
+    "Şarjstop": {
+      "ac": {
+        "min": 9.99,
+        "max": 9.99
+      },
+      "dc": {
+        "min": 12.99,
+        "max": 12.99
+      },
+      "kaynak": "https://sarjstop.com.tr/tarifeler",
+      "kontrol": "2026-11-24",
+      "gecerlilik": "2026-06-13",
+      "adlar": [
+        "ŞS ŞARJSTOP Güvenli Şarj Nok",
+        "ŞS ŞARJSTOP Güvenli Şarj Noktası",
+        "ŞARJSTOP"
+      ],
+      "not": "KDV dahil. AC (Tip-2, 3,6–22 kW) 9,99, DC (CCS2, 24 kW+) 12,99 TL/kWh; 13.06.2026'dan itibaren. Önceki 8,29 AC kademesi resmi sayfada artık yok (17 Kasım 2026)."
+    },
+    "Solargize": {
+      "ac": {
+        "min": 9.99,
+        "max": 9.99
+      },
+      "dc": {
+        "min": 11.99,
+        "max": 11.99
+      },
+      "kaynak": "https://solargize.com.tr/fiyatlar",
+      "kontrol": "2026-11-24",
+      "gecerlilik": "2025-11-15",
+      "adlar": [
+        "Solargize"
+      ]
+    },
+    "KES": {
+      "ac": {
+        "min": 11,
+        "max": 11
+      },
+      "dc": {
+        "min": 13,
+        "max": 13
+      },
+      "kaynak": "https://kessarj.com/fiyat-ve-tarifeler",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "KES",
+        "KES Şarj"
+      ],
+      "not": "KDV dahil."
+    },
+    "Rönesans Charger": {
+      "ac": {
+        "min": 10.99,
+        "max": 10.99
+      },
+      "dc": {
+        "min": 15.99,
+        "max": 15.99
+      },
+      "kaynak": "https://www.ronesanscharger.com/#tarifeler",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "RÖNESANS CHARGER",
+        "RönesansChargeR"
+      ],
+      "not": "AC Type-2 22 kW'a kadar, DC CCS; istasyon soket tipine göre değişebilir."
+    },
+    "Checkpoint": {
+      "ac": {
+        "min": 7.89,
+        "max": 7.89
+      },
+      "dc": {
+        "min": 9.49,
+        "max": 9.49
+      },
+      "kaynak": "https://checkpointsarj.com.tr/fiyatlandirma",
+      "kontrol": "2026-11-20",
+      "gecerlilik": "2026-03-01",
+      "adlar": [
+        "CheckPoint"
+      ],
+      "not": "KDV dahil, tüm istasyonlarda geçerli. AC 11–22 kW, DC 120–240 kW."
+    },
+    "sepascharge": {
+      "ac": {
+        "min": 9.9,
+        "max": 9.9
+      },
+      "dc": {
+        "min": 12.9,
+        "max": 12.9
+      },
+      "kaynak": "https://sepascharge.com/sarj-ucretleri",
+      "kontrol": "2026-11-20",
+      "gecerlilik": "2026-05-08",
+      "adlar": [
+        "Sepaş Akıllı Çözümler Anonim",
+        "Sepaş Akıllı Çözümler Anonim Şirketi",
+        "Sepaş"
+      ],
+      "not": "KDV dahil. AC 22 kW ve altı, DC 80–200 kW; belirli lokasyonlarda kampanyalı 11,35 (07.10–31.12.2026)."
+    },
+    "HIZZLAN": {
+      "ac": {
+        "min": 9.99,
+        "max": 9.99
+      },
+      "dc": {
+        "min": 12.99,
+        "max": 12.99
+      },
+      "kaynak": "https://hizzlan.com/ucretlendirme-ve-tarifeler",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "HIZZLAN Charge N'Drive",
+        "HIZZLAN Charge N’Drive"
+      ]
+    },
+    "5 Şarj": {
+      "ac": {
+        "min": 8.99,
+        "max": 8.99
+      },
+      "dc": {
+        "min": 15.9,
+        "max": 15.9
+      },
+      "kaynak": "https://5sarj.com/tr/fiyatlandirma",
+      "kontrol": "2026-11-13",
+      "gecerlilik": null,
+      "adlar": [
+        "5 Şarj",
+        "5Şarj",
+        "Beş Şarj"
+      ],
+      "not": "AC ≤22 kW 8,99, DC 150 kW 15,9 TL/kWh. Sayfaya göre fiyat lokasyona/sokete göre değişebilir; kullanıcı 5 istasyonu uygulamada kontrol etti, aynı. Sayfa bot korumalı: günlük tarama açamaz, fiyat elle (sayfanın ekran görüntüsüyle) güncellenir."
+    },
+    "Tesla": {
+      "ac": null,
+      "dc": {
+        "min": 10.4,
+        "max": 13
+      },
+      "kaynak": "https://www.tesla.com/tr_TR/supercharger",
+      "kontrol": "2026-11-13",
+      "gecerlilik": null,
+      "adlar": [
+        "Tesla",
+        "Tesla Supercharger",
+        "Tesla Motors"
+      ],
+      "not": "Tesla Supercharger (250 kW): Tesla dışı araçlar 13,00 TL/kWh; Tesla araçlara %20 indirimli 10,40 TL/kWh. Kaynak Tesla uygulaması (kullanıcının ekran görüntüsü, 13 Kasım 2026); tesla.com otomatik erişime kapalı, fiyat elle güncellenir."
+    },
+    "AOS Technology": {
+      "ac": {
+        "min": 10.9,
+        "max": 10.9
+      },
+      "dc": {
+        "min": 14.9,
+        "max": 14.9
+      },
+      "kaynak": "https://aostechnology.com.tr/sarj-istasyonlarimiz/",
+      "kontrol": "2026-11-19",
+      "gecerlilik": "2026-04-18",
+      "adlar": [
+        "AOSTECHNOLOGY",
+        "AOS Technology",
+        "AOS Teknoloji"
+      ],
+      "not": "AC (22 kW) 10,90, DC (120 kW) 14,90 TL/kWh. Kaynak AOS uygulaması (kullanıcının ekran görüntüsü, 13 Kasım 2026); sitede fiyat yayımlanmıyor, fiyat elle güncellenir."
+    },
+    "EKA Enerji": {
+      "ac": {
+        "min": 9.7,
+        "max": 9.7
+      },
+      "dc": {
+        "min": 12.8,
+        "max": 12.8
+      },
+      "kaynak": "https://ekaenerjiteknoloji.com.tr/sarj/fiyat",
+      "kontrol": "2026-11-19",
+      "gecerlilik": "2026-08-27",
+      "adlar": [
+        "EKA Enerji",
+        "EKA Enerji Teknoloji",
+        "Eka Enerji Teknoloji",
+        "ekaenerji"
+      ],
+      "not": "AC (7,4–22 kW) 9,70, DC (60–720 kW) 12,80 TL/kWh, KDV dahil."
+    },
+    "otoWATT": {
+      "ac": {
+        "min": 10.99,
+        "max": 10.99
+      },
+      "dc": {
+        "min": 13.99,
+        "max": 13.99
+      },
+      "kaynak": "https://www.aydemplus.com.tr/otowatt-tarifelerimiz",
+      "kontrol": "2026-11-24",
+      "gecerlilik": "2026-04-15",
+      "adlar": [
+        "otoWATT",
+        "OTOWATT",
+        "Aydem Plus",
+        "otoWATT (Aydem Plus)"
+      ],
+      "not": "Genel tarife AC 10,99, DC 13,99 TL/kWh. Konut sitelerinde lokasyon bazlı indirimli site tarifesi AC 9,49, DC 11,99 (data/site_tarifesi.json; istasyon adından tanınan sitelerde istasyon fiyatı olarak gösterilir)."
+    },
+    "Toger": {
+      "ac": {
+        "min": 9.9,
+        "max": 9.9
+      },
+      "dc": {
+        "min": 13.39,
+        "max": 13.39
+      },
+      "kaynak": "https://toger.co/pricing",
+      "kontrol": "2026-11-19",
+      "gecerlilik": null,
+      "adlar": [
+        "TOGER",
+        "Toger (TR)",
+        "Toger.co",
+        "Toger Şarj"
+      ],
+      "not": "KDV dahil. Şarj bittikten 15 dk sonra 5 TL/dk işgaliye (en çok 450 TL)."
+    },
+    "360 Enerji": {
+      "ac": {
+        "min": 9.49,
+        "max": 9.49
+      },
+      "dc": {
+        "min": 12.49,
+        "max": 12.49
+      },
+      "kaynak": "https://sarj.360enerji.com.tr/tarifeler/",
+      "kontrol": "2026-11-17",
+      "gecerlilik": "2026-09-23",
+      "adlar": [
+        "360° ENERJİ",
+        "360 ENERJİ",
+        "360° Enerji",
+        "360 Enerji Şarj"
+      ],
+      "not": "AC-1 (3,7–22 kW) 9,49, DC (60–180 kW) 12,49 TL/kWh. Düşük güçlü bazı lokasyonlarda AC-2 8,99 (lokasyona özel, uygulanmadı). İşgaliye: şarjdan 15 dk sonra her 15 dk için 50 TL."
+    },
+    "Voltgo": {
+      "ac": {
+        "min": 9.5,
+        "max": 9.5
+      },
+      "dc": {
+        "min": 12.4,
+        "max": 12.4
+      },
+      "kaynak": "https://voltgo.com.tr/voltgo-tarife/",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "Voltgo",
+        "VOLTGO",
+        "Voltgo Şarj"
+      ],
+      "not": "AC Tip 2 9,5, DC CCS2 12,4 TL/kWh. Sayfada KDV durumu belirtilmiyor."
+    },
+    "EPSIS": {
+      "ac": {
+        "min": 9.9,
+        "max": 9.9
+      },
+      "dc": {
+        "min": 12.5,
+        "max": 12.5
+      },
+      "kaynak": "https://www.epsis.net/elektrikli-arac-sarj-tarifeleri",
+      "kontrol": "2026-11-24",
+      "gecerlilik": "2026-03-04",
+      "adlar": [
+        "EPSIS Emobility",
+        "EPSIS",
+        "Epsis"
+      ],
+      "not": "AC (22 kW, Type 2) 9,90, DC (30–480 kW, CCS2) 12,50 TL/kWh, vergiler dahil, 81 ilde aynı fiyat."
+    },
+    "Fast-Go": {
+      "ac": {
+        "min": 9.49,
+        "max": 9.49
+      },
+      "dc": {
+        "min": 12.49,
+        "max": 12.49
+      },
+      "kaynak": "https://fast-go.com.tr/fiyatlandirma/",
+      "kontrol": "2026-11-14",
+      "gecerlilik": null,
+      "adlar": [
+        "Fast-Go",
+        "FastGo",
+        "Fast Go",
+        "FAST-GO",
+        "Fastgo DC Şarj"
+      ],
+      "not": "AC (22 kW'a kadar) 9,49, DC (30–180 kW) 12,49 TL/kWh. Kaynak: fiyat sayfasının ekran görüntüsü, kullanıcı uygulamadan doğruladı (14 Kasım 2026). Sitenin SSL sertifikası süresi dolmuş; günlük kontrol açamaz, fiyat elle güncellenir."
+    },
+    "Petrol Ofisi e-POwer": {
+      "ac": {
+        "min": 8.99,
+        "max": 8.99
+      },
+      "dc": {
+        "min": 11.99,
+        "max": 11.99
+      },
+      "kaynak": "https://www.petrolofisi.com.tr/urun-ve-hizmetler/e-power",
+      "kontrol": "2026-11-19",
+      "gecerlilik": null,
+      "adlar": [
+        "Petrol Ofisi e-POWER",
+        "e-POwer",
+        "Petrol Ofisi e-POwer"
+      ],
+      "not": "AC Tip 2 8,99, DC CCS 11,99 TL/kWh, KDV dahil. Sayfanın İngilizce sürümünde eski fiyat (8,49/10,99) duruyor; Türkçe sayfa esas alındı."
+    },
+    "Solarşarj": {
+      "ac": {
+        "min": 9.69,
+        "max": 12.99
+      },
+      "dc": {
+        "min": 13.89,
+        "max": 16.49
+      },
+      "kaynak": "https://solarsarj.org/fiyatlar/",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "solarşarj",
+        "Solarsarj"
+      ],
+      "not": "AC-01 9,69, AC-02 10,89, AC-03 12,99; DC CCS-01 13,89, CCS-02 16,49 TL/kWh. Fiyat lokasyon bazlı (uygulamada istasyon detayında). KDV belirtilmemiş. İstasyon listesi EPDK'daki solarşarj kayıtlarıyla aynı (Villa Aşina, Le Chic vb.)."
+    },
+    "Plug&Drive": {
+      "ac": {
+        "min": 9.99,
+        "max": 9.99
+      },
+      "dc": {
+        "min": 12.99,
+        "max": 12.99
+      },
+      "kaynak": "https://pgdenerji.com/fiyatlandirma",
+      "kontrol": "2026-11-14",
+      "gecerlilik": null,
+      "adlar": [
+        "Plug&drive",
+        "PGD Enerji"
+      ],
+      "not": "PGD Enerji (Plug&drive) AC 9,99, DC 12,99 TL/kWh, KDV dahil. Fiyatlar lokasyon bazlı değişebilir (uygulamada görünür)."
+    },
+    "CNS Solar Şarj": {
+      "ac": {
+        "min": 9.15,
+        "max": 9.15
+      },
+      "dc": {
+        "min": 10,
+        "max": 10
+      },
+      "kaynak": "https://cnssolarsarj.com/tarife.php",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "CNS Solar ŞARJ",
+        "CNS Solar"
+      ],
+      "not": "AC 9,15, DC 10 TL/kWh. KDV belirtilmemiş."
+    },
+    "Tripy": {
+      "ac": {
+        "min": 9.5,
+        "max": 9.5
+      },
+      "dc": {
+        "min": 12.99,
+        "max": 12.99
+      },
+      "kaynak": "https://tripy.mobi/sarj-istasyonlari/",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "Tripy",
+        "Tripy Charge"
+      ],
+      "not": "AC 9,50, DC 12,99 TL/kWh: Rotawatt uygulamasındaki güncel fiyat (15 Kasım 2026). tripy.mobi'deki 7,8 / 11 eski."
+    },
+    "EKOS Mobility": {
+      "ac": {
+        "min": 9.99,
+        "max": 9.99
+      },
+      "dc": {
+        "min": 14.99,
+        "max": 14.99
+      },
+      "kaynak": "https://ekosmobility.com/fiyatlandirma/",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "EKOS",
+        "EKOS Mobilite"
+      ],
+      "not": "AC 9,99, DC 14,99 TL/kWh, KDV dahil."
+    },
+    "Q Charge": {
+      "ac": {
+        "min": 9.95,
+        "max": 9.95
+      },
+      "dc": {
+        "min": 13.78,
+        "max": 15.36
+      },
+      "kaynak": "https://qcharge.io/",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "Q Charge",
+        "QCharge",
+        "META Mobilite"
+      ],
+      "not": "META Mobilite Enerji. qcharge.io 'Hizmet Tarifesi' (EPDK azami hizmet bedelleri): AC tüm soketler 9,95; DC 150 kW ve altı 13,78, 150 kW üstü 15,36 TL/kWh, KDV dahil (20.11.2026)."
+    },
+    "Fix Charge": {
+      "ac": {
+        "min": 9.98,
+        "max": 9.98
+      },
+      "dc": {
+        "min": 14.98,
+        "max": 14.98
+      },
+      "kaynak": "https://www.fixcharge.io/fiyatlar",
+      "kontrol": "2026-11-19",
+      "gecerlilik": null,
+      "adlar": [
+        "fixcharge",
+        "Fix Charge"
+      ],
+      "not": "Beyttürk Enerji. AC 22 kW 9,98, DC 14,98 TL/kWh, tüm lokasyonlarda. KDV belirtilmemiş. İşgaliye: 20 dk tolerans sonrası 100 TL + 5 TL/dk."
+    },
+    "Greendrive": {
+      "ac": {
+        "min": 8.7,
+        "max": 8.7
+      },
+      "dc": {
+        "min": 12.7,
+        "max": 12.7
+      },
+      "kaynak": "https://greendrive.com.tr/tarifeler",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "Greendrive"
+      ],
+      "not": "Akköprülü Otomotiv. AC 8,70, DC 12,70 TL/kWh, KDV dahil."
+    },
+    "ENH Şarj": {
+      "ac": {
+        "min": 9.49,
+        "max": 9.49
+      },
+      "dc": {
+        "min": 12.99,
+        "max": 12.99
+      },
+      "kaynak": "https://enhsarj.com/",
+      "kontrol": "2026-11-19",
+      "gecerlilik": null,
+      "adlar": [
+        "CLIXOLAR",
+        "ENH Şarj"
+      ],
+      "not": "EPDK'da marka CLIXOLAR, işletmeci ENH Şarj A.Ş.; fiyat işletmecinin kendi sitesinden: tüm AC 9,49, tüm DC 12,99 TL/kWh. KDV belirtilmemiş."
+    },
+    "E4 Şarj": {
+      "ac": {
+        "min": 9.99,
+        "max": 10.99
+      },
+      "dc": {
+        "min": 13.99,
+        "max": 15.99
+      },
+      "kaynak": "https://e4sarj.com.tr/#tarifeler-ve-ucretler",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "E4 ŞARJ"
+      ],
+      "not": "TT Ventures. AC 9,99–10,99, DC 13,99–15,99 TL/kWh, KDV dahil; lokasyon bazlı."
+    },
+    "Avrupa Şarj": {
+      "ac": {
+        "min": 8.99,
+        "max": 8.99
+      },
+      "dc": {
+        "min": 10.99,
+        "max": 10.99
+      },
+      "kaynak": "https://avrupasarj.com/",
+      "kontrol": "2026-11-17",
+      "gecerlilik": null,
+      "adlar": [
+        "AVRUPA ŞARJ"
+      ],
+      "not": "AC 8,99, DC 10,99 TL/kWh, KDV dahil."
+    },
+    "GelDol": {
+      "ac": {
+        "min": 9.99,
+        "max": 9.99
+      },
+      "dc": {
+        "min": 12.99,
+        "max": 12.99
+      },
+      "kaynak": "https://geldol.com/tarifelerimiz/",
+      "kontrol": "2026-11-19",
+      "gecerlilik": "2026-03-18",
+      "adlar": [
+        "GEL DOL",
+        "Gel Dol"
+      ],
+      "not": "AC 9,99, DC 12,99 TL/kWh, KDV dahil. AC fiyatı bazı lokasyonlarda sözleşmeye göre farklı olabilir."
+    },
+    "Arcona": {
+      "ac": {
+        "min": 9.9,
+        "max": 9.9
+      },
+      "dc": {
+        "min": 12.95,
+        "max": 12.95
+      },
+      "kaynak": "https://arconasarj.com/tarife",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "AARCONA",
+        "ARCONA"
+      ],
+      "not": "Halka açık AC 22 9,90, tüm DC 12,95 TL/kWh, KDV dahil. Konut özel noktalarda ayrı tarife (uygulanmadı). İşgaliye şarjdan 10 dk sonra 3 TL/dk."
+    },
+    "MyPower": {
+      "ac": {
+        "min": 11.5,
+        "max": 11.5,
+        "saatli_liste": "mypower",
+        "saatli": [
+          {
+            "bas": "07:00",
+            "bit": "16:59",
+            "etiket": "16:58",
+            "v": 9.99
+          },
+          {
+            "bas": "16:59",
+            "bit": "07:00",
+            "etiket": "06:59",
+            "v": 11.5
+          }
+        ]
+      },
+      "dc": {
+        "min": 13.6,
+        "max": 13.6,
+        "saatli_liste": "mypower",
+        "saatli": [
+          {
+            "bas": "07:00",
+            "bit": "16:59",
+            "etiket": "16:58",
+            "v": 10.99
+          },
+          {
+            "bas": "16:59",
+            "bit": "07:00",
+            "etiket": "06:59",
+            "v": 13.6
+          }
+        ]
+      },
+      "kaynak": "https://www.mypower.net.tr/",
+      "kontrol": "2026-11-24",
+      "gecerlilik": "2026-04-15",
+      "adlar": [
+        "MYPOWER",
+        "Mypower Şarj"
+      ],
+      "not": "AC 11,50, DC 13,60 TL/kWh (15.04.2026), KDV dahil. Listedeki 9 istasyonda saatli tarife (data/saatli_tarife.json → mypower): 07:00–16:58 AC 9,99 / DC 10,99, 16:59–06:59 AC 11,50 / DC 13,60 (Rotawatt uygulaması, 15 Kasım 2026)."
+    },
+    "Power Elektronik": {
+      "ac": {
+        "min": 9.75,
+        "max": 9.75
+      },
+      "dc": {
+        "min": 10.6,
+        "max": 13.6
+      },
+      "kaynak": "https://powerelektronik.com.tr/arac-sarj-fiyat-tarifeleri",
+      "kontrol": "2026-11-14",
+      "gecerlilik": null,
+      "adlar": [
+        "POWER ELEKTRONİK SANAYİ VE T",
+        "POWER ELEKTRONİK"
+      ],
+      "not": "Fiyatlar sayfadaki görselde, lokasyon bazlı: AC genel 9,75 (Avrupa Konutları 9, Adapark 9,7); DC 10,6–13,6 (Avrupa Konutları 10 uygulanmadı). Sayfada tarih ve KDV bilgisi yok."
+    },
+    "Türkşarj": {
+      "ac": {
+        "min": 9.4,
+        "max": 9.4
+      },
+      "dc": {
+        "min": 11.8,
+        "max": 11.8
+      },
+      "kaynak": "https://turksarj.com.tr/ucretlendirme/",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "TÜRKŞARJ"
+      ],
+      "not": "AC 22 kW'a kadar 9,4, DC 60 kW ve üzeri 11,8 TL/kWh, KDV dahil."
+    },
+    "Bölgem Mobilite": {
+      "ac": {
+        "min": 9.59,
+        "max": 9.59
+      },
+      "dc": {
+        "min": 12.39,
+        "max": 12.39
+      },
+      "kaynak": "https://www.bolgem.com.tr/fiyat-tarifesi/",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "BÖLGEM mobilite"
+      ],
+      "not": "AC 9,59, DC 12,39 TL/kWh. Lokasyon/saate göre indirim ve sadakat tarifeleri olabilir. KDV belirtilmemiş."
+    },
+    "Ekoşarj": {
+      "ac": {
+        "min": 10.49,
+        "max": 10.49
+      },
+      "dc": {
+        "min": 14.49,
+        "max": 14.49
+      },
+      "kaynak": "https://ekosarj.com/sarj-agi-tarifeleri/",
+      "kontrol": "2026-11-24",
+      "gecerlilik": "2026-05-24",
+      "adlar": [
+        "ekoşarj en ekonomik, en ekol",
+        "ekoşarj en ekonomik, en ekolojik şekil",
+        "EKOŞARJ"
+      ],
+      "not": "HES Group. AC 10,49, DC 14,49 TL/kWh, KDV dahil (24.05.2026)."
+    },
+    "Electrise": {
+      "ac": {
+        "min": 8.5,
+        "max": 8.5
+      },
+      "dc": {
+        "min": 11,
+        "max": 11
+      },
+      "kaynak": "https://www.electrise.com.tr/",
+      "kontrol": "2026-11-17",
+      "gecerlilik": null,
+      "adlar": [
+        "Electrise"
+      ],
+      "not": "AC 8,5, DC 11 TL/kWh, KDV dahil."
+    },
+    "Doğuş Dijital Enerji": {
+      "ac": {
+        "min": 11.19,
+        "max": 11.19
+      },
+      "dc": {
+        "min": 13.99,
+        "max": 13.99
+      },
+      "kaynak": "https://dogusdijitalenerji.com/",
+      "kontrol": "2026-11-19",
+      "gecerlilik": null,
+      "adlar": [
+        "Doğuş Dijital Enerji",
+        "dgdoğuşgıda"
+      ],
+      "not": "AC 11,19, DC (30–320 kW) 13,99 TL/kWh. KDV belirtilmemiş."
+    },
+    "Minus Energy": {
+      "ac": {
+        "min": 8.5,
+        "max": 9.2
+      },
+      "dc": {
+        "min": 9.9,
+        "max": 12.5
+      },
+      "kaynak": "https://minusenergy.net/",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "MINUS ENERGY"
+      ],
+      "not": "AC-1 9,2, AC-2 8,5, DC-1 12,5, DC-2 9,9 TL/kWh, vergiler dahil; kademelerin hangi istasyonda geçerli olduğu sayfada yazmıyor (uygulamada görünür)."
+    },
+    "Verdepunto": {
+      "ac": {
+        "min": 9.49,
+        "max": 9.49
+      },
+      "dc": {
+        "min": 12.49,
+        "max": 12.49
+      },
+      "kaynak": "https://verdepuntoenerji.com/",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "ar armaksis ar verdepunto",
+        "Verdepunto Enerji"
+      ],
+      "not": "AC 22 kW 9,49, DC 50 kW ve üstü 12,49 TL/kWh. Sayfada tarih ve KDV bilgisi yok."
+    },
+    "Ecobox": {
+      "ac": {
+        "min": 9.29,
+        "max": 9.29
+      },
+      "dc": {
+        "min": 11.9,
+        "max": 11.9
+      },
+      "kaynak": "https://www.ecoboxsarj.com/tarifeler",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "ECOBOX"
+      ],
+      "not": "Atay Güç ve Enerji. AC 22 kW 9,29, DC (60–380 kW) 11,90 TL/kWh, KDV dahil. İşgaliye 2 TL/dk."
+    },
+    "EVC Charge": {
+      "ac": {
+        "min": 9.79,
+        "max": 9.79
+      },
+      "dc": {
+        "min": 13.79,
+        "max": 13.79
+      },
+      "kaynak": "https://evccharge.com/",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "EVC CHARGE"
+      ],
+      "not": "AC 11–22 kW 9,79, tüm DC 13,79 TL/kWh. KDV belirtilmemiş. İşgaliye bedeli 27.07.2026'dan itibaren."
+    },
+    "Bladeco": {
+      "ac": {
+        "min": 8.98,
+        "max": 8.98
+      },
+      "dc": {
+        "min": 11.98,
+        "max": 11.98
+      },
+      "kaynak": "https://www.bladeco.com.tr/tarifeler/",
+      "kontrol": "2026-11-14",
+      "gecerlilik": "2026-04-09",
+      "adlar": [
+        "BLADECO"
+      ],
+      "not": "AC 8,98, DC 11,98 TL/kWh (sayfadaki AC/DC seçicisi; 9 Nisan 2026 tarihli). KDV belirtilmemiş."
+    },
+    "Pilstop": {
+      "ac": {
+        "min": 9.95,
+        "max": 9.95
+      },
+      "dc": {
+        "min": 14.98,
+        "max": 14.98
+      },
+      "kaynak": "https://pilstop.com/fiyatlandirma/",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "PİLSTOP"
+      ],
+      "not": "AC 9,95, DC 14,98 TL/kWh, KDV dahil."
+    },
+    "3a Şarj": {
+      "ac": {
+        "min": 7.95,
+        "max": 7.95
+      },
+      "dc": {
+        "min": 10.95,
+        "max": 10.95
+      },
+      "kaynak": "https://3asarj.com/uyelik-ve-tarifeler/",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "3a",
+        "3A Şarj"
+      ],
+      "not": "MAS Sınai ve Ticari Yatırımlar. AC 22 kW'a kadar 7,95, DC 30–360 kW 10,95 TL/kWh (sayfada 'Üyelere Özel'; üyelik uygulamadan ücretsiz). KDV belirtilmemiş."
+    },
+    "Aktif Şarj": {
+      "ac": {
+        "min": 9.8,
+        "max": 9.8
+      },
+      "dc": {
+        "min": 12.9,
+        "max": 12.9
+      },
+      "kaynak": "https://aktifsarj.com/",
+      "kontrol": "2026-11-14",
+      "gecerlilik": "2026-10-08",
+      "adlar": [
+        "AKTİF ŞARJ"
+      ],
+      "not": "AC Tip 2 9,80, DC (CHAdeMO/CCS) 12,90 TL/kWh, 08.10.2026'dan itibaren. KDV belirtilmemiş."
+    },
+    "RHG Enertürk": {
+      "ac": {
+        "min": 10.99,
+        "max": 10.99
+      },
+      "dc": {
+        "min": 13.5,
+        "max": 13.5
+      },
+      "kaynak": "https://www.enerturk.com/sarj/uyelik-tarifeler/",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "RHG Enertürk",
+        "enertürk rhg enerji",
+        "ENERTÜRK RHG"
+      ],
+      "not": "AC-1 10,99, DC 13,50 TL/kWh, KDV dahil. AC-2 8,25 tesislerle yapılan anlaşmaya göre (uygulanmadı)."
+    },
+    "Arsima": {
+      "ac": {
+        "min": 13.99,
+        "max": 13.99
+      },
+      "dc": {
+        "min": 14.99,
+        "max": 14.99
+      },
+      "kaynak": "https://www.arsimaenerji.com/tarifeler.html",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "ARSİMA"
+      ],
+      "not": "AC 13,99, DC 14,99 TL/kWh. KDV belirtilmemiş."
+    },
+    "Karkin Enerji": {
+      "ac": {
+        "min": 9,
+        "max": 9
+      },
+      "dc": {
+        "min": 11,
+        "max": 11
+      },
+      "kaynak": "https://karkinenerji.com.tr/guncel-sarj-fiyatlari/",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "ACROBAT",
+        "Karkin Enerji"
+      ],
+      "not": "EPDK'da marka ACROBAT, işletmeci Karkın Enerji; fiyat işletmecinin kendi sitesinden: AC 9, DC 11 TL/kWh. Sayfada tarih ve KDV bilgisi yok."
+    },
+    "Tam Şarj": {
+      "ac": {
+        "min": 10.49,
+        "max": 10.49
+      },
+      "dc": {
+        "min": 13.99,
+        "max": 13.99
+      },
+      "kaynak": "https://tam-sarj.com/tarifeler/",
+      "kontrol": "2026-11-19",
+      "gecerlilik": null,
+      "adlar": [
+        "TAMŞARJ",
+        "Tam Şarj"
+      ],
+      "not": "Tekno Metal. AC Tip 2 10,49, DC CCS 13,99 TL/kWh (sayfada birim 'TL/kw' yazıyor). Lokasyon bazlı değişebilir. KDV belirtilmemiş."
+    },
+    "GezCar": {
+      "ac": {
+        "min": 9.99,
+        "max": 9.99
+      },
+      "dc": {
+        "min": 11.5,
+        "max": 11.5
+      },
+      "kaynak": "https://gezcarenerji.com/fiyatlarimiz",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "GezCar",
+        "GEZCAR"
+      ],
+      "not": "AC Tip 2 9,99, DC CCS 11,50 TL/kWh, KDV dahil. İşgaliye 3 TL/dk."
+    },
+    "Şarjed": {
+      "ac": {
+        "min": 9.99,
+        "max": 9.99
+      },
+      "dc": {
+        "min": 12.9,
+        "max": 12.9
+      },
+      "kaynak": "https://sarjed.com/tarifeler",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "şarjed Park",
+        "Şarjed"
+      ],
+      "not": "AC 9,99, DC 12,90 TL/kWh, KDV dahil."
+    },
+    "PowerPay": {
+      "ac": {
+        "min": 9.9,
+        "max": 9.9
+      },
+      "dc": {
+        "min": 12.9,
+        "max": 12.9
+      },
+      "kaynak": "https://www.powerpay.com.tr/",
+      "kontrol": "2026-11-14",
+      "gecerlilik": null,
+      "adlar": [
+        "powerpay by metropolcard",
+        "PowerPay"
+      ],
+      "not": "Metropol Şarj. Standart tarife AC 9,90, DC 12,90 TL/kWh. Er-Der HUB'daki DC indirimi (10,50, 31 Ekim'e kadar) uygulanmadı. KDV belirtilmemiş."
+    },
+    "Vilampo": {
+      "ac": {
+        "min": 10.39,
+        "max": 10.39
+      },
+      "dc": {
+        "min": 12.89,
+        "max": 12.89
+      },
+      "kaynak": "https://vilampo.com/tr/price",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "vilampo"
+      ],
+      "not": "Vitalen Enerji. AC 7–22 kW 10,39, DC 60–180 kW 12,89 TL/kWh, KDV dahil."
+    },
+    "Obişarj": {
+      "ac": {
+        "min": 10.99,
+        "max": 10.99
+      },
+      "dc": {
+        "min": 15.95,
+        "max": 15.95
+      },
+      "kaynak": "https://obisarj.com/tarifeler/",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "Obişarj"
+      ],
+      "not": "AC 10,99, DC 15,95 TL/kWh, KDV dahil."
+    },
+    "Qopuz Energy": {
+      "ac": {
+        "min": 9.76,
+        "max": 9.76
+      },
+      "dc": {
+        "min": 11.9,
+        "max": 11.9
+      },
+      "kaynak": "https://www.qopuzenergy.com/tarifeler",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "Qopuz Energy proton neutron",
+        "Qopuz Energy"
+      ],
+      "not": "AC 9,76, DC 11,90 TL/kWh, KDV dahil. Anlaşmalı konut/işyeri üyelerine farklı fiyat (uygulanmadı)."
+    },
+    "Porty": {
+      "ac": {
+        "min": 8.4,
+        "max": 8.4
+      },
+      "dc": {
+        "min": 8.75,
+        "max": 9.9
+      },
+      "kaynak": "https://porty.tech/tr/porty-nedir/elektrikli-arac-sarj-istasyonu",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "porty",
+        "Porty4Car"
+      ],
+      "not": "AC 8,40; DC 60 kW'a kadar 8,75, 60 kW ve üstü 9,90 TL/kWh. Sayfada tarih ve KDV bilgisi yok."
+    },
+    "Köfteci Yusuf Şarj": {
+      "ac": {
+        "min": 9.95,
+        "max": 9.95
+      },
+      "dc": {
+        "min": 14.98,
+        "max": 14.98
+      },
+      "kaynak": "https://kofteciyusufsarj.com/fiyat",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "KÖFTECİ YUSUF"
+      ],
+      "not": "AC 9,95, DC 14,98 TL/kWh. KDV belirtilmemiş."
+    },
+    "WattReise": {
+      "ac": {
+        "min": 8.98,
+        "max": 10.49
+      },
+      "dc": {
+        "min": 11.64,
+        "max": 13.64
+      },
+      "kaynak": "https://wattreise.com/tr/fiyatlar",
+      "kontrol": "2026-11-19",
+      "gecerlilik": null,
+      "adlar": [
+        "WATTREISE"
+      ],
+      "not": "AC Type 2 8,98–9,99–10,49, DC CCS 11,64–13,64 TL/kWh; istasyona göre (uygulamada görünür). KDV belirtilmemiş."
+    },
+    "Mithra Pod": {
+      "ac": {
+        "min": 10.99,
+        "max": 10.99
+      },
+      "dc": {
+        "min": 15.59,
+        "max": 15.59
+      },
+      "kaynak": "https://www.rotawatt.com/",
+      "kontrol": "2026-11-15",
+      "gecerlilik": null,
+      "adlar": [
+        "MITHRA POD",
+        "MithraPOD",
+        "Mithrapod"
+      ],
+      "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+    },
+    "Royal Şarj": {
+      "ac": {
+        "min": 9.9,
+        "max": 9.9
+      },
+      "dc": {
+        "min": 13.75,
+        "max": 13.75
+      },
+      "kaynak": "https://www.rotawatt.com/",
+      "kontrol": "2026-11-15",
+      "gecerlilik": null,
+      "adlar": [
+        "ROYAL",
+        "Royal",
+        "Federal Elektrik"
+      ],
+      "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+    },
+    "Solinved": {
+      "ac": {
+        "min": 9.99,
+        "max": 9.99
+      },
+      "dc": {
+        "min": 13.99,
+        "max": 13.99
+      },
+      "kaynak": "https://www.rotawatt.com/",
+      "kontrol": "2026-11-15",
+      "gecerlilik": null,
+      "adlar": [
+        "solinved",
+        "SOLINVED"
+      ],
+      "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+    },
+    "ŞarjPlus": {
+      "ac": {
+        "min": 9.9,
+        "max": 9.9
+      },
+      "dc": {
+        "min": 12.9,
+        "max": 12.9
+      },
+      "kaynak": "https://www.rotawatt.com/",
+      "kontrol": "2026-11-15",
+      "gecerlilik": null,
+      "adlar": [
+        "ŞARJPLUS",
+        "Şarj Plus",
+        "SarjPlus"
+      ],
+      "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+    },
+    "Evroad": {
+      "ac": {
+        "min": 8.9,
+        "max": 8.9
+      },
+      "dc": {
+        "min": 12.9,
+        "max": 12.9
+      },
+      "kaynak": "https://www.rotawatt.com/",
+      "kontrol": "2026-11-15",
+      "gecerlilik": null,
+      "adlar": [
+        "evroad",
+        "EVROAD"
+      ],
+      "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+    },
+    "Çelikler Enerji": {
+      "ac": {
+        "min": 9.99,
+        "max": 9.99
+      },
+      "dc": {
+        "min": 12.79,
+        "max": 12.79
+      },
+      "kaynak": "https://www.rotawatt.com/",
+      "kontrol": "2026-11-15",
+      "gecerlilik": null,
+      "adlar": [
+        "ÇELİKLER ENERJİ",
+        "Çelikler"
+      ],
+      "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+    },
+    "Meis Charge": {
+      "ac": {
+        "min": 9.5,
+        "max": 9.5
+      },
+      "dc": {
+        "min": 12.9,
+        "max": 12.9
+      },
+      "kaynak": "https://www.rotawatt.com/",
+      "kontrol": "2026-11-15",
+      "gecerlilik": null,
+      "adlar": [
+        "MEIS CHARGE",
+        "Meis"
+      ],
+      "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+    },
+    "Promaster": {
+      "ac": {
+        "min": 8.5,
+        "max": 8.5
+      },
+      "dc": {
+        "min": 11.5,
+        "max": 11.5
+      },
+      "kaynak": "https://www.rotawatt.com/",
+      "kontrol": "2026-11-15",
+      "gecerlilik": null,
+      "adlar": [
+        "PROMASTER",
+        "Promaster Şarj"
+      ],
+      "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+    },
+    "Econ": {
+      "ac": {
+        "min": 9.99,
+        "max": 9.99
+      },
+      "dc": {
+        "min": 12.49,
+        "max": 12.49
+      },
+      "kaynak": "https://www.rotawatt.com/",
+      "kontrol": "2026-11-15",
+      "gecerlilik": null,
+      "adlar": [
+        "ECON",
+        "Energy Charging Operator Network"
+      ],
+      "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+    },
+    "EvSolt": {
+      "ac": {
+        "min": 8.99,
+        "max": 8.99
+      },
+      "dc": {
+        "min": 11.99,
+        "max": 11.99
+      },
+      "kaynak": "https://www.rotawatt.com/",
+      "kontrol": "2026-11-15",
+      "gecerlilik": null,
+      "adlar": [
+        "EVSolt",
+        "EVSOLT"
+      ],
+      "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+    },
+    "Spectrum": {
+      "ac": {
+        "min": 9.89,
+        "max": 9.89
+      },
+      "dc": {
+        "min": 12.96,
+        "max": 12.96
+      },
+      "kaynak": "https://www.rotawatt.com/",
+      "kontrol": "2026-11-15",
+      "gecerlilik": null,
+      "adlar": [
+        "SPECTRUM"
+      ],
+      "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+    },
+    "Swapp": {
+      "ac": {
+        "min": 8,
+        "max": 8
+      },
+      "dc": {
+        "min": 10,
+        "max": 10
+      },
+      "kaynak": "https://www.rotawatt.com/",
+      "kontrol": "2026-11-15",
+      "gecerlilik": null,
+      "adlar": [
+        "SWAPP",
+        "Swapp Şarjpark"
+      ],
+      "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+    },
+    "Mercury Şarj": {
+      "ac": null,
+      "dc": {
+        "min": 13.49,
+        "max": 13.49
+      },
+      "kaynak": "https://www.rotawatt.com/",
+      "kontrol": "2026-11-15",
+      "gecerlilik": null,
+      "adlar": [
+        "MERCURY",
+        "Mercury"
+      ],
+      "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+    },
+    "TR Charge": {
+      "ac": null,
+      "dc": {
+        "min": 13.5,
+        "max": 13.5
+      },
+      "kaynak": "https://www.rotawatt.com/",
+      "kontrol": "2026-11-15",
+      "gecerlilik": null,
+      "adlar": [
+        "TRCHARGE",
+        "TR CHARGE"
+      ],
+      "not": "Rotawatt uygulamasındaki liste fiyatı (15 Kasım 2026, kullanıcı uygulamadan aldı); ağın kendi sitesinde fiyat yok. Rotawatt'taki fiyatlar diğer ağlarda ağın kendi tarifesiyle birebir aynı."
+    },
+    "GREEN SCIENCE": {
+      "ac": {
+        "min": 8.9,
+        "max": 8.9
+      },
+      "dc": {
+        "min": 11.9,
+        "max": 11.9
+      },
+      "kaynak": "https://www.zeyenerji.com.tr/tarifeler.html",
+      "kontrol": "2026-11-24",
+      "gecerlilik": null,
+      "adlar": [
+        "GREEN SCIENCE",
+        "Green Science",
+        "Zey Enerji",
+        "ZEY ENERJİ"
+      ],
+      "not": "KDV dahil (ağın kendi tarifeler sayfası; Green Science markası Zey Enerji'nin). AC 8,90, DC 11,90 TL/kWh."
+    },
+    "Pirim": {
+      "ac": {
+        "min": 9.49,
+        "max": 9.49
+      },
+      "dc": {
+        "min": 12.49,
+        "max": 12.49
+      },
+      "kaynak": "https://raw.githubusercontent.com/AlperKonan/prizy-data/main/prices.json",
+      "kontrol": "2026-11-20",
+      "gecerlilik": null,
+      "adlar": [
+        "PİRİM GIDA VE MEŞRUBAT SAN. ve TİC. LTD. ŞTİ.",
+        "Pirim",
+        "PİRİM GIDA VE MEŞRUBAT SAN."
+      ],
+      "not": "Ağın kendi sitesinde fiyat bulunamadı; fiyat üçüncü taraf derleme prizy-data'dan (GitHub, 16 Kasım 2026) alındı, resmi sayfada doğrulanmadı. Resmi fiyat bulunursa o esas alınır."
+    }
   }
- }
 }
