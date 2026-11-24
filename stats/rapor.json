@@ -1,5 +1,5 @@
 {
- "zaman": "2026-11-23T00:21:19+00:00",
+ "zaman": "2026-11-24T04:19:37+00:00",
  "hatalar": {
   "medya_metrik": {
    "profile_visits": "(#100) The Media Insights API does not support the profile_visits metric for this media product type.",
@@ -10,33 +10,55 @@
   "id": "17841424717954969",
   "followers_count": 55,
   "follows_count": 57,
-  "media_count": 49,
+  "media_count": 50,
   "username": "wattkac"
  },
  "hesap_7gun": {
-  "reach": 1410,
-  "views": 3557,
-  "profile_views": 209,
-  "accounts_engaged": 22,
-  "total_interactions": 146
+  "reach": 497,
+  "views": 1947,
+  "profile_views": 132,
+  "accounts_engaged": 18,
+  "total_interactions": 115
  },
  "medya": [
   {
    "tur": "REELS",
    "tip": "VIDEO",
+   "zaman": "2026-11-23T13:53:18+0000",
+   "begeni": 4,
+   "yorum": 0,
+   "link": "https://www.instagram.com/reel/DgFhzpSIiV2/",
+   "baslik": "Salı günlerine özel Rotawatt'ta %20, Wat Mobilite'de %10 indirim var! ",
+   "istatistik": {
+    "reach": 25,
+    "views": 50,
+    "saved": 0,
+    "shares": 0,
+    "total_interactions": 6,
+    "ig_reels_avg_watch_time": 7425,
+    "ig_reels_video_view_total_time": 230175
+   },
+   "olmayan": [
+    "follows",
+    "profile_visits"
+   ]
+  },
+  {
+   "tur": "REELS",
+   "tip": "VIDEO",
    "zaman": "2026-11-22T21:28:44+0000",
-   "begeni": 5,
+   "begeni": 8,
    "yorum": 1,
    "link": "https://www.instagram.com/reel/DgDxW-eIKnL/",
    "baslik": "Şarj istasyonunda \"enayi\" durumuna düşmemek için tek yapman gereken be",
    "istatistik": {
-    "reach": 55,
-    "views": 94,
+    "reach": 233,
+    "views": 335,
     "saved": 2,
     "shares": 1,
-    "total_interactions": 14,
-    "ig_reels_avg_watch_time": 10202,
-    "ig_reels_video_view_total_time": 571315
+    "total_interactions": 17,
+    "ig_reels_avg_watch_time": 5070,
+    "ig_reels_video_view_total_time": 1369062
    },
    "olmayan": [
     "follows",
@@ -52,8 +74,8 @@
    "link": "https://www.instagram.com/p/Df_9zinDeN4/",
    "baslik": "💳 Banka kartıyla şarj kampanyaları · Kasım 2026  Hangi kartla hangi şa",
    "istatistik": {
-    "reach": 23,
-    "views": 49,
+    "reach": 28,
+    "views": 55,
     "saved": 0,
     "shares": 0,
     "total_interactions": 3,
@@ -71,12 +93,12 @@
    "link": "https://www.instagram.com/p/Df_27-Kjb_0/",
    "baslik": "⚡ Şarj ağlarının kendi kampanyaları · Kasım 2026  Kart şartı olmadan, ",
    "istatistik": {
-    "reach": 29,
-    "views": 52,
+    "reach": 33,
+    "views": 63,
     "saved": 0,
     "shares": 0,
     "total_interactions": 4,
-    "profile_visits": 0,
+    "profile_visits": 1,
     "follows": 0
    },
    "olmayan": []
@@ -90,8 +112,8 @@
    "link": "https://www.instagram.com/p/Df_l16gF3CG/",
    "baslik": "⚡ En Yakıt'ta DC şarj 10,90 TL/kWh! (20–30 Kasım)  Seçili 27 En Yakıt ",
    "istatistik": {
-    "reach": 27,
-    "views": 67,
+    "reach": 29,
+    "views": 74,
     "saved": 0,
     "shares": 2,
     "total_interactions": 10,
@@ -114,8 +136,8 @@
     "saved": 0,
     "shares": 0,
     "total_interactions": 6,
-    "ig_reels_avg_watch_time": 4093,
-    "ig_reels_video_view_total_time": 683548
+    "ig_reels_avg_watch_time": 4206,
+    "ig_reels_video_view_total_time": 706641
    },
    "olmayan": [
     "follows",
@@ -131,13 +153,13 @@
    "link": "https://www.instagram.com/reel/Df60Uiwops5/",
    "baslik": "Aynı istasyon, farklı uygulama = daha ucuz şarj ⚡  WattKaç'ta istasyon",
    "istatistik": {
-    "reach": 142,
-    "views": 192,
+    "reach": 143,
+    "views": 193,
     "saved": 0,
     "shares": 0,
     "total_interactions": 8,
-    "ig_reels_avg_watch_time": 4326,
-    "ig_reels_video_view_total_time": 735522
+    "ig_reels_avg_watch_time": 4297,
+    "ig_reels_video_view_total_time": 739169
    },
    "olmayan": [
     "follows",
@@ -172,13 +194,13 @@
    "link": "https://www.instagram.com/reel/Df0VOIiIfNA/",
    "baslik": "Salı = şarj günü ⚡ Bu salıdan itibaren iki ayrı indirim var, karıştırm",
    "istatistik": {
-    "reach": 154,
-    "views": 195,
+    "reach": 155,
+    "views": 196,
     "saved": 0,
     "shares": 0,
     "total_interactions": 6,
-    "ig_reels_avg_watch_time": 4093,
-    "ig_reels_video_view_total_time": 740874
+    "ig_reels_avg_watch_time": 4076,
+    "ig_reels_video_view_total_time": 741931
    },
    "olmayan": [
     "follows",
@@ -841,13 +863,13 @@
    "link": "https://www.instagram.com/reel/DfaXz2wowWT/",
    "baslik": "☕⚡ Araban şarj olurken sen de kahveni kap!  En Yakıt × Starbucks kampa",
    "istatistik": {
-    "reach": 137,
-    "views": 173,
+    "reach": 138,
+    "views": 174,
     "saved": 0,
     "shares": 6,
     "total_interactions": 10,
-    "ig_reels_avg_watch_time": 6072,
-    "ig_reels_video_view_total_time": 916994
+    "ig_reels_avg_watch_time": 6111,
+    "ig_reels_video_view_total_time": 928967
    },
    "olmayan": [
     "follows",
@@ -863,13 +885,13 @@
    "link": "https://www.instagram.com/reel/DfaUhswImoj/",
    "baslik": "⚡ Togg sahipleri, Trugo'da şarj %20 indirimli!  Togg'unla Trugo DC ist",
    "istatistik": {
-    "reach": 127,
-    "views": 165,
+    "reach": 128,
+    "views": 166,
     "saved": 0,
     "shares": 2,
     "total_interactions": 7,
-    "ig_reels_avg_watch_time": 6474,
-    "ig_reels_video_view_total_time": 919349
+    "ig_reels_avg_watch_time": 6434,
+    "ig_reels_video_view_total_time": 920125
    },
    "olmayan": [
     "follows",
