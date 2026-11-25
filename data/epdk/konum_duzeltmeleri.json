@@ -1,15 +1,15 @@
 {
-"guncelleme": "2026-11-24",
+"guncelleme": "2026-11-25",
 "ozet": {
 "denetlenen": {
-"e": 13293,
-"r": 6415,
+"e": 13298,
+"r": 6416,
 "o": 771,
 "c": 2257
 },
 "isaretlenen": {
 "e": {
-"ilce_uyumsuz": 129,
+"ilce_uyumsuz": 128,
 "il_uyumsuz": 15,
 "il_uzak": 28,
 "turkiye_disi": 2
@@ -36,7 +36,7 @@
 "birakildi": 6
 },
 "korunan": {
-"ilce_uyumsuz": 116,
+"ilce_uyumsuz": 115,
 "il_uyumsuz": 5,
 "ad_yeri": 1,
 "diger_kaynak_il": 80
