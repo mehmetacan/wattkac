@@ -1,74 +1,75 @@
 [
-  {
-    "id": "otowatt_kasim_post",
-    "grup": "2026-11-24-otowatt__istasyon_otowatt",
-    "tip": "karusel",
-    "tur": "istasyon",
-    "zaman": "2026-11-25T09:30:00+03:00",
-    "baslik": "otoWATT · seçili 45 istasyonda %25",
-    "kaynaklar": [
-      {
-        "ad": "otoWATT: Seçili istasyonlarda %25 indirim (resmi duyuru ve istasyon listesi)",
-        "url": "https://www.otowatt.com.tr/haber/secili-otowatt-istasyonlarinda-25-indirim-firsati",
-        "tur": "resmi"
-      }
-    ],
-    "gorseller": [
-      "media/2026-11-24-otowatt/1_kapak.jpg",
-      "media/2026-11-24-otowatt/2_liste.jpg",
-      "media/2026-11-24-otowatt/3_liste.jpg",
-      "media/2026-11-24-otowatt/4_liste.jpg"
-    ],
-    "alt": [
-      "WattKaç: otoWATT şarj kampanyası, seçili 45 istasyonda %25 indirim, 25 Kasım – 24 Aralık 2026. Örnek DC 13,99 yerine 10,49 TL/kWh.",
-      "otoWATT %25 indirimli istasyonlar, 1/3: Denizli: Er-Der Petrol Ofisi, Ender Dinlenme Tesisleri, Pekdemir Çiftliği Deliktaş Mağazası, Bereketler Sergi Merkezi, Hyundai Turkuaz, Pamukkale Tenis Kulübü, Denizli 80.Yıl Öğretmenevi, Marlen Hotel Denizli, Pekdemir Kayhan Opet, Otonomi; İzmir: Mars Station Otomatik Oto Yıkama Tesisi, D.E.Ü. Hastanesi Halka Açık Otopark, Marlen Hotel Bayraklı, Mirarda Park Evleri, BYD Volt, İçkale Grup, Container Park, Çardaklı Petrol Ofisi, Nk Hotel, Kasaba Outlet AVM",
-      "otoWATT %25 indirimli istasyonlar, 2/3: Aydın: Kurtuluş Otoparkı, Zafer Otoparkı, Kuşadası Küçük Sanayi Sitesi, Palmin Otel, Öztaş Country Sitesi, Tarihi Sarıoğlu Lokantası 1953, Golftaş Unique; Muğla: Bodrum Belediye A.Ş. Merkez Ofis, Turgutreis Yaşam Merkezi, Çöllü Plaza, BigChefs Fethiye, Muğla Life AVM, Türkan Saylan Çağdaş Yaşam Merkezi, Yücelen Otel; Manisa: Lukoil Saruhanlı, Soma Bel. Değirmen Kafe Çakıllı Otopark, Soma Bel. Gündüz Beder Kültür Merkezi, Pekdemir Turgutlu AVM",
-      "otoWATT %25 indirimli istasyonlar, 3/3: Adana: Aksu Piliç, Başkent Üniversitesi Hastanesi Seyhan, Başkent Üniversitesi Hastanesi Kışla; Konya: Başkent Üniversitesi Hastanesi Konya, Lara Park Sitesi; Ankara: Ankara Tenis Kulübü; Antalya: Akdeniz Park AVM"
-    ],
-    "aciklama": "⚡ otoWATT şarj kampanyası (Kasım 2026): seçili 45 istasyonda %25 indirim!\n\n25 Kasım – 24 Aralık arasında listedeki otoWATT istasyonlarında şarj birim fiyatına %25 indirim. Kod gerekmez; indirimli fiyat şarja başlamadan önce gösterilir.\n\n💰 Örnek: DC 13,99 TL/kWh olan istasyonda 10,49 TL/kWh\n\n📍 Kampanyalı 45 istasyon (9 il):\n• Denizli: Er-Der Petrol Ofisi, Ender Dinlenme Tesisleri, Pekdemir Çiftliği Deliktaş Mağazası, Bereketler Sergi Merkezi, Hyundai Turkuaz, Pamukkale Tenis Kulübü, Denizli 80.Yıl Öğretmenevi, Marlen Hotel Denizli, Pekdemir Kayhan Opet, Otonomi\n• İzmir: Mars Station Otomatik Oto Yıkama Tesisi, D.E.Ü. Hastanesi Halka Açık Otopark, Marlen Hotel Bayraklı, Mirarda Park Evleri, BYD Volt, İçkale Grup, Container Park, Çardaklı Petrol Ofisi, Nk Hotel, Kasaba Outlet AVM\n• Aydın: Kurtuluş Otoparkı, Zafer Otoparkı, Kuşadası Küçük Sanayi Sitesi, Palmin Otel, Öztaş Country Sitesi, Tarihi Sarıoğlu Lokantası 1953, Golftaş Unique\n• Muğla: Bodrum Belediye A.Ş. Merkez Ofis, Turgutreis Yaşam Merkezi, Çöllü Plaza, BigChefs Fethiye, Muğla Life AVM, Türkan Saylan Çağdaş Yaşam Merkezi, Yücelen Otel\n• Manisa: Lukoil Saruhanlı, Soma Bel. Değirmen Kafe Çakıllı Otopark, Soma Bel. Gündüz Beder Kültür Merkezi, Pekdemir Turgutlu AVM\n• Adana: Aksu Piliç, Başkent Üniversitesi Hastanesi Seyhan, Başkent Üniversitesi Hastanesi Kışla\n• Konya: Başkent Üniversitesi Hastanesi Konya, Lara Park Sitesi\n• Ankara: Ankara Tenis Kulübü\n• Antalya: Akdeniz Park AVM\n\n🗺️ Haritada görmek için: wattkac.com → Kampanyalar → otoWATT → Haritada gör\n\n⚠️ Başka indirim, sadakat programı ve kampanyalarla birleşmez; birden fazla avantaj varsa senin için en uygun tek fiyat uygulanır.\n\nHangi istasyon yoluna yakın? Yorumlara yaz 👇 Kaydet 🔖\n\nKoşullar değişebilir; şarjdan önce otoWATT uygulamasından kontrol edin.\n\n🔎 Tüm şarj kampanyaları ve geçerli istasyonlar: wattkac.com/kampanyalar\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#otowatt #şarjkampanyası #elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #izmir #denizli #aydın #muğla #manisa #wattkac",
-    "durum": "bekliyor",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null
-  },
-  {
-    "id": "otowatt_kasim_hikaye",
-    "grup": "2026-11-24-otowatt__istasyon_otowatt",
-    "tip": "hikaye",
-    "tur": "istasyon",
-    "zaman": "2026-11-25T10:30:00+03:00",
-    "baslik": "otoWATT · seçili 45 istasyonda %25",
-    "gorseller": [
-      "media/2026-11-24-otowatt/hikaye.jpg"
-    ],
-    "aciklama": "",
-    "durum": "bekliyor",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null
-  },
-  {
-    "id": "otowatt_kasim_reels",
-    "grup": "2026-11-24-otowatt__otowatt_reels",
-    "tip": "reels",
-    "tur": "reels",
-    "zaman": "2026-11-25T19:30:00+03:00",
-    "baslik": "Reels · otoWATT %25 indirimli istasyonlar wattkac.com'da",
-    "kaynaklar": [
-      {
-        "ad": "otoWATT: Seçili istasyonlarda %25 indirim (resmi duyuru ve istasyon listesi)",
-        "url": "https://www.otowatt.com.tr/haber/secili-otowatt-istasyonlarinda-25-indirim-firsati",
-        "tur": "resmi"
-      }
-    ],
-    "gorseller": [
-      "docs/reels/2026-11-24_otowatt.mp4"
-    ],
-    "kapak_ms": 1200,
-    "aciklama": "⚡ otoWATT şarj kampanyası: %25 indirimli 45 istasyon nerede? wattkac.com'da 3 adımda bul 👇\n\n1️⃣ wattkac.com'u aç, Kampanyalar sekmesine geç\n2️⃣ otoWATT kampanyasında \"Haritada gör\"e dokun\n3️⃣ Haritada yalnızca kampanyalı istasyonlar kalır; istasyona dokununca indirimli fiyatı ve anlık durumu gör\n\n📅 25 Kasım – 24 Aralık · seçili 45 otoWATT istasyonunda %25 indirim, kod gerekmez. Örnek: DC 13,99 yerine 10,49 TL/kWh.\n\n📍 İzmir, Denizli, Aydın, Muğla, Manisa, Adana, Konya, Ankara ve Antalya'da. Tam liste sabahki gönderimizde.\n\n⚠️ Başka indirim ve kampanyalarla birleşmez.\n\nKaydet, yola çıkmadan bak 🔖 Takip et 👉 @wattkac\n\nKoşullar değişebilir; şarjdan önce otoWATT uygulamasından kontrol edin.\n\n🔎 Tüm şarj kampanyaları ve geçerli istasyonlar: wattkac.com/kampanyalar\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#otowatt #şarjkampanyası #elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #izmir #denizli #wattkac",
-    "durum": "bekliyor",
-    "deneme": 0,
-    "ig_media_id": null,
-    "hata": null
-  }
+ {
+  "id": "otowatt_kasim_post",
+  "grup": "2026-11-24-otowatt__istasyon_otowatt",
+  "tip": "karusel",
+  "tur": "istasyon",
+  "zaman": "2026-11-25T09:30:00+03:00",
+  "baslik": "otoWATT · seçili 45 istasyonda %25",
+  "kaynaklar": [
+   {
+    "ad": "otoWATT: Seçili istasyonlarda %25 indirim (resmi duyuru ve istasyon listesi)",
+    "url": "https://www.otowatt.com.tr/haber/secili-otowatt-istasyonlarinda-25-indirim-firsati",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "media/2026-11-24-otowatt/1_kapak.jpg",
+   "media/2026-11-24-otowatt/2_liste.jpg",
+   "media/2026-11-24-otowatt/3_liste.jpg",
+   "media/2026-11-24-otowatt/4_liste.jpg"
+  ],
+  "alt": [
+   "WattKaç: otoWATT şarj kampanyası, seçili 45 istasyonda %25 indirim, 25 Kasım – 24 Aralık 2026. Örnek DC 13,99 yerine 10,49 TL/kWh.",
+   "otoWATT %25 indirimli istasyonlar, 1/3: Denizli: Er-Der Petrol Ofisi, Ender Dinlenme Tesisleri, Pekdemir Çiftliği Deliktaş Mağazası, Bereketler Sergi Merkezi, Hyundai Turkuaz, Pamukkale Tenis Kulübü, Denizli 80.Yıl Öğretmenevi, Marlen Hotel Denizli, Pekdemir Kayhan Opet, Otonomi; İzmir: Mars Station Otomatik Oto Yıkama Tesisi, D.E.Ü. Hastanesi Halka Açık Otopark, Marlen Hotel Bayraklı, Mirarda Park Evleri, BYD Volt, İçkale Grup, Container Park, Çardaklı Petrol Ofisi, Nk Hotel, Kasaba Outlet AVM",
+   "otoWATT %25 indirimli istasyonlar, 2/3: Aydın: Kurtuluş Otoparkı, Zafer Otoparkı, Kuşadası Küçük Sanayi Sitesi, Palmin Otel, Öztaş Country Sitesi, Tarihi Sarıoğlu Lokantası 1953, Golftaş Unique; Muğla: Bodrum Belediye A.Ş. Merkez Ofis, Turgutreis Yaşam Merkezi, Çöllü Plaza, BigChefs Fethiye, Muğla Life AVM, Türkan Saylan Çağdaş Yaşam Merkezi, Yücelen Otel; Manisa: Lukoil Saruhanlı, Soma Bel. Değirmen Kafe Çakıllı Otopark, Soma Bel. Gündüz Beder Kültür Merkezi, Pekdemir Turgutlu AVM",
+   "otoWATT %25 indirimli istasyonlar, 3/3: Adana: Aksu Piliç, Başkent Üniversitesi Hastanesi Seyhan, Başkent Üniversitesi Hastanesi Kışla; Konya: Başkent Üniversitesi Hastanesi Konya, Lara Park Sitesi; Ankara: Ankara Tenis Kulübü; Antalya: Akdeniz Park AVM"
+  ],
+  "aciklama": "⚡ otoWATT şarj kampanyası (Kasım 2026): seçili 45 istasyonda %25 indirim!\n\n25 Kasım – 24 Aralık arasında listedeki otoWATT istasyonlarında şarj birim fiyatına %25 indirim. Kod gerekmez; indirimli fiyat şarja başlamadan önce gösterilir.\n\n💰 Örnek: DC 13,99 TL/kWh olan istasyonda 10,49 TL/kWh\n\n📍 Kampanyalı 45 istasyon (9 il):\n• Denizli: Er-Der Petrol Ofisi, Ender Dinlenme Tesisleri, Pekdemir Çiftliği Deliktaş Mağazası, Bereketler Sergi Merkezi, Hyundai Turkuaz, Pamukkale Tenis Kulübü, Denizli 80.Yıl Öğretmenevi, Marlen Hotel Denizli, Pekdemir Kayhan Opet, Otonomi\n• İzmir: Mars Station Otomatik Oto Yıkama Tesisi, D.E.Ü. Hastanesi Halka Açık Otopark, Marlen Hotel Bayraklı, Mirarda Park Evleri, BYD Volt, İçkale Grup, Container Park, Çardaklı Petrol Ofisi, Nk Hotel, Kasaba Outlet AVM\n• Aydın: Kurtuluş Otoparkı, Zafer Otoparkı, Kuşadası Küçük Sanayi Sitesi, Palmin Otel, Öztaş Country Sitesi, Tarihi Sarıoğlu Lokantası 1953, Golftaş Unique\n• Muğla: Bodrum Belediye A.Ş. Merkez Ofis, Turgutreis Yaşam Merkezi, Çöllü Plaza, BigChefs Fethiye, Muğla Life AVM, Türkan Saylan Çağdaş Yaşam Merkezi, Yücelen Otel\n• Manisa: Lukoil Saruhanlı, Soma Bel. Değirmen Kafe Çakıllı Otopark, Soma Bel. Gündüz Beder Kültür Merkezi, Pekdemir Turgutlu AVM\n• Adana: Aksu Piliç, Başkent Üniversitesi Hastanesi Seyhan, Başkent Üniversitesi Hastanesi Kışla\n• Konya: Başkent Üniversitesi Hastanesi Konya, Lara Park Sitesi\n• Ankara: Ankara Tenis Kulübü\n• Antalya: Akdeniz Park AVM\n\n🗺️ Haritada görmek için: wattkac.com → Kampanyalar → otoWATT → Haritada gör\n\n⚠️ Başka indirim, sadakat programı ve kampanyalarla birleşmez; birden fazla avantaj varsa senin için en uygun tek fiyat uygulanır.\n\nHangi istasyon yoluna yakın? Yorumlara yaz 👇 Kaydet 🔖\n\nKoşullar değişebilir; şarjdan önce otoWATT uygulamasından kontrol edin.\n\n🔎 Tüm şarj kampanyaları ve geçerli istasyonlar: wattkac.com/kampanyalar\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#otowatt #şarjkampanyası #elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #izmir #denizli #aydın #muğla #manisa #wattkac",
+  "durum": "paylasildi",
+  "deneme": 0,
+  "ig_media_id": "18118154702019549",
+  "hata": null,
+  "paylasim_zamani": "2026-11-25T05:30:04+00:00"
+ },
+ {
+  "id": "otowatt_kasim_hikaye",
+  "grup": "2026-11-24-otowatt__istasyon_otowatt",
+  "tip": "hikaye",
+  "tur": "istasyon",
+  "zaman": "2026-11-25T10:30:00+03:00",
+  "baslik": "otoWATT · seçili 45 istasyonda %25",
+  "gorseller": [
+   "media/2026-11-24-otowatt/hikaye.jpg"
+  ],
+  "aciklama": "",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ },
+ {
+  "id": "otowatt_kasim_reels",
+  "grup": "2026-11-24-otowatt__otowatt_reels",
+  "tip": "reels",
+  "tur": "reels",
+  "zaman": "2026-11-25T19:30:00+03:00",
+  "baslik": "Reels · otoWATT %25 indirimli istasyonlar wattkac.com'da",
+  "kaynaklar": [
+   {
+    "ad": "otoWATT: Seçili istasyonlarda %25 indirim (resmi duyuru ve istasyon listesi)",
+    "url": "https://www.otowatt.com.tr/haber/secili-otowatt-istasyonlarinda-25-indirim-firsati",
+    "tur": "resmi"
+   }
+  ],
+  "gorseller": [
+   "docs/reels/2026-11-24_otowatt.mp4"
+  ],
+  "kapak_ms": 1200,
+  "aciklama": "⚡ otoWATT şarj kampanyası: %25 indirimli 45 istasyon nerede? wattkac.com'da 3 adımda bul 👇\n\n1️⃣ wattkac.com'u aç, Kampanyalar sekmesine geç\n2️⃣ otoWATT kampanyasında \"Haritada gör\"e dokun\n3️⃣ Haritada yalnızca kampanyalı istasyonlar kalır; istasyona dokununca indirimli fiyatı ve anlık durumu gör\n\n📅 25 Kasım – 24 Aralık · seçili 45 otoWATT istasyonunda %25 indirim, kod gerekmez. Örnek: DC 13,99 yerine 10,49 TL/kWh.\n\n📍 İzmir, Denizli, Aydın, Muğla, Manisa, Adana, Konya, Ankara ve Antalya'da. Tam liste sabahki gönderimizde.\n\n⚠️ Başka indirim ve kampanyalarla birleşmez.\n\nKaydet, yola çıkmadan bak 🔖 Takip et 👉 @wattkac\n\nKoşullar değişebilir; şarjdan önce otoWATT uygulamasından kontrol edin.\n\n🔎 Tüm şarj kampanyaları ve geçerli istasyonlar: wattkac.com/kampanyalar\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#otowatt #şarjkampanyası #elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #izmir #denizli #wattkac",
+  "durum": "bekliyor",
+  "deneme": 0,
+  "ig_media_id": null,
+  "hata": null
+ }
 ]
