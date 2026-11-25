@@ -738,6 +738,7 @@ a{color:var(--pri)}
       <div class="count" id="count" aria-live="polite"></div>
       <select id="sort" aria-label="Sırala">
         <option value="son">Son günü yakın olan</option>
+        <option value="yeni">Yeniden eskiye</option>
         <option value="kurum">Kuruma göre (A-Z)</option>
       </select>
     </div>
@@ -1117,7 +1118,7 @@ function renderProfile() {
 function readHash() {
   const p = new URLSearchParams(location.hash.slice(1));
   ["banka", "ag", "tip"].forEach(k => S[k] = new Set((p.get(k) || "").split(",").filter(Boolean)));
-  S.q = p.get("q") || ""; S.sort = p.get("sirala") || "son";
+  S.q = p.get("q") || ""; S.sort = ["son", "yeni", "kurum"].includes(p.get("sirala")) ? p.get("sirala") : "son";
   S.bana = p.get("bana") === "1" ? true : p.get("bana") === "0" ? false : null;
   S.view = ["kamp", "harita", "profil", "geri"].includes(p.get("g")) ? p.get("g") : "harita";
   // Haritada kampanya filtresi: #g=harita&kamp=<kampanya kimliği> (paylaşılabilir; Instagram gönderilerinden bağlantı)
@@ -1207,7 +1208,10 @@ function render() {
   // Seçili ağa özel kampanyalar, "tüm istasyonlar" kampanyalarından önce gelir
   const sel = S.ag.size ? S.ag : new Set(agler());
   const rel = c => (sel.size && c.st.some(s => sel.has(s))) ? 0 : 1;
-  const list = C.filter(match).sort((a, b) => rel(a) - rel(b) || (S.sort === "kurum" ? tr(a.kurum, b.kurum)
+  // Yeniden eskiye: eklenme tarihi (yoksa başlangıç) en yeni önce; ilgili ağ önceliği ve uygulama başlığı bu sıralamada uygulanmaz
+  const yeni = S.sort === "yeni", eklenme = c => c.eklendi || c.bas || "";
+  const list = C.filter(match).sort((a, b) => yeni ? eklenme(b).localeCompare(eklenme(a)) || (a.bit || "9").localeCompare(b.bit || "9") || tr(a.kurum, b.kurum)
+    : rel(a) - rel(b) || (S.sort === "kurum" ? tr(a.kurum, b.kurum)
     : (a.bit || "9").localeCompare(b.bit || "9") || tr(a.kurum, b.kurum)));
   $("count").innerHTML = list.length === C.length ? `${C.length} kampanya` : `${list.length} kampanya <span>/ ${C.length}</span>`;
   const n = S.banka.size + S.ag.size + S.tip.size;
@@ -1215,7 +1219,7 @@ function render() {
   // Uygulama kampanyaları kendi başlığı altında, en üstte; diğerleri (banka kartı, şarj ağı) eski sırasıyla altta
   const uy = list.filter(c => c.tip === "uygulama"), di = list.filter(c => c.tip !== "uygulama");
   const lh = (cls, ic, t) => `<h2 class="lh ${cls}">${ic}${t}</h2>`;
-  $("list").innerHTML = list.length ? (uy.length && di.length
+  $("list").innerHTML = list.length ? (yeni ? list.map(card).join("") : uy.length && di.length
     ? lh("uy", IC.uygulama, "Uygulama kampanyaları") + uy.map(card).join("") + lh("", IC.banka, "Banka kartı ve şarj ağı kampanyaları") + di.map(card).join("")
     : (uy.length ? lh("uy", IC.uygulama, "Uygulama kampanyaları") : "") + list.map(card).join("")) :
     `<div class="empty">Bu seçime uyan kampanya yok.<br><button class="btn" id="reset">Filtreleri temizle</button></div>`;
