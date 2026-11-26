@@ -371,7 +371,7 @@
     "ad": "Coşkunoğlu Kasap"
    }
   ],
-  "cekildi": "2026-11-25"
+  "cekildi": "2026-11-26"
  },
  "enyakit": {
   "ag": "Enyakıt",
@@ -538,11 +538,6 @@
     "il": "",
     "ilce": "",
     "ad": "Başkent Üniversitesi Hastanesi Kışla"
-   },
-   {
-    "il": "",
-    "ilce": "",
-    "ad": "Başkent Üniversitesi Hastanesi Konya"
    },
    {
     "il": "",
@@ -745,6 +740,6 @@
     "ad": "Zafer Otoparkı"
    }
   ],
-  "cekildi": "2026-11-25"
+  "cekildi": "2026-11-26"
  }
 }
