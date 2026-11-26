@@ -376,6 +376,17 @@ footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--mut);fon
 .ibtn{flex:none;width:44px;height:44px;margin:-12px -10px -12px -8px;padding:0;border:0;background:none;color:var(--mut);display:grid;place-items:center;border-radius:50%}
 .ibtn svg{width:18px;height:18px}
 .ibtn[aria-expanded=true]{color:var(--pri)}
+/* Yol tarifi uygulama seçimi: alttan açılan küçük menü */
+.yol{position:fixed;inset:0;z-index:1500;display:flex;align-items:flex-end;justify-content:center}.yol[hidden]{display:none}
+.yol-bg{position:absolute;inset:0;background:var(--scrim)}
+.yol-k{position:relative;width:min(420px,100%);margin:0 8px calc(8px + env(safe-area-inset-bottom));background:var(--pop);color:var(--txt);border:1px solid var(--line);border-radius:18px;box-shadow:var(--sh-pop);padding:14px 12px 12px;animation:yolac .18s ease-out}
+@keyframes yolac{from{transform:translateY(24px);opacity:0}}
+.yol-b{font-weight:800;font-size:15px;padding:2px 6px 10px}
+.yol a{display:flex;width:100%;justify-content:flex-start;text-align:left;align-items:center;gap:12px;min-height:52px;padding:8px 10px;border-radius:12px;text-decoration:none;color:var(--txt);font-weight:700;font-size:15px}
+.yol a:hover,.yol a:focus-visible{background:var(--ctl)}
+.yol a i{flex:none;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:800;font-size:13px;color:#fff}
+.yol a small{display:block;font-weight:500;font-size:12.5px;color:var(--mut,#64748B)}
+.yol-i{width:100%;margin-top:8px}
 .tip{position:fixed;z-index:1400;max-width:min(300px,calc(100vw - 24px));background:var(--pop);color:var(--txt);border:1px solid var(--line);border-radius:var(--r-md);box-shadow:var(--sh-pop);padding:10px 12px;font-size:13.5px;font-weight:600;line-height:1.4}
 .tip a{display:inline-block;margin-top:4px;font-weight:800;font-size:13px;text-decoration:none}
 /* Ağın diğer kampanyaları: tek satır; solda kısa koşul, sağda o kampanyayla fiyat */
@@ -848,6 +859,9 @@ a{color:var(--pri)}
 
 <!-- Bilgi kutusu: fiyat satırındaki (i) ve ağ kampanyası satırlarına dokununca açılır; dışarı dokunmak ya da Esc kapatır -->
 <div class="tip" id="tip" role="dialog" aria-label="Bilgi" hidden></div>
+<div class="yol" id="yol" hidden><div class="yol-bg" data-yolkapat></div>
+  <div class="yol-k" role="dialog" aria-modal="true" aria-labelledby="yol-t"><div class="yol-b" id="yol-t">Hangi uygulamayla gidelim?</div><div id="yol-l"></div>
+  <button class="btn yol-i" data-yolkapat>Vazgeç</button></div></div>
 
 <!-- Kampanya filtre çekmecesi -->
 <div class="bd" id="bd" hidden></div>
@@ -2200,7 +2214,7 @@ function renderDetail(s0) {
     ${s.pasif ? `<p class="dnote bad">Şu an pasif ya da bakımda görünüyor.</p>` : ""}
     ${s.approx ? `<p class="dnote">Konum yaklaşık.</p>` : ""}
     ${rows.length ? `<dl class="kv">${rows.map(([k, v, cls]) => `<dt>${k}</dt><dd${cls ? ` class="${cls}"` : ""}>${v}</dd>`).join("")}</dl>` : ""}
-    <div class="dacts"><a class="btn primary dir" href="https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lon}" target="_blank" rel="noopener">Yol tarifi al</a></div>
+    <div class="dacts"><button class="btn primary dir" data-yol aria-haspopup="dialog">Yol tarifi al</button></div>
     ${secici}${kampHtml}
     <details class="bkay"><summary>Bilgi kaynağı ›</summary>${srcTxt.map(x => `<p>${x}</p>`).join("")}
       <p>${/^bigstation/.test(s.id) ? "İstasyon bilgisi BIG Station sisteminden, üçüncü taraf bir hizmet aracılığıyla günde bir kez alınır." : /^cv\d/.test(s.id) ? "İstasyon bilgisi CV Charging'in resmi istasyon listesinden (cv-charging.com), günde bir kez alınır." : /^acropol\d/.test(s.id) ? "İstasyon bilgisi Acropol Şarj'ın kendi haritasından (acropolsarj.com), günde bir kez alınır. Konut sitelerindeki cihazlar gösterilmez." : /^5sarj\d/.test(s.id) ? `İstasyon bilgisi 5 Şarj'ın kendi haritasından (5sarj.com) alınır; elle güncellenen kopya${kopyaTarih("5sarj")}. Soket gücü EPDK kaydından tamamlanır.` : /^epsis/.test(s.id) && s.official ? "İstasyon bilgisi EPSIS'in kendi haritasından (epsis.net); istasyon listesi günde bir kez güncellenir. Konut sitelerindeki cihazlar gösterilmez." : /^otopriz/.test(s.id) && s.official ? "İstasyon ve anlık durum bilgisi Otopriz'in kendi haritasından (electroop). Konut sitelerindeki cihazlar gösterilmez." : s.official ? `İstasyon bilgisi ağın kendi resmi haritasından${agSite(s)}, günde bir kez güncellenir.` : s.epdk ? `${s.rk ? `Soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir; konum ağın kendi haritasından${agSite(s)}.` : "Konum ve soket bilgisi EPDK'nın resmi şarj istasyonu kaydından, günde bir kez güncellenir."}${s.rl ? ` İstasyon ağın kendi listesinde${s.rk ? "" : agSite(s)} de yer alıyor.` : ""}` : `Konum ve teknik bilgiler EPDK kaydı, OpenStreetMap ve Open Charge Map'ten gelir; eksik ya da eski olabilir.${s.tesis ? ` Konum: ${esc(s.tesis)} (OpenStreetMap).` : ""}`}</p>
@@ -2911,11 +2925,31 @@ async function init() {
   initPwa(); updatePushUi();
   setTimeout(maybeOb, 1200);
 }
+// Yol tarifi: uygulama seçimi. Android'de "geo:" bağlantısı telefondaki navigasyon uygulamalarını listeler (Trumore vb. kabul ediyorsa orada çıkar)
+const YOL = { odak: null };
+function yolAc() {
+  const s = M.byId && M.byId.get(M.sel); if (!s) return;
+  const ll = `${s.lat},${s.lon}`, ua = navigator.userAgent, android = /Android/i.test(ua), apple = /iPhone|iPad|iPod|Macintosh/i.test(ua);
+  const sec = [["Google Haritalar", "#1A73E8", "G", `https://www.google.com/maps/dir/?api=1&destination=${ll}`, "", "google"]];
+  const igne = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#fff"/></svg>';
+  if (apple) sec.push(["Apple Haritalar", "#111827", igne, `https://maps.apple.com/?daddr=${ll}&dirflg=d`, "", "apple"]);
+  sec.push(["Yandex Navigasyon", "#FC3F1D", "Y", `https://yandex.com.tr/maps/?rtext=~${ll}&rtt=auto`, "", "yandex"]);
+  if (android) sec.push(["Diğer navigasyon uygulamaları", "#0E7490", "…", `geo:${ll}?q=${ll}(${encodeURIComponent(s.name || s.brand || "Şarj istasyonu")})`, "Telefondaki uygulamalardan seç", "diger"]);
+  $("yol-l").innerHTML = sec.map(([ad, renk, h, url, alt, k]) => `<a class="dir" data-uyg="${k}" href="${esc(url)}"${url.startsWith("geo:") ? "" : ' target="_blank" rel="noopener"'}>`
+    + `<i style="background:${renk}" aria-hidden="true">${h}</i><span>${esc(ad)}${alt ? `<small>${esc(alt)}</small>` : ""}</span></a>`).join("");
+  YOL.odak = document.activeElement; $("yol").hidden = false; $("yol-l").querySelector("a").focus();
+}
+function yolKapat() { if ($("yol").hidden) return; $("yol").hidden = true; if (YOL.odak && YOL.odak.isConnected) YOL.odak.focus(); }
+document.addEventListener("click", e => {
+  if (e.target.closest("[data-yol]")) yolAc();
+  else if (e.target.closest("[data-yolkapat]") || e.target.closest("#yol a")) setTimeout(yolKapat, 0);
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape") yolKapat(); });
 // Dış bağlantı tıklamaları (resmi kampanya sayfası, yol tarifi) sayılır
 document.addEventListener("click", e => {
   const a = e.target.closest("a"); if (!a) return;
   if (a.dataset.kk) an("kampanya", a.dataset.kk);
-  else if (a.classList.contains("dir")) { const s = M.byId && M.byId.get(M.sel); an("yol_tarifi", s ? pretty(s.brand) || "markasız" : ""); }
+  else if (a.classList.contains("dir")) { const s = M.byId && M.byId.get(M.sel); an("yol_tarifi", s ? pretty(s.brand) || "markasız" : ""); if (a.dataset.uyg) an("yol_uygulama", a.dataset.uyg); }
 }, true);
 document.addEventListener("DOMContentLoaded", init);
 </script>

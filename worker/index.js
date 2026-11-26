@@ -20,7 +20,7 @@ const YONLENDIR = new Set(["www.wattkac.com", "wattkac.xyz", "www.wattkac.xyz"])
 const TURLER = new Set(["hata", "istasyon", "fiyat", "kampanya", "oneri", "diger"]);
 const DURUMLAR = new Set(["yeni", "okundu", "cozuldu", "cop"]);
 // Analiz: izin verilen olay adları. Değer alanı kısa bir etiket (ör. ağ adı, sayfa adı); kişisel veri içermez.
-const OLAYLAR = new Set(["ziyaret", "tekil", "kaynak", "cihaz", "uygulama", "gorunum", "istasyon", "kampanya", "yol_tarifi",
+const OLAYLAR = new Set(["ziyaret", "tekil", "kaynak", "cihaz", "uygulama", "gorunum", "istasyon", "kampanya", "yol_tarifi", "yol_uygulama",
   "filtre", "siralama", "konum", "geri_bildirim", "kurulum", "seo_sayfa", "panel_disi"]);
 // Ücretsiz D1 yazma sınırını (günde 100.000 satır) korumak için: günlük ziyaret bu sayıyı aşınca yalnızca ziyaret sayılır
 const AYRINTI_SINIRI = 3000;
