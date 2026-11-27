@@ -1,6 +1,6 @@
 {
   "donem": "Kasım 2026",
-  "guncelleme": "2026-11-24",
+  "guncelleme": "2026-11-27",
   "son_kontrol": "2026-11-24",
   "genel_kartlar": "Paraf Doğal · QNB · ON",
   "kampanyasiz_bankalar": [
@@ -1665,22 +1665,6 @@
         {
           "big": "%15 indirim",
           "kisa": "Seçili istasyonda",
-          "det": "Karaköprü Belediyesi istasyonunda · açılışa özel",
-          "son": "26 Kasım",
-          "link": "https://www.aksasarj.com.tr/tr/kampanyalar",
-          "bas": "2026-10-26",
-          "bit": "2026-11-26",
-          "join": "Aksa Şarj uygulamasında şarjdan önce veya şarj sırasında kampanyayı seç",
-          "kosul": "26.10.2026 – 26.11.2026 arasında yalnızca Şanlıurfa Karaköprü Belediyesi istasyonunda (1 DC 80 kW, 1 AC 22 kW halka açık ünite) güncel soket tarifesine %15 indirim. Yalnızca bireysel müşteriler; Aksa Şarj uygulamasında aktif ve onaylı hesap gerekir. Kampanya seçilmeyen şarjlar standart tarifeden ücretlendirilir, sonradan indirim uygulanmaz. Kurumsal anlaşmalı işlemler hariç; diğer indirim, puan veya hediye çekleriyle birleşmez.",
-          "iller": [
-            "Şanlıurfa"
-          ],
-          "eklendi": "2026-11-13",
-          "herkese": false
-        },
-        {
-          "big": "%15 indirim",
-          "kisa": "Seçili istasyonda",
           "det": "Pendik Duru Park Konutları 2 istasyonunda · açılışa özel",
           "son": "12 Aralık",
           "link": "https://www.aksasarj.com.tr/tr/kampanyalar",
@@ -1698,8 +1682,8 @@
       "banks": [],
       "cover": {
         "big": "%15 indirim",
-        "sub": "Şanlıurfa Karaköprü ve İstanbul Pendik Duru Park istasyonlarında · açılışa özel",
-        "son": "26 Kasım"
+        "sub": "İstanbul Pendik Duru Park Konutları 2 istasyonunda · açılışa özel",
+        "son": "12 Aralık"
       }
     },
     {
@@ -1736,6 +1720,19 @@
           "bit": "2027-04-30",
           "kosul": "\"Şarj Ettikçe Yıldız Kazan\": 1 Kasım 2026 – 30 Nisan 2027 arasında En Yakıt'ta 200 kWh şarjı tamamlayana 15 Starbucks yıldızı. Kaynak En Yakıt'ın duyuru görseli; katılım ve yıldız tanımlama koşulları resmi sayfada doğrulanamadı.",
           "eklendi": "2026-11-20"
+        },
+        {
+          "big": "1.500 kWh paket 17.400 TL",
+          "kisa": "Black Friday paketi",
+          "herkese": false,
+          "kontrol": true,
+          "det": "Black Friday Paketi: 1.500 kWh 22.350 TL yerine 17.400 TL (kWh başına 11,60 TL; liste fiyatı 14,90 TL/kWh)",
+          "son": "29 Kasım",
+          "link": "https://www.instagram.com/en_yakit/",
+          "bas": "2026-11-27",
+          "bit": "2026-11-29",
+          "kosul": "Black Friday Paketi 27–29 Kasım 2026 arasında satın alınabilir: 1.500 kWh şarj 22.350 TL yerine 17.400 TL. Kaynak En Yakıt'ın resmi Instagram duyurusu; resmi sitede (ücretlendirme sayfası) yer almıyor. Paketin kullanım süresi, geçerli istasyonlar ve satın alma kanalı doğrulanamadı.",
+          "eklendi": "2026-11-27"
         }
       ]
     },

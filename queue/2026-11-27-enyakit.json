@@ -1,0 +1,48 @@
+[
+  {
+    "id": "enyakit_blackfriday_post",
+    "grup": "2026-11-27-enyakit__enyakit_blackfriday",
+    "tip": "karusel",
+    "tur": "istasyon",
+    "zaman": "2026-11-27T20:30:00+03:00",
+    "baslik": "En Yakıt · Black Friday 1.500 kWh 17.400 TL",
+    "kaynaklar": [
+      {
+        "ad": "En Yakıt: Black Friday Paketi, 1.500 kWh 22.350 yerine 17.400 TL (27–29 Kasım)",
+        "url": "https://www.instagram.com/en_yakit/",
+        "tur": "kontrol",
+        "not": "Ağın resmi Instagram duyurusu (kullanıcının ekran görüntüsü, 27 Kasım). Resmi sitede (enyakit.com.tr/ucretlendirme) yok. Gönderinin açıklamasından paketin kullanım süresini ve geçerli istasyonları kontrol et."
+      }
+    ],
+    "gorseller": [
+      "media/2026-11-27-enyakit/1_kapak.jpg",
+      "media/2026-11-27-enyakit/2_detay.jpg"
+    ],
+    "alt": [
+      "WattKaç: En Yakıt Black Friday Paketi, 1.500 kWh şarj 22.350 TL yerine 17.400 TL, 27–29 Kasım 2026.",
+      "En Yakıt Black Friday hesabı: liste fiyatı 14,90 TL/kWh ile 1.500 kWh 22.350 TL; paketle 17.400 TL, kWh başına 11,60 TL. Kazanç 4.950 TL, yüzde 22 indirim. Yaklaşık 7.500–8.800 km yol."
+    ],
+    "aciklama": "⚡ En Yakıt'ta Black Friday: 1.500 kWh şarj 17.400 TL! (27–29 Kasım)\n\nEn Yakıt'ın Black Friday Paketi'nde 1.500 kWh şarj 22.350 TL yerine 17.400 TL. Paket yalnızca 27–29 Kasım arasında satışta.\n\n💰 Hesabı yaptık:\n• Liste fiyatı: 14,90 TL/kWh → 1.500 kWh = 22.350 TL\n• Paketle: 11,60 TL/kWh → 17.400 TL\n• Kazanç: 4.950 TL (%22)\n• 1.500 kWh ≈ 7.500–8.800 km yol (100 km'de 17–20 kWh tüketimle, tahmini)\n\n❓ Almadan önce sor: Paket ne kadar sürede kullanılmalı, tüm En Yakıt istasyonlarında geçerli mi? Duyuruda yazmıyor; En Yakıt uygulamasından kontrol et.\n\n💡 İpucu: 30 Kasım'a kadar seçili 27 En Yakıt istasyonunda kWh zaten 10,90 TL. Liste: wattkac.com → Kampanyalar → En Yakıt → Haritada gör\n\nYılda kaç kWh şarj ediyorsun, paket sana değer mi? Yorumlara yaz 👇 Kaydet 🔖\n\nKoşullar değişebilir; satın almadan önce En Yakıt uygulamasından kontrol edin.\n\n🔎 Tüm şarj kampanyaları: wattkac.com/kampanyalar\n\nℹ️ Reklam veya işbirliği değildir. Kampanyaları bağımsız olarak, kurumların resmi kaynaklarından derliyoruz.\n\n#enyakıt #blackfriday #şarjkampanyası #elektrikliaraç #elektriklioto #şarj #şarjistasyonu #kampanya #wattkac",
+    "durum": "bekliyor",
+    "deneme": 0,
+    "ig_media_id": null,
+    "hata": null
+  },
+  {
+    "id": "enyakit_blackfriday_hikaye",
+    "grup": "2026-11-27-enyakit__enyakit_blackfriday",
+    "tip": "hikaye",
+    "tur": "istasyon",
+    "zaman": "2026-11-27T21:30:00+03:00",
+    "baslik": "En Yakıt · Black Friday 1.500 kWh 17.400 TL",
+    "kaynaklar": null,
+    "gorseller": [
+      "media/2026-11-27-enyakit/hikaye.jpg"
+    ],
+    "aciklama": "",
+    "durum": "bekliyor",
+    "deneme": 0,
+    "ig_media_id": null,
+    "hata": null
+  }
+]
