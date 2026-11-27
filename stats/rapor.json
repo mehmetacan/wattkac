@@ -1,5 +1,5 @@
 {
- "zaman": "2026-11-26T02:16:37+00:00",
+ "zaman": "2026-11-27T02:16:47+00:00",
  "hatalar": {
   "medya_metrik": {
    "profile_visits": "(#100) The Media Insights API does not support the profile_visits metric for this media product type.",
@@ -9,16 +9,16 @@
  "hesap": {
   "id": "17841424717954969",
   "followers_count": 59,
-  "follows_count": 58,
+  "follows_count": 61,
   "media_count": 52,
   "username": "wattkac"
  },
  "hesap_7gun": {
-  "reach": 624,
-  "views": 2361,
-  "profile_views": 154,
-  "accounts_engaged": 20,
-  "total_interactions": 85
+  "reach": 539,
+  "views": 1887,
+  "profile_views": 97,
+  "accounts_engaged": 19,
+  "total_interactions": 73
  },
  "medya": [
   {
@@ -30,13 +30,13 @@
    "link": "https://www.instagram.com/reel/DgKMF0nIYDe/",
    "baslik": "⚡ otoWATT şarj kampanyası: %25 indirimli 45 istasyon nerede? wattkac.c",
    "istatistik": {
-    "reach": 131,
-    "views": 166,
+    "reach": 133,
+    "views": 169,
     "saved": 0,
     "shares": 0,
     "total_interactions": 4,
-    "ig_reels_avg_watch_time": 2700,
-    "ig_reels_video_view_total_time": 375355
+    "ig_reels_avg_watch_time": 2765,
+    "ig_reels_video_view_total_time": 392709
    },
    "olmayan": [
     "follows",
@@ -71,13 +71,13 @@
    "link": "https://www.instagram.com/reel/DgFhzpSIiV2/",
    "baslik": "Salı günlerine özel Rotawatt'ta %20, Wat Mobilite'de %10 indirim var! ",
    "istatistik": {
-    "reach": 259,
-    "views": 389,
+    "reach": 260,
+    "views": 390,
     "saved": 0,
     "shares": 1,
     "total_interactions": 11,
-    "ig_reels_avg_watch_time": 4762,
-    "ig_reels_video_view_total_time": 1400312
+    "ig_reels_avg_watch_time": 4750,
+    "ig_reels_video_view_total_time": 1401339
    },
    "olmayan": [
     "follows",
@@ -93,13 +93,13 @@
    "link": "https://www.instagram.com/reel/DgDxW-eIKnL/",
    "baslik": "Şarj istasyonunda \"enayi\" durumuna düşmemek için tek yapman gereken be",
    "istatistik": {
-    "reach": 239,
-    "views": 359,
+    "reach": 240,
+    "views": 363,
     "saved": 2,
     "shares": 1,
     "total_interactions": 19,
-    "ig_reels_avg_watch_time": 5076,
-    "ig_reels_video_view_total_time": 1482249
+    "ig_reels_avg_watch_time": 5089,
+    "ig_reels_video_view_total_time": 1501361
    },
    "olmayan": [
     "follows",
@@ -216,8 +216,8 @@
    "link": "https://www.instagram.com/p/Df39s_vFwLT/",
    "baslik": "⚡ Aksa Şarj: %15 indirim!  ✅ %15 indirim: Karaköprü Belediyesi istasyo",
    "istatistik": {
-    "reach": 28,
-    "views": 87,
+    "reach": 29,
+    "views": 88,
     "saved": 0,
     "shares": 0,
     "total_interactions": 8,
@@ -257,13 +257,13 @@
    "link": "https://www.instagram.com/reel/Df0ElHvBw6L/",
    "baslik": "Bir takipçimiz yazdı: \"Böyle bir yer yok. Yıkıldı bizim market\" 🏚️  He",
    "istatistik": {
-    "reach": 175,
-    "views": 235,
+    "reach": 176,
+    "views": 237,
     "saved": 0,
     "shares": 0,
     "total_interactions": 8,
-    "ig_reels_avg_watch_time": 5339,
-    "ig_reels_video_view_total_time": 1014417
+    "ig_reels_avg_watch_time": 5472,
+    "ig_reels_video_view_total_time": 1045185
    },
    "olmayan": [
     "follows",
@@ -340,7 +340,7 @@
    "baslik": "⚡ Ovolt: %12 indirim!  ✅ %12 indirim: Kampanyaya dahil Ovolt istasyonl",
    "istatistik": {
     "reach": 33,
-    "views": 82,
+    "views": 83,
     "saved": 0,
     "shares": 0,
     "total_interactions": 6,
@@ -396,8 +396,8 @@
    "link": "https://www.instagram.com/p/DftkOyfF0rl/",
    "baslik": "⚡ Kasım 2026: şarj ağlarında hangi kampanyalar var?  • Eşarj: %20'ye v",
    "istatistik": {
-    "reach": 46,
-    "views": 112,
+    "reach": 47,
+    "views": 113,
     "saved": 0,
     "shares": 0,
     "total_interactions": 8,
@@ -415,7 +415,7 @@
    "link": "https://www.instagram.com/reel/DfsAWXuoeyn/",
    "baslik": "Her kampanya sana göre değil. 🎯  Kartlarını, şarj uygulamalarını ve ar",
    "istatistik": {
-    "reach": 141,
+    "reach": 142,
     "views": 189,
     "saved": 0,
     "shares": 0,
@@ -520,7 +520,7 @@
    "baslik": "⚡ Kuveyt Türk ile şarjda %10 indirim!  ✅ %10 indirim: 300 TL+ şarj har",
    "istatistik": {
     "reach": 22,
-    "views": 63,
+    "views": 64,
     "saved": 0,
     "shares": 0,
     "total_interactions": 4,
@@ -580,7 +580,7 @@
    "baslik": "⚡ DenizBank ile şarjda %10 indirim!  ✅ %10 indirim: 500 TL+ şarj harca",
    "istatistik": {
     "reach": 22,
-    "views": 57,
+    "views": 61,
     "saved": 0,
     "shares": 0,
     "total_interactions": 4,
